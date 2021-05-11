@@ -24,7 +24,15 @@
   ((*- for f in substruct.fields *))                                                                          
 	  +
     ((*- if f.order == "packed-string" *))
-    0 /*(((string_path + f.name)))_packed_len( (((path + f.name))) )*/
+    ((*- if f.encoding == "unterminated" *))
+      sbp_unterminated_string_packed_len(&(((path + f.name))), (((f.max_items))))
+    ((*- elif f.encoding == "null_terminated" *))
+      sbp_null_terminated_string_packed_len(&(((path + f.name))), (((f.max_items))))
+    ((*- elif f.encoding == "multipart" *))
+      sbp_multipart_string_packed_len(&(((path + f.name))), (((f.max_items))), (((f.min_sections))), (((f.max_sections))))
+    ((*- else *))
+      sbp_sequence_string_packed_len(&(((path + f.name))), (((f.max_items))), (((f.terminator))))
+    ((*- endif *))
     ((*- elif f.order == "fixed-string" *))                                                                     
       (((f.max_items)))                                                                                       
 	  ((*- elif f.order == "single" *))
@@ -93,7 +101,15 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 	  ((*- with *))
 	  ((*- set loop_idx = (path + f.name + "_idx")|sanitise_path *))
     ((*- if f.order == "packed-string" *))
-      //offset += (((string_path + f.name)))_pack( (((path + f.name))), buf + offset, (uint8_t)(len - offset ));
+      ((*- if f.encoding == "unterminated" *))
+        offset += sbp_unterminated_string_pack(&(((path + f.name))), (((f.max_items))), buf + offset, (uint8_t)(len - offset));
+      ((*- elif f.encoding == "null_terminated" *))
+        offset += sbp_null_terminated_string_pack(&(((path + f.name))), (((f.max_items))), buf + offset, (uint8_t)(len - offset));
+      ((*- elif f.encoding == "multipart" *))
+        offset += sbp_multipart_string_pack(&(((path + f.name))), (((f.max_items))), (((f.min_sections))), (((f.max_sections))), buf + offset, (uint8_t)(len - offset));
+      ((*- else *))
+        offset += sbp_sequence_string_pack(&(((path + f.name))), (((f.max_items))), (((f.terminator))), buf + offset, (uint8_t)(len - offset));
+      ((*- endif *))
 	  ((*- elif f.order == "single" *))
 		  ((*- if f.basetype.is_primitive *))
         (((pack_primitive(f, path + f.name))))
@@ -171,7 +187,15 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 	((*- with *))
 	((*- set loop_idx = (path + f.name + "_idx")|sanitise_path *))
   ((*- if f.order == "packed-string" *))
-  //offset += (((string_path + f.name)))_unpack( (((path + f.name))), buf + offset, (uint8_t)(len - offset ));
+    ((*- if f.encoding == "unterminated" *))
+      offset += sbp_unterminated_string_unpack(&(((path + f.name))), (((f.max_items))), buf + offset, (uint8_t)(len - offset));
+    ((*- elif f.encoding == "null_terminated" *))
+      offset += sbp_null_terminated_string_unpack(&(((path + f.name))), (((f.max_items))), buf + offset, (uint8_t)(len - offset));
+    ((*- elif f.encoding == "multipart" *))
+      offset += sbp_multipart_string_unpack(&(((path + f.name))), (((f.max_items))), (((f.min_sections))), (((f.max_sections))), buf + offset, (uint8_t)(len - offset));
+    ((*- else *))
+      offset += sbp_sequence_string_unpack(&(((path + f.name))), (((f.max_items))), (((f.terminator))), buf + offset, (uint8_t)(len - offset));
+    ((*- endif *))
 	((*- elif f.order == "single" *))
 		((*- if f.basetype.is_primitive *))
       (((unpack_primitive(f, path + f.name))))

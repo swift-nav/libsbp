@@ -49,7 +49,7 @@ sbp_unpack_sbp_msg_bootloader_handshake_req_t(const u8 *buf, size_t len, sbp_msg
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->flags) + 0 /*sbp_msg_bootloader_handshake_resp_t_version_packed_len( msg->version )*/;
+  return 0 + sizeof(msg->flags) + sbp_unterminated_string_packed_len(&msg->version, 251);
 }
 
 static inline bool
@@ -73,7 +73,7 @@ sbp_pack_sbp_msg_bootloader_handshake_resp_t(u8 *buf, size_t len, const sbp_msg_
   memcpy(buf + offset, &msgflags, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_bootloader_handshake_resp_t_version_pack( msg->version, buf + offset, (uint8_t)(len - offset ));
+  offset += sbp_unterminated_string_pack(&msg->version, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -94,8 +94,7 @@ sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const u8 *buf, size_t len, sbp_ms
   msg->flags = le32toh(msg->flags);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_bootloader_handshake_resp_t_version_unpack( msg->version, buf + offset, (uint8_t)(len - offset
-  // ));
+  offset += sbp_unterminated_string_unpack(&msg->version, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -240,7 +239,7 @@ static inline size_t
 sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootloader_handshake_dep_a_t *msg)
 {
   (void)msg;
-  return 0 + 0 /*sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len( msg->handshake )*/;
+  return 0 + sbp_unterminated_string_packed_len(&msg->handshake, 255);
 }
 
 static inline bool
@@ -256,8 +255,7 @@ sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(u8 *buf, size_t len, const sbp_msg
     return false;
   }
 
-  // offset += sbp_msg_bootloader_handshake_dep_a_t_handshake_pack( msg->handshake, buf + offset, (uint8_t)(len - offset
-  // ));
+  offset += sbp_unterminated_string_pack(&msg->handshake, 255, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -270,8 +268,7 @@ sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const u8 *buf, size_t len, sbp_m
   (void)len;
   (void)msg;
 
-  // offset += sbp_msg_bootloader_handshake_dep_a_t_handshake_unpack( msg->handshake, buf + offset, (uint8_t)(len -
-  // offset ));
+  offset += sbp_unterminated_string_unpack(&msg->handshake, 255, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 

@@ -17,14 +17,16 @@ bool sbp_null_terminated_string_valid(const sbp_null_terminated_string_t *s, uin
 
 uint8_t sbp_null_terminated_string_packed_len(const sbp_null_terminated_string_t *s, uint8_t max_packed_len)
 {
-  if(!sbp_null_terminated_string_valid(s, max_packed_len)) return 0;
+  if (!sbp_null_terminated_string_valid(s, max_packed_len))
+    return 0;
   return (uint8_t)(s->len + 1);
 }
 
 bool sbp_null_terminated_string_set(sbp_null_terminated_string_t *s, const char *new_str, uint8_t max_packed_len)
 {
   size_t new_len = strlen(new_str);
-  if (new_len >= max_packed_len) return false;
+  if (new_len >= max_packed_len)
+    return false;
   strncpy(s->data, new_str, sizeof(s->data));
   s->len = (uint8_t)new_len;
   return true;
@@ -38,7 +40,8 @@ bool sbp_null_terminated_string_printf(sbp_null_terminated_string_t *s, uint8_t 
   int len = vsnprintf(new_str, max_packed_len, fmt, ap);
   va_end(ap);
 
-  if ((size_t)len >= max_packed_len) return false;
+  if ((size_t)len >= max_packed_len)
+    return false;
   strncpy(s->data, new_str, (size_t)len + 1);
   s->len = (uint8_t)len;
   return true;
@@ -46,7 +49,8 @@ bool sbp_null_terminated_string_printf(sbp_null_terminated_string_t *s, uint8_t 
 
 const char *sbp_null_terminated_string_get(const sbp_null_terminated_string_t *s, uint8_t max_packed_len)
 {
-  if (!sbp_null_terminated_string_valid(s, max_packed_len)) return NULL;
+  if (!sbp_null_terminated_string_valid(s, max_packed_len))
+    return NULL;
   return s->data;
 }
 
@@ -55,8 +59,10 @@ uint8_t sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
                                         uint8_t *buf,
                                         uint8_t buf_len)
 {
-  if (!sbp_null_terminated_string_valid(s, max_packed_len)) return 0;
-  if (buf_len < s->len + 1) return 0;
+  if (!sbp_null_terminated_string_valid(s, max_packed_len))
+    return 0;
+  if (buf_len < s->len + 1)
+    return 0;
   memcpy(buf, s->data, (size_t)(s->len + 1u));
   return (uint8_t)(s->len + 1);
 }
@@ -69,8 +75,10 @@ uint8_t sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
   (void)max_packed_len;
   size_t copy_len = strnlen((const char *)buf, buf_len);
   copy_len++;
-  if (copy_len > buf_len) copy_len = buf_len;
-  if (!copy_len) {
+  if (copy_len > buf_len)
+    copy_len = buf_len;
+  if (!copy_len)
+  {
     sbp_null_terminated_string_init(s, max_packed_len);
     return 0;
   }
@@ -78,4 +86,3 @@ uint8_t sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
   s->len = (uint8_t)(copy_len - 1u);
   return (uint8_t)copy_len;
 }
-

@@ -2056,7 +2056,7 @@ static inline bool sbp_unpack_sbp_msg_device_monitor_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_command_req_t(const sbp_msg_command_req_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + 0 /*sbp_msg_command_req_t_command_packed_len( msg->command )*/;
+  return 0 + sizeof(msg->sequence) + sbp_null_terminated_string_packed_len(&msg->command, 251);
 }
 
 static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp_msg_command_req_t *msg)
@@ -2079,7 +2079,7 @@ static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_command_req_t_command_pack( msg->command, buf + offset, (uint8_t)(len - offset ));
+  offset += sbp_null_terminated_string_pack(&msg->command, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -2099,7 +2099,7 @@ static inline bool sbp_unpack_sbp_msg_command_req_t(const u8 *buf, size_t len, s
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_command_req_t_command_unpack( msg->command, buf + offset, (uint8_t)(len - offset ));
+  offset += sbp_null_terminated_string_unpack(&msg->command, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -2174,7 +2174,7 @@ static inline bool sbp_unpack_sbp_msg_command_resp_t(const u8 *buf, size_t len, 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(const sbp_msg_command_output_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + 0 /*sbp_msg_command_output_t_line_packed_len( msg->line )*/;
+  return 0 + sizeof(msg->sequence) + sbp_unterminated_string_packed_len(&msg->line, 251);
 }
 
 static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const sbp_msg_command_output_t *msg)
@@ -2197,7 +2197,7 @@ static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const 
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_command_output_t_line_pack( msg->line, buf + offset, (uint8_t)(len - offset ));
+  offset += sbp_unterminated_string_pack(&msg->line, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
@@ -2217,7 +2217,7 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(const u8 *buf, size_t len
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  // offset += sbp_msg_command_output_t_line_unpack( msg->line, buf + offset, (uint8_t)(len - offset ));
+  offset += sbp_unterminated_string_unpack(&msg->line, 251, buf + offset, (uint8_t)(len - offset));
   return true;
 }
 

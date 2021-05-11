@@ -181,8 +181,37 @@ START_TEST(test_auto_check_sbp_settings_67)
       {
         test_msg_len += sizeof(assign_string);
       }
-      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting, assign_string, sizeof(assign_string));
     }
+
+    {
+      const char assign_string[] = {
+        (char)116, (char)101, (char)108, (char)101, (char)109, (char)101, (char)116, (char)114, (char)121, (char)95,
+        (char)114, (char)97,  (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111, (char)110, (char)102,
+        (char)105, (char)103, (char)117, (char)114, (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
+        (char)115, (char)116, (char)114, (char)105, (char)110, (char)103, (char)0,   (char)65,  (char)84,  (char)38,
+        (char)70,  (char)44,  (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,  (char)49,  (char)53,
+        (char)44,  (char)65,  (char)84,  (char)83,  (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
+        (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,  (char)44,  (char)65,  (char)84,  (char)38,
+        (char)87,  (char)44,  (char)65,  (char)84,  (char)90,  (char)0
+      };
+      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, assign_string, sizeof(assign_string));
+    }
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] = 15;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] = 20;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] = 38;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections = 3;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] = 0;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] = 16;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] = 37;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len = 76;
     sbp_send_message(&sbp_state, 0xa7, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -241,13 +270,63 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = {
+        (char)116, (char)101, (char)108, (char)101, (char)109, (char)101, (char)116, (char)114, (char)121, (char)95,
+        (char)114, (char)97,  (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111, (char)110, (char)102,
+        (char)105, (char)103, (char)117, (char)114, (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
+        (char)115, (char)116, (char)114, (char)105, (char)110, (char)103, (char)0,   (char)65,  (char)84,  (char)38,
+        (char)70,  (char)44,  (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,  (char)49,  (char)53,
+        (char)44,  (char)65,  (char)84,  (char)83,  (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
+        (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,  (char)44,  (char)65,  (char)84,  (char)38,
+        (char)87,  (char)44,  (char)65,  (char)84,  (char)90,  (char)0
+      };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 15,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 15, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 20,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 20, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 38,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 38, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 16,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 16, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 37,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 37, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 76,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 76, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
 
     dummy_reset();
     logging_reset();
@@ -310,13 +389,63 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = {
+        (char)116, (char)101, (char)108, (char)101, (char)109, (char)101, (char)116, (char)114, (char)121, (char)95,
+        (char)114, (char)97,  (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111, (char)110, (char)102,
+        (char)105, (char)103, (char)117, (char)114, (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
+        (char)115, (char)116, (char)114, (char)105, (char)110, (char)103, (char)0,   (char)65,  (char)84,  (char)38,
+        (char)70,  (char)44,  (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,  (char)49,  (char)53,
+        (char)44,  (char)65,  (char)84,  (char)83,  (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
+        (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,  (char)44,  (char)65,  (char)84,  (char)38,
+        (char)87,  (char)44,  (char)65,  (char)84,  (char)90,  (char)0
+      };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 15,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 15, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 20,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 20, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 38,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 38, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 16,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 16, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 37,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 37, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 76,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 76, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -360,8 +489,36 @@ START_TEST(test_auto_check_sbp_settings_67)
       {
         test_msg_len += sizeof(assign_string);
       }
-      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting, assign_string, sizeof(assign_string));
     }
+
+    {
+      const char assign_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                     (char)100, (char)105, (char)0,   (char)109, (char)111, (char)100, (char)101,
+                                     (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101, (char)110,
+                                     (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,  (char)44,
+                                     (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, assign_string, sizeof(assign_string));
+    }
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] = 9;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] = 4;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] = 3;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] = 13;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections = 4;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] = 0;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] = 10;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] = 15;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] = 19;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len = 33;
     sbp_send_message(&sbp_state, 0xa7, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -415,13 +572,66 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)109, (char)111, (char)100, (char)101,
+                                    (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101, (char)110,
+                                    (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,  (char)44,
+                                    (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] == 13,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3], expected 13, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 15,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 15, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] == 19,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3], "
+                  "expected 19, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 33,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 33, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
 
     dummy_reset();
     logging_reset();
@@ -479,13 +689,66 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)109, (char)111, (char)100, (char)101,
+                                    (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101, (char)110,
+                                    (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,  (char)44,
+                                    (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] == 13,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3], expected 13, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 15,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 15, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] == 19,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3], "
+                  "expected 19, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 33,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 33, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -529,8 +792,32 @@ START_TEST(test_auto_check_sbp_settings_67)
       {
         test_msg_len += sizeof(assign_string);
       }
-      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting, assign_string, sizeof(assign_string));
     }
+
+    {
+      const char assign_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                     (char)100, (char)105, (char)0,   (char)115, (char)98,  (char)112, (char)95,
+                                     (char)109, (char)101, (char)115, (char)115, (char)97,  (char)103, (char)101,
+                                     (char)95,  (char)109, (char)97,  (char)115, (char)107, (char)0,   (char)54,
+                                     (char)53,  (char)53,  (char)51,  (char)53,  (char)0 };
+      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, assign_string, sizeof(assign_string));
+    }
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] = 9;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] = 16;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] = 5;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections = 3;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] = 0;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] = 10;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] = 27;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len = 33;
     sbp_send_message(&sbp_state, 0xa7, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -584,13 +871,58 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)115, (char)98,  (char)112, (char)95,
+                                    (char)109, (char)101, (char)115, (char)115, (char)97,  (char)103, (char)101,
+                                    (char)95,  (char)109, (char)97,  (char)115, (char)107, (char)0,   (char)54,
+                                    (char)53,  (char)53,  (char)51,  (char)53,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 16,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 16, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 5,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 5, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 27,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 27, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 33,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 33, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
 
     dummy_reset();
     logging_reset();
@@ -648,13 +980,58 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)115, (char)98,  (char)112, (char)95,
+                                    (char)109, (char)101, (char)115, (char)115, (char)97,  (char)103, (char)101,
+                                    (char)95,  (char)109, (char)97,  (char)115, (char)107, (char)0,   (char)54,
+                                    (char)53,  (char)53,  (char)51,  (char)53,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 16,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 16, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 5,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 5, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 27,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 27, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 33,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 33, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -697,8 +1074,31 @@ START_TEST(test_auto_check_sbp_settings_67)
       {
         test_msg_len += sizeof(assign_string);
       }
-      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting, assign_string, sizeof(assign_string));
     }
+
+    {
+      const char assign_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95, (char)102, (char)116,
+                                     (char)100, (char)105, (char)0,   (char)98,  (char)97, (char)117, (char)100,
+                                     (char)114, (char)97,  (char)116, (char)101, (char)0,  (char)49,  (char)48,
+                                     (char)48,  (char)48,  (char)48,  (char)48,  (char)48, (char)0 };
+      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, assign_string, sizeof(assign_string));
+    }
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] = 9;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] = 8;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] = 7;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections = 3;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] = 0;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] = 10;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] = 19;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len = 27;
     sbp_send_message(&sbp_state, 0xa7, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -751,13 +1151,57 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95, (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)98,  (char)97, (char)117, (char)100,
+                                    (char)114, (char)97,  (char)116, (char)101, (char)0,  (char)49,  (char)48,
+                                    (char)48,  (char)48,  (char)48,  (char)48,  (char)48, (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 8,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 8, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 7,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 7, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 19,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 19, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 27,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 27, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
 
     dummy_reset();
     logging_reset();
@@ -814,13 +1258,57 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95, (char)102, (char)116,
+                                    (char)100, (char)105, (char)0,   (char)98,  (char)97, (char)117, (char)100,
+                                    (char)114, (char)97,  (char)116, (char)101, (char)0,  (char)49,  (char)48,
+                                    (char)48,  (char)48,  (char)48,  (char)48,  (char)48, (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 9,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 9, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 8,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 8, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 7,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 7, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 10,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 10, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 19,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 19, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 27,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 27, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -864,8 +1352,36 @@ START_TEST(test_auto_check_sbp_settings_67)
       {
         test_msg_len += sizeof(assign_string);
       }
-      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting, assign_string, sizeof(assign_string));
     }
+
+    {
+      const char assign_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117, (char)97,
+                                     (char)114, (char)116, (char)97,  (char)0,   (char)109, (char)111, (char)100,
+                                     (char)101, (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101,
+                                     (char)110, (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,
+                                     (char)44,  (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      memcpy(test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, assign_string, sizeof(assign_string));
+    }
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] = 10;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] = 4;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] = 3;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] = 13;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections = 4;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] = 0;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] = 11;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] = 16;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] = 20;
+
+    test_unpacked_msg.MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len = 34;
     sbp_send_message(&sbp_state, 0xa7, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -919,13 +1435,66 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117, (char)97,
+                                    (char)114, (char)116, (char)97,  (char)0,   (char)109, (char)111, (char)100,
+                                    (char)101, (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101,
+                                    (char)110, (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,
+                                    (char)44,  (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 10,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 10, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] == 13,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3], expected 13, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 11,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 11, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 16,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 16, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] == 20,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3], "
+                  "expected 20, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 34,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 34, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
 
     dummy_reset();
     logging_reset();
@@ -983,13 +1552,66 @@ START_TEST(test_auto_check_sbp_settings_67)
                     "incorrect value for check_msg->setting, expected string '%s', is '%s'",
                     check_string,
                     check_msg->setting);
-      ck_assert_msg(
-          memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, check_string, sizeof(check_string)) == 0,
-          "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting, expected string '%s', is "
-          "'%s'",
-          check_string,
-          check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting);
     }
+
+    {
+      const char check_string[] = { (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117, (char)97,
+                                    (char)114, (char)116, (char)97,  (char)0,   (char)109, (char)111, (char)100,
+                                    (char)101, (char)0,   (char)83,  (char)66,  (char)80,  (char)0,   (char)101,
+                                    (char)110, (char)117, (char)109, (char)58,  (char)83,  (char)66,  (char)80,
+                                    (char)44,  (char)78,  (char)77,  (char)69,  (char)65,  (char)0 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data,
+                           check_string,
+                           sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data, expected "
+                    "string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.data);
+    }
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0] == 10,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0], expected 10, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[0]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1] == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1], expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[1]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2] == 3,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2], expected 3, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[2]);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3] == 13,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3], expected 13, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.lens[3]);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections == 4,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections, expected 4, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.n_sections);
+
+    ck_assert_msg(
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0] == 0,
+        "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0], expected 0, is %d",
+        check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1] == 11,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1], "
+                  "expected 11, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2] == 16,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2], "
+                  "expected 16, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[2]);
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3] == 20,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3], "
+                  "expected 20, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.offsets[3]);
+
+    ck_assert_msg(check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len == 34,
+                  "incorrect value for check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len, "
+                  "expected 34, is %d",
+                  check_unpacked_msg->MSG_SETTINGS_READ_BY_INDEX_RESP.setting.packed_len);
   }
 }
 END_TEST
