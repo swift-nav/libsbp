@@ -1,0 +1,33 @@
+name: Generated artifacts
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    paths:
+      - "generator/**"
+      - "spec/**"
+      - "c/test/**"
+      - "rust/sbp/tests/**"
+jobs:
+  generation:
+    name: Generated artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Run generator
+        run: |
+          pip3 install tox
+          make gen-c gen-rust
+
+      - name: Check
+        run: |
+          git add c/test/ rust/sbp/tests/
+          git diff --cached --name-only --exit-code
+          git diff --name-only --exit-code
