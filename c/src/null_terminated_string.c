@@ -42,7 +42,7 @@ bool sbp_null_terminated_string_printf(sbp_null_terminated_string_t *s, uint8_t 
 
   if ((size_t)len >= max_packed_len)
     return false;
-  strncpy(s->data, new_str, (size_t)len + 1);
+  memcpy(s->data, new_str, (size_t)len + 1);
   s->len = (uint8_t)len;
   return true;
 }
@@ -85,4 +85,25 @@ uint8_t sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
   memcpy(s->data, buf, copy_len);
   s->len = (uint8_t)(copy_len - 1u);
   return (uint8_t)copy_len;
+}
+
+int sbp_null_terminated_string_strcmp(const sbp_null_terminated_string_t *a,
+                                      const sbp_null_terminated_string_t *b,
+                                      uint8_t max_packed_len)
+{
+  bool avalid = sbp_null_terminated_string_valid(a, max_packed_len);
+  bool bvalid = sbp_null_terminated_string_valid(b, max_packed_len);
+  if (!avalid)
+    return bvalid ? 1 : 0;
+  if (!bvalid)
+    return avalid ? -1 : 0;
+  uint8_t cmp_len = max_packed_len;
+  if (a->len < cmp_len)
+    cmp_len = a->len;
+  if (b->len < cmp_len)
+    cmp_len = b->len;
+  cmp_len++;
+  if (memcmp(a->data, b->data, cmp_len) == 0)
+    return 0;
+  return (int)b->len - (int)a->len;
 }

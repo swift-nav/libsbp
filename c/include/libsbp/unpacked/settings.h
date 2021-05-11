@@ -53,6 +53,7 @@ typedef struct
 #define sbp_msg_settings_write_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 255, 3, 3)
 #define sbp_msg_settings_write_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 255, 3, 3)
 #define sbp_msg_settings_write_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 255, 3, 3)
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
  * Return the status of a write request with the new value of the
@@ -106,6 +107,7 @@ typedef struct
 #define sbp_msg_settings_write_resp_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 254, 3, 3)
 #define sbp_msg_settings_write_resp_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 254, 3, 3)
 #define sbp_msg_settings_write_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 254, 3, 3)
 /** Read device configuration settings (host => device)
  *
  * The setting message that reads the device configuration. The string
@@ -138,6 +140,7 @@ typedef struct
 #define sbp_msg_settings_read_req_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 255, 2, 2)
 #define sbp_msg_settings_read_req_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 255, 2, 2)
 #define sbp_msg_settings_read_req_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 255, 2, 2)
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -170,6 +173,7 @@ typedef struct
 #define sbp_msg_settings_read_resp_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 255, 3, 3)
 #define sbp_msg_settings_read_resp_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 255, 3, 3)
 #define sbp_msg_settings_read_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 255, 3, 3)
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings
@@ -231,6 +235,7 @@ typedef struct
   sbp_multipart_string_section_len(f, s, 253, 3, 4)
 #define sbp_msg_settings_read_by_index_resp_t_setting_space_remaining(f) \
   sbp_multipart_string_space_remaining(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 253, 3, 4)
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
@@ -269,6 +274,7 @@ typedef struct
 #define sbp_msg_settings_register_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 255, 3, 3)
 #define sbp_msg_settings_register_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 255, 3, 3)
 #define sbp_msg_settings_register_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 255, 3, 3)
 /** Register setting and default value (device <= host)
  *
  * This message responds to setting registration with the effective value.
@@ -320,6 +326,7 @@ typedef struct
 #define sbp_msg_settings_register_resp_t_setting_get_section(f, s) sbp_multipart_string_get_section(f, s, 254, 3, 3)
 #define sbp_msg_settings_register_resp_t_setting_section_len(f, s) sbp_multipart_string_section_len(f, s, 254, 3, 3)
 #define sbp_msg_settings_register_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_strcmp(a, b) sbp_multipart_string_strcmp(a, b, 254, 3, 3)
 
 #include <libsbp/unpacked/settings_operators.h>
 #include <libsbp/unpacked/settings_packers.h>

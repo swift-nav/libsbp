@@ -545,6 +545,8 @@ typedef struct
 #define sbp_msg_command_req_t_command_printf(f, ...) sbp_null_terminated_string_printf(f, 251, __VA_ARGS__)
 #define sbp_msg_command_req_t_command_packed_len(f) sbp_null_terminated_string_packed_len(f, 251)
 #define sbp_msg_command_req_t_command_get(f) sbp_null_terminated_string_get(f, 251)
+#define sbp_msg_command_req_t_command_len(f) (sbp_msg_command_req_t_command_packed_len(f) - 1)
+#define sbp_msg_command_req_t_command_strcmp(a, b) sbp_null_terminated_string_strcmp(a, b, 251)
 /** Exit code from executed command (device => host)
  *
  * The response to MSG_COMMAND_REQ with the return code of
@@ -592,6 +594,8 @@ typedef struct
 #define sbp_msg_command_output_t_line_printf(f, ...) sbp_unterminated_string_printf(f, 251, __VA_ARGS__)
 #define sbp_msg_command_output_t_line_packed_len(f) sbp_unterminated_string_packed_len(f, 251)
 #define sbp_msg_command_output_t_line_get(f) sbp_unterminated_string_get(f, 251)
+#define sbp_msg_command_output_t_line_len(f) (sbp_msg_command_output_t_line_packed_len(f))
+#define sbp_msg_command_output_t_line_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 251)
 /** Request state of Piksi network interfaces
  *
  * Request state of Piksi network interfaces.

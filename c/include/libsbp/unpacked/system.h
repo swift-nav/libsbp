@@ -110,6 +110,8 @@ typedef struct
 #define sbp_msg_dgnss_status_t_source_printf(f, ...) sbp_unterminated_string_printf(f, 251, __VA_ARGS__)
 #define sbp_msg_dgnss_status_t_source_packed_len(f) sbp_unterminated_string_packed_len(f, 251)
 #define sbp_msg_dgnss_status_t_source_get(f) sbp_unterminated_string_get(f, 251)
+#define sbp_msg_dgnss_status_t_source_len(f) (sbp_msg_dgnss_status_t_source_packed_len(f))
+#define sbp_msg_dgnss_status_t_source_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 251)
 /** System heartbeat message
  *
  * The heartbeat message is sent periodically to inform the host
@@ -529,6 +531,8 @@ typedef struct
 #define sbp_msg_csac_telemetry_t_telemetry_printf(f, ...) sbp_unterminated_string_printf(f, 254, __VA_ARGS__)
 #define sbp_msg_csac_telemetry_t_telemetry_packed_len(f) sbp_unterminated_string_packed_len(f, 254)
 #define sbp_msg_csac_telemetry_t_telemetry_get(f) sbp_unterminated_string_get(f, 254)
+#define sbp_msg_csac_telemetry_t_telemetry_len(f) (sbp_msg_csac_telemetry_t_telemetry_packed_len(f))
+#define sbp_msg_csac_telemetry_t_telemetry_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 254)
 /** Experimental telemetry message labels
  *
  * The CSAC telemetry message provides labels for each member of the string
@@ -556,6 +560,9 @@ typedef struct
   sbp_unterminated_string_printf(f, 254, __VA_ARGS__)
 #define sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f) sbp_unterminated_string_packed_len(f, 254)
 #define sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(f) sbp_unterminated_string_get(f, 254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_len(f) \
+  (sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f))
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 254)
 /** Inertial Navigation System update status message
  *
  * The INS update status message contains informations about executed and rejected INS updates.

@@ -47,6 +47,8 @@ typedef struct
 #define sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 236, __VA_ARGS__)
 #define sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 236)
 #define sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_len(f) (sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f))
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 236)
 /** List memory state on the system. DEPRECATED.
  *
  * This message indicates the process state of the top 10 heaviest
@@ -84,6 +86,8 @@ typedef struct
 #define sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 236, __VA_ARGS__)
 #define sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 236)
 #define sbp_msg_linux_mem_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_len(f) (sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f))
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 236)
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
  *
  * This presents a summary of CPU and memory utilization.
@@ -165,6 +169,9 @@ typedef struct
 #define sbp_msg_linux_process_socket_counts_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 246, __VA_ARGS__)
 #define sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 246)
 #define sbp_msg_linux_process_socket_counts_t_cmdline_get(f) sbp_unterminated_string_get(f, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_len(f) \
+  (sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 246)
 /** A list of processes with deep socket queues
  *
  * Top 10 list of sockets with deep queues.
@@ -220,6 +227,9 @@ typedef struct
 #define sbp_msg_linux_process_socket_queues_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 180, __VA_ARGS__)
 #define sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 180)
 #define sbp_msg_linux_process_socket_queues_t_cmdline_get(f) sbp_unterminated_string_get(f, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_len(f) \
+  (sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 180)
 /** Summary of socket usage across the system
  *
  * Summaries the socket usage across the system.
@@ -281,6 +291,8 @@ typedef struct
 #define sbp_msg_linux_process_fd_count_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 250, __VA_ARGS__)
 #define sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 250)
 #define sbp_msg_linux_process_fd_count_t_cmdline_get(f) sbp_unterminated_string_get(f, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_len(f) (sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_fd_count_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 250)
 /** Summary of open file descriptors on the system
  *
  * Summary of open file descriptors on the system.
@@ -313,6 +325,7 @@ typedef struct
 #define sbp_msg_linux_process_fd_summary_t_most_opened_get_section(f, s) sbp_sequence_string_get_section(f, s, 251, 0)
 #define sbp_msg_linux_process_fd_summary_t_most_opened_section_len(f, s) sbp_sequence_string_section_len(f, s, 251, 0)
 #define sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(f) sbp_sequence_string_space_remaining(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(a, b) sbp_sequence_string_strcmp(a, b, 251, 0)
 /** List CPU state on the system
  *
  * This message indicates the process state of the top 10 heaviest
@@ -371,6 +384,8 @@ typedef struct
 #define sbp_msg_linux_cpu_state_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 231, __VA_ARGS__)
 #define sbp_msg_linux_cpu_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 231)
 #define sbp_msg_linux_cpu_state_t_cmdline_get(f) sbp_unterminated_string_get(f, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_len(f) (sbp_msg_linux_cpu_state_t_cmdline_packed_len(f))
+#define sbp_msg_linux_cpu_state_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 231)
 /** List memory state on the system
  *
  * This message indicates the process state of the top 10 heaviest
@@ -429,6 +444,8 @@ typedef struct
 #define sbp_msg_linux_mem_state_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 231, __VA_ARGS__)
 #define sbp_msg_linux_mem_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 231)
 #define sbp_msg_linux_mem_state_t_cmdline_get(f) sbp_unterminated_string_get(f, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_len(f) (sbp_msg_linux_mem_state_t_cmdline_packed_len(f))
+#define sbp_msg_linux_mem_state_t_cmdline_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 231)
 /** CPU, Memory and Process Starts/Stops.
  *
  * This presents a summary of CPU and memory utilization, including a timestamp.

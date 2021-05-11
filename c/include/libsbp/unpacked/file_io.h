@@ -49,6 +49,8 @@ typedef struct
 #define sbp_msg_fileio_read_req_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 246, __VA_ARGS__)
 #define sbp_msg_fileio_read_req_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 246)
 #define sbp_msg_fileio_read_req_t_filename_get(f) sbp_null_terminated_string_get(f, 246)
+#define sbp_msg_fileio_read_req_t_filename_len(f) (sbp_msg_fileio_read_req_t_filename_packed_len(f) - 1)
+#define sbp_msg_fileio_read_req_t_filename_strcmp(a, b) sbp_null_terminated_string_strcmp(a, b, 246)
 /** File read from the file system (host <= device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -113,6 +115,8 @@ typedef struct
 #define sbp_msg_fileio_read_dir_req_t_dirname_printf(f, ...) sbp_null_terminated_string_printf(f, 247, __VA_ARGS__)
 #define sbp_msg_fileio_read_dir_req_t_dirname_packed_len(f) sbp_null_terminated_string_packed_len(f, 247)
 #define sbp_msg_fileio_read_dir_req_t_dirname_get(f) sbp_null_terminated_string_get(f, 247)
+#define sbp_msg_fileio_read_dir_req_t_dirname_len(f) (sbp_msg_fileio_read_dir_req_t_dirname_packed_len(f) - 1)
+#define sbp_msg_fileio_read_dir_req_t_dirname_strcmp(a, b) sbp_null_terminated_string_strcmp(a, b, 247)
 /** Files listed in a directory (host <= device)
  *
  * The read directory message lists the files in a directory on the
@@ -146,6 +150,7 @@ typedef struct
 #define sbp_msg_fileio_read_dir_resp_t_contents_get_section(f, s) sbp_sequence_string_get_section(f, s, 251, 255)
 #define sbp_msg_fileio_read_dir_resp_t_contents_section_len(f, s) sbp_sequence_string_section_len(f, s, 251, 255)
 #define sbp_msg_fileio_read_dir_resp_t_contents_space_remaining(f) sbp_sequence_string_space_remaining(f, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_strcmp(a, b) sbp_sequence_string_strcmp(a, b, 251, 255)
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system.
@@ -169,6 +174,8 @@ typedef struct
 #define sbp_msg_fileio_remove_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 255, __VA_ARGS__)
 #define sbp_msg_fileio_remove_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 255)
 #define sbp_msg_fileio_remove_t_filename_get(f) sbp_null_terminated_string_get(f, 255)
+#define sbp_msg_fileio_remove_t_filename_len(f) (sbp_msg_fileio_remove_t_filename_packed_len(f) - 1)
+#define sbp_msg_fileio_remove_t_filename_strcmp(a, b) sbp_null_terminated_string_strcmp(a, b, 255)
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -212,6 +219,8 @@ typedef struct
 #define sbp_msg_fileio_write_req_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 247, __VA_ARGS__)
 #define sbp_msg_fileio_write_req_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 247)
 #define sbp_msg_fileio_write_req_t_filename_get(f) sbp_null_terminated_string_get(f, 247)
+#define sbp_msg_fileio_write_req_t_filename_len(f) (sbp_msg_fileio_write_req_t_filename_packed_len(f) - 1)
+#define sbp_msg_fileio_write_req_t_filename_strcmp(a, b) sbp_null_terminated_string_strcmp(a, b, 247)
 /** File written to (host <= device)
  *
  * The file write message writes a certain length (up to 255 bytes)

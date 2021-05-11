@@ -52,6 +52,9 @@ extern "C"
                                          uint8_t max_packed_len,
                                          const uint8_t *buf,
                                          uint8_t buf_len);
+  int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
+                                     const sbp_unterminated_string_t *b,
+                                     uint8_t max_packed_len);
 
   typedef struct
   {
@@ -74,6 +77,9 @@ extern "C"
                                             uint8_t max_packed_len,
                                             const uint8_t *buf,
                                             uint8_t buf_len);
+  int sbp_null_terminated_string_strcmp(const sbp_null_terminated_string_t *a,
+                                        const sbp_null_terminated_string_t *b,
+                                        uint8_t max_packed_len);
 
   typedef struct
   {
@@ -137,6 +143,11 @@ extern "C"
                                       uint8_t max_sections,
                                       const uint8_t *buf,
                                       uint8_t buf_len);
+  int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,
+                                  const sbp_multipart_string_t *b,
+                                  uint8_t max_packed_len,
+                                  uint8_t min_sections,
+                                  uint8_t max_sections);
 
   typedef struct
   {
@@ -179,6 +190,10 @@ extern "C"
                                      uint8_t terminator,
                                      const uint8_t *buf,
                                      uint8_t buf_len);
+  int sbp_sequence_string_strcmp(const sbp_sequence_string_t *a,
+                                 const sbp_sequence_string_t *b,
+                                 uint8_t max_packed_len,
+                                 uint8_t terminator);
 
 #ifdef __cplusplus
 }

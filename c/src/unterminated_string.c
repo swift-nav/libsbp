@@ -88,3 +88,23 @@ uint8_t sbp_unterminated_string_unpack(sbp_unterminated_string_t *s,
   s->len = copy_len;
   return s->len;
 }
+
+int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
+                                   const sbp_unterminated_string_t *b,
+                                   uint8_t max_packed_len)
+{
+  bool avalid = sbp_unterminated_string_valid(a, max_packed_len);
+  bool bvalid = sbp_unterminated_string_valid(b, max_packed_len);
+  if (!avalid)
+    return bvalid ? 1 : 0;
+  if (!bvalid)
+    return avalid ? -1 : 0;
+  uint8_t cmp_len = max_packed_len;
+  if (a->len < cmp_len)
+    cmp_len = a->len;
+  if (b->len < cmp_len)
+    cmp_len = b->len;
+  if (memcmp(a->data, b->data, cmp_len) == 0)
+    return 0;
+  return (int)b->len - (int)a->len;
+}

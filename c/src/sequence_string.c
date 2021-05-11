@@ -150,3 +150,24 @@ uint8_t sbp_sequence_string_unpack(sbp_sequence_string_t *s,
   memcpy(s, &new_str, sizeof(new_str));
   return s->packed_len;
 }
+
+int sbp_sequence_string_strcmp(const sbp_sequence_string_t *a,
+                               const sbp_sequence_string_t *b,
+                               uint8_t max_packed_len,
+                               uint8_t terminator)
+{
+  bool avalid = sbp_sequence_string_valid(a, max_packed_len, terminator);
+  bool bvalid = sbp_sequence_string_valid(b, max_packed_len, terminator);
+  if (!avalid)
+    return bvalid ? 1 : 0;
+  if (!bvalid)
+    return avalid ? -1 : 0;
+  uint8_t cmp_len = max_packed_len;
+  if (a->packed_len < cmp_len)
+    cmp_len = a->packed_len;
+  if (b->packed_len < cmp_len)
+    cmp_len = b->packed_len;
+  if (memcmp(a->data, b->data, cmp_len) == 0)
+    return 0;
+  return (int)b->packed_len - (int)a->packed_len;
+}

@@ -75,6 +75,8 @@ typedef struct
 #define sbp_msg_bootloader_handshake_resp_t_version_printf(f, ...) sbp_unterminated_string_printf(f, 251, __VA_ARGS__)
 #define sbp_msg_bootloader_handshake_resp_t_version_packed_len(f) sbp_unterminated_string_packed_len(f, 251)
 #define sbp_msg_bootloader_handshake_resp_t_version_get(f) sbp_unterminated_string_get(f, 251)
+#define sbp_msg_bootloader_handshake_resp_t_version_len(f) (sbp_msg_bootloader_handshake_resp_t_version_packed_len(f))
+#define sbp_msg_bootloader_handshake_resp_t_version_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 251)
 /** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
@@ -148,6 +150,9 @@ typedef struct
   sbp_unterminated_string_printf(f, 255, __VA_ARGS__)
 #define sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f) sbp_unterminated_string_packed_len(f, 255)
 #define sbp_msg_bootloader_handshake_dep_a_t_handshake_get(f) sbp_unterminated_string_get(f, 255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_len(f) \
+  (sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f))
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 255)
 
 #include <libsbp/unpacked/bootload_operators.h>
 #include <libsbp/unpacked/bootload_packers.h>

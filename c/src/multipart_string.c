@@ -184,3 +184,25 @@ uint8_t sbp_multipart_string_unpack(sbp_multipart_string_t *s,
   memcpy(s, &new_str, sizeof(new_str));
   return s->packed_len;
 }
+
+int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,
+                                const sbp_multipart_string_t *b,
+                                uint8_t max_packed_len,
+                                uint8_t min_sections,
+                                uint8_t max_sections)
+{
+  bool avalid = sbp_multipart_string_valid(a, max_packed_len, min_sections, max_sections);
+  bool bvalid = sbp_multipart_string_valid(b, max_packed_len, min_sections, max_sections);
+  if (!avalid)
+    return bvalid ? 1 : 0;
+  if (!bvalid)
+    return avalid ? -1 : 0;
+  uint8_t cmp_len = max_packed_len;
+  if (a->packed_len < cmp_len)
+    cmp_len = a->packed_len;
+  if (b->packed_len < cmp_len)
+    cmp_len = b->packed_len;
+  if (memcmp(a->data, b->data, cmp_len) == 0)
+    return 0;
+  return (int)b->n_sections - (int)a->n_sections;
+}

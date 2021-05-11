@@ -54,6 +54,8 @@ typedef struct
 #define sbp_msg_log_t_text_printf(f, ...) sbp_unterminated_string_printf(f, 254, __VA_ARGS__)
 #define sbp_msg_log_t_text_packed_len(f) sbp_unterminated_string_packed_len(f, 254)
 #define sbp_msg_log_t_text_get(f) sbp_unterminated_string_get(f, 254)
+#define sbp_msg_log_t_text_len(f) (sbp_msg_log_t_text_packed_len(f))
+#define sbp_msg_log_t_text_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 254)
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may take the form
@@ -107,6 +109,8 @@ typedef struct
 #define sbp_msg_print_dep_t_text_printf(f, ...) sbp_unterminated_string_printf(f, 255, __VA_ARGS__)
 #define sbp_msg_print_dep_t_text_packed_len(f) sbp_unterminated_string_packed_len(f, 255)
 #define sbp_msg_print_dep_t_text_get(f) sbp_unterminated_string_get(f, 255)
+#define sbp_msg_print_dep_t_text_len(f) (sbp_msg_print_dep_t_text_packed_len(f))
+#define sbp_msg_print_dep_t_text_strcmp(a, b) sbp_unterminated_string_strcmp(a, b, 255)
 
 #include <libsbp/unpacked/logging_operators.h>
 #include <libsbp/unpacked/logging_packers.h>
