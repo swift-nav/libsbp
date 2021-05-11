@@ -172,6 +172,7 @@ def main():
         elif args.jsonschema:
           import sbpg.targets.jsonschema as jsonschema
           jsonschema.render_source(output_dir, parsed)
+      all_specs = sorted(all_specs)
       if args.c:
         c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]

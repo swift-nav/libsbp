@@ -16,9 +16,11 @@ message tests.
 
 """
 
+import base64
 import datetime
 import json
-import base64
+import os.path
+
 from binascii import unhexlify
 
 ##############################################################################
@@ -38,6 +40,8 @@ class PackageTestSpecification(object):
     self.tests = tests
     self.render_source = True
 
+  def __lt__(self, other):
+    return (self.package, self.suite_no).__lt__((other.package, other.suite_no))
 
   @property
   def suite_name(self):
@@ -46,7 +50,9 @@ class PackageTestSpecification(object):
 
   @property
   def filepath(self):
-    split = ("auto_check_" + self.package + "_" + str(self.suite_no)).split(".")
+    # Remove 'test_' and '.yaml'
+    test_name_suffix = os.path.basename(self.src_filename)[5:-5]
+    split = ("auto_check_" + self.package + "_" + test_name_suffix).split(".")
     filepath, filename = "/".join(split[:-1]), "_".join(split[-2:])
     return (filepath, filename)
 
@@ -65,6 +71,9 @@ class TestSpecification(object):
     self.msg_type = msg_type
     self.msg = msg
     self.sbp = sbp
+
+  def __lt__(self, other):
+    return raw_packet.__lt__(other.raw_packet)
 
   @property
   def msg_type_name(self):

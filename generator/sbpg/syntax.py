@@ -39,6 +39,9 @@ class PackageSpecification(object):
     self.public = public
     self.creation_timestamp = str(datetime.datetime.now())
 
+  def __lt__(self, other):
+    return self.identifier.__lt__(other.identifier)
+
   @property
   def filepath(self):
     """
