@@ -23,8 +23,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_almanac_t;
 
-#if 0
-#endif
 /** Send GPS time from host (host => Piksi)
  *
  * This message sets up timing functionality using a coarse GPS
@@ -37,8 +35,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_set_time_t;
 
-#if 0
-#endif
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the
@@ -67,8 +63,6 @@ typedef struct
   u32 flags;
 } sbp_msg_reset_t;
 
-#if 0
-#endif
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the
@@ -81,8 +75,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_reset_dep_t;
 
-#if 0
-#endif
 /** Legacy message for CW interference channel (Piksi => host)
  *
  * This is an unused legacy message for result reporting from the
@@ -96,8 +88,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_cw_results_t;
 
-#if 0
-#endif
 /** Legacy message for CW interference channel (host => Piksi)
  *
  * This is an unused legacy message from the host for starting
@@ -111,8 +101,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_cw_start_t;
 
-#if 0
-#endif
 /** Reset IAR filters (host => Piksi)
  *
  * This message resets either the DGNSS Kalman filters or Integer
@@ -144,8 +132,6 @@ typedef struct
   u8 filter;
 } sbp_msg_reset_filters_t;
 
-#if 0
-#endif
 /** Deprecated
  *
  * Deprecated
@@ -157,8 +143,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_init_base_dep_t;
 
-#if 0
-#endif
 /** State of an RTOS thread
  *
  * The thread usage message from the device reports real-time
@@ -185,8 +169,6 @@ typedef struct
   u32 stack_free;
 } sbp_msg_thread_state_t;
 
-#if 0
-#endif
 /** State of the UART channel
  *
  * Throughput, utilization, and error counts on the RX/TX buffers
@@ -225,8 +207,6 @@ typedef struct
   u8 rx_buffer_level;
 } sbp_uart_channel_t;
 
-#if 0
-#endif
 /** base station observation message receipt period
  *
  * Statistics on the period of observations received from the base
@@ -258,8 +238,6 @@ typedef struct
   s32 current;
 } sbp_period_t;
 
-#if 0
-#endif
 /** Receiver-to-base station latency
  *
  * Statistics on the latency of observations received from the base
@@ -290,8 +268,6 @@ typedef struct
   s32 current;
 } sbp_latency_t;
 
-#if 0
-#endif
 /** State of the UART channels
  *
  * The UART message reports data latency and throughput of the UART
@@ -331,23 +307,6 @@ typedef struct
   sbp_period_t obs_period;
 } sbp_msg_uart_state_t;
 
-#if 0
-
-#if 0
-#endif
-
-#if 0
-#endif
-
-#if 0
-#endif
-
-#if 0
-#endif
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated
@@ -375,20 +334,6 @@ typedef struct
   sbp_latency_t latency;
 } sbp_msg_uart_state_depa_t;
 
-#if 0
-
-#if 0
-#endif
-
-#if 0
-#endif
-
-#if 0
-#endif
-
-#if 0
-#endif
-#endif
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
  * This message reports the state of the Integer Ambiguity
@@ -407,8 +352,6 @@ typedef struct
   u32 num_hyps;
 } sbp_msg_iar_state_t;
 
-#if 0
-#endif
 /** Mask a satellite from use in Piksi subsystems
  *
  * This message allows setting a mask to prevent a particular satellite
@@ -478,11 +421,6 @@ typedef struct
   sbp_sbp_gnss_signal_t sid;
 } sbp_msg_mask_satellite_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -548,11 +486,6 @@ typedef struct
   sbp_gnss_signal_dep_t sid;
 } sbp_msg_mask_satellite_dep_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Device temperature and voltage levels
  *
  * This message contains temperature and voltage level measurements from the
@@ -586,8 +519,6 @@ typedef struct
   s16 fe_temperature;
 } sbp_msg_device_monitor_t;
 
-#if 0
-#endif
 /** Execute a command (host => device)
  *
  * Request the recipient to execute an command.
@@ -609,23 +540,11 @@ typedef struct
   sbp_null_terminated_string_t command;
 } sbp_msg_command_req_t;
 
-#if 0
-  static const sbp_null_terminated_string_format_t sbp_msg_command_req_t_command_format = {
-    /* .encoding = */ SBP_STRING_NULL_TERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 251u
-  };
-  static inline void sbp_msg_command_req_t_command_init(sbp_null_terminated_string_t s) { sbp_null_terminated_string_init(s, &sbp_msg_command_req_t_command_format); }
-  static inline uint8_t sbp_msg_command_req_t_command_packed_len(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_packed_len(s, &sbp_msg_command_req_t_command_format); }
-  static inline uint8_t sbp_msg_command_req_t_command_pack(const sbp_null_terminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_pack(s, &sbp_msg_command_req_t_command_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_command_req_t_command_unpack(sbp_null_terminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_unpack(s, &sbp_msg_command_req_t_command_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_command_req_t_command_space_remaining(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_space_remaining(s, &sbp_msg_command_req_t_command_format); }
-  static inline uint8_t sbp_msg_command_req_t_command_count_sections(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_count_sections(s, &sbp_msg_command_req_t_command_format); }
-  static inline const char *sbp_msg_command_req_t_command_get_section(const sbp_null_terminated_string_t s, uint8_t section) { return sbp_null_terminated_string_get_section(s, &sbp_msg_command_req_t_command_format, section); }
-  static inline bool sbp_msg_command_req_t_command_append_section(sbp_null_terminated_string_t s, const char *new_str) { return sbp_null_terminated_string_append_section(s, &sbp_msg_command_req_t_command_format, new_str); }
-#endif
+#define sbp_msg_command_req_t_command_init(f) sbp_null_terminated_string_init(f, 251)
+#define sbp_msg_command_req_t_command_set(f, s) sbp_null_terminated_string_set(f, s, 251)
+#define sbp_msg_command_req_t_command_printf(f, ...) sbp_null_terminated_string_printf(f, 251, __VA_ARGS__)
+#define sbp_msg_command_req_t_command_packed_len(f) sbp_null_terminated_string_packed_len(f, 251)
+#define sbp_msg_command_req_t_command_get(f) sbp_null_terminated_string_get(f, 251)
 /** Exit code from executed command (device => host)
  *
  * The response to MSG_COMMAND_REQ with the return code of
@@ -646,8 +565,6 @@ typedef struct
   s32 code;
 } sbp_msg_command_resp_t;
 
-#if 0
-#endif
 /** Command output
  *
  * Returns the standard output and standard error of the
@@ -670,22 +587,11 @@ typedef struct
   sbp_unterminated_string_t line;
 } sbp_msg_command_output_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_command_output_t_line_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 251u
-  };
-  static inline void sbp_msg_command_output_t_line_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_command_output_t_line_format); }
-  static inline uint8_t sbp_msg_command_output_t_line_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_command_output_t_line_format); }
-  static inline uint8_t sbp_msg_command_output_t_line_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_command_output_t_line_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_command_output_t_line_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_command_output_t_line_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_command_output_t_line_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_command_output_t_line_format); }
-  static inline const char *sbp_msg_command_output_t_line_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_command_output_t_line_format, 0); }
-  static inline bool sbp_msg_command_output_t_line_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_command_output_t_line_format, new_str); }
-#endif
+#define sbp_msg_command_output_t_line_init(f) sbp_unterminated_string_init(f, 251)
+#define sbp_msg_command_output_t_line_set(f, s) sbp_unterminated_string_set(f, s, 251)
+#define sbp_msg_command_output_t_line_printf(f, ...) sbp_unterminated_string_printf(f, 251, __VA_ARGS__)
+#define sbp_msg_command_output_t_line_packed_len(f) sbp_unterminated_string_packed_len(f, 251)
+#define sbp_msg_command_output_t_line_get(f) sbp_unterminated_string_get(f, 251)
 /** Request state of Piksi network interfaces
  *
  * Request state of Piksi network interfaces.
@@ -698,8 +604,6 @@ typedef struct
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_network_state_req_t;
 
-#if 0
-#endif
 /** State of network interface
  *
  * The state of a network interface on the Piksi.
@@ -937,8 +841,6 @@ typedef struct
   u32 flags;
 } sbp_msg_network_state_resp_t;
 
-#if 0
-#endif
 /** Bandwidth usage measurement for a single interface.
  *
  * The bandwidth usage for each interface can be reported
@@ -974,8 +876,6 @@ typedef struct
   char interface_name[16];
 } sbp_network_usage_t;
 
-#if 0
-#endif
 /** Bandwidth usage reporting message
  *
  * The bandwidth usage, a list of usage by interface.
@@ -995,11 +895,6 @@ typedef struct
   u8 interfaces_count;
 } sbp_msg_network_bandwidth_usage_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Cell modem information update message
  *
  * If a cell modem is present on a piksi device, this message
@@ -1029,8 +924,6 @@ typedef struct
   u8 reserved_count;
 } sbp_msg_cell_modem_status_t;
 
-#if 0
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -1074,11 +967,6 @@ typedef struct
   u8 amplitude_value_count;
 } sbp_msg_specan_dep_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Spectrum analyzer
  *
  * Spectrum analyzer packet.
@@ -1122,11 +1010,6 @@ typedef struct
   u8 amplitude_value_count;
 } sbp_msg_specan_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** RF AGC status
  *
  * This message describes the gain of each channel in the receiver frontend. Each
@@ -1150,9 +1033,6 @@ typedef struct
    */
   s8 if_gain[8];
 } sbp_msg_front_end_gain_t;
-
-#if 0
-#endif
 
 #include <libsbp/unpacked/piksi_operators.h>
 #include <libsbp/unpacked/piksi_packers.h>

@@ -1,6 +1,10 @@
 #ifndef LIBSBP_SOLUTION_META_PACKERS_H
 #define LIBSBP_SOLUTION_META_PACKERS_H
 
+#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/solution_meta.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/solution_meta.h>
 
 static inline size_t sbp_packed_size_sbp_solution_input_type_t(const sbp_solution_input_type_t *msg)
 {

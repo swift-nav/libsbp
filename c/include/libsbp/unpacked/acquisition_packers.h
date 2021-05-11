@@ -1,6 +1,10 @@
 #ifndef LIBSBP_ACQUISITION_PACKERS_H
 #define LIBSBP_ACQUISITION_PACKERS_H
 
+#ifndef LIBSBP_ACQUISITION_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/acquisition.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,8 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/acquisition.h>
-//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *msg)
 {

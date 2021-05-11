@@ -1,6 +1,10 @@
 #ifndef LIBSBP_(((pkg_name|upper)))_PACKERS_H
 #define LIBSBP_(((pkg_name|upper)))_PACKERS_H
 
+#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/(((pkg_name))).h instead"
+#endif
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
@@ -10,11 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/(((pkg_name))).h>
-
-((*- for i in include *))
-//#include <libsbp/unpacked/(((i)))>
-((*- endfor *))
 
 ((*- for m in msgs *))
                                                                                                               

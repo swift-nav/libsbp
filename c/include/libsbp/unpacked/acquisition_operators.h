@@ -1,6 +1,10 @@
 #ifndef LIBSBP_ACQUISITION_OPERATORS_H
 #define LIBSBP_ACQUISITION_OPERATORS_H
 
+#ifndef LIBSBP_ACQUISITION_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/acquisition.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,8 +13,6 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/acquisition.h>
-#include <libsbp/unpacked/gnss.h>
 #ifdef __cplusplus
 static inline bool operator==(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b)
 {

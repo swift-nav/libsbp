@@ -68,9 +68,6 @@ typedef struct
   u8 pin;
 } sbp_msg_ext_event_t;
 
-#if 0
-#endif
-
 #include <libsbp/unpacked/ext_events_operators.h>
 #include <libsbp/unpacked/ext_events_packers.h>
 

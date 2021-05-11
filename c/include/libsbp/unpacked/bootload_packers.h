@@ -1,6 +1,10 @@
 #ifndef LIBSBP_BOOTLOAD_PACKERS_H
 #define LIBSBP_BOOTLOAD_PACKERS_H
 
+#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/bootload.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/bootload.h>
 
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshake_req_t *msg)
 {

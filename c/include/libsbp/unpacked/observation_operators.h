@@ -1,6 +1,10 @@
 #ifndef LIBSBP_OBSERVATION_OPERATORS_H
 #define LIBSBP_OBSERVATION_OPERATORS_H
 
+#ifndef LIBSBP_OBSERVATION_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/observation.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,8 +13,6 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/gnss.h>
-#include <libsbp/unpacked/observation.h>
 #ifdef __cplusplus
 static inline bool operator==(const sbp_observation_header_t &a, const sbp_observation_header_t &b)
 {

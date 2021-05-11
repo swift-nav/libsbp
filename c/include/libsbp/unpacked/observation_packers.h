@@ -1,6 +1,10 @@
 #ifndef LIBSBP_OBSERVATION_PACKERS_H
 #define LIBSBP_OBSERVATION_PACKERS_H
 
+#ifndef LIBSBP_OBSERVATION_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/observation.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,8 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/observation.h>
-//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_observation_header_t(const sbp_observation_header_t *msg)
 {

@@ -1,6 +1,10 @@
 #ifndef LIBSBP_FLASH_PACKERS_H
 #define LIBSBP_FLASH_PACKERS_H
 
+#ifndef LIBSBP_FLASH_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/flash.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/flash.h>
 
 static inline size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *msg)
 {

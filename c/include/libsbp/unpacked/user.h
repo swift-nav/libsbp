@@ -30,9 +30,6 @@ typedef struct
   u8 contents_count;
 } sbp_msg_user_data_t;
 
-#if 0
-#endif
-
 #include <libsbp/unpacked/user_operators.h>
 #include <libsbp/unpacked/user_packers.h>
 

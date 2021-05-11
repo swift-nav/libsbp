@@ -1,6 +1,10 @@
 #ifndef LIBSBP_BOOTLOAD_OPERATORS_H
 #define LIBSBP_BOOTLOAD_OPERATORS_H
 
+#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/bootload.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,7 +13,6 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/bootload.h>
 #ifdef __cplusplus
 static inline bool operator==(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b)
 {

@@ -1,6 +1,10 @@
 #ifndef LIBSBP_SETTINGS_OPERATORS_H
 #define LIBSBP_SETTINGS_OPERATORS_H
 
+#ifndef LIBSBP_SETTINGS_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/settings.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,7 +13,6 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/settings.h>
 #ifdef __cplusplus
 static inline bool operator==(const sbp_msg_settings_save_t &a, const sbp_msg_settings_save_t &b)
 {

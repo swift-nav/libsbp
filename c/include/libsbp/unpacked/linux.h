@@ -42,22 +42,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 236u
-  };
-  static inline void sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_cpu_state_dep_a_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 236, __VA_ARGS__)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f, 236)
 /** List memory state on the system. DEPRECATED.
  *
  * This message indicates the process state of the top 10 heaviest
@@ -90,22 +79,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_mem_state_dep_a_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 236u
-  };
-  static inline void sbp_msg_linux_mem_state_dep_a_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_mem_state_dep_a_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_mem_state_dep_a_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_mem_state_dep_a_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 236, __VA_ARGS__)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f, 236)
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
  *
  * This presents a summary of CPU and memory utilization.
@@ -141,8 +119,6 @@ typedef struct
   u16 pid_count;
 } sbp_msg_linux_sys_state_dep_a_t;
 
-#if 0
-#endif
 /** A list of processes with high socket counts
  *
  * Top 10 list of processes with high socket counts.
@@ -184,22 +160,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_counts_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_process_socket_counts_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 246u
-  };
-  static inline void sbp_msg_linux_process_socket_counts_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_process_socket_counts_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_process_socket_counts_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_process_socket_counts_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_process_socket_counts_t_cmdline_init(f) sbp_unterminated_string_init(f, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 246, __VA_ARGS__)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_get(f) sbp_unterminated_string_get(f, 246)
 /** A list of processes with deep socket queues
  *
  * Top 10 list of sockets with deep queues.
@@ -250,22 +215,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_queues_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_process_socket_queues_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 180u
-  };
-  static inline void sbp_msg_linux_process_socket_queues_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_process_socket_queues_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_process_socket_queues_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_process_socket_queues_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_process_socket_queues_t_cmdline_init(f) sbp_unterminated_string_init(f, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 180, __VA_ARGS__)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_get(f) sbp_unterminated_string_get(f, 180)
 /** Summary of socket usage across the system
  *
  * Summaries the socket usage across the system.
@@ -295,8 +249,6 @@ typedef struct
   u16 socket_type_counts[16];
 } sbp_msg_linux_socket_usage_t;
 
-#if 0
-#endif
 /** Summary of processes with large amounts of open file descriptors
  *
  * Top 10 list of processes with a large number of open file descriptors.
@@ -324,22 +276,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_fd_count_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_process_fd_count_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 250u
-  };
-  static inline void sbp_msg_linux_process_fd_count_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_process_fd_count_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_fd_count_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_process_fd_count_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_process_fd_count_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_process_fd_count_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_fd_count_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_process_fd_count_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_fd_count_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_process_fd_count_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_process_fd_count_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_process_fd_count_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_process_fd_count_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_process_fd_count_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_process_fd_count_t_cmdline_init(f) sbp_unterminated_string_init(f, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 250, __VA_ARGS__)
+#define sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_get(f) sbp_unterminated_string_get(f, 250)
 /** Summary of open file descriptors on the system
  *
  * Summary of open file descriptors on the system.
@@ -363,23 +304,15 @@ typedef struct
   sbp_sequence_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 
-#if 0
-  static const sbp_sequence_string_format_t sbp_msg_linux_process_fd_summary_t_most_opened_format = {
-    /* .encoding = */ SBP_STRING_SEQUENCE,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 251u
-  };
-  static inline void sbp_msg_linux_process_fd_summary_t_most_opened_init(sbp_sequence_string_t s) { sbp_sequence_string_init(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format); }
-  static inline uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(const sbp_sequence_string_t s) { return sbp_sequence_string_packed_len(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format); }
-  static inline uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_pack(const sbp_sequence_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_sequence_string_pack(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_unpack(sbp_sequence_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_sequence_string_unpack(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(const sbp_sequence_string_t s) { return sbp_sequence_string_space_remaining(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format); }
-  static inline uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(const sbp_sequence_string_t s) { return sbp_sequence_string_count_sections(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format); }
-  static inline const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(const sbp_sequence_string_t s, uint8_t section) { return sbp_sequence_string_get_section(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format, section); }
-  static inline bool sbp_msg_linux_process_fd_summary_t_most_opened_append_section(sbp_sequence_string_t s, const char *new_str) { return sbp_sequence_string_append_section(s, &sbp_msg_linux_process_fd_summary_t_most_opened_format, new_str); }
-#endif
+#define sbp_msg_linux_process_fd_summary_t_most_opened_init(f) , sbp_sequence_string_init(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(f) sbp_sequence_string_packed_len(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_append(f, s) sbp_sequence_string_append(f, s, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(f, ...) \
+  sbp_sequence_string_append_printf(s, 251, 0, __VA_ARGS__)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(f) sbp_sequence_string_count_sections(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_get_section(f, s) sbp_sequence_string_get_section(f, s, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_section_len(f, s) sbp_sequence_string_section_len(f, s, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(f) sbp_sequence_string_space_remaining(f, 251, 0)
 /** List CPU state on the system
  *
  * This message indicates the process state of the top 10 heaviest
@@ -433,22 +366,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_cpu_state_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 231u
-  };
-  static inline void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_cpu_state_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_cpu_state_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_cpu_state_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_cpu_state_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_cpu_state_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_cpu_state_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_cpu_state_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_cpu_state_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_cpu_state_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_cpu_state_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_cpu_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 231, __VA_ARGS__)
+#define sbp_msg_linux_cpu_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_get(f) sbp_unterminated_string_get(f, 231)
 /** List memory state on the system
  *
  * This message indicates the process state of the top 10 heaviest
@@ -502,22 +424,11 @@ typedef struct
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_t;
 
-#if 0
-  static const sbp_unterminated_string_format_t sbp_msg_linux_mem_state_t_cmdline_format = {
-    /* .encoding = */ SBP_STRING_UNTERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 231u
-  };
-  static inline void sbp_msg_linux_mem_state_t_cmdline_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_linux_mem_state_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_mem_state_t_cmdline_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_linux_mem_state_t_cmdline_format); }
-  static inline uint8_t sbp_msg_linux_mem_state_t_cmdline_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_linux_mem_state_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_mem_state_t_cmdline_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_linux_mem_state_t_cmdline_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_linux_mem_state_t_cmdline_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_linux_mem_state_t_cmdline_format); }
-  static inline const char *sbp_msg_linux_mem_state_t_cmdline_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_linux_mem_state_t_cmdline_format, 0); }
-  static inline bool sbp_msg_linux_mem_state_t_cmdline_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_linux_mem_state_t_cmdline_format, new_str); }
-#endif
+#define sbp_msg_linux_mem_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_set(f, s) sbp_unterminated_string_set(f, s, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_printf(f, ...) sbp_unterminated_string_printf(f, 231, __VA_ARGS__)
+#define sbp_msg_linux_mem_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_get(f) sbp_unterminated_string_get(f, 231)
 /** CPU, Memory and Process Starts/Stops.
  *
  * This presents a summary of CPU and memory utilization, including a timestamp.
@@ -573,9 +484,6 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_linux_sys_state_t;
-
-#if 0
-#endif
 
 #include <libsbp/unpacked/linux_operators.h>
 #include <libsbp/unpacked/linux_packers.h>

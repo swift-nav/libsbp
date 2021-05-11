@@ -1,6 +1,10 @@
 #ifndef LIBSBP_(((pkg_name|upper)))_OPERATORS_H
 #define LIBSBP_(((pkg_name|upper)))_OPERATORS_H
 
+#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/(((pkg_name))).h instead"
+#endif
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
@@ -9,11 +13,6 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/(((pkg_name))).h>
-
-((*- for i in include *))
-#include <libsbp/unpacked/(((i)))>
-((*- endfor *))
 
 ((*- macro compare_primitive(field, path) *))
   ((*- if field.basetype.name == "double" or field.basetype.name == "float" *))

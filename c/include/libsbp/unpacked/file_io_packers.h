@@ -1,6 +1,10 @@
 #ifndef LIBSBP_FILE_IO_PACKERS_H
 #define LIBSBP_FILE_IO_PACKERS_H
 
+#ifndef LIBSBP_FILE_IO_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/file_io.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/file_io.h>
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg)
 {

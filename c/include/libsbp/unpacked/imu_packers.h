@@ -1,6 +1,10 @@
 #ifndef LIBSBP_IMU_PACKERS_H
 #define LIBSBP_IMU_PACKERS_H
 
+#ifndef LIBSBP_IMU_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/imu.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/imu.h>
 
 static inline size_t sbp_packed_size_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *msg)
 {

@@ -64,11 +64,6 @@ typedef struct
   sbp_sbp_gnss_signal_t sid;
 } sbp_msg_acq_result_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -113,11 +108,6 @@ typedef struct
   sbp_gnss_signal_dep_t sid;
 } sbp_msg_acq_result_dep_c_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -163,11 +153,6 @@ typedef struct
   sbp_gnss_signal_dep_t sid;
 } sbp_msg_acq_result_dep_b_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -197,8 +182,6 @@ typedef struct
   u8 prn;
 } sbp_msg_acq_result_dep_a_t;
 
-#if 0
-#endif
 /** Acq perfomance measurement and debug
  *
  * Profile for a specific SV for debugging purposes
@@ -281,11 +264,6 @@ typedef struct
   u32 cp;
 } sbp_acq_sv_profile_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Deprecated
  *
  * Deprecated.
@@ -361,11 +339,6 @@ typedef struct
   u32 cp;
 } sbp_acq_sv_profile_dep_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Acquisition perfomance measurement and debug
  *
  * The message describes all SV profiles during acquisition time.
@@ -409,14 +382,6 @@ typedef struct
   u8 acq_sv_profile_count;
 } sbp_msg_acq_sv_profile_t;
 
-#if 0
-
-#if 0
-
-#if 0
-#endif
-#endif
-#endif
 /** Deprecated.
  *
  * Deprecated.
@@ -454,15 +419,6 @@ typedef struct
    */
   u8 acq_sv_profile_count;
 } sbp_msg_acq_sv_profile_dep_t;
-
-#if 0
-
-#if 0
-
-#if 0
-#endif
-#endif
-#endif
 
 #include <libsbp/unpacked/acquisition_operators.h>
 #include <libsbp/unpacked/acquisition_packers.h>

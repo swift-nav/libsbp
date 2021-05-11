@@ -84,8 +84,6 @@ typedef struct
   u8 flags;
 } sbp_msg_odometry_t;
 
-#if 0
-#endif
 /** Accumulated wheeltick count message
  *
  * Message containing the accumulated distance travelled by a wheel located at an odometry
@@ -154,9 +152,6 @@ typedef struct
    */
   s32 ticks;
 } sbp_msg_wheeltick_t;
-
-#if 0
-#endif
 
 #include <libsbp/unpacked/vehicle_operators.h>
 #include <libsbp/unpacked/vehicle_packers.h>

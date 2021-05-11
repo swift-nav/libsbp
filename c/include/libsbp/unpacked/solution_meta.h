@@ -67,8 +67,6 @@ typedef struct
   u8 flags;
 } sbp_solution_input_type_t;
 
-#if 0
-#endif
 /** Deprecated
  *
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
@@ -175,11 +173,6 @@ typedef struct
   u8 sol_in_count;
 } sbp_msg_soln_meta_dep_a_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
@@ -288,11 +281,6 @@ typedef struct
   u8 sol_in_count;
 } sbp_msg_soln_meta_t;
 
-#if 0
-
-#if 0
-#endif
-#endif
 /** Instruments the physical type of GNSS sensor input to the fuzed solution.
  *
  * Metadata around the GNSS sensors involved in the fuzed solution.
@@ -323,8 +311,6 @@ typedef struct
   u8 flags;
 } sbp_gnss_input_type_t;
 
-#if 0
-#endif
 /** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
  * Metadata around the IMU sensors involved in the fuzed solution.
@@ -381,8 +367,6 @@ typedef struct
   u8 flags;
 } sbp_imu_input_type_t;
 
-#if 0
-#endif
 /** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
  * Metadata around the Odometry sensors involved in the fuzed solution.
@@ -438,9 +422,6 @@ typedef struct
    */
   u8 flags;
 } sbp_odo_input_type_t;
-
-#if 0
-#endif
 
 #include <libsbp/unpacked/solution_meta_operators.h>
 #include <libsbp/unpacked/solution_meta_packers.h>

@@ -1,6 +1,10 @@
 #ifndef LIBSBP_TRACKING_PACKERS_H
 #define LIBSBP_TRACKING_PACKERS_H
 
+#ifndef LIBSBP_TRACKING_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/tracking.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,8 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/tracking.h>
-//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t
 sbp_packed_size_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *msg)

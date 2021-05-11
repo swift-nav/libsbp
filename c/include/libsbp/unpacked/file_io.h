@@ -44,23 +44,11 @@ typedef struct
   sbp_null_terminated_string_t filename;
 } sbp_msg_fileio_read_req_t;
 
-#if 0
-  static const sbp_null_terminated_string_format_t sbp_msg_fileio_read_req_t_filename_format = {
-    /* .encoding = */ SBP_STRING_NULL_TERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 246u
-  };
-  static inline void sbp_msg_fileio_read_req_t_filename_init(sbp_null_terminated_string_t s) { sbp_null_terminated_string_init(s, &sbp_msg_fileio_read_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_read_req_t_filename_packed_len(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_packed_len(s, &sbp_msg_fileio_read_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_read_req_t_filename_pack(const sbp_null_terminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_pack(s, &sbp_msg_fileio_read_req_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_req_t_filename_unpack(sbp_null_terminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_unpack(s, &sbp_msg_fileio_read_req_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_req_t_filename_space_remaining(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_space_remaining(s, &sbp_msg_fileio_read_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_read_req_t_filename_count_sections(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_count_sections(s, &sbp_msg_fileio_read_req_t_filename_format); }
-  static inline const char *sbp_msg_fileio_read_req_t_filename_get_section(const sbp_null_terminated_string_t s, uint8_t section) { return sbp_null_terminated_string_get_section(s, &sbp_msg_fileio_read_req_t_filename_format, section); }
-  static inline bool sbp_msg_fileio_read_req_t_filename_append_section(sbp_null_terminated_string_t s, const char *new_str) { return sbp_null_terminated_string_append_section(s, &sbp_msg_fileio_read_req_t_filename_format, new_str); }
-#endif
+#define sbp_msg_fileio_read_req_t_filename_init(f) sbp_null_terminated_string_init(f, 246)
+#define sbp_msg_fileio_read_req_t_filename_set(f, s) sbp_null_terminated_string_set(f, s, 246)
+#define sbp_msg_fileio_read_req_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 246, __VA_ARGS__)
+#define sbp_msg_fileio_read_req_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 246)
+#define sbp_msg_fileio_read_req_t_filename_get(f) sbp_null_terminated_string_get(f, 246)
 /** File read from the file system (host <= device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -88,8 +76,6 @@ typedef struct
   u8 contents_count;
 } sbp_msg_fileio_read_resp_t;
 
-#if 0
-#endif
 /** List files in a directory (host => device)
  *
  * The read directory message lists the files in a directory on the
@@ -122,23 +108,11 @@ typedef struct
   sbp_null_terminated_string_t dirname;
 } sbp_msg_fileio_read_dir_req_t;
 
-#if 0
-  static const sbp_null_terminated_string_format_t sbp_msg_fileio_read_dir_req_t_dirname_format = {
-    /* .encoding = */ SBP_STRING_NULL_TERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 247u
-  };
-  static inline void sbp_msg_fileio_read_dir_req_t_dirname_init(sbp_null_terminated_string_t s) { sbp_null_terminated_string_init(s, &sbp_msg_fileio_read_dir_req_t_dirname_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_req_t_dirname_packed_len(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_packed_len(s, &sbp_msg_fileio_read_dir_req_t_dirname_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_req_t_dirname_pack(const sbp_null_terminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_pack(s, &sbp_msg_fileio_read_dir_req_t_dirname_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_dir_req_t_dirname_unpack(sbp_null_terminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_unpack(s, &sbp_msg_fileio_read_dir_req_t_dirname_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_dir_req_t_dirname_space_remaining(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_space_remaining(s, &sbp_msg_fileio_read_dir_req_t_dirname_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_req_t_dirname_count_sections(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_count_sections(s, &sbp_msg_fileio_read_dir_req_t_dirname_format); }
-  static inline const char *sbp_msg_fileio_read_dir_req_t_dirname_get_section(const sbp_null_terminated_string_t s, uint8_t section) { return sbp_null_terminated_string_get_section(s, &sbp_msg_fileio_read_dir_req_t_dirname_format, section); }
-  static inline bool sbp_msg_fileio_read_dir_req_t_dirname_append_section(sbp_null_terminated_string_t s, const char *new_str) { return sbp_null_terminated_string_append_section(s, &sbp_msg_fileio_read_dir_req_t_dirname_format, new_str); }
-#endif
+#define sbp_msg_fileio_read_dir_req_t_dirname_init(f) sbp_null_terminated_string_init(f, 247)
+#define sbp_msg_fileio_read_dir_req_t_dirname_set(f, s) sbp_null_terminated_string_set(f, s, 247)
+#define sbp_msg_fileio_read_dir_req_t_dirname_printf(f, ...) sbp_null_terminated_string_printf(f, 247, __VA_ARGS__)
+#define sbp_msg_fileio_read_dir_req_t_dirname_packed_len(f) sbp_null_terminated_string_packed_len(f, 247)
+#define sbp_msg_fileio_read_dir_req_t_dirname_get(f) sbp_null_terminated_string_get(f, 247)
 /** Files listed in a directory (host <= device)
  *
  * The read directory message lists the files in a directory on the
@@ -163,23 +137,15 @@ typedef struct
   sbp_sequence_string_t contents;
 } sbp_msg_fileio_read_dir_resp_t;
 
-#if 0
-  static const sbp_sequence_string_format_t sbp_msg_fileio_read_dir_resp_t_contents_format = {
-    /* .encoding = */ SBP_STRING_SEQUENCE,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */255u,
-    /* .max_encoded_len = */ 251u
-  };
-  static inline void sbp_msg_fileio_read_dir_resp_t_contents_init(sbp_sequence_string_t s) { sbp_sequence_string_init(s, &sbp_msg_fileio_read_dir_resp_t_contents_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_resp_t_contents_packed_len(const sbp_sequence_string_t s) { return sbp_sequence_string_packed_len(s, &sbp_msg_fileio_read_dir_resp_t_contents_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_resp_t_contents_pack(const sbp_sequence_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_sequence_string_pack(s, &sbp_msg_fileio_read_dir_resp_t_contents_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_dir_resp_t_contents_unpack(sbp_sequence_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_sequence_string_unpack(s, &sbp_msg_fileio_read_dir_resp_t_contents_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_read_dir_resp_t_contents_space_remaining(const sbp_sequence_string_t s) { return sbp_sequence_string_space_remaining(s, &sbp_msg_fileio_read_dir_resp_t_contents_format); }
-  static inline uint8_t sbp_msg_fileio_read_dir_resp_t_contents_count_sections(const sbp_sequence_string_t s) { return sbp_sequence_string_count_sections(s, &sbp_msg_fileio_read_dir_resp_t_contents_format); }
-  static inline const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(const sbp_sequence_string_t s, uint8_t section) { return sbp_sequence_string_get_section(s, &sbp_msg_fileio_read_dir_resp_t_contents_format, section); }
-  static inline bool sbp_msg_fileio_read_dir_resp_t_contents_append_section(sbp_sequence_string_t s, const char *new_str) { return sbp_sequence_string_append_section(s, &sbp_msg_fileio_read_dir_resp_t_contents_format, new_str); }
-#endif
+#define sbp_msg_fileio_read_dir_resp_t_contents_init(f) , sbp_sequence_string_init(f, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_packed_len(f) sbp_sequence_string_packed_len(f, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_append(f, s) sbp_sequence_string_append(f, s, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_append_printf(f, ...) \
+  sbp_sequence_string_append_printf(s, 251, 255, __VA_ARGS__)
+#define sbp_msg_fileio_read_dir_resp_t_contents_count_sections(f) sbp_sequence_string_count_sections(f, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_get_section(f, s) sbp_sequence_string_get_section(f, s, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_section_len(f, s) sbp_sequence_string_section_len(f, s, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_space_remaining(f) sbp_sequence_string_space_remaining(f, 251, 255)
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system.
@@ -198,23 +164,11 @@ typedef struct
   sbp_null_terminated_string_t filename;
 } sbp_msg_fileio_remove_t;
 
-#if 0
-  static const sbp_null_terminated_string_format_t sbp_msg_fileio_remove_t_filename_format = {
-    /* .encoding = */ SBP_STRING_NULL_TERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 255u
-  };
-  static inline void sbp_msg_fileio_remove_t_filename_init(sbp_null_terminated_string_t s) { sbp_null_terminated_string_init(s, &sbp_msg_fileio_remove_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_remove_t_filename_packed_len(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_packed_len(s, &sbp_msg_fileio_remove_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_remove_t_filename_pack(const sbp_null_terminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_pack(s, &sbp_msg_fileio_remove_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_remove_t_filename_unpack(sbp_null_terminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_unpack(s, &sbp_msg_fileio_remove_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_remove_t_filename_space_remaining(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_space_remaining(s, &sbp_msg_fileio_remove_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_remove_t_filename_count_sections(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_count_sections(s, &sbp_msg_fileio_remove_t_filename_format); }
-  static inline const char *sbp_msg_fileio_remove_t_filename_get_section(const sbp_null_terminated_string_t s, uint8_t section) { return sbp_null_terminated_string_get_section(s, &sbp_msg_fileio_remove_t_filename_format, section); }
-  static inline bool sbp_msg_fileio_remove_t_filename_append_section(sbp_null_terminated_string_t s, const char *new_str) { return sbp_null_terminated_string_append_section(s, &sbp_msg_fileio_remove_t_filename_format, new_str); }
-#endif
+#define sbp_msg_fileio_remove_t_filename_init(f) sbp_null_terminated_string_init(f, 255)
+#define sbp_msg_fileio_remove_t_filename_set(f, s) sbp_null_terminated_string_set(f, s, 255)
+#define sbp_msg_fileio_remove_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 255, __VA_ARGS__)
+#define sbp_msg_fileio_remove_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 255)
+#define sbp_msg_fileio_remove_t_filename_get(f) sbp_null_terminated_string_get(f, 255)
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -253,23 +207,11 @@ typedef struct
   u8 data_count;
 } sbp_msg_fileio_write_req_t;
 
-#if 0
-  static const sbp_null_terminated_string_format_t sbp_msg_fileio_write_req_t_filename_format = {
-    /* .encoding = */ SBP_STRING_NULL_TERMINATED,
-    /* .min_sections = */0u,
-    /* .max_sections = */0u,
-    /* .terminator = */0u,
-    /* .max_encoded_len = */ 247u
-  };
-  static inline void sbp_msg_fileio_write_req_t_filename_init(sbp_null_terminated_string_t s) { sbp_null_terminated_string_init(s, &sbp_msg_fileio_write_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_write_req_t_filename_packed_len(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_packed_len(s, &sbp_msg_fileio_write_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_write_req_t_filename_pack(const sbp_null_terminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_pack(s, &sbp_msg_fileio_write_req_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_write_req_t_filename_unpack(sbp_null_terminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_null_terminated_string_unpack(s, &sbp_msg_fileio_write_req_t_filename_format, buf, buf_len); }
-  static inline uint8_t sbp_msg_fileio_write_req_t_filename_space_remaining(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_space_remaining(s, &sbp_msg_fileio_write_req_t_filename_format); }
-  static inline uint8_t sbp_msg_fileio_write_req_t_filename_count_sections(const sbp_null_terminated_string_t s) { return sbp_null_terminated_string_count_sections(s, &sbp_msg_fileio_write_req_t_filename_format); }
-  static inline const char *sbp_msg_fileio_write_req_t_filename_get_section(const sbp_null_terminated_string_t s, uint8_t section) { return sbp_null_terminated_string_get_section(s, &sbp_msg_fileio_write_req_t_filename_format, section); }
-  static inline bool sbp_msg_fileio_write_req_t_filename_append_section(sbp_null_terminated_string_t s, const char *new_str) { return sbp_null_terminated_string_append_section(s, &sbp_msg_fileio_write_req_t_filename_format, new_str); }
-#endif
+#define sbp_msg_fileio_write_req_t_filename_init(f) sbp_null_terminated_string_init(f, 247)
+#define sbp_msg_fileio_write_req_t_filename_set(f, s) sbp_null_terminated_string_set(f, s, 247)
+#define sbp_msg_fileio_write_req_t_filename_printf(f, ...) sbp_null_terminated_string_printf(f, 247, __VA_ARGS__)
+#define sbp_msg_fileio_write_req_t_filename_packed_len(f) sbp_null_terminated_string_packed_len(f, 247)
+#define sbp_msg_fileio_write_req_t_filename_get(f) sbp_null_terminated_string_get(f, 247)
 /** File written to (host <= device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -289,8 +231,6 @@ typedef struct
   u32 sequence;
 } sbp_msg_fileio_write_resp_t;
 
-#if 0
-#endif
 /** Request advice on the optimal configuration for FileIO.
  *
  * Requests advice on the optimal configuration for a FileIO
@@ -309,8 +249,6 @@ typedef struct
   u32 sequence;
 } sbp_msg_fileio_config_req_t;
 
-#if 0
-#endif
 /** Response with advice on the optimal configuration for FileIO.
 
  *
@@ -341,9 +279,6 @@ typedef struct
    */
   u32 fileio_version;
 } sbp_msg_fileio_config_resp_t;
-
-#if 0
-#endif
 
 #include <libsbp/unpacked/file_io_operators.h>
 #include <libsbp/unpacked/file_io_packers.h>

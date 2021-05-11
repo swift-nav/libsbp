@@ -1,6 +1,10 @@
 #ifndef LIBSBP_LINUX_OPERATORS_H
 #define LIBSBP_LINUX_OPERATORS_H
 
+#ifndef LIBSBP_LINUX_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/linux.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,7 +13,6 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/linux.h>
 #ifdef __cplusplus
 static inline bool operator==(const sbp_msg_linux_cpu_state_dep_a_t &a, const sbp_msg_linux_cpu_state_dep_a_t &b)
 {

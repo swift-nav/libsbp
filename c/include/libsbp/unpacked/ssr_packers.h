@@ -1,6 +1,10 @@
 #ifndef LIBSBP_SSR_PACKERS_H
 #define LIBSBP_SSR_PACKERS_H
 
+#ifndef LIBSBP_SSR_MESSAGES_H
+#error "Do not include this file directly, include libsbp/unpacked/ssr.h instead"
+#endif
+
 #include <endian.h>
 #include <math.h>
 #include <stdbool.h>
@@ -10,8 +14,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string2.h>
-//#include <libsbp/unpacked/ssr.h>
-//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_code_biases_content_t(const sbp_code_biases_content_t *msg)
 {

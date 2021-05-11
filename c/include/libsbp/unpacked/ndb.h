@@ -177,15 +177,6 @@ typedef struct
   u16 original_sender;
 } sbp_msg_ndb_event_t;
 
-#if 0
-
-#if 0
-#endif
-
-#if 0
-#endif
-#endif
-
 #include <libsbp/unpacked/ndb_operators.h>
 #include <libsbp/unpacked/ndb_packers.h>
 
