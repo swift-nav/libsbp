@@ -67,7 +67,7 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
 static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + sbp_unterminated_string_packed_len(&msg->fwd_payload, 253);
+  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + (msg->fwd_payload_count * sizeof(msg->fwd_payload[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg)
@@ -99,7 +99,18 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   memcpy(buf + offset, &msgprotocol, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  offset += sbp_unterminated_string_pack(&msg->fwd_payload, 253, buf + offset, (uint8_t)(len - offset));
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->fwd_payload_count; msgfwd_payload_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgfwd_payloadmsgfwd_payload_idx = msg->fwd_payload[msgfwd_payload_idx];
+    memcpy(buf + offset, &msgfwd_payloadmsgfwd_payload_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -126,7 +137,19 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
   memcpy(&msg->protocol, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  offset += sbp_unterminated_string_unpack(&msg->fwd_payload, 253, buf + offset, (uint8_t)(len - offset));
+  msg->fwd_payload_count = (u8)((len - offset) / 1);
+
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < msg->fwd_payload_count; msgfwd_payload_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->fwd_payload[msgfwd_payload_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 

@@ -160,10 +160,6 @@ START_TEST(test_auto_check_sbp_logging_8)
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     msg_fwd_t *test_msg = (msg_fwd_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->protocol = 0;
-    test_unpacked_msg.MSG_FWD.protocol = 0;
-    test_msg->source = 0;
-    test_unpacked_msg.MSG_FWD.source = 0;
     {
       const char assign_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
                                      (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
@@ -172,15 +168,13 @@ START_TEST(test_auto_check_sbp_logging_8)
       {
         test_msg_len += sizeof(assign_string);
       }
+      memcpy(test_unpacked_msg.MSG_FWD.fwd_payload, assign_string, sizeof(assign_string));
     }
-
-    {
-      const char assign_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
-                                     (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
-      memcpy(test_unpacked_msg.MSG_FWD.fwd_payload.data, assign_string, sizeof(assign_string));
-    }
-
-    test_unpacked_msg.MSG_FWD.fwd_payload.len = 16;
+    test_msg->protocol = 0;
+    test_unpacked_msg.MSG_FWD.protocol = 0;
+    test_msg->source = 0;
+    test_unpacked_msg.MSG_FWD.source = 0;
+    test_unpacked_msg.MSG_FWD.fwd_payload_count = 16;
     sbp_send_message(&sbp_state, 0x402, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -220,6 +214,18 @@ START_TEST(test_auto_check_sbp_logging_8)
     sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    {
+      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
+                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
+      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0,
+                    "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'",
+                    check_string,
+                    check_msg->fwd_payload);
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload, check_string, sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload, expected string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_FWD.fwd_payload);
+    }
     ck_assert_msg(check_msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", check_msg->protocol);
     ck_assert_msg(check_unpacked_msg->MSG_FWD.protocol == 0,
                   "incorrect value for check_unpacked_msg->MSG_FWD.protocol, expected 0, is %d",
@@ -228,27 +234,9 @@ START_TEST(test_auto_check_sbp_logging_8)
     ck_assert_msg(check_unpacked_msg->MSG_FWD.source == 0,
                   "incorrect value for check_unpacked_msg->MSG_FWD.source, expected 0, is %d",
                   check_unpacked_msg->MSG_FWD.source);
-    {
-      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
-                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
-      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0,
-                    "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'",
-                    check_string,
-                    check_msg->fwd_payload);
-    }
-
-    {
-      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
-                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload.data, check_string, sizeof(check_string)) == 0,
-                    "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.data, expected string '%s', is '%s'",
-                    check_string,
-                    check_unpacked_msg->MSG_FWD.fwd_payload.data);
-    }
-
-    ck_assert_msg(check_unpacked_msg->MSG_FWD.fwd_payload.len == 16,
-                  "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.len, expected 16, is %d",
-                  check_unpacked_msg->MSG_FWD.fwd_payload.len);
+    ck_assert_msg(check_unpacked_msg->MSG_FWD.fwd_payload_count == 16,
+                  "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload_count, expected 16, is %d",
+                  check_unpacked_msg->MSG_FWD.fwd_payload_count);
 
     dummy_reset();
     logging_reset();
@@ -292,6 +280,18 @@ START_TEST(test_auto_check_sbp_logging_8)
     check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    {
+      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
+                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
+      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0,
+                    "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'",
+                    check_string,
+                    check_msg->fwd_payload);
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload, check_string, sizeof(check_string)) == 0,
+                    "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload, expected string '%s', is '%s'",
+                    check_string,
+                    check_unpacked_msg->MSG_FWD.fwd_payload);
+    }
     ck_assert_msg(check_msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", check_msg->protocol);
     ck_assert_msg(check_unpacked_msg->MSG_FWD.protocol == 0,
                   "incorrect value for check_unpacked_msg->MSG_FWD.protocol, expected 0, is %d",
@@ -300,27 +300,9 @@ START_TEST(test_auto_check_sbp_logging_8)
     ck_assert_msg(check_unpacked_msg->MSG_FWD.source == 0,
                   "incorrect value for check_unpacked_msg->MSG_FWD.source, expected 0, is %d",
                   check_unpacked_msg->MSG_FWD.source);
-    {
-      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
-                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
-      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0,
-                    "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'",
-                    check_string,
-                    check_msg->fwd_payload);
-    }
-
-    {
-      const char check_string[] = { (char)86, (char)81, (char)68, (char)47, (char)81, (char)103, (char)65, (char)69,
-                                    (char)65, (char)65, (char)65, (char)65, (char)65, (char)69,  (char)97, (char)103 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload.data, check_string, sizeof(check_string)) == 0,
-                    "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.data, expected string '%s', is '%s'",
-                    check_string,
-                    check_unpacked_msg->MSG_FWD.fwd_payload.data);
-    }
-
-    ck_assert_msg(check_unpacked_msg->MSG_FWD.fwd_payload.len == 16,
-                  "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.len, expected 16, is %d",
-                  check_unpacked_msg->MSG_FWD.fwd_payload.len);
+    ck_assert_msg(check_unpacked_msg->MSG_FWD.fwd_payload_count == 16,
+                  "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload_count, expected 16, is %d",
+                  check_unpacked_msg->MSG_FWD.fwd_payload_count);
   }
 }
 END_TEST

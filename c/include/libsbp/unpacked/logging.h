@@ -80,14 +80,13 @@ typedef struct
   /**
    * variable length wrapped binary message
    */
-  sbp_unterminated_string_t fwd_payload;
+  char fwd_payload[253];
+  /**
+   * Number of items in fwd_payload
+   */
+  u8 fwd_payload_count;
 } sbp_msg_fwd_t;
 
-#define sbp_msg_fwd_t_fwd_payload_init(f) sbp_unterminated_string_init(f, 253)
-#define sbp_msg_fwd_t_fwd_payload_set(f, s) sbp_unterminated_string_set(f, s, 253)
-#define sbp_msg_fwd_t_fwd_payload_printf(f, ...) sbp_unterminated_string_printf(f, 253, __VA_ARGS__)
-#define sbp_msg_fwd_t_fwd_payload_packed_len(f) sbp_unterminated_string_packed_len(f, 253)
-#define sbp_msg_fwd_t_fwd_payload_get(f) sbp_unterminated_string_get(f, 253)
 /** Deprecated
  *
  * Deprecated.
