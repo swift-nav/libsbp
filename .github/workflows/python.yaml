@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "python/**"
+      - "spec/tests/**"
       - requirements.txt
       - tox.ini
       - scripts/ci_prepare_python.bash

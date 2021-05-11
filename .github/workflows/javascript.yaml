@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "javascript/**"
+      - "spec/tests/**"
       - package.json
       - package-lock.json
       - .github/workflows/javascript.yaml
