@@ -137,19 +137,16 @@ START_TEST( test_auto_check_sbp_system_71 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[0] = 65290;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[1] = 522;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[2] = 65282;
     test_msg->n_group_msgs = 3;
     sbp_send_message(&sbp_state, 0xFF0A, 61166, test_msg_len, test_msg_storage, &dummy_write);
@@ -236,85 +233,71 @@ START_TEST( test_auto_check_sbp_system_71 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[0] = 258;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[1] = 259;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[2] = 522;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[3] = 529;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[4] = 521;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[5] = 532;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[6] = 526;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[7] = 530;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[8] = 525;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[9] = 533;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[10] = 545;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[11] = 65283;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[12] = 65286;
     if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    
     test_msg->group_msgs[13] = 65294;
     test_msg->n_group_msgs = 14;
     sbp_send_message(&sbp_state, 0xFF0A, 789, test_msg_len, test_msg_storage, &dummy_write);

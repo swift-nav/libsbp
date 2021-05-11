@@ -220,25 +220,21 @@ START_TEST( test_auto_check_sbp_bootload_4 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
-    
     test_msg->handshake[0] = 118;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
-    
     test_msg->handshake[1] = 49;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
-    
     test_msg->handshake[2] = 46;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
-    
     test_msg->handshake[3] = 50;
     sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage, &dummy_write);
 

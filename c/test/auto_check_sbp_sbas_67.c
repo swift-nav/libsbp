@@ -135,163 +135,136 @@ START_TEST( test_auto_check_sbp_sbas_67 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[0] = 23;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[1] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[2] = 0;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[3] = 23;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[4] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[5] = 0;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[6] = 23;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[7] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[8] = 127;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[9] = 240;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[10] = 2;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[11] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[12] = 192;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[13] = 3;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[14] = 127;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[15] = 247;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[16] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[17] = 127;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[18] = 247;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[19] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[20] = 229;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[21] = 229;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[22] = 238;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[23] = 170;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[24] = 175;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[25] = 255;
     if (sizeof(test_msg->data) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->data[0]);
     }
-    
     test_msg->data[26] = 240;
     test_msg->message_type = 4;
     test_msg->sid.code = 2;

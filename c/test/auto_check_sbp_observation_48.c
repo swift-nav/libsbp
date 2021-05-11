@@ -135,19 +135,16 @@ START_TEST( test_auto_check_sbp_observation_48 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->acc[0]);
     }
-    
     test_msg->acc[0] = 9.313225746154785e-07;
     if (sizeof(test_msg->acc) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->acc[0]);
     }
-    
     test_msg->acc[1] = 9.313225746154785e-07;
     if (sizeof(test_msg->acc) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->acc[0]);
     }
-    
     test_msg->acc[2] = 2.7939677238464355e-06;
     test_msg->common.fit_interval = 2400;
     test_msg->common.health_bits = 0;
@@ -165,38 +162,32 @@ START_TEST( test_auto_check_sbp_observation_48 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->pos[0]);
     }
-    
     test_msg->pos[0] = -12177330.078125;
     if (sizeof(test_msg->pos) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->pos[0]);
     }
-    
     test_msg->pos[1] = 599893.06640625;
     if (sizeof(test_msg->pos) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->pos[0]);
     }
-    
     test_msg->pos[2] = -22373708.49609375;
     test_msg->tau = -8.36281105875969e-05;
     if (sizeof(test_msg->vel) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->vel[0]);
     }
-    
     test_msg->vel[0] = -1726.506233215332;
     if (sizeof(test_msg->vel) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->vel[0]);
     }
-    
     test_msg->vel[1] = -2542.6149368286133;
     if (sizeof(test_msg->vel) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->vel[0]);
     }
-    
     test_msg->vel[2] = 869.8177337646484;
     sbp_send_message(&sbp_state, 0x8b, 2314, test_msg_len, test_msg_storage, &dummy_write);
 

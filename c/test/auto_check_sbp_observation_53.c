@@ -138,7 +138,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[0].L.f = 27;
     test_msg->obs[0].L.i = 117913055;
     test_msg->obs[0].P = 2243669940;
@@ -151,7 +150,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[1].L.f = 175;
     test_msg->obs[1].L.i = 129899608;
     test_msg->obs[1].P = 2471857210;
@@ -164,7 +162,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[2].L.f = 135;
     test_msg->obs[2].L.i = 122531024;
     test_msg->obs[2].P = 2331544796;
@@ -177,7 +174,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[3].L.f = 242;
     test_msg->obs[3].L.i = 119280243;
     test_msg->obs[3].P = 2269692589;
@@ -190,7 +186,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[4].L.f = 120;
     test_msg->obs[4].L.i = 109691922;
     test_msg->obs[4].P = 2087293092;
@@ -203,7 +198,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[5].L.f = 87;
     test_msg->obs[5].L.i = 123340754;
     test_msg->obs[5].P = 2347034654;
@@ -342,7 +336,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[0].L.f = 219;
     test_msg->obs[0].L.i = 120256389;
     test_msg->obs[0].P = 2288371524;
@@ -355,7 +348,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[1].L.f = 235;
     test_msg->obs[1].L.i = 117692256;
     test_msg->obs[1].P = 2239434459;
@@ -368,7 +360,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[2].L.f = 174;
     test_msg->obs[2].L.i = 107851013;
     test_msg->obs[2].P = 2052171351;
@@ -483,7 +474,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[0].L.f = 94;
     test_msg->obs[0].L.i = 117912556;
     test_msg->obs[0].P = 2243658852;
@@ -496,7 +486,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[1].L.f = 40;
     test_msg->obs[1].L.i = 129900210;
     test_msg->obs[1].P = 2471868513;
@@ -509,7 +498,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[2].L.f = 2;
     test_msg->obs[2].L.i = 122530650;
     test_msg->obs[2].P = 2331537287;
@@ -522,7 +510,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[3].L.f = 241;
     test_msg->obs[3].L.i = 119280830;
     test_msg->obs[3].P = 2269703860;
@@ -535,7 +522,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[4].L.f = 153;
     test_msg->obs[4].L.i = 109691996;
     test_msg->obs[4].P = 2087295247;
@@ -548,7 +534,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[5].L.f = 41;
     test_msg->obs[5].L.i = 123340176;
     test_msg->obs[5].P = 2347022641;
@@ -687,7 +672,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[0].L.f = 20;
     test_msg->obs[0].L.i = 120255759;
     test_msg->obs[0].P = 2288358634;
@@ -700,7 +684,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[1].L.f = 38;
     test_msg->obs[1].L.i = 117691920;
     test_msg->obs[1].P = 2239428560;
@@ -713,7 +696,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[2].L.f = 7;
     test_msg->obs[2].L.i = 107850774;
     test_msg->obs[2].P = 2052167183;
@@ -828,7 +810,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[0].L.f = 165;
     test_msg->obs[0].L.i = 117912057;
     test_msg->obs[0].P = 2243649790;
@@ -841,7 +822,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[1].L.f = 106;
     test_msg->obs[1].L.i = 129900811;
     test_msg->obs[1].P = 2471880049;
@@ -854,7 +834,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[2].L.f = 159;
     test_msg->obs[2].L.i = 122530275;
     test_msg->obs[2].P = 2331530678;
@@ -867,7 +846,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[3].L.f = 7;
     test_msg->obs[3].L.i = 119281418;
     test_msg->obs[3].P = 2269714449;
@@ -880,7 +858,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[4].L.f = 186;
     test_msg->obs[4].L.i = 109692070;
     test_msg->obs[4].P = 2087295852;
@@ -893,7 +870,6 @@ START_TEST( test_auto_check_sbp_observation_53 )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
-    
     test_msg->obs[5].L.f = 236;
     test_msg->obs[5].L.i = 123339597;
     test_msg->obs[5].P = 2347011798;
