@@ -304,11 +304,7 @@ test-c:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-ifdef CI
-	cd $(SWIFTNAV_ROOT)/python/ && tox -- $(SWIFTNAV_ROOT)/haskell
-else
 	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
-endif
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
