@@ -8,6 +8,8 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import sys
+
 import pytest
 
 
@@ -15,6 +17,8 @@ def test_jit_deprecation():
     """
     Test importing deprecated module emits warning.
     """
+    if "sbp.jit" in sys.modules:
+        del sys.modules["sbp.jit"]
     with pytest.warns(UserWarning) as records:
         import sbp.jit as _unused
 
