@@ -316,7 +316,7 @@ typedef struct
   sbp_sequence_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 
-#define sbp_msg_linux_process_fd_summary_t_most_opened_init(f) , sbp_sequence_string_init(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_init(f) sbp_sequence_string_init(f, 251, 0)
 #define sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(f) sbp_sequence_string_packed_len(f, 251, 0)
 #define sbp_msg_linux_process_fd_summary_t_most_opened_append(f, s) sbp_sequence_string_append(f, s, 251, 0)
 #define sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(f, ...) \

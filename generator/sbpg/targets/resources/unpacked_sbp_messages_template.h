@@ -75,7 +75,7 @@
   ((*- elif f.encoding == "multipart" or f.encoding == "sequence" *))
   ((*- if f.encoding == "multipart" *))((*- set common_args = f.max_items|string + ", " + f.min_sections|string + ", " + f.max_sections|string *))
   ((*- else *))((*- set common_args = f.max_items|string + ", " + f.terminator|string *))((*- endif *))
-#define (((path)))_(((f.name)))_init(f), sbp_(((f.encoding)))_string_init(f, (((common_args))))
+#define (((path)))_(((f.name)))_init(f) sbp_(((f.encoding)))_string_init(f, (((common_args))))
 #define (((path)))_(((f.name)))_packed_len(f) sbp_(((f.encoding)))_string_packed_len(f, (((common_args))))
 #define (((path)))_(((f.name)))_append(f,s) sbp_(((f.encoding)))_string_append(f, s, (((common_args))))
 #define (((path)))_(((f.name)))_append_printf(f, ...) sbp_(((f.encoding)))_string_append_printf(s, (((common_args))), __VA_ARGS__)

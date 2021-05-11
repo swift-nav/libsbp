@@ -141,7 +141,7 @@ typedef struct
   sbp_sequence_string_t contents;
 } sbp_msg_fileio_read_dir_resp_t;
 
-#define sbp_msg_fileio_read_dir_resp_t_contents_init(f) , sbp_sequence_string_init(f, 251, 255)
+#define sbp_msg_fileio_read_dir_resp_t_contents_init(f) sbp_sequence_string_init(f, 251, 255)
 #define sbp_msg_fileio_read_dir_resp_t_contents_packed_len(f) sbp_sequence_string_packed_len(f, 251, 255)
 #define sbp_msg_fileio_read_dir_resp_t_contents_append(f, s) sbp_sequence_string_append(f, s, 251, 255)
 #define sbp_msg_fileio_read_dir_resp_t_contents_append_printf(f, ...) \

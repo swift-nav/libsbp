@@ -44,7 +44,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_write_t;
 
-#define sbp_msg_settings_write_t_setting_init(f) , sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
 #define sbp_msg_settings_write_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
 #define sbp_msg_settings_write_t_setting_append(f, s) sbp_multipart_string_append(f, s, 255, 3, 3)
 #define sbp_msg_settings_write_t_setting_append_printf(f, ...) \
@@ -98,7 +98,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_write_resp_t;
 
-#define sbp_msg_settings_write_resp_t_setting_init(f) , sbp_multipart_string_init(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_init(f) sbp_multipart_string_init(f, 254, 3, 3)
 #define sbp_msg_settings_write_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 254, 3, 3)
 #define sbp_msg_settings_write_resp_t_setting_append(f, s) sbp_multipart_string_append(f, s, 254, 3, 3)
 #define sbp_msg_settings_write_resp_t_setting_append_printf(f, ...) \
@@ -131,7 +131,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_req_t;
 
-#define sbp_msg_settings_read_req_t_setting_init(f) , sbp_multipart_string_init(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_init(f) sbp_multipart_string_init(f, 255, 2, 2)
 #define sbp_msg_settings_read_req_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 2, 2)
 #define sbp_msg_settings_read_req_t_setting_append(f, s) sbp_multipart_string_append(f, s, 255, 2, 2)
 #define sbp_msg_settings_read_req_t_setting_append_printf(f, ...) \
@@ -164,7 +164,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_resp_t;
 
-#define sbp_msg_settings_read_resp_t_setting_init(f) , sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
 #define sbp_msg_settings_read_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
 #define sbp_msg_settings_read_resp_t_setting_append(f, s) sbp_multipart_string_append(f, s, 255, 3, 3)
 #define sbp_msg_settings_read_resp_t_setting_append_printf(f, ...) \
@@ -222,7 +222,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_by_index_resp_t;
 
-#define sbp_msg_settings_read_by_index_resp_t_setting_init(f) , sbp_multipart_string_init(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_init(f) sbp_multipart_string_init(f, 253, 3, 4)
 #define sbp_msg_settings_read_by_index_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 253, 3, 4)
 #define sbp_msg_settings_read_by_index_resp_t_setting_append(f, s) sbp_multipart_string_append(f, s, 253, 3, 4)
 #define sbp_msg_settings_read_by_index_resp_t_setting_append_printf(f, ...) \
@@ -265,7 +265,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_register_t;
 
-#define sbp_msg_settings_register_t_setting_init(f) , sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
 #define sbp_msg_settings_register_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
 #define sbp_msg_settings_register_t_setting_append(f, s) sbp_multipart_string_append(f, s, 255, 3, 3)
 #define sbp_msg_settings_register_t_setting_append_printf(f, ...) \
@@ -317,7 +317,7 @@ typedef struct
   sbp_multipart_string_t setting;
 } sbp_msg_settings_register_resp_t;
 
-#define sbp_msg_settings_register_resp_t_setting_init(f) , sbp_multipart_string_init(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_init(f) sbp_multipart_string_init(f, 254, 3, 3)
 #define sbp_msg_settings_register_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 254, 3, 3)
 #define sbp_msg_settings_register_resp_t_setting_append(f, s) sbp_multipart_string_append(f, s, 254, 3, 3)
 #define sbp_msg_settings_register_resp_t_setting_append_printf(f, ...) \
