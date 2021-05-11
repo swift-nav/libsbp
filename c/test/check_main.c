@@ -82,6 +82,7 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_observation_MsgObsDepB_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_MsgObsDepC_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_MsgOsr_suite());
+  srunner_add_suite(sr, auto_check_sbp_observation_MsgSvAzEl_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_msgEphemerisDepB_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_msgEphemerisQzss_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_msgObsDepA_suite());
@@ -90,6 +91,7 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_orientation_MsgOrientQuat_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgDeviceMonitor_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgIarState_suite());
+  srunner_add_suite(sr, auto_check_sbp_piksi_MsgNetworkBandwidthUsage_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgThreadState_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgUartState_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgUartStateDepA_suite());
@@ -102,6 +104,7 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_system_MsgInsStatus_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgInsUpdates_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgStartup_suite());
+  srunner_add_suite(sr, auto_check_sbp_tracking_MsgMeasurementState_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_MsgTrackingState_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_MsgTrackingStateDetailedDep_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_MsgtrackingStateDepA_suite());

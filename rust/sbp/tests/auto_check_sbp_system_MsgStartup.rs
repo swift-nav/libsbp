@@ -92,9 +92,19 @@ fn test_auto_check_sbp_system_MsgStartup() {
                     sender_id
                 );
                 assert_eq!(
+                    msg.cause, 0,
+                    "incorrect value for cause, expected 0, is {}",
+                    msg.cause
+                );
+                assert_eq!(
                     msg.reserved, 0,
                     "incorrect value for reserved, expected 0, is {}",
                     msg.reserved
+                );
+                assert_eq!(
+                    msg.startup_type, 0,
+                    "incorrect value for startup_type, expected 0, is {}",
+                    msg.startup_type
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgStartup"),
