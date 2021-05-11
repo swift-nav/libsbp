@@ -54,7 +54,32 @@ let gps_time = match crate::time::GpsTime::new(0, tow_s) {
 """.strip()
 
 BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
-SKIP_GPS_TIME_MSGS = ["MSG_IMU_RAW"]
+
+CUSTOM_GPS_TIME_MSGS = {
+  "MSG_IMU_RAW": """
+const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
+if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {
+    return None;
+}
+let tow_s = (self.tow as f64) / 1000.0;
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip(),
+
+  "MSG_WHEELTICK": """
+// only consider wheelticks with synchronization type value "microsec in GPS week"
+if self.flags != 1 {
+    return None;
+}
+let tow_s = (self.time as f64) / 1000000.0;
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip(),
+}
 
 import re
 def camel_case(s):
@@ -142,6 +167,9 @@ def gps_time(msg, all_messages):
         return False
 
     def gen_body():
+        if msg.identifier in CUSTOM_GPS_TIME_MSGS:
+          return CUSTOM_GPS_TIME_MSGS[msg.identifier]
+
         header = False
         tow = False
         wn = False
@@ -167,9 +195,6 @@ def gps_time(msg, all_messages):
     def gen_ret():
         name = "Base" if msg.identifier in BASE_TIME_MSGS else "Rover"
         return f"Some(Ok(crate::time::MessageTime::{name}(gps_time.into())))"
-
-    if msg.identifier in SKIP_GPS_TIME_MSGS:
-        return ""
 
     body = gen_body()
     if body is None:

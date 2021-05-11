@@ -179,6 +179,22 @@ impl super::SBPMessage for MsgImuRaw {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
+        if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {
+            return None;
+        }
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgImuRaw {
