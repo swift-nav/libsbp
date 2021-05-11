@@ -8,8 +8,6 @@ HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
 HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE}/${HYPERFINE_BASENAME}.tar.gz
 HYPERFINE_BIN_PATH=${HYPERFINE_BASENAME}/hyperfine
 
-sudo apt-get -qq update
-
 mkdir -p ~/.local/bin
 curl -sSL "${HYPERFINE_URL}" | tar -C ~/.local/bin -xvzf - --strip-components=1 "${HYPERFINE_BIN_PATH}"
 

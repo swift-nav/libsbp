@@ -22,7 +22,6 @@ jobs:
 
       - name: Setup
         run: |
-          sudo apt-get -qq update
           sudo apt-get -qq install lcov
 
       - name: Run tests
