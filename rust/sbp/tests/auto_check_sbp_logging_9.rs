@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/logging/test_MsgLog.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/logging/test_MsgFwd.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,9 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_logging_9() {
     {
         let mut payload = Cursor::new(vec![
-            85, 1, 4, 10, 9, 44, 6, 70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32,
-            111, 98, 115, 32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111,
-            119, 32, 56, 51, 46, 53, 51, 57, 48, 49, 57, 177, 163,
+            85, 2, 4, 66, 0, 18, 0, 0, 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97,
+            103, 125, 95,
         ]);
 
         // Test the round trip payload parsing
@@ -37,33 +36,38 @@ fn test_auto_check_sbp_logging_9() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgLog(msg) => {
+            sbp::messages::SBP::MsgFwd(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x0401,
-                    "Incorrect message type, expected 0x0401, is {}",
+                    0x402,
+                    "Incorrect message type, expected 0x402, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.level, 6,
-                    "incorrect value for level, expected 6, is {}",
-                    msg.level
+                    Into::<String>::into(msg.fwd_payload.clone()),
+                    "VQD/QgAEAAAAAEag".to_string(),
+                    "incorrect value for msg.fwd_payload, expected string '{}', is '{}'",
+                    "VQD/QgAEAAAAAEag".to_string(),
+                    msg.fwd_payload
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
-                    msg.text
+                    msg.protocol, 0,
+                    "incorrect value for protocol, expected 0, is {}",
+                    msg.protocol
+                );
+                assert_eq!(
+                    msg.source, 0,
+                    "incorrect value for source, expected 0, is {}",
+                    msg.source
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgLog"),
+            _ => panic!("Invalid message type! Expected a MsgFwd"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

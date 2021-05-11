@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNedGnss.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNedCovGnss.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,27 +119,31 @@ START_TEST( test_auto_check_sbp_navigation_44 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x22e, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x22e, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x232, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x232, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,46,2,0,16,22,168,230,233,29,251,255,255,255,0,0,0,0,246,255,255,255,40,0,89,0,21,2,99,171, };
+    u8 encoded_frame[] = {85,50,2,0,16,42,168,230,233,29,251,255,255,255,0,0,0,0,246,255,255,255,15,58,207,58,248,139,116,55,103,197,57,57,203,186,129,58,109,171,44,57,135,39,1,60,21,2,155,3, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_vel_ned_gnss_t* test_msg = ( msg_vel_ned_gnss_t* )test_msg_storage;
+    msg_vel_ned_cov_gnss_t* test_msg = ( msg_vel_ned_cov_gnss_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
+    test_msg->cov_d_d = 0.007882959209382534;
+    test_msg->cov_e_d = 0.00016467059322167188;
+    test_msg->cov_e_e = 0.0009897587588056922;
+    test_msg->cov_n_d = 0.00017716512957122177;
+    test_msg->cov_n_e = 1.457612233934924e-05;
+    test_msg->cov_n_n = 0.0015810149488970637;
     test_msg->d = -10;
     test_msg->e = 0;
     test_msg->flags = 2;
-    test_msg->h_accuracy = 40;
     test_msg->n = -5;
     test_msg->n_sats = 21;
     test_msg->tow = 501868200;
-    test_msg->v_accuracy = 89;
-    sbp_send_message(&sbp_state, 0x22e, 4096, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x232, 4096, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -170,7 +174,7 @@ START_TEST( test_auto_check_sbp_navigation_44 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 4096,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x22e,
+    ck_assert_msg(last_frame.msg_type == 0x232,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -184,17 +188,21 @@ START_TEST( test_auto_check_sbp_navigation_44 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_gnss_t* check_msg = ( msg_vel_ned_gnss_t *)((void *)last_msg.msg);
+    msg_vel_ned_cov_gnss_t* check_msg = ( msg_vel_ned_cov_gnss_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((check_msg->cov_d_d*100 - 0.00788295920938*100) < 0.05, "incorrect value for cov_d_d, expected 0.00788295920938, is %f", check_msg->cov_d_d);
+    ck_assert_msg((check_msg->cov_e_d*100 - 0.000164670593222*100) < 0.05, "incorrect value for cov_e_d, expected 0.000164670593222, is %f", check_msg->cov_e_d);
+    ck_assert_msg((check_msg->cov_e_e*100 - 0.000989758758806*100) < 0.05, "incorrect value for cov_e_e, expected 0.000989758758806, is %f", check_msg->cov_e_e);
+    ck_assert_msg((check_msg->cov_n_d*100 - 0.000177165129571*100) < 0.05, "incorrect value for cov_n_d, expected 0.000177165129571, is %f", check_msg->cov_n_d);
+    ck_assert_msg((check_msg->cov_n_e*100 - 1.45761223393e-05*100) < 0.05, "incorrect value for cov_n_e, expected 1.45761223393e-05, is %f", check_msg->cov_n_e);
+    ck_assert_msg((check_msg->cov_n_n*100 - 0.0015810149489*100) < 0.05, "incorrect value for cov_n_n, expected 0.0015810149489, is %f", check_msg->cov_n_n);
     ck_assert_msg(check_msg->d == -10, "incorrect value for d, expected -10, is %d", check_msg->d);
     ck_assert_msg(check_msg->e == 0, "incorrect value for e, expected 0, is %d", check_msg->e);
     ck_assert_msg(check_msg->flags == 2, "incorrect value for flags, expected 2, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->h_accuracy == 40, "incorrect value for h_accuracy, expected 40, is %d", check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == -5, "incorrect value for n, expected -5, is %d", check_msg->n);
     ck_assert_msg(check_msg->n_sats == 21, "incorrect value for n_sats, expected 21, is %d", check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 501868200, "incorrect value for tow, expected 501868200, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->v_accuracy == 89, "incorrect value for v_accuracy, expected 89, is %d", check_msg->v_accuracy);
   }
 }
 END_TEST

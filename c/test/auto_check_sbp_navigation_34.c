@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelBody.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTimeGNSS.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,31 +119,28 @@ START_TEST( test_auto_check_sbp_navigation_34 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x213, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x213, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x105, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x105, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,19,2,66,0,42,1,0,0,0,4,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,160,64,0,0,224,64,0,0,224,64,0,0,64,64,0,0,0,64,3,8,120,144, };
+    u8 encoded_frame[] = {85,5,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,177,33, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_vel_body_t* test_msg = ( msg_vel_body_t* )test_msg_storage;
+    msg_utc_time_gnss_t* test_msg = ( msg_utc_time_gnss_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->cov_x_x = 0.0;
-    test_msg->cov_x_y = 5.0;
-    test_msg->cov_x_z = 7.0;
-    test_msg->cov_y_y = 7.0;
-    test_msg->cov_y_z = 3.0;
-    test_msg->cov_z_z = 2.0;
-    test_msg->flags = 8;
-    test_msg->n_sats = 3;
-    test_msg->tow = 1;
-    test_msg->x = 4;
-    test_msg->y = 2;
-    test_msg->z = 1;
-    sbp_send_message(&sbp_state, 0x213, 66, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->day = 9;
+    test_msg->flags = 1;
+    test_msg->hours = 19;
+    test_msg->minutes = 24;
+    test_msg->month = 4;
+    test_msg->ns = 800000000;
+    test_msg->seconds = 9;
+    test_msg->tow = 501867800;
+    test_msg->year = 2021;
+    sbp_send_message(&sbp_state, 0x105, 789, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -160,7 +157,7 @@ START_TEST( test_auto_check_sbp_navigation_34 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 66,
+    ck_assert_msg(last_msg.sender_id == 789,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -172,9 +169,9 @@ START_TEST( test_auto_check_sbp_navigation_34 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 66,
+    ck_assert_msg(last_frame.sender_id == 789,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x213,
+    ck_assert_msg(last_frame.msg_type == 0x105,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -188,21 +185,18 @@ START_TEST( test_auto_check_sbp_navigation_34 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_body_t* check_msg = ( msg_vel_body_t *)((void *)last_msg.msg);
+    msg_utc_time_gnss_t* check_msg = ( msg_utc_time_gnss_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_msg->cov_x_x*100 - 0.0*100) < 0.05, "incorrect value for cov_x_x, expected 0.0, is %f", check_msg->cov_x_x);
-    ck_assert_msg((check_msg->cov_x_y*100 - 5.0*100) < 0.05, "incorrect value for cov_x_y, expected 5.0, is %f", check_msg->cov_x_y);
-    ck_assert_msg((check_msg->cov_x_z*100 - 7.0*100) < 0.05, "incorrect value for cov_x_z, expected 7.0, is %f", check_msg->cov_x_z);
-    ck_assert_msg((check_msg->cov_y_y*100 - 7.0*100) < 0.05, "incorrect value for cov_y_y, expected 7.0, is %f", check_msg->cov_y_y);
-    ck_assert_msg((check_msg->cov_y_z*100 - 3.0*100) < 0.05, "incorrect value for cov_y_z, expected 3.0, is %f", check_msg->cov_y_z);
-    ck_assert_msg((check_msg->cov_z_z*100 - 2.0*100) < 0.05, "incorrect value for cov_z_z, expected 2.0, is %f", check_msg->cov_z_z);
-    ck_assert_msg(check_msg->flags == 8, "incorrect value for flags, expected 8, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 3, "incorrect value for n_sats, expected 3, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 1, "incorrect value for tow, expected 1, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == 4, "incorrect value for x, expected 4, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == 2, "incorrect value for y, expected 2, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == 1, "incorrect value for z, expected 1, is %d", check_msg->z);
+    ck_assert_msg(check_msg->day == 9, "incorrect value for day, expected 9, is %d", check_msg->day);
+    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->hours == 19, "incorrect value for hours, expected 19, is %d", check_msg->hours);
+    ck_assert_msg(check_msg->minutes == 24, "incorrect value for minutes, expected 24, is %d", check_msg->minutes);
+    ck_assert_msg(check_msg->month == 4, "incorrect value for month, expected 4, is %d", check_msg->month);
+    ck_assert_msg(check_msg->ns == 800000000, "incorrect value for ns, expected 800000000, is %d", check_msg->ns);
+    ck_assert_msg(check_msg->seconds == 9, "incorrect value for seconds, expected 9, is %d", check_msg->seconds);
+    ck_assert_msg(check_msg->tow == 501867800, "incorrect value for tow, expected 501867800, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->year == 2021, "incorrect value for year, expected 2021, is %d", check_msg->year);
   }
 }
 END_TEST

@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuRaw.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuAux.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,27 +119,22 @@ START_TEST( test_auto_check_sbp_imu_7 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x900, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x900, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x901, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x901, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,9,52,18,17,26,1,0,192,206,96,0,223,255,44,16,60,0,208,254,238,255,70,135, };
+    u8 encoded_frame[] = {85,1,9,52,18,4,1,244,10,66,200,252, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_imu_raw_t* test_msg = ( msg_imu_raw_t* )test_msg_storage;
+    msg_imu_aux_t* test_msg = ( msg_imu_aux_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->acc_x = 96;
-    test_msg->acc_y = -33;
-    test_msg->acc_z = 4140;
-    test_msg->gyr_x = 60;
-    test_msg->gyr_y = -304;
-    test_msg->gyr_z = -18;
-    test_msg->tow = 3221225754;
-    test_msg->tow_f = 206;
-    sbp_send_message(&sbp_state, 0x900, 4660, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->imu_conf = 66;
+    test_msg->imu_type = 1;
+    test_msg->temp = 2804;
+    sbp_send_message(&sbp_state, 0x901, 4660, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -170,7 +165,7 @@ START_TEST( test_auto_check_sbp_imu_7 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 4660,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x900,
+    ck_assert_msg(last_frame.msg_type == 0x901,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -184,17 +179,12 @@ START_TEST( test_auto_check_sbp_imu_7 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_imu_raw_t* check_msg = ( msg_imu_raw_t *)((void *)last_msg.msg);
+    msg_imu_aux_t* check_msg = ( msg_imu_aux_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->acc_x == 96, "incorrect value for acc_x, expected 96, is %d", check_msg->acc_x);
-    ck_assert_msg(check_msg->acc_y == -33, "incorrect value for acc_y, expected -33, is %d", check_msg->acc_y);
-    ck_assert_msg(check_msg->acc_z == 4140, "incorrect value for acc_z, expected 4140, is %d", check_msg->acc_z);
-    ck_assert_msg(check_msg->gyr_x == 60, "incorrect value for gyr_x, expected 60, is %d", check_msg->gyr_x);
-    ck_assert_msg(check_msg->gyr_y == -304, "incorrect value for gyr_y, expected -304, is %d", check_msg->gyr_y);
-    ck_assert_msg(check_msg->gyr_z == -18, "incorrect value for gyr_z, expected -18, is %d", check_msg->gyr_z);
-    ck_assert_msg(check_msg->tow == 3221225754, "incorrect value for tow, expected 3221225754, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->tow_f == 206, "incorrect value for tow_f, expected 206, is %d", check_msg->tow_f);
+    ck_assert_msg(check_msg->imu_conf == 66, "incorrect value for imu_conf, expected 66, is %d", check_msg->imu_conf);
+    ck_assert_msg(check_msg->imu_type == 1, "incorrect value for imu_type, expected 1, is %d", check_msg->imu_type);
+    ck_assert_msg(check_msg->temp == 2804, "incorrect value for temp, expected 2804, is %d", check_msg->temp);
   }
 }
 END_TEST

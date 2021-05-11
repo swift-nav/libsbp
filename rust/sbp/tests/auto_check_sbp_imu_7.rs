@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuRaw.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuAux.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -23,10 +23,7 @@ use std::io::Cursor;
 #[test]
 fn test_auto_check_sbp_imu_7() {
     {
-        let mut payload = Cursor::new(vec![
-            85, 0, 9, 52, 18, 17, 26, 1, 0, 192, 206, 96, 0, 223, 255, 44, 16, 60, 0, 208, 254,
-            238, 255, 70, 135,
-        ]);
+        let mut payload = Cursor::new(vec![85, 1, 9, 52, 18, 4, 1, 244, 10, 66, 200, 252]);
 
         // Test the round trip payload parsing
         let sbp_msg = {
@@ -36,11 +33,11 @@ fn test_auto_check_sbp_imu_7() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgImuRaw(msg) => {
+            sbp::messages::SBP::MsgImuAux(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x900,
-                    "Incorrect message type, expected 0x900, is {}",
+                    0x901,
+                    "Incorrect message type, expected 0x901, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -50,47 +47,22 @@ fn test_auto_check_sbp_imu_7() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.acc_x, 96,
-                    "incorrect value for acc_x, expected 96, is {}",
-                    msg.acc_x
+                    msg.imu_conf, 66,
+                    "incorrect value for imu_conf, expected 66, is {}",
+                    msg.imu_conf
                 );
                 assert_eq!(
-                    msg.acc_y, -33,
-                    "incorrect value for acc_y, expected -33, is {}",
-                    msg.acc_y
+                    msg.imu_type, 1,
+                    "incorrect value for imu_type, expected 1, is {}",
+                    msg.imu_type
                 );
                 assert_eq!(
-                    msg.acc_z, 4140,
-                    "incorrect value for acc_z, expected 4140, is {}",
-                    msg.acc_z
-                );
-                assert_eq!(
-                    msg.gyr_x, 60,
-                    "incorrect value for gyr_x, expected 60, is {}",
-                    msg.gyr_x
-                );
-                assert_eq!(
-                    msg.gyr_y, -304,
-                    "incorrect value for gyr_y, expected -304, is {}",
-                    msg.gyr_y
-                );
-                assert_eq!(
-                    msg.gyr_z, -18,
-                    "incorrect value for gyr_z, expected -18, is {}",
-                    msg.gyr_z
-                );
-                assert_eq!(
-                    msg.tow, 3221225754,
-                    "incorrect value for tow, expected 3221225754, is {}",
-                    msg.tow
-                );
-                assert_eq!(
-                    msg.tow_f, 206,
-                    "incorrect value for tow_f, expected 206, is {}",
-                    msg.tow_f
+                    msg.temp, 2804,
+                    "incorrect value for temp, expected 2804, is {}",
+                    msg.temp
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgImuRaw"),
+            _ => panic!("Invalid message type! Expected a MsgImuAux"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

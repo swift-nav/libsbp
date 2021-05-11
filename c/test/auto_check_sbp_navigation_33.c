@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTimeGNSS.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTime.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,17 +119,17 @@ START_TEST( test_auto_check_sbp_navigation_33 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x105, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x105, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x103, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x103, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,5,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,177,33, };
+    u8 encoded_frame[] = {85,3,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,199,253, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_utc_time_gnss_t* test_msg = ( msg_utc_time_gnss_t* )test_msg_storage;
+    msg_utc_time_t* test_msg = ( msg_utc_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->day = 9;
     test_msg->flags = 1;
@@ -140,7 +140,7 @@ START_TEST( test_auto_check_sbp_navigation_33 )
     test_msg->seconds = 9;
     test_msg->tow = 501867800;
     test_msg->year = 2021;
-    sbp_send_message(&sbp_state, 0x105, 789, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x103, 789, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -171,7 +171,7 @@ START_TEST( test_auto_check_sbp_navigation_33 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 789,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x105,
+    ck_assert_msg(last_frame.msg_type == 0x103,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -185,7 +185,7 @@ START_TEST( test_auto_check_sbp_navigation_33 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_utc_time_gnss_t* check_msg = ( msg_utc_time_gnss_t *)((void *)last_msg.msg);
+    msg_utc_time_t* check_msg = ( msg_utc_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->day == 9, "incorrect value for day, expected 9, is %d", check_msg->day);

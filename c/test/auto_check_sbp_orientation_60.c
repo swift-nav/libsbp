@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientQuat.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientEuler.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,29 +119,27 @@ START_TEST( test_auto_check_sbp_orientation_60 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x220, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x220, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x221, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x221, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
+    u8 encoded_frame[] = {85,33,2,66,0,29,1,0,0,0,1,0,0,0,2,0,0,0,8,0,0,0,0,0,224,64,0,0,64,64,0,0,224,64,3,44,226, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_orient_quat_t* test_msg = ( msg_orient_quat_t* )test_msg_storage;
+    msg_orient_euler_t* test_msg = ( msg_orient_euler_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->flags = 1;
-    test_msg->tow = 0;
-    test_msg->w = 3;
-    test_msg->w_accuracy = 3.0;
-    test_msg->x = 7;
-    test_msg->x_accuracy = 4.0;
-    test_msg->y = 8;
-    test_msg->y_accuracy = 8.0;
-    test_msg->z = 4;
-    test_msg->z_accuracy = 3.0;
-    sbp_send_message(&sbp_state, 0x220, 66, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->flags = 3;
+    test_msg->pitch = 2;
+    test_msg->pitch_accuracy = 3.0;
+    test_msg->roll = 1;
+    test_msg->roll_accuracy = 7.0;
+    test_msg->tow = 1;
+    test_msg->yaw = 8;
+    test_msg->yaw_accuracy = 7.0;
+    sbp_send_message(&sbp_state, 0x221, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -172,7 +170,7 @@ START_TEST( test_auto_check_sbp_orientation_60 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 66,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x220,
+    ck_assert_msg(last_frame.msg_type == 0x221,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -186,19 +184,17 @@ START_TEST( test_auto_check_sbp_orientation_60 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_orient_quat_t* check_msg = ( msg_orient_quat_t *)((void *)last_msg.msg);
+    msg_orient_euler_t* check_msg = ( msg_orient_euler_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->tow == 0, "incorrect value for tow, expected 0, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->w == 3, "incorrect value for w, expected 3, is %d", check_msg->w);
-    ck_assert_msg((check_msg->w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for w_accuracy, expected 3.0, is %f", check_msg->w_accuracy);
-    ck_assert_msg(check_msg->x == 7, "incorrect value for x, expected 7, is %d", check_msg->x);
-    ck_assert_msg((check_msg->x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for x_accuracy, expected 4.0, is %f", check_msg->x_accuracy);
-    ck_assert_msg(check_msg->y == 8, "incorrect value for y, expected 8, is %d", check_msg->y);
-    ck_assert_msg((check_msg->y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for y_accuracy, expected 8.0, is %f", check_msg->y_accuracy);
-    ck_assert_msg(check_msg->z == 4, "incorrect value for z, expected 4, is %d", check_msg->z);
-    ck_assert_msg((check_msg->z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for z_accuracy, expected 3.0, is %f", check_msg->z_accuracy);
+    ck_assert_msg(check_msg->flags == 3, "incorrect value for flags, expected 3, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->pitch == 2, "incorrect value for pitch, expected 2, is %d", check_msg->pitch);
+    ck_assert_msg((check_msg->pitch_accuracy*100 - 3.0*100) < 0.05, "incorrect value for pitch_accuracy, expected 3.0, is %f", check_msg->pitch_accuracy);
+    ck_assert_msg(check_msg->roll == 1, "incorrect value for roll, expected 1, is %d", check_msg->roll);
+    ck_assert_msg((check_msg->roll_accuracy*100 - 7.0*100) < 0.05, "incorrect value for roll_accuracy, expected 7.0, is %f", check_msg->roll_accuracy);
+    ck_assert_msg(check_msg->tow == 1, "incorrect value for tow, expected 1, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", check_msg->yaw);
+    ck_assert_msg((check_msg->yaw_accuracy*100 - 7.0*100) < 0.05, "incorrect value for yaw_accuracy, expected 7.0, is %f", check_msg->yaw_accuracy);
   }
 }
 END_TEST

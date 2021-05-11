@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgEphemerisGPS.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgEphemerisGLO.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,14 +24,11 @@ use std::io::Cursor;
 fn test_auto_check_sbp_observation_48() {
     {
         let mut payload = Cursor::new(vec![
-            85, 138, 0, 10, 9, 139, 22, 0, 176, 207, 6, 0, 106, 8, 0, 0, 0, 64, 64, 56, 0, 0, 1, 0,
-            0, 0, 152, 178, 0, 64, 81, 194, 0, 80, 154, 67, 0, 32, 56, 182, 0, 128, 82, 54, 0, 0,
-            0, 50, 0, 0, 248, 179, 114, 216, 96, 180, 49, 117, 56, 62, 142, 41, 5, 235, 95, 135,
-            150, 191, 0, 0, 0, 32, 191, 247, 124, 63, 0, 0, 192, 206, 140, 33, 180, 64, 41, 131,
-            179, 134, 141, 248, 253, 191, 227, 133, 81, 54, 204, 30, 67, 190, 216, 59, 199, 39, 96,
-            168, 239, 191, 71, 11, 217, 147, 145, 228, 237, 63, 221, 47, 100, 224, 255, 47, 198,
-            189, 96, 139, 37, 186, 0, 0, 30, 45, 0, 0, 0, 0, 176, 207, 6, 0, 106, 8, 45, 45, 0,
-            170, 4,
+            85, 139, 0, 10, 9, 92, 4, 3, 70, 197, 6, 0, 106, 8, 0, 0, 160, 64, 96, 9, 0, 0, 1, 0,
+            0, 0, 128, 43, 128, 97, 175, 184, 0, 0, 64, 177, 0, 0, 128, 66, 246, 57, 103, 193, 0,
+            0, 0, 34, 170, 78, 34, 65, 0, 0, 240, 199, 84, 86, 117, 193, 0, 0, 0, 98, 6, 250, 154,
+            192, 0, 0, 0, 217, 58, 221, 163, 192, 0, 0, 0, 184, 138, 46, 139, 64, 0, 0, 122, 53, 0,
+            0, 122, 53, 0, 128, 59, 54, 14, 100, 89, 149,
         ]);
 
         // Test the round trip payload parsing
@@ -42,11 +39,11 @@ fn test_auto_check_sbp_observation_48() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgEphemerisGPS(msg) => {
+            sbp::messages::SBP::MsgEphemerisGlo(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x8a,
-                    "Incorrect message type, expected 0x8a, is {}",
+                    0x8b,
+                    "Incorrect message type, expected 0x8b, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -56,53 +53,23 @@ fn test_auto_check_sbp_observation_48() {
                     sender_id
                 );
                 assert!(
-                    msg.af0.almost_eq(-6.31501898169517517e-04),
-                    "incorrect value for af0, expected -6.31501898169517517e-04, is {:e}",
-                    msg.af0
+                    msg.acc[0].almost_eq(9.31322574615478516e-07),
+                    "incorrect value for acc[0], expected 9.31322574615478516e-07, is {:e}",
+                    msg.acc[0]
                 );
                 assert!(
-                    msg.af1.almost_eq(8.98126018000766635e-12),
-                    "incorrect value for af1, expected 8.98126018000766635e-12, is {:e}",
-                    msg.af1
+                    msg.acc[1].almost_eq(9.31322574615478516e-07),
+                    "incorrect value for acc[1], expected 9.31322574615478516e-07, is {:e}",
+                    msg.acc[1]
                 );
                 assert!(
-                    msg.af2.almost_eq(0.00000000000000000e+00),
-                    "incorrect value for af2, expected 0.00000000000000000e+00, is {:e}",
-                    msg.af2
-                );
-                assert!(
-                    msg.c_ic.almost_eq(7.45058059692382812e-09),
-                    "incorrect value for c_ic, expected 7.45058059692382812e-09, is {:e}",
-                    msg.c_ic
-                );
-                assert!(
-                    msg.c_is.almost_eq(-1.15483999252319336e-07),
-                    "incorrect value for c_is, expected -1.15483999252319336e-07, is {:e}",
-                    msg.c_is
-                );
-                assert!(
-                    msg.c_rc.almost_eq(3.08625000000000000e+02),
-                    "incorrect value for c_rc, expected 3.08625000000000000e+02, is {:e}",
-                    msg.c_rc
-                );
-                assert!(
-                    msg.c_rs.almost_eq(-5.23125000000000000e+01),
-                    "incorrect value for c_rs, expected -5.23125000000000000e+01, is {:e}",
-                    msg.c_rs
-                );
-                assert!(
-                    msg.c_uc.almost_eq(-2.74367630481719971e-06),
-                    "incorrect value for c_uc, expected -2.74367630481719971e-06, is {:e}",
-                    msg.c_uc
-                );
-                assert!(
-                    msg.c_us.almost_eq(3.13669443130493164e-06),
-                    "incorrect value for c_us, expected 3.13669443130493164e-06, is {:e}",
-                    msg.c_us
+                    msg.acc[2].almost_eq(2.79396772384643555e-06),
+                    "incorrect value for acc[2], expected 2.79396772384643555e-06, is {:e}",
+                    msg.acc[2]
                 );
                 assert_eq!(
-                    msg.common.fit_interval, 14400,
-                    "incorrect value for common.fit_interval, expected 14400, is {}",
+                    msg.common.fit_interval, 2400,
+                    "incorrect value for common.fit_interval, expected 2400, is {}",
                     msg.common.fit_interval
                 );
                 assert_eq!(
@@ -111,18 +78,18 @@ fn test_auto_check_sbp_observation_48() {
                     msg.common.health_bits
                 );
                 assert_eq!(
-                    msg.common.sid.code, 0,
-                    "incorrect value for common.sid.code, expected 0, is {}",
+                    msg.common.sid.code, 3,
+                    "incorrect value for common.sid.code, expected 3, is {}",
                     msg.common.sid.code
                 );
                 assert_eq!(
-                    msg.common.sid.sat, 22,
-                    "incorrect value for common.sid.sat, expected 22, is {}",
+                    msg.common.sid.sat, 4,
+                    "incorrect value for common.sid.sat, expected 4, is {}",
                     msg.common.sid.sat
                 );
                 assert_eq!(
-                    msg.common.toe.tow, 446384,
-                    "incorrect value for common.toe.tow, expected 446384, is {}",
+                    msg.common.toe.tow, 443718,
+                    "incorrect value for common.toe.tow, expected 443718, is {}",
                     msg.common.toe.tow
                 );
                 assert_eq!(
@@ -131,8 +98,8 @@ fn test_auto_check_sbp_observation_48() {
                     msg.common.toe.wn
                 );
                 assert!(
-                    msg.common.ura.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for common.ura, expected 2.00000000000000000e+00, is {:e}",
+                    msg.common.ura.almost_eq(5.00000000000000000e+00),
+                    "incorrect value for common.ura, expected 5.00000000000000000e+00, is {:e}",
                     msg.common.ura
                 );
                 assert_eq!(
@@ -141,77 +108,62 @@ fn test_auto_check_sbp_observation_48() {
                     msg.common.valid
                 );
                 assert!(
-                    msg.dn.almost_eq(5.69452291402237483e-09),
-                    "incorrect value for dn, expected 5.69452291402237483e-09, is {:e}",
-                    msg.dn
-                );
-                assert!(
-                    msg.ecc.almost_eq(7.07220705226063728e-03),
-                    "incorrect value for ecc, expected 7.07220705226063728e-03, is {:e}",
-                    msg.ecc
-                );
-                assert!(
-                    msg.inc.almost_eq(9.34151448025979714e-01),
-                    "incorrect value for inc, expected 9.34151448025979714e-01, is {:e}",
-                    msg.inc
-                );
-                assert!(
-                    msg.inc_dot.almost_eq(-4.03588239641575691e-11),
-                    "incorrect value for inc_dot, expected -4.03588239641575691e-11, is {:e}",
-                    msg.inc_dot
+                    msg.d_tau.almost_eq(-2.79396772384643555e-09),
+                    "incorrect value for d_tau, expected -2.79396772384643555e-09, is {:e}",
+                    msg.d_tau
                 );
                 assert_eq!(
-                    msg.iodc, 45,
-                    "incorrect value for iodc, expected 45, is {}",
-                    msg.iodc
+                    msg.fcn, 14,
+                    "incorrect value for fcn, expected 14, is {}",
+                    msg.fcn
+                );
+                assert!(
+                    msg.gamma.almost_eq(9.09494701772928238e-13),
+                    "incorrect value for gamma, expected 9.09494701772928238e-13, is {:e}",
+                    msg.gamma
                 );
                 assert_eq!(
-                    msg.iode, 45,
-                    "incorrect value for iode, expected 45, is {}",
-                    msg.iode
+                    msg.iod, 100,
+                    "incorrect value for iod, expected 100, is {}",
+                    msg.iod
                 );
                 assert!(
-                    msg.m0.almost_eq(-2.20007884211468815e-02),
-                    "incorrect value for m0, expected -2.20007884211468815e-02, is {:e}",
-                    msg.m0
+                    msg.pos[0].almost_eq(-1.21773300781250000e+07),
+                    "incorrect value for pos[0], expected -1.21773300781250000e+07, is {:e}",
+                    msg.pos[0]
                 );
                 assert!(
-                    msg.omega0.almost_eq(-1.87318184487976169e+00),
-                    "incorrect value for omega0, expected -1.87318184487976169e+00, is {:e}",
-                    msg.omega0
+                    msg.pos[1].almost_eq(5.99893066406250000e+05),
+                    "incorrect value for pos[1], expected 5.99893066406250000e+05, is {:e}",
+                    msg.pos[1]
                 );
                 assert!(
-                    msg.omegadot.almost_eq(-8.90358515577419627e-09),
-                    "incorrect value for omegadot, expected -8.90358515577419627e-09, is {:e}",
-                    msg.omegadot
+                    msg.pos[2].almost_eq(-2.23737084960937500e+07),
+                    "incorrect value for pos[2], expected -2.23737084960937500e+07, is {:e}",
+                    msg.pos[2]
                 );
                 assert!(
-                    msg.sqrta.almost_eq(5.15355002975463867e+03),
-                    "incorrect value for sqrta, expected 5.15355002975463867e+03, is {:e}",
-                    msg.sqrta
+                    msg.tau.almost_eq(-8.36281105875968933e-05),
+                    "incorrect value for tau, expected -8.36281105875968933e-05, is {:e}",
+                    msg.tau
                 );
                 assert!(
-                    msg.tgd.almost_eq(-1.76951289176940918e-08),
-                    "incorrect value for tgd, expected -1.76951289176940918e-08, is {:e}",
-                    msg.tgd
-                );
-                assert_eq!(
-                    msg.toc.tow, 446384,
-                    "incorrect value for toc.tow, expected 446384, is {}",
-                    msg.toc.tow
-                );
-                assert_eq!(
-                    msg.toc.wn, 2154,
-                    "incorrect value for toc.wn, expected 2154, is {}",
-                    msg.toc.wn
+                    msg.vel[0].almost_eq(-1.72650623321533203e+03),
+                    "incorrect value for vel[0], expected -1.72650623321533203e+03, is {:e}",
+                    msg.vel[0]
                 );
                 assert!(
-                    msg.w.almost_eq(-9.89303662959964747e-01),
-                    "incorrect value for w, expected -9.89303662959964747e-01, is {:e}",
-                    msg.w
+                    msg.vel[1].almost_eq(-2.54261493682861328e+03),
+                    "incorrect value for vel[1], expected -2.54261493682861328e+03, is {:e}",
+                    msg.vel[1]
+                );
+                assert!(
+                    msg.vel[2].almost_eq(8.69817733764648438e+02),
+                    "incorrect value for vel[2], expected 8.69817733764648438e+02, is {:e}",
+                    msg.vel[2]
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgEphemerisGPS"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisGlo"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

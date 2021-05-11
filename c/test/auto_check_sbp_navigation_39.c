@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelEcefGnss.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelEcefCovGnss.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,26 +119,31 @@ START_TEST( test_auto_check_sbp_navigation_39 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x22d, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x22d, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x235, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x235, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,45,2,0,16,20,224,229,233,29,253,255,255,255,1,0,0,0,4,0,0,0,89,0,21,2,205,16, };
+    u8 encoded_frame[] = {85,53,2,0,16,42,224,229,233,29,253,255,255,255,1,0,0,0,4,0,0,0,46,224,32,59,32,214,14,59,150,147,220,186,19,63,138,59,26,150,35,187,11,193,119,59,21,2,22,230, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_vel_ecef_gnss_t* test_msg = ( msg_vel_ecef_gnss_t* )test_msg_storage;
+    msg_vel_ecef_cov_gnss_t* test_msg = ( msg_vel_ecef_cov_gnss_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 89;
+    test_msg->cov_x_x = 0.0024547684006392956;
+    test_msg->cov_x_y = 0.0021795108914375305;
+    test_msg->cov_x_z = -0.0016828652005642653;
+    test_msg->cov_y_y = 0.004218944814056158;
+    test_msg->cov_y_z = -0.0024961293675005436;
+    test_msg->cov_z_z = 0.0037804271560162306;
     test_msg->flags = 2;
     test_msg->n_sats = 21;
     test_msg->tow = 501868000;
     test_msg->x = -3;
     test_msg->y = 1;
     test_msg->z = 4;
-    sbp_send_message(&sbp_state, 0x22d, 4096, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x235, 4096, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -169,7 +174,7 @@ START_TEST( test_auto_check_sbp_navigation_39 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 4096,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x22d,
+    ck_assert_msg(last_frame.msg_type == 0x235,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -183,10 +188,15 @@ START_TEST( test_auto_check_sbp_navigation_39 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_gnss_t* check_msg = ( msg_vel_ecef_gnss_t *)((void *)last_msg.msg);
+    msg_vel_ecef_cov_gnss_t* check_msg = ( msg_vel_ecef_cov_gnss_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 89, "incorrect value for accuracy, expected 89, is %d", check_msg->accuracy);
+    ck_assert_msg((check_msg->cov_x_x*100 - 0.00245476840064*100) < 0.05, "incorrect value for cov_x_x, expected 0.00245476840064, is %f", check_msg->cov_x_x);
+    ck_assert_msg((check_msg->cov_x_y*100 - 0.00217951089144*100) < 0.05, "incorrect value for cov_x_y, expected 0.00217951089144, is %f", check_msg->cov_x_y);
+    ck_assert_msg((check_msg->cov_x_z*100 - -0.00168286520056*100) < 0.05, "incorrect value for cov_x_z, expected -0.00168286520056, is %f", check_msg->cov_x_z);
+    ck_assert_msg((check_msg->cov_y_y*100 - 0.00421894481406*100) < 0.05, "incorrect value for cov_y_y, expected 0.00421894481406, is %f", check_msg->cov_y_y);
+    ck_assert_msg((check_msg->cov_y_z*100 - -0.0024961293675*100) < 0.05, "incorrect value for cov_y_z, expected -0.0024961293675, is %f", check_msg->cov_y_z);
+    ck_assert_msg((check_msg->cov_z_z*100 - 0.00378042715602*100) < 0.05, "incorrect value for cov_z_z, expected 0.00378042715602, is %f", check_msg->cov_z_z);
     ck_assert_msg(check_msg->flags == 2, "incorrect value for flags, expected 2, is %d", check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 21, "incorrect value for n_sats, expected 21, is %d", check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 501868000, "incorrect value for tow, expected 501868000, is %d", check_msg->tow);

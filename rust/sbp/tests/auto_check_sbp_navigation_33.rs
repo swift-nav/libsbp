@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTimeGNSS.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTime.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_33() {
     {
         let mut payload = Cursor::new(vec![
-            85, 5, 1, 21, 3, 16, 1, 24, 229, 233, 29, 229, 7, 4, 9, 19, 24, 9, 0, 8, 175, 47, 177,
-            33,
+            85, 3, 1, 21, 3, 16, 1, 24, 229, 233, 29, 229, 7, 4, 9, 19, 24, 9, 0, 8, 175, 47, 199,
+            253,
         ]);
 
         // Test the round trip payload parsing
@@ -36,11 +36,11 @@ fn test_auto_check_sbp_navigation_33() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgUtcTimeGnss(msg) => {
+            sbp::messages::SBP::MsgUtcTime(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x105,
-                    "Incorrect message type, expected 0x105, is {}",
+                    0x103,
+                    "Incorrect message type, expected 0x103, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -95,7 +95,7 @@ fn test_auto_check_sbp_navigation_33() {
                     msg.year
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgUtcTimeGnss"),
+            _ => panic!("Invalid message type! Expected a MsgUtcTime"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

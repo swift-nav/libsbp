@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientEuler.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgAngularRate.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,7 @@ use std::io::Cursor;
 fn test_auto_check_sbp_orientation_59() {
     {
         let mut payload = Cursor::new(vec![
-            85, 33, 2, 66, 0, 29, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 8, 0, 0, 0, 0, 0, 224, 64, 0,
-            0, 64, 64, 0, 0, 224, 64, 3, 44, 226,
+            85, 34, 2, 66, 0, 17, 2, 0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 2, 0, 0, 0, 0, 88, 70,
         ]);
 
         // Test the round trip payload parsing
@@ -36,11 +35,11 @@ fn test_auto_check_sbp_orientation_59() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgOrientEuler(msg) => {
+            sbp::messages::SBP::MsgAngularRate(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x221,
-                    "Incorrect message type, expected 0x221, is {}",
+                    0x222,
+                    "Incorrect message type, expected 0x222, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -50,47 +49,20 @@ fn test_auto_check_sbp_orientation_59() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.flags, 3,
-                    "incorrect value for flags, expected 3, is {}",
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
                     msg.flags
                 );
                 assert_eq!(
-                    msg.pitch, 2,
-                    "incorrect value for pitch, expected 2, is {}",
-                    msg.pitch
-                );
-                assert!(
-                    msg.pitch_accuracy.almost_eq(3.00000000000000000e+00),
-                    "incorrect value for pitch_accuracy, expected 3.00000000000000000e+00, is {:e}",
-                    msg.pitch_accuracy
-                );
-                assert_eq!(
-                    msg.roll, 1,
-                    "incorrect value for roll, expected 1, is {}",
-                    msg.roll
-                );
-                assert!(
-                    msg.roll_accuracy.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for roll_accuracy, expected 7.00000000000000000e+00, is {:e}",
-                    msg.roll_accuracy
-                );
-                assert_eq!(
-                    msg.tow, 1,
-                    "incorrect value for tow, expected 1, is {}",
+                    msg.tow, 2,
+                    "incorrect value for tow, expected 2, is {}",
                     msg.tow
                 );
-                assert_eq!(
-                    msg.yaw, 8,
-                    "incorrect value for yaw, expected 8, is {}",
-                    msg.yaw
-                );
-                assert!(
-                    msg.yaw_accuracy.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for yaw_accuracy, expected 7.00000000000000000e+00, is {:e}",
-                    msg.yaw_accuracy
-                );
+                assert_eq!(msg.x, 2, "incorrect value for x, expected 2, is {}", msg.x);
+                assert_eq!(msg.y, 5, "incorrect value for y, expected 5, is {}", msg.y);
+                assert_eq!(msg.z, 2, "incorrect value for z, expected 2, is {}", msg.z);
             }
-            _ => panic!("Invalid message type! Expected a MsgOrientEuler"),
+            _ => panic!("Invalid message type! Expected a MsgAngularRate"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLlhGnss.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLlhCovGnss.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,9 +24,10 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_30() {
     {
         let mut payload = Cursor::new(vec![
-            85, 42, 2, 0, 16, 34, 24, 229, 233, 29, 73, 123, 28, 207, 101, 234, 66, 64, 100, 168,
-            19, 20, 86, 146, 94, 192, 214, 198, 35, 120, 209, 100, 49, 192, 87, 0, 181, 0, 18, 4,
-            105, 55,
+            85, 49, 2, 0, 16, 54, 24, 229, 233, 29, 73, 123, 28, 207, 101, 234, 66, 64, 100, 168,
+            19, 20, 86, 146, 94, 192, 214, 198, 35, 120, 209, 100, 49, 192, 12, 102, 245, 59, 6,
+            181, 192, 185, 168, 79, 243, 58, 96, 60, 148, 59, 253, 58, 93, 186, 159, 174, 6, 61,
+            18, 4, 10, 196,
         ]);
 
         // Test the round trip payload parsing
@@ -37,11 +38,11 @@ fn test_auto_check_sbp_navigation_30() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosLLHGnss(msg) => {
+            sbp::messages::SBP::MsgPosLLHCovGnss(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x22a,
-                    "Incorrect message type, expected 0x22a, is {}",
+                    0x231,
+                    "Incorrect message type, expected 0x231, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -50,15 +51,40 @@ fn test_auto_check_sbp_navigation_30() {
                     "incorrect sender id, expected 0x1000, is {}",
                     sender_id
                 );
+                assert!(
+                    msg.cov_d_d.almost_eq(3.28813754022121429e-02),
+                    "incorrect value for cov_d_d, expected 3.28813754022121429e-02, is {:e}",
+                    msg.cov_d_d
+                );
+                assert!(
+                    msg.cov_e_d.almost_eq(-8.43927089590579271e-04),
+                    "incorrect value for cov_e_d, expected -8.43927089590579271e-04, is {:e}",
+                    msg.cov_e_d
+                );
+                assert!(
+                    msg.cov_e_e.almost_eq(4.52379882335662842e-03),
+                    "incorrect value for cov_e_e, expected 4.52379882335662842e-03, is {:e}",
+                    msg.cov_e_e
+                );
+                assert!(
+                    msg.cov_n_d.almost_eq(1.85631681233644485e-03),
+                    "incorrect value for cov_n_d, expected 1.85631681233644485e-03, is {:e}",
+                    msg.cov_n_d
+                );
+                assert!(
+                    msg.cov_n_e.almost_eq(-3.67559667211025953e-04),
+                    "incorrect value for cov_n_e, expected -3.67559667211025953e-04, is {:e}",
+                    msg.cov_n_e
+                );
+                assert!(
+                    msg.cov_n_n.almost_eq(7.48897157609462738e-03),
+                    "incorrect value for cov_n_n, expected 7.48897157609462738e-03, is {:e}",
+                    msg.cov_n_n
+                );
                 assert_eq!(
                     msg.flags, 4,
                     "incorrect value for flags, expected 4, is {}",
                     msg.flags
-                );
-                assert_eq!(
-                    msg.h_accuracy, 87,
-                    "incorrect value for h_accuracy, expected 87, is {}",
-                    msg.h_accuracy
                 );
                 assert!(
                     msg.height.almost_eq(-1.73938212478013483e+01),
@@ -85,13 +111,8 @@ fn test_auto_check_sbp_navigation_30() {
                     "incorrect value for tow, expected 501867800, is {}",
                     msg.tow
                 );
-                assert_eq!(
-                    msg.v_accuracy, 181,
-                    "incorrect value for v_accuracy, expected 181, is {}",
-                    msg.v_accuracy
-                );
             }
-            _ => panic!("Invalid message type! Expected a MsgPosLLHGnss"),
+            _ => panic!("Invalid message type! Expected a MsgPosLLHCovGnss"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

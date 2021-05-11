@@ -46,9 +46,9 @@ process. This is likely to change in the future.
    struct. GCC won't compile this.
 
 4. (Optional) Add a [`test`](spec/tests/yaml/swiftnav/sbp) case and
-   update the appropriate language libaries. If a test case is not
-   added, increment `EXPECTED_MISSING_MESSAGES` in
-   `python/tests/sbp/test_messages.py`.
+   update the appropriate language libaries using `make gen`.
+   If a test case is not added, increment `EXPECTED_MISSING_MESSAGES`
+   in `python/tests/sbp/test_messages.py`.
 
 5. Run `make test`.
 

@@ -163,6 +163,8 @@ deps-quicktype-elm: verify-prereq-quicktype
 
 # Generators
 
+gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype-typescript gen-quicktype-javascript gen-quicktype-elm
+
 gen-c:
 	$(call announce-begin,"Generating C headers")
 	cd $(SWIFTNAV_ROOT)/generator; \

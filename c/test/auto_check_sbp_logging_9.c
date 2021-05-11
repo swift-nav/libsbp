@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/logging/test_MsgLog.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/logging/test_MsgFwd.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,27 +119,28 @@ START_TEST( test_auto_check_sbp_logging_9 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x0401, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x0401, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x402, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x402, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,1,4,10,9,44,6,70,105,108,116,101,114,101,100,32,97,108,108,32,111,98,115,32,102,114,111,109,32,50,51,49,52,32,97,116,32,116,111,119,32,56,51,46,53,51,57,48,49,57,177,163, };
+    u8 encoded_frame[] = {85,2,4,66,0,18,0,0,86,81,68,47,81,103,65,69,65,65,65,65,65,69,97,103,125,95, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_log_t* test_msg = ( msg_log_t* )test_msg_storage;
+    msg_fwd_t* test_msg = ( msg_fwd_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->level = 6;
     {
-      const char assign_string[] = { (char)70,(char)105,(char)108,(char)116,(char)101,(char)114,(char)101,(char)100,(char)32,(char)97,(char)108,(char)108,(char)32,(char)111,(char)98,(char)115,(char)32,(char)102,(char)114,(char)111,(char)109,(char)32,(char)50,(char)51,(char)49,(char)52,(char)32,(char)97,(char)116,(char)32,(char)116,(char)111,(char)119,(char)32,(char)56,(char)51,(char)46,(char)53,(char)51,(char)57,(char)48,(char)49,(char)57 };
-      memcpy(test_msg->text, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg->text) == 0) {
+      const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
+      memcpy(test_msg->fwd_payload, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->fwd_payload) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0x0401, 2314, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->protocol = 0;
+    test_msg->source = 0;
+    sbp_send_message(&sbp_state, 0x402, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -156,7 +157,7 @@ START_TEST( test_auto_check_sbp_logging_9 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 2314,
+    ck_assert_msg(last_msg.sender_id == 66,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -168,9 +169,9 @@ START_TEST( test_auto_check_sbp_logging_9 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 2314,
+    ck_assert_msg(last_frame.sender_id == 66,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x0401,
+    ck_assert_msg(last_frame.msg_type == 0x402,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -184,14 +185,15 @@ START_TEST( test_auto_check_sbp_logging_9 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_log_t* check_msg = ( msg_log_t *)((void *)last_msg.msg);
+    msg_fwd_t* check_msg = ( msg_fwd_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->level == 6, "incorrect value for level, expected 6, is %d", check_msg->level);
     {
-      const char check_string[] = { (char)70,(char)105,(char)108,(char)116,(char)101,(char)114,(char)101,(char)100,(char)32,(char)97,(char)108,(char)108,(char)32,(char)111,(char)98,(char)115,(char)32,(char)102,(char)114,(char)111,(char)109,(char)32,(char)50,(char)51,(char)49,(char)52,(char)32,(char)97,(char)116,(char)32,(char)116,(char)111,(char)119,(char)32,(char)56,(char)51,(char)46,(char)53,(char)51,(char)57,(char)48,(char)49,(char)57 };
-      ck_assert_msg(memcmp(check_msg->text, check_string, sizeof(check_string)) == 0, "incorrect value for check_msg->text, expected string '%s', is '%s'", check_string, check_msg->text);
+      const char check_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
+      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0, "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'", check_string, check_msg->fwd_payload);
     }
+    ck_assert_msg(check_msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", check_msg->protocol);
+    ck_assert_msg(check_msg->source == 0, "incorrect value for source, expected 0, is %d", check_msg->source);
   }
 }
 END_TEST

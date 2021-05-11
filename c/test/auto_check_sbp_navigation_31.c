@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgProtectionLevel.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLlhGnss.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,26 +119,27 @@ START_TEST( test_auto_check_sbp_navigation_31 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x216, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x216, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x22a, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x22a, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,22,2,0,16,33,136,227,233,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,82,195, };
+    u8 encoded_frame[] = {85,42,2,0,16,34,24,229,233,29,73,123,28,207,101,234,66,64,100,168,19,20,86,146,94,192,214,198,35,120,209,100,49,192,87,0,181,0,18,4,105,55, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_protection_level_dep_a_t* test_msg = ( msg_protection_level_dep_a_t* )test_msg_storage;
+    msg_pos_llh_gnss_t* test_msg = ( msg_pos_llh_gnss_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->flags = 0;
-    test_msg->height = 0.0;
-    test_msg->hpl = 0;
-    test_msg->lat = 0.0;
-    test_msg->lon = 0.0;
-    test_msg->tow = 501867400;
-    test_msg->vpl = 0;
-    sbp_send_message(&sbp_state, 0x216, 4096, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->flags = 4;
+    test_msg->h_accuracy = 87;
+    test_msg->height = -17.39382124780135;
+    test_msg->lat = 37.83123196497633;
+    test_msg->lon = -122.28650381011681;
+    test_msg->n_sats = 18;
+    test_msg->tow = 501867800;
+    test_msg->v_accuracy = 181;
+    sbp_send_message(&sbp_state, 0x22a, 4096, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -169,7 +170,7 @@ START_TEST( test_auto_check_sbp_navigation_31 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 4096,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x216,
+    ck_assert_msg(last_frame.msg_type == 0x22a,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -183,16 +184,17 @@ START_TEST( test_auto_check_sbp_navigation_31 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_protection_level_dep_a_t* check_msg = ( msg_protection_level_dep_a_t *)((void *)last_msg.msg);
+    msg_pos_llh_gnss_t* check_msg = ( msg_pos_llh_gnss_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg((check_msg->height*100 - 0.0*100) < 0.05, "incorrect value for height, expected 0.0, is %f", check_msg->height);
-    ck_assert_msg(check_msg->hpl == 0, "incorrect value for hpl, expected 0, is %d", check_msg->hpl);
-    ck_assert_msg((check_msg->lat*100 - 0.0*100) < 0.05, "incorrect value for lat, expected 0.0, is %f", check_msg->lat);
-    ck_assert_msg((check_msg->lon*100 - 0.0*100) < 0.05, "incorrect value for lon, expected 0.0, is %f", check_msg->lon);
-    ck_assert_msg(check_msg->tow == 501867400, "incorrect value for tow, expected 501867400, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->vpl == 0, "incorrect value for vpl, expected 0, is %d", check_msg->vpl);
+    ck_assert_msg(check_msg->flags == 4, "incorrect value for flags, expected 4, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->h_accuracy == 87, "incorrect value for h_accuracy, expected 87, is %d", check_msg->h_accuracy);
+    ck_assert_msg((check_msg->height*100 - -17.3938212478*100) < 0.05, "incorrect value for height, expected -17.3938212478, is %f", check_msg->height);
+    ck_assert_msg((check_msg->lat*100 - 37.831231965*100) < 0.05, "incorrect value for lat, expected 37.831231965, is %f", check_msg->lat);
+    ck_assert_msg((check_msg->lon*100 - -122.28650381*100) < 0.05, "incorrect value for lon, expected -122.28650381, is %f", check_msg->lon);
+    ck_assert_msg(check_msg->n_sats == 18, "incorrect value for n_sats, expected 18, is %d", check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 501867800, "incorrect value for tow, expected 501867800, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->v_accuracy == 181, "incorrect value for v_accuracy, expected 181, is %d", check_msg->v_accuracy);
   }
 }
 END_TEST

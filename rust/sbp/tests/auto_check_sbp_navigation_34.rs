@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelBody.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTimeGNSS.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_34() {
     {
         let mut payload = Cursor::new(vec![
-            85, 19, 2, 66, 0, 42, 1, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            160, 64, 0, 0, 224, 64, 0, 0, 224, 64, 0, 0, 64, 64, 0, 0, 0, 64, 3, 8, 120, 144,
+            85, 5, 1, 21, 3, 16, 1, 24, 229, 233, 29, 229, 7, 4, 9, 19, 24, 9, 0, 8, 175, 47, 177,
+            33,
         ]);
 
         // Test the round trip payload parsing
@@ -36,69 +36,66 @@ fn test_auto_check_sbp_navigation_34() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgVelBody(msg) => {
+            sbp::messages::SBP::MsgUtcTimeGnss(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x213,
-                    "Incorrect message type, expected 0x213, is {}",
+                    0x105,
+                    "Incorrect message type, expected 0x105, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id, 0x315,
+                    "incorrect sender id, expected 0x315, is {}",
                     sender_id
                 );
-                assert!(
-                    msg.cov_x_x.almost_eq(0.00000000000000000e+00),
-                    "incorrect value for cov_x_x, expected 0.00000000000000000e+00, is {:e}",
-                    msg.cov_x_x
-                );
-                assert!(
-                    msg.cov_x_y.almost_eq(5.00000000000000000e+00),
-                    "incorrect value for cov_x_y, expected 5.00000000000000000e+00, is {:e}",
-                    msg.cov_x_y
-                );
-                assert!(
-                    msg.cov_x_z.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for cov_x_z, expected 7.00000000000000000e+00, is {:e}",
-                    msg.cov_x_z
-                );
-                assert!(
-                    msg.cov_y_y.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for cov_y_y, expected 7.00000000000000000e+00, is {:e}",
-                    msg.cov_y_y
-                );
-                assert!(
-                    msg.cov_y_z.almost_eq(3.00000000000000000e+00),
-                    "incorrect value for cov_y_z, expected 3.00000000000000000e+00, is {:e}",
-                    msg.cov_y_z
-                );
-                assert!(
-                    msg.cov_z_z.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for cov_z_z, expected 2.00000000000000000e+00, is {:e}",
-                    msg.cov_z_z
+                assert_eq!(
+                    msg.day, 9,
+                    "incorrect value for day, expected 9, is {}",
+                    msg.day
                 );
                 assert_eq!(
-                    msg.flags, 8,
-                    "incorrect value for flags, expected 8, is {}",
+                    msg.flags, 1,
+                    "incorrect value for flags, expected 1, is {}",
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_sats, 3,
-                    "incorrect value for n_sats, expected 3, is {}",
-                    msg.n_sats
+                    msg.hours, 19,
+                    "incorrect value for hours, expected 19, is {}",
+                    msg.hours
                 );
                 assert_eq!(
-                    msg.tow, 1,
-                    "incorrect value for tow, expected 1, is {}",
+                    msg.minutes, 24,
+                    "incorrect value for minutes, expected 24, is {}",
+                    msg.minutes
+                );
+                assert_eq!(
+                    msg.month, 4,
+                    "incorrect value for month, expected 4, is {}",
+                    msg.month
+                );
+                assert_eq!(
+                    msg.ns, 800000000,
+                    "incorrect value for ns, expected 800000000, is {}",
+                    msg.ns
+                );
+                assert_eq!(
+                    msg.seconds, 9,
+                    "incorrect value for seconds, expected 9, is {}",
+                    msg.seconds
+                );
+                assert_eq!(
+                    msg.tow, 501867800,
+                    "incorrect value for tow, expected 501867800, is {}",
                     msg.tow
                 );
-                assert_eq!(msg.x, 4, "incorrect value for x, expected 4, is {}", msg.x);
-                assert_eq!(msg.y, 2, "incorrect value for y, expected 2, is {}", msg.y);
-                assert_eq!(msg.z, 1, "incorrect value for z, expected 1, is {}", msg.z);
+                assert_eq!(
+                    msg.year, 2021,
+                    "incorrect value for year, expected 2021, is {}",
+                    msg.year
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgVelBody"),
+            _ => panic!("Invalid message type! Expected a MsgUtcTimeGnss"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

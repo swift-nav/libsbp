@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsUpdates.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -23,9 +23,7 @@ use std::io::Cursor;
 #[test]
 fn test_auto_check_sbp_system_72() {
     {
-        let mut payload = Cursor::new(vec![
-            85, 6, 255, 21, 3, 10, 84, 229, 17, 30, 0, 0, 0, 0, 0, 0, 81, 63,
-        ]);
+        let mut payload = Cursor::new(vec![85, 255, 255, 246, 215, 4, 0, 50, 0, 0, 249, 216]);
 
         // Test the round trip payload parsing
         let sbp_msg = {
@@ -35,56 +33,61 @@ fn test_auto_check_sbp_system_72() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgInsUpdates(msg) => {
+            sbp::messages::SBP::MsgHeartbeat(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0xff06,
-                    "Incorrect message type, expected 0xff06, is {}",
+                    0xffff,
+                    "Incorrect message type, expected 0xffff, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.gnsspos, 0,
-                    "incorrect value for gnsspos, expected 0, is {}",
-                    msg.gnsspos
-                );
-                assert_eq!(
-                    msg.gnssvel, 0,
-                    "incorrect value for gnssvel, expected 0, is {}",
-                    msg.gnssvel
-                );
-                assert_eq!(
-                    msg.nhc, 0,
-                    "incorrect value for nhc, expected 0, is {}",
-                    msg.nhc
-                );
-                assert_eq!(
-                    msg.speed, 0,
-                    "incorrect value for speed, expected 0, is {}",
-                    msg.speed
-                );
-                assert_eq!(
-                    msg.tow, 504489300,
-                    "incorrect value for tow, expected 504489300, is {}",
-                    msg.tow
-                );
-                assert_eq!(
-                    msg.wheelticks, 0,
-                    "incorrect value for wheelticks, expected 0, is {}",
-                    msg.wheelticks
-                );
-                assert_eq!(
-                    msg.zerovel, 0,
-                    "incorrect value for zerovel, expected 0, is {}",
-                    msg.zerovel
+                    msg.flags, 12800,
+                    "incorrect value for flags, expected 12800, is {}",
+                    msg.flags
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgInsUpdates"),
+            _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
+        };
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
+    }
+    {
+        let mut payload = Cursor::new(vec![85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57]);
+
+        // Test the round trip payload parsing
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
+        match &sbp_msg {
+            sbp::messages::SBP::MsgHeartbeat(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0xffff,
+                    "Incorrect message type, expected 0xffff, is {}",
+                    msg.get_message_type()
+                );
+                let sender_id = msg.get_sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

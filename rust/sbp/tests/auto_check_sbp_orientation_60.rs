@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientQuat.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientEuler.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_orientation_60() {
     {
         let mut payload = Cursor::new(vec![
-            85, 32, 2, 66, 0, 37, 0, 0, 0, 0, 3, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 4, 0, 0, 0, 0, 0,
-            64, 64, 0, 0, 128, 64, 0, 0, 0, 65, 0, 0, 64, 64, 1, 186, 6,
+            85, 33, 2, 66, 0, 29, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 8, 0, 0, 0, 0, 0, 224, 64, 0,
+            0, 64, 64, 0, 0, 224, 64, 3, 44, 226,
         ]);
 
         // Test the round trip payload parsing
@@ -36,11 +36,11 @@ fn test_auto_check_sbp_orientation_60() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgOrientQuat(msg) => {
+            sbp::messages::SBP::MsgOrientEuler(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x220,
-                    "Incorrect message type, expected 0x220, is {}",
+                    0x221,
+                    "Incorrect message type, expected 0x221, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -50,41 +50,47 @@ fn test_auto_check_sbp_orientation_60() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.flags, 1,
-                    "incorrect value for flags, expected 1, is {}",
+                    msg.flags, 3,
+                    "incorrect value for flags, expected 3, is {}",
                     msg.flags
                 );
                 assert_eq!(
-                    msg.tow, 0,
-                    "incorrect value for tow, expected 0, is {}",
+                    msg.pitch, 2,
+                    "incorrect value for pitch, expected 2, is {}",
+                    msg.pitch
+                );
+                assert!(
+                    msg.pitch_accuracy.almost_eq(3.00000000000000000e+00),
+                    "incorrect value for pitch_accuracy, expected 3.00000000000000000e+00, is {:e}",
+                    msg.pitch_accuracy
+                );
+                assert_eq!(
+                    msg.roll, 1,
+                    "incorrect value for roll, expected 1, is {}",
+                    msg.roll
+                );
+                assert!(
+                    msg.roll_accuracy.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for roll_accuracy, expected 7.00000000000000000e+00, is {:e}",
+                    msg.roll_accuracy
+                );
+                assert_eq!(
+                    msg.tow, 1,
+                    "incorrect value for tow, expected 1, is {}",
                     msg.tow
                 );
-                assert_eq!(msg.w, 3, "incorrect value for w, expected 3, is {}", msg.w);
-                assert!(
-                    msg.w_accuracy.almost_eq(3.00000000000000000e+00),
-                    "incorrect value for w_accuracy, expected 3.00000000000000000e+00, is {:e}",
-                    msg.w_accuracy
+                assert_eq!(
+                    msg.yaw, 8,
+                    "incorrect value for yaw, expected 8, is {}",
+                    msg.yaw
                 );
-                assert_eq!(msg.x, 7, "incorrect value for x, expected 7, is {}", msg.x);
                 assert!(
-                    msg.x_accuracy.almost_eq(4.00000000000000000e+00),
-                    "incorrect value for x_accuracy, expected 4.00000000000000000e+00, is {:e}",
-                    msg.x_accuracy
-                );
-                assert_eq!(msg.y, 8, "incorrect value for y, expected 8, is {}", msg.y);
-                assert!(
-                    msg.y_accuracy.almost_eq(8.00000000000000000e+00),
-                    "incorrect value for y_accuracy, expected 8.00000000000000000e+00, is {:e}",
-                    msg.y_accuracy
-                );
-                assert_eq!(msg.z, 4, "incorrect value for z, expected 4, is {}", msg.z);
-                assert!(
-                    msg.z_accuracy.almost_eq(3.00000000000000000e+00),
-                    "incorrect value for z_accuracy, expected 3.00000000000000000e+00, is {:e}",
-                    msg.z_accuracy
+                    msg.yaw_accuracy.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for yaw_accuracy, expected 7.00000000000000000e+00, is {:e}",
+                    msg.yaw_accuracy
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgOrientQuat"),
+            _ => panic!("Invalid message type! Expected a MsgOrientEuler"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

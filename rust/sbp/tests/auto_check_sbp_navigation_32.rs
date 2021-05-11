@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCTime.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgProtectionLevel.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_32() {
     {
         let mut payload = Cursor::new(vec![
-            85, 3, 1, 21, 3, 16, 1, 24, 229, 233, 29, 229, 7, 4, 9, 19, 24, 9, 0, 8, 175, 47, 199,
-            253,
+            85, 22, 2, 0, 16, 33, 136, 227, 233, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 195,
         ]);
 
         // Test the round trip payload parsing
@@ -36,66 +36,56 @@ fn test_auto_check_sbp_navigation_32() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgUtcTime(msg) => {
+            sbp::messages::SBP::MsgProtectionLevelDepA(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x103,
-                    "Incorrect message type, expected 0x103, is {}",
+                    0x216,
+                    "Incorrect message type, expected 0x216, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
+                    sender_id, 0x1000,
+                    "incorrect sender id, expected 0x1000, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.day, 9,
-                    "incorrect value for day, expected 9, is {}",
-                    msg.day
-                );
-                assert_eq!(
-                    msg.flags, 1,
-                    "incorrect value for flags, expected 1, is {}",
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
                     msg.flags
                 );
-                assert_eq!(
-                    msg.hours, 19,
-                    "incorrect value for hours, expected 19, is {}",
-                    msg.hours
+                assert!(
+                    msg.height.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for height, expected 0.00000000000000000e+00, is {:e}",
+                    msg.height
                 );
                 assert_eq!(
-                    msg.minutes, 24,
-                    "incorrect value for minutes, expected 24, is {}",
-                    msg.minutes
+                    msg.hpl, 0,
+                    "incorrect value for hpl, expected 0, is {}",
+                    msg.hpl
+                );
+                assert!(
+                    msg.lat.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for lat, expected 0.00000000000000000e+00, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for lon, expected 0.00000000000000000e+00, is {:e}",
+                    msg.lon
                 );
                 assert_eq!(
-                    msg.month, 4,
-                    "incorrect value for month, expected 4, is {}",
-                    msg.month
-                );
-                assert_eq!(
-                    msg.ns, 800000000,
-                    "incorrect value for ns, expected 800000000, is {}",
-                    msg.ns
-                );
-                assert_eq!(
-                    msg.seconds, 9,
-                    "incorrect value for seconds, expected 9, is {}",
-                    msg.seconds
-                );
-                assert_eq!(
-                    msg.tow, 501867800,
-                    "incorrect value for tow, expected 501867800, is {}",
+                    msg.tow, 501867400,
+                    "incorrect value for tow, expected 501867400, is {}",
                     msg.tow
                 );
                 assert_eq!(
-                    msg.year, 2021,
-                    "incorrect value for year, expected 2021, is {}",
-                    msg.year
+                    msg.vpl, 0,
+                    "incorrect value for vpl, expected 0, is {}",
+                    msg.vpl
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgUtcTime"),
+            _ => panic!("Invalid message type! Expected a MsgProtectionLevelDepA"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
