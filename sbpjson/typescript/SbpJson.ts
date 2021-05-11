@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridDefinitionHeader, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGridDefinition, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SolutionInputType, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridDefinitionHeader, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGridDefinition, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -70,6 +70,7 @@
 //   const msgFrontEndGain = Convert.toMsgFrontEndGain(json);
 //   const msgFwd = Convert.toMsgFwd(json);
 //   const msgGPSTime = Convert.toMsgGPSTime(json);
+//   const msgGPSTimeGnss = Convert.toMsgGPSTimeGnss(json);
 //   const msgGloBiases = Convert.toMsgGloBiases(json);
 //   const msgGnssCapb = Convert.toMsgGnssCapb(json);
 //   const msgGnssTimeOffset = Convert.toMsgGnssTimeOffset(json);
@@ -114,6 +115,7 @@
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
 //   const msgPosLLHCovGnss = Convert.toMsgPosLLHCovGnss(json);
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
+//   const msgPpsTime = Convert.toMsgPpsTime(json);
 //   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
 //   const msgReset = Convert.toMsgReset(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
@@ -137,9 +139,11 @@
 //   const msgSsrGriddedCorrectionNoStd = Convert.toMsgSsrGriddedCorrectionNoStd(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
+//   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
 //   const msgSsrTileDefinition = Convert.toMsgSsrTileDefinition(json);
 //   const msgStartup = Convert.toMsgStartup(json);
+//   const msgStatusReport = Convert.toMsgStatusReport(json);
 //   const msgStmFlashLockSector = Convert.toMsgStmFlashLockSector(json);
 //   const msgStmFlashUnlockSector = Convert.toMsgStmFlashUnlockSector(json);
 //   const msgStmUniqueIDReq = Convert.toMsgStmUniqueIDReq(json);
@@ -151,6 +155,7 @@
 //   const msgUARTState = Convert.toMsgUARTState(json);
 //   const msgUserData = Convert.toMsgUserData(json);
 //   const msgUTCTime = Convert.toMsgUTCTime(json);
+//   const msgUTCTimeGnss = Convert.toMsgUTCTimeGnss(json);
 //   const msgVelBody = Convert.toMsgVelBody(json);
 //   const msgVelECEF = Convert.toMsgVelECEF(json);
 //   const msgVelECEFCov = Convert.toMsgVelECEFCov(json);
@@ -172,7 +177,9 @@
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
 //   const sTECSatElement = Convert.toSTECSatElement(json);
+//   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
+//   const subSystemReport = Convert.toSubSystemReport(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
 //   const trackingChannelCorrelation = Convert.toTrackingChannelCorrelation(json);
@@ -185,20 +192,16 @@
 // match the expected interface, even if the JSON is valid.
 
 /**
- * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through
- * sol_in[N].flags,
- * in a MSG_SOLN_META.,
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the GNSS sensors involved in the fuzed solution.,
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface GNSSInputType {
     flags: number;
 }
 
 /**
- * Metadata around the IMU sensors involved in the fuzed solution. Accessible through
- * sol_in[N].flags,
- * in a MSG_SOLN_META.,
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the IMU sensors involved in the fuzed solution.,
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface IMUInputType {
     flags: number;
@@ -955,6 +958,28 @@ export interface MsgGPSTime {
 }
 
 /**
+ * This message reports the GPS time, representing the time since,
+ * the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
+ * counts the weeks and seconds of the week. The weeks begin at the,
+ * Saturday/Sunday transition. GPS week 0 began at the beginning of,
+ * the GPS time scale.,
+ * ,
+ * Within each week number, the GPS time of the week is between,
+ * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time,
+ * does not accumulate leap seconds, and as of now, has a small,
+ * offset from UTC. In a message stream, this message precedes a,
+ * set of other navigation messages referenced to the same time,
+ * (but lacking the ns field) and indicates a more precise time of,
+ * these messages.
+ */
+export interface MsgGPSTimeGnss {
+    flags:       number;
+    ns_residual: number;
+    tow:         number;
+    wn:          number;
+}
+
+/**
  * The GLONASS L1/L2 Code-Phase biases allows to perform,
  * GPS+GLONASS integer ambiguity resolution for baselines,
  * with mixed receiver types (e.g. receiver of different,
@@ -1022,11 +1047,10 @@ export interface MsgGroupDelay {
  * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
  */
 export interface MsgGroupMeta {
-    flags:       number;
-    group_msgs:  number[];
-    ns_residual: number;
-    tom:         number;
-    wn:          number;
+    flags:        number;
+    group_id:     number;
+    group_msgs:   number[];
+    n_group_msgs: number;
 }
 
 /**
@@ -1132,25 +1156,29 @@ export interface MsgIono {
 
 /**
  * This message indicates the process state of the top 10 heaviest,
- * consumers of CPU on the system.
+ * consumers of CPU on the system, including a timestamp.
  */
 export interface MsgLinuxCPUState {
     cmdline: string;
+    flags:   number;
     index:   number;
     pcpu:    number;
     pid:     number;
+    time:    number;
     tname:   string;
 }
 
 /**
  * This message indicates the process state of the top 10 heaviest,
- * consumers of memory on the system.
+ * consumers of memory on the system, including a timestamp.
  */
 export interface MsgLinuxMemState {
     cmdline: string;
+    flags:   number;
     index:   number;
     pid:     number;
     pmem:    number;
+    time:    number;
     tname:   string;
 }
 
@@ -1209,15 +1237,17 @@ export interface MsgLinuxSocketUsage {
 }
 
 /**
- * This presents a summary of CPU and memory utilization.
+ * This presents a summary of CPU and memory utilization, including a timestamp.
  */
 export interface MsgLinuxSysState {
+    flags:          number;
     mem_total:      number;
     pcpu:           number;
     pid_count:      number;
     pmem:           number;
     procs_starting: number;
     procs_stopping: number;
+    time:           number;
 }
 
 /**
@@ -1433,7 +1463,7 @@ export interface CarrierPhase {
  * If using "processor time" time tags, the receiving end will expect a,
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
  * measurements,
- * with GNSS.
+ * with GNSS. Processor time shall roll over to zero after one week.
  */
 export interface MsgOdometry {
     flags:    number;
@@ -1690,18 +1720,52 @@ export interface MsgPosLLHGnss {
 }
 
 /**
- * This message reports the local vertical and horizontal protection levels,
- * associated with a given LLH position solution. The full GPS time is given,
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * The PPS time message contains the value of the sender's local time in,
+ * microseconds at the moment a pulse is detected on the PPS input. This,
+ * is to be used for syncronisation of sensor data sampled with a local,
+ * timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown,
+ * to the sender.,
+ * ,
+ * The local time used to timestamp the PPS pulse must be generated by the,
+ * same clock which is used to timestamp the IMU/wheel sensor data and,
+ * should follow the same roll-over rules.  A separate MSG_PPS_TIME,
+ * message should be sent for each source of sensor data which uses,
+ * PPS-relative timestamping.  The sender ID for each of these,
+ * MSG_PPS_TIME messages should match the sender ID of the respective,
+ * sensor data.
+ */
+export interface MsgPpsTime {
+    flags: number;
+    time:  number;
+}
+
+/**
+ * This message reports the protection levels associated to the given ,
+ * state estimate. The full GPS time is given by the preceding MSG_GPS_TIME ,
+ * with the matching time-of-week (tow).
  */
 export interface MsgProtectionLevel {
-    flags:  number;
-    height: number;
-    hpl:    number;
-    lat:    number;
-    lon:    number;
-    tow:    number;
-    vpl:    number;
+    atpl:    number;
+    ctpl:    number;
+    flags:   number;
+    heading: number;
+    height:  number;
+    hopl:    number;
+    hpl:     number;
+    hvpl:    number;
+    lat:     number;
+    lon:     number;
+    pitch:   number;
+    popl:    number;
+    roll:    number;
+    ropl:    number;
+    tow:     number;
+    v_x:     number;
+    v_y:     number;
+    v_z:     number;
+    vpl:     number;
+    vvpl:    number;
+    wn:      number;
 }
 
 /**
@@ -1833,19 +1897,25 @@ export interface MsgSettingsWriteResp {
 
 /**
  * This message contains all metadata about the sensors received and/or used in computing
- * the Fuzed Solution.,
- * It focuses primarly, but not only, on GNSS metadata.
+ * the sensorfusion solution.,
+ * It focuses primarly, but not only, on GNSS metadata.,
+ * Regarding the age of the last received valid GNSS solution, the highest two bits are time
+ * status, indicating,
+ * whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also
+ * known as time of validity),
+ * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used
+ * before alignment is,
+ * complete in the Fusion Engine, when output solution is the last received valid GNSS
+ * solution and its tow is not a TOM.
  */
 export interface MsgSolnMeta {
-    age_corrections:        number;
-    alignment_status:       number;
-    hdop:                   number;
-    last_used_gnss_pos_tow: number;
-    last_used_gnss_vel_tow: number;
-    n_sats:                 number;
-    pdop:                   number;
-    sol_in:                 SolutionInputType[];
-    vdop:                   number;
+    age_corrections: number;
+    age_gnss:        number;
+    hdop:            number;
+    pdop:            number;
+    sol_in:          SolutionInputType[];
+    tow:             number;
+    vdop:            number;
 }
 
 /**
@@ -1878,8 +1948,8 @@ export interface MsgSpecan {
 /**
  * The precise code biases message is to be added,
  * to the pseudorange of the corresponding signal,
- * to get corrected pseudorange. It is typically,
- * an equivalent to the 1059 and 1065 RTCM message types
+ * to get corrected pseudorange. It is an,
+ * equivalent to the 1059 / 1065 RTCM message types
  */
 export interface MsgSsrCodeBiases {
     biases:          CodeBiasesContent[];
@@ -1891,7 +1961,7 @@ export interface MsgSsrCodeBiases {
 
 /**
  * Code biases are to be added to pseudorange.,
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
+ * The corrections conform with RTCMv3 MT 1059 / 1065.
  */
 export interface CodeBiasesContent {
     code:  number;
@@ -2023,8 +2093,8 @@ export interface TroposphericDelayCorrectionNoStd {
 /**
  * The precise orbit and clock correction message is,
  * to be applied as a delta correction to broadcast,
- * ephemeris and is typically an equivalent to the 1060,
- * and 1066 RTCM message types
+ * ephemeris and is an equivalent to the 1060 /1066,
+ * RTCM message types
  */
 export interface MsgSsrOrbitClock {
     along:           number;
@@ -2064,8 +2134,7 @@ export interface MsgSsrPhaseBiases {
 }
 
 /**
- * Phase biases are to be added to carrier phase measurements.,
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
+ * Phase biases are to be added to carrier phase measurements.
  */
 export interface PhaseBiasesContent {
     bias:                       number;
@@ -2073,6 +2142,22 @@ export interface PhaseBiasesContent {
     discontinuity_counter:      number;
     integer_indicator:          number;
     widelane_integer_indicator: number;
+}
+
+export interface MsgSsrSatelliteApc {
+    apc: SatelliteAPC[];
+}
+
+/**
+ * Contains phase center offset and elevation variation corrections for one,
+ * signal on a satellite.
+ */
+export interface SatelliteAPC {
+    pco:      number[];
+    pcv:      number[];
+    sat_info: number;
+    sid:      GnssSignal;
+    svn:      number;
 }
 
 /**
@@ -2142,6 +2227,35 @@ export interface MsgSsrTileDefinition {
 export interface MsgStartup {
     cause:        number;
     startup_type: number;
+}
+
+/**
+ * The status report is sent periodically to inform the host,
+ * or other attached devices that the system is running. It is,
+ * used to monitor system malfunctions. It contains status,
+ * reports that indicate to the host the status of each sub-system and,
+ * whether it is operating correctly.,
+ * ,
+ * Interpretation of the subsystem specific status code is product,
+ * dependent, but if the generic status code is initializing, it should,
+ * be ignored.  Refer to product documentation for details.
+ */
+export interface MsgStatusReport {
+    reporting_system: number;
+    sbp_version:      number;
+    sequence:         number;
+    status:           SubSystemReport[];
+    uptime:           number;
+}
+
+/**
+ * Report the general and specific state of a sub-system.  If the generic,
+ * state is reported as initializing, the specific state should be ignored.
+ */
+export interface SubSystemReport {
+    component: number;
+    generic:   number;
+    specific:  number;
 }
 
 /**
@@ -2310,6 +2424,22 @@ export interface MsgUserData {
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 export interface MsgUTCTime {
+    day:     number;
+    flags:   number;
+    hours:   number;
+    minutes: number;
+    month:   number;
+    ns:      number;
+    seconds: number;
+    tow:     number;
+    year:    number;
+}
+
+/**
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags,
+ * which indicate the source of the UTC offset value and source of the time fix.
+ */
+export interface MsgUTCTimeGnss {
     day:     number;
     flags:   number;
     hours:   number;
@@ -2512,7 +2642,7 @@ export interface MsgVelNEDGnss {
  * If using "local CPU time" time tags, the receiving end will expect a,
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
  * measurements,
- * with GNSS.
+ * with GNSS. Local CPU time shall roll over to zero after one week.
  */
 export interface MsgWheeltick {
     flags:  number;
@@ -2522,10 +2652,8 @@ export interface MsgWheeltick {
 }
 
 /**
- * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through
- * sol_in[N].flags,
- * in a MSG_SOLN_META.,
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the Odometry sensors involved in the fuzed solution.,
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface OdoInputType {
     flags: number;
@@ -3078,6 +3206,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgGPSTime")), null, 2);
     }
 
+    public static toMsgGPSTimeGnss(json: string): MsgGPSTimeGnss {
+        return cast(JSON.parse(json), r("MsgGPSTimeGnss"));
+    }
+
+    public static msgGPSTimeGnssToJson(value: MsgGPSTimeGnss): string {
+        return JSON.stringify(uncast(value, r("MsgGPSTimeGnss")), null, 2);
+    }
+
     public static toMsgGloBiases(json: string): MsgGloBiases {
         return cast(JSON.parse(json), r("MsgGloBiases"));
     }
@@ -3430,6 +3566,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgPosLLHGnss")), null, 2);
     }
 
+    public static toMsgPpsTime(json: string): MsgPpsTime {
+        return cast(JSON.parse(json), r("MsgPpsTime"));
+    }
+
+    public static msgPpsTimeToJson(value: MsgPpsTime): string {
+        return JSON.stringify(uncast(value, r("MsgPpsTime")), null, 2);
+    }
+
     public static toMsgProtectionLevel(json: string): MsgProtectionLevel {
         return cast(JSON.parse(json), r("MsgProtectionLevel"));
     }
@@ -3614,6 +3758,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrPhaseBiases")), null, 2);
     }
 
+    public static toMsgSsrSatelliteApc(json: string): MsgSsrSatelliteApc {
+        return cast(JSON.parse(json), r("MsgSsrSatelliteApc"));
+    }
+
+    public static msgSsrSatelliteApcToJson(value: MsgSsrSatelliteApc): string {
+        return JSON.stringify(uncast(value, r("MsgSsrSatelliteApc")), null, 2);
+    }
+
     public static toMsgSsrStecCorrection(json: string): MsgSsrStecCorrection {
         return cast(JSON.parse(json), r("MsgSsrStecCorrection"));
     }
@@ -3636,6 +3788,14 @@ export class Convert {
 
     public static msgStartupToJson(value: MsgStartup): string {
         return JSON.stringify(uncast(value, r("MsgStartup")), null, 2);
+    }
+
+    public static toMsgStatusReport(json: string): MsgStatusReport {
+        return cast(JSON.parse(json), r("MsgStatusReport"));
+    }
+
+    public static msgStatusReportToJson(value: MsgStatusReport): string {
+        return JSON.stringify(uncast(value, r("MsgStatusReport")), null, 2);
     }
 
     public static toMsgStmFlashLockSector(json: string): MsgStmFlashLockSector {
@@ -3724,6 +3884,14 @@ export class Convert {
 
     public static msgUTCTimeToJson(value: MsgUTCTime): string {
         return JSON.stringify(uncast(value, r("MsgUTCTime")), null, 2);
+    }
+
+    public static toMsgUTCTimeGnss(json: string): MsgUTCTimeGnss {
+        return cast(JSON.parse(json), r("MsgUTCTimeGnss"));
+    }
+
+    public static msgUTCTimeGnssToJson(value: MsgUTCTimeGnss): string {
+        return JSON.stringify(uncast(value, r("MsgUTCTimeGnss")), null, 2);
     }
 
     public static toMsgVelBody(json: string): MsgVelBody {
@@ -3894,12 +4062,28 @@ export class Convert {
         return JSON.stringify(uncast(value, r("STECSatElement")), null, 2);
     }
 
+    public static toSatelliteAPC(json: string): SatelliteAPC {
+        return cast(JSON.parse(json), r("SatelliteAPC"));
+    }
+
+    public static satelliteAPCToJson(value: SatelliteAPC): string {
+        return JSON.stringify(uncast(value, r("SatelliteAPC")), null, 2);
+    }
+
     public static toSolutionInputType(json: string): SolutionInputType {
         return cast(JSON.parse(json), r("SolutionInputType"));
     }
 
     public static solutionInputTypeToJson(value: SolutionInputType): string {
         return JSON.stringify(uncast(value, r("SolutionInputType")), null, 2);
+    }
+
+    public static toSubSystemReport(json: string): SubSystemReport {
+        return cast(JSON.parse(json), r("SubSystemReport"));
+    }
+
+    public static subSystemReportToJson(value: SubSystemReport): string {
+        return JSON.stringify(uncast(value, r("SubSystemReport")), null, 2);
     }
 
     public static toSvAzEl(json: string): SvAzEl {
@@ -3959,8 +4143,11 @@ export class Convert {
     }
 }
 
-function invalidValue(typ: any, val: any): never {
-    throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`);
+function invalidValue(typ: any, val: any, key: any = ''): never {
+    if (key) {
+        throw Error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`);
+    }
+    throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`, );
 }
 
 function jsonToJSProps(typ: any): any {
@@ -3981,10 +4168,10 @@ function jsToJSONProps(typ: any): any {
     return typ.jsToJSON;
 }
 
-function transform(val: any, typ: any, getProps: any): any {
+function transform(val: any, typ: any, getProps: any, key: any = ''): any {
     function transformPrimitive(typ: string, val: any): any {
         if (typeof typ === typeof val) return val;
-        return invalidValue(typ, val);
+        return invalidValue(typ, val, key);
     }
 
     function transformUnion(typs: any[], val: any): any {
@@ -4029,11 +4216,11 @@ function transform(val: any, typ: any, getProps: any): any {
         Object.getOwnPropertyNames(props).forEach(key => {
             const prop = props[key];
             const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
-            result[prop.key] = transform(v, prop.typ, getProps);
+            result[prop.key] = transform(v, prop.typ, getProps, prop.key);
         });
         Object.getOwnPropertyNames(val).forEach(key => {
             if (!Object.prototype.hasOwnProperty.call(props, key)) {
-                result[key] = transform(val[key], additional, getProps);
+                result[key] = transform(val[key], additional, getProps, key);
             }
         });
         return result;
@@ -4470,6 +4657,12 @@ const typeMap: any = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "wn", js: "wn", typ: 0 },
     ], "any"),
+    "MsgGPSTimeGnss": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "ns_residual", js: "ns_residual", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
     "MsgGloBiases": o([
         { json: "l1ca_bias", js: "l1ca_bias", typ: 0 },
         { json: "l1p_bias", js: "l1p_bias", typ: 0 },
@@ -4514,10 +4707,9 @@ const typeMap: any = {
     ], "any"),
     "MsgGroupMeta": o([
         { json: "flags", js: "flags", typ: 0 },
+        { json: "group_id", js: "group_id", typ: 0 },
         { json: "group_msgs", js: "group_msgs", typ: a(0) },
-        { json: "ns_residual", js: "ns_residual", typ: 0 },
-        { json: "tom", js: "tom", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
+        { json: "n_group_msgs", js: "n_group_msgs", typ: 0 },
     ], "any"),
     "MsgHeartbeat": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -4565,16 +4757,20 @@ const typeMap: any = {
     ], "any"),
     "MsgLinuxCPUState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "index", js: "index", typ: 0 },
         { json: "pcpu", js: "pcpu", typ: 0 },
         { json: "pid", js: "pid", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
         { json: "tname", js: "tname", typ: "" },
     ], "any"),
     "MsgLinuxMemState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "index", js: "index", typ: 0 },
         { json: "pid", js: "pid", typ: 0 },
         { json: "pmem", js: "pmem", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
         { json: "tname", js: "tname", typ: "" },
     ], "any"),
     "MsgLinuxProcessFdCount": o([
@@ -4612,12 +4808,14 @@ const typeMap: any = {
         { json: "socket_type_counts", js: "socket_type_counts", typ: a(0) },
     ], "any"),
     "MsgLinuxSysState": o([
+        { json: "flags", js: "flags", typ: 0 },
         { json: "mem_total", js: "mem_total", typ: 0 },
         { json: "pcpu", js: "pcpu", typ: 0 },
         { json: "pid_count", js: "pid_count", typ: 0 },
         { json: "pmem", js: "pmem", typ: 0 },
         { json: "procs_starting", js: "procs_starting", typ: 0 },
         { json: "procs_stopping", js: "procs_stopping", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
     ], "any"),
     "MsgLog": o([
         { json: "level", js: "level", typ: 0 },
@@ -4842,14 +5040,32 @@ const typeMap: any = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
     ], "any"),
-    "MsgProtectionLevel": o([
+    "MsgPpsTime": o([
         { json: "flags", js: "flags", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
+    ], "any"),
+    "MsgProtectionLevel": o([
+        { json: "atpl", js: "atpl", typ: 0 },
+        { json: "ctpl", js: "ctpl", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "heading", js: "heading", typ: 0 },
         { json: "height", js: "height", typ: 3.14 },
+        { json: "hopl", js: "hopl", typ: 0 },
         { json: "hpl", js: "hpl", typ: 0 },
+        { json: "hvpl", js: "hvpl", typ: 0 },
         { json: "lat", js: "lat", typ: 3.14 },
         { json: "lon", js: "lon", typ: 3.14 },
+        { json: "pitch", js: "pitch", typ: 0 },
+        { json: "popl", js: "popl", typ: 0 },
+        { json: "roll", js: "roll", typ: 0 },
+        { json: "ropl", js: "ropl", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
+        { json: "v_x", js: "v_x", typ: 0 },
+        { json: "v_y", js: "v_y", typ: 0 },
+        { json: "v_z", js: "v_z", typ: 0 },
         { json: "vpl", js: "vpl", typ: 0 },
+        { json: "vvpl", js: "vvpl", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "MsgReset": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -4892,13 +5108,11 @@ const typeMap: any = {
     ], "any"),
     "MsgSolnMeta": o([
         { json: "age_corrections", js: "age_corrections", typ: 0 },
-        { json: "alignment_status", js: "alignment_status", typ: 0 },
+        { json: "age_gnss", js: "age_gnss", typ: 0 },
         { json: "hdop", js: "hdop", typ: 0 },
-        { json: "last_used_gnss_pos_tow", js: "last_used_gnss_pos_tow", typ: 0 },
-        { json: "last_used_gnss_vel_tow", js: "last_used_gnss_vel_tow", typ: 0 },
-        { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "pdop", js: "pdop", typ: 0 },
         { json: "sol_in", js: "sol_in", typ: a(r("SolutionInputType")) },
+        { json: "tow", js: "tow", typ: 0 },
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
     "SolutionInputType": o([
@@ -5021,6 +5235,16 @@ const typeMap: any = {
         { json: "integer_indicator", js: "integer_indicator", typ: 0 },
         { json: "widelane_integer_indicator", js: "widelane_integer_indicator", typ: 0 },
     ], "any"),
+    "MsgSsrSatelliteApc": o([
+        { json: "apc", js: "apc", typ: a(r("SatelliteAPC")) },
+    ], "any"),
+    "SatelliteAPC": o([
+        { json: "pco", js: "pco", typ: a(0) },
+        { json: "pcv", js: "pcv", typ: a(0) },
+        { json: "sat_info", js: "sat_info", typ: 0 },
+        { json: "sid", js: "sid", typ: r("GnssSignal") },
+        { json: "svn", js: "svn", typ: 0 },
+    ], "any"),
     "MsgSsrStecCorrection": o([
         { json: "header", js: "header", typ: r("STECHeader") },
         { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElement")) },
@@ -5053,6 +5277,18 @@ const typeMap: any = {
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
         { json: "startup_type", js: "startup_type", typ: 0 },
+    ], "any"),
+    "MsgStatusReport": o([
+        { json: "reporting_system", js: "reporting_system", typ: 0 },
+        { json: "sbp_version", js: "sbp_version", typ: 0 },
+        { json: "sequence", js: "sequence", typ: 0 },
+        { json: "status", js: "status", typ: a(r("SubSystemReport")) },
+        { json: "uptime", js: "uptime", typ: 0 },
+    ], "any"),
+    "SubSystemReport": o([
+        { json: "component", js: "component", typ: 0 },
+        { json: "generic", js: "generic", typ: 0 },
+        { json: "specific", js: "specific", typ: 0 },
     ], "any"),
     "MsgStmFlashLockSector": o([
         { json: "sector", js: "sector", typ: 0 },
@@ -5124,6 +5360,17 @@ const typeMap: any = {
         { json: "contents", js: "contents", typ: a(0) },
     ], "any"),
     "MsgUTCTime": o([
+        { json: "day", js: "day", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "hours", js: "hours", typ: 0 },
+        { json: "minutes", js: "minutes", typ: 0 },
+        { json: "month", js: "month", typ: 0 },
+        { json: "ns", js: "ns", typ: 0 },
+        { json: "seconds", js: "seconds", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "year", js: "year", typ: 0 },
+    ], "any"),
+    "MsgUTCTimeGnss": o([
         { json: "day", js: "day", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
         { json: "hours", js: "hours", typ: 0 },
