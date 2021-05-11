@@ -15,6 +15,9 @@
 //! Messages from a vehicle.
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
@@ -85,6 +88,18 @@ impl super::SBPMessage for MsgOdometry {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -176,6 +191,22 @@ impl super::SBPMessage for MsgWheeltick {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        // only consider wheelticks with synchronization type value "microsec in GPS week"
+        if self.flags != 1 {
+            return None;
+        }
+        let tow_s = (self.time as f64) / 1000000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 

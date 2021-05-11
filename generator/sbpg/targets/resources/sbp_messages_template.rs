@@ -16,6 +16,9 @@
 //! (((description | replace("\n", "\n//! "))))
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian,ReadBytesExt};
 
 #[allow(unused_imports)]
@@ -112,6 +115,8 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
     ) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    (((m|gps_time(msgs))))
 }
 ((*- endif *))
 

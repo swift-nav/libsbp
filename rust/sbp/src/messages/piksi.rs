@@ -18,6 +18,9 @@
 //!
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;

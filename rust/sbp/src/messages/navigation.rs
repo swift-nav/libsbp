@@ -39,6 +39,9 @@
 //!
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
@@ -98,6 +101,18 @@ impl super::SBPMessage for MsgAgeCorrections {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -186,6 +201,18 @@ impl super::SBPMessage for MsgBaselineECEF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -285,6 +312,18 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
@@ -371,6 +410,18 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -467,6 +518,18 @@ impl super::SBPMessage for MsgBaselineNED {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -572,6 +635,18 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
@@ -671,6 +746,18 @@ impl super::SBPMessage for MsgDops {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgDops {
@@ -763,6 +850,18 @@ impl super::SBPMessage for MsgDopsDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -860,6 +959,22 @@ impl super::SBPMessage for MsgGPSTime {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgGPSTime {
@@ -952,6 +1067,22 @@ impl super::SBPMessage for MsgGPSTimeDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
@@ -1043,6 +1174,22 @@ impl super::SBPMessage for MsgGPSTimeGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1138,6 +1285,18 @@ impl super::SBPMessage for MsgPosECEF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1255,6 +1414,18 @@ impl super::SBPMessage for MsgPosECEFCov {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1383,6 +1554,18 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
@@ -1494,6 +1677,18 @@ impl super::SBPMessage for MsgPosECEFDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
@@ -1594,6 +1789,18 @@ impl super::SBPMessage for MsgPosECEFGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1698,6 +1905,18 @@ impl super::SBPMessage for MsgPosLLH {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1816,6 +2035,18 @@ impl super::SBPMessage for MsgPosLLHCov {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -1943,6 +2174,18 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
@@ -2057,6 +2300,18 @@ impl super::SBPMessage for MsgPosLLHDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
@@ -2162,6 +2417,18 @@ impl super::SBPMessage for MsgPosLLHGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -2305,6 +2572,22 @@ impl super::SBPMessage for MsgProtectionLevel {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgProtectionLevel {
@@ -2429,6 +2712,18 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
@@ -2529,6 +2824,18 @@ impl super::SBPMessage for MsgUtcTime {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -2634,6 +2941,18 @@ impl super::SBPMessage for MsgUtcTimeGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -2755,6 +3074,18 @@ impl super::SBPMessage for MsgVelBody {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgVelBody {
@@ -2860,6 +3191,18 @@ impl super::SBPMessage for MsgVelECEF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -2971,6 +3314,18 @@ impl super::SBPMessage for MsgVelECEFCov {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -3093,6 +3448,18 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
@@ -3199,6 +3566,18 @@ impl super::SBPMessage for MsgVelECEFDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
@@ -3294,6 +3673,18 @@ impl super::SBPMessage for MsgVelECEFGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -3394,6 +3785,18 @@ impl super::SBPMessage for MsgVelNED {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -3510,6 +3913,18 @@ impl super::SBPMessage for MsgVelNEDCov {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -3635,6 +4050,18 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
@@ -3745,6 +4172,18 @@ impl super::SBPMessage for MsgVelNEDDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
@@ -3846,6 +4285,18 @@ impl super::SBPMessage for MsgVelNEDGnss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 

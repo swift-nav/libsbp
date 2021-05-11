@@ -15,6 +15,9 @@
 //! Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
@@ -4663,6 +4666,22 @@ impl super::SBPMessage for MsgObs {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.header.t.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgObs {
@@ -4731,6 +4750,22 @@ impl super::SBPMessage for MsgObsDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.header.t.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -4805,6 +4840,22 @@ impl super::SBPMessage for MsgObsDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.header.t.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
@@ -4881,6 +4932,22 @@ impl super::SBPMessage for MsgObsDepC {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.header.t.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgObsDepC {
@@ -4949,6 +5016,22 @@ impl super::SBPMessage for MsgOsr {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.header.t.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
     }
 }
 

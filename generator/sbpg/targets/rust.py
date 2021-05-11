@@ -13,7 +13,7 @@
 Generator for rust target.
 """
 
-from sbpg.targets.templating import *
+from sbpg.targets.templating import JENV, ACRONYMS
 from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
@@ -22,6 +22,64 @@ SBP2JSON_CARGO_TEMPLATE = "sbp2json-cargo.toml"
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.rs"
 MESSAGES_MOD_TEMPLATE_NAME = "sbp_messages_mod.rs"
+
+GPS_TIME = """
+let tow_s = (self.tow as f64) / 1000.0;
+let wn = match i16::try_from(self.wn) {
+    Ok(wn) => wn,
+    Err(e) => return Some(Err(e.into())),
+};
+let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+    Ok(gps_time) => gps_time,
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip()
+GPS_TIME_HEADER = """
+let tow_s = (self.header.t.tow as f64) / 1000.0;
+let wn = match i16::try_from(self.header.t.wn) {
+    Ok(wn) => wn,
+    Err(e) => return Some(Err(e.into())),
+};
+let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+    Ok(gps_time) => gps_time,
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip()
+GPS_TIME_ONLY_TOW = """
+let tow_s = (self.tow as f64) / 1000.0;
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip()
+
+BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
+
+CUSTOM_GPS_TIME_MSGS = {
+  "MSG_IMU_RAW": """
+const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
+if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {
+    return None;
+}
+let tow_s = (self.tow as f64) / 1000.0;
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip(),
+
+  "MSG_WHEELTICK": """
+// only consider wheelticks with synchronization type value "microsec in GPS week"
+if self.flags != 1 {
+    return None;
+}
+let tow_s = (self.time as f64) / 1000000.0;
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
+""".strip(),
+}
 
 import re
 def camel_case(s):
@@ -101,17 +159,69 @@ def parse_type(field):
     # This is an inner class, call default constructor
     return "%s::parse(_buf)" % field.type_id
 
+def gps_time(msg, all_messages):
+    def time_aware_header(type_id):
+        for m in all_messages:
+            if m.identifier == type_id:
+                return any([f.identifier == "t" for f in m.fields])
+        return False
+
+    def gen_body():
+        if msg.identifier in CUSTOM_GPS_TIME_MSGS:
+          return CUSTOM_GPS_TIME_MSGS[msg.identifier]
+
+        header = False
+        tow = False
+        wn = False
+
+        for f in msg.fields:
+            if f.identifier == "header" and time_aware_header(f.type_id):
+                header = True
+            elif f.identifier == "tow":
+                assert f.units == "ms"
+                tow = True
+            elif f.identifier == "wn":
+                wn = True
+
+        if header:
+            return GPS_TIME_HEADER
+        elif tow and wn:
+            return GPS_TIME
+        elif tow:
+            return GPS_TIME_ONLY_TOW
+        else:
+            return None
+
+    def gen_ret():
+        name = "Base" if msg.identifier in BASE_TIME_MSGS else "Rover"
+        return f"Some(Ok(crate::time::MessageTime::{name}(gps_time.into())))"
+
+    body = gen_body()
+    if body is None:
+        return ""
+
+    ret = gen_ret()
+
+    return f"""
+  #[cfg(feature = "swiftnav-rs")]
+  fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {{
+      {body}
+      {ret}
+  }}
+  """.strip()
+
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify
 JENV.filters['type_map'] = type_map
 JENV.filters['mod_name'] = mod_name
 JENV.filters['parse_type'] = parse_type
+JENV.filters['gps_time'] = gps_time
 
 def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
-  path, name = package_spec.filepath
+  _, name = package_spec.filepath
   destination_filename = "%s/sbp/src/messages/%s.rs" % (output_dir, name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   includes = [x.rsplit('.', 1)[0] for x in package_spec.includes]
