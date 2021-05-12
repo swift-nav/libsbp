@@ -23,10 +23,10 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install lcov
+          sudo apt-get -qq install lcov libeigen3-dev
 
       - name: Run tests
-        run: make test-c
+        run: make test-c examples
         env:
           CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
 
