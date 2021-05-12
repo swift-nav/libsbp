@@ -30,6 +30,11 @@ jobs:
         env:
           CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
 
+      - name: Build examples
+        run: make
+        env:
+          CMAKEFLAGS: -DBUILD_EXAMPLES=true
+
       - name: Upload coverage to codecov.io
         run: |
           bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
