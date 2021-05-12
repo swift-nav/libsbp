@@ -13,6 +13,7 @@
 #ifndef SBP_CPP_STATE_H
 #define SBP_CPP_STATE_H
 
+#include <libsbp/cpp/message_traits.h>
 #include <libsbp/sbp.h>
 #include <libsbp/unpacked/sbp_msg.h>
 
@@ -102,6 +103,12 @@ public:
   s8 send_message(u16 sender_id, u16 msg_type, const sbp_msg_t &msg)
   {
     return sbp_pack_and_send_message(&state_, sender_id, msg_type, &msg, &write_func);
+  }
+
+  template <typename T> s8 send_message(u16 sender_id, const T &msg)
+  {
+    return sbp_pack_and_send_message(
+        &state_, sender_id, sbp::MessageTraits<T>::id, reinterpret_cast<const sbp_msg_t *>(&msg), &write_func);
   }
 
   s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length, const u8 payload[])

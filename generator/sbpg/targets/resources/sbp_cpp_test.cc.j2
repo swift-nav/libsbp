@@ -1,0 +1,112 @@
+#include <gtest/gtest.h>
+#include <libsbp/cpp/state.h>
+#include <libsbp/cpp/message_traits.h>
+#include <libsbp/cpp/message_handler.h>
+
+((*- for t in s.tests *))                                                     
+class Test_(((s.suite_name)))(((loop.index0))) : public ::testing::Test, public sbp::State, public sbp::IReader, public sbp::IWriter, sbp::MessageHandler<(((t.msg_type_name|convert_unpacked)))>
+{
+public:
+  Test_(((s.suite_name)))(((loop.index0)))() : ::testing::Test(), sbp::State(), sbp::IReader(), sbp::IWriter(), sbp::MessageHandler<(((t.msg_type_name|convert_unpacked)))>(this), last_msg_(), last_sender_id_(), n_callbacks_logged_(), wr_(), rd_(), io_buf_()
+  {
+    set_reader(this);
+    set_writer(this);
+  }
+
+  s32 read(uint8_t *buf, const uint32_t n) override {
+    uint32_t real_n = n;
+    memcpy(buf, io_buf_ + rd_, real_n);
+    rd_ += real_n;
+    return (s32)real_n;
+  }
+
+  s32 write(const uint8_t *buf, uint32_t n) override {
+    uint32_t real_n = n;
+    memcpy(io_buf_ + wr_, buf, real_n);
+    wr_ += real_n;
+    return (s32)real_n;
+  }
+
+
+protected:
+
+  void handle_sbp_msg(uint16_t sender_id, const (((t.msg_type_name|convert_unpacked))) &msg) override
+  {
+    last_msg_ = msg;
+    last_sender_id_ = sender_id;
+    n_callbacks_logged_++;
+  }
+
+  (((t.msg_type_name|convert_unpacked))) last_msg_;
+  uint16_t last_sender_id_;                                                   
+  size_t n_callbacks_logged_;                                                 
+  uint32_t wr_;
+  uint32_t rd_;
+  uint8_t io_buf_[1024];
+};                                                                            
+                                                                              
+TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)     
+{                                                                             
+    ((*- macro compare_value(test, prefix, value) *))
+    ((*- if value is string_type *))
+    {
+      const char check_string[] = { (((value|str_escape))) };
+      EXPECT_EQ(memcmp(last_msg_.(((prefix))), check_string, sizeof(check_string)), 0);
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))((( compare_value(test, (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- for k in (((value|sorted))) *))
+    ((( compare_value(test, (((prefix))) + '.' + (((k))), (((value[k])))) )))
+    ((*- endfor *))
+    ((*- elif value is float_type *))((=
+        Note: the ("%.12g"|format(value)|float) filter is intended to keep float
+        literal precision unchanged whether generated under Python 2.7 or 3.x. =))
+    EXPECT_LT((last_msg_.(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100), 0.05);
+    ((*- else *))
+    EXPECT_EQ(last_msg_.(((prefix))), (((value))));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro assign_value(test, prefix, value, target) *))
+   ((*- if value is string_type *))
+    {
+      const char assign_string[] = { (((value|str_escape))) };
+      memcpy(test_unpacked_msg.(((prefix))), assign_string, sizeof(assign_string));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))
+    ((( assign_value(test, (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))), target) )))
+    ((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- for k in (((value|sorted))) *))
+    ((( assign_value(test, (((prefix))) + '.' + (((k))), (((value[k]))), target) )))
+    ((*- endfor *))
+    ((*- else *))
+    test_unpacked_msg.(((prefix))) = (((value)));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    uint8_t encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
+
+    (((t.msg_type_name|convert_unpacked))) test_unpacked_msg{};
+    ((*- for f in t.fieldskeys *))(((assign_value(t, (((f))), (((t.fields[f]))), "both"))))((*- endfor *))
+    ((*- for f in t.unpacked_fieldskeys *))(((assign_value(t, (((f))), (((t.unpacked_fields[f]))), "unpacked"))))((*- endfor *))
+                                                                              
+    EXPECT_EQ(send_message( (((t.raw_json_obj.sender))), test_unpacked_msg), SBP_OK);
+                                                                              
+    EXPECT_EQ(wr_, sizeof(encoded_frame));                               
+    EXPECT_EQ(memcmp(io_buf_, encoded_frame, sizeof(encoded_frame)), 0);   
+                                                                              
+    while (rd_ < wr_) {                                             
+      process();                                                              
+    }
+
+    EXPECT_EQ(n_callbacks_logged_, 1);
+    EXPECT_EQ(last_sender_id_, (((t.raw_json_obj.sender))));
+    EXPECT_EQ(test_unpacked_msg, last_msg_);
+
+    ((*- for f in t.fieldskeys *))(((compare_value(t, (((f))), (((t.fields[f])))))))((*- endfor *))
+    ((*- for f in t.unpacked_fieldskeys *))(((compare_value(t, (((f))), (((t.unpacked_fields[f])))))))((*- endfor *))
+}
+((*- endfor *))

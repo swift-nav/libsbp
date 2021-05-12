@@ -29,11 +29,10 @@ template<typename>
 struct MessageTraits;
 
 ((* for m in msgs *))
-((*- if m.fields *))
+((*- if m.is_real_message *))
 template<>
 struct MessageTraits<(((m.identifier|convert_unpacked)))> {
   static constexpr u16 id = (((m.sbp_id)));
-  static constexpr bool is_unpacked = true;
 };
 
 ((* endif *))

@@ -14,7 +14,7 @@ tests:
     unpacked_fields:
       version:
         data: 'v1.2
- 
+
           '
         len: 5
     module: sbp.bootload

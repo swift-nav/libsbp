@@ -39,9 +39,7 @@ public:
 
   void write_message() const
   {
-    sbp_msg_t msg;
-    msg.MSG_OBS = header_params_.msg;
-    state_->send_message(header_params_.sender_id, SBP_MSG_OBS, msg);
+    state_->send_message(header_params_.sender_id, header_params_.msg);
   }
 
   SbpHeaderParams get_header_params()
