@@ -28,12 +28,7 @@ jobs:
       - name: Run tests
         run: make test-c
         env:
-          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
-
-      - name: Build examples
-        run: make
-        env:
-          CMAKEFLAGS: -DBUILD_EXAMPLES=true
+          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
 
       - name: Upload coverage to codecov.io
         run: |
