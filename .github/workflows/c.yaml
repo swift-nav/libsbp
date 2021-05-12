@@ -23,7 +23,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install lcov libeigen3-dev
+          sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
 
       - name: Run tests
         run: make test-c examples
