@@ -64,6 +64,9 @@ definitions:
     fields:
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 3
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -96,6 +99,9 @@ definitions:
                     - 6: Rejected; unspecified error
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 3
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0" 
@@ -115,6 +121,9 @@ definitions:
     fields:
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 2
+          max-sections: 2
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0"
@@ -133,6 +142,9 @@ definitions:
     fields:
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 3
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -174,6 +186,9 @@ definitions:
             0 to length(settings)
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 4
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
@@ -195,6 +210,9 @@ definitions:
     fields:
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 3
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE".
@@ -222,6 +240,9 @@ definitions:
                     - 3: Rejected; malformed message
       - setting:
           type: string
+          encoding: multipart
+          min-sections: 3
+          max-sections: 3
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined

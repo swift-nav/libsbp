@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <bootload.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/bootload.h>
+#include <libsbp/packed/bootload.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -220,21 +239,25 @@ START_TEST( test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
+    
     test_msg->handshake[0] = 118;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
+    
     test_msg->handshake[1] = 49;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
+    
     test_msg->handshake[2] = 46;
     if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
+    
     test_msg->handshake[3] = 50;
     sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
@@ -281,13 +304,140 @@ START_TEST( test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_bootloader_handshake_dep_a_t* check_msg = ( msg_bootloader_handshake_dep_a_t *)((void *)last_msg.msg);
+  }
+}
+END_TEST
+
+START_TEST( test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb4, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,180,0,0,0,9,0,0,0,0,118,49,46,50,10,201,1, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.flags = 0;
+    
+    {
+      const char assign_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
+      memcpy(test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, assign_string, sizeof(assign_string));
+    }
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.version.len = 5;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 0,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_bootloader_handshake_resp_t* check_msg = ( msg_bootloader_handshake_resp_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->handshake[0] == 118, "incorrect value for handshake[0], expected 118, is %d", check_msg->handshake[0]);
-    ck_assert_msg(check_msg->handshake[1] == 49, "incorrect value for handshake[1], expected 49, is %d", check_msg->handshake[1]);
-    ck_assert_msg(check_msg->handshake[2] == 46, "incorrect value for handshake[2], expected 46, is %d", check_msg->handshake[2]);
-    ck_assert_msg(check_msg->handshake[3] == 50, "incorrect value for handshake[3], expected 50, is %d", check_msg->handshake[3]);
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags == 0, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags, expected 0, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags);
+    
+    {
+      const char check_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data);
+    }
+    
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len == 5, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len, expected 5, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb0, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,176,0,195,4,4,118,49,46,50,1,206, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0] = 118;
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1] = 49;
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2] = 46;
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3] = 50;
+    
+    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len = 4;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_bootloader_handshake_dep_a_t* check_msg = ( msg_bootloader_handshake_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0] == 118, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0], expected 118, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0]);
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1] == 49, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1], expected 49, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1]);
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2] == 46, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2], expected 46, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2]);
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3] == 50, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3], expected 50, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3]);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len == 4, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len, expected 4, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len);
   }
 }
 END_TEST
@@ -296,7 +446,8 @@ Suite* auto_check_sbp_bootload_MsgBootloaderHandshakeResp_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_bootload_MsgBootloaderHandshakeResp");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_bootload_MsgBootloaderHandshakeResp");
-  tcase_add_test(tc_acq, test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_bootload_MsgBootloaderHandshakeResp);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp);
   suite_add_tcase(s, tc_acq);
   return s;
 }

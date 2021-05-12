@@ -150,7 +150,7 @@ def main():
           js.render_source(output_dir, parsed)
         elif args.c:
           import sbpg.targets.c as c
-          c.render_source(output_dir, parsed)
+          c.render_packed_headers(output_dir, parsed)
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
@@ -177,6 +177,7 @@ def main():
         c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         c.render_traits(output_dir, parsed)
+        c.render_unpacked_headers(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

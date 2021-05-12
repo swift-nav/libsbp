@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <observation.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/observation.h>
+#include <libsbp/packed/observation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_observation_MsgEphemerisGPS )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_observation_MsgEphemerisGPS )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -140,13 +159,23 @@ START_TEST( test_auto_check_sbp_observation_MsgEphemerisGPS )
     test_msg->c_rs = -52.3125;
     test_msg->c_uc = -2.7436763048171997e-06;
     test_msg->c_us = 3.1366944313049316e-06;
+    
     test_msg->common.fit_interval = 14400;
+    
     test_msg->common.health_bits = 0;
+    
+    
     test_msg->common.sid.code = 0;
+    
     test_msg->common.sid.sat = 22;
+    
+    
     test_msg->common.toe.tow = 446384;
+    
     test_msg->common.toe.wn = 2154;
+    
     test_msg->common.ura = 2.0;
+    
     test_msg->common.valid = 1;
     test_msg->dn = 5.694522914022375e-09;
     test_msg->ecc = 0.007072207052260637;
@@ -159,7 +188,9 @@ START_TEST( test_auto_check_sbp_observation_MsgEphemerisGPS )
     test_msg->omegadot = -8.903585155774196e-09;
     test_msg->sqrta = 5153.550029754639;
     test_msg->tgd = -1.7695128917694092e-08;
+    
     test_msg->toc.tow = 446384;
+    
     test_msg->toc.wn = 2154;
     test_msg->w = -0.9893036629599647;
     sbp_send_message(&sbp_state, 0x8a, 2314, test_msg_len, test_msg_storage, &dummy_write);
@@ -219,13 +250,23 @@ START_TEST( test_auto_check_sbp_observation_MsgEphemerisGPS )
     ck_assert_msg((check_msg->c_rs*100 - -52.3125*100) < 0.05, "incorrect value for c_rs, expected -52.3125, is %f", check_msg->c_rs);
     ck_assert_msg((check_msg->c_uc*100 - -2.74367630482e-06*100) < 0.05, "incorrect value for c_uc, expected -2.74367630482e-06, is %f", check_msg->c_uc);
     ck_assert_msg((check_msg->c_us*100 - 3.1366944313e-06*100) < 0.05, "incorrect value for c_us, expected 3.1366944313e-06, is %f", check_msg->c_us);
+    
     ck_assert_msg(check_msg->common.fit_interval == 14400, "incorrect value for common.fit_interval, expected 14400, is %d", check_msg->common.fit_interval);
+    
     ck_assert_msg(check_msg->common.health_bits == 0, "incorrect value for common.health_bits, expected 0, is %d", check_msg->common.health_bits);
+    
+    
     ck_assert_msg(check_msg->common.sid.code == 0, "incorrect value for common.sid.code, expected 0, is %d", check_msg->common.sid.code);
+    
     ck_assert_msg(check_msg->common.sid.sat == 22, "incorrect value for common.sid.sat, expected 22, is %d", check_msg->common.sid.sat);
+    
+    
     ck_assert_msg(check_msg->common.toe.tow == 446384, "incorrect value for common.toe.tow, expected 446384, is %d", check_msg->common.toe.tow);
+    
     ck_assert_msg(check_msg->common.toe.wn == 2154, "incorrect value for common.toe.wn, expected 2154, is %d", check_msg->common.toe.wn);
+    
     ck_assert_msg((check_msg->common.ura*100 - 2.0*100) < 0.05, "incorrect value for common.ura, expected 2.0, is %f", check_msg->common.ura);
+    
     ck_assert_msg(check_msg->common.valid == 1, "incorrect value for common.valid, expected 1, is %d", check_msg->common.valid);
     ck_assert_msg((check_msg->dn*100 - 5.69452291402e-09*100) < 0.05, "incorrect value for dn, expected 5.69452291402e-09, is %f", check_msg->dn);
     ck_assert_msg((check_msg->ecc*100 - 0.00707220705226*100) < 0.05, "incorrect value for ecc, expected 0.00707220705226, is %f", check_msg->ecc);
@@ -238,9 +279,154 @@ START_TEST( test_auto_check_sbp_observation_MsgEphemerisGPS )
     ck_assert_msg((check_msg->omegadot*100 - -8.90358515577e-09*100) < 0.05, "incorrect value for omegadot, expected -8.90358515577e-09, is %f", check_msg->omegadot);
     ck_assert_msg((check_msg->sqrta*100 - 5153.55002975*100) < 0.05, "incorrect value for sqrta, expected 5153.55002975, is %f", check_msg->sqrta);
     ck_assert_msg((check_msg->tgd*100 - -1.76951289177e-08*100) < 0.05, "incorrect value for tgd, expected -1.76951289177e-08, is %f", check_msg->tgd);
+    
     ck_assert_msg(check_msg->toc.tow == 446384, "incorrect value for toc.tow, expected 446384, is %d", check_msg->toc.tow);
+    
     ck_assert_msg(check_msg->toc.wn == 2154, "incorrect value for toc.wn, expected 2154, is %d", check_msg->toc.wn);
     ck_assert_msg((check_msg->w*100 - -0.98930366296*100) < 0.05, "incorrect value for w, expected -0.98930366296, is %f", check_msg->w);
+  }
+}
+END_TEST
+
+START_TEST( test_unpacked_auto_check_sbp_observation_MsgEphemerisGPS )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x8a, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,138,0,10,9,139,22,0,176,207,6,0,106,8,0,0,0,64,64,56,0,0,1,0,0,0,152,178,0,64,81,194,0,80,154,67,0,32,56,182,0,128,82,54,0,0,0,50,0,0,248,179,114,216,96,180,49,117,56,62,142,41,5,235,95,135,150,191,0,0,0,32,191,247,124,63,0,0,192,206,140,33,180,64,41,131,179,134,141,248,253,191,227,133,81,54,204,30,67,190,216,59,199,39,96,168,239,191,71,11,217,147,145,228,237,63,221,47,100,224,255,47,198,189,96,139,37,186,0,0,30,45,0,0,0,0,176,207,6,0,106,8,45,45,0,170,4, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.af0 = -0.0006315018981695175;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.af1 = 8.981260180007666e-12;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.af2 = 0.0;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_ic = 7.450580596923828e-09;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_is = -1.1548399925231934e-07;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_rc = 308.625;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_rs = -52.3125;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_uc = -2.7436763048171997e-06;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.c_us = 3.1366944313049316e-06;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.fit_interval = 14400;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.health_bits = 0;
+    
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.sid.code = 0;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.sid.sat = 22;
+    
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.toe.tow = 446384;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.toe.wn = 2154;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.ura = 2.0;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.common.valid = 1;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.dn = 5.694522914022375e-09;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.ecc = 0.007072207052260637;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.inc = 0.9341514480259797;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.inc_dot = -4.035882396415757e-11;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.iodc = 45;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.iode = 45;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.m0 = -0.02200078842114688;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.omega0 = -1.8731818448797617;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.omegadot = -8.903585155774196e-09;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.sqrta = 5153.550029754639;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.tgd = -1.7695128917694092e-08;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.toc.tow = 446384;
+    
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.toc.wn = 2154;
+    test_unpacked_msg.MSG_EPHEMERIS_GPS.w = -0.9893036629599647;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_EPHEMERIS_GPS, 2314, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 2314,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_ephemeris_gps_t* check_msg = ( msg_ephemeris_gps_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.af0*100 - -0.00063150189817*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.af0, expected -0.00063150189817, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.af0);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.af1*100 - 8.98126018001e-12*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.af1, expected 8.98126018001e-12, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.af1);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.af2*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.af2, expected 0.0, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.af2);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_ic*100 - 7.45058059692e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_ic, expected 7.45058059692e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_ic);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_is*100 - -1.15483999252e-07*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_is, expected -1.15483999252e-07, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_is);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rc*100 - 308.625*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rc, expected 308.625, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rc);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rs*100 - -52.3125*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rs, expected -52.3125, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_rs);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_uc*100 - -2.74367630482e-06*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_uc, expected -2.74367630482e-06, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_uc);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.c_us*100 - 3.1366944313e-06*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.c_us, expected 3.1366944313e-06, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.c_us);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.fit_interval == 14400, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.fit_interval, expected 14400, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.fit_interval);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.health_bits == 0, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.health_bits, expected 0, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.health_bits);
+    
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.code, expected 0, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.code);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.sat == 22, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.sat, expected 22, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.sid.sat);
+    
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.tow == 446384, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.tow, expected 446384, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.tow);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.wn == 2154, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.wn, expected 2154, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.toe.wn);
+    
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.common.ura*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.ura, expected 2.0, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.ura);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.common.valid == 1, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.common.valid, expected 1, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.common.valid);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.dn*100 - 5.69452291402e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.dn, expected 5.69452291402e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.dn);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.ecc*100 - 0.00707220705226*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.ecc, expected 0.00707220705226, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.ecc);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.inc*100 - 0.934151448026*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.inc, expected 0.934151448026, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.inc);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.inc_dot*100 - -4.03588239642e-11*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.inc_dot, expected -4.03588239642e-11, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.inc_dot);
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.iodc == 45, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.iodc, expected 45, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.iodc);
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.iode == 45, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.iode, expected 45, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.iode);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.m0*100 - -0.0220007884211*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.m0, expected -0.0220007884211, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.m0);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.omega0*100 - -1.87318184488*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.omega0, expected -1.87318184488, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.omega0);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.omegadot*100 - -8.90358515577e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.omegadot, expected -8.90358515577e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.omegadot);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.sqrta*100 - 5153.55002975*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.sqrta, expected 5153.55002975, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.sqrta);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.tgd*100 - -1.76951289177e-08*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.tgd, expected -1.76951289177e-08, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.tgd);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.tow == 446384, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.tow, expected 446384, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.tow);
+    
+    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.wn == 2154, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.wn, expected 2154, is %d", check_unpacked_msg->MSG_EPHEMERIS_GPS.toc.wn);
+    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GPS.w*100 - -0.98930366296*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GPS.w, expected -0.98930366296, is %s", check_unpacked_msg->MSG_EPHEMERIS_GPS.w);
   }
 }
 END_TEST
@@ -249,7 +435,8 @@ Suite* auto_check_sbp_observation_MsgEphemerisGPS_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_MsgEphemerisGPS");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_MsgEphemerisGPS");
-  tcase_add_test(tc_acq, test_auto_check_sbp_observation_MsgEphemerisGPS);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_observation_MsgEphemerisGPS);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_observation_MsgEphemerisGPS);
   suite_add_tcase(s, tc_acq);
   return s;
 }

@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <observation.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/observation.h>
+#include <libsbp/packed/observation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_observation_MsgBasePosEcef )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_observation_MsgBasePosEcef )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -189,11 +208,75 @@ START_TEST( test_auto_check_sbp_observation_MsgBasePosEcef )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_observation_MsgBasePosEcef )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x48, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,72,0,0,0,24,228,131,158,245,87,205,68,193,66,62,232,209,32,118,80,193,213,231,106,251,63,20,77,65,194,125, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_BASE_POS_ECEF.x = -2726575.9189;
+    test_unpacked_msg.MSG_BASE_POS_ECEF.y = -4315267.2798;
+    test_unpacked_msg.MSG_BASE_POS_ECEF.z = 3811455.9642;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASE_POS_ECEF, 0, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 0,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_base_pos_ecef_t* check_msg = ( msg_base_pos_ecef_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.x*100 - -2726575.9189*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.x, expected -2726575.9189, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.x);
+    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.y*100 - -4315267.2798*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.y, expected -4315267.2798, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.y);
+    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.z*100 - 3811455.9642*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.z, expected 3811455.9642, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.z);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_observation_MsgBasePosEcef_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_MsgBasePosEcef");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_MsgBasePosEcef");
-  tcase_add_test(tc_acq, test_auto_check_sbp_observation_MsgBasePosEcef);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_observation_MsgBasePosEcef);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_observation_MsgBasePosEcef);
   suite_add_tcase(s, tc_acq);
   return s;
 }

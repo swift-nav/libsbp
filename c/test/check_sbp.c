@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 #include <check.h>
-#include <sbp.h>
+#include <libsbp/sbp.h>
 
 
 int DUMMY_MEMORY_FOR_CALLBACKS = (int)0xdeadbeef;

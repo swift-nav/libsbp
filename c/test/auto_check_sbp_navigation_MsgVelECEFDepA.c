@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <navigation.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/navigation.h>
+#include <libsbp/packed/navigation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_navigation_MsgVelECEFDepA )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_navigation_MsgVelECEFDepA )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -1057,11 +1076,653 @@ START_TEST( test_auto_check_sbp_navigation_MsgVelECEFDepA )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEFDepA )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,246,215,20,20,46,39,0,218,11,0,0,134,245,255,255,163,252,255,255,0,0,9,0,80,236, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 2567700;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 3034;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -2682;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -861;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 55286,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 2567700, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 2567700, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 3034, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 3034, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -2682, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -2682, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -861, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -861, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,246,215,20,120,46,39,0,68,11,0,0,24,246,255,255,220,252,255,255,0,0,9,0,248,138, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 2567800;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 2884;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -2536;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -804;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 55286,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 2567800, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 2884, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 2884, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -2536, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -2536, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -804, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -804, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,246,215,20,220,46,39,0,21,11,0,0,77,246,255,255,247,252,255,255,0,0,9,0,25,174, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 2567900;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 2837;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -2483;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -777;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 55286,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 2567900, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 2567900, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 2837, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 2837, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -2483, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -2483, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -777, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -777, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,246,215,20,64,47,39,0,121,11,0,0,2,246,255,255,234,252,255,255,0,0,9,0,195,228, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 2568000;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 2937;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -2558;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -790;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 55286,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 2568000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 2568000, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 2937, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 2937, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -2558, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -2558, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -790, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -790, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,246,215,20,164,47,39,0,31,11,0,0,93,246,255,255,16,253,255,255,0,0,9,0,219,164, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 2568100;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 2847;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -2467;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -752;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 55286,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 2568100, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 2568100, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 2847, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 2847, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -2467, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -2467, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -752, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -752, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,212,157,67,24,24,0,0,0,245,255,255,255,219,255,255,255,0,0,8,0,68,255, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 8;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407084500;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 24;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -11;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -37;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407084500, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407084500, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 24, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 24, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -11, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -11, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -37, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -37, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,56,158,67,24,4,0,0,0,234,255,255,255,18,0,0,0,0,0,8,0,214,136, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 8;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407084600;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = 4;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -22;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = 18;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407084600, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407084600, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == 4, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected 4, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -22, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -22, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == 18, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected 18, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,156,158,67,24,230,255,255,255,4,0,0,0,1,0,0,0,0,0,8,0,122,159, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 8;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407084700;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = -26;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = 4;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = 1;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407084700, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407084700, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == -26, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected -26, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == 4, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected 4, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == 1, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected 1, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,0,159,67,24,247,255,255,255,237,255,255,255,28,0,0,0,0,0,8,0,232,146, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 8;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407084800;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = -9;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -19;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = 28;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407084800, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407084800, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == -9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected -9, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -19, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -19, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == 28, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected 28, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,100,159,67,24,255,255,255,255,2,0,0,0,245,255,255,255,0,0,8,0,171,238, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 8;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407084900;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = -1;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = 2;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = -11;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407084900, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407084900, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == -1, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected -1, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == 2, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected 2, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == -11, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected -11, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x204, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,2,195,4,20,46,162,68,24,207,255,255,255,185,255,255,255,65,0,0,0,0,0,5,0,82,154, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.accuracy = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.flags = 0;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.n_sats = 5;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.tow = 407151150;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.x = -49;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.y = -71;
+    test_unpacked_msg.MSG_VEL_ECEF_DEP_A.z = 65;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 1219,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ecef_dep_a_t* check_msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.accuracy);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats == 5, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats, expected 5, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow == 407151150, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow, expected 407151150, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x == -49, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x, expected -49, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.x);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y == -71, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y, expected -71, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.y);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z == 65, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z, expected 65, is %d", check_unpacked_msg->MSG_VEL_ECEF_DEP_A.z);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_navigation_MsgVelECEFDepA_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_MsgVelECEFDepA");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_MsgVelECEFDepA");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgVelECEFDepA);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_navigation_MsgVelECEFDepA);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_navigation_MsgVelECEFDepA);
   suite_add_tcase(s, tc_acq);
   return s;
 }

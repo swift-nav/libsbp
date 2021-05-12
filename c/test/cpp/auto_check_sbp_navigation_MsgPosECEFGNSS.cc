@@ -12,16 +12,17 @@
 
 // This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosECEFGNSS.yaml by generate.py. Do not modify by hand!
 
+#include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_handler.h>                                                     
 class Test_auto_check_sbp_navigation_MsgPosECEFGNSS0 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<msg_pos_ecef_gnss_t>
+  sbp::MessageHandler<sbp_msg_pos_ecef_gnss_t>
 {
 public:
   Test_auto_check_sbp_navigation_MsgPosECEFGNSS0() : 
@@ -29,9 +30,8 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<msg_pos_ecef_gnss_t>(this), 
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_ecef_gnss_t*>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_ecef_gnss_t>(this), 
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
         n_callbacks_logged_(), 
@@ -62,16 +62,14 @@ public:
 
 protected:
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_pos_ecef_gnss_t &msg) override
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_pos_ecef_gnss_t &msg) override
   {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_ecef_gnss_t *last_msg_;
+  sbp_msg_pos_ecef_gnss_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;                                                   
   size_t n_callbacks_logged_;                                                 
@@ -83,21 +81,17 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosECEFGNSS0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,41,2,0,16,32,24,229,233,29,52,254,158,218,42,142,68,193,69,162,89,91,34,68,80,193,131,21,176,129,239,174,77,65,182,0,18,4,135,2, };
-
-    uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-    uint8_t test_msg_len = 0;
-    msg_pos_ecef_gnss_t* test_msg = ( msg_pos_ecef_gnss_t* )test_msg_storage;
-    test_msg_len = (uint8_t)sizeof(*test_msg);
-    test_msg->accuracy = 182;
-    test_msg->flags = 4;
-    test_msg->n_sats = 18;
-    test_msg->tow = 501867800;
-    test_msg->x = -2694229.7079770807;
-    test_msg->y = -4264073.427345817;
-    test_msg->z = 3890655.013186158;
+    uint8_t encoded_frame[] = {85,41,2,0,16,32,24,229,233,29,52,254,158,218,42,142,68,193,69,162,89,91,34,68,80,193,131,21,176,129,239,174,77,65,182,0,18,4,135,2, }; //No unpacked fields
+    sbp_msg_pos_ecef_gnss_t test_msg{};
+    test_msg.accuracy = 182;
+    test_msg.flags = 4;
+    test_msg.n_sats = 18;
+    test_msg.tow = 501867800;
+    test_msg.x = -2694229.7079770807;
+    test_msg.y = -4264073.427345817;
+    test_msg.z = 3890655.013186158;
                                                                               
-    EXPECT_EQ(send_message( 0x229, 4096, test_msg_len, test_msg_storage), SBP_OK);
+    EXPECT_EQ(send_message( 4096, test_msg), SBP_OK);
                                                                               
     EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
     EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
@@ -108,12 +102,12 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosECEFGNSS0, Test)
 
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 4096);
-    EXPECT_EQ(last_msg_len_, test_msg_len);
-    EXPECT_EQ(last_msg_->accuracy, 182) << "incorrect value for accuracy, expected 182, is " << last_msg_->accuracy;
-    EXPECT_EQ(last_msg_->flags, 4) << "incorrect value for flags, expected 4, is " << last_msg_->flags;
-    EXPECT_EQ(last_msg_->n_sats, 18) << "incorrect value for n_sats, expected 18, is " << last_msg_->n_sats;
-    EXPECT_EQ(last_msg_->tow, 501867800) << "incorrect value for tow, expected 501867800, is " << last_msg_->tow;
-    EXPECT_LT((last_msg_->x*100 - -2694229.70798*100), 0.05) << "incorrect value for x, expected -2694229.70798, is " << last_msg_->x;
-    EXPECT_LT((last_msg_->y*100 - -4264073.42735*100), 0.05) << "incorrect value for y, expected -4264073.42735, is " << last_msg_->y;
-    EXPECT_LT((last_msg_->z*100 - 3890655.01319*100), 0.05) << "incorrect value for z, expected 3890655.01319, is " << last_msg_->z;
+    EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.accuracy, 182) << "incorrect value for accuracy, expected 182, is " << last_msg_.accuracy;
+    EXPECT_EQ(last_msg_.flags, 4) << "incorrect value for flags, expected 4, is " << last_msg_.flags;
+    EXPECT_EQ(last_msg_.n_sats, 18) << "incorrect value for n_sats, expected 18, is " << last_msg_.n_sats;
+    EXPECT_EQ(last_msg_.tow, 501867800) << "incorrect value for tow, expected 501867800, is " << last_msg_.tow;
+    EXPECT_LT((last_msg_.x*100 - -2694229.70798*100), 0.05) << "incorrect value for x, expected -2694229.70798, is " << last_msg_.x;
+    EXPECT_LT((last_msg_.y*100 - -4264073.42735*100), 0.05) << "incorrect value for y, expected -4264073.42735, is " << last_msg_.y;
+    EXPECT_LT((last_msg_.z*100 - 3890655.01319*100), 0.05) << "incorrect value for z, expected 3890655.01319, is " << last_msg_.z;
 }

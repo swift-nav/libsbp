@@ -12,16 +12,17 @@
 
 // This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgStartup.yaml by generate.py. Do not modify by hand!
 
+#include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_handler.h>                                                     
 class Test_auto_check_sbp_system_MsgStartup0 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<msg_startup_t>
+  sbp::MessageHandler<sbp_msg_startup_t>
 {
 public:
   Test_auto_check_sbp_system_MsgStartup0() : 
@@ -29,9 +30,8 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<msg_startup_t>(this), 
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_startup_t*>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_startup_t>(this), 
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
         n_callbacks_logged_(), 
@@ -62,16 +62,14 @@ public:
 
 protected:
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_startup_t &msg) override
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_startup_t &msg) override
   {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_startup_t *last_msg_;
+  sbp_msg_startup_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;                                                   
   size_t n_callbacks_logged_;                                                 
@@ -83,17 +81,13 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgStartup0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,255,66,0,4,0,0,0,0,70,160, };
-
-    uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-    uint8_t test_msg_len = 0;
-    msg_startup_t* test_msg = ( msg_startup_t* )test_msg_storage;
-    test_msg_len = (uint8_t)sizeof(*test_msg);
-    test_msg->cause = 0;
-    test_msg->reserved = 0;
-    test_msg->startup_type = 0;
+    uint8_t encoded_frame[] = {85,0,255,66,0,4,0,0,0,0,70,160, }; //No unpacked fields
+    sbp_msg_startup_t test_msg{};
+    test_msg.cause = 0;
+    test_msg.reserved = 0;
+    test_msg.startup_type = 0;
                                                                               
-    EXPECT_EQ(send_message( 0xff00, 66, test_msg_len, test_msg_storage), SBP_OK);
+    EXPECT_EQ(send_message( 66, test_msg), SBP_OK);
                                                                               
     EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
     EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
@@ -104,17 +98,17 @@ TEST_F(Test_auto_check_sbp_system_MsgStartup0, Test)
 
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 66);
-    EXPECT_EQ(last_msg_len_, test_msg_len);
-    EXPECT_EQ(last_msg_->cause, 0) << "incorrect value for cause, expected 0, is " << last_msg_->cause;
-    EXPECT_EQ(last_msg_->reserved, 0) << "incorrect value for reserved, expected 0, is " << last_msg_->reserved;
-    EXPECT_EQ(last_msg_->startup_type, 0) << "incorrect value for startup_type, expected 0, is " << last_msg_->startup_type;
-}
+    EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.cause, 0) << "incorrect value for cause, expected 0, is " << last_msg_.cause;
+    EXPECT_EQ(last_msg_.reserved, 0) << "incorrect value for reserved, expected 0, is " << last_msg_.reserved;
+    EXPECT_EQ(last_msg_.startup_type, 0) << "incorrect value for startup_type, expected 0, is " << last_msg_.startup_type;
+}                                                     
 class Test_auto_check_sbp_system_MsgStartup1 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<msg_startup_t>
+  sbp::MessageHandler<sbp_msg_startup_t>
 {
 public:
   Test_auto_check_sbp_system_MsgStartup1() : 
@@ -122,9 +116,8 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<msg_startup_t>(this), 
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_startup_t*>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_startup_t>(this), 
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
         n_callbacks_logged_(), 
@@ -155,16 +148,14 @@ public:
 
 protected:
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_startup_t &msg) override
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_startup_t &msg) override
   {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_startup_t *last_msg_;
+  sbp_msg_startup_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;                                                   
   size_t n_callbacks_logged_;                                                 
@@ -176,17 +167,11 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgStartup1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,255,195,4,4,0,0,0,0,127,181, };
-
-    uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-    uint8_t test_msg_len = 0;
-    msg_startup_t* test_msg = ( msg_startup_t* )test_msg_storage;
-    test_msg_len = (uint8_t)sizeof(*test_msg);
-    test_msg->cause = 0;
-    test_msg->reserved = 0;
-    test_msg->startup_type = 0;
+    uint8_t encoded_frame[] = {85,0,255,195,4,4,0,0,0,0,127,181, }; //No unpacked fields
+    sbp_msg_startup_t test_msg{};
+    test_msg.reserved = 0;
                                                                               
-    EXPECT_EQ(send_message( 0xff00, 1219, test_msg_len, test_msg_storage), SBP_OK);
+    EXPECT_EQ(send_message( 1219, test_msg), SBP_OK);
                                                                               
     EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
     EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
@@ -197,8 +182,6 @@ TEST_F(Test_auto_check_sbp_system_MsgStartup1, Test)
 
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 1219);
-    EXPECT_EQ(last_msg_len_, test_msg_len);
-    EXPECT_EQ(last_msg_->cause, 0) << "incorrect value for cause, expected 0, is " << last_msg_->cause;
-    EXPECT_EQ(last_msg_->reserved, 0) << "incorrect value for reserved, expected 0, is " << last_msg_->reserved;
-    EXPECT_EQ(last_msg_->startup_type, 0) << "incorrect value for startup_type, expected 0, is " << last_msg_->startup_type;
+    EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.reserved, 0) << "incorrect value for reserved, expected 0, is " << last_msg_.reserved;
 }

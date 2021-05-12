@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <navigation.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/navigation.h>
+#include <libsbp/packed/navigation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_navigation_MsgVelNedCovGnss )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_navigation_MsgVelNedCovGnss )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -207,11 +226,93 @@ START_TEST( test_auto_check_sbp_navigation_MsgVelNedCovGnss )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelNedCovGnss )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x232, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,50,2,0,16,42,168,230,233,29,251,255,255,255,0,0,0,0,246,255,255,255,15,58,207,58,248,139,116,55,103,197,57,57,203,186,129,58,109,171,44,57,135,39,1,60,21,2,155,3, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_d_d = 0.007882959209382534;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_e_d = 0.00016467059322167188;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_e_e = 0.0009897587588056922;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_n_d = 0.00017716512957122177;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_n_e = 1.457612233934924e-05;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.cov_n_n = 0.0015810149488970637;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.d = -10;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.e = 0;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.flags = 2;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.n = -5;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.n_sats = 21;
+    test_unpacked_msg.MSG_VEL_NED_COV_GNSS.tow = 501868200;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_NED_COV_GNSS, 4096, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 4096,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_vel_ned_cov_gnss_t* check_msg = ( msg_vel_ned_cov_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_d_d*100 - 0.00788295920938*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_d_d, expected 0.00788295920938, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_d_d);
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_d*100 - 0.000164670593222*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_d, expected 0.000164670593222, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_d);
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_e*100 - 0.000989758758806*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_e, expected 0.000989758758806, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_e_e);
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_d*100 - 0.000177165129571*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_d, expected 0.000177165129571, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_d);
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_e*100 - 1.45761223393e-05*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_e, expected 1.45761223393e-05, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_e);
+    ck_assert_msg((check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_n*100 - 0.0015810149489*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_n, expected 0.0015810149489, is %s", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.cov_n_n);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.d == -10, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.d, expected -10, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.d);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.e == 0, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.e, expected 0, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.e);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.flags == 2, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.flags, expected 2, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n == -5, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n, expected -5, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n_sats == 21, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n_sats, expected 21, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.n_sats);
+    ck_assert_msg(check_unpacked_msg->MSG_VEL_NED_COV_GNSS.tow == 501868200, "incorrect value for check_unpacked_msg->MSG_VEL_NED_COV_GNSS.tow, expected 501868200, is %d", check_unpacked_msg->MSG_VEL_NED_COV_GNSS.tow);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_navigation_MsgVelNedCovGnss_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_MsgVelNedCovGnss");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_MsgVelNedCovGnss");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgVelNedCovGnss);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_navigation_MsgVelNedCovGnss);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_navigation_MsgVelNedCovGnss);
   suite_add_tcase(s, tc_acq);
   return s;
 }

@@ -7,7 +7,7 @@ swift_add_test(test-libsbp-cpp
         test_sbp_stdio.cc
         ${generated_cpp_sources}
     INCLUDE
-        ${PROJECT_SOURCE_DIR}/include/libsbp
+        ${PROJECT_SOURCE_DIR}/include
     LINK
         sbp
         gtest_main)

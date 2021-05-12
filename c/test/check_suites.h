@@ -49,7 +49,7 @@ Suite* auto_check_sbp_navigation_MsgPosLLHCov_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLLHDepA_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLlhCovGnss_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLlhGnss_suite(void);
-Suite* auto_check_sbp_navigation_MsgProtectionLevel_suite(void);
+Suite* auto_check_sbp_navigation_MsgProtectionLevelDepA_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTime_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTimeGNSS_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelBody_suite(void);

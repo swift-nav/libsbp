@@ -25,9 +25,7 @@ tests:
 
 - msg:
     fields:
-      cause: 0
       reserved: 0
-      startup_type: 0
     module: sbp.system
     name: MsgStartup
   msg_type: '0xff00'

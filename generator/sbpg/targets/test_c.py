@@ -29,10 +29,15 @@ def b64_decode(field):
 def strEscape(value):
     return ",".join(["(char)" + str(ord(ch)) for ch in value])
 
+def convert_upper(value):
+    return convert_unpacked(value)[4:-2].upper()
+
 JENV.filters['commentify'] = commentify
-JENV.filters['mk_id'] = mk_id
+JENV.filters['mk_packed_id'] = mk_packed_id
 JENV.filters['mk_size'] = mk_size
-JENV.filters['convert'] = convert
+JENV.filters['convert_packed'] = convert_packed
+JENV.filters['convert_unpacked'] = convert_unpacked
+JENV.filters['convert_upper'] = convert_upper
 JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
 JENV.filters['to_str'] = to_str

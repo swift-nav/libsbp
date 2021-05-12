@@ -12,16 +12,17 @@
 
 // This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgDgnssStatus.yaml by generate.py. Do not modify by hand!
 
+#include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_handler.h>                                                     
 class Test_auto_check_sbp_system_MsgDgnssStatus0 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<msg_dgnss_status_t>
+  sbp::MessageHandler<sbp_msg_dgnss_status_t>
 {
 public:
   Test_auto_check_sbp_system_MsgDgnssStatus0() : 
@@ -29,9 +30,8 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<msg_dgnss_status_t>(this), 
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_dgnss_status_t*>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_dgnss_status_t>(this), 
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
         n_callbacks_logged_(), 
@@ -62,16 +62,14 @@ public:
 
 protected:
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_dgnss_status_t &msg) override
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_dgnss_status_t &msg) override
   {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_dgnss_status_t *last_msg_;
+  sbp_msg_dgnss_status_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;                                                   
   size_t n_callbacks_logged_;                                                 
@@ -84,23 +82,17 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test)
 {
 
     uint8_t encoded_frame[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
-
-    uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-    uint8_t test_msg_len = 0;
-    msg_dgnss_status_t* test_msg = ( msg_dgnss_status_t* )test_msg_storage;
-    test_msg_len = (uint8_t)sizeof(*test_msg);
-    test_msg->flags = 0;
-    test_msg->latency = 50;
-    test_msg->num_signals = 12;
+    sbp_msg_dgnss_status_t test_msg{};
+    test_msg.flags = 0;
+    test_msg.latency = 50;
+    test_msg.num_signals = 12;
     {
       const char assign_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      memcpy(test_msg->source, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg->source) == 0) {
-        test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-      }
+      memcpy(test_msg.source.data, assign_string, sizeof(assign_string));
     }
+    test_msg.source.len = 7;
                                                                               
-    EXPECT_EQ(send_message( 0xff02, 66, test_msg_len, test_msg_storage), SBP_OK);
+    EXPECT_EQ(send_message( 66, test_msg), SBP_OK);
                                                                               
     EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
     EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
@@ -111,12 +103,13 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test)
 
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 66);
-    EXPECT_EQ(last_msg_len_, test_msg_len);
-    EXPECT_EQ(last_msg_->flags, 0) << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-    EXPECT_EQ(last_msg_->latency, 50) << "incorrect value for latency, expected 50, is " << last_msg_->latency;
-    EXPECT_EQ(last_msg_->num_signals, 12) << "incorrect value for num_signals, expected 12, is " << last_msg_->num_signals;
+    EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.flags, 0) << "incorrect value for flags, expected 0, is " << last_msg_.flags;
+    EXPECT_EQ(last_msg_.latency, 50) << "incorrect value for latency, expected 50, is " << last_msg_.latency;
+    EXPECT_EQ(last_msg_.num_signals, 12) << "incorrect value for num_signals, expected 12, is " << last_msg_.num_signals;
     {
       const char check_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      EXPECT_EQ(memcmp(last_msg_->source, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_->source, expected string '" << check_string << "', is '" << last_msg_->source << "'";
+      EXPECT_EQ(memcmp(last_msg_.source.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.source.data, expected string '" << check_string << "', is '" << last_msg_.source.data << "'";
     }
+    EXPECT_EQ(last_msg_.source.len, 7) << "incorrect value for source.len, expected 7, is " << last_msg_.source.len;
 }

@@ -182,7 +182,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
   if ((cb_type == SBP_PAYLOAD_CALLBACK && cb.msg == 0) ||
-      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0)) {
+      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0) ||
+      (cb_type == SBP_UNPACKED_CALLBACK && cb.unpacked == 0)) {
     return SBP_NULL_ERROR;
   }
 
@@ -203,6 +204,10 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
       if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
         return SBP_CALLBACK_ERROR;
       }
+      if ((cb_type == SBP_UNPACKED_CALLBACK) && (n->cb.unpacked == cb.unpacked))
+      {
+        return SBP_CALLBACK_ERROR;
+      }
     }
   }
 
@@ -214,6 +219,10 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
     node->cb.msg = cb.msg;
   } else if (cb_type == SBP_FRAME_CALLBACK) {
     node->cb.frame = cb.frame;
+  }
+  else if (cb_type == SBP_UNPACKED_CALLBACK)
+  {
+    node->cb.unpacked = cb.unpacked;
   }
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
@@ -325,6 +334,20 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
                                        SBP_PAYLOAD_CALLBACK, context, node);
 }
 
+s8 sbp_register_unpacked_callback(sbp_state_t *s, u16 msg_type, sbp_unpacked_callback_t cb, void *context, sbp_msg_callbacks_node_t *node)
+{
+  sbp_callback_t callback;
+  callback.unpacked = cb;
+  return sbp_register_callback_generic(s, msg_type, callback, SBP_UNPACKED_CALLBACK, context, node);
+}
+
+s8 sbp_register_all_unpacked_callback(sbp_state_t *s, sbp_unpacked_callback_t cb, void *context, sbp_msg_callbacks_node_t *node)
+{
+  sbp_callback_t callback;
+  callback.unpacked = cb;
+  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback, SBP_UNPACKED_CALLBACK, context, node);
+}
+
 /** Clear all registered callbacks.
  * This is probably only useful for testing but who knows!
  */
@@ -387,8 +410,8 @@ static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
     if (0 > rd) {
       return SBP_READ_ERROR;
     }
-    s->frame_len += rd;
-    s->n_read += rd;
+    s->frame_len = (uint16_t)(s->frame_len + rd);
+    s->n_read = (uint8_t)(s->n_read + rd);
     return SBP_OK;
 }
 
@@ -410,7 +433,7 @@ static void sbp_state_frame_buffer_clear(sbp_state_t *s)
  */
 static u16 sbp_u8_array_to_u16(u8 *array_start)
 {
-  return (u16) array_start[0] + ((u16) array_start[1] << 8);
+  return (u16) (array_start[0] + ((u16) array_start[1] << 8));
 }
 
 /** Read and process SBP messages.
@@ -482,7 +505,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_TYPE:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (uint8_t)(sizeof(s->msg_type)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -494,7 +517,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_SENDER:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (uint8_t)(sizeof(s->sender_id)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -506,7 +529,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_LEN:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (uint8_t)(sizeof(s->msg_len)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -519,7 +542,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
-    ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (uint8_t)(s->msg_len - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -530,7 +553,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_CRC:
-    ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (uint8_t)(SBP_CRC_LEN - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -579,6 +602,54 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                           0, 0, SBP_CALLBACK_FLAG(SBP_PAYLOAD_CALLBACK));
 }
 
+s8 sbp_process_unpacked(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_msg_t *msg)
+{
+  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+  sbp_msg_callbacks_node_t *node;
+  uint8_t frame[SBP_MAX_FRAME_LEN];
+  frame[0] = SBP_PREAMBLE;
+  frame[1] = (uint8_t)(msg_type & 0xff);
+  frame[2] = (uint8_t)((msg_type >> 8) & 0xff);
+  frame[3] = (uint8_t)(sender_id & 0xff);
+  frame[4] = (uint8_t)((sender_id >> 8) & 0xff);
+  frame[5] = (uint8_t)sbp_packed_size(msg_type, msg);
+  sbp_pack_msg(frame + 6, SBP_MAX_PAYLOAD_LEN, msg_type, msg);
+  uint16_t crc = crc16_ccitt(frame + 1, 5u + frame[5], 0);
+  frame[6 + frame[5]] = (uint8_t)(crc & 0xff);
+  frame[7 + frame[5]] = (uint8_t)((crc >> 8) & 0xff);
+
+  for (node = s->sbp_msg_callbacks_head; node; node = node->next)
+  {
+    if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL)))
+    {
+      switch (node->cb_type)
+      {
+        case SBP_FRAME_CALLBACK:
+        {
+          node->cb.frame(sender_id, msg_type, frame[5], frame + 6, (uint16_t)(8u + frame[5]), frame, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
+        case SBP_PAYLOAD_CALLBACK:
+        {
+          node->cb.msg(sender_id, frame[5], frame + 6, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
+        case SBP_UNPACKED_CALLBACK:
+        {
+          node->cb.unpacked(sender_id, msg_type, msg, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
+        case SBP_CALLBACK_TYPE_COUNT:
+        default:
+          break;
+      }
+    }
+  }
+  return ret;
+}
 
 /** Directly process an SBP frame.
  * Use this function to directly process the entire SBP frame after
@@ -621,6 +692,14 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
           node->cb.msg(sender_id, payload_len, payload, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
+        case SBP_UNPACKED_CALLBACK:
+        {
+          sbp_msg_t msg;
+          sbp_unpack_msg(payload, payload_len, msg_type, &msg);
+          node->cb.unpacked(sender_id, msg_type, &msg, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
         case SBP_CALLBACK_TYPE_COUNT:
         default:
         {
@@ -735,6 +814,16 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   }
 
   return SBP_OK;
+}
+
+s8 sbp_pack_and_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t send_buf[SBP_MAX_PAYLOAD_LEN];
+  if (!sbp_pack_msg(send_buf, sizeof(send_buf), msg_type, msg))
+  {
+    return SBP_NULL_ERROR;
+  }
+  return sbp_send_message(s, msg_type, sender_id, (u8)sbp_packed_size(msg_type, msg), send_buf, write);
 }
 
 /** \} */

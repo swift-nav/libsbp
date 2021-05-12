@@ -195,6 +195,8 @@ tests:
         sid:
           sat: 18
           code: 3
+    unpacked_fields:
+      n_obs: 14
     module: sbp.observation 
     name: MsgObs
   msg_type: '0x4a'
@@ -217,7 +219,6 @@ tests:
           tow: 434293400
           ns_residual: 0
           wn: 2154
-      obs: []
     module: sbp.observation
     name: MsgObs
   msg_type: '0x4a'

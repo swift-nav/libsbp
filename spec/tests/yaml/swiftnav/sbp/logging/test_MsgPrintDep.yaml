@@ -5,10 +5,16 @@ package: sbp.logging
 tests:
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
+
+        '
+        len: 43
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -24,10 +30,16 @@ tests:
     sender: '0x2222'
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
+
+        '
+        len: 42
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -43,10 +55,16 @@ tests:
     sender: '0x2222'
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: Disabling channel 0 (PRN 11)
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: Disabling channel 0 (PRN 11)
+
+        '
+        len: 35
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -62,10 +80,16 @@ tests:
     sender: '0x2222'
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
+
+        '
+        len: 41
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -81,10 +105,16 @@ tests:
     sender: '0x2222'
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
+
+        '
+        len: 42
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -100,10 +130,16 @@ tests:
     sender: '0x2222'
 
 - msg:
-    fields:
+    packed_fields:
       text: 'INFO: Disabling channel 1 (PRN 15)
 
         '
+    unpacked_fields:
+      text: 
+        data: 'INFO: Disabling channel 1 (PRN 15)
+
+        '
+        len: 35
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'

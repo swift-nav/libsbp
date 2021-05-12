@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <logging.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/logging.h>
+#include <libsbp/packed/logging.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_logging_MsgLog )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_logging_MsgLog )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -196,11 +215,85 @@ START_TEST( test_auto_check_sbp_logging_MsgLog )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_logging_MsgLog )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x0401, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,1,4,10,9,44,6,70,105,108,116,101,114,101,100,32,97,108,108,32,111,98,115,32,102,114,111,109,32,50,51,49,52,32,97,116,32,116,111,119,32,56,51,46,53,51,57,48,49,57,177,163, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_LOG.level = 6;
+    
+    {
+      const char assign_string[] = { (char)70,(char)105,(char)108,(char)116,(char)101,(char)114,(char)101,(char)100,(char)32,(char)97,(char)108,(char)108,(char)32,(char)111,(char)98,(char)115,(char)32,(char)102,(char)114,(char)111,(char)109,(char)32,(char)50,(char)51,(char)49,(char)52,(char)32,(char)97,(char)116,(char)32,(char)116,(char)111,(char)119,(char)32,(char)56,(char)51,(char)46,(char)53,(char)51,(char)57,(char)48,(char)49,(char)57 };
+      memcpy(test_unpacked_msg.MSG_LOG.text.data, assign_string, sizeof(assign_string));
+    }
+    
+    test_unpacked_msg.MSG_LOG.text.len = 43;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_LOG, 2314, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 2314,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_log_t* check_msg = ( msg_log_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_LOG.level == 6, "incorrect value for check_unpacked_msg->MSG_LOG.level, expected 6, is %d", check_unpacked_msg->MSG_LOG.level);
+    
+    {
+      const char check_string[] = { (char)70,(char)105,(char)108,(char)116,(char)101,(char)114,(char)101,(char)100,(char)32,(char)97,(char)108,(char)108,(char)32,(char)111,(char)98,(char)115,(char)32,(char)102,(char)114,(char)111,(char)109,(char)32,(char)50,(char)51,(char)49,(char)52,(char)32,(char)97,(char)116,(char)32,(char)116,(char)111,(char)119,(char)32,(char)56,(char)51,(char)46,(char)53,(char)51,(char)57,(char)48,(char)49,(char)57 };
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_LOG.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_LOG.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_LOG.text.data);
+    }
+    
+    ck_assert_msg(check_unpacked_msg->MSG_LOG.text.len == 43, "incorrect value for check_unpacked_msg->MSG_LOG.text.len, expected 43, is %d", check_unpacked_msg->MSG_LOG.text.len);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_logging_MsgLog_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_logging_MsgLog");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_logging_MsgLog");
-  tcase_add_test(tc_acq, test_auto_check_sbp_logging_MsgLog);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_logging_MsgLog);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_logging_MsgLog);
   suite_add_tcase(s, tc_acq);
   return s;
 }

@@ -6,9 +6,11 @@ tests:
 
 - msg:
     fields:
-      fwd_payload: VQD/QgAEAAAAAEag
       protocol: 0
       source: 0
+      fwd_payload: VQD/QgAEAAAAAEag
+    unpacked_fields:
+      n_fwd_payload:  16
     module: sbp.logging
     name: MsgFwd
   msg_type: '0x402'

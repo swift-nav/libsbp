@@ -1,6 +1,10 @@
 set(libsbp_SRCS
   edc.c
   sbp.c
+  unterminated_string.c
+  null_terminated_string.c
+  multipart_string.c
+  sequence_string.c
   )
 
 add_library(sbp ${libsbp_SRCS})
@@ -18,7 +22,7 @@ set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
 target_code_coverage(sbp AUTO ALL)
 swift_set_language_standards(sbp)
-swift_set_compile_options(sbp REMOVE -Wconversion)
+swift_set_compile_options(sbp ADD -pedantic)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")
