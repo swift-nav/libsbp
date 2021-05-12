@@ -26,9 +26,12 @@ jobs:
           sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
 
       - name: Run tests
-        run: make test-c examples
+        run: make test-c
         env:
           CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
+
+      - name: Build examples
+        run: make -C c/build examples
 
       - name: Upload coverage to codecov.io
         run: |
