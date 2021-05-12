@@ -12,16 +12,17 @@
 
 // This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgBasePosEcef.yaml by generate.py. Do not modify by hand!
 
+#include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_handler.h>                                                     
 class Test_auto_check_sbp_observation_MsgBasePosEcef0 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<msg_base_pos_ecef_t>
+  sbp::MessageHandler<sbp_msg_base_pos_ecef_t>
 {
 public:
   Test_auto_check_sbp_observation_MsgBasePosEcef0() : 
@@ -29,9 +30,8 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<msg_base_pos_ecef_t>(this), 
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_base_pos_ecef_t*>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_base_pos_ecef_t>(this), 
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
         n_callbacks_logged_(), 
@@ -62,16 +62,14 @@ public:
 
 protected:
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_base_pos_ecef_t &msg) override
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_base_pos_ecef_t &msg) override
   {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_base_pos_ecef_t *last_msg_;
+  sbp_msg_base_pos_ecef_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;                                                   
   size_t n_callbacks_logged_;                                                 
@@ -83,17 +81,13 @@ protected:
 TEST_F(Test_auto_check_sbp_observation_MsgBasePosEcef0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,72,0,0,0,24,228,131,158,245,87,205,68,193,66,62,232,209,32,118,80,193,213,231,106,251,63,20,77,65,194,125, };
-
-    uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-    uint8_t test_msg_len = 0;
-    msg_base_pos_ecef_t* test_msg = ( msg_base_pos_ecef_t* )test_msg_storage;
-    test_msg_len = (uint8_t)sizeof(*test_msg);
-    test_msg->x = -2726575.9189;
-    test_msg->y = -4315267.2798;
-    test_msg->z = 3811455.9642;
+    uint8_t encoded_frame[] = {85,72,0,0,0,24,228,131,158,245,87,205,68,193,66,62,232,209,32,118,80,193,213,231,106,251,63,20,77,65,194,125, }; //No unpacked fields
+    sbp_msg_base_pos_ecef_t test_msg{};
+    test_msg.x = -2726575.9189;
+    test_msg.y = -4315267.2798;
+    test_msg.z = 3811455.9642;
                                                                               
-    EXPECT_EQ(send_message( 0x48, 0, test_msg_len, test_msg_storage), SBP_OK);
+    EXPECT_EQ(send_message( 0, test_msg), SBP_OK);
                                                                               
     EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
     EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
@@ -104,8 +98,8 @@ TEST_F(Test_auto_check_sbp_observation_MsgBasePosEcef0, Test)
 
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 0);
-    EXPECT_EQ(last_msg_len_, test_msg_len);
-    EXPECT_LT((last_msg_->x*100 - -2726575.9189*100), 0.05) << "incorrect value for x, expected -2726575.9189, is " << last_msg_->x;
-    EXPECT_LT((last_msg_->y*100 - -4315267.2798*100), 0.05) << "incorrect value for y, expected -4315267.2798, is " << last_msg_->y;
-    EXPECT_LT((last_msg_->z*100 - 3811455.9642*100), 0.05) << "incorrect value for z, expected 3811455.9642, is " << last_msg_->z;
+    EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_LT((last_msg_.x*100 - -2726575.9189*100), 0.05) << "incorrect value for x, expected -2726575.9189, is " << last_msg_.x;
+    EXPECT_LT((last_msg_.y*100 - -4315267.2798*100), 0.05) << "incorrect value for y, expected -4315267.2798, is " << last_msg_.y;
+    EXPECT_LT((last_msg_.z*100 - 3811455.9642*100), 0.05) << "incorrect value for z, expected 3811455.9642, is " << last_msg_.z;
 }

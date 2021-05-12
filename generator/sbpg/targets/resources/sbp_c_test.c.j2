@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <(((include))).h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/(((include))).h>
+#include <libsbp/packed/(((include))).h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_(((s.suite_name))) )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_(((s.suite_name))) )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -116,9 +135,11 @@ START_TEST( test_(((s.suite_name))) )
       ck_assert_msg(memcmp(check_msg->(((prefix))), check_string, sizeof(check_string)) == 0, "incorrect value for check_msg->(((prefix))), expected string '%s', is '%s'", check_string, check_msg->(((prefix))));
     }
     ((*- elif value is array_type *))
-    ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
+    ((*- for ff in value *))((( compare_value((((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))((*- endfor *))
     ((*- elif value is dict_type *))
-    ((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
+    ((*- for k in (((value|sorted))) *))
+    ((( compare_value((((prefix))) + '.' + (((k))), (((value[k])))) )))
+    ((*- endfor *))
     ((*- elif value is float_type *))((=
         Note: the ("%.12g"|format(value)|float) filter is intended to keep float
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
@@ -143,10 +164,12 @@ START_TEST( test_(((s.suite_name))) )
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->(((prefix)))[0]);
     }
-    (((- assign_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) -)))
+    ((( assign_value((((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))
     ((*- endfor *))
     ((*- elif value is dict_type *))
-    ((*- for k in (((value|sorted))) *))((( assign_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
+    ((*- for k in (((value|sorted))) *))
+    ((( assign_value((((prefix))) + '.' + (((k))), (((value[k])))) )))
+    ((*- endfor *))
     ((*- else *))
     test_msg->(((prefix))) = (((value)));
     ((*- endif *))
@@ -174,10 +197,11 @@ START_TEST( test_(((s.suite_name))) )
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    ((*- if t.fields *))
-    (((t.msg_type_name|convert)))* test_msg = ( (((t.msg_type_name|convert)))* )test_msg_storage;
+    ((*- if t.fields or t.packed_fields *))
+    (((t.msg_type_name|convert_packed)))* test_msg = ( (((t.msg_type_name|convert_packed)))* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    ((*- for f in t.fieldskeys *))(((assign_value((((f))), (((t.fields[f])))))))((*- endfor *))
+    ((*- for f in t.packed_fieldskeys *))(((assign_value((((f))), (((t.packed_fields[f])))))))((*- endfor *))
     ((*- endif *))
     sbp_send_message(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), test_msg_len, test_msg_storage, &dummy_write);
 
@@ -225,10 +249,119 @@ START_TEST( test_(((s.suite_name))) )
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     ((*- if t.fields *))
-    (((t.msg_type_name|convert)))* check_msg = ( (((t.msg_type_name|convert))) *)((void *)last_msg.msg);
+    (((t.msg_type_name|convert_packed)))* check_msg = ( (((t.msg_type_name|convert_packed))) *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    ((*- for f in t.fieldskeys *))(((compare_value((((f))), (((t.fields[f])))))))((*- endfor *))
+    ((*- for f in t.packed_fieldskeys *))(((compare_value((((f))), (((t.packed_fields[f])))))))((*- endfor *))
+    ((*- endif *))
+  }
+  ((*- endfor *))
+}
+END_TEST
+
+START_TEST( test_unpacked_(((s.suite_name))) )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+
+    ((*- macro compare_value(test, prefix, value) *))
+    ((*- if value is string_type *))
+    {
+      const char check_string[] = { (((value|str_escape))) };
+      ck_assert_msg(memcmp(check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected string '%s', is '%s'", check_string, check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))((( compare_value(test, (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- for k in (((value|sorted))) *))
+    ((( compare_value(test, (((prefix))) + '.' + (((k))), (((value[k])))) )))
+    ((*- endfor *))
+    ((*- elif value is float_type *))((=
+        Note: the ("%.12g"|format(value)|float) filter is intended to keep float
+        literal precision unchanged whether generated under Python 2.7 or 3.x. =))
+    ck_assert_msg((check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected ((("%.12g"|format(value)|float))), is %s", check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+    ((*- else *))
+    ck_assert_msg(check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))) == (((value))), "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected (((value))), is %d", check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro assign_value(test, prefix, value) *))
+    ((*- if value is string_type *))
+    {
+      const char assign_string[] = { (((value|str_escape))) };
+      memcpy(test_unpacked_msg.(((test.msg_type_name|convert_upper))).(((prefix))), assign_string, sizeof(assign_string));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))
+    ((( assign_value(test, (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))
+    ((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- for k in (((value|sorted))) *))
+    ((( assign_value(test, (((prefix))) + '.' + (((k))), (((value[k])))) )))
+    ((*- endfor *))
+    ((*- else *))
+    test_unpacked_msg.(((test.msg_type_name|convert_upper))).(((prefix))) = (((value)));
+    ((*- endif *))
+    ((*- endmacro *))
+
+  ((*- for t in s.tests *))
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, (((t.msg_type))), &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    ((*- if t.fields or t.unpacked_fields *))
+    ((*- for f in t.fieldskeys *))(((assign_value(t, (((f))), (((t.fields[f])))))))((*- endfor *))
+    ((*- for f in t.unpacked_fieldskeys *))(((assign_value(t, (((f))), (((t.unpacked_fields[f])))))))((*- endfor *))
+    ((*- endif *))
+
+    sbp_pack_and_send_message(&sbp_state, SBP_(((t.msg_type_name|convert_upper))), (((t.raw_json_obj.sender))), &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == (((t.raw_json_obj.sender))),
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    ((*- if t.fields or t.unpacked_fields*))
+    const (((t.msg_type_name|convert_packed)))* check_msg = ( (((t.msg_type_name|convert_packed))) *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ((*- for f in t.fieldskeys *))(((compare_value(t, (((f))), (((t.fields[f])))))))((*- endfor *))
+    ((*- for f in t.unpacked_fieldskeys *))(((compare_value(t, (((f))), (((t.unpacked_fields[f])))))))((*- endfor *))
     ((*- endif *))
   }
   ((*- endfor *))
@@ -239,7 +372,8 @@ Suite* (((s.suite_name)))_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: (((s.suite_name)))");
   TCase *tc_acq = tcase_create("Automated_Suite_(((s.suite_name)))");
-  tcase_add_test(tc_acq, test_(((s.suite_name))));
+  tcase_add_test(tc_acq, test_packed_(((s.suite_name))));
+  tcase_add_test(tc_acq, test_unpacked_(((s.suite_name))));
   suite_add_tcase(s, tc_acq);
   return s;
 }

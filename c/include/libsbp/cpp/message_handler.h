@@ -25,7 +25,7 @@ namespace sbp {
  * A convenience type alias for class member functions that accept SBP message callbacks
  */
 template<typename ClassT, typename ArgT>
-using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
+using CallbackMemFn = void (ClassT::*)(uint16_t, const ArgT &);
 
 /**
  * A helper function for calling a C++ object member function from a libsbp callback.
@@ -45,12 +45,13 @@ using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
 template<typename MsgT, typename ClassT, CallbackMemFn<ClassT, MsgT> func>
-inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], void *context) {
+inline void sbp_unpacked_cb_passthrough(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t *msg, void *context) {
   assert(nullptr != context);
+  assert(msg_type == sbp::MessageTraits<MsgT>::id);
 
   auto instance = static_cast<ClassT *>(context);
-  auto val = reinterpret_cast<MsgT *>(msg); // NOLINT
-  ((*instance).*(func))(sender_id, len, *val);
+  auto val = sbp::MessageTraits<MsgT>::get(*msg);
+  ((*instance).*(func))(sender_id, val);
 }
 
 namespace details {
@@ -73,13 +74,13 @@ class CallbackInterface : CallbackInterface<OtherTypes...> {
   ~CallbackInterface() override = default;
 
   using CallbackInterface<OtherTypes...>::handle_sbp_msg;
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType& msg) = 0;
 
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(state,
+    sbp_register_unpacked_callback(state,
         sbp::MessageTraits<MsgType>::id,
-        &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+        &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
         this,
         &nodes[0]);
     CallbackInterface<OtherTypes...>::register_callback(state, &nodes[1]);
@@ -92,12 +93,12 @@ class CallbackInterface<MsgType> {
   CallbackInterface() = default;
   virtual ~CallbackInterface() = default;
 
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType& msg) = 0;
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(state,
+    sbp_register_unpacked_callback(state,
                           sbp::MessageTraits<MsgType>::id,
-                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+                          &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
                           this,
                           &nodes[0]);
   }

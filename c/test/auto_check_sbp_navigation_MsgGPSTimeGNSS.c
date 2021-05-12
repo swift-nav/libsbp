@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <navigation.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/navigation.h>
+#include <libsbp/packed/navigation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_navigation_MsgGPSTimeGNSS )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_navigation_MsgGPSTimeGNSS )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -511,11 +530,281 @@ START_TEST( test_auto_check_sbp_navigation_MsgGPSTimeGNSS )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeGNSS )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x104, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,1,211,136,11,128,7,40,244,122,19,244,139,2,0,0,153,88, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.flags = 0;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.ns_residual = 166900;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.tow = 326825000;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.wn = 1920;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_GNSS, 35027, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 35027,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_gps_time_gnss_t* check_msg = ( msg_gps_time_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual == 166900, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual, expected 166900, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.tow == 326825000, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.tow, expected 326825000, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.wn == 1920, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.wn, expected 1920, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.wn);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x104, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,1,211,136,11,128,7,28,246,122,19,126,234,3,0,0,250,195, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.flags = 0;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.ns_residual = 256638;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.tow = 326825500;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.wn = 1920;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_GNSS, 35027, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 35027,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_gps_time_gnss_t* check_msg = ( msg_gps_time_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual == 256638, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual, expected 256638, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.tow == 326825500, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.tow, expected 326825500, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.wn == 1920, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.wn, expected 1920, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.wn);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x104, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,1,211,136,11,128,7,16,248,122,19,129,12,4,0,0,183,148, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.flags = 0;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.ns_residual = 265345;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.tow = 326826000;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.wn = 1920;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_GNSS, 35027, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 35027,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_gps_time_gnss_t* check_msg = ( msg_gps_time_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual == 265345, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual, expected 265345, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.tow == 326826000, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.tow, expected 326826000, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.wn == 1920, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.wn, expected 1920, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.wn);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x104, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,1,211,136,11,128,7,4,250,122,19,137,204,4,0,0,137,101, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.flags = 0;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.ns_residual = 314505;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.tow = 326826500;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.wn = 1920;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_GNSS, 35027, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 35027,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_gps_time_gnss_t* check_msg = ( msg_gps_time_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual == 314505, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual, expected 314505, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.tow == 326826500, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.tow, expected 326826500, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.wn == 1920, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.wn, expected 1920, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.wn);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0x104, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,4,1,211,136,11,128,7,248,251,122,19,181,137,5,0,0,15,225, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.flags = 0;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.ns_residual = 362933;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.tow = 326827000;
+    test_unpacked_msg.MSG_GPS_TIME_GNSS.wn = 1920;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_GNSS, 35027, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 35027,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_gps_time_gnss_t* check_msg = ( msg_gps_time_gnss_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.flags);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual == 362933, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual, expected 362933, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.ns_residual);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.tow == 326827000, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.tow, expected 326827000, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.tow);
+    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_GNSS.wn == 1920, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_GNSS.wn, expected 1920, is %d", check_unpacked_msg->MSG_GPS_TIME_GNSS.wn);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_navigation_MsgGPSTimeGNSS_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_MsgGPSTimeGNSS");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_MsgGPSTimeGNSS");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgGPSTimeGNSS);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_navigation_MsgGPSTimeGNSS);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_navigation_MsgGPSTimeGNSS);
   suite_add_tcase(s, tc_acq);
   return s;
 }

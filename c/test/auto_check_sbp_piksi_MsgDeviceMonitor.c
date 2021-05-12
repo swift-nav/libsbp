@@ -15,8 +15,9 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <piksi.h>
+#include <libsbp/sbp.h>
+#include <libsbp/unpacked/piksi.h>
+#include <libsbp/packed/piksi.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,14 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +82,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,7 +106,16 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_piksi_MsgDeviceMonitor )
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
+START_TEST( test_packed_auto_check_sbp_piksi_MsgDeviceMonitor )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -521,11 +540,291 @@ START_TEST( test_auto_check_sbp_piksi_MsgDeviceMonitor )
 }
 END_TEST
 
+START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb5, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,21,24,168,18,207,233, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6165;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 16991,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_device_monitor_t* check_msg = ( msg_device_monitor_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6165, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6165, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb5, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,254,6,24,24,168,18,169,30, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6168;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1790;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 16991,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_device_monitor_t* check_msg = ( msg_device_monitor_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6168, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6168, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1790, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1790, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb5, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,22,24,168,18,19,114, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6166;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 16991,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_device_monitor_t* check_msg = ( msg_device_monitor_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6166, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6166, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb5, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,181,0,95,66,10,241,216,218,3,252,6,6,24,168,18,199,107, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6150;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1788;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 986;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 16991,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_device_monitor_t* check_msg = ( msg_device_monitor_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6150, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6150, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1788, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1788, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 986, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 986, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_unpacked_callback(&sbp_state, 0xb5, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {85,181,0,95,66,10,241,216,220,3,253,6,235,23,168,18,241,63, };
+
+    dummy_reset();
+
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6123;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 988;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
+    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+
+    sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_unpacked.n_callbacks_logged == 1,
+        "unpacked_callback: one callback should have been logged");
+    ck_assert_msg(last_unpacked.sender_id == 16991,
+        "unpacked_callback: sender_id decoded incorrectly");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    const msg_device_monitor_t* check_msg = ( msg_device_monitor_t *)((void *)last_msg.msg);
+    const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6123, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6123, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 988, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 988, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
+    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+  }
+}
+END_TEST
+
 Suite* auto_check_sbp_piksi_MsgDeviceMonitor_suite(void)
 {
   Suite *s = suite_create("SBP generated test suite: auto_check_sbp_piksi_MsgDeviceMonitor");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_piksi_MsgDeviceMonitor");
-  tcase_add_test(tc_acq, test_auto_check_sbp_piksi_MsgDeviceMonitor);
+  tcase_add_test(tc_acq, test_packed_auto_check_sbp_piksi_MsgDeviceMonitor);
+  tcase_add_test(tc_acq, test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor);
   suite_add_tcase(s, tc_acq);
   return s;
 }
