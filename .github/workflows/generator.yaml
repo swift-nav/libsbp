@@ -24,7 +24,7 @@ jobs:
       - name: Run generator
         run: |
           pip3 install tox
-          rm c/test/auto_check_*.c rust/sbp/tests/auto_check_*.rs
+          rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc rust/sbp/tests/auto_check_*.rs
           make gen-c gen-rust
 
       - name: Check
