@@ -19,6 +19,7 @@ from sbpg.targets.common import *
 import base64
 
 TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
+CPP_TEST_TEMPLATE_NAME = "sbp_cpp_test.cc.j2"
 CHECK_SUITES_TEMPLATE_NAME = "sbp_c_suites.h.j2"
 CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
 
@@ -50,6 +51,14 @@ def render_source(output_dir, package_spec):
   path, name = package_spec.filepath
   destination_filename = "%s/%s.c" % (output_dir, name)
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(s=package_spec,
+                               description=package_spec.description,
+                               pkg_name=package_spec.package,
+                               include=package_spec.package.split('.')[1],
+                               filepath="/".join(package_spec.filepath) + ".yaml"))
+  destination_filename = "%s/cpp/%s.cc" % (output_dir, name)
+  py_template = JENV.get_template(CPP_TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(s=package_spec,
                                description=package_spec.description,
