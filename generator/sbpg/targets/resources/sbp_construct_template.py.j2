@@ -100,7 +100,7 @@ class ((( m.identifier )))(object):
     ((*- if m.is_real_message *))
 SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
-  """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+  ((* if m is needs_raw_docstring *))r((* endif *))"""SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
 
   You can have (((m.identifier))) inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict

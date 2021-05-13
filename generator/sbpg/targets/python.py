@@ -55,10 +55,6 @@ PYDOC_CODE = {
 }
 
 
-def is_array():
-  return False
-
-
 def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   Formats for Construct.
@@ -117,6 +113,12 @@ def has_real_message(l):
   return any(m.static and m.is_real_message for m in l)
 
 
+def needs_raw_docstring(m):
+  if m.desc and "\\0" in m.desc:
+    return True
+  return any(f.desc and "\\0" in f.desc for f in m.fields)
+
+
 JENV.filters['has_real_message'] = has_real_message
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
@@ -125,6 +127,7 @@ JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
 
 JENV.tests['list'] = is_list
+JENV.tests['needs_raw_docstring'] = needs_raw_docstring
 
 
 def render_source(output_dir, package_spec, jenv=JENV):
