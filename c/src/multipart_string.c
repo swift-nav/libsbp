@@ -64,15 +64,26 @@ bool sbp_multipart_string_append_printf(sbp_multipart_string_t *s,
                                         const char *fmt,
                                         ...)
 {
+  va_list ap;
+  va_start(ap, fmt);
+  bool ret = sbp_multipart_string_append_vprintf(s, max_packed_len, min_sections, max_sections, fmt, ap);
+  va_end(ap);
+  return ret;
+}
+
+bool sbp_multipart_string_append_vprintf(sbp_multipart_string_t *s,
+                                        uint8_t max_packed_len,
+                                        uint8_t min_sections,
+                                        uint8_t max_sections,
+                                        const char *fmt,
+                                        va_list ap)
+{
   if (!sbp_multipart_string_valid(s, max_packed_len, min_sections, max_sections))
     return false;
   if (s->n_sections == max_sections)
     return false;
   char new_str[256];
-  va_list ap;
-  va_start(ap, fmt);
   int new_len = vsnprintf(new_str, sizeof(new_str), fmt, ap);
-  va_end(ap);
   size_t copy_len = (size_t)new_len + 1u;
   if (s->packed_len + copy_len > max_packed_len)
     return false;

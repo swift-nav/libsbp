@@ -43,6 +43,7 @@ extern "C"
   bool sbp_unterminated_string_set(sbp_unterminated_string_t *s, const char *new_str, uint8_t max_packed_len);
   bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
       __attribute__((format(printf, 3, 4)));
+  bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap);
   const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
   uint8_t sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
                                        uint8_t max_packed_len,
@@ -68,6 +69,7 @@ extern "C"
   bool sbp_null_terminated_string_set(sbp_null_terminated_string_t *s, const char *new_str, uint8_t max_packed_len);
   bool sbp_null_terminated_string_printf(sbp_null_terminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
       __attribute__((format(printf, 3, 4)));
+  bool sbp_null_terminated_string_vprintf(sbp_null_terminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list);
   const char *sbp_null_terminated_string_get(const sbp_null_terminated_string_t *s, uint8_t max_packed_len);
   uint8_t sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
                                           uint8_t max_packed_len,
@@ -113,6 +115,12 @@ extern "C"
                                           uint8_t max_sections,
                                           const char *fmt,
                                           ...) __attribute__((format(printf, 5, 6)));
+  bool sbp_multipart_string_append_vprintf(sbp_multipart_string_t *s,
+                                          uint8_t max_packed_len,
+                                          uint8_t min_sections,
+                                          uint8_t max_sections,
+                                          const char *fmt,
+                                          va_list ap);
   uint8_t sbp_multipart_string_count_sections(const sbp_multipart_string_t *s,
                                               uint8_t max_packed_len,
                                               uint8_t min_sections,
@@ -168,6 +176,11 @@ extern "C"
                                          uint8_t terminator,
                                          const char *fmt,
                                          ...) __attribute__((format(printf, 4, 5)));
+  bool sbp_sequence_string_append_vprintf(sbp_sequence_string_t *s,
+                                         uint8_t max_packed_len,
+                                         uint8_t terminator,
+                                         const char *fmt,
+                                         va_list ap);
   uint8_t
   sbp_sequence_string_count_sections(const sbp_sequence_string_t *s, uint8_t max_packed_len, uint8_t terminator);
   const char *sbp_sequence_string_get_section(const sbp_sequence_string_t *s,
