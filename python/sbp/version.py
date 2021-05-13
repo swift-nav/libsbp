@@ -33,7 +33,7 @@
 #
 #   include RELEASE-VERSION
 
-__all__ = ("get_git_version")
+__all__ = ("get_git_version", )
 
 from subprocess import Popen, PIPE
 
