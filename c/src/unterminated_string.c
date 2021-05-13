@@ -36,11 +36,17 @@ bool sbp_unterminated_string_set(sbp_unterminated_string_t *s, const char *new_s
 
 bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
 {
-  char new_str[256];
   va_list ap;
   va_start(ap, fmt);
-  int len = vsnprintf(new_str, max_packed_len + 1u, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(s, max_packed_len, fmt, ap);
   va_end(ap);
+  return ret;
+}
+
+bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap)
+{
+  char new_str[256];
+  int len = vsnprintf(new_str, max_packed_len + 1u, fmt, ap);
 
   if ((size_t)len >= max_packed_len + 1u)
   {

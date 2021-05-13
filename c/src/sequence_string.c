@@ -47,13 +47,23 @@ bool sbp_sequence_string_append_printf(sbp_sequence_string_t *s,
                                        const char *fmt,
                                        ...)
 {
+  va_list ap;
+  va_start(ap, fmt);
+  bool ret = sbp_sequence_string_append_vprintf(s, max_packed_len, terminator, fmt, ap);
+  va_end(ap);
+  return ret;
+}
+
+bool sbp_sequence_string_append_vprintf(sbp_sequence_string_t *s,
+                                       uint8_t max_packed_len,
+                                       uint8_t terminator,
+                                       const char *fmt,
+                                       va_list ap)
+{
   if (!sbp_sequence_string_valid(s, max_packed_len, terminator))
     return false;
   char new_str[256];
-  va_list ap;
-  va_start(ap, fmt);
   int new_len = vsnprintf(new_str, sizeof(new_str), fmt, ap);
-  va_end(ap);
   size_t copy_len = (size_t)new_len + 1u;
   if (s->packed_len + copy_len > max_packed_len)
     return false;
