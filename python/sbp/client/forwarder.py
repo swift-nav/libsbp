@@ -26,7 +26,7 @@ class Forwarder(Thread):
     ----------
     source : iterable of tuple(SBP, dict)
       Source of SBP messages.
-    sink : callable (SBP, **metadata)
+    sink : callable (SBP, metadata)
       Callable sink of SBP messages.
 
     """
