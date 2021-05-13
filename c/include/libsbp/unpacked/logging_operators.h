@@ -20,6 +20,7 @@ static inline bool operator== ( const sbp_msg_log_t &a, const sbp_msg_log_t &b) 
   
         
     if (a.level != b.level) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.text, &b.text, 254)) { return false; }
 
   return true;
 }
@@ -56,6 +57,7 @@ static inline bool operator== ( const sbp_msg_print_dep_t &a, const sbp_msg_prin
   (void)a;
   (void)b;
   
+    if (0 != sbp_unterminated_string_strcmp(&a.text, &b.text, 255)) { return false; }
 
   return true;
 }

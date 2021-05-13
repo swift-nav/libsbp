@@ -29,6 +29,7 @@ static inline bool operator== ( const sbp_msg_linux_cpu_state_dep_a_t &a, const 
             
     if (a.tname[tname_idx] != b.tname[tname_idx]) { return false; }
         }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 236)) { return false; }
 
   return true;
 }
@@ -53,6 +54,7 @@ static inline bool operator== ( const sbp_msg_linux_mem_state_dep_a_t &a, const 
             
     if (a.tname[tname_idx] != b.tname[tname_idx]) { return false; }
         }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 236)) { return false; }
 
   return true;
 }
@@ -101,6 +103,7 @@ static inline bool operator== ( const sbp_msg_linux_process_socket_counts_t &a, 
     if (a.socket_types != b.socket_types) { return false; }
         
     if (a.socket_states != b.socket_states) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 246)) { return false; }
 
   return true;
 }
@@ -131,6 +134,7 @@ static inline bool operator== ( const sbp_msg_linux_process_socket_queues_t &a, 
             
     if (a.address_of_largest[address_of_largest_idx] != b.address_of_largest[address_of_largest_idx]) { return false; }
         }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 180)) { return false; }
 
   return true;
 }
@@ -177,6 +181,7 @@ static inline bool operator== ( const sbp_msg_linux_process_fd_count_t &a, const
     if (a.pid != b.pid) { return false; }
         
     if (a.fd_count != b.fd_count) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 250)) { return false; }
 
   return true;
 }
@@ -192,6 +197,7 @@ static inline bool operator== ( const sbp_msg_linux_process_fd_summary_t &a, con
   
         
     if (a.sys_fd_count != b.sys_fd_count) { return false; }
+    if (0 != sbp_sequence_string_strcmp(&a.most_opened, &b.most_opened, 251, 0)) { return false; }
 
   return true;
 }
@@ -220,6 +226,7 @@ static inline bool operator== ( const sbp_msg_linux_cpu_state_t &a, const sbp_ms
             
     if (a.tname[tname_idx] != b.tname[tname_idx]) { return false; }
         }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 231)) { return false; }
 
   return true;
 }
@@ -248,6 +255,7 @@ static inline bool operator== ( const sbp_msg_linux_mem_state_t &a, const sbp_ms
             
     if (a.tname[tname_idx] != b.tname[tname_idx]) { return false; }
         }
+    if (0 != sbp_unterminated_string_strcmp(&a.cmdline, &b.cmdline, 231)) { return false; }
 
   return true;
 }

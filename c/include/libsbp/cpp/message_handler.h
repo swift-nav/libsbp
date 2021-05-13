@@ -46,6 +46,7 @@ using CallbackMemFn = void (ClassT::*)(uint16_t, const ArgT &);
  */
 template<typename MsgT, typename ClassT, CallbackMemFn<ClassT, MsgT> func>
 inline void sbp_unpacked_cb_passthrough(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t *msg, void *context) {
+  (void)msg_type;
   assert(nullptr != context);
   assert(msg_type == sbp::MessageTraits<MsgT>::id);
 

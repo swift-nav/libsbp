@@ -24,6 +24,7 @@ static inline bool operator== ( const sbp_msg_fileio_read_req_t &a, const sbp_ms
     if (a.offset != b.offset) { return false; }
         
     if (a.chunk_size != b.chunk_size) { return false; }
+    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 246)) { return false; }
 
   return true;
 }
@@ -62,6 +63,7 @@ static inline bool operator== ( const sbp_msg_fileio_read_dir_req_t &a, const sb
     if (a.sequence != b.sequence) { return false; }
         
     if (a.offset != b.offset) { return false; }
+    if (0 != sbp_null_terminated_string_strcmp(&a.dirname, &b.dirname, 247)) { return false; }
 
   return true;
 }
@@ -77,6 +79,7 @@ static inline bool operator== ( const sbp_msg_fileio_read_dir_resp_t &a, const s
   
         
     if (a.sequence != b.sequence) { return false; }
+    if (0 != sbp_sequence_string_strcmp(&a.contents, &b.contents, 251, 255)) { return false; }
 
   return true;
 }
@@ -90,6 +93,7 @@ static inline bool operator== ( const sbp_msg_fileio_remove_t &a, const sbp_msg_
   (void)a;
   (void)b;
   
+    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 255)) { return false; }
 
   return true;
 }
@@ -107,6 +111,7 @@ static inline bool operator== ( const sbp_msg_fileio_write_req_t &a, const sbp_m
     if (a.sequence != b.sequence) { return false; }
         
     if (a.offset != b.offset) { return false; }
+    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 247)) { return false; }
           if (a.n_data != b.n_data) { return false; }
         for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
         {
