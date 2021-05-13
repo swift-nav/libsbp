@@ -65,7 +65,11 @@ help:
 all: c python javascript java docs haskell protobuf rust jsonschema quicktype
 clean:
 	@echo "Removing the ./c/build directory..."
-	rm -r $(SWIFTNAV_ROOT)/c/build
+	rm -fr $(SWIFTNAV_ROOT)/c/build
+	@echo "Removing the ./python/docs/build directory..."
+	rm -fr $(SWIFTNAV_ROOT)/python/docs/build
+	@echo "Removing ./latex/sbp_out.* ..."
+	rm -f $(SWIFTNAV_ROOT)/latex/sbp_out.*
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
@@ -403,16 +407,24 @@ pdf_dist:
 	s3cmd put  $(SWIFTNAV_ROOT)/docs/sbp.pdf s3://downloads.swiftnav.com/sbp/docs/sbp_$(SBP_VERSION).pdf
 
 html:
-	$(call announce-begin,"Generating bindings documentation")
+	$(call announce-begin,"Generating html documentation")
+	$(MAKE) html-c
+	$(MAKE) html-python
+	$(call announce-end,"Finished generating html documentation")
+
+html-c:
 	$(call announce-begin,"Generating C bindings documentation")
 	cd $(SWIFTNAV_ROOT)/c && \
 	  mkdir -p build      && \
 	  cd build            && \
 	  cmake ..            && \
 	  $(MAKE) docs
+	$(call announce-end,"Finished generating C bindings documentation")
+
+html-python:
 	$(call announce-begin,"Generating Python documentation")
-	$(MAKE) -C $(SWIFTNAV_ROOT)/python/docs html
-	$(call announce-end,"Finished generating documentation")
+	tox -e py --run-command="make -C python/docs html"
+	$(call announce-end,"Finished generating Python documentation")
 
 release:
 	$(call announce-begin,"Run release boilerplate")

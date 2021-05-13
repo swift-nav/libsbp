@@ -4,13 +4,15 @@ coverage
 docutils
 flake8
 mccabe
+numpy
+pybase64
+python-rapidjson
 pep8
 pyflakes
 pylint
 pytest
 tox
 voluptuous
-construct
 pytest-cov
 pytest-xdist
 dataclasses

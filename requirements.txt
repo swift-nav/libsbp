@@ -1,2 +1,4 @@
 -r generator/requirements.txt
 -e generator
+-e python
+sphinx
