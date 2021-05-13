@@ -26,7 +26,17 @@
   ((*- for f in substruct.fields *))
     ((*- with *))
     ((*- set loop_idx = (path + f.name + "_idx")|sanitise_path *))
-    ((*- if f.order == "single" *))
+    ((*- if f.order == "packed-string" *))
+    ((*- if f.encoding == "unterminated" *))
+    if (0 != sbp_unterminated_string_strcmp(&a.(((path + f.name))), &b.(((path + f.name))), (((f.max_items))))) { return false; }
+    ((*- elif f.encoding == "null_terminated" *))
+    if (0 != sbp_null_terminated_string_strcmp(&a.(((path + f.name))), &b.(((path + f.name))), (((f.max_items))))) { return false; }
+    ((*- elif f.encoding == "multipart" *))
+    if (0 != sbp_multipart_string_strcmp(&a.(((path + f.name))), &b.(((path + f.name))), (((f.max_items))), (((f.min_sections))), (((f.max_sections))))) { return false; }
+    ((*- else *))
+    if (0 != sbp_sequence_string_strcmp(&a.(((path + f.name))), &b.(((path + f.name))), (((f.max_items))), (((f.terminator))))) { return false; }
+    ((*-endif *))
+    ((*- elif f.order == "single" *))
       ((*- if f.basetype.is_primitive *))
         (((compare_primitive(f, path + f.name))))
       ((*- else *))

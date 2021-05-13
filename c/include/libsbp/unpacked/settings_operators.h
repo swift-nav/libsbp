@@ -31,6 +31,7 @@ static inline bool operator== ( const sbp_msg_settings_write_t &a, const sbp_msg
   (void)a;
   (void)b;
   
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 255, 3, 3)) { return false; }
 
   return true;
 }
@@ -46,6 +47,7 @@ static inline bool operator== ( const sbp_msg_settings_write_resp_t &a, const sb
   
         
     if (a.status != b.status) { return false; }
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 254, 3, 3)) { return false; }
 
   return true;
 }
@@ -59,6 +61,7 @@ static inline bool operator== ( const sbp_msg_settings_read_req_t &a, const sbp_
   (void)a;
   (void)b;
   
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 255, 2, 2)) { return false; }
 
   return true;
 }
@@ -72,6 +75,7 @@ static inline bool operator== ( const sbp_msg_settings_read_resp_t &a, const sbp
   (void)a;
   (void)b;
   
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 255, 3, 3)) { return false; }
 
   return true;
 }
@@ -102,6 +106,7 @@ static inline bool operator== ( const sbp_msg_settings_read_by_index_resp_t &a, 
   
         
     if (a.index != b.index) { return false; }
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 253, 3, 4)) { return false; }
 
   return true;
 }
@@ -128,6 +133,7 @@ static inline bool operator== ( const sbp_msg_settings_register_t &a, const sbp_
   (void)a;
   (void)b;
   
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 255, 3, 3)) { return false; }
 
   return true;
 }
@@ -143,6 +149,7 @@ static inline bool operator== ( const sbp_msg_settings_register_resp_t &a, const
   
         
     if (a.status != b.status) { return false; }
+    if (0 != sbp_multipart_string_strcmp(&a.setting, &b.setting, 254, 3, 3)) { return false; }
 
   return true;
 }

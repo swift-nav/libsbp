@@ -33,6 +33,7 @@ static inline bool operator== ( const sbp_msg_bootloader_handshake_resp_t &a, co
   
         
     if (a.flags != b.flags) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.version, &b.version, 251)) { return false; }
 
   return true;
 }
@@ -92,6 +93,7 @@ static inline bool operator== ( const sbp_msg_bootloader_handshake_dep_a_t &a, c
   (void)a;
   (void)b;
   
+    if (0 != sbp_unterminated_string_strcmp(&a.handshake, &b.handshake, 255)) { return false; }
 
   return true;
 }

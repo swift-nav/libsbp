@@ -43,6 +43,7 @@ static inline bool operator== ( const sbp_msg_dgnss_status_t &a, const sbp_msg_d
     if (a.latency != b.latency) { return false; }
         
     if (a.num_signals != b.num_signals) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.source, &b.source, 251)) { return false; }
 
   return true;
 }
@@ -139,6 +140,7 @@ static inline bool operator== ( const sbp_msg_csac_telemetry_t &a, const sbp_msg
   
         
     if (a.id != b.id) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.telemetry, &b.telemetry, 254)) { return false; }
 
   return true;
 }
@@ -154,6 +156,7 @@ static inline bool operator== ( const sbp_msg_csac_telemetry_labels_t &a, const 
   
         
     if (a.id != b.id) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.telemetry_labels, &b.telemetry_labels, 254)) { return false; }
 
   return true;
 }

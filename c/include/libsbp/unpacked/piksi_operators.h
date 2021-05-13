@@ -428,6 +428,7 @@ static inline bool operator== ( const sbp_msg_command_req_t &a, const sbp_msg_co
   
         
     if (a.sequence != b.sequence) { return false; }
+    if (0 != sbp_null_terminated_string_strcmp(&a.command, &b.command, 251)) { return false; }
 
   return true;
 }
@@ -460,6 +461,7 @@ static inline bool operator== ( const sbp_msg_command_output_t &a, const sbp_msg
   
         
     if (a.sequence != b.sequence) { return false; }
+    if (0 != sbp_unterminated_string_strcmp(&a.line, &b.line, 251)) { return false; }
 
   return true;
 }
