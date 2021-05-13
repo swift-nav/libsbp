@@ -29,13 +29,13 @@ definitions:
             desc: GNSS time of this observation
         - n_obs:
             type: u8
-            desc: |
+            desc: >
               Total number of observations. First nibble is the size
               of the sequence (n), second nibble is the zero-indexed
               counter (ith packet of n)
  - Doppler:
      short_desc: GNSS doppler measurement
-     desc: |
+     desc: >
        Doppler measurement in Hz represented as a 24-bit
        fixed point number with Q16.8 layout, i.e. 16-bits of whole
        doppler and 8-bits of fractional doppler. This doppler is defined
@@ -52,10 +52,11 @@ definitions:
 
  - PackedObsContent:
     short_desc: GNSS observations for a particular satellite signal
-    desc: |
+    desc: >
       Pseudorange and carrier phase observation for a satellite being tracked.
       The observations are interoperable with 3rd party receivers and conform with
       typical RTCM 3.1 message GPS/GLO observations.
+
 
       Carrier phase observations are not guaranteed to be aligned to the RINEX 3
       or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
@@ -80,7 +81,7 @@ definitions:
             desc: Carrier-to-Noise density.  Zero implies invalid cn0.
         - lock:
             type: u8
-            desc: |
+            desc: >
               Lock timer. This value gives an indication of the time
               for which a signal has maintained continuous phase lock.
               Whenever a signal has lost and regained lock, this
@@ -89,7 +90,7 @@ definitions:
               from 0 to 15 and the most significant nibble is reserved for future use.
         - flags:
             type: u8
-            desc: |
+            desc: >
               Measurement status flags. A bit field of flags providing the
               status of this observation.  If this field is 0 it means only the Cn0
               estimate for the signal is valid.
@@ -127,7 +128,7 @@ definitions:
 
  - PackedOsrContent:
     short_desc: Network correction for a particular satellite signal
-    desc: |
+    desc: >
       Pseudorange and carrier phase network corrections for a satellite signal.
 
     fields:
@@ -141,7 +142,7 @@ definitions:
             desc: Carrier phase observation with typical sign convention.
         - lock:
             type: u8
-            desc: |
+            desc: >
               Lock timer. This value gives an indication of the time
               for which a signal has maintained continuous phase lock.
               Whenever a signal has lost and regained lock, this
@@ -150,7 +151,7 @@ definitions:
               from 0 to 15 and the most significant nibble is reserved for future use.
         - flags:
             type: u8
-            desc: |
+            desc: >
               Correction flags.
             fields:
               - 4:
@@ -197,7 +198,7 @@ definitions:
  - MSG_OBS:
     id: 0x004A
     short_desc: GPS satellite observations
-    desc: |
+    desc: >
       The GPS observations message reports all the raw pseudorange and
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
@@ -213,14 +214,14 @@ definitions:
             type: array
             fill: PackedObsContent
             map_by: sid
-            desc: |
+            desc: >
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
  - MSG_BASE_POS_LLH:
     id: 0x0044
     short_desc: Base station position
-    desc: |
+    desc: >
       The base station position message is the position reported by
       the base station itself. It is used for pseudo-absolute RTK
       positioning, and is required to be a high-accuracy surveyed
@@ -243,7 +244,7 @@ definitions:
  - MSG_BASE_POS_ECEF:
     id: 0x0048
     short_desc: Base station position in ECEF
-    desc: |
+    desc: >
       The base station position message is the position reported by
       the base station itself in absolute Earth Centered Earth Fixed
       coordinates. It is used for pseudo-absolute RTK positioning, and
@@ -356,7 +357,7 @@ definitions:
     short_desc: Satellite broadcast ephemeris for GPS
     replaced_by:
       - MSG_EPHEMERIS
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
       velocity, and clock offset. Please see the Navstar GPS
@@ -456,7 +457,7 @@ definitions:
     short_desc: Deprecated
     replaced_by:
       - MSG_EPHEMERIS_GPS
-    desc: |
+    desc: >
       This observation message has been deprecated in favor of
       ephemeris message using floats for size reduction.
     fields:
@@ -551,7 +552,7 @@ definitions:
  - MSG_EPHEMERIS_GPS:
     id: 0x008A
     short_desc: Satellite broadcast ephemeris for GPS
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
       velocity, and clock offset. Please see the Navstar GPS
@@ -649,7 +650,7 @@ definitions:
  - MSG_EPHEMERIS_QZSS:
     id: 0x008E
     short_desc: Satellite broadcast ephemeris for QZSS
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate QZSS satellite position,
       velocity, and clock offset.
@@ -745,7 +746,7 @@ definitions:
  - MSG_EPHEMERIS_BDS:
     id: 0x0089
     short_desc: Satellite broadcast ephemeris for BDS
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate BDS satellite position,
       velocity, and clock offset. Please see the BeiDou Navigation
@@ -838,14 +839,14 @@ definitions:
           desc: Clock reference
       - iode:
           type: u8
-          desc: |
+          desc: >
             Issue of ephemeris data
 
             Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
             IODE = mod (t_oe / 720, 240)
       - iodc:
           type: u16
-          desc: |
+          desc: >
             Issue of clock data
 
             Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
@@ -856,7 +857,7 @@ definitions:
     short_desc: Deprecated
     replaced_by:
       - MSG_EPHEMERIS_GAL
-    desc: |
+    desc: >
       This observation message has been deprecated in favor of
       an ephemeris message with explicit source of NAV data.
     fields:
@@ -955,7 +956,7 @@ definitions:
  - MSG_EPHEMERIS_GAL:
     id: 0x008D
     short_desc: Satellite broadcast ephemeris for Galileo
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate Galileo satellite position,
       velocity, and clock offset. Please see the Signal In Space ICD
@@ -1100,7 +1101,7 @@ definitions:
     short_desc: Satellite broadcast ephemeris for GLO
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GLO satellite position,
       velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
@@ -1144,7 +1145,7 @@ definitions:
     short_desc: Deprecated
     replaced_by:
       - MSG_EPHEMERIS_SBAS
-    desc: |
+    desc: >
       This observation message has been deprecated in favor of
       ephemeris message using floats for size reduction.
     fields:
@@ -1223,7 +1224,7 @@ definitions:
     short_desc: Satellite broadcast ephemeris for GLO
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GLO satellite position,
       velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
@@ -1267,7 +1268,7 @@ definitions:
     short_desc: Satellite broadcast ephemeris for GLO
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GLO satellite position,
       velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
@@ -1318,7 +1319,7 @@ definitions:
     short_desc: Deprecated
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: |
+    desc: >
       This observation message has been deprecated in favor of
       ephemeris message using floats for size reduction.
     fields:
@@ -1367,7 +1368,7 @@ definitions:
  - MSG_EPHEMERIS_GLO:
     id: 0x008B
     short_desc: Satellite broadcast ephemeris for GLO
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GLO satellite position,
       velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
@@ -1420,7 +1421,7 @@ definitions:
     id: 0x0080
     short_desc: Satellite broadcast ephemeris
     public: False
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
       velocity, and clock offset. Please see the Navstar GPS
@@ -1762,7 +1763,7 @@ definitions:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
     public: False
-    desc: |
+    desc: >
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
       velocity, and clock offset. Please see the Navstar GPS
@@ -1888,14 +1889,14 @@ definitions:
             desc: GPS time of this observation
         - n_obs:
             type: u8
-            desc: |
+            desc: >
               Total number of observations. First nibble is the size
               of the sequence (n), second nibble is the zero-indexed
               counter (ith packet of n)
 
  - CarrierPhaseDepA:
     short_desc: GPS carrier phase measurement
-    desc: |
+    desc: >
       Carrier phase measurement in cycles represented as a 40-bit
       fixed point number with Q32.8 layout, i.e. 32-bits of whole
       cycles and 8-bits of fractional cycles. This has the opposite
@@ -1928,7 +1929,7 @@ definitions:
             desc: Carrier-to-Noise density
         - lock:
             type: u16
-            desc: |
+            desc: >
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
@@ -1938,7 +1939,7 @@ definitions:
 
  - PackedObsContentDepB:
     short_desc: GPS observations for a particular satellite signal
-    desc: |
+    desc: >
       Pseudorange and carrier phase observation for a satellite being
       tracked.  Pseudoranges are referenced to a nominal pseudorange.
     fields:
@@ -1955,7 +1956,7 @@ definitions:
             desc: Carrier-to-Noise density
         - lock:
             type: u16
-            desc: |
+            desc: >
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
@@ -1965,7 +1966,7 @@ definitions:
 
  - PackedObsContentDepC:
     short_desc: GPS observations for a particular satellite signal
-    desc: |
+    desc: >
       Pseudorange and carrier phase observation for a satellite being
       tracked. The observations are be interoperable with 3rd party
       receivers and conform with typical RTCMv3 GNSS observations.
@@ -1984,7 +1985,7 @@ definitions:
             desc: Carrier-to-Noise density
         - lock:
             type: u16
-            desc: |
+            desc: >
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
@@ -2007,14 +2008,14 @@ definitions:
             type: array
             fill: PackedObsContentDepA
             map_by: prn
-            desc: |
+            desc: >
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
  - MSG_OBS_DEP_B:
     id: 0x0043
     short_desc: Deprecated
-    desc: |
+    desc: >
       This observation message has been deprecated in favor of
       observations that are more interoperable. This message
       should be used for observations referenced to
@@ -2032,14 +2033,14 @@ definitions:
             type: array
             fill: PackedObsContentDepB
             map_by: sid
-            desc: |
+            desc: >
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
  - MSG_OBS_DEP_C:
     id: 0x0049
     short_desc: Deprecated
-    desc: |
+    desc: >
       The GPS observations message reports all the raw pseudorange and
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
@@ -2058,14 +2059,14 @@ definitions:
             type: array
             fill: PackedObsContentDepC
             map_by: sid
-            desc: |
+            desc: >
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
  - MSG_IONO:
     id: 0x0090
     short_desc: Iono corrections
-    desc: |
+    desc: >
       The ionospheric parameters which allow the "L1 only" or "L2 only" user to
       utilize the ionospheric model for computation of the ionospheric delay.
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
@@ -2101,7 +2102,7 @@ definitions:
  - MSG_SV_CONFIGURATION_GPS_DEP:
     id: 0x0091
     short_desc: L2C capability mask
-    desc: |
+    desc: >
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     fields:
       - t_nmct:
@@ -2134,12 +2135,12 @@ definitions:
           desc: GLO L3 active mask
       - sbas_active:
           type: u64
-          desc: |
+          desc: >
            SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
            https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
       - sbas_l5:
           type: u64
-          desc: |
+          desc: >
            SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
            https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
       - bds_active:
@@ -2190,7 +2191,7 @@ definitions:
           desc: Satellite number
       - valid:
           type: u8
-          desc: |
+          desc: >
             bit-field indicating validity of the values,
             LSB indicating tgd validity etc.
             1 = value is valid, 0 = value is not valid.
@@ -2219,7 +2220,7 @@ definitions:
           desc: GNSS signal identifier
       - valid:
           type: u8
-          desc: |
+          desc: >
             bit-field indicating validity of the values,
             LSB indicating tgd validity etc.
             1 = value is valid, 0 = value is not valid.
@@ -2246,7 +2247,7 @@ definitions:
           desc: GNSS signal identifier
       - valid:
           type: u8
-          desc: |
+          desc: >
             bit-field indicating validity of the values,
             LSB indicating tgd validity etc.
             1 = value is valid, 0 = value is not valid.
@@ -2282,7 +2283,7 @@ definitions:
             desc: Status of almanac, 1 = valid, 0 = invalid
         - health_bits:
             type: u8
-            desc: |
+            desc: >
               Satellite health status for GPS:
                 - bits 5-7: NAV data health status. See IS-GPS-200H
                   Table 20-VII: NAV Data Health Indications.
@@ -2320,7 +2321,7 @@ definitions:
             desc: Status of almanac, 1 = valid, 0 = invalid
         - health_bits:
             type: u8
-            desc: |
+            desc: >
               Satellite health status for GPS:
                 - bits 5-7: NAV data health status. See IS-GPS-200H
                   Table 20-VII: NAV Data Health Indications.
@@ -2339,7 +2340,7 @@ definitions:
  - MSG_ALMANAC_GPS_DEP:
     id: 0x0070
     short_desc: Satellite broadcast ephemeris for GPS
-    desc: |
+    desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
       Please see the Navstar GPS Space Segment/Navigation user interfaces
@@ -2390,7 +2391,7 @@ definitions:
  - MSG_ALMANAC_GPS:
     id: 0x0072
     short_desc: Satellite broadcast ephemeris for GPS
-    desc: |
+    desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
       Please see the Navstar GPS Space Segment/Navigation user interfaces
@@ -2438,7 +2439,7 @@ definitions:
  - MSG_ALMANAC_GLO_DEP:
     id: 0x0071
     short_desc: Satellite broadcast ephemeris for GLO
-    desc: |
+    desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
       Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
@@ -2453,7 +2454,7 @@ definitions:
       - lambda_na:
           type: double
           units: rad
-          desc: |
+          desc: >
             Longitude of the first ascending node of the orbit in PZ-90.02
             coordinate system
       - t_lambda_na:
@@ -2483,7 +2484,7 @@ definitions:
  - MSG_ALMANAC_GLO:
     id: 0x0073
     short_desc: Satellite broadcast ephemeris for GLO
-    desc: |
+    desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
       Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
@@ -2495,7 +2496,7 @@ definitions:
       - lambda_na:
           type: double
           units: rad
-          desc: |
+          desc: >
             Longitude of the first ascending node of the orbit in PZ-90.02
             coordinate system
       - t_lambda_na:
@@ -2525,7 +2526,7 @@ definitions:
  - MSG_GLO_BIASES:
     id: 0x0075
     short_desc: GLONASS L1/L2 Code-Phase biases
-    desc: |
+    desc: >
       The GLONASS L1/L2 Code-Phase biases allows to perform
       GPS+GLONASS integer ambiguity resolution for baselines
       with mixed receiver types (e.g. receiver of different
@@ -2571,7 +2572,7 @@ definitions:
  - MSG_SV_AZ_EL:
     id: 0x0097
     short_desc: Satellite azimuths and elevations
-    desc: |
+    desc: >
       Azimuth and elevation angles of all the visible satellites
       that the device does have ephemeris or almanac for.
     fields:
@@ -2582,7 +2583,7 @@ definitions:
  - MSG_OSR:
     id: 0x0640
     short_desc: OSR corrections
-    desc: |
+    desc: >
       The OSR message contains network corrections in an observation-like format.
     fields:
         - header:
@@ -2592,6 +2593,6 @@ definitions:
             type: array
             fill: PackedOsrContent
             map_by: sid
-            desc: |
+            desc: >
               Network correction for a
               satellite signal.

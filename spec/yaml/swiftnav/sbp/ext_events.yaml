@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.ext_events
-description: |
+description: >
   Messages reporting accurately-timestamped external events,
   e.g. camera shutter time.
 stable: True
@@ -21,7 +21,7 @@ definitions:
  - MSG_EXT_EVENT:
     id: 0x0101
     short_desc: Reports timestamped external pin event
-    desc: |
+    desc: >
         Reports detection of an external event, the GPS time it occurred,
         which pin it was and whether it was rising or falling.
     fields:
@@ -36,7 +36,7 @@ definitions:
         - ns_residual:
             type: s32
             units: ns
-            desc: |
+            desc: >
               Nanosecond residual of millisecond-rounded TOW (ranges
               from -500000 to 500000)
         - flags:

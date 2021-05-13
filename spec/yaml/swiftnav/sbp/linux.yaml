@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.linux
-description: |
+description: >
   Linux state monitoring.
 
 stable: False
@@ -24,7 +24,7 @@ definitions:
     id: 0x7F00
     short_desc: List CPU state on the system. DEPRECATED
     public: false
-    desc: |
+    desc: >
       This message indicates the process state of the top 10 heaviest
       consumers of CPU on the system.
     fields:
@@ -49,7 +49,7 @@ definitions:
     id: 0x7F01
     short_desc: List memory state on the system. DEPRECATED
     public: false
-    desc: |
+    desc: >
       This message indicates the process state of the top 10 heaviest
       consumers of memory on the system.
     fields:
@@ -74,7 +74,7 @@ definitions:
     id: 0x7F02
     public: false
     short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED
-    desc: |
+    desc: >
       This presents a summary of CPU and memory utilization.
     fields:
       - mem_total:
@@ -100,7 +100,7 @@ definitions:
     id: 0x7F03
     public: false
     short_desc: A list of processes with high socket counts
-    desc: |
+    desc: >
       Top 10 list of processes with high socket counts.
     fields:
       - index:
@@ -114,13 +114,13 @@ definitions:
           desc: the number of sockets the process is using
       - socket_types:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket types used:
            0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
            and 0x8000 (unknown)
       - socket_states:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket states:
            0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
            0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
@@ -134,7 +134,7 @@ definitions:
     id: 0x7F04
     public: false
     short_desc: A list of processes with deep socket queues
-    desc: |
+    desc: >
       Top 10 list of sockets with deep queues.
     fields:
       - index:
@@ -151,13 +151,13 @@ definitions:
           desc: the total amount of send data queued for this process
       - socket_types:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket types used:
            0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
            and 0x8000 (unknown)
       - socket_states:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket states:
            0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
            0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
@@ -166,7 +166,7 @@ definitions:
       - address_of_largest:
           type: string
           size: 64
-          desc: |
+          desc: >
              Address of the largest queue, remote or local depending on the directionality
              of the connection.
       - cmdline:
@@ -177,7 +177,7 @@ definitions:
     id: 0x7F05
     public: false
     short_desc: Summary of socket usage across the system
-    desc: |
+    desc: >
       Summaries the socket usage across the system.
     fields:
       - avg_queue_depth:
@@ -190,14 +190,14 @@ definitions:
           type: array
           size: 16
           fill: u16
-          desc: |
+          desc: >
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
       - socket_type_counts:
           type: array
           size: 16
           fill: u16
-          desc: |
+          desc: >
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
 
@@ -205,7 +205,7 @@ definitions:
     id: 0x7F06
     public: false
     short_desc: Summary of processes with large amounts of open file descriptors
-    desc: |
+    desc: >
       Top 10 list of processes with a large number of open file descriptors.
     fields:
       - index:
@@ -225,7 +225,7 @@ definitions:
     id: 0x7F07
     public: false
     short_desc: Summary of open file descriptors on the system
-    desc: |
+    desc: >
       Summary of open file descriptors on the system.
     fields:
       - sys_fd_count:
@@ -233,7 +233,7 @@ definitions:
           desc: count of total FDs open on the system
       - most_opened:
           type: string
-          desc: |
+          desc: >
              A null delimited list of strings which alternates between
              a string representation of the process count and the file
              name whose count it being reported.  That is, in C string
@@ -244,7 +244,7 @@ definitions:
      id: 0x7F08
      short_desc: List CPU state on the system
      public: false
-     desc: |
+     desc: >
        This message indicates the process state of the top 10 heaviest
        consumers of CPU on the system, including a timestamp.
      fields:
@@ -282,7 +282,7 @@ definitions:
      id: 0x7F09
      short_desc: List memory state on the system
      public: false
-     desc: |
+     desc: >
        This message indicates the process state of the top 10 heaviest
        consumers of memory on the system, including a timestamp.
      fields:
@@ -319,7 +319,7 @@ definitions:
      id: 0x7F0A
      public: false
      short_desc: CPU, Memory and Process Starts/Stops
-     desc: |
+     desc: >
        This presents a summary of CPU and memory utilization, including a timestamp.
      fields:
        - mem_total:

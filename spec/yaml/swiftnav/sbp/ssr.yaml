@@ -18,13 +18,13 @@ include:
 definitions:
  - CodeBiasesContent:
      short_desc: SSR code biases corrections for a particular satellite
-     desc: |
+     desc: >
       Code biases are to be added to pseudorange.
       The corrections conform with RTCMv3 MT 1059 / 1065.
      fields:
      - code:
             type: u8
-            desc: |
+            desc: >
                 Signal encoded following RTCM specifications
                 (DF380, DF381, DF382 and DF467).
      - value:
@@ -34,12 +34,12 @@ definitions:
 
  - PhaseBiasesContent:
      short_desc: SSR phase biases corrections for a particular satellite
-     desc: |
+     desc: >
       Phase biases are to be added to carrier phase measurements.
      fields:
      - code:
             type: u8
-            desc: |
+            desc: >
                 Signal encoded following RTCM specifications
                 (DF380, DF381, DF382 and DF467)
      - integer_indicator:
@@ -50,7 +50,7 @@ definitions:
             desc: Indicator for two groups of Wide-Lane(s) integer property
      - discontinuity_counter:
             type: u8
-            desc: |
+            desc: >
               Signal phase discontinuity counter.
               Increased for every discontinuity in phase.
      - bias:
@@ -60,7 +60,7 @@ definitions:
 
  - STECHeader:
     short_desc: Header for the MSG_SSR_STEC_CORRECTION message
-    desc: |
+    desc: >
       A full set of STEC information will likely span multiple SBP
       messages, since SBP message a limited to 255 bytes.  The header
       is used to tie multiple SBP messages into a sequence.
@@ -82,17 +82,17 @@ definitions:
         desc: Position of this message in the dataset
     - update_interval:
         type: u8
-        desc: |
+        desc: >
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
     - iod_atmo:
         type: u8
-        desc: |
+        desc: >
             IOD of the SSR atmospheric correction
 
  - GriddedCorrectionHeader:
     short_desc: Header for the MSG_SSR_GRIDDED_CORRECTION message
-    desc: |
+    desc: >
       The LPP message contains nested variable length arrays
       which are not suppported in SBP, so each grid point will
       be identified by the index.
@@ -114,16 +114,16 @@ definitions:
         desc: Position of this message in the dataset
     - update_interval:
         type: u8
-        desc: |
+        desc: >
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
     - iod_atmo:
         type: u8
-        desc: |
+        desc: >
             IOD of the SSR atmospheric correction
     - tropo_quality_indicator:
         type: u8
-        desc: |
+        desc: >
           Quality of the troposphere data. Encoded following RTCM DF389
           specification in units of m.
 
@@ -135,7 +135,7 @@ definitions:
         desc: Unique space vehicle identifier
     - stec_quality_indicator:
         type: u8
-        desc: |
+        desc: >
           Quality of the STEC data. Encoded following RTCM DF389 specification
           but in units of TECU instead of m.
     - stec_coeff:
@@ -143,11 +143,11 @@ definitions:
         size: 4
         fill: s16
         units: C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
-        desc: |
+        desc: >
           Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
 
  - TroposphericDelayCorrectionNoStd:
-    desc: |
+    desc: >
       Troposphere vertical delays at the grid point.
     fields:
     - hydro:
@@ -160,7 +160,7 @@ definitions:
         desc: Wet vertical delay
 
  - TroposphericDelayCorrection:
-    desc: |
+    desc: >
       Troposphere vertical delays (mean and standard deviation) at the grid
       point.
     fields:
@@ -174,7 +174,7 @@ definitions:
         desc: Wet vertical delay
     - stddev:
         type: u8
-        units: |
+        units: >
           modified DF389 scale; class is upper 3 bits, value is lower 5
           stddev <= (3^class * (1 + value/16) - 1) mm
         desc: stddev
@@ -191,7 +191,7 @@ definitions:
         desc: STEC residual
 
  - STECResidual:
-    desc: |
+    desc: >
       STEC residual (mean and standard deviation) for the given satellite
       at the grid point.
     fields:
@@ -204,14 +204,14 @@ definitions:
         desc: STEC residual
     - stddev:
         type: u8
-        units: |
+        units: >
           modified DF389 scale; class is upper 3 bits, value is lower 5
           stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
         desc: stddev
 
  - GridElementNoStd:
     short_desc: Correction data for a single grid point
-    desc: |
+    desc: >
       Contains one tropo delay, plus STEC residuals for each satellite at the
       grid point.
     fields:
@@ -228,7 +228,7 @@ definitions:
 
  - GridElement:
     short_desc: Correction data for a single grid point
-    desc: |
+    desc: >
       Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
       stddev) for each satellite at the grid point.
     fields:
@@ -246,7 +246,7 @@ definitions:
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
     short_desc: Precise orbit and clock correction
-    desc: |
+    desc: >
       The precise orbit and clock correction message is
       to be applied as a delta correction to broadcast
       ephemeris and is an equivalent to the 1060 /1066
@@ -260,12 +260,12 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            desc: |
+            desc: >
                 Update interval between consecutive corrections. Encoded
                 following RTCM DF391 specification.
         - iod_ssr:
             type: u8
-            desc: |
+            desc: >
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR
                 generating configuration
@@ -312,7 +312,7 @@ definitions:
  - MSG_SSR_CODE_BIASES:
     id: 0x05E1
     short_desc: Precise code biases correction
-    desc: |
+    desc: >
       The precise code biases message is to be added
       to the pseudorange of the corresponding signal
       to get corrected pseudorange. It is an
@@ -326,12 +326,12 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            desc: |
+            desc: >
                 Update interval between consecutive corrections. Encoded
                 following RTCM DF391 specification.
         - iod_ssr:
             type: u8
-            desc: |
+            desc: >
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR
                 generating configuration
@@ -344,7 +344,7 @@ definitions:
  - MSG_SSR_PHASE_BIASES:
     id: 0x05E6
     short_desc: Precise phase biases correction
-    desc: |
+    desc: >
       The precise phase biases message contains the biases
       to be added to the carrier phase of the corresponding
       signal to get corrected carrier phase measurement, as
@@ -360,22 +360,22 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            desc: |
+            desc: >
                 Update interval between consecutive corrections. Encoded
                 following RTCM DF391 specification.
         - iod_ssr:
             type: u8
-            desc: |
+            desc: >
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR
                 generating configuration
         - dispersive_bias:
             type: u8
-            desc: |
+            desc: >
                 Indicator for the dispersive phase biases property.
         - mw_consistency:
             type: u8
-            desc: |
+            desc: >
                 Consistency indicator for Melbourne-Wubbena linear combinations
         - yaw:
             type: u16
@@ -389,18 +389,19 @@ definitions:
             type: array
             fill: PhaseBiasesContent
             map_by: code
-            desc: |
+            desc: >
               Phase biases corrections for a
               satellite being tracked.
 
  - MSG_SSR_STEC_CORRECTION:
     id: 0x05FB
     short_desc: STEC correction polynomial coeffcients
-    desc: |
+    desc: >
       The Slant Total Electron Content per space vehicle, given as polynomial
       approximation for a given tile. This should be combined with the
       MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
       of the atmospheric delay.
+
 
       It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
     fields:
@@ -415,8 +416,9 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION:
     id: 0x05FC
     short_desc: Gridded troposphere and STEC correction residuals
-    desc: |
+    desc: >
       STEC residuals are per space vehicle, troposphere is not.
+
 
       It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
     fields:
@@ -425,17 +427,18 @@ definitions:
             desc: Header of a gridded correction message
         - element:
             type: GridElement
-            desc: |
+            desc: >
               Tropo and STEC residuals for the given grid point.
 
  - MSG_SSR_TILE_DEFINITION:
     id: 0x05F6
-    short_desc: |
+    short_desc: >
       Definition of a SSR atmospheric correction tile.
-    desc: |
+    desc: >
       Provides the correction point coordinates for the atmospheric correction
       values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
       messages.
+
 
       Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
       element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
@@ -446,70 +449,82 @@ definitions:
             desc: Unique identifier of the tile set this tile belongs to.
         - tile_id:
             type: u16
-            desc: |
+            desc: >
               Unique identifier of this tile in the tile set.
 
               See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
         - corner_nw_lat:
             type: s16
             units: encoded degrees
-            desc: |
+            desc: >
               North-West corner correction point latitude.
+
 
               The relation between the latitude X in the range [-90, 90] and
               the coded number N is:
 
+
               N = floor((X / 90) * 2^14)
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
         - corner_nw_lon:
             type: s16
             units: encoded degrees
-            desc: |
+            desc: >
               North-West corner correction point longitude.
+
 
               The relation between the longitude X in the range [-180, 180]
               and the coded number N is:
 
+
               N = floor((X / 180) * 2^15)
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
         - spacing_lat:
             type: u16
             units: 0.01 degrees
-            desc: |
+            desc: >
               Spacing of the correction points in the latitude direction.
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
         - spacing_lon:
             type: u16
             units: 0.01 degrees
-            desc: |
+            desc: >
               Spacing of the correction points in the longitude direction.
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
         - rows:
             type: u16
-            desc: |
+            desc: >
               Number of steps in the latitude direction.
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
         - cols:
             type: u16
-            desc: |
+            desc: >
               Number of steps in the longitude direction.
+
 
               See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
         - bitmask:
             type: u64
-            desc: |
+            desc: >
               Specifies the availability of correction data at the
               correction points in the array.
+
 
               If a specific bit is enabled (set to 1), the correction is not
               available. Only the first rows * cols bits are used, the remainder
               are set to 0. If there are more then 64 correction points the
               remaining corrections are always available.
+
 
               Starting with the northwest corner of the array (top left on a
               north oriented map) the correction points are enumerated with row
@@ -517,12 +532,13 @@ definitions:
               until last row west to east - ending with the southeast corner of
               the array.
 
+
               See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
               note the definition of the bits is inverted.
 
  - SatelliteAPC:
      short_desc: Antenna phase center correction
-     desc: |
+     desc: >
        Contains phase center offset and elevation variation corrections for one
        signal on a satellite.
      fields:
@@ -566,7 +582,7 @@ definitions:
            size: 3
            fill: s16
            units: 1 mm
-           desc: |
+           desc: >
              Mean phase center offset, X Y and Z axises. See IGS ANTEX file
              format description for coordinate system definition.
        - pcv:
@@ -574,7 +590,7 @@ definitions:
            size: 21
            fill: s8
            units: 1 mm
-           desc: |
+           desc: >
              Elevation dependent phase center variations. First element is 0
              degrees separation from the Z axis, subsequent elements represent
              elevation variations in 1 degree increments.
@@ -603,12 +619,12 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            desc: |
+            desc: >
                 Update interval between consecutive corrections. Encoded
                 following RTCM DF391 specification.
         - iod_ssr:
             type: u8
-            desc: |
+            desc: >
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR
                 generating configuration
@@ -654,7 +670,7 @@ definitions:
 
  - STECHeaderDepA:
     short_desc: Header for MSG_SSR_STEC_CORRECTION_DEP message
-    desc: |
+    desc: >
       A full set of STEC information will likely span multiple SBP
       messages, since SBP message a limited to 255 bytes.  The header
       is used to tie multiple SBP messages into a sequence.
@@ -670,17 +686,17 @@ definitions:
         desc: Position of this message in the dataset
     - update_interval:
         type: u8
-        desc: |
+        desc: >
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
     - iod_atmo:
         type: u8
-        desc: |
+        desc: >
             IOD of the SSR atmospheric correction
 
  - GriddedCorrectionHeaderDepA:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION_DEP
-    desc: |
+    desc: >
       The 3GPP message contains nested variable length arrays
       which are not suppported in SBP, so each grid point will
       be identified by the index.
@@ -696,34 +712,34 @@ definitions:
         desc: Position of this message in the dataset
     - update_interval:
         type: u8
-        desc: |
+        desc: >
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
     - iod_atmo:
         type: u8
-        desc: |
+        desc: >
             IOD of the SSR atmospheric correction
     - tropo_quality_indicator:
         type: u8
-        desc: |
+        desc: >
           Quality of the troposphere data. Encoded following RTCM DF389
           specifcation in units of m.
 
  - GridDefinitionHeaderDepA:
     short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages
-    desc: |
+    desc: >
       Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
       Also includes an RLE encoded validity list.
     fields:
     - region_size_inverse:
         type: u8
         units: inverse degrees
-        desc: |
+        desc: >
           region_size (deg) = 10 / region_size_inverse
           0 is an invalid value.
     - area_width:
         type: u16
-        desc: |
+        desc: >
           grid height (deg) = grid width (deg) = area_width / region_size
           0 is an invalid value.
     - lat_nw_corner_enc:
@@ -780,7 +796,7 @@ definitions:
             desc: Header of a Gridded Correction message
         - element:
             type: GridElement
-            desc: |
+            desc: >
               Tropo and STEC residuals for the given grid point (mean
               and standard deviation)
 
@@ -797,7 +813,7 @@ definitions:
         - rle_list:
             type: array
             fill: u8
-            desc: |
+            desc: >
               Run Length Encode list of quadrants that contain valid data.
               The spec describes the encoding scheme in detail, but
               essentially the index of the quadrants that contain transitions between

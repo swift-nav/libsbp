@@ -15,6 +15,7 @@ Parsing YAML specifications of SBP.
 
 import glob
 import inspect
+import itertools
 import os
 import string
 import sys
@@ -262,12 +263,16 @@ def mk_definition(defn):
     if not desc.upper() == "DEPRECATED":
       assert desc.endswith("."), f"{identifier}: Append . to: `{desc}`"
     assert all(x in string.printable for x in desc), f"Unprintable: {desc}"
-    assert all(line.strip() == line for line in desc.splitlines()), f"Extra whitespace: {line}"
+    lines = desc.splitlines()
+    assert all(line.strip() == line for line in lines), f"Extra whitespace: {line}"
+    odd_lines = list(itertools.islice(lines,1,len(lines),2))
+    if any(line for line in odd_lines):
+      print(f"Warning: Multi-line desc contains single blank lines (use two):\n{lines}")
   short_desc = contents.get("short_desc", None)
   if short_desc:
     assert not short_desc.endswith("."), f"{identifier}: Remove . from: `{short_desc}`"
     assert all(x in string.printable for x in short_desc), f"Unprintable: {short_desc}"
-    assert all(line.strip() == line for line in short_desc.splitlines()), f"Extra whitespace: {line}"
+    assert len(short_desc.splitlines()) == 1, f"Multi-line short_desc: {short_desc}"
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
                                          short_desc=short_desc,

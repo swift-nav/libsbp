@@ -33,7 +33,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-(((m.desc | commentify))) */
+ * (((m.desc | commentify))) */
 ((*- endif *))
 
 public class (((m.identifier | classnameify))) extends SBPMessage {
@@ -42,7 +42,7 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     ((* if m.fields *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /** (((f.desc))) */
+    /** (((f.desc | commentify(indent=5) ))) */
     ((*- endif *))
     public (((f | type_map))) (((f.identifier)));
     ((* endfor *))
@@ -87,7 +87,7 @@ public class (((m.identifier))) extends SBPStruct {
     ((* if m.fields *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /** (((f.desc))) */
+    /** (((f.desc | wordwrap(wrapstring="\n      * ") ))) */
     ((*- endif *))
     public (((f | type_map))) (((f.identifier)));
     ((* endfor *))

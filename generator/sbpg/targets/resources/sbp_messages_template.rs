@@ -13,7 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 
-//! (((description | replace("\n", "\n//! "))))
+//! (((description | commentify(prefix="//! ") )))
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -34,7 +34,7 @@ use super::(((i)))::*;
 ((*- if m.desc *))
 /// (((m.short_desc)))
 ///
-(((m.desc|commentify)))
+/// (((m.desc | commentify)))
 ///
 ((*- endif *))
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -47,7 +47,7 @@ pub struct (((m.identifier|camel_case))) {
     ((*- endif *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /// (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    /// "))))
+    /// (((f.desc | commentify(indent=2) )))
     ((*- endif *))
     pub (((f.identifier))): (((f|type_map))),
     ((*- endfor *))

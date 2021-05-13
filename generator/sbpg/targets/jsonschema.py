@@ -18,9 +18,8 @@ files.
 
 import copy
 import json
-import os
 
-from sbpg.targets.templating import *
+from sbpg.targets.templating import JENV, ACRONYMS
 
 TEMPLATE_NAME = 'message_template.jsonschema.j2'
 

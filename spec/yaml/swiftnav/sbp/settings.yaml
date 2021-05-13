@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.settings
-description: |
+description: >
   Messages for reading, writing, and discovering device settings. Settings
   with a "string" field have multiple values in this field delimited with a
   null character (the c style null terminator).  For instance, when querying
@@ -35,7 +35,6 @@ description: |
   the open source python command line utility for reading, writing, and
   saving settings in the piksi_tools repository on github as a helpful
   reference and example.
-
 stable: True
 public: True
 include:
@@ -45,14 +44,14 @@ definitions:
  - MSG_SETTINGS_SAVE:
     id: 0x00A1
     short_desc: Save settings to flash (host => device)
-    desc: |
+    desc: >
       The save settings message persists the device's current settings
       configuration to its onboard flash memory file system.
 
  - MSG_SETTINGS_WRITE:
     id: 0x00A0
     short_desc: Write device configuration settings (host => device)
-    desc: |
+    desc: >
       The setting message writes the device configuration for a particular
       setting via A NULL-terminated and NULL-delimited string with contents
       "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
@@ -63,14 +62,14 @@ definitions:
     fields:
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
 
  - MSG_SETTINGS_WRITE_RESP:
     id: 0x00AF
     short_desc: Acknowledgement with status of MSG_SETTINGS_WRITE
-    desc: |
+    desc: >
       Return the status of a write request with the new value of the
       setting.  If the requested value is rejected, the current value
       will be returned. The string field is a NULL-terminated and NULL-delimited
@@ -95,14 +94,14 @@ definitions:
                     - 6: Rejected; unspecified error
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
 
  - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
     short_desc: Read device configuration settings (host => device)
-    desc: |
+    desc: >
        The setting message that reads the device configuration. The string
        field is a NULL-terminated and NULL-delimited string with contents
        "SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the
@@ -114,14 +113,14 @@ definitions:
     fields:
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0"
 
  - MSG_SETTINGS_READ_RESP:
     id: 0x00A5
     short_desc: Read device configuration settings (host <= device)
-    desc: |
+    desc: >
       The setting message wich which the device responds after a
       MSG_SETTING_READ_REQ is sent to device. The string field is a
       NULL-terminated and NULL-delimited string with contents
@@ -132,7 +131,7 @@ definitions:
     fields:
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
 
@@ -140,21 +139,22 @@ definitions:
  - MSG_SETTINGS_READ_BY_INDEX_REQ:
     id: 0x00A2
     short_desc: Read setting by direct index (host => device)
-    desc: |
+    desc: >
       The settings message for iterating through the settings
       values. A device will respond to this message with a
       "MSG_SETTINGS_READ_BY_INDEX_RESP".
     fields:
       - index:
           type: u16
-          desc: |
+          desc: >
             An index into the device settings, with values ranging from
             0 to length(settings).
  - MSG_SETTINGS_READ_BY_INDEX_RESP:
     id: 0x00A7
     short_desc: Read setting by direct index (host <= device)
-    desc: |
+    desc: >
       The settings message that reports the value of a setting at an index.
+
 
       In the string field, it reports NULL-terminated and delimited string
       with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
@@ -167,33 +167,33 @@ definitions:
     fields:
       - index:
           type: u16
-          desc: |
+          desc: >
             An index into the device settings, with values ranging from
             0 to length(settings)
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
 
  - MSG_SETTINGS_READ_BY_INDEX_DONE:
     id: 0x00A6
     short_desc: Finished reading settings (host <= device)
-    desc: |
+    desc: >
       The settings message for indicating end of the settings values.
 
  - MSG_SETTINGS_REGISTER:
     id: 0x00AE
     public: false
     short_desc: Register setting and default value (device => host)
-    desc: |
+    desc: >
       This message registers the presence and default value of a setting
       with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
       for this setting to set the initial value.
     fields:
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE".
 
@@ -201,7 +201,7 @@ definitions:
     id: 0x01AF
     public: false
     short_desc: Register setting and default value (device <= host)
-    desc: |
+    desc: >
       This message responds to setting registration with the effective value.
       The effective value shall differ from the given default value if setting
       was already registered or is available in the permanent setting storage
@@ -220,7 +220,7 @@ definitions:
                     - 3: Rejected; malformed message
       - setting:
           type: string
-          desc: |
+          desc: >
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
             according to the status field.

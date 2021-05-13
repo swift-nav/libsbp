@@ -17,7 +17,7 @@
 
 /** \defgroup (((pkg_name))) (((pkg_name|capitalize)))
  *
- * (((description|commentify)))
+(((description|commentify)))
  * \{ */
 
 #ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
@@ -53,7 +53,7 @@ SBP_PACK_START
 typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
-  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
+  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< ((( f.desc|commentify_field(f,m) ))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
   ((*- else *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
   ((*- endif *))

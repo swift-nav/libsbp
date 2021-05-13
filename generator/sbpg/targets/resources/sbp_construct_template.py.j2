@@ -11,7 +11,7 @@
 
 
 """
-(((description|comment_links)))
+(((description|comment_links|commentify(indent=0) )))
 """
 
 ((* if msgs|has_real_message -*))
@@ -44,7 +44,7 @@ from (((module_path))).(((file))) import *
 class ((( m.identifier )))(object):
   """(((m.identifier))).
   ((* if m.desc *))
-  (((m.desc)))
+  ((( m.desc | commentify )))
   ((*- endif *))
   ((* if m.fields *))
   Parameters
@@ -52,7 +52,7 @@ class ((( m.identifier )))(object):
   ((*- for f in m.fields *))
   (((f.identifier))) : (((f.type_id|pydoc)))
   ((*- if f.desc *))
-    (((f.desc)))
+    ((( f.desc | commentify(width=74, indent=4) )))
   ((*- endif *))
   ((*- endfor *))
   ((*- endif *))
@@ -107,7 +107,7 @@ class ((( m.identifier | classnameify )))(SBP):
   of its fields.
 
   ((* if m.desc *))
-  (((m.desc)))
+  (((m.desc | commentify )))
   ((*- endif *))
 
   ((*- if m.fields*))
@@ -119,7 +119,7 @@ class ((( m.identifier | classnameify )))(SBP):
   ((*- for f in m.fields *))
   (((f.identifier))) : (((f.type_id|pydoc)))
   ((*- if f.desc *))
-    (((f.desc)))
+    (((f.desc | commentify(width=74, indent=4) )))
   ((*- endif *))
   ((*- endfor *))
   sender : int

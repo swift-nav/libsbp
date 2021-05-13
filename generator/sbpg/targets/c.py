@@ -14,8 +14,11 @@ Generator for c target.
 """
 
 import re
-from sbpg.targets.templating import *
-from sbpg.utils import markdown_links
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
@@ -23,17 +26,27 @@ VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
 
 
-def commentify(value):
+@pass_environment
+def commentify(environment: Environment,
+               value: str):
   """
   Builds a comment.
   """
-  value = markdown_links(value)
+  return indented_wordwrap(environment, value, indent=" * ", first=True, blank=True, markdown=True)
+
+
+@pass_environment
+def commentify_field(environment: Environment,
+                     value: str,
+                     field, message):
+  """
+  Builds a comment.
+  """
   if value is None:
     return
-  if len(value.split('\n')) == 1:
-    return "* " + value
-  else:
-    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+  f_size_len = len(mk_size(field).ljust(message.max_fid_len+4))
+  indent = len("  ") + f_size_len + len(" ") + len(mk_id(field)) + len(" /**< ")
+  return indented_wordwrap(environment, value, indent=" " * indent, first=False, blank=False)
 
 
 def extensions(includes):
@@ -132,6 +145,7 @@ def create_bitfield_macros(field, msg):
   return "\n".join(ret_list)
 
 JENV.filters['commentify'] = commentify
+JENV.filters['commentify_field'] = commentify_field
 JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert

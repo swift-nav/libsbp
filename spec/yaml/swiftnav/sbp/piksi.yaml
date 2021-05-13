@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.piksi
-description: |
+description: >
   System health, configuration, and diagnostic messages specific to
   the Piksi L1 receiver, including a variety of legacy messages that
   may no longer be used.
@@ -24,21 +24,21 @@ definitions:
  - MSG_ALMANAC:
     id: 0x0069
     short_desc: Legacy message to load satellite almanac (host => Piksi)
-    desc: |
+    desc: >
       This is a legacy message for sending and loading a satellite
       alamanac onto the Piksi's flash memory from the host.
 
  - MSG_SET_TIME:
     id: 0x0068
     short_desc: Send GPS time from host (host => Piksi)
-    desc: |
+    desc: >
       This message sets up timing functionality using a coarse GPS
       time estimate sent by the host.
 
  - MSG_RESET:
     id: 0x00B6
     short_desc: Reset the device (host => Piksi)
-    desc: |
+    desc: >
       This message from the host resets the Piksi back into the
       bootloader.
     fields:
@@ -57,14 +57,14 @@ definitions:
  - MSG_RESET_DEP:
     id: 0x00B2
     short_desc: Reset the device (host => Piksi)
-    desc: |
+    desc: >
       This message from the host resets the Piksi back into the
       bootloader.
 
  - MSG_CW_RESULTS:
     id: 0x00C0
     short_desc: Legacy message for CW interference channel (Piksi => host)
-    desc: |
+    desc: >
       This is an unused legacy message for result reporting from the
       CW interference channel on the SwiftNAP. This message will be
       removed in a future release.
@@ -72,7 +72,7 @@ definitions:
  - MSG_CW_START:
     id: 0x00C1
     short_desc: Legacy message for CW interference channel (host => Piksi)
-    desc: |
+    desc: >
       This is an unused legacy message from the host for starting
       the CW interference channel on the SwiftNAP. This message will
       be removed in a future release.
@@ -80,7 +80,7 @@ definitions:
  - MSG_RESET_FILTERS:
     id: 0x0022
     short_desc: Reset IAR filters (host => Piksi)
-    desc: |
+    desc: >
       This message resets either the DGNSS Kalman filters or Integer
       Ambiguity Resolution (IAR) process.
     fields:
@@ -105,7 +105,7 @@ definitions:
  - MSG_THREAD_STATE:
     id: 0x0017
     short_desc: State of an RTOS thread
-    desc: |
+    desc: >
       The thread usage message from the device reports real-time
       operating system (RTOS) thread usage statistics for the named
       thread. The reported percentage values must be normalized.
@@ -116,7 +116,7 @@ definitions:
             desc: Thread name (NULL terminated)
         - cpu:
             type: u16
-            desc: |
+            desc: >
               Percentage cpu use for this thread. Values range from 0
               - 1000 and needs to be renormalized to 100
         - stack_free:
@@ -126,7 +126,7 @@ definitions:
 
  - UARTChannel:
     short_desc: State of the UART channel
-    desc: |
+    desc: >
       Throughput, utilization, and error counts on the RX/TX buffers
       of this UART channel. The reported percentage values must
       be normalized.
@@ -147,17 +147,17 @@ definitions:
             desc: UART IO error count
         - tx_buffer_level:
             type: u8
-            desc: |
+            desc: >
               UART transmit buffer percentage utilization (ranges from
               0 to 255)
         - rx_buffer_level:
             type: u8
-            desc: |
+            desc: >
               UART receive buffer percentage utilization (ranges from
               0 to 255)
  - Period:
     short_desc: base station observation message receipt period
-    desc: |
+    desc: >
       Statistics on the period of observations received from the base
       station. As complete observation sets are received, their time
       of reception is compared with the prior set''s time of reception.
@@ -184,7 +184,7 @@ definitions:
 
  - Latency:
     short_desc: Receiver-to-base station latency
-    desc: |
+    desc: >
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
       compared to the current GPS time calculated locally by the
@@ -211,7 +211,7 @@ definitions:
  - MSG_UART_STATE:
     id: 0x001D
     short_desc: State of the UART channels
-    desc: |
+    desc: >
       The UART message reports data latency and throughput of the UART
       channels providing SBP I/O. On the default Piksi configuration,
       UARTs A and B are used for telemetry radios, but can also be
@@ -260,7 +260,7 @@ definitions:
  - MSG_IAR_STATE:
     id: 0x0019
     short_desc: State of the Integer Ambiguity Resolution (IAR) process
-    desc: |
+    desc: >
       This message reports the state of the Integer Ambiguity
       Resolution (IAR) process, which resolves unknown integer
       ambiguities from double-differenced carrier-phase measurements
@@ -273,7 +273,7 @@ definitions:
  - MSG_MASK_SATELLITE:
     id: 0x002B
     short_desc: Mask a satellite from use in Piksi subsystems
-    desc: |
+    desc: >
       This message allows setting a mask to prevent a particular satellite
       from being used in various Piksi subsystems.
     fields:
@@ -328,7 +328,7 @@ definitions:
  - MSG_DEVICE_MONITOR:
     id: 0x00B5
     short_desc: Device temperature and voltage levels
-    desc: |
+    desc: >
       This message contains temperature and voltage level measurements from the
       processor's monitoring system and the RF frontend die temperature if
       available.
@@ -357,7 +357,7 @@ definitions:
  - MSG_COMMAND_REQ:
     id: 0x00B8
     short_desc: Execute a command (host => device)
-    desc: |
+    desc: >
       Request the recipient to execute an command.
       Output will be sent in MSG_LOG messages, and the exit
       code will be returned with MSG_COMMAND_RESP.
@@ -372,7 +372,7 @@ definitions:
  - MSG_COMMAND_RESP:
     id: 0x00B9
     short_desc: Exit code from executed command (device => host)
-    desc: |
+    desc: >
       The response to MSG_COMMAND_REQ with the return code of
       the command.  A return code of zero indicates success.
     fields:
@@ -386,7 +386,7 @@ definitions:
  - MSG_COMMAND_OUTPUT:
     id: 0x00BC
     short_desc: Command output
-    desc: |
+    desc: >
       Returns the standard output and standard error of the
       command requested by MSG_COMMAND_REQ.
       The sequence number can be used to filter for filtering
@@ -402,13 +402,13 @@ definitions:
  - MSG_NETWORK_STATE_REQ:
     id: 0x00BA
     short_desc: Request state of Piksi network interfaces
-    desc: |
+    desc: >
       Request state of Piksi network interfaces.
       Output will be sent in MSG_NETWORK_STATE_RESP messages.
  - MSG_NETWORK_STATE_RESP:
     id: 0x00BB
     short_desc: State of network interface
-    desc: |
+    desc: >
       The state of a network interface on the Piksi.
       Data is made to reflect output of ifaddrs struct returned by getifaddrs
       in c.
@@ -480,7 +480,7 @@ definitions:
 
  - NetworkUsage:
     short_desc: Bandwidth usage measurement for a single interface
-    desc: |
+    desc: >
       The bandwidth usage for each interface can be reported
       within this struct and utilize multiple fields to fully
       specify the type of traffic that is being tracked. As
@@ -519,7 +519,7 @@ definitions:
  - MSG_CELL_MODEM_STATUS:
     id: 0x00BE
     short_desc: Cell modem information update message
-    desc: |
+    desc: >
       If a cell modem is present on a piksi device, this message
       will be send periodically to update the host on the status
       of the modem and its various parameters.
@@ -553,33 +553,33 @@ definitions:
         - freq_ref:
             type: float
             units: MHz
-            desc: |
+            desc: >
                 Reference frequency of this packet
         - freq_step:
             type: float
             units: MHz
-            desc: |
+            desc: >
                 Frequency step of points in this packet
         - amplitude_ref:
             type: float
             units: dB
-            desc: |
+            desc: >
                 Reference amplitude of this packet
         - amplitude_unit:
             type: float
             units: dB
-            desc: |
+            desc: >
                 Amplitude unit value of points in this packet
         - amplitude_value:
             type: array
             fill: u8
-            desc: |
+            desc: >
                 Amplitude values (in the above units) of points in this packet
 
  - MSG_SPECAN:
     id: 0x0051
     short_desc: Spectrum analyzer
-    desc: |
+    desc: >
         Spectrum analyzer packet.
 
     fields:
@@ -592,33 +592,33 @@ definitions:
         - freq_ref:
             type: float
             units: MHz
-            desc: |
+            desc: >
                 Reference frequency of this packet
         - freq_step:
             type: float
             units: MHz
-            desc: |
+            desc: >
                 Frequency step of points in this packet
         - amplitude_ref:
             type: float
             units: dB
-            desc: |
+            desc: >
                 Reference amplitude of this packet
         - amplitude_unit:
             type: float
             units: dB
-            desc: |
+            desc: >
                 Amplitude unit value of points in this packet
         - amplitude_value:
             type: array
             fill: u8
-            desc: |
+            desc: >
                 Amplitude values (in the above units) of points in this packet
 
  - MSG_FRONT_END_GAIN:
     id: 0x00BF
     short_desc: RF AGC status
-    desc: |
+    desc: >
       This message describes the gain of each channel in the receiver frontend. Each
       gain is encoded as a non-dimensional percentage relative to the maximum range
       possible for the gain stage of the frontend. By convention, each gain array

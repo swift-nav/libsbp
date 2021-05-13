@@ -14,6 +14,10 @@
 """
 
 import jinja2
+from jinja2.environment import Environment
+from jinja2.filters import do_indent, do_wordwrap
+
+from sbpg.utils import comment_links, markdown_links
 
 JENV = jinja2.Environment(block_start_string = '((*',
                           block_end_string = '*))',
@@ -27,9 +31,64 @@ JENV = jinja2.Environment(block_start_string = '((*',
 
 ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED', 'IO']
 INCLUDE_MAP = {
-    "gnss": ["CarrierPhase", "GnssSignal", "GnssSignalDep", "GPSTime", "GPSTime", "GPSTimeDep", "GPSTimeSec", "SvId"],
+    "gnss": [
+        "CarrierPhase",
+        "GnssSignal",
+        "GnssSignalDep",
+        "GPSTime",
+        "GPSTime",
+        "GPSTimeDep",
+        "GPSTimeSec",
+        "SvId",
+    ],
 }
 
 
 def is_list(x):
     return isinstance(x, list)
+
+
+def indented_wordwrap(
+    environment: Environment,
+    value: str,
+    indent: str,
+    width: int = None,
+    first: bool = True,
+    blank: bool = True,
+    markdown: bool = False,
+):
+    """
+    Build a indented and word-wrapped comment.
+    """
+    if not value:
+        return
+    if not width:
+        width = 78 - len(indent)
+    if "https://" in value:
+        if markdown:
+            value = markdown_links(value)
+        else:
+            value = comment_links(value)
+        value = do_wordwrap(
+            environment,
+            value,
+            width=width,
+            break_on_hyphens=False,
+            break_long_words=False,
+        )
+    else:
+        # While breaking on long lines is helpful for the Jinja output,
+        # it inhibits language style specific formatters from reformatting
+        # as they dont know to re-join words which have been split.
+        value = do_wordwrap(
+            environment,
+            value,
+            width=width,
+            break_on_hyphens=True,
+            break_long_words=False,
+        )
+    # If the indent contains characters, it sould be shown for blank lines.
+    blank = indent.strip() != ""
+    value = do_indent(value, indent, first=first, blank=blank)
+    value = "\n".join([line.rstrip() for line in value.splitlines()])
+    return value

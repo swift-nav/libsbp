@@ -9,12 +9,13 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.file_io
-description: |
+description: >
   Messages for using device's onboard flash filesystem
   functionality. This allows data to be stored persistently in the
   device's program flash with wear-levelling using a simple filesystem
   interface. The file system interface (CFS) defines an abstract API
   for reading directories and for reading and writing files.
+
 
   Note that some of these messages share the same message type ID for both the
   host request and the device response.
@@ -27,7 +28,7 @@ definitions:
  - MSG_FILEIO_READ_REQ:
     id: 0x00A8
     short_desc: Read file from the file system (host => device)
-    desc: |
+    desc: >
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
       MSG_FILEIO_READ_RESP message where the message length field
@@ -55,7 +56,7 @@ definitions:
  - MSG_FILEIO_READ_RESP:
     id: 0x00A3
     short_desc: File read from the file system (host <= device)
-    desc: |
+    desc: >
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
       message where the message length field indicates how many bytes
@@ -73,7 +74,7 @@ definitions:
  - MSG_FILEIO_READ_DIR_REQ:
     id: 0x00A9
     short_desc: List files in a directory (host => device)
-    desc: |
+    desc: >
       The read directory message lists the files in a directory on the
       device's onboard flash file system.  The offset parameter can be
       used to skip the first n elements of the file list. Returns a
@@ -90,7 +91,7 @@ definitions:
           desc: Read sequence number
       - offset:
           type: u32
-          desc: |
+          desc: >
             The offset to skip the first n elements of the file list
       - dirname:
           type: string
@@ -99,7 +100,7 @@ definitions:
  - MSG_FILEIO_READ_DIR_RESP:
     id: 0x00AA
     short_desc: Files listed in a directory (host <= device)
-    desc: |
+    desc: >
       The read directory message lists the files in a directory on the
       device's onboard flash file system. Message contains the directory
       listings as a NULL delimited list. The listing is chunked over
@@ -118,7 +119,7 @@ definitions:
  - MSG_FILEIO_REMOVE:
     id: 0x00AC
     short_desc: Delete a file from the file system (host => device)
-    desc: |
+    desc: >
       The file remove message deletes a file from the file system.
       If the message is invalid, a followup MSG_PRINT message will
       print "Invalid fileio remove message". A device will only
@@ -131,7 +132,7 @@ definitions:
  - MSG_FILEIO_WRITE_REQ:
     id: 0x00AD
     short_desc: Write to file (host => device)
-    desc: |
+    desc: >
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
       original MSG_FILEIO_WRITE_RESP message to check integrity of
@@ -159,7 +160,7 @@ definitions:
  - MSG_FILEIO_WRITE_RESP:
     id: 0x00AB
     short_desc: File written to (host <= device)
-    desc: |
+    desc: >
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. The message is a copy of the
       original MSG_FILEIO_WRITE_REQ message to check integrity of the
@@ -173,7 +174,7 @@ definitions:
  - MSG_FILEIO_CONFIG_REQ:
     id: 0x1001
     short_desc: Request advice on the optimal configuration for FileIO
-    desc: |
+    desc: >
       Requests advice on the optimal configuration for a FileIO
       transfer.  Newer version of FileIO can support greater
       throughput by supporting a large window of FileIO data
@@ -185,9 +186,9 @@ definitions:
 
  - MSG_FILEIO_CONFIG_RESP:
     id: 0x1002
-    short_desc: |
+    short_desc: >
       Response with advice on the optimal configuration for FileIO.
-    desc: |
+    desc: >
       The advice on the optimal configuration for a FileIO
       transfer.  Newer version of FileIO can support greater
       throughput by supporting a large window of FileIO data

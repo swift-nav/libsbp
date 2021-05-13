@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- (((description | comment_links | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- " ))))
+-- (((description | commentify(wrap_in_brackets=True) )))
 
 module (((module_name)))
   ( module (((module_name)))
@@ -49,7 +49,7 @@ import (((m)))
 -- | SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
 ((*- endif *))
 --
--- (((m.desc | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- "))))
+-- (((m.desc | commentify )))
 ((*- endif *))
 data (((m.identifier|hs_to_data))) = (((m.identifier|hs_to_data)))
 ((*- if not m.fields *))
@@ -59,12 +59,12 @@ data (((m.identifier|hs_to_data))) = (((m.identifier|hs_to_data)))
 ((*- if loop.first *))
   { (((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier)).ljust(m|hs_max_fid_len)))) :: !(((f|hs_to_type)))
     ((*- if f.desc *))
-    -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
+    -- ^ (((f.desc | commentify(indent=4) )))
     ((*- endif *))
 ((*- else *))
   , (((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier)).ljust(m|hs_max_fid_len)))) :: !(((f|hs_to_type)))
     ((*- if f.desc *))
-    -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
+    -- ^ (((f.desc | commentify(indent=4) )))
     ((*- endif *))
 ((*- endif *))
 ((*- if loop.last *))

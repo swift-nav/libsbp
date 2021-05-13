@@ -19,7 +19,7 @@ definitions:
  - MSG_SBAS_RAW:
     id: 0x7777
     short_desc: Raw SBAS data
-    desc: |
+    desc: >
       This message is sent once per second per SBAS satellite. ME checks the
       parity of the data block and sends only blocks that pass the check.
     fields:

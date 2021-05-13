@@ -16,10 +16,14 @@ files.
 
 """
 
-from sbpg.targets.templating import ACRONYMS, INCLUDE_MAP, JENV, is_list
+import copy
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import ACRONYMS, INCLUDE_MAP, JENV, indented_wordwrap, is_list
 from sbpg.utils import comment_links
 from sbpg import ReleaseVersion
-import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 VERSION_TEMPLATE_NAME = "sbp_python_relver_template.j2"
@@ -83,6 +87,15 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'%s' / %s._parser" % (f.identifier, f.type_id)
 
 
+@pass_environment
+def commentify(environment: Environment,
+               value: str, width=76, indent=2):
+  """
+  Builds a comment.
+  """
+  return indented_wordwrap(environment, value, width=width, indent=" " * indent, first=False, blank=True)
+
+
 def pydoc_format(type_id, pydoc=PYDOC_CODE):
   """
   Formats type for pydoc.
@@ -107,6 +120,7 @@ def has_real_message(l):
 JENV.filters['has_real_message'] = has_real_message
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
+JENV.filters['commentify'] = commentify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
 

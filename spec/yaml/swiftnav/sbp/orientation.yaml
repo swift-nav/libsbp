@@ -17,7 +17,7 @@ definitions:
  - MSG_BASELINE_HEADING:
     id: 0x020F
     short_desc: Heading relative to True North
-    desc: |
+    desc: >
       This message reports the baseline heading pointing from the base station
       to the rover relative to True North. The full GPS time is given by the
       preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
@@ -52,7 +52,7 @@ definitions:
  - MSG_ORIENT_QUAT:
     id: 0x0220
     short_desc: Quaternion 4 component vector
-    desc: |
+    desc: >
       This message reports the quaternion vector describing the vehicle body frame's orientation
       with respect to a local-level NED frame. The components of the vector should sum to a unit
       vector assuming that the LSB of each component as a value of 2^-31. This message will only
@@ -110,7 +110,7 @@ definitions:
  - MSG_ORIENT_EULER:
     id: 0x0221
     short_desc: Euler angles
-    desc: |
+    desc: >
       This message reports the yaw, pitch, and roll angles of the vehicle body frame.
       The rotations should applied intrinsically in the order yaw, pitch, and roll
       in order to rotate the from a frame aligned with the local-level NED frame
@@ -159,7 +159,7 @@ definitions:
  - MSG_ANGULAR_RATE:
     id: 0x0222
     short_desc: Vehicle Body Frame instantaneous angular rates
-    desc: |
+    desc: >
       This message reports the orientation rates in the vehicle body frame.
       The values represent the measurements a strapped down gyroscope would
       make and are not equivalent to the time derivative of the Euler angles.

@@ -13,10 +13,12 @@
 Generator for Haskell target.
 """
 
-import string
 import copy
-from sbpg.targets.templating import *
-from sbpg.utils import comment_links
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, ACRONYMS, indented_wordwrap
 from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
@@ -145,8 +147,18 @@ def to_put(f, type_map=PUT_CONSTRUCT_CODE):
     return "mapM_ %s" % to_put(f_, type_map)
   return type_map.get(name, "put")
 
-def comment_links_hsk(s):
-  return '\<' + comment_links(s) + '\>'
+@pass_environment
+def commentify(environment: Environment, value: str, indent=0, wrap_in_brackets=False):
+  """
+  Builds a comment.
+  """
+  if not value:
+    return
+  value = indented_wordwrap(environment, value, indent=(" " * indent) + "-- ", first=False, blank=True)
+  if wrap_in_brackets:
+    return "\< " + value + " \>"
+  else:
+    return value
 
 def max_fid_len(m):
   """
@@ -160,7 +172,7 @@ JENV.filters['hs_to_type'] = to_type
 JENV.filters['hs_to_get'] = to_get
 JENV.filters['hs_to_put'] = to_put
 JENV.filters['hs_max_fid_len'] = max_fid_len
-JENV.filters['comment_links'] = comment_links_hsk
+JENV.filters['commentify'] = commentify
 
 def render_source(output_dir, package_spec):
   """

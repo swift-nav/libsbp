@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.types
-description: |
+description: >
   Documents a variety of common types referenced by the SBP
   specification. Sizes are in bytes.
 render_source: false
@@ -58,14 +58,14 @@ definitions:
     size: 8
  - array:
     type: collection
-    desc: |
+    desc: >
       Fixed or variable length array of any fill type
  - string:
     type: collection
-    desc: |
+    desc: >
       Fixed or variable length string (NULL padded/terminated)
  - bitfield:
     type: collection
-    desc: |
+    desc: >
       A primitive type, typically a u8, can encode boolean and
       enumerated status flags.

@@ -13,8 +13,10 @@
 Generator for rust target.
 """
 
-from sbpg.targets.templating import JENV, ACRONYMS
-from sbpg.utils import markdown_links
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, ACRONYMS, indented_wordwrap
 from sbpg import ReleaseVersion
 
 SBP_CARGO_TEMPLATE = "sbp-cargo.toml"
@@ -90,17 +92,15 @@ def camel_case(s):
   s = re.sub('([a-z])([A-Z])', r'\1_\2', s)
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
-def commentify(value):
+@pass_environment
+def commentify(environment: Environment,
+               value: str,
+               indent: int=0,
+               prefix: str="/// "):
   """
   Builds a comment.
   """
-  value = markdown_links(value)
-  if value is None:
-    return
-  if len(value.split('\n')) == 1:
-    return "/// " + value
-  else:
-    return '\n'.join(['/// ' + l for l in value.split('\n')[:-1]])
+  return indented_wordwrap(environment, value, indent=(" " * indent) + prefix, first=False, markdown=True)
 
 TYPE_MAP = {'u8': 'u8',
             'u16': 'u16',

@@ -14,7 +14,7 @@ syntax = "proto3";
 
 /** (((name|pb_to_title)))
  *
- (((description|pb_to_comment)))
+(((description|commentify)))
  */
 
 package (((package)));
@@ -27,7 +27,7 @@ import "(((include))).proto";
 
 /** (((message.short_desc)))
  *
-(((message.desc|pb_to_comment)))
+(((message.desc|commentify)))
  */
 message (((message.identifier|pb_to_identifier))) {
 ((*- for field in message.fields *))

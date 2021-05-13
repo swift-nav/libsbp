@@ -17,7 +17,7 @@ definitions:
  - MSG_ODOMETRY:
     id: 0x0903
     short_desc: Vehicle forward (x-axis) velocity
-    desc: |
+    desc: >
       Message representing the x component of vehicle velocity in the user frame at the odometry
       reference point(s) specified by the user. The offset for the odometry reference point and
       the definition and origin of the user frame are defined through the device settings interface.
@@ -30,7 +30,7 @@ definitions:
         - tow:
             type: u32
             units: ms
-            desc: |
+            desc: >
              Time field representing either milliseconds in the GPS Week or local CPU
              time from the producing system in milliseconds.  See the tow_source flag
              for the exact source of this timestamp.
@@ -69,7 +69,7 @@ definitions:
  - MSG_WHEELTICK:
     id: 0x0904
     short_desc: Accumulated wheeltick count message
-    desc: |
+    desc: >
       Message containing the accumulated distance travelled by a wheel located at an odometry
       reference point defined by the user. The offset for the odometry reference point and the
       definition and origin of the user frame are defined through the device settings interface.
@@ -84,13 +84,13 @@ definitions:
         - time:
             type: u64
             units: us
-            desc: |
+            desc: >
              Time field representing either microseconds since the last PPS, microseconds in the GPS
              Week or local CPU time from the producing system in microseconds. See the synch_type
              field for the exact meaning of this timestamp.
         - flags:
             type: u8
-            desc: |
+            desc: >
               Field indicating the type of timestamp contained in the time field.
             fields:
                   - 4-7:
@@ -110,12 +110,12 @@ definitions:
                           - 2: local CPU time in nominal microseconds
         - source:
             type: u8
-            desc: |
+            desc: >
               ID of the sensor producing this message
         - ticks:
             type: s32
             units: arbitrary distance units
-            desc: |
+            desc: >
               Free-running counter of the accumulated distance for this sensor. The counter should be
               incrementing if travelling into one direction and decrementing when travelling in the
               opposite direction.

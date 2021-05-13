@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.tracking
-description: |
+description: >
   Satellite code and carrier-phase tracking messages from the device.
 stable: False
 public: True
@@ -22,7 +22,7 @@ definitions:
     id: 0x0021
     short_desc: Detailed signal tracking channel states. DEPRECATED
     public: False
-    desc: |
+    desc: >
       The tracking message returns a set tracking channel parameters for a
       single tracking channel useful for debugging issues.
     fields:
@@ -32,26 +32,26 @@ definitions:
             desc: Receiver clock time.
         - tot:
             type: GPSTime
-            desc: |
+            desc: >
               Time of transmission of signal from satellite. TOW only valid when
               TOW status is decoded or propagated. WN only valid when week
               number valid flag is set.
         - P:
             type: u32
             units: 2 cm
-            desc: |
+            desc: >
               Pseudorange observation. Valid only when pseudorange valid flag is
               set.
         - P_std:
             type: u16
             units: 2 cm
-            desc: |
+            desc: >
               Pseudorange observation standard deviation. Valid only when
               pseudorange valid flag is set.
         - L:
             type: CarrierPhase
             units: cycles
-            desc: |
+            desc: >
               Carrier phase observation with typical sign convention. Valid only
               when PLL pessimistic lock is achieved.
         - cn0:
@@ -60,7 +60,7 @@ definitions:
             desc: Carrier-to-Noise density
         - lock:
             type: u16
-            desc: |
+            desc: >
               Lock time. It is encoded according to DF402 from the RTCM 10403.2
               Amendment 2 specification. Valid values range from 0 to 15.
         - sid:
@@ -77,18 +77,18 @@ definitions:
         - uptime:
             type: u32
             units: s
-            desc: |
+            desc: >
               Number of seconds of continuous tracking. Specifies how much time
               signal is in continuous track.
         - clock_offset:
             type: s16
             units: s / (2 ^ 20)
-            desc: |
+            desc: >
               TCXO clock offset. Valid only when valid clock valid flag is set.
         - clock_drift:
             type: s16
             units: (s / s) / (2 ^ 31)
-            desc: |
+            desc: >
               TCXO clock drift. Valid only when valid clock valid flag is set.
         - corr_spacing:
             type: u16
@@ -110,7 +110,7 @@ definitions:
                         - 0: No synchronization
                         - 1: Bit synchronization
                         - 2: Word synchronization (L1 C/A only)
-                        - 3: |
+                        - 3: >
                             Sub-frame synchronization (L1 C/A) /
                             message synchronization (L2C)
                         - 4: Reserved
@@ -258,26 +258,26 @@ definitions:
             desc: Receiver clock time.
         - tot:
             type: GPSTimeDep
-            desc: |
+            desc: >
               Time of transmission of signal from satellite. TOW only valid when
               TOW status is decoded or propagated. WN only valid when week
               number valid flag is set.
         - P:
             type: u32
             units: 2 cm
-            desc: |
+            desc: >
               Pseudorange observation. Valid only when pseudorange valid flag is
               set.
         - P_std:
             type: u16
             units: 2 cm
-            desc: |
+            desc: >
               Pseudorange observation standard deviation. Valid only when
               pseudorange valid flag is set.
         - L:
             type: CarrierPhase
             units: cycles
-            desc: |
+            desc: >
               Carrier phase observation with typical sign convention. Valid only
               when PLL pessimistic lock is achieved.
         - cn0:
@@ -286,7 +286,7 @@ definitions:
             desc: Carrier-to-Noise density
         - lock:
             type: u16
-            desc: |
+            desc: >
               Lock time. It is encoded according to DF402 from the RTCM 10403.2
               Amendment 2 specification. Valid values range from 0 to 15.
         - sid:
@@ -303,18 +303,18 @@ definitions:
         - uptime:
             type: u32
             units: s
-            desc: |
+            desc: >
               Number of seconds of continuous tracking. Specifies how much time
               signal is in continuous track.
         - clock_offset:
             type: s16
             units: s / (2 ^ 20)
-            desc: |
+            desc: >
               TCXO clock offset. Valid only when valid clock valid flag is set.
         - clock_drift:
             type: s16
             units: (s / s) / (2 ^ 31)
-            desc: |
+            desc: >
               TCXO clock drift. Valid only when valid clock valid flag is set.
         - corr_spacing:
             type: u16
@@ -336,7 +336,7 @@ definitions:
                         - 0: No synchronization
                         - 1: Bit synchronization
                         - 2: Word synchronization (L1 C/A only)
-                        - 3: |
+                        - 3: >
                             Sub-frame synchronization (L1 C/A) /
                             message synchronization (L2C)
                         - 4: Reserved
@@ -472,7 +472,7 @@ definitions:
 
  - TrackingChannelState:
     short_desc: Signal tracking channel state
-    desc: |
+    desc: >
       Tracking channel state for a specific satellite signal and
       measured signal power.
     fields:
@@ -490,7 +490,7 @@ definitions:
  - MSG_TRACKING_STATE:
     id: 0x0041
     short_desc: Signal tracking channel states
-    desc: |
+    desc: >
       The tracking message returns a variable-length array of tracking
       channel states. It reports status and carrier-to-noise density
       measurements for all tracked satellites.
@@ -502,7 +502,7 @@ definitions:
 
  - MeasurementState:
     short_desc: Measurement Engine signal tracking channel state
-    desc: |
+    desc: >
       Measurement Engine tracking channel state for a specific satellite signal
       and measured signal power.
       The mesid field for Glonass can either
@@ -520,7 +520,7 @@ definitions:
  - MSG_MEASUREMENT_STATE:
     id: 0x0061
     short_desc: Measurement Engine signal tracking channel states
-    desc: |
+    desc: >
       The tracking message returns a variable-length array of tracking
       channel states. It reports status and carrier-to-noise density
       measurements for all tracked satellites.
@@ -532,7 +532,7 @@ definitions:
 
  - TrackingChannelCorrelation:
     short_desc: Complex correlation structure
-    desc: |
+    desc: >
       Structure containing in-phase and quadrature correlation components.
     fields:
         - I:
@@ -545,7 +545,7 @@ definitions:
  - MSG_TRACKING_IQ:
     id: 0x002D
     short_desc: Tracking channel correlations
-    desc: |
+    desc: >
       When enabled, a tracking channel can output the correlations at each
       update interval.
     fields:
@@ -563,7 +563,7 @@ definitions:
 
  - TrackingChannelCorrelationDep:
     short_desc: Complex correlation structure
-    desc: |
+    desc: >
       Structure containing in-phase and quadrature correlation components.
     fields:
         - I:
@@ -576,7 +576,7 @@ definitions:
  - MSG_TRACKING_IQ_DEP_B:
     id: 0x002C
     short_desc: Tracking channel correlations
-    desc: |
+    desc: >
       When enabled, a tracking channel can output the correlations at each
       update interval.
     fields:

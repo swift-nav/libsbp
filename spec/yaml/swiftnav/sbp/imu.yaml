@@ -19,7 +19,7 @@ definitions:
  - MSG_IMU_RAW:
     id: 0x0900
     short_desc: Raw IMU data
-    desc: |
+    desc: >
       Raw data from the Inertial Measurement Unit, containing accelerometer and
       gyroscope readings. The sense of the measurements are to be aligned with
       the indications on the device itself. Measurement units, which are specific to the
@@ -27,6 +27,7 @@ definitions:
       If using "time since startup" time tags, the receiving end will expect a
       `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
       with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
+
 
       The time-tagging mode should not change throughout a run.
     fields:
@@ -42,12 +43,12 @@ definitions:
                       - 3: Reference epoch is last PPS
               - 0-29:
                   desc: Time since reference epoch in milliseconds
-            desc: |
+            desc: >
               Milliseconds since reference epoch and time status.
         - tow_f:
             type: u8
             units: ms / 256
-            desc: |
+            desc: >
               Milliseconds since reference epoch, fractional part
         - acc_x:
             type: s16
@@ -71,7 +72,7 @@ definitions:
  - MSG_IMU_AUX:
     id: 0x0901
     short_desc: Auxiliary IMU data
-    desc: |
+    desc: >
       Auxiliary data specific to a particular IMU. The `imu_type` field will
       always be consistent but the rest of the payload is device specific and
       depends on the value of `imu_type`.
