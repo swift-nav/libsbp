@@ -46,6 +46,28 @@ CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
 
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
+def get_expected_offset(field,m):
+    offset_str = "0"
+    for f in m.fields:
+        if f == field:
+            break
+        if (f.type_id == "string" or f.type_id == "array") and 'size' not in f.options:
+            continue
+        if f.type_id == "string":
+            offset_str = offset_str + " + (sizeof(char) * " + str(f.options['size'].value) + ")"
+        elif f.type_id == "array":
+            offset_str = offset_str + " + (sizeof(" 
+            if f.options['fill'].value in CONSTRUCT_CODE:
+                offset_str = offset_str + f.options['fill'].value
+            else:
+                offset_str = offset_str + convert(f.options['fill'].value)
+            offset_str = offset_str + ") * " + str(f.options['size'].value) + ")"
+        elif f.type_id in CONSTRUCT_CODE:
+            offset_str = offset_str + " + sizeof(" + f.type_id + ")"
+        else:
+            offset_str = offset_str + " + sizeof(" + convert(f.type_id) + ")"
+    return offset_str
+
 def field_is_variable_sized(field):
   """Tests a field for variable sizing if array or string
   """
@@ -149,6 +171,7 @@ def create_bitfield_macros(field, msg):
                                                       value_numerical))
   return "\n".join(ret_list)
 
+JENV.filters['get_expected_offset'] = get_expected_offset
 JENV.filters['field_is_variable_sized'] = field_is_variable_sized
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id

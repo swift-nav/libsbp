@@ -169,6 +169,45 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_BASELINE_HEADING(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_t, tow ) == 0, offset_of_tow_in_msg_baseline_heading_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_t, heading ) == 0 + sizeof(u32), offset_of_heading_in_msg_baseline_heading_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_t, n_sats ) == 0 + sizeof(u32) + sizeof(u32), offset_of_n_sats_in_msg_baseline_heading_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_t, flags ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), offset_of_flags_in_msg_baseline_heading_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_ORIENT_QUAT(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, tow ) == 0, offset_of_tow_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, w ) == 0 + sizeof(u32), offset_of_w_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, x ) == 0 + sizeof(u32) + sizeof(s32), offset_of_x_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_y_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, w_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_w_accuracy_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, x_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_x_accuracy_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, y_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_y_accuracy_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, z_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_z_accuracy_in_msg_orient_quat_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_quat_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_flags_in_msg_orient_quat_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_ORIENT_EULER(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, tow ) == 0, offset_of_tow_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, roll ) == 0 + sizeof(u32), offset_of_roll_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, pitch ) == 0 + sizeof(u32) + sizeof(s32), offset_of_pitch_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, yaw ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_yaw_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, roll_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_roll_accuracy_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, pitch_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_pitch_accuracy_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, yaw_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_yaw_accuracy_in_msg_orient_euler_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_orient_euler_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_flags_in_msg_orient_euler_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_ANGULAR_RATE(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, tow ) == 0, offset_of_tow_in_msg_angular_rate_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_angular_rate_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_angular_rate_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_angular_rate_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_flags_in_msg_angular_rate_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

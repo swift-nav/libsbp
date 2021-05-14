@@ -142,6 +142,23 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_IMU_RAW(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, tow ) == 0, offset_of_tow_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, tow_f ) == 0 + sizeof(u32), offset_of_tow_f_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, acc_x ) == 0 + sizeof(u32) + sizeof(u8), offset_of_acc_x_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, acc_y ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16), offset_of_acc_y_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, acc_z ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_acc_z_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, gyr_x ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_gyr_x_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, gyr_y ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_gyr_y_in_msg_imu_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_raw_t, gyr_z ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16) + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_gyr_z_in_msg_imu_raw_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_IMU_AUX(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_aux_t, imu_type ) == 0, offset_of_imu_type_in_msg_imu_aux_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_aux_t, temp ) == 0 + sizeof(u8), offset_of_temp_in_msg_imu_aux_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_aux_t, imu_conf ) == 0 + sizeof(u8) + sizeof(s16), offset_of_imu_conf_in_msg_imu_aux_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

@@ -672,6 +672,85 @@ including GROUP_META itself
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_STARTUP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, cause ) == 0, offset_of_cause_in_msg_startup_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, startup_type ) == 0 + sizeof(u8), offset_of_startup_type_in_msg_startup_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, reserved ) == 0 + sizeof(u8) + sizeof(u8), offset_of_reserved_in_msg_startup_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_DGNSS_STATUS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, flags ) == 0, offset_of_flags_in_msg_dgnss_status_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, latency ) == 0 + sizeof(u8), offset_of_latency_in_msg_dgnss_status_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, num_signals ) == 0 + sizeof(u8) + sizeof(u16), offset_of_num_signals_in_msg_dgnss_status_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, source ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_source_in_msg_dgnss_status_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_HEARTBEAT(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_heartbeat_t, flags ) == 0, offset_of_flags_in_msg_heartbeat_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_SubSystemReport(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, component ) == 0, offset_of_component_in_sub_system_report_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, generic ) == 0 + sizeof(u16), offset_of_generic_in_sub_system_report_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, specific ) == 0 + sizeof(u16) + sizeof(u8), offset_of_specific_in_sub_system_report_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_STATUS_REPORT(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, reporting_system ) == 0, offset_of_reporting_system_in_msg_status_report_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, sbp_version ) == 0 + sizeof(u16), offset_of_sbp_version_in_msg_status_report_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, sequence ) == 0 + sizeof(u16) + sizeof(u16), offset_of_sequence_in_msg_status_report_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, uptime ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32), offset_of_uptime_in_msg_status_report_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, status ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32), offset_of_status_in_msg_status_report_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_INS_STATUS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_status_t, flags ) == 0, offset_of_flags_in_msg_ins_status_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_CSAC_TELEMETRY(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_t, id ) == 0, offset_of_id_in_msg_csac_telemetry_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_t, telemetry ) == 0 + sizeof(u8), offset_of_telemetry_in_msg_csac_telemetry_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_CSAC_TELEMETRY_LABELS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_labels_t, id ) == 0, offset_of_id_in_msg_csac_telemetry_labels_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_labels_t, telemetry_labels ) == 0 + sizeof(u8), offset_of_telemetry_labels_in_msg_csac_telemetry_labels_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_INS_UPDATES(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, tow ) == 0, offset_of_tow_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, gnsspos ) == 0 + sizeof(u32), offset_of_gnsspos_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, gnssvel ) == 0 + sizeof(u32) + sizeof(u8), offset_of_gnssvel_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, wheelticks ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8), offset_of_wheelticks_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, speed ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_speed_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, nhc ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_nhc_in_msg_ins_updates_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, zerovel ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_zerovel_in_msg_ins_updates_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_GNSS_TIME_OFFSET(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, weeks ) == 0, offset_of_weeks_in_msg_gnss_time_offset_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, milliseconds ) == 0 + sizeof(s16), offset_of_milliseconds_in_msg_gnss_time_offset_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, microseconds ) == 0 + sizeof(s16) + sizeof(s32), offset_of_microseconds_in_msg_gnss_time_offset_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, flags ) == 0 + sizeof(s16) + sizeof(s32) + sizeof(s16), offset_of_flags_in_msg_gnss_time_offset_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_GROUP_META(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, group_id ) == 0, offset_of_group_id_in_msg_group_meta_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, flags ) == 0 + sizeof(u8), offset_of_flags_in_msg_group_meta_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, n_group_msgs ) == 0 + sizeof(u8) + sizeof(u8), offset_of_n_group_msgs_in_msg_group_meta_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, group_msgs ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_group_msgs_in_msg_group_meta_t_is_incorrect)
+#endif
+}
+
 
 SBP_PACK_END
 

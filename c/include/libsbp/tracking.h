@@ -700,6 +700,129 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_TRACKING_STATE_DETAILED_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, recv_time ) == 0, offset_of_recv_time_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, tot ) == 0 + sizeof(u64), offset_of_tot_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, P ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t), offset_of_P_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, P_std ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32), offset_of_P_std_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, L ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16), offset_of_L_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, cn0 ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t), offset_of_cn0_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, lock ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8), offset_of_lock_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, sid ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16), offset_of_sid_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, doppler ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t), offset_of_doppler_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, doppler_std ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32), offset_of_doppler_std_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, uptime ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16), offset_of_uptime_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, clock_offset ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32), offset_of_clock_offset_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, clock_drift ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16), offset_of_clock_drift_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, corr_spacing ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16), offset_of_corr_spacing_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, acceleration ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16), offset_of_acceleration_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, sync_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8), offset_of_sync_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, tow_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8), offset_of_tow_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, track_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8), offset_of_track_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, nav_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_nav_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, pset_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_pset_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_a_t, misc_flags ) == 0 + sizeof(u64) + sizeof(sbp_gps_time_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(sbp_gnss_signal_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_misc_flags_in_msg_tracking_state_detailed_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_STATE_DETAILED_DEP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, recv_time ) == 0, offset_of_recv_time_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, tot ) == 0 + sizeof(u64), offset_of_tot_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, P ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t), offset_of_P_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, P_std ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32), offset_of_P_std_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, L ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16), offset_of_L_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, cn0 ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t), offset_of_cn0_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, lock ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8), offset_of_lock_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, sid ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16), offset_of_sid_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, doppler ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t), offset_of_doppler_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, doppler_std ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32), offset_of_doppler_std_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, uptime ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16), offset_of_uptime_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, clock_offset ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32), offset_of_clock_offset_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, clock_drift ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16), offset_of_clock_drift_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, corr_spacing ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16), offset_of_corr_spacing_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, acceleration ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16), offset_of_acceleration_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, sync_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8), offset_of_sync_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, tow_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8), offset_of_tow_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, track_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8), offset_of_track_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, nav_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_nav_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, pset_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_pset_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_detailed_dep_t, misc_flags ) == 0 + sizeof(u64) + sizeof(gps_time_dep_t) + sizeof(u32) + sizeof(u16) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16) + sizeof(gnss_signal_dep_t) + sizeof(s32) + sizeof(u16) + sizeof(u32) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(s8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_misc_flags_in_msg_tracking_state_detailed_dep_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_TrackingChannelState(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_t, sid ) == 0, offset_of_sid_in_tracking_channel_state_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_t, fcn ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_fcn_in_tracking_channel_state_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_t, cn0 ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_cn0_in_tracking_channel_state_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_STATE(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_t, states ) == 0, offset_of_states_in_msg_tracking_state_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MeasurementState(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(measurement_state_t, mesid ) == 0, offset_of_mesid_in_measurement_state_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(measurement_state_t, cn0 ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_cn0_in_measurement_state_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_MEASUREMENT_STATE(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_measurement_state_t, states ) == 0, offset_of_states_in_msg_measurement_state_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_TrackingChannelCorrelation(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_correlation_t, I ) == 0, offset_of_I_in_tracking_channel_correlation_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_correlation_t, Q ) == 0 + sizeof(s16), offset_of_Q_in_tracking_channel_correlation_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_IQ(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_t, channel ) == 0, offset_of_channel_in_msg_tracking_iq_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_msg_tracking_iq_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_t, corrs ) == 0 + sizeof(u8) + sizeof(sbp_gnss_signal_t), offset_of_corrs_in_msg_tracking_iq_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_TrackingChannelCorrelationDep(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_correlation_dep_t, I ) == 0, offset_of_I_in_tracking_channel_correlation_dep_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_correlation_dep_t, Q ) == 0 + sizeof(s32), offset_of_Q_in_tracking_channel_correlation_dep_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_IQ_DEP_B(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_b_t, channel ) == 0, offset_of_channel_in_msg_tracking_iq_dep_b_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_b_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_msg_tracking_iq_dep_b_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_b_t, corrs ) == 0 + sizeof(u8) + sizeof(sbp_gnss_signal_t), offset_of_corrs_in_msg_tracking_iq_dep_b_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_IQ_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_a_t, channel ) == 0, offset_of_channel_in_msg_tracking_iq_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_a_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_msg_tracking_iq_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_iq_dep_a_t, corrs ) == 0 + sizeof(u8) + sizeof(gnss_signal_dep_t), offset_of_corrs_in_msg_tracking_iq_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_TrackingChannelStateDepA(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_a_t, state ) == 0, offset_of_state_in_tracking_channel_state_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_a_t, prn ) == 0 + sizeof(u8), offset_of_prn_in_tracking_channel_state_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_a_t, cn0 ) == 0 + sizeof(u8) + sizeof(u8), offset_of_cn0_in_tracking_channel_state_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_STATE_DEP_A(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_dep_a_t, states ) == 0, offset_of_states_in_msg_tracking_state_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_TrackingChannelStateDepB(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_b_t, state ) == 0, offset_of_state_in_tracking_channel_state_dep_b_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_b_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_tracking_channel_state_dep_b_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(tracking_channel_state_dep_b_t, cn0 ) == 0 + sizeof(u8) + sizeof(gnss_signal_dep_t), offset_of_cn0_in_tracking_channel_state_dep_b_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_TRACKING_STATE_DEP_B(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_tracking_state_dep_b_t, states ) == 0, offset_of_states_in_msg_tracking_state_dep_b_t_is_incorrect)
+#endif
+}
+
 
 SBP_PACK_END
 

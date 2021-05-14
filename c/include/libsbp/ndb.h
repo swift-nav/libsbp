@@ -130,6 +130,17 @@ of other data_source.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_NDB_EVENT(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, recv_time ) == 0, offset_of_recv_time_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, event ) == 0 + sizeof(u64), offset_of_event_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, object_type ) == 0 + sizeof(u64) + sizeof(u8), offset_of_object_type_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, result ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8), offset_of_result_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, data_source ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_data_source_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, object_sid ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_object_sid_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, src_sid ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t), offset_of_src_sid_in_msg_ndb_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, original_sender ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(sbp_gnss_signal_t), offset_of_original_sender_in_msg_ndb_event_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

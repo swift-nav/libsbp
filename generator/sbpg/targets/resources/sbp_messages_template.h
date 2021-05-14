@@ -94,6 +94,20 @@ typedef struct SBP_ATTR_PACKED {
 ((* endfor *))
 /** \} */
 
+((*- for m in msgs *))
+static inline void static_asserts_for_module_(((m.identifier)))(void) {
+((*- for f in m.fields *))
+((*- if f|field_is_variable_sized *))
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+((*- endif *))
+SBP_STATIC_ASSERT(SBP_OFFSET_OF( (((-m.identifier|convert))), (((f.identifier))) ) == (((f|get_expected_offset(m)))), offset_of_(((f.identifier)))_in_(((m.identifier|convert)))_is_incorrect)
+((*- if f|field_is_variable_sized *))
+#endif
+((*- endif *))
+((*- endfor *))
+}
+((* endfor *))
+
 SBP_PACK_END
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */

@@ -263,6 +263,55 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_FLASH_PROGRAM(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_program_t, target ) == 0, offset_of_target_in_msg_flash_program_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_program_t, addr_start ) == 0 + sizeof(u8), offset_of_addr_start_in_msg_flash_program_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_program_t, addr_len ) == 0 + sizeof(u8) + (sizeof(u8) * 3), offset_of_addr_len_in_msg_flash_program_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_program_t, data ) == 0 + sizeof(u8) + (sizeof(u8) * 3) + sizeof(u8), offset_of_data_in_msg_flash_program_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_FLASH_DONE(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_done_t, response ) == 0, offset_of_response_in_msg_flash_done_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_FLASH_READ_REQ(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_req_t, target ) == 0, offset_of_target_in_msg_flash_read_req_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_req_t, addr_start ) == 0 + sizeof(u8), offset_of_addr_start_in_msg_flash_read_req_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_req_t, addr_len ) == 0 + sizeof(u8) + (sizeof(u8) * 3), offset_of_addr_len_in_msg_flash_read_req_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_FLASH_READ_RESP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_resp_t, target ) == 0, offset_of_target_in_msg_flash_read_resp_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_resp_t, addr_start ) == 0 + sizeof(u8), offset_of_addr_start_in_msg_flash_read_resp_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_read_resp_t, addr_len ) == 0 + sizeof(u8) + (sizeof(u8) * 3), offset_of_addr_len_in_msg_flash_read_resp_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_FLASH_ERASE(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_erase_t, target ) == 0, offset_of_target_in_msg_flash_erase_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_flash_erase_t, sector_num ) == 0 + sizeof(u8), offset_of_sector_num_in_msg_flash_erase_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_STM_FLASH_LOCK_SECTOR(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_stm_flash_lock_sector_t, sector ) == 0, offset_of_sector_in_msg_stm_flash_lock_sector_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_STM_FLASH_UNLOCK_SECTOR(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_stm_flash_unlock_sector_t, sector ) == 0, offset_of_sector_in_msg_stm_flash_unlock_sector_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_STM_UNIQUE_ID_REQ(void) {
+}
+
+static inline void static_asserts_for_module_MSG_STM_UNIQUE_ID_RESP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_stm_unique_id_resp_t, stm_id ) == 0, offset_of_stm_id_in_msg_stm_unique_id_resp_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_M25_FLASH_WRITE_STATUS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_m25_flash_write_status_t, status ) == 0, offset_of_status_in_msg_m25_flash_write_status_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

@@ -74,6 +74,14 @@ from -500000 to 500000)
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_EXT_EVENT(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, wn ) == 0, offset_of_wn_in_msg_ext_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_ext_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_ext_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_ext_event_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, pin ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32) + sizeof(u8), offset_of_pin_in_msg_ext_event_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

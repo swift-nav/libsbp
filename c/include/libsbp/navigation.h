@@ -1750,6 +1750,395 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_GPS_TIME(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, wn ) == 0, offset_of_wn_in_msg_gps_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_GPS_TIME_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, wn ) == 0, offset_of_wn_in_msg_gps_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_UTC_TIME(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, flags ) == 0, offset_of_flags_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, tow ) == 0 + sizeof(u8), offset_of_tow_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, year ) == 0 + sizeof(u8) + sizeof(u32), offset_of_year_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), offset_of_month_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), offset_of_day_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_hours_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_minutes_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_seconds_in_msg_utc_time_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_ns_in_msg_utc_time_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_UTC_TIME_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, flags ) == 0, offset_of_flags_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, tow ) == 0 + sizeof(u8), offset_of_tow_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, year ) == 0 + sizeof(u8) + sizeof(u32), offset_of_year_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), offset_of_month_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), offset_of_day_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_hours_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_minutes_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_seconds_in_msg_utc_time_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_ns_in_msg_utc_time_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_DOPS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, tow ) == 0, offset_of_tow_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, gdop ) == 0 + sizeof(u32), offset_of_gdop_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), offset_of_pdop_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_tdop_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_hdop_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_dops_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_flags_in_msg_dops_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_COV(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_x_x_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_x_y_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_cov_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_COV(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_n_n_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_n_e_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_llh_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_llh_cov_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_ECEF(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, tow ) == 0, offset_of_tow_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ecef_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_NED(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, tow ) == 0, offset_of_tow_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ned_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_COV(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ecef_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_cov_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_COV(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_n_n_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_n_e_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ned_cov_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ned_cov_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_COV_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_x_x_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_x_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_COV_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_n_n_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_n_e_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_COV_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_COV_GNSS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_n_n_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_n_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_BODY(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, tow ) == 0, offset_of_tow_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_body_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_body_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_AGE_CORRECTIONS(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_age_corrections_t, tow ) == 0, offset_of_tow_in_msg_age_corrections_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_age_corrections_t, age ) == 0 + sizeof(u32), offset_of_age_in_msg_age_corrections_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_GPS_TIME_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, wn ) == 0, offset_of_wn_in_msg_gps_time_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_DOPS_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, tow ) == 0, offset_of_tow_in_msg_dops_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, gdop ) == 0 + sizeof(u32), offset_of_gdop_in_msg_dops_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), offset_of_pdop_in_msg_dops_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_tdop_in_msg_dops_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_hdop_in_msg_dops_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_dops_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_ECEF_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_NED_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ned_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_HEADING_DEP_A(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_heading_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, heading ) == 0 + sizeof(u32), offset_of_heading_in_msg_baseline_heading_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(u32), offset_of_n_sats_in_msg_baseline_heading_dep_a_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), offset_of_flags_in_msg_baseline_heading_dep_a_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_PROTECTION_LEVEL(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, tow ) == 0, offset_of_tow_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, vpl ) == 0 + sizeof(u32), offset_of_vpl_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, hpl ) == 0 + sizeof(u32) + sizeof(u16), offset_of_hpl_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, lat ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_lat_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, lon ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double), offset_of_lon_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, height ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double), offset_of_height_in_msg_protection_level_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_flags_in_msg_protection_level_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

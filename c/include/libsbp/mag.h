@@ -47,6 +47,14 @@ time is unknown or invalid.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_MAG_RAW(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, tow ) == 0, offset_of_tow_in_msg_mag_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, tow_f ) == 0 + sizeof(u32), offset_of_tow_f_in_msg_mag_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_x ) == 0 + sizeof(u32) + sizeof(u8), offset_of_mag_x_in_msg_mag_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_y ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16), offset_of_mag_y_in_msg_mag_raw_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_z ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_mag_z_in_msg_mag_raw_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

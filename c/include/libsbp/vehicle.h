@@ -157,6 +157,19 @@ opposite direction.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_ODOMETRY(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, tow ) == 0, offset_of_tow_in_msg_odometry_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, velocity ) == 0 + sizeof(u32), offset_of_velocity_in_msg_odometry_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, flags ) == 0 + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_odometry_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_WHEELTICK(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, time ) == 0, offset_of_time_in_msg_wheeltick_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, flags ) == 0 + sizeof(u64), offset_of_flags_in_msg_wheeltick_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, source ) == 0 + sizeof(u64) + sizeof(u8), offset_of_source_in_msg_wheeltick_t_is_incorrect)
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, ticks ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8), offset_of_ticks_in_msg_wheeltick_t_is_incorrect)
+}
+
 
 SBP_PACK_END
 

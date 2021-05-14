@@ -274,6 +274,61 @@ according to the status field.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_SETTINGS_SAVE(void) {
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_WRITE(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_t, setting ) == 0, offset_of_setting_in_msg_settings_write_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_WRITE_RESP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_resp_t, status ) == 0, offset_of_status_in_msg_settings_write_resp_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_resp_t, setting ) == 0 + sizeof(u8), offset_of_setting_in_msg_settings_write_resp_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_REQ(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_req_t, setting ) == 0, offset_of_setting_in_msg_settings_read_req_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_RESP(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_resp_t, setting ) == 0, offset_of_setting_in_msg_settings_read_resp_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_REQ(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_req_t, index ) == 0, offset_of_index_in_msg_settings_read_by_index_req_t_is_incorrect)
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_RESP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_resp_t, index ) == 0, offset_of_index_in_msg_settings_read_by_index_resp_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_resp_t, setting ) == 0 + sizeof(u16), offset_of_setting_in_msg_settings_read_by_index_resp_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_DONE(void) {
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_REGISTER(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_t, setting ) == 0, offset_of_setting_in_msg_settings_register_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_REGISTER_RESP(void) {
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_resp_t, status ) == 0, offset_of_status_in_msg_settings_register_resp_t_is_incorrect)
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_resp_t, setting ) == 0 + sizeof(u8), offset_of_setting_in_msg_settings_register_resp_t_is_incorrect)
+#endif
+}
+
 
 SBP_PACK_END
 

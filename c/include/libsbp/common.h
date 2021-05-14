@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <stddef.h>
 #endif
 
 /* Should match guard in libswiftnav/common.h */
@@ -70,6 +71,11 @@ typedef uint64_t u64;
 #endif 
 
 #endif /* toolchaing packing macros */
+
+#define SBP_OFFSET_OF(s,f) ((size_t)(&((s*)0)->f))
+#define STATIC_MSG(msg, l) STATIC_MSG2(msg, l)
+#define STATIC_MSG2(msg,l) on_line_##l##__##msg
+#define SBP_STATIC_ASSERT(x, msg) char STATIC_MSG(msg, __LINE__) [(x)?1:-1]; (void)STATIC_MSG(msg, __LINE__);
 
 /** \} */
 
