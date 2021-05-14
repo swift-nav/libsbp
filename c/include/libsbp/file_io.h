@@ -222,66 +222,154 @@ typedef struct SBP_ATTR_PACKED {
 
 /** \} */
 static inline void static_asserts_for_module_MSG_FILEIO_READ_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_req_t, sequence ) == 0, "Offset of sequence in msg_fileio_read_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_req_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_read_req_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_req_t, offset ) == 0 + sizeof(u32), "Offset of offset in msg_fileio_read_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_req_t, offset ) == 0 + sizeof(u32), offset_of_offset_in_msg_fileio_read_req_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_req_t, chunk_size ) == 0 + sizeof(u32) + sizeof(u32), "Offset of chunk_size in msg_fileio_read_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_req_t, chunk_size ) == 0 + sizeof(u32) + sizeof(u32), offset_of_chunk_size_in_msg_fileio_read_req_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_req_t, filename ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), "Offset of filename in msg_fileio_read_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_req_t, filename ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), offset_of_filename_in_msg_fileio_read_req_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_READ_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_resp_t, sequence ) == 0, "Offset of sequence in msg_fileio_read_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_resp_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_read_resp_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_resp_t, contents ) == 0 + sizeof(u32), "Offset of contents in msg_fileio_read_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_resp_t, contents ) == 0 + sizeof(u32), offset_of_contents_in_msg_fileio_read_resp_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_READ_DIR_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_dir_req_t, sequence ) == 0, "Offset of sequence in msg_fileio_read_dir_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_dir_req_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_read_dir_req_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_dir_req_t, offset ) == 0 + sizeof(u32), "Offset of offset in msg_fileio_read_dir_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_dir_req_t, offset ) == 0 + sizeof(u32), offset_of_offset_in_msg_fileio_read_dir_req_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_dir_req_t, dirname ) == 0 + sizeof(u32) + sizeof(u32), "Offset of dirname in msg_fileio_read_dir_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_dir_req_t, dirname ) == 0 + sizeof(u32) + sizeof(u32), offset_of_dirname_in_msg_fileio_read_dir_req_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_READ_DIR_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_dir_resp_t, sequence ) == 0, "Offset of sequence in msg_fileio_read_dir_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_dir_resp_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_read_dir_resp_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_read_dir_resp_t, contents ) == 0 + sizeof(u32), "Offset of contents in msg_fileio_read_dir_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_read_dir_resp_t, contents ) == 0 + sizeof(u32), offset_of_contents_in_msg_fileio_read_dir_resp_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_REMOVE(void) {
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_remove_t, filename ) == 0, "Offset of filename in msg_fileio_remove_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_remove_t, filename ) == 0, offset_of_filename_in_msg_fileio_remove_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_WRITE_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_write_req_t, sequence ) == 0, "Offset of sequence in msg_fileio_write_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_req_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_write_req_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_write_req_t, offset ) == 0 + sizeof(u32), "Offset of offset in msg_fileio_write_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_req_t, offset ) == 0 + sizeof(u32), offset_of_offset_in_msg_fileio_write_req_t_is_incorrect)
-#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
-SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_req_t, filename ) == 0 + sizeof(u32) + sizeof(u32), offset_of_filename_in_msg_fileio_write_req_t_is_incorrect)
 #endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_write_req_t, filename ) == 0 + sizeof(u32) + sizeof(u32), "Offset of filename in msg_fileio_write_req_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_req_t, filename ) == 0 + sizeof(u32) + sizeof(u32), offset_of_filename_in_msg_fileio_write_req_t_is_incorrect)
+#endif
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_write_req_t, data ) == 0 + sizeof(u32) + sizeof(u32), "Offset of data in msg_fileio_write_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_req_t, data ) == 0 + sizeof(u32) + sizeof(u32), offset_of_data_in_msg_fileio_write_req_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_WRITE_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_write_resp_t, sequence ) == 0, "Offset of sequence in msg_fileio_write_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_write_resp_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_write_resp_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_CONFIG_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_config_req_t, sequence ) == 0, "Offset of sequence in msg_fileio_config_req_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_req_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_config_req_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_FILEIO_CONFIG_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_config_resp_t, sequence ) == 0, "Offset of sequence in msg_fileio_config_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_resp_t, sequence ) == 0, offset_of_sequence_in_msg_fileio_config_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_config_resp_t, window_size ) == 0 + sizeof(u32), "Offset of window_size in msg_fileio_config_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_resp_t, window_size ) == 0 + sizeof(u32), offset_of_window_size_in_msg_fileio_config_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_config_resp_t, batch_size ) == 0 + sizeof(u32) + sizeof(u32), "Offset of batch_size in msg_fileio_config_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_resp_t, batch_size ) == 0 + sizeof(u32) + sizeof(u32), offset_of_batch_size_in_msg_fileio_config_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fileio_config_resp_t, fileio_version ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u32), "Offset of fileio_version in msg_fileio_config_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_resp_t, fileio_version ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u32), offset_of_fileio_version_in_msg_fileio_config_resp_t_is_incorrect)
+#endif
 }
 
 

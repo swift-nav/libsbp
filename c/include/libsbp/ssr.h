@@ -543,212 +543,696 @@ valid and invalid (and vice versa) are encoded as u8 integers.
 
 /** \} */
 static inline void static_asserts_for_module_CodeBiasesContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(code_biases_content_t, code ) == 0, "Offset of code in code_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(code_biases_content_t, code ) == 0, offset_of_code_in_code_biases_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(code_biases_content_t, value ) == 0 + sizeof(u8), "Offset of value in code_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(code_biases_content_t, value ) == 0 + sizeof(u8), offset_of_value_in_code_biases_content_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_PhaseBiasesContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(phase_biases_content_t, code ) == 0, "Offset of code in phase_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(phase_biases_content_t, code ) == 0, offset_of_code_in_phase_biases_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(phase_biases_content_t, integer_indicator ) == 0 + sizeof(u8), "Offset of integer_indicator in phase_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(phase_biases_content_t, integer_indicator ) == 0 + sizeof(u8), offset_of_integer_indicator_in_phase_biases_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(phase_biases_content_t, widelane_integer_indicator ) == 0 + sizeof(u8) + sizeof(u8), "Offset of widelane_integer_indicator in phase_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(phase_biases_content_t, widelane_integer_indicator ) == 0 + sizeof(u8) + sizeof(u8), offset_of_widelane_integer_indicator_in_phase_biases_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(phase_biases_content_t, discontinuity_counter ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of discontinuity_counter in phase_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(phase_biases_content_t, discontinuity_counter ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_discontinuity_counter_in_phase_biases_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(phase_biases_content_t, bias ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of bias in phase_biases_content_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(phase_biases_content_t, bias ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_bias_in_phase_biases_content_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_STECHeader(void) {
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, tile_set_id ) == 0, "Offset of tile_set_id in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, tile_set_id ) == 0, offset_of_tile_set_id_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, tile_id ) == 0 + sizeof(u16), "Offset of tile_id in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, tile_id ) == 0 + sizeof(u16), offset_of_tile_id_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, time ) == 0 + sizeof(u16) + sizeof(u16), "Offset of time in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, time ) == 0 + sizeof(u16) + sizeof(u16), offset_of_time_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, num_msgs ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t), "Offset of num_msgs in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, num_msgs ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t), offset_of_num_msgs_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, seq_num ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of seq_num in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, seq_num ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_seq_num_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, update_interval ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8), "Offset of update_interval in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, update_interval ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8), offset_of_update_interval_in_stec_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_t, iod_atmo ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of iod_atmo in stec_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_t, iod_atmo ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_iod_atmo_in_stec_header_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_GriddedCorrectionHeader(void) {
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, tile_set_id ) == 0, "Offset of tile_set_id in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, tile_set_id ) == 0, offset_of_tile_set_id_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, tile_id ) == 0 + sizeof(u16), "Offset of tile_id in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, tile_id ) == 0 + sizeof(u16), offset_of_tile_id_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, time ) == 0 + sizeof(u16) + sizeof(u16), "Offset of time in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, time ) == 0 + sizeof(u16) + sizeof(u16), offset_of_time_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, num_msgs ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t), "Offset of num_msgs in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, num_msgs ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t), offset_of_num_msgs_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, seq_num ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16), "Offset of seq_num in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, seq_num ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16), offset_of_seq_num_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, update_interval ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), "Offset of update_interval in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, update_interval ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), offset_of_update_interval_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, iod_atmo ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of iod_atmo in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, iod_atmo ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_iod_atmo_in_gridded_correction_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_t, tropo_quality_indicator ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of tropo_quality_indicator in gridded_correction_header_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_t, tropo_quality_indicator ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_tropo_quality_indicator_in_gridded_correction_header_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_STECSatElement(void) {
+#ifdef __cplusplus
+static_assert(offsetof(stec_sat_element_t, sv_id ) == 0, "Offset of sv_id in stec_sat_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_sat_element_t, sv_id ) == 0, offset_of_sv_id_in_stec_sat_element_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_sat_element_t, stec_quality_indicator ) == 0 + sizeof(sv_id_t), "Offset of stec_quality_indicator in stec_sat_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_sat_element_t, stec_quality_indicator ) == 0 + sizeof(sv_id_t), offset_of_stec_quality_indicator_in_stec_sat_element_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_sat_element_t, stec_coeff ) == 0 + sizeof(sv_id_t) + sizeof(u8), "Offset of stec_coeff in stec_sat_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_sat_element_t, stec_coeff ) == 0 + sizeof(sv_id_t) + sizeof(u8), offset_of_stec_coeff_in_stec_sat_element_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_TroposphericDelayCorrectionNoStd(void) {
+#ifdef __cplusplus
+static_assert(offsetof(tropospheric_delay_correction_no_std_t, hydro ) == 0, "Offset of hydro in tropospheric_delay_correction_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(tropospheric_delay_correction_no_std_t, hydro ) == 0, offset_of_hydro_in_tropospheric_delay_correction_no_std_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(tropospheric_delay_correction_no_std_t, wet ) == 0 + sizeof(s16), "Offset of wet in tropospheric_delay_correction_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(tropospheric_delay_correction_no_std_t, wet ) == 0 + sizeof(s16), offset_of_wet_in_tropospheric_delay_correction_no_std_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_TroposphericDelayCorrection(void) {
+#ifdef __cplusplus
+static_assert(offsetof(tropospheric_delay_correction_t, hydro ) == 0, "Offset of hydro in tropospheric_delay_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(tropospheric_delay_correction_t, hydro ) == 0, offset_of_hydro_in_tropospheric_delay_correction_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(tropospheric_delay_correction_t, wet ) == 0 + sizeof(s16), "Offset of wet in tropospheric_delay_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(tropospheric_delay_correction_t, wet ) == 0 + sizeof(s16), offset_of_wet_in_tropospheric_delay_correction_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(tropospheric_delay_correction_t, stddev ) == 0 + sizeof(s16) + sizeof(s8), "Offset of stddev in tropospheric_delay_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(tropospheric_delay_correction_t, stddev ) == 0 + sizeof(s16) + sizeof(s8), offset_of_stddev_in_tropospheric_delay_correction_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_STECResidualNoStd(void) {
+#ifdef __cplusplus
+static_assert(offsetof(stec_residual_no_std_t, sv_id ) == 0, "Offset of sv_id in stec_residual_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_residual_no_std_t, sv_id ) == 0, offset_of_sv_id_in_stec_residual_no_std_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_residual_no_std_t, residual ) == 0 + sizeof(sv_id_t), "Offset of residual in stec_residual_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_residual_no_std_t, residual ) == 0 + sizeof(sv_id_t), offset_of_residual_in_stec_residual_no_std_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_STECResidual(void) {
+#ifdef __cplusplus
+static_assert(offsetof(stec_residual_t, sv_id ) == 0, "Offset of sv_id in stec_residual_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_residual_t, sv_id ) == 0, offset_of_sv_id_in_stec_residual_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_residual_t, residual ) == 0 + sizeof(sv_id_t), "Offset of residual in stec_residual_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_residual_t, residual ) == 0 + sizeof(sv_id_t), offset_of_residual_in_stec_residual_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_residual_t, stddev ) == 0 + sizeof(sv_id_t) + sizeof(s16), "Offset of stddev in stec_residual_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_residual_t, stddev ) == 0 + sizeof(sv_id_t) + sizeof(s16), offset_of_stddev_in_stec_residual_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_GridElementNoStd(void) {
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_no_std_t, index ) == 0, "Offset of index in grid_element_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_no_std_t, index ) == 0, offset_of_index_in_grid_element_no_std_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_no_std_t, tropo_delay_correction ) == 0 + sizeof(u16), "Offset of tropo_delay_correction in grid_element_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_no_std_t, tropo_delay_correction ) == 0 + sizeof(u16), offset_of_tropo_delay_correction_in_grid_element_no_std_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_no_std_t, stec_residuals ) == 0 + sizeof(u16) + sizeof(tropospheric_delay_correction_no_std_t), "Offset of stec_residuals in grid_element_no_std_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_no_std_t, stec_residuals ) == 0 + sizeof(u16) + sizeof(tropospheric_delay_correction_no_std_t), offset_of_stec_residuals_in_grid_element_no_std_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_GridElement(void) {
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_t, index ) == 0, "Offset of index in grid_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_t, index ) == 0, offset_of_index_in_grid_element_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_t, tropo_delay_correction ) == 0 + sizeof(u16), "Offset of tropo_delay_correction in grid_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_t, tropo_delay_correction ) == 0 + sizeof(u16), offset_of_tropo_delay_correction_in_grid_element_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(grid_element_t, stec_residuals ) == 0 + sizeof(u16) + sizeof(tropospheric_delay_correction_t), "Offset of stec_residuals in grid_element_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_element_t, stec_residuals ) == 0 + sizeof(u16) + sizeof(tropospheric_delay_correction_t), offset_of_stec_residuals_in_grid_element_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_ORBIT_CLOCK(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, time ) == 0, "Offset of time in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, time ) == 0, offset_of_time_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), "Offset of update_interval in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), offset_of_update_interval_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of iod_ssr in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_iod_ssr_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, iod ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), "Offset of iod in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, iod ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), offset_of_iod_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32), "Offset of radial in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32), offset_of_radial_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32), "Offset of along in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32), offset_of_along_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of cross in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_cross_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, dot_radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_radial in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, dot_radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_radial_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, dot_along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_along in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, dot_along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_along_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, dot_cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_cross in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, dot_cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_cross_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, c0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c0 in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, c0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c0_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, c1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c1 in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, c1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c1_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_t, c2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c2 in msg_ssr_orbit_clock_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_t, c2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c2_in_msg_ssr_orbit_clock_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_CODE_BIASES(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_code_biases_t, time ) == 0, "Offset of time in msg_ssr_code_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_code_biases_t, time ) == 0, offset_of_time_in_msg_ssr_code_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_code_biases_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_ssr_code_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_code_biases_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_ssr_code_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_code_biases_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), "Offset of update_interval in msg_ssr_code_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_code_biases_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), offset_of_update_interval_in_msg_ssr_code_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_code_biases_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of iod_ssr in msg_ssr_code_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_code_biases_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_iod_ssr_in_msg_ssr_code_biases_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_code_biases_t, biases ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), "Offset of biases in msg_ssr_code_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_code_biases_t, biases ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), offset_of_biases_in_msg_ssr_code_biases_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_PHASE_BIASES(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, time ) == 0, "Offset of time in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, time ) == 0, offset_of_time_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), "Offset of update_interval in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), offset_of_update_interval_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of iod_ssr in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_iod_ssr_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, dispersive_bias ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), "Offset of dispersive_bias in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, dispersive_bias ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), offset_of_dispersive_bias_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, mw_consistency ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of mw_consistency in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, mw_consistency ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_mw_consistency_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, yaw ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of yaw in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, yaw ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_yaw_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, yaw_rate ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16), "Offset of yaw_rate in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, yaw_rate ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16), offset_of_yaw_rate_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_phase_biases_t, biases ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(s8), "Offset of biases in msg_ssr_phase_biases_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_phase_biases_t, biases ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(s8), offset_of_biases_in_msg_ssr_phase_biases_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_STEC_CORRECTION(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_stec_correction_t, header ) == 0, "Offset of header in msg_ssr_stec_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_stec_correction_t, header ) == 0, offset_of_header_in_msg_ssr_stec_correction_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_stec_correction_t, stec_sat_list ) == 0 + sizeof(stec_header_t), "Offset of stec_sat_list in msg_ssr_stec_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_stec_correction_t, stec_sat_list ) == 0 + sizeof(stec_header_t), offset_of_stec_sat_list_in_msg_ssr_stec_correction_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_GRIDDED_CORRECTION(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_t, header ) == 0, "Offset of header in msg_ssr_gridded_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_t, header ) == 0, offset_of_header_in_msg_ssr_gridded_correction_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_t, element ) == 0 + sizeof(gridded_correction_header_t), "Offset of element in msg_ssr_gridded_correction_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_t, element ) == 0 + sizeof(gridded_correction_header_t), offset_of_element_in_msg_ssr_gridded_correction_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_TILE_DEFINITION(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, tile_set_id ) == 0, "Offset of tile_set_id in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, tile_set_id ) == 0, offset_of_tile_set_id_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, tile_id ) == 0 + sizeof(u16), "Offset of tile_id in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, tile_id ) == 0 + sizeof(u16), offset_of_tile_id_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, corner_nw_lat ) == 0 + sizeof(u16) + sizeof(u16), "Offset of corner_nw_lat in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, corner_nw_lat ) == 0 + sizeof(u16) + sizeof(u16), offset_of_corner_nw_lat_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, corner_nw_lon ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16), "Offset of corner_nw_lon in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, corner_nw_lon ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16), offset_of_corner_nw_lon_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, spacing_lat ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16), "Offset of spacing_lat in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, spacing_lat ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16), offset_of_spacing_lat_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, spacing_lon ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16), "Offset of spacing_lon in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, spacing_lon ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16), offset_of_spacing_lon_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, rows ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16), "Offset of rows in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, rows ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16), offset_of_rows_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, cols ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of cols in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, cols ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_cols_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_tile_definition_t, bitmask ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of bitmask in msg_ssr_tile_definition_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_tile_definition_t, bitmask ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(s16) + sizeof(s16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_bitmask_in_msg_ssr_tile_definition_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_ORBIT_CLOCK_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, time ) == 0, "Offset of time in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, time ) == 0, offset_of_time_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), "Offset of update_interval in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), offset_of_update_interval_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of iod_ssr in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, iod_ssr ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_iod_ssr_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, iod ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), "Offset of iod in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, iod ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8), offset_of_iod_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of radial in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_radial_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32), "Offset of along in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32), offset_of_along_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32), "Offset of cross in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32), offset_of_cross_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, dot_radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_radial in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, dot_radial ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_radial_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, dot_along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_along in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, dot_along ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_along_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, dot_cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of dot_cross in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, dot_cross ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_dot_cross_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, c0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c0 in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, c0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c0_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, c1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c1 in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, c1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c1_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_orbit_clock_dep_a_t, c2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of c2 in msg_ssr_orbit_clock_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_orbit_clock_dep_a_t, c2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_c2_in_msg_ssr_orbit_clock_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_STECHeaderDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_dep_a_t, time ) == 0, "Offset of time in stec_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_dep_a_t, time ) == 0, offset_of_time_in_stec_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_dep_a_t, num_msgs ) == 0 + sizeof(gps_time_sec_t), "Offset of num_msgs in stec_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_dep_a_t, num_msgs ) == 0 + sizeof(gps_time_sec_t), offset_of_num_msgs_in_stec_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_dep_a_t, seq_num ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of seq_num in stec_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_dep_a_t, seq_num ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_seq_num_in_stec_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8), "Offset of update_interval in stec_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8), offset_of_update_interval_in_stec_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(stec_header_dep_a_t, iod_atmo ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of iod_atmo in stec_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(stec_header_dep_a_t, iod_atmo ) == 0 + sizeof(gps_time_sec_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_iod_atmo_in_stec_header_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_GriddedCorrectionHeaderDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, time ) == 0, "Offset of time in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, time ) == 0, offset_of_time_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, num_msgs ) == 0 + sizeof(gps_time_sec_t), "Offset of num_msgs in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, num_msgs ) == 0 + sizeof(gps_time_sec_t), offset_of_num_msgs_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, seq_num ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16), "Offset of seq_num in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, seq_num ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16), offset_of_seq_num_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), "Offset of update_interval in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, update_interval ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), offset_of_update_interval_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, iod_atmo ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of iod_atmo in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, iod_atmo ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_iod_atmo_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gridded_correction_header_dep_a_t, tropo_quality_indicator ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of tropo_quality_indicator in gridded_correction_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(gridded_correction_header_dep_a_t, tropo_quality_indicator ) == 0 + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_tropo_quality_indicator_in_gridded_correction_header_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_GridDefinitionHeaderDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, region_size_inverse ) == 0, "Offset of region_size_inverse in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, region_size_inverse ) == 0, offset_of_region_size_inverse_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, area_width ) == 0 + sizeof(u8), "Offset of area_width in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, area_width ) == 0 + sizeof(u8), offset_of_area_width_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, lat_nw_corner_enc ) == 0 + sizeof(u8) + sizeof(u16), "Offset of lat_nw_corner_enc in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, lat_nw_corner_enc ) == 0 + sizeof(u8) + sizeof(u16), offset_of_lat_nw_corner_enc_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, lon_nw_corner_enc ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of lon_nw_corner_enc in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, lon_nw_corner_enc ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_lon_nw_corner_enc_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, num_msgs ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of num_msgs in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, num_msgs ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_num_msgs_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(grid_definition_header_dep_a_t, seq_num ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of seq_num in grid_definition_header_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(grid_definition_header_dep_a_t, seq_num ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_seq_num_in_grid_definition_header_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_STEC_CORRECTION_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_stec_correction_dep_a_t, header ) == 0, "Offset of header in msg_ssr_stec_correction_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_stec_correction_dep_a_t, header ) == 0, offset_of_header_in_msg_ssr_stec_correction_dep_a_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_stec_correction_dep_a_t, stec_sat_list ) == 0 + sizeof(stec_header_dep_a_t), "Offset of stec_sat_list in msg_ssr_stec_correction_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_stec_correction_dep_a_t, stec_sat_list ) == 0 + sizeof(stec_header_dep_a_t), offset_of_stec_sat_list_in_msg_ssr_stec_correction_dep_a_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_no_std_dep_a_t, header ) == 0, "Offset of header in msg_ssr_gridded_correction_no_std_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_no_std_dep_a_t, header ) == 0, offset_of_header_in_msg_ssr_gridded_correction_no_std_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_no_std_dep_a_t, element ) == 0 + sizeof(gridded_correction_header_dep_a_t), "Offset of element in msg_ssr_gridded_correction_no_std_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_no_std_dep_a_t, element ) == 0 + sizeof(gridded_correction_header_dep_a_t), offset_of_element_in_msg_ssr_gridded_correction_no_std_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_GRIDDED_CORRECTION_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_dep_a_t, header ) == 0, "Offset of header in msg_ssr_gridded_correction_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_dep_a_t, header ) == 0, offset_of_header_in_msg_ssr_gridded_correction_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_gridded_correction_dep_a_t, element ) == 0 + sizeof(gridded_correction_header_dep_a_t), "Offset of element in msg_ssr_gridded_correction_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_gridded_correction_dep_a_t, element ) == 0 + sizeof(gridded_correction_header_dep_a_t), offset_of_element_in_msg_ssr_gridded_correction_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_SSR_GRID_DEFINITION_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_grid_definition_dep_a_t, header ) == 0, "Offset of header in msg_ssr_grid_definition_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_grid_definition_dep_a_t, header ) == 0, offset_of_header_in_msg_ssr_grid_definition_dep_a_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_ssr_grid_definition_dep_a_t, rle_list ) == 0 + sizeof(grid_definition_header_dep_a_t), "Offset of rle_list in msg_ssr_grid_definition_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_grid_definition_dep_a_t, rle_list ) == 0 + sizeof(grid_definition_header_dep_a_t), offset_of_rle_list_in_msg_ssr_grid_definition_dep_a_t_is_incorrect)
+#endif
 #endif
 }
 

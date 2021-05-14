@@ -304,114 +304,362 @@ typedef struct SBP_ATTR_PACKED {
 
 /** \} */
 static inline void static_asserts_for_module_MSG_LINUX_CPU_STATE_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_dep_a_t, index ) == 0, "Offset of index in msg_linux_cpu_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_dep_a_t, index ) == 0, offset_of_index_in_msg_linux_cpu_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_dep_a_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_cpu_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_dep_a_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_cpu_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_dep_a_t, pcpu ) == 0 + sizeof(u8) + sizeof(u16), "Offset of pcpu in msg_linux_cpu_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_dep_a_t, pcpu ) == 0 + sizeof(u8) + sizeof(u16), offset_of_pcpu_in_msg_linux_cpu_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_dep_a_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of tname in msg_linux_cpu_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_dep_a_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_tname_in_msg_linux_cpu_state_dep_a_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_dep_a_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + (sizeof(char) * 15), "Offset of cmdline in msg_linux_cpu_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_dep_a_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + (sizeof(char) * 15), offset_of_cmdline_in_msg_linux_cpu_state_dep_a_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_MEM_STATE_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_dep_a_t, index ) == 0, "Offset of index in msg_linux_mem_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_dep_a_t, index ) == 0, offset_of_index_in_msg_linux_mem_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_dep_a_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_mem_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_dep_a_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_mem_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_dep_a_t, pmem ) == 0 + sizeof(u8) + sizeof(u16), "Offset of pmem in msg_linux_mem_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_dep_a_t, pmem ) == 0 + sizeof(u8) + sizeof(u16), offset_of_pmem_in_msg_linux_mem_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_dep_a_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of tname in msg_linux_mem_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_dep_a_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_tname_in_msg_linux_mem_state_dep_a_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_dep_a_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + (sizeof(char) * 15), "Offset of cmdline in msg_linux_mem_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_dep_a_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + (sizeof(char) * 15), offset_of_cmdline_in_msg_linux_mem_state_dep_a_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_SYS_STATE_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, mem_total ) == 0, "Offset of mem_total in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, mem_total ) == 0, offset_of_mem_total_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, pcpu ) == 0 + sizeof(u16), "Offset of pcpu in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, pcpu ) == 0 + sizeof(u16), offset_of_pcpu_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, pmem ) == 0 + sizeof(u16) + sizeof(u8), "Offset of pmem in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, pmem ) == 0 + sizeof(u16) + sizeof(u8), offset_of_pmem_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, procs_starting ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of procs_starting in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, procs_starting ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_procs_starting_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, procs_stopping ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16), "Offset of procs_stopping in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, procs_stopping ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16), offset_of_procs_stopping_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_dep_a_t, pid_count ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of pid_count in msg_linux_sys_state_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_dep_a_t, pid_count ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_pid_count_in_msg_linux_sys_state_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_PROCESS_SOCKET_COUNTS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, index ) == 0, "Offset of index in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, index ) == 0, offset_of_index_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, socket_count ) == 0 + sizeof(u8) + sizeof(u16), "Offset of socket_count in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, socket_count ) == 0 + sizeof(u8) + sizeof(u16), offset_of_socket_count_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, socket_types ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of socket_types in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, socket_types ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_socket_types_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, socket_states ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of socket_states in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, socket_states ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_socket_states_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_counts_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of cmdline in msg_linux_process_socket_counts_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_counts_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_cmdline_in_msg_linux_process_socket_counts_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_PROCESS_SOCKET_QUEUES(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, index ) == 0, "Offset of index in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, index ) == 0, offset_of_index_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, recv_queued ) == 0 + sizeof(u8) + sizeof(u16), "Offset of recv_queued in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, recv_queued ) == 0 + sizeof(u8) + sizeof(u16), offset_of_recv_queued_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, send_queued ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of send_queued in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, send_queued ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_send_queued_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, socket_types ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of socket_types in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, socket_types ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_socket_types_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, socket_states ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of socket_states in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, socket_states ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_socket_states_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, address_of_largest ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of address_of_largest in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, address_of_largest ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_address_of_largest_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_socket_queues_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + (sizeof(char) * 64), "Offset of cmdline in msg_linux_process_socket_queues_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_socket_queues_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + (sizeof(char) * 64), offset_of_cmdline_in_msg_linux_process_socket_queues_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_SOCKET_USAGE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_socket_usage_t, avg_queue_depth ) == 0, "Offset of avg_queue_depth in msg_linux_socket_usage_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_socket_usage_t, avg_queue_depth ) == 0, offset_of_avg_queue_depth_in_msg_linux_socket_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_socket_usage_t, max_queue_depth ) == 0 + sizeof(u32), "Offset of max_queue_depth in msg_linux_socket_usage_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_socket_usage_t, max_queue_depth ) == 0 + sizeof(u32), offset_of_max_queue_depth_in_msg_linux_socket_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_socket_usage_t, socket_state_counts ) == 0 + sizeof(u32) + sizeof(u32), "Offset of socket_state_counts in msg_linux_socket_usage_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_socket_usage_t, socket_state_counts ) == 0 + sizeof(u32) + sizeof(u32), offset_of_socket_state_counts_in_msg_linux_socket_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_socket_usage_t, socket_type_counts ) == 0 + sizeof(u32) + sizeof(u32) + (sizeof(u16) * 16), "Offset of socket_type_counts in msg_linux_socket_usage_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_socket_usage_t, socket_type_counts ) == 0 + sizeof(u32) + sizeof(u32) + (sizeof(u16) * 16), offset_of_socket_type_counts_in_msg_linux_socket_usage_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_PROCESS_FD_COUNT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_count_t, index ) == 0, "Offset of index in msg_linux_process_fd_count_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_count_t, index ) == 0, offset_of_index_in_msg_linux_process_fd_count_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_count_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_process_fd_count_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_count_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_process_fd_count_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_count_t, fd_count ) == 0 + sizeof(u8) + sizeof(u16), "Offset of fd_count in msg_linux_process_fd_count_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_count_t, fd_count ) == 0 + sizeof(u8) + sizeof(u16), offset_of_fd_count_in_msg_linux_process_fd_count_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_count_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of cmdline in msg_linux_process_fd_count_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_count_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_cmdline_in_msg_linux_process_fd_count_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_PROCESS_FD_SUMMARY(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_summary_t, sys_fd_count ) == 0, "Offset of sys_fd_count in msg_linux_process_fd_summary_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_summary_t, sys_fd_count ) == 0, offset_of_sys_fd_count_in_msg_linux_process_fd_summary_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_process_fd_summary_t, most_opened ) == 0 + sizeof(u32), "Offset of most_opened in msg_linux_process_fd_summary_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_process_fd_summary_t, most_opened ) == 0 + sizeof(u32), offset_of_most_opened_in_msg_linux_process_fd_summary_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_CPU_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, index ) == 0, "Offset of index in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, index ) == 0, offset_of_index_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, pcpu ) == 0 + sizeof(u8) + sizeof(u16), "Offset of pcpu in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, pcpu ) == 0 + sizeof(u8) + sizeof(u16), offset_of_pcpu_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, time ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of time in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, time ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_time_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, flags ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), "Offset of flags in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, flags ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), offset_of_flags_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8), "Offset of tname in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8), offset_of_tname_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_cpu_state_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + (sizeof(char) * 15), "Offset of cmdline in msg_linux_cpu_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_cpu_state_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + (sizeof(char) * 15), offset_of_cmdline_in_msg_linux_cpu_state_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_MEM_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, index ) == 0, "Offset of index in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, index ) == 0, offset_of_index_in_msg_linux_mem_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, pid ) == 0 + sizeof(u8), "Offset of pid in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, pid ) == 0 + sizeof(u8), offset_of_pid_in_msg_linux_mem_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, pmem ) == 0 + sizeof(u8) + sizeof(u16), "Offset of pmem in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, pmem ) == 0 + sizeof(u8) + sizeof(u16), offset_of_pmem_in_msg_linux_mem_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, time ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of time in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, time ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_time_in_msg_linux_mem_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, flags ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), "Offset of flags in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, flags ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), offset_of_flags_in_msg_linux_mem_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8), "Offset of tname in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, tname ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8), offset_of_tname_in_msg_linux_mem_state_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_mem_state_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + (sizeof(char) * 15), "Offset of cmdline in msg_linux_mem_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_mem_state_t, cmdline ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + (sizeof(char) * 15), offset_of_cmdline_in_msg_linux_mem_state_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_LINUX_SYS_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, mem_total ) == 0, "Offset of mem_total in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, mem_total ) == 0, offset_of_mem_total_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, pcpu ) == 0 + sizeof(u16), "Offset of pcpu in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, pcpu ) == 0 + sizeof(u16), offset_of_pcpu_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, pmem ) == 0 + sizeof(u16) + sizeof(u8), "Offset of pmem in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, pmem ) == 0 + sizeof(u16) + sizeof(u8), offset_of_pmem_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, procs_starting ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of procs_starting in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, procs_starting ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_procs_starting_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, procs_stopping ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16), "Offset of procs_stopping in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, procs_stopping ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16), offset_of_procs_stopping_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, pid_count ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16), "Offset of pid_count in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, pid_count ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16), offset_of_pid_count_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, time ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of time in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, time ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_time_in_msg_linux_sys_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_linux_sys_state_t, flags ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32), "Offset of flags in msg_linux_sys_state_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, flags ) == 0 + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32), offset_of_flags_in_msg_linux_sys_state_t_is_incorrect)
+#endif
 }
 
 

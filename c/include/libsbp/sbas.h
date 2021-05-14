@@ -46,10 +46,26 @@ typedef struct SBP_ATTR_PACKED {
 
 /** \} */
 static inline void static_asserts_for_module_MSG_SBAS_RAW(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_sbas_raw_t, sid ) == 0, "Offset of sid in msg_sbas_raw_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sbas_raw_t, sid ) == 0, offset_of_sid_in_msg_sbas_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_sbas_raw_t, tow ) == 0 + sizeof(sbp_gnss_signal_t), "Offset of tow in msg_sbas_raw_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sbas_raw_t, tow ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_tow_in_msg_sbas_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_sbas_raw_t, message_type ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u32), "Offset of message_type in msg_sbas_raw_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sbas_raw_t, message_type ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u32), offset_of_message_type_in_msg_sbas_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_sbas_raw_t, data ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u32) + sizeof(u8), "Offset of data in msg_sbas_raw_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sbas_raw_t, data ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u32) + sizeof(u8), offset_of_data_in_msg_sbas_raw_t_is_incorrect)
+#endif
 }
 
 

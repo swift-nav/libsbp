@@ -45,7 +45,11 @@ typedef struct SBP_ATTR_PACKED {
 /** \} */
 static inline void static_asserts_for_module_MSG_USER_DATA(void) {
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_user_data_t, contents ) == 0, "Offset of contents in msg_user_data_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_user_data_t, contents ) == 0, offset_of_contents_in_msg_user_data_t_is_incorrect)
+#endif
 #endif
 }
 

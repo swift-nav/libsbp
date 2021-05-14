@@ -168,72 +168,240 @@ typedef struct SBP_ATTR_PACKED {
 
 /** \} */
 static inline void static_asserts_for_module_MSG_ACQ_RESULT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_t, cn0 ) == 0, "Offset of cn0 in msg_acq_result_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_t, cn0 ) == 0, offset_of_cn0_in_msg_acq_result_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_t, cp ) == 0 + sizeof(float), "Offset of cp in msg_acq_result_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_t, cp ) == 0 + sizeof(float), offset_of_cp_in_msg_acq_result_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_t, cf ) == 0 + sizeof(float) + sizeof(float), "Offset of cf in msg_acq_result_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_t, cf ) == 0 + sizeof(float) + sizeof(float), offset_of_cf_in_msg_acq_result_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), "Offset of sid in msg_acq_result_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), offset_of_sid_in_msg_acq_result_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_ACQ_RESULT_DEP_C(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_c_t, cn0 ) == 0, "Offset of cn0 in msg_acq_result_dep_c_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_c_t, cn0 ) == 0, offset_of_cn0_in_msg_acq_result_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_c_t, cp ) == 0 + sizeof(float), "Offset of cp in msg_acq_result_dep_c_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_c_t, cp ) == 0 + sizeof(float), offset_of_cp_in_msg_acq_result_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_c_t, cf ) == 0 + sizeof(float) + sizeof(float), "Offset of cf in msg_acq_result_dep_c_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_c_t, cf ) == 0 + sizeof(float) + sizeof(float), offset_of_cf_in_msg_acq_result_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_c_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), "Offset of sid in msg_acq_result_dep_c_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_c_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), offset_of_sid_in_msg_acq_result_dep_c_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_ACQ_RESULT_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_b_t, snr ) == 0, "Offset of snr in msg_acq_result_dep_b_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_b_t, snr ) == 0, offset_of_snr_in_msg_acq_result_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_b_t, cp ) == 0 + sizeof(float), "Offset of cp in msg_acq_result_dep_b_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_b_t, cp ) == 0 + sizeof(float), offset_of_cp_in_msg_acq_result_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_b_t, cf ) == 0 + sizeof(float) + sizeof(float), "Offset of cf in msg_acq_result_dep_b_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_b_t, cf ) == 0 + sizeof(float) + sizeof(float), offset_of_cf_in_msg_acq_result_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_b_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), "Offset of sid in msg_acq_result_dep_b_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_b_t, sid ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), offset_of_sid_in_msg_acq_result_dep_b_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_ACQ_RESULT_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_a_t, snr ) == 0, "Offset of snr in msg_acq_result_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_a_t, snr ) == 0, offset_of_snr_in_msg_acq_result_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_a_t, cp ) == 0 + sizeof(float), "Offset of cp in msg_acq_result_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_a_t, cp ) == 0 + sizeof(float), offset_of_cp_in_msg_acq_result_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_a_t, cf ) == 0 + sizeof(float) + sizeof(float), "Offset of cf in msg_acq_result_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_a_t, cf ) == 0 + sizeof(float) + sizeof(float), offset_of_cf_in_msg_acq_result_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_result_dep_a_t, prn ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), "Offset of prn in msg_acq_result_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_result_dep_a_t, prn ) == 0 + sizeof(float) + sizeof(float) + sizeof(float), offset_of_prn_in_msg_acq_result_dep_a_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_AcqSvProfile(void) {
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, job_type ) == 0, "Offset of job_type in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, job_type ) == 0, offset_of_job_type_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, status ) == 0 + sizeof(u8), "Offset of status in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, status ) == 0 + sizeof(u8), offset_of_status_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, cn0 ) == 0 + sizeof(u8) + sizeof(u8), "Offset of cn0 in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, cn0 ) == 0 + sizeof(u8) + sizeof(u8), offset_of_cn0_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, int_time ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16), "Offset of int_time in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, int_time ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16), offset_of_int_time_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, sid ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of sid in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, sid ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_sid_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, bin_width ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t), "Offset of bin_width in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, bin_width ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t), offset_of_bin_width_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, timestamp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16), "Offset of timestamp in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, timestamp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16), offset_of_timestamp_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, time_spent ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32), "Offset of time_spent in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, time_spent ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32), offset_of_time_spent_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, cf_min ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32), "Offset of cf_min in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, cf_min ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32), offset_of_cf_min_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, cf_max ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32), "Offset of cf_max in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, cf_max ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32), offset_of_cf_max_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, cf ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of cf in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, cf ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_cf_in_acq_sv_profile_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_t, cp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cp in acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_t, cp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cp_in_acq_sv_profile_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_AcqSvProfileDep(void) {
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, job_type ) == 0, "Offset of job_type in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, job_type ) == 0, offset_of_job_type_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, status ) == 0 + sizeof(u8), "Offset of status in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, status ) == 0 + sizeof(u8), offset_of_status_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, cn0 ) == 0 + sizeof(u8) + sizeof(u8), "Offset of cn0 in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, cn0 ) == 0 + sizeof(u8) + sizeof(u8), offset_of_cn0_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, int_time ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16), "Offset of int_time in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, int_time ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16), offset_of_int_time_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, sid ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of sid in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, sid ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_sid_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, bin_width ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t), "Offset of bin_width in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, bin_width ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t), offset_of_bin_width_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, timestamp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16), "Offset of timestamp in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, timestamp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16), offset_of_timestamp_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, time_spent ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32), "Offset of time_spent in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, time_spent ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32), offset_of_time_spent_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, cf_min ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32), "Offset of cf_min in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, cf_min ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32), offset_of_cf_min_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, cf_max ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32), "Offset of cf_max in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, cf_max ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32), offset_of_cf_max_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, cf ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of cf in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, cf ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_cf_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(acq_sv_profile_dep_t, cp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cp in acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(acq_sv_profile_dep_t, cp ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u16) + sizeof(u32) + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cp_in_acq_sv_profile_dep_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_ACQ_SV_PROFILE(void) {
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_sv_profile_t, acq_sv_profile ) == 0, "Offset of acq_sv_profile in msg_acq_sv_profile_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_sv_profile_t, acq_sv_profile ) == 0, offset_of_acq_sv_profile_in_msg_acq_sv_profile_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_ACQ_SV_PROFILE_DEP(void) {
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_acq_sv_profile_dep_t, acq_sv_profile ) == 0, "Offset of acq_sv_profile in msg_acq_sv_profile_dep_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_sv_profile_dep_t, acq_sv_profile ) == 0, offset_of_acq_sv_profile_in_msg_acq_sv_profile_dep_t_is_incorrect)
+#endif
 #endif
 }
 

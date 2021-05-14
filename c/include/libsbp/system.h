@@ -673,81 +673,225 @@ including GROUP_META itself
 
 /** \} */
 static inline void static_asserts_for_module_MSG_STARTUP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_startup_t, cause ) == 0, "Offset of cause in msg_startup_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, cause ) == 0, offset_of_cause_in_msg_startup_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_startup_t, startup_type ) == 0 + sizeof(u8), "Offset of startup_type in msg_startup_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, startup_type ) == 0 + sizeof(u8), offset_of_startup_type_in_msg_startup_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_startup_t, reserved ) == 0 + sizeof(u8) + sizeof(u8), "Offset of reserved in msg_startup_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_startup_t, reserved ) == 0 + sizeof(u8) + sizeof(u8), offset_of_reserved_in_msg_startup_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_DGNSS_STATUS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_dgnss_status_t, flags ) == 0, "Offset of flags in msg_dgnss_status_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, flags ) == 0, offset_of_flags_in_msg_dgnss_status_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dgnss_status_t, latency ) == 0 + sizeof(u8), "Offset of latency in msg_dgnss_status_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, latency ) == 0 + sizeof(u8), offset_of_latency_in_msg_dgnss_status_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dgnss_status_t, num_signals ) == 0 + sizeof(u8) + sizeof(u16), "Offset of num_signals in msg_dgnss_status_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, num_signals ) == 0 + sizeof(u8) + sizeof(u16), offset_of_num_signals_in_msg_dgnss_status_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_dgnss_status_t, source ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of source in msg_dgnss_status_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dgnss_status_t, source ) == 0 + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_source_in_msg_dgnss_status_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_HEARTBEAT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_heartbeat_t, flags ) == 0, "Offset of flags in msg_heartbeat_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_heartbeat_t, flags ) == 0, offset_of_flags_in_msg_heartbeat_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_SubSystemReport(void) {
+#ifdef __cplusplus
+static_assert(offsetof(sub_system_report_t, component ) == 0, "Offset of component in sub_system_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, component ) == 0, offset_of_component_in_sub_system_report_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(sub_system_report_t, generic ) == 0 + sizeof(u16), "Offset of generic in sub_system_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, generic ) == 0 + sizeof(u16), offset_of_generic_in_sub_system_report_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(sub_system_report_t, specific ) == 0 + sizeof(u16) + sizeof(u8), "Offset of specific in sub_system_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(sub_system_report_t, specific ) == 0 + sizeof(u16) + sizeof(u8), offset_of_specific_in_sub_system_report_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_STATUS_REPORT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_status_report_t, reporting_system ) == 0, "Offset of reporting_system in msg_status_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, reporting_system ) == 0, offset_of_reporting_system_in_msg_status_report_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_status_report_t, sbp_version ) == 0 + sizeof(u16), "Offset of sbp_version in msg_status_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, sbp_version ) == 0 + sizeof(u16), offset_of_sbp_version_in_msg_status_report_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_status_report_t, sequence ) == 0 + sizeof(u16) + sizeof(u16), "Offset of sequence in msg_status_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, sequence ) == 0 + sizeof(u16) + sizeof(u16), offset_of_sequence_in_msg_status_report_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_status_report_t, uptime ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32), "Offset of uptime in msg_status_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, uptime ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32), offset_of_uptime_in_msg_status_report_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_status_report_t, status ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32), "Offset of status in msg_status_report_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_status_report_t, status ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32), offset_of_status_in_msg_status_report_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_INS_STATUS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_status_t, flags ) == 0, "Offset of flags in msg_ins_status_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_status_t, flags ) == 0, offset_of_flags_in_msg_ins_status_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_CSAC_TELEMETRY(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_csac_telemetry_t, id ) == 0, "Offset of id in msg_csac_telemetry_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_t, id ) == 0, offset_of_id_in_msg_csac_telemetry_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_csac_telemetry_t, telemetry ) == 0 + sizeof(u8), "Offset of telemetry in msg_csac_telemetry_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_t, telemetry ) == 0 + sizeof(u8), offset_of_telemetry_in_msg_csac_telemetry_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_CSAC_TELEMETRY_LABELS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_csac_telemetry_labels_t, id ) == 0, "Offset of id in msg_csac_telemetry_labels_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_labels_t, id ) == 0, offset_of_id_in_msg_csac_telemetry_labels_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_csac_telemetry_labels_t, telemetry_labels ) == 0 + sizeof(u8), "Offset of telemetry_labels in msg_csac_telemetry_labels_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_csac_telemetry_labels_t, telemetry_labels ) == 0 + sizeof(u8), offset_of_telemetry_labels_in_msg_csac_telemetry_labels_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_INS_UPDATES(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, tow ) == 0, "Offset of tow in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, tow ) == 0, offset_of_tow_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, gnsspos ) == 0 + sizeof(u32), "Offset of gnsspos in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, gnsspos ) == 0 + sizeof(u32), offset_of_gnsspos_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, gnssvel ) == 0 + sizeof(u32) + sizeof(u8), "Offset of gnssvel in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, gnssvel ) == 0 + sizeof(u32) + sizeof(u8), offset_of_gnssvel_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, wheelticks ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8), "Offset of wheelticks in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, wheelticks ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8), offset_of_wheelticks_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, speed ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of speed in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, speed ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_speed_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, nhc ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of nhc in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, nhc ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_nhc_in_msg_ins_updates_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ins_updates_t, zerovel ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of zerovel in msg_ins_updates_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ins_updates_t, zerovel ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_zerovel_in_msg_ins_updates_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_GNSS_TIME_OFFSET(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_time_offset_t, weeks ) == 0, "Offset of weeks in msg_gnss_time_offset_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, weeks ) == 0, offset_of_weeks_in_msg_gnss_time_offset_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_time_offset_t, milliseconds ) == 0 + sizeof(s16), "Offset of milliseconds in msg_gnss_time_offset_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, milliseconds ) == 0 + sizeof(s16), offset_of_milliseconds_in_msg_gnss_time_offset_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_time_offset_t, microseconds ) == 0 + sizeof(s16) + sizeof(s32), "Offset of microseconds in msg_gnss_time_offset_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, microseconds ) == 0 + sizeof(s16) + sizeof(s32), offset_of_microseconds_in_msg_gnss_time_offset_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_time_offset_t, flags ) == 0 + sizeof(s16) + sizeof(s32) + sizeof(s16), "Offset of flags in msg_gnss_time_offset_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_time_offset_t, flags ) == 0 + sizeof(s16) + sizeof(s32) + sizeof(s16), offset_of_flags_in_msg_gnss_time_offset_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_GROUP_META(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_meta_t, group_id ) == 0, "Offset of group_id in msg_group_meta_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, group_id ) == 0, offset_of_group_id_in_msg_group_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_meta_t, flags ) == 0 + sizeof(u8), "Offset of flags in msg_group_meta_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, flags ) == 0 + sizeof(u8), offset_of_flags_in_msg_group_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_meta_t, n_group_msgs ) == 0 + sizeof(u8) + sizeof(u8), "Offset of n_group_msgs in msg_group_meta_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, n_group_msgs ) == 0 + sizeof(u8) + sizeof(u8), offset_of_n_group_msgs_in_msg_group_meta_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_meta_t, group_msgs ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of group_msgs in msg_group_meta_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, group_msgs ) == 0 + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_group_msgs_in_msg_group_meta_t_is_incorrect)
+#endif
 #endif
 }
 

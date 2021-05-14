@@ -142,26 +142,46 @@ static inline void static_asserts_for_module_MSG_BOOTLOADER_HANDSHAKE_REQ(void) 
 }
 
 static inline void static_asserts_for_module_MSG_BOOTLOADER_HANDSHAKE_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_bootloader_handshake_resp_t, flags ) == 0, "Offset of flags in msg_bootloader_handshake_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_bootloader_handshake_resp_t, flags ) == 0, offset_of_flags_in_msg_bootloader_handshake_resp_t_is_incorrect)
+#endif
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_bootloader_handshake_resp_t, version ) == 0 + sizeof(u32), "Offset of version in msg_bootloader_handshake_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_bootloader_handshake_resp_t, version ) == 0 + sizeof(u32), offset_of_version_in_msg_bootloader_handshake_resp_t_is_incorrect)
+#endif
 #endif
 }
 
 static inline void static_asserts_for_module_MSG_BOOTLOADER_JUMP_TO_APP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_bootloader_jump_to_app_t, jump ) == 0, "Offset of jump in msg_bootloader_jump_to_app_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_bootloader_jump_to_app_t, jump ) == 0, offset_of_jump_in_msg_bootloader_jump_to_app_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_NAP_DEVICE_DNA_REQ(void) {
 }
 
 static inline void static_asserts_for_module_MSG_NAP_DEVICE_DNA_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_nap_device_dna_resp_t, dna ) == 0, "Offset of dna in msg_nap_device_dna_resp_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_nap_device_dna_resp_t, dna ) == 0, offset_of_dna_in_msg_nap_device_dna_resp_t_is_incorrect)
+#endif
 }
 
 static inline void static_asserts_for_module_MSG_BOOTLOADER_HANDSHAKE_DEP_A(void) {
 #ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_bootloader_handshake_dep_a_t, handshake ) == 0, "Offset of handshake in msg_bootloader_handshake_dep_a_t is incorrect");
+#else
 SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_bootloader_handshake_dep_a_t, handshake ) == 0, offset_of_handshake_in_msg_bootloader_handshake_dep_a_t_is_incorrect)
+#endif
 #endif
 }
 
