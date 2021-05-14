@@ -62,7 +62,7 @@ help:
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python javascript java docs haskell protobuf rust jsonschema
+all: c python javascript java docs haskell protobuf rust jsonschema quicktype
 clean:
 	@echo "Removing the ./c/build directory..."
 	rm -r $(SWIFTNAV_ROOT)/c/build
@@ -80,6 +80,7 @@ jsonschema: deps-jsonschema gen-jsonschema test-jsonschema
 quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript
 quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript
 quicktype-elm:        deps-quicktype-elm        gen-quicktype-elm        test-quicktype-elm
+quicktype:            quicktype-typescript      quicktype-javascript     quicktype-elm
 
 # Prerequisite verification
 verify-prereq-generator:
@@ -162,7 +163,8 @@ deps-quicktype-elm: verify-prereq-quicktype
 
 # Generators
 
-gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype-typescript gen-quicktype-javascript gen-quicktype-elm
+gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype
+gen-quicktype: gen-quicktype-typescript gen-quicktype-elm
 
 gen-c:
 	$(call announce-begin,"Generating C headers")
