@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -45,31 +44,27 @@ static inline bool sbp_pack_sbp_msg_flash_program_t(u8 *buf, size_t len, const s
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, & msgtarget , 1);
+  memcpy(buf + offset, & msg->target , 1);
   // NOLINTNEXTLINE
   offset += 1;
 		  for(size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-  memcpy(buf + offset, & msgaddr_startmsgaddr_start_idx , 1);
+  memcpy(buf + offset, & msg->addr_start[msgaddr_start_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, & msgaddr_len , 1);
+  memcpy(buf + offset, & msg->addr_len , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			for(size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->addr_len; msgdata_idx++)
 			{
           
   if (offset + 1 > len) { return false; }
-  u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
-  memcpy(buf + offset, & msgdatamsgdata_idx , 1);
+  memcpy(buf + offset, & msg->data[msgdata_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}
@@ -133,8 +128,7 @@ static inline bool sbp_pack_sbp_msg_flash_done_t(u8 *buf, size_t len, const sbp_
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgresponse = msg->response;
-  memcpy(buf + offset, & msgresponse , 1);
+  memcpy(buf + offset, & msg->response , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -179,23 +173,20 @@ static inline bool sbp_pack_sbp_msg_flash_read_req_t(u8 *buf, size_t len, const 
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, & msgtarget , 1);
+  memcpy(buf + offset, & msg->target , 1);
   // NOLINTNEXTLINE
   offset += 1;
 		  for(size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-  memcpy(buf + offset, & msgaddr_startmsgaddr_start_idx , 1);
+  memcpy(buf + offset, & msg->addr_start[msgaddr_start_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, & msgaddr_len , 1);
+  memcpy(buf + offset, & msg->addr_len , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -253,23 +244,20 @@ static inline bool sbp_pack_sbp_msg_flash_read_resp_t(u8 *buf, size_t len, const
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, & msgtarget , 1);
+  memcpy(buf + offset, & msg->target , 1);
   // NOLINTNEXTLINE
   offset += 1;
 		  for(size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-  memcpy(buf + offset, & msgaddr_startmsgaddr_start_idx , 1);
+  memcpy(buf + offset, & msg->addr_start[msgaddr_start_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}
         
   if (offset + 1 > len) { return false; }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, & msgaddr_len , 1);
+  memcpy(buf + offset, & msg->addr_len , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -323,14 +311,12 @@ static inline bool sbp_pack_sbp_msg_flash_erase_t(u8 *buf, size_t len, const sbp
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, & msgtarget , 1);
+  memcpy(buf + offset, & msg->target , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector_num = htole32( msg->sector_num );
-  memcpy(buf + offset, & msgsector_num , 4);
+  sbp_pack_u32(buf + offset, msg->sector_num);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -350,8 +336,7 @@ static inline bool sbp_unpack_sbp_msg_flash_erase_t(const u8 *buf, size_t len, s
   offset += 1;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->sector_num, buf + offset, 4);
-  msg->sector_num = le32toh( msg->sector_num );
+  msg->sector_num = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -375,8 +360,7 @@ static inline bool sbp_pack_sbp_msg_stm_flash_lock_sector_t(u8 *buf, size_t len,
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector = htole32( msg->sector );
-  memcpy(buf + offset, & msgsector , 4);
+  sbp_pack_u32(buf + offset, msg->sector);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -391,8 +375,7 @@ static inline bool sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const u8 *buf, siz
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->sector, buf + offset, 4);
-  msg->sector = le32toh( msg->sector );
+  msg->sector = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -416,8 +399,7 @@ static inline bool sbp_pack_sbp_msg_stm_flash_unlock_sector_t(u8 *buf, size_t le
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector = htole32( msg->sector );
-  memcpy(buf + offset, & msgsector , 4);
+  sbp_pack_u32(buf + offset, msg->sector);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -432,8 +414,7 @@ static inline bool sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const u8 *buf, s
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->sector, buf + offset, 4);
-  msg->sector = le32toh( msg->sector );
+  msg->sector = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -488,8 +469,7 @@ static inline bool sbp_pack_sbp_msg_stm_unique_id_resp_t(u8 *buf, size_t len, co
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgstm_idmsgstm_id_idx = msg->stm_id[msgstm_id_idx];
-  memcpy(buf + offset, & msgstm_idmsgstm_id_idx , 1);
+  memcpy(buf + offset, & msg->stm_id[msgstm_id_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}
@@ -536,8 +516,7 @@ static inline bool sbp_pack_sbp_msg_m25_flash_write_status_t(u8 *buf, size_t len
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgstatusmsgstatus_idx = msg->status[msgstatus_idx];
-  memcpy(buf + offset, & msgstatusmsgstatus_idx , 1);
+  memcpy(buf + offset, & msg->status[msgstatus_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}

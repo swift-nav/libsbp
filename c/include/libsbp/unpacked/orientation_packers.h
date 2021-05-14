@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -39,26 +38,22 @@ static inline bool sbp_pack_sbp_msg_baseline_heading_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
+  sbp_pack_u32(buf + offset, msg->tow);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgheading = htole32( msg->heading );
-  memcpy(buf + offset, & msgheading , 4);
+  sbp_pack_u32(buf + offset, msg->heading);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgn_sats = msg->n_sats;
-  memcpy(buf + offset, & msgn_sats , 1);
+  memcpy(buf + offset, & msg->n_sats , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
+  memcpy(buf + offset, & msg->flags , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -73,14 +68,12 @@ static inline bool sbp_unpack_sbp_msg_baseline_heading_t(const u8 *buf, size_t l
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
+  msg->tow = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->heading, buf + offset, 4);
-  msg->heading = le32toh( msg->heading );
+  msg->heading = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
@@ -132,62 +125,52 @@ static inline bool sbp_pack_sbp_msg_orient_quat_t(u8 *buf, size_t len, const sbp
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
+  sbp_pack_u32(buf + offset, msg->tow);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgw = htole32( *(const u32*)&msg->w );
-  memcpy(buf + offset, & msgw , 4);
+  sbp_pack_s32(buf + offset, msg->w);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgx = htole32( *(const u32*)&msg->x );
-  memcpy(buf + offset, & msgx , 4);
+  sbp_pack_s32(buf + offset, msg->x);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgy = htole32( *(const u32*)&msg->y );
-  memcpy(buf + offset, & msgy , 4);
+  sbp_pack_s32(buf + offset, msg->y);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgz = htole32( *(const u32*)&msg->z );
-  memcpy(buf + offset, & msgz , 4);
+  sbp_pack_s32(buf + offset, msg->z);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgw_accuracy = msg->w_accuracy;
-  memcpy(buf + offset, & msgw_accuracy , 4);
+  memcpy(buf + offset, & msg->w_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgx_accuracy = msg->x_accuracy;
-  memcpy(buf + offset, & msgx_accuracy , 4);
+  memcpy(buf + offset, & msg->x_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgy_accuracy = msg->y_accuracy;
-  memcpy(buf + offset, & msgy_accuracy , 4);
+  memcpy(buf + offset, & msg->y_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgz_accuracy = msg->z_accuracy;
-  memcpy(buf + offset, & msgz_accuracy , 4);
+  memcpy(buf + offset, & msg->z_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
+  memcpy(buf + offset, & msg->flags , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -202,40 +185,27 @@ static inline bool sbp_unpack_sbp_msg_orient_quat_t(const u8 *buf, size_t len, s
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
+  msg->tow = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->w, buf + offset, 4);
-  u32 msgw = *(const u32*)&msg->w;
-  msgw = le32toh( msgw );
-  msg->w = *(const s32*)&msgw;
+  msg->w = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->x, buf + offset, 4);
-  u32 msgx = *(const u32*)&msg->x;
-  msgx = le32toh( msgx );
-  msg->x = *(const s32*)&msgx;
+  msg->x = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->y, buf + offset, 4);
-  u32 msgy = *(const u32*)&msg->y;
-  msgy = le32toh( msgy );
-  msg->y = *(const s32*)&msgy;
+  msg->y = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->z, buf + offset, 4);
-  u32 msgz = *(const u32*)&msg->z;
-  msgz = le32toh( msgz );
-  msg->z = *(const s32*)&msgz;
+  msg->z = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
@@ -298,50 +268,42 @@ static inline bool sbp_pack_sbp_msg_orient_euler_t(u8 *buf, size_t len, const sb
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
+  sbp_pack_u32(buf + offset, msg->tow);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgroll = htole32( *(const u32*)&msg->roll );
-  memcpy(buf + offset, & msgroll , 4);
+  sbp_pack_s32(buf + offset, msg->roll);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgpitch = htole32( *(const u32*)&msg->pitch );
-  memcpy(buf + offset, & msgpitch , 4);
+  sbp_pack_s32(buf + offset, msg->pitch);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgyaw = htole32( *(const u32*)&msg->yaw );
-  memcpy(buf + offset, & msgyaw , 4);
+  sbp_pack_s32(buf + offset, msg->yaw);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgroll_accuracy = msg->roll_accuracy;
-  memcpy(buf + offset, & msgroll_accuracy , 4);
+  memcpy(buf + offset, & msg->roll_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgpitch_accuracy = msg->pitch_accuracy;
-  memcpy(buf + offset, & msgpitch_accuracy , 4);
+  memcpy(buf + offset, & msg->pitch_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgyaw_accuracy = msg->yaw_accuracy;
-  memcpy(buf + offset, & msgyaw_accuracy , 4);
+  memcpy(buf + offset, & msg->yaw_accuracy , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
+  memcpy(buf + offset, & msg->flags , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -356,32 +318,22 @@ static inline bool sbp_unpack_sbp_msg_orient_euler_t(const u8 *buf, size_t len, 
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
+  msg->tow = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->roll, buf + offset, 4);
-  u32 msgroll = *(const u32*)&msg->roll;
-  msgroll = le32toh( msgroll );
-  msg->roll = *(const s32*)&msgroll;
+  msg->roll = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->pitch, buf + offset, 4);
-  u32 msgpitch = *(const u32*)&msg->pitch;
-  msgpitch = le32toh( msgpitch );
-  msg->pitch = *(const s32*)&msgpitch;
+  msg->pitch = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->yaw, buf + offset, 4);
-  u32 msgyaw = *(const u32*)&msg->yaw;
-  msgyaw = le32toh( msgyaw );
-  msg->yaw = *(const s32*)&msgyaw;
+  msg->yaw = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
@@ -433,32 +385,27 @@ static inline bool sbp_pack_sbp_msg_angular_rate_t(u8 *buf, size_t len, const sb
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
+  sbp_pack_u32(buf + offset, msg->tow);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgx = htole32( *(const u32*)&msg->x );
-  memcpy(buf + offset, & msgx , 4);
+  sbp_pack_s32(buf + offset, msg->x);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgy = htole32( *(const u32*)&msg->y );
-  memcpy(buf + offset, & msgy , 4);
+  sbp_pack_s32(buf + offset, msg->y);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgz = htole32( *(const u32*)&msg->z );
-  memcpy(buf + offset, & msgz , 4);
+  sbp_pack_s32(buf + offset, msg->z);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
+  memcpy(buf + offset, & msg->flags , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -473,32 +420,22 @@ static inline bool sbp_unpack_sbp_msg_angular_rate_t(const u8 *buf, size_t len, 
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
+  msg->tow = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->x, buf + offset, 4);
-  u32 msgx = *(const u32*)&msg->x;
-  msgx = le32toh( msgx );
-  msg->x = *(const s32*)&msgx;
+  msg->x = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->y, buf + offset, 4);
-  u32 msgy = *(const u32*)&msg->y;
-  msgy = le32toh( msgy );
-  msg->y = *(const s32*)&msgy;
+  msg->y = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->z, buf + offset, 4);
-  u32 msgz = *(const u32*)&msg->z;
-  msgz = le32toh( msgz );
-  msg->z = *(const s32*)&msgz;
+  msg->z = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       

@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -44,33 +43,28 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   
         
   if (offset + 4 > len) { return false; }
-  float msgcn0 = msg->cn0;
-  memcpy(buf + offset, & msgcn0 , 4);
+  memcpy(buf + offset, & msg->cn0 , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcp = msg->cp;
-  memcpy(buf + offset, & msgcp , 4);
+  memcpy(buf + offset, & msg->cp , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcf = msg->cf;
-  memcpy(buf + offset, & msgcf , 4);
+  memcpy(buf + offset, & msg->cf , 4);
   // NOLINTNEXTLINE
   offset += 4;
 				
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidsat = msg->sid.sat;
-  memcpy(buf + offset, & msgsidsat , 1);
+  memcpy(buf + offset, & msg->sid.sat , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, & msgsidcode , 1);
+  memcpy(buf + offset, & msg->sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -143,39 +137,33 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  float msgcn0 = msg->cn0;
-  memcpy(buf + offset, & msgcn0 , 4);
+  memcpy(buf + offset, & msg->cn0 , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcp = msg->cp;
-  memcpy(buf + offset, & msgcp , 4);
+  memcpy(buf + offset, & msg->cp , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcf = msg->cf;
-  memcpy(buf + offset, & msgcf , 4);
+  memcpy(buf + offset, & msg->cf , 4);
   // NOLINTNEXTLINE
   offset += 4;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = htole16( msg->sid.sat );
-  memcpy(buf + offset, & msgsidsat , 2);
+  sbp_pack_u16(buf + offset, msg->sid.sat);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, & msgsidcode , 1);
+  memcpy(buf + offset, & msg->sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, & msgsidreserved , 1);
+  memcpy(buf + offset, & msg->sid.reserved , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -206,8 +194,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
 			
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh( msg->sid.sat );
+  msg->sid.sat = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -254,39 +241,33 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  float msgsnr = msg->snr;
-  memcpy(buf + offset, & msgsnr , 4);
+  memcpy(buf + offset, & msg->snr , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcp = msg->cp;
-  memcpy(buf + offset, & msgcp , 4);
+  memcpy(buf + offset, & msg->cp , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcf = msg->cf;
-  memcpy(buf + offset, & msgcf , 4);
+  memcpy(buf + offset, & msg->cf , 4);
   // NOLINTNEXTLINE
   offset += 4;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = htole16( msg->sid.sat );
-  memcpy(buf + offset, & msgsidsat , 2);
+  sbp_pack_u16(buf + offset, msg->sid.sat);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, & msgsidcode , 1);
+  memcpy(buf + offset, & msg->sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, & msgsidreserved , 1);
+  memcpy(buf + offset, & msg->sid.reserved , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -317,8 +298,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
 			
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh( msg->sid.sat );
+  msg->sid.sat = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -358,26 +338,22 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  float msgsnr = msg->snr;
-  memcpy(buf + offset, & msgsnr , 4);
+  memcpy(buf + offset, & msg->snr , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcp = msg->cp;
-  memcpy(buf + offset, & msgcp , 4);
+  memcpy(buf + offset, & msg->cp , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  float msgcf = msg->cf;
-  memcpy(buf + offset, & msgcf , 4);
+  memcpy(buf + offset, & msg->cf , 4);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgprn = msg->prn;
-  memcpy(buf + offset, & msgprn , 1);
+  memcpy(buf + offset, & msg->prn , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -458,81 +434,68 @@ static inline bool sbp_pack_sbp_acq_sv_profile_t(u8 *buf, size_t len, const sbp_
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgjob_type = msg->job_type;
-  memcpy(buf + offset, & msgjob_type , 1);
+  memcpy(buf + offset, & msg->job_type , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, & msgstatus , 1);
+  memcpy(buf + offset, & msg->status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcn0 = htole16( msg->cn0 );
-  memcpy(buf + offset, & msgcn0 , 2);
+  sbp_pack_u16(buf + offset, msg->cn0);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgint_time = msg->int_time;
-  memcpy(buf + offset, & msgint_time , 1);
+  memcpy(buf + offset, & msg->int_time , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidsat = msg->sid.sat;
-  memcpy(buf + offset, & msgsidsat , 1);
+  memcpy(buf + offset, & msg->sid.sat , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, & msgsidcode , 1);
+  memcpy(buf + offset, & msg->sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgbin_width = htole16( msg->bin_width );
-  memcpy(buf + offset, & msgbin_width , 2);
+  sbp_pack_u16(buf + offset, msg->bin_width);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtimestamp = htole32( msg->timestamp );
-  memcpy(buf + offset, & msgtimestamp , 4);
+  sbp_pack_u32(buf + offset, msg->timestamp);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtime_spent = htole32( msg->time_spent );
-  memcpy(buf + offset, & msgtime_spent , 4);
+  sbp_pack_u32(buf + offset, msg->time_spent);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf_min = htole32( *(const u32*)&msg->cf_min );
-  memcpy(buf + offset, & msgcf_min , 4);
+  sbp_pack_s32(buf + offset, msg->cf_min);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf_max = htole32( *(const u32*)&msg->cf_max );
-  memcpy(buf + offset, & msgcf_max , 4);
+  sbp_pack_s32(buf + offset, msg->cf_max);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf = htole32( *(const u32*)&msg->cf );
-  memcpy(buf + offset, & msgcf , 4);
+  sbp_pack_s32(buf + offset, msg->cf);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcp = htole32( msg->cp );
-  memcpy(buf + offset, & msgcp , 4);
+  sbp_pack_u32(buf + offset, msg->cp);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -557,8 +520,7 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_t(const u8 *buf, size_t len, sb
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->cn0, buf + offset, 2);
-  msg->cn0 = le16toh( msg->cn0 );
+  msg->cn0 = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -579,50 +541,37 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_t(const u8 *buf, size_t len, sb
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->bin_width, buf + offset, 2);
-  msg->bin_width = le16toh( msg->bin_width );
+  msg->bin_width = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->timestamp, buf + offset, 4);
-  msg->timestamp = le32toh( msg->timestamp );
+  msg->timestamp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->time_spent, buf + offset, 4);
-  msg->time_spent = le32toh( msg->time_spent );
+  msg->time_spent = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf_min, buf + offset, 4);
-  u32 msgcf_min = *(const u32*)&msg->cf_min;
-  msgcf_min = le32toh( msgcf_min );
-  msg->cf_min = *(const s32*)&msgcf_min;
+  msg->cf_min = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf_max, buf + offset, 4);
-  u32 msgcf_max = *(const u32*)&msg->cf_max;
-  msgcf_max = le32toh( msgcf_max );
-  msg->cf_max = *(const s32*)&msgcf_max;
+  msg->cf_max = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf, buf + offset, 4);
-  u32 msgcf = *(const u32*)&msg->cf;
-  msgcf = le32toh( msgcf );
-  msg->cf = *(const s32*)&msgcf;
+  msg->cf = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cp, buf + offset, 4);
-  msg->cp = le32toh( msg->cp );
+  msg->cp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -675,87 +624,73 @@ static inline bool sbp_pack_sbp_acq_sv_profile_dep_t(u8 *buf, size_t len, const 
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgjob_type = msg->job_type;
-  memcpy(buf + offset, & msgjob_type , 1);
+  memcpy(buf + offset, & msg->job_type , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, & msgstatus , 1);
+  memcpy(buf + offset, & msg->status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcn0 = htole16( msg->cn0 );
-  memcpy(buf + offset, & msgcn0 , 2);
+  sbp_pack_u16(buf + offset, msg->cn0);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgint_time = msg->int_time;
-  memcpy(buf + offset, & msgint_time , 1);
+  memcpy(buf + offset, & msg->int_time , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = htole16( msg->sid.sat );
-  memcpy(buf + offset, & msgsidsat , 2);
+  sbp_pack_u16(buf + offset, msg->sid.sat);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, & msgsidcode , 1);
+  memcpy(buf + offset, & msg->sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, & msgsidreserved , 1);
+  memcpy(buf + offset, & msg->sid.reserved , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgbin_width = htole16( msg->bin_width );
-  memcpy(buf + offset, & msgbin_width , 2);
+  sbp_pack_u16(buf + offset, msg->bin_width);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtimestamp = htole32( msg->timestamp );
-  memcpy(buf + offset, & msgtimestamp , 4);
+  sbp_pack_u32(buf + offset, msg->timestamp);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtime_spent = htole32( msg->time_spent );
-  memcpy(buf + offset, & msgtime_spent , 4);
+  sbp_pack_u32(buf + offset, msg->time_spent);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf_min = htole32( *(const u32*)&msg->cf_min );
-  memcpy(buf + offset, & msgcf_min , 4);
+  sbp_pack_s32(buf + offset, msg->cf_min);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf_max = htole32( *(const u32*)&msg->cf_max );
-  memcpy(buf + offset, & msgcf_max , 4);
+  sbp_pack_s32(buf + offset, msg->cf_max);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcf = htole32( *(const u32*)&msg->cf );
-  memcpy(buf + offset, & msgcf , 4);
+  sbp_pack_s32(buf + offset, msg->cf);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcp = htole32( msg->cp );
-  memcpy(buf + offset, & msgcp , 4);
+  sbp_pack_u32(buf + offset, msg->cp);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -780,8 +715,7 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_dep_t(const u8 *buf, size_t len
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->cn0, buf + offset, 2);
-  msg->cn0 = le16toh( msg->cn0 );
+  msg->cn0 = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -792,8 +726,7 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_dep_t(const u8 *buf, size_t len
 			
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh( msg->sid.sat );
+  msg->sid.sat = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -808,50 +741,37 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_dep_t(const u8 *buf, size_t len
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->bin_width, buf + offset, 2);
-  msg->bin_width = le16toh( msg->bin_width );
+  msg->bin_width = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->timestamp, buf + offset, 4);
-  msg->timestamp = le32toh( msg->timestamp );
+  msg->timestamp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->time_spent, buf + offset, 4);
-  msg->time_spent = le32toh( msg->time_spent );
+  msg->time_spent = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf_min, buf + offset, 4);
-  u32 msgcf_min = *(const u32*)&msg->cf_min;
-  msgcf_min = le32toh( msgcf_min );
-  msg->cf_min = *(const s32*)&msgcf_min;
+  msg->cf_min = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf_max, buf + offset, 4);
-  u32 msgcf_max = *(const u32*)&msg->cf_max;
-  msgcf_max = le32toh( msgcf_max );
-  msg->cf_max = *(const s32*)&msgcf_max;
+  msg->cf_max = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cf, buf + offset, 4);
-  u32 msgcf = *(const u32*)&msg->cf;
-  msgcf = le32toh( msgcf );
-  msg->cf = *(const s32*)&msgcf;
+  msg->cf = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->cp, buf + offset, 4);
-  msg->cp = le32toh( msg->cp );
+  msg->cp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
   return true;
@@ -912,81 +832,68 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
 					
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxjob_type = msg->acq_sv_profile[msgacq_sv_profile_idx].job_type;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxjob_type , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].job_type , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxstatus = msg->acq_sv_profile[msgacq_sv_profile_idx].status;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxstatus , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcn0 , 2);
+  sbp_pack_u16(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxint_time = msg->acq_sv_profile[msgacq_sv_profile_idx].int_time;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxint_time , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].int_time , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidsat , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxsidcode = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidcode , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxbin_width , 2);
+  sbp_pack_u16(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtimestamp , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtime_spent , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_min , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_max , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcp , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
   // NOLINTNEXTLINE
   offset += 4;
 			}
@@ -1019,8 +926,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cn0, buf + offset, 2);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = le16toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -1041,50 +947,37 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width, buf + offset, 2);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width = le16toh( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cp, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cp = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
 		}
@@ -1148,87 +1041,73 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
 					
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxjob_type = msg->acq_sv_profile[msgacq_sv_profile_idx].job_type;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxjob_type , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].job_type , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxstatus = msg->acq_sv_profile[msgacq_sv_profile_idx].status;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxstatus , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcn0 , 2);
+  sbp_pack_u16(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxint_time = msg->acq_sv_profile[msgacq_sv_profile_idx].int_time;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxint_time , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].int_time , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidsat , 2);
+  sbp_pack_u16(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxsidcode = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidcode , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgacq_sv_profilemsgacq_sv_profile_idxsidreserved = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.reserved;
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidreserved , 1);
+  memcpy(buf + offset, & msg->acq_sv_profile[msgacq_sv_profile_idx].sid.reserved , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxbin_width , 2);
+  sbp_pack_u16(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtimestamp , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtime_spent , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_min , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_max , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf , 4);
+  sbp_pack_s32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cf);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
-  memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcp , 4);
+  sbp_pack_u32(buf + offset, msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
   // NOLINTNEXTLINE
   offset += 4;
 			}
@@ -1261,8 +1140,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cn0, buf + offset, 2);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = le16toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -1273,8 +1151,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
 			
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat, buf + offset, 2);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat = le16toh( msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
@@ -1289,50 +1166,37 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width, buf + offset, 2);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width = le16toh( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf, buf + offset, 4);
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf );
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = sbp_unpack_s32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cp, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cp = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cp = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
 		}

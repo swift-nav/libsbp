@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -62,8 +61,7 @@ static inline bool sbp_pack_sbp_msg_bootloader_handshake_resp_t(u8 *buf, size_t 
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgflags = htole32( msg->flags );
-  memcpy(buf + offset, & msgflags , 4);
+  sbp_pack_u32(buf + offset, msg->flags);
   // NOLINTNEXTLINE
   offset += 4;
         offset += sbp_unterminated_string_pack(&msg->version, 251, buf + offset, (uint8_t)(len - offset));
@@ -79,8 +77,7 @@ static inline bool sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const u8 *buf,
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->flags, buf + offset, 4);
-  msg->flags = le32toh( msg->flags );
+  msg->flags = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       offset += sbp_unterminated_string_unpack(&msg->version, 251, buf + offset, (uint8_t)(len - offset));
@@ -105,8 +102,7 @@ static inline bool sbp_pack_sbp_msg_bootloader_jump_to_app_t(u8 *buf, size_t len
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgjump = msg->jump;
-  memcpy(buf + offset, & msgjump , 1);
+  memcpy(buf + offset, & msg->jump , 1);
   // NOLINTNEXTLINE
   offset += 1;
   return true;
@@ -176,8 +172,7 @@ static inline bool sbp_pack_sbp_msg_nap_device_dna_resp_t(u8 *buf, size_t len, c
 			{
         
   if (offset + 1 > len) { return false; }
-  u8 msgdnamsgdna_idx = msg->dna[msgdna_idx];
-  memcpy(buf + offset, & msgdnamsgdna_idx , 1);
+  memcpy(buf + offset, & msg->dna[msgdna_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}

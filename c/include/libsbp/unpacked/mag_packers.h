@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -41,32 +40,27 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
+  sbp_pack_u32(buf + offset, msg->tow);
   // NOLINTNEXTLINE
   offset += 4;
         
   if (offset + 1 > len) { return false; }
-  u8 msgtow_f = msg->tow_f;
-  memcpy(buf + offset, & msgtow_f , 1);
+  memcpy(buf + offset, & msg->tow_f , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgmag_x = htole16( *(const u16*)&msg->mag_x );
-  memcpy(buf + offset, & msgmag_x , 2);
+  sbp_pack_s16(buf + offset, msg->mag_x);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgmag_y = htole16( *(const u16*)&msg->mag_y );
-  memcpy(buf + offset, & msgmag_y , 2);
+  sbp_pack_s16(buf + offset, msg->mag_y);
   // NOLINTNEXTLINE
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgmag_z = htole16( *(const u16*)&msg->mag_z );
-  memcpy(buf + offset, & msgmag_z , 2);
+  sbp_pack_s16(buf + offset, msg->mag_z);
   // NOLINTNEXTLINE
   offset += 2;
   return true;
@@ -81,8 +75,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   
       
   if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
+  msg->tow = sbp_unpack_u32(buf + offset);
   // NOLINTNEXTLINE
   offset += 4;
       
@@ -92,26 +85,17 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->mag_x, buf + offset, 2);
-  u16 msgmag_x = *(const u16*)&msg->mag_x;
-  msgmag_x = le16toh( msgmag_x );
-  msg->mag_x = *(const s16*)&msgmag_x;
+  msg->mag_x = sbp_unpack_s16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->mag_y, buf + offset, 2);
-  u16 msgmag_y = *(const u16*)&msg->mag_y;
-  msgmag_y = le16toh( msgmag_y );
-  msg->mag_y = *(const s16*)&msgmag_y;
+  msg->mag_y = sbp_unpack_s16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->mag_z, buf + offset, 2);
-  u16 msgmag_z = *(const u16*)&msg->mag_z;
-  msgmag_z = le16toh( msgmag_z );
-  msg->mag_z = *(const s16*)&msgmag_z;
+  msg->mag_z = sbp_unpack_s16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
   return true;

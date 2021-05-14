@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -39,8 +38,7 @@ static inline bool sbp_pack_sbp_msg_user_data_t(u8 *buf, size_t len, const sbp_m
 			{
           
   if (offset + 1 > len) { return false; }
-  u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-  memcpy(buf + offset, & msgcontentsmsgcontents_idx , 1);
+  memcpy(buf + offset, & msg->contents[msgcontents_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}

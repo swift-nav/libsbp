@@ -71,6 +71,74 @@ typedef uint64_t u64;
 
 #endif /* toolchaing packing macros */
 
+static inline void sbp_pack_u16(uint8_t *buf, uint16_t v) {
+  buf[0] = (uint8_t)(v & 0xff);
+  buf[1] = (uint8_t)((v & 0xff00) >> 8);
+}
+
+static inline void sbp_pack_u32(uint8_t *buf, uint32_t v) {
+  buf[0] = (uint8_t)(v & 0xff);
+  buf[1] = (uint8_t)((v & 0xff00) >> 8);
+  buf[2] = (uint8_t)((v & 0xff0000) >> 16);
+  buf[3] = (uint8_t)((v & 0xff000000) >> 24);
+}
+
+static inline void sbp_pack_u64(uint8_t *buf, uint64_t v) {
+  buf[0] = (uint8_t)(v & 0xff);
+  buf[1] = (uint8_t)((v & 0xff00) >> 8);
+  buf[2] = (uint8_t)((v & 0xff0000) >> 16);
+  buf[3] = (uint8_t)((v & 0xff000000) >> 24);
+  buf[4] = (uint8_t)((v & 0xff00000000) >> 32);
+  buf[5] = (uint8_t)((v & 0xff0000000000) >> 40);
+  buf[6] = (uint8_t)((v & 0xff000000000000) >> 48);
+  buf[7] = (uint8_t)((v & 0xff00000000000000) >> 56);
+}
+
+static inline void sbp_pack_s16(uint8_t *buf, s16 v) { sbp_pack_u16(buf, (u16)v); }
+static inline void sbp_pack_s32(uint8_t *buf, s32 v) { sbp_pack_u32(buf, (u32)v); }
+static inline void sbp_pack_s64(uint8_t *buf, s64 v) { sbp_pack_u64(buf, (u64)v); }
+
+static inline uint16_t sbp_unpack_u16(const uint8_t *buf) {
+  uint32_t v = buf[1];
+  v <<= 8;
+  v |= buf[0];
+  return (uint16_t)v;
+}
+
+static inline uint32_t sbp_unpack_u32(const uint8_t *buf) {
+  uint32_t v = buf[3];
+  v <<= 8;
+  v |= buf[2];
+  v <<= 8;
+  v |= buf[1];
+  v <<= 8;
+  v |= buf[0];
+  return v;
+}
+
+static inline uint64_t sbp_unpack_u64(const uint8_t *buf) {
+  uint64_t v = buf[7];
+  v <<= 8;
+  v |= buf[6];
+  v <<= 8;
+  v |= buf[5];
+  v <<= 8;
+  v |= buf[4];
+  v <<= 8;
+  v |= buf[3];
+  v <<= 8;
+  v |= buf[2];
+  v <<= 8;
+  v |= buf[1];
+  v <<= 8;
+  v |= buf[0];
+  return v;
+}
+
+static inline s16 sbp_unpack_s16(const uint8_t *buf) { return (s16)sbp_unpack_u16(buf); }
+static inline s32 sbp_unpack_s32(const uint8_t *buf) { return (s32)sbp_unpack_u32(buf); }
+static inline s64 sbp_unpack_s64(const uint8_t *buf) { return (s64)sbp_unpack_u64(buf); }
+
 /** \} */
 
 #endif /* LIBSBP_COMMON_H */

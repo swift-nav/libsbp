@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -93,8 +92,7 @@ static inline bool sbp_pack_sbp_msg_settings_write_resp_t(u8 *buf, size_t len, c
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, & msgstatus , 1);
+  memcpy(buf + offset, & msg->status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         offset += sbp_multipart_string_pack(&msg->setting, 254, 3, 3, buf + offset, (uint8_t)(len - offset));
@@ -197,8 +195,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_by_index_req_t(u8 *buf, size_t
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgindex = htole16( msg->index );
-  memcpy(buf + offset, & msgindex , 2);
+  sbp_pack_u16(buf + offset, msg->index);
   // NOLINTNEXTLINE
   offset += 2;
   return true;
@@ -213,8 +210,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_req_t(const u8 *buf
   
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->index, buf + offset, 2);
-  msg->index = le16toh( msg->index );
+  msg->index = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
   return true;
@@ -240,8 +236,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_by_index_resp_t(u8 *buf, size_
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgindex = htole16( msg->index );
-  memcpy(buf + offset, & msgindex , 2);
+  sbp_pack_u16(buf + offset, msg->index);
   // NOLINTNEXTLINE
   offset += 2;
         offset += sbp_multipart_string_pack(&msg->setting, 253, 3, 4, buf + offset, (uint8_t)(len - offset));
@@ -257,8 +252,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *bu
   
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->index, buf + offset, 2);
-  msg->index = le16toh( msg->index );
+  msg->index = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
       offset += sbp_multipart_string_unpack(&msg->setting, 253, 3, 4, buf + offset, (uint8_t)(len - offset));
@@ -343,8 +337,7 @@ static inline bool sbp_pack_sbp_msg_settings_register_resp_t(u8 *buf, size_t len
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, & msgstatus , 1);
+  memcpy(buf + offset, & msg->status , 1);
   // NOLINTNEXTLINE
   offset += 1;
         offset += sbp_multipart_string_pack(&msg->setting, 254, 3, 3, buf + offset, (uint8_t)(len - offset));

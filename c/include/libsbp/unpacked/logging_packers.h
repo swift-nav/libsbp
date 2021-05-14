@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -35,8 +34,7 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log
   
         
   if (offset + 1 > len) { return false; }
-  u8 msglevel = msg->level;
-  memcpy(buf + offset, & msglevel , 1);
+  memcpy(buf + offset, & msg->level , 1);
   // NOLINTNEXTLINE
   offset += 1;
         offset += sbp_unterminated_string_pack(&msg->text, 254, buf + offset, (uint8_t)(len - offset));
@@ -85,22 +83,19 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   
         
   if (offset + 1 > len) { return false; }
-  u8 msgsource = msg->source;
-  memcpy(buf + offset, & msgsource , 1);
+  memcpy(buf + offset, & msg->source , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgprotocol = msg->protocol;
-  memcpy(buf + offset, & msgprotocol , 1);
+  memcpy(buf + offset, & msg->protocol , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			for(size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->n_fwd_payload; msgfwd_payload_idx++)
 			{
           
   if (offset + 1 > len) { return false; }
-  char msgfwd_payloadmsgfwd_payload_idx = msg->fwd_payload[msgfwd_payload_idx];
-  memcpy(buf + offset, & msgfwd_payloadmsgfwd_payload_idx , 1);
+  memcpy(buf + offset, & msg->fwd_payload[msgfwd_payload_idx] , 1);
   // NOLINTNEXTLINE
   offset += 1;
 			}

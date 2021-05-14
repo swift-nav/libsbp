@@ -9,7 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
-#include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
@@ -57,64 +56,54 @@ static inline bool sbp_pack_sbp_msg_ndb_event_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 8 > len) { return false; }
-  u64 msgrecv_time = htole64( msg->recv_time );
-  memcpy(buf + offset, & msgrecv_time , 8);
+  sbp_pack_u64(buf + offset, msg->recv_time);
   // NOLINTNEXTLINE
   offset += 8;
         
   if (offset + 1 > len) { return false; }
-  u8 msgevent = msg->event;
-  memcpy(buf + offset, & msgevent , 1);
+  memcpy(buf + offset, & msg->event , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgobject_type = msg->object_type;
-  memcpy(buf + offset, & msgobject_type , 1);
+  memcpy(buf + offset, & msg->object_type , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgresult = msg->result;
-  memcpy(buf + offset, & msgresult , 1);
+  memcpy(buf + offset, & msg->result , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgdata_source = msg->data_source;
-  memcpy(buf + offset, & msgdata_source , 1);
+  memcpy(buf + offset, & msg->data_source , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 1 > len) { return false; }
-  u8 msgobject_sidsat = msg->object_sid.sat;
-  memcpy(buf + offset, & msgobject_sidsat , 1);
+  memcpy(buf + offset, & msg->object_sid.sat , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgobject_sidcode = msg->object_sid.code;
-  memcpy(buf + offset, & msgobject_sidcode , 1);
+  memcpy(buf + offset, & msg->object_sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
 				
         
   if (offset + 1 > len) { return false; }
-  u8 msgsrc_sidsat = msg->src_sid.sat;
-  memcpy(buf + offset, & msgsrc_sidsat , 1);
+  memcpy(buf + offset, & msg->src_sid.sat , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 1 > len) { return false; }
-  u8 msgsrc_sidcode = msg->src_sid.code;
-  memcpy(buf + offset, & msgsrc_sidcode , 1);
+  memcpy(buf + offset, & msg->src_sid.code , 1);
   // NOLINTNEXTLINE
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgoriginal_sender = htole16( msg->original_sender );
-  memcpy(buf + offset, & msgoriginal_sender , 2);
+  sbp_pack_u16(buf + offset, msg->original_sender);
   // NOLINTNEXTLINE
   offset += 2;
   return true;
@@ -129,8 +118,7 @@ static inline bool sbp_unpack_sbp_msg_ndb_event_t(const u8 *buf, size_t len, sbp
   
       
   if (offset + 8 > len) { return false; }
-  memcpy(&msg->recv_time, buf + offset, 8);
-  msg->recv_time = le64toh( msg->recv_time );
+  msg->recv_time = sbp_unpack_u64(buf + offset);
   // NOLINTNEXTLINE
   offset += 8;
       
@@ -177,8 +165,7 @@ static inline bool sbp_unpack_sbp_msg_ndb_event_t(const u8 *buf, size_t len, sbp
   offset += 1;
       
   if (offset + 2 > len) { return false; }
-  memcpy(&msg->original_sender, buf + offset, 2);
-  msg->original_sender = le16toh( msg->original_sender );
+  msg->original_sender = sbp_unpack_u16(buf + offset);
   // NOLINTNEXTLINE
   offset += 2;
   return true;
