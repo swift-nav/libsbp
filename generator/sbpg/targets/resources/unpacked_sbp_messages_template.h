@@ -69,7 +69,7 @@
 #define (((path)))_(((f.name)))_valid(f) sbp_(((f.encoding)))_string_valid(f, (((f.max_items))))
 #define (((path)))_(((f.name)))_set(f,s) sbp_(((f.encoding)))_string_set(f,s,(((f.max_items))))
 #define (((path)))_(((f.name)))_printf(f,...) sbp_(((f.encoding)))_string_printf(f,(((f.max_items))),__VA_ARGS__)
-#define (((path)))_(((f.name)))_vprintf(f,ap) sbp_(((f.encoding)))_string_vprintf(f,(((f.max_items))),ap)
+#define (((path)))_(((f.name)))_vprintf(f,fmt,ap) sbp_(((f.encoding)))_string_vprintf(f,(((f.max_items))),fmt,ap)
 #define (((path)))_(((f.name)))_packed_len(f) sbp_(((f.encoding)))_string_packed_len(f,(((f.max_items))))
 #define (((path)))_(((f.name)))_get(f) sbp_(((f.encoding)))_string_get(f,(((f.max_items))))
 #define (((path)))_(((f.name)))_len(f) ( (((path)))_(((f.name)))_packed_len(f) ((*- if f.encoding == "null_terminated" *)) - 1((*- endif *)))
@@ -82,7 +82,7 @@
 #define (((path)))_(((f.name)))_packed_len(f) sbp_(((f.encoding)))_string_packed_len(f, (((common_args))))
 #define (((path)))_(((f.name)))_append(f,s) sbp_(((f.encoding)))_string_append(f, s, (((common_args))))
 #define (((path)))_(((f.name)))_append_printf(f, ...) sbp_(((f.encoding)))_string_append_printf(s, (((common_args))), __VA_ARGS__)
-#define (((path)))_(((f.name)))_append_vprintf(f, ap) sbp_(((f.encoding)))_string_append_vprintf(s, (((common_args))), )p
+#define (((path)))_(((f.name)))_append_vprintf(f, fmt,ap) sbp_(((f.encoding)))_string_append_vprintf(s, (((common_args))), fmt, ap)
 #define (((path)))_(((f.name)))_count_sections(f) sbp_(((f.encoding)))_string_count_sections(f, (((common_args))))
 #define (((path)))_(((f.name)))_get_section(f,s) sbp_(((f.encoding)))_string_get_section(f,s,(((common_args))))
 #define (((path)))_(((f.name)))_section_len(f,s) sbp_(((f.encoding)))_string_section_len(f,s,(((common_args))))

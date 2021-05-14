@@ -126,18 +126,18 @@ class CallbackInterface<MsgType> {
  * or if the `handle_sbp_msg` functions are public or private.
  *
  * @example
- * class ECEFHandler : private sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t> {
+ * class ECEFHandler : private sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t> {
  *   public:
- *     ECEFHandler(sbp::State *state) : sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+ *     ECEFHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t>(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
  *
- *     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_gps_time_t& msg) {
+ *     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const sbp_msg_gps_time_t& msg) {
  *       // handle GPS time message
  *     }
  *
- *     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_pos_ecef_t& msg) {
+ *     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const sbp_msg_pos_ecef_t& msg) {
  *       // handle pos ECEF message
  *     }
  * };
@@ -169,6 +169,44 @@ template<typename... MsgTypes>
     MessageHandler& operator=(MessageHandler&&) = delete;
 
     using details::CallbackInterface<MsgTypes...>::handle_sbp_msg;
+};
+
+template<typename ClassT>
+using CallbackSbpMsgFn = void (*ClassT::*)(uint16_t, uint16_t, const sbp_msg_t &);
+
+template<typename ClassT>
+inline void sbp_all_unpacked_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
+                                     const sbp_msg_t *msg,
+                                     void *context) {
+  assert(nullptr != context);
+
+  auto *instance = static_cast<ClassT *>(context);
+  instance->handle_sbp_message(sender_id, msg_type, *msg);
+}
+
+class AllUnpackedHandler {
+    State &state_;
+    sbp_msg_callbacks_node_t callback_node_;
+
+  public:
+
+    explicit AllUnpackedHandler(State *state) : state_(*state), callback_node_() {
+      sbp_register_all_unpacked_callback(state_.get_state(),
+              sbp_all_unpacked_cb_passthrough<AllUnpackedHandler>,
+              this,
+              &callback_node_);
+    }
+
+    virtual ~AllUnpackedHandler() {
+        sbp_remove_callback(state_.get_state(), &callback_node_);
+    }
+
+    AllUnpackedHandler(const AllUnpackedHandler&) = delete;
+    AllUnpackedHandler(AllUnpackedHandler&& other) = delete;
+    AllUnpackedHandler& operator=(const AllUnpackedHandler&) = delete;
+    AllUnpackedHandler& operator=(AllUnpackedHandler&&) = delete;
+    
+    virtual void handle_sbp_message(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t &msg) = 0;
 };
 
 } /* namespace sbp */
