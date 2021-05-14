@@ -139,7 +139,7 @@ You can then make this image operate on your local workspace like this:
 
 `cd ..`  (back up to the root of the repo)
 
-``docker run --rm -v $PWD:/mnt/workspace  -i -t libsbp-build:latest``
+``docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:latest``
 
 #### Using the docker image
 
