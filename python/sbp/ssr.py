@@ -43,9 +43,9 @@ The corrections conform with RTCMv3 MT 1059 / 1065.
     Code bias value
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'code' / construct.Int8ul,
-                     'value' / construct.Int16sl,))
+                     'value' / construct.Int16sl,)
   __slots__ = [
                'code',
                'value',
@@ -90,12 +90,12 @@ Increased for every discontinuity in phase.
     Phase bias for specified signal
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'code' / construct.Int8ul,
                      'integer_indicator' / construct.Int8ul,
                      'widelane_integer_indicator' / construct.Int8ul,
                      'discontinuity_counter' / construct.Int8ul,
-                     'bias' / construct.Int32sl,))
+                     'bias' / construct.Int32sl,)
   __slots__ = [
                'code',
                'integer_indicator',
@@ -151,14 +151,14 @@ following RTCM DF391 specification.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tile_set_id' / construct.Int16ul,
                      'tile_id' / construct.Int16ul,
-                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_atmo' / construct.Int8ul,))
+                     'iod_atmo' / construct.Int8ul,)
   __slots__ = [
                'tile_set_id',
                'tile_id',
@@ -222,15 +222,15 @@ specification in units of m.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tile_set_id' / construct.Int16ul,
                      'tile_id' / construct.Int16ul,
-                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
                      'update_interval' / construct.Int8ul,
                      'iod_atmo' / construct.Int8ul,
-                     'tropo_quality_indicator' / construct.Int8ul,))
+                     'tropo_quality_indicator' / construct.Int8ul,)
   __slots__ = [
                'tile_set_id',
                'tile_id',
@@ -281,10 +281,10 @@ but in units of TECU instead of m.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
                      'stec_quality_indicator' / construct.Int8ul,
-                     'stec_coeff' / construct.Array(4, construct.Int16sl),))
+                     'stec_coeff' / construct.Array(4, construct.Int16sl),)
   __slots__ = [
                'sv_id',
                'stec_quality_indicator',
@@ -321,9 +321,9 @@ class TroposphericDelayCorrectionNoStd(object):
     Wet vertical delay
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'hydro' / construct.Int16sl,
-                     'wet' / construct.Int8sl,))
+                     'wet' / construct.Int8sl,)
   __slots__ = [
                'hydro',
                'wet',
@@ -361,10 +361,10 @@ point.
     stddev
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'hydro' / construct.Int16sl,
                      'wet' / construct.Int8sl,
-                     'stddev' / construct.Int8ul,))
+                     'stddev' / construct.Int8ul,)
   __slots__ = [
                'hydro',
                'wet',
@@ -400,9 +400,9 @@ class STECResidualNoStd(object):
     STEC residual
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
-                     'residual' / construct.Int16sl,))
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
+                     'residual' / construct.Int16sl,)
   __slots__ = [
                'sv_id',
                'residual',
@@ -440,10 +440,10 @@ at the grid point,
     stddev
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
                      'residual' / construct.Int16sl,
-                     'stddev' / construct.Int8ul,))
+                     'stddev' / construct.Int8ul,)
   __slots__ = [
                'sv_id',
                'residual',
@@ -483,10 +483,10 @@ grid point.
     STEC residuals for each satellite
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrectionNoStd._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidualNoStd._parser)),))
+                     'tropo_delay_correction' / TroposphericDelayCorrectionNoStd._parser,
+                     'stec_residuals' / construct.GreedyRange(STECResidualNoStd._parser),)
   __slots__ = [
                'index',
                'tropo_delay_correction',
@@ -526,10 +526,10 @@ stddev) for each satellite at the grid point.
     STEC residuals for each satellite (mean, stddev)
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrection._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidual._parser)),))
+                     'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                     'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
   __slots__ = [
                'index',
                'tropo_delay_correction',
@@ -578,12 +578,12 @@ elevation variations in 1 degree increments.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
                      'sat_info' / construct.Int8ul,
                      'svn' / construct.Int16ul,
                      'pco' / construct.Array(3, construct.Int16sl),
-                     'pcv' / construct.Array(21, construct.Int8sl),))
+                     'pcv' / construct.Array(21, construct.Int8sl),)
   __slots__ = [
                'sid',
                'sat_info',
@@ -635,12 +635,12 @@ following RTCM DF391 specification.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_atmo' / construct.Int8ul,))
+                     'iod_atmo' / construct.Int8ul,)
   __slots__ = [
                'time',
                'num_msgs',
@@ -696,13 +696,13 @@ specifcation in units of m.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
                      'update_interval' / construct.Int8ul,
                      'iod_atmo' / construct.Int8ul,
-                     'tropo_quality_indicator' / construct.Int8ul,))
+                     'tropo_quality_indicator' / construct.Int8ul,)
   __slots__ = [
                'time',
                'num_msgs',
@@ -758,13 +758,13 @@ Also includes an RLE encoded validity list.
     Postion of this message in the dataset
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'region_size_inverse' / construct.Int8ul,
                      'area_width' / construct.Int16ul,
                      'lat_nw_corner_enc' / construct.Int16ul,
                      'lon_nw_corner_enc' / construct.Int16ul,
                      'num_msgs' / construct.Int8ul,
-                     'seq_num' / construct.Int8ul,))
+                     'seq_num' / construct.Int8ul,)
   __slots__ = [
                'region_size_inverse',
                'area_width',
@@ -850,8 +850,8 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'iod' / construct.Int32ul,
@@ -995,11 +995,11 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   construct.GreedyRange('biases' / construct.Struct(CodeBiasesContent._parser)),)
+                   'biases' / construct.GreedyRange(CodeBiasesContent._parser),)
   __slots__ = [
                'time',
                'sid',
@@ -1127,15 +1127,15 @@ satellite being tracked.
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'dispersive_bias' / construct.Int8ul,
                    'mw_consistency' / construct.Int8ul,
                    'yaw' / construct.Int16ul,
                    'yaw_rate' / construct.Int8sl,
-                   construct.GreedyRange('biases' / construct.Struct(PhaseBiasesContent._parser)),)
+                   'biases' / construct.GreedyRange(PhaseBiasesContent._parser),)
   __slots__ = [
                'time',
                'sid',
@@ -1248,8 +1248,8 @@ It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(STECHeader._parser),
-                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+                   'header' / STECHeader._parser,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
   __slots__ = [
                'header',
                'stec_sat_list',
@@ -1346,8 +1346,8 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
-                   'element' / construct.Struct(GridElement._parser),)
+                   'header' / GriddedCorrectionHeader._parser,
+                   'element' / GridElement._parser,)
   __slots__ = [
                'header',
                'element',
@@ -1620,7 +1620,7 @@ class MsgSsrSatelliteApc(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('apc' / construct.Struct(SatelliteAPC._parser)),)
+                   'apc' / construct.GreedyRange(SatelliteAPC._parser),)
   __slots__ = [
                'apc',
               ]
@@ -1739,8 +1739,8 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'iod' / construct.Int8ul,
@@ -1868,8 +1868,8 @@ class MsgSsrStecCorrectionDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(STECHeaderDepA._parser),
-                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+                   'header' / STECHeaderDepA._parser,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
   __slots__ = [
                'header',
                'stec_sat_list',
@@ -1961,8 +1961,8 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeaderDepA._parser),
-                   'element' / construct.Struct(GridElementNoStd._parser),)
+                   'header' / GriddedCorrectionHeaderDepA._parser,
+                   'element' / GridElementNoStd._parser,)
   __slots__ = [
                'header',
                'element',
@@ -2056,8 +2056,8 @@ and standard deviation)
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeaderDepA._parser),
-                   'element' / construct.Struct(GridElement._parser),)
+                   'header' / GriddedCorrectionHeaderDepA._parser,
+                   'element' / GridElement._parser,)
   __slots__ = [
                'header',
                'element',
@@ -2153,8 +2153,8 @@ valid and invalid (and vice versa) are encoded as u8 integers.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GridDefinitionHeaderDepA._parser),
-                   construct.GreedyRange('rle_list' / construct.Int8ul),)
+                   'header' / GridDefinitionHeaderDepA._parser,
+                   'rle_list' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'header',
                'rle_list',

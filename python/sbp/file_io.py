@@ -175,7 +175,7 @@ preserved from the request.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -385,7 +385,7 @@ the response is preserved from the request.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -586,7 +586,7 @@ only  process this message when it is received from sender ID
                    'sequence' / construct.Int32ul,
                    'offset' / construct.Int32ul,
                    'filename' / construct.GreedyBytes,
-                   construct.GreedyRange('data' / construct.Int8ul),)
+                   'data' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'offset',

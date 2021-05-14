@@ -62,19 +62,19 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'job_type' / construct.Int8ul,
                      'status' / construct.Int8ul,
                      'cn0' / construct.Int16ul,
                      'int_time' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignal._parser),
+                     'sid' / GnssSignal._parser,
                      'bin_width' / construct.Int16ul,
                      'timestamp' / construct.Int32ul,
                      'time_spent' / construct.Int32ul,
                      'cf_min' / construct.Int32sl,
                      'cf_max' / construct.Int32sl,
                      'cf' / construct.Int32sl,
-                     'cp' / construct.Int32ul,))
+                     'cp' / construct.Int32ul,)
   __slots__ = [
                'job_type',
                'status',
@@ -148,19 +148,19 @@ class AcqSvProfileDep(object):
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'job_type' / construct.Int8ul,
                      'status' / construct.Int8ul,
                      'cn0' / construct.Int16ul,
                      'int_time' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),
+                     'sid' / GnssSignalDep._parser,
                      'bin_width' / construct.Int16ul,
                      'timestamp' / construct.Int32ul,
                      'time_spent' / construct.Int32ul,
                      'cf_min' / construct.Int32sl,
                      'cf_max' / construct.Int32sl,
                      'cf' / construct.Int32sl,
-                     'cp' / construct.Int32ul,))
+                     'cp' / construct.Int32ul,)
   __slots__ = [
                'job_type',
                'status',
@@ -237,7 +237,7 @@ ratio.
                    'cn0' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignal._parser),)
+                   'sid' / GnssSignal._parser,)
   __slots__ = [
                'cn0',
                'cp',
@@ -341,7 +341,7 @@ class MsgAcqResultDepC(SBP):
                    'cn0' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'cn0',
                'cp',
@@ -447,7 +447,7 @@ be in units of dB Hz in a later revision of this message.
                    'snr' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'snr',
                'cp',
@@ -652,7 +652,7 @@ The message is used to debug and measure the performance.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfile._parser)),)
+                   'acq_sv_profile' / construct.GreedyRange(AcqSvProfile._parser),)
   __slots__ = [
                'acq_sv_profile',
               ]
@@ -741,7 +741,7 @@ class MsgAcqSvProfileDep(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfileDep._parser)),)
+                   'acq_sv_profile' / construct.GreedyRange(AcqSvProfileDep._parser),)
   __slots__ = [
                'acq_sv_profile',
               ]

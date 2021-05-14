@@ -44,10 +44,10 @@ measured signal power.
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
                      'fcn' / construct.Int8ul,
-                     'cn0' / construct.Int8ul,))
+                     'cn0' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'fcn',
@@ -88,9 +88,9 @@ the Slot ID (from 1 to 28)
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'mesid' / construct.Struct(GnssSignal._parser),
-                     'cn0' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'mesid' / GnssSignal._parser,
+                     'cn0' / construct.Int8ul,)
   __slots__ = [
                'mesid',
                'cn0',
@@ -125,9 +125,9 @@ class TrackingChannelCorrelation(object):
     Quadrature correlation
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'I' / construct.Int16sl,
-                     'Q' / construct.Int16sl,))
+                     'Q' / construct.Int16sl,)
   __slots__ = [
                'I',
                'Q',
@@ -162,9 +162,9 @@ class TrackingChannelCorrelationDep(object):
     Quadrature correlation
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'I' / construct.Int32sl,
-                     'Q' / construct.Int32sl,))
+                     'Q' / construct.Int32sl,)
   __slots__ = [
                'I',
                'Q',
@@ -200,10 +200,10 @@ class TrackingChannelStateDepA(object):
     Carrier-to-noise density
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'state' / construct.Int8ul,
                      'prn' / construct.Int8ul,
-                     'cn0' / construct.Float32l,))
+                     'cn0' / construct.Float32l,)
   __slots__ = [
                'state',
                'prn',
@@ -241,10 +241,10 @@ class TrackingChannelStateDepB(object):
     Carrier-to-noise density
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'state' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),
-                     'cn0' / construct.Float32l,))
+                     'sid' / GnssSignalDep._parser,
+                     'cn0' / construct.Float32l,)
   __slots__ = [
                'state',
                'sid',
@@ -347,13 +347,13 @@ signal is in continuous track.
   """
   _parser = construct.Struct(
                    'recv_time' / construct.Int64ul,
-                   'tot' / construct.Struct(GPSTime._parser),
+                   'tot' / GPSTime._parser,
                    'P' / construct.Int32ul,
                    'P_std' / construct.Int16ul,
-                   'L' / construct.Struct(CarrierPhase._parser),
+                   'L' / CarrierPhase._parser,
                    'cn0' / construct.Int8ul,
                    'lock' / construct.Int16ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'doppler' / construct.Int32sl,
                    'doppler_std' / construct.Int16ul,
                    'uptime' / construct.Int32ul,
@@ -551,13 +551,13 @@ signal is in continuous track.
   """
   _parser = construct.Struct(
                    'recv_time' / construct.Int64ul,
-                   'tot' / construct.Struct(GPSTimeDep._parser),
+                   'tot' / GPSTimeDep._parser,
                    'P' / construct.Int32ul,
                    'P_std' / construct.Int16ul,
-                   'L' / construct.Struct(CarrierPhase._parser),
+                   'L' / CarrierPhase._parser,
                    'cn0' / construct.Int8ul,
                    'lock' / construct.Int16ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'doppler' / construct.Int32sl,
                    'doppler_std' / construct.Int16ul,
                    'uptime' / construct.Int32ul,
@@ -702,7 +702,7 @@ measurements for all tracked satellites.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelState._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelState._parser),)
   __slots__ = [
                'states',
               ]
@@ -794,7 +794,7 @@ measurements for all tracked satellites.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(MeasurementState._parser)),)
+                   'states' / construct.GreedyRange(MeasurementState._parser),)
   __slots__ = [
                'states',
               ]
@@ -890,7 +890,7 @@ update interval.
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -991,7 +991,7 @@ update interval.
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -1090,7 +1090,7 @@ class MsgTrackingIqDepA(SBP):
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -1184,7 +1184,7 @@ class MsgTrackingStateDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepA._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelStateDepA._parser),)
   __slots__ = [
                'states',
               ]
@@ -1273,7 +1273,7 @@ class MsgTrackingStateDepB(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepB._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelStateDepB._parser),)
   __slots__ = [
                'states',
               ]

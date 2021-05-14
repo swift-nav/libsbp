@@ -44,9 +44,9 @@ The content of flags, for each sensor type, is described in the relevant structu
     Refer to each InputType description
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'sensor_type' / construct.Int8ul,
-                     'flags' / construct.Int8ul,))
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'sensor_type',
                'flags',
@@ -80,8 +80,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     flags that store all relevant info specific to this sensor type.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -113,8 +113,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     Instrument time, grade, and architecture for a sensor.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -146,8 +146,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     Instrument ODO rate, grade, and quality.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -214,7 +214,7 @@ It focuses primarly, but not only, on GNSS metadata.
                    'alignment_status' / construct.Int8ul,
                    'last_used_gnss_pos_tow' / construct.Int32ul,
                    'last_used_gnss_vel_tow' / construct.Int32ul,
-                   construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
+                   'sol_in' / construct.GreedyRange(SolutionInputType._parser),)
   __slots__ = [
                'pdop',
                'hdop',
@@ -343,7 +343,7 @@ complete in the Fusion Engine, when output solution is the last received valid G
                    'vdop' / construct.Int16ul,
                    'age_corrections' / construct.Int16ul,
                    'age_gnss' / construct.Int32ul,
-                   construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
+                   'sol_in' / construct.GreedyRange(SolutionInputType._parser),)
   __slots__ = [
                'tow',
                'pdop',

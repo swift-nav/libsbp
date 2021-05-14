@@ -42,10 +42,10 @@ state is reported as initializing, the specific state should be ignored.
     Subsystem specific status code
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'component' / construct.Int16ul,
                      'generic' / construct.Int8ul,
-                     'specific' / construct.Int8ul,))
+                     'specific' / construct.Int8ul,)
   __slots__ = [
                'component',
                'generic',
@@ -420,7 +420,7 @@ be ignored.  Refer to product documentation for details.
                    'sbp_version' / construct.Int16ul,
                    'sequence' / construct.Int32ul,
                    'uptime' / construct.Int32ul,
-                   construct.GreedyRange('status' / construct.Struct(SubSystemReport._parser)),)
+                   'status' / construct.GreedyRange(SubSystemReport._parser),)
   __slots__ = [
                'reporting_system',
                'sbp_version',
@@ -1150,7 +1150,7 @@ including GROUP_META itself
                    'group_id' / construct.Int8ul,
                    'flags' / construct.Int8ul,
                    'n_group_msgs' / construct.Int8ul,
-                   construct.GreedyRange('group_msgs' / construct.Int16ul),)
+                   'group_msgs' / construct.GreedyRange(construct.Int16ul),)
   __slots__ = [
                'group_id',
                'flags',

@@ -57,13 +57,13 @@ be normalized.
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tx_throughput' / construct.Float32l,
                      'rx_throughput' / construct.Float32l,
                      'crc_error_count' / construct.Int16ul,
                      'io_error_count' / construct.Int16ul,
                      'tx_buffer_level' / construct.Int8ul,
-                     'rx_buffer_level' / construct.Int8ul,))
+                     'rx_buffer_level' / construct.Int8ul,)
   __slots__ = [
                'tx_throughput',
                'rx_throughput',
@@ -115,11 +115,11 @@ can cause momentary RTK solution outages.
     Smoothed estimate of the current period
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'avg' / construct.Int32sl,
                      'pmin' / construct.Int32sl,
                      'pmax' / construct.Int32sl,
-                     'current' / construct.Int32sl,))
+                     'current' / construct.Int32sl,)
   __slots__ = [
                'avg',
                'pmin',
@@ -166,11 +166,11 @@ communication latency in the system.
     Smoothed estimate of the current latency
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'avg' / construct.Int32sl,
                      'lmin' / construct.Int32sl,
                      'lmax' / construct.Int32sl,
-                     'current' / construct.Int32sl,))
+                     'current' / construct.Int32sl,)
   __slots__ = [
                'avg',
                'lmin',
@@ -220,12 +220,12 @@ though may not necessarily be populated with a value.
     Interface Name
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'duration' / construct.Int64ul,
                      'total_bytes' / construct.Int64ul,
                      'rx_bytes' / construct.Int32ul,
                      'tx_bytes' / construct.Int32ul,
-                     'interface_name'/ construct.Bytes(16),))
+                     'interface_name'/ construct.Bytes(16),)
   __slots__ = [
                'duration',
                'total_bytes',
@@ -853,11 +853,11 @@ period indicates their likelihood of transmission.
 
   """
   _parser = construct.Struct(
-                   'uart_a' / construct.Struct(UARTChannel._parser),
-                   'uart_b' / construct.Struct(UARTChannel._parser),
-                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
-                   'latency' / construct.Struct(Latency._parser),
-                   'obs_period' / construct.Struct(Period._parser),)
+                   'uart_a' / UARTChannel._parser,
+                   'uart_b' / UARTChannel._parser,
+                   'uart_ftdi' / UARTChannel._parser,
+                   'latency' / Latency._parser,
+                   'obs_period' / Period._parser,)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -960,10 +960,10 @@ class MsgUartStateDepa(SBP):
 
   """
   _parser = construct.Struct(
-                   'uart_a' / construct.Struct(UARTChannel._parser),
-                   'uart_b' / construct.Struct(UARTChannel._parser),
-                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
-                   'latency' / construct.Struct(Latency._parser),)
+                   'uart_a' / UARTChannel._parser,
+                   'uart_b' / UARTChannel._parser,
+                   'uart_ftdi' / UARTChannel._parser,
+                   'latency' / Latency._parser,)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -1156,7 +1156,7 @@ from being used in various Piksi subsystems.
   """
   _parser = construct.Struct(
                    'mask' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),)
+                   'sid' / GnssSignal._parser,)
   __slots__ = [
                'mask',
                'sid',
@@ -1250,7 +1250,7 @@ class MsgMaskSatelliteDep(SBP):
   """
   _parser = construct.Struct(
                    'mask' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'mask',
                'sid',
@@ -1918,7 +1918,7 @@ class MsgNetworkBandwidthUsage(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('interfaces' / construct.Struct(NetworkUsage._parser)),)
+                   'interfaces' / construct.GreedyRange(NetworkUsage._parser),)
   __slots__ = [
                'interfaces',
               ]
@@ -2016,7 +2016,7 @@ of the modem and its various parameters.
   _parser = construct.Struct(
                    'signal_strength' / construct.Int8sl,
                    'signal_error_rate' / construct.Float32l,
-                   construct.GreedyRange('reserved' / construct.Int8ul),)
+                   'reserved' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'signal_strength',
                'signal_error_rate',
@@ -2127,12 +2127,12 @@ class MsgSpecanDep(SBP):
   """
   _parser = construct.Struct(
                    'channel_tag' / construct.Int16ul,
-                   't' / construct.Struct(GPSTimeDep._parser),
+                   't' / GPSTimeDep._parser,
                    'freq_ref' / construct.Float32l,
                    'freq_step' / construct.Float32l,
                    'amplitude_ref' / construct.Float32l,
                    'amplitude_unit' / construct.Float32l,
-                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
+                   'amplitude_value' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'channel_tag',
                't',
@@ -2252,12 +2252,12 @@ class MsgSpecan(SBP):
   """
   _parser = construct.Struct(
                    'channel_tag' / construct.Int16ul,
-                   't' / construct.Struct(GPSTime._parser),
+                   't' / GPSTime._parser,
                    'freq_ref' / construct.Float32l,
                    'freq_step' / construct.Float32l,
                    'amplitude_ref' / construct.Float32l,
                    'amplitude_unit' / construct.Float32l,
-                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
+                   'amplitude_value' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'channel_tag',
                't',

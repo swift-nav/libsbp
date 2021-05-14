@@ -81,8 +81,8 @@ of other data_source.
                    'object_type' / construct.Int8ul,
                    'result' / construct.Int8ul,
                    'data_source' / construct.Int8ul,
-                   'object_sid' / construct.Struct(GnssSignal._parser),
-                   'src_sid' / construct.Struct(GnssSignal._parser),
+                   'object_sid' / GnssSignal._parser,
+                   'src_sid' / GnssSignal._parser,
                    'original_sender' / construct.Int16ul,)
   __slots__ = [
                'recv_time',

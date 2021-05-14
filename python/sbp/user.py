@@ -50,7 +50,7 @@ maximum length of 255 bytes per message.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'contents',
               ]

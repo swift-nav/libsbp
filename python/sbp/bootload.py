@@ -435,7 +435,7 @@ class MsgBootloaderHandshakeDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('handshake' / construct.Int8ul),)
+                   'handshake' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'handshake',
               ]

@@ -59,7 +59,6 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   Formats for Construct.
   """
-  formatted = ""
   if type_map.get(f.type_id, None):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
@@ -76,12 +75,12 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'construct.Byte'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
-    f_ = copy.copy(f)
-    f_.type_id = fill
-    return "construct.GreedyRange(%s)" % construct_format(f_)
+    if type_map.get(fill):
+      return "'%s' / construct.GreedyRange(%s)" % (f.identifier, type_map.get(fill))
+    else:
+      return "'%s' / construct.GreedyRange(%s._parser)" % (f.identifier, fill)
   else:
-    return "'%s' / construct.Struct(%s._parser)" % (f.identifier, f.type_id)
-  return formatted
+    return "'%s' / %s._parser" % (f.identifier, f.type_id)
 
 
 def pydoc_format(type_id, pydoc=PYDOC_CODE):

@@ -56,7 +56,7 @@ parity of the data block and sends only blocks that pass the check.
 
   """
   _parser = construct.Struct(
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'tow' / construct.Int32ul,
                    'message_type' / construct.Int8ul,
                    'data' / construct.Array(27, construct.Int8ul),)

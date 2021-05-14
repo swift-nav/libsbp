@@ -42,9 +42,9 @@ counter (ith packet of n)
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     't' / construct.Struct(GPSTime._parser),
-                     'n_obs' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     't' / GPSTime._parser,
+                     'n_obs' / construct.Int8ul,)
   __slots__ = [
                't',
                'n_obs',
@@ -82,9 +82,9 @@ as positive for approaching satellites.
     Doppler fractional part
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'i' / construct.Int16sl,
-                     'f' / construct.Int8ul,))
+                     'f' / construct.Int8ul,)
   __slots__ = [
                'i',
                'f',
@@ -144,14 +144,14 @@ estimate for the signal is valid.
     GNSS signal identifier (16 bit)
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'P' / construct.Int32ul,
-                     'L' / construct.Struct(CarrierPhase._parser),
-                     'D' / construct.Struct(Doppler._parser),
+                     'L' / CarrierPhase._parser,
+                     'D' / Doppler._parser,
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int8ul,
                      'flags' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignal._parser),))
+                     'sid' / GnssSignal._parser,)
   __slots__ = [
                'P',
                'L',
@@ -215,15 +215,15 @@ from 0 to 15 and the most significant nibble is reserved for future use.
     Orbit/clock/bias correction projected on range standard deviation
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'P' / construct.Int32ul,
-                     'L' / construct.Struct(CarrierPhase._parser),
+                     'L' / CarrierPhase._parser,
                      'lock' / construct.Int8ul,
                      'flags' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignal._parser),
+                     'sid' / GnssSignal._parser,
                      'iono_std' / construct.Int16ul,
                      'tropo_std' / construct.Int16ul,
-                     'range_std' / construct.Int16ul,))
+                     'range_std' / construct.Int16ul,)
   __slots__ = [
                'P',
                'L',
@@ -280,13 +280,13 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
-                     'toe' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
+                     'toe' / GPSTimeSec._parser,
                      'ura' / construct.Float32l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
-                     'health_bits' / construct.Int8ul,))
+                     'health_bits' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'toe',
@@ -338,13 +338,13 @@ Others: 0 = valid, non-zero = invalid
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
-                     'toe' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
+                     'toe' / GPSTimeSec._parser,
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
-                     'health_bits' / construct.Int8ul,))
+                     'health_bits' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'toe',
@@ -397,13 +397,13 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignalDep._parser),
-                     'toe' / construct.Struct(GPSTimeDep._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignalDep._parser,
+                     'toe' / GPSTimeDep._parser,
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
-                     'health_bits' / construct.Int8ul,))
+                     'health_bits' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'toe',
@@ -448,9 +448,9 @@ counter (ith packet of n)
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     't' / construct.Struct(GPSTimeDep._parser),
-                     'n_obs' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     't' / GPSTimeDep._parser,
+                     'n_obs' / construct.Int8ul,)
   __slots__ = [
                't',
                'n_obs',
@@ -489,9 +489,9 @@ the opposite sign as the pseudorange.
     Carrier phase fractional part
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'i' / construct.Int32sl,
-                     'f' / construct.Int8ul,))
+                     'f' / construct.Int8ul,)
   __slots__ = [
                'i',
                'f',
@@ -534,12 +534,12 @@ carrier phase ambiguity may have changed.
     PRN-1 identifier of the satellite signal
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'P' / construct.Int32ul,
-                     'L' / construct.Struct(CarrierPhaseDepA._parser),
+                     'L' / CarrierPhaseDepA._parser,
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int16ul,
-                     'prn' / construct.Int8ul,))
+                     'prn' / construct.Int8ul,)
   __slots__ = [
                'P',
                'L',
@@ -590,12 +590,12 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'P' / construct.Int32ul,
-                     'L' / construct.Struct(CarrierPhaseDepA._parser),
+                     'L' / CarrierPhaseDepA._parser,
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int16ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),))
+                     'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'P',
                'L',
@@ -647,12 +647,12 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'P' / construct.Int32ul,
-                     'L' / construct.Struct(CarrierPhase._parser),
+                     'L' / CarrierPhase._parser,
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int16ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),))
+                     'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'P',
                'L',
@@ -721,7 +721,7 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     GAL E5 active mask
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'gps_active' / construct.Int64ul,
                      'gps_l2c' / construct.Int64ul,
                      'gps_l5' / construct.Int64ul,
@@ -736,7 +736,7 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
                      'bds_b2a' / construct.Int64ul,
                      'qzss_active' / construct.Int32ul,
                      'gal_active' / construct.Int64ul,
-                     'gal_e5' / construct.Int64ul,))
+                     'gal_e5' / construct.Int64ul,)
   __slots__ = [
                'gps_active',
                'gps_l2c',
@@ -818,13 +818,13 @@ Satellite health status for GLO:
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
-                     'toa' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
+                     'toa' / GPSTimeSec._parser,
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
-                     'health_bits' / construct.Int8ul,))
+                     'health_bits' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'toa',
@@ -888,13 +888,13 @@ Satellite health status for GLO:
 
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignalDep._parser),
-                     'toa' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignalDep._parser,
+                     'toa' / GPSTimeSec._parser,
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
-                     'health_bits' / construct.Int8ul,))
+                     'health_bits' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'toa',
@@ -938,10 +938,10 @@ class SvAzEl(object):
     Elevation angle (range -90..90)
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
                      'az' / construct.Int8ul,
-                     'el' / construct.Int8sl,))
+                     'el' / construct.Int8sl,)
   __slots__ = [
                'sid',
                'az',
@@ -997,8 +997,8 @@ satellite being tracked.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(ObservationHeader._parser),
-                   construct.GreedyRange('obs' / construct.Struct(PackedObsContent._parser)),)
+                   'header' / ObservationHeader._parser,
+                   'obs' / construct.GreedyRange(PackedObsContent._parser),)
   __slots__ = [
                'header',
                'obs',
@@ -1347,7 +1347,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepA._parser),
+                   'common' / EphemerisCommonContentDepA._parser,
                    'tgd' / construct.Float64l,
                    'c_rs' / construct.Float64l,
                    'c_rc' / construct.Float64l,
@@ -1367,7 +1367,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float64l,
-                   'toc' / construct.Struct(GPSTimeDep._parser),
+                   'toc' / GPSTimeDep._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -1548,7 +1548,7 @@ ephemeris message using floats for size reduction.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'common' / EphemerisCommonContentDepB._parser,
                    'tgd' / construct.Float64l,
                    'c_rs' / construct.Float64l,
                    'c_rc' / construct.Float64l,
@@ -1568,7 +1568,7 @@ ephemeris message using floats for size reduction.
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float64l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -1752,7 +1752,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'tgd' / construct.Float32l,
                    'c_rs' / construct.Float32l,
                    'c_rc' / construct.Float32l,
@@ -1772,7 +1772,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'af0' / construct.Float32l,
                    'af1' / construct.Float32l,
                    'af2' / construct.Float32l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -1954,7 +1954,7 @@ velocity, and clock offset.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'tgd' / construct.Float32l,
                    'c_rs' / construct.Float32l,
                    'c_rc' / construct.Float32l,
@@ -1974,7 +1974,7 @@ velocity, and clock offset.
                    'af0' / construct.Float32l,
                    'af1' / construct.Float32l,
                    'af2' / construct.Float32l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -2167,7 +2167,7 @@ IODE = mod (t_oc / 720, 240)
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'tgd1' / construct.Float32l,
                    'tgd2' / construct.Float32l,
                    'c_rs' / construct.Float32l,
@@ -2188,7 +2188,7 @@ IODE = mod (t_oc / 720, 240)
                    'af0' / construct.Float64l,
                    'af1' / construct.Float32l,
                    'af2' / construct.Float32l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -2373,7 +2373,7 @@ an ephemeris message with explicit source of NAV data.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'bgd_e1e5a' / construct.Float32l,
                    'bgd_e1e5b' / construct.Float32l,
                    'c_rs' / construct.Float32l,
@@ -2394,7 +2394,7 @@ an ephemeris message with explicit source of NAV data.
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float32l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int16ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -2583,7 +2583,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'bgd_e1e5a' / construct.Float32l,
                    'bgd_e1e5b' / construct.Float32l,
                    'c_rs' / construct.Float32l,
@@ -2604,7 +2604,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float32l,
-                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'toc' / GPSTimeSec._parser,
                    'iode' / construct.Int16ul,
                    'iodc' / construct.Int16ul,
                    'source' / construct.Int8ul,)
@@ -2753,7 +2753,7 @@ class MsgEphemerisSbasDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepA._parser),
+                   'common' / EphemerisCommonContentDepA._parser,
                    'pos' / construct.Array(3, construct.Float64l),
                    'vel' / construct.Array(3, construct.Float64l),
                    'acc' / construct.Array(3, construct.Float64l),
@@ -2872,7 +2872,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepA._parser),
+                   'common' / EphemerisCommonContentDepA._parser,
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'pos' / construct.Array(3, construct.Float64l),
@@ -2988,7 +2988,7 @@ ephemeris message using floats for size reduction.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'common' / EphemerisCommonContentDepB._parser,
                    'pos' / construct.Array(3, construct.Float64l),
                    'vel' / construct.Array(3, construct.Float64l),
                    'acc' / construct.Array(3, construct.Float64l),
@@ -3101,7 +3101,7 @@ class MsgEphemerisSbas(SBP):
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'pos' / construct.Array(3, construct.Float64l),
                    'vel' / construct.Array(3, construct.Float32l),
                    'acc' / construct.Array(3, construct.Float32l),
@@ -3220,7 +3220,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'common' / EphemerisCommonContentDepB._parser,
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'pos' / construct.Array(3, construct.Float64l),
@@ -3343,7 +3343,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'common' / EphemerisCommonContentDepB._parser,
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'd_tau' / construct.Float64l,
@@ -3471,7 +3471,7 @@ ephemeris message using floats for size reduction.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'common' / EphemerisCommonContentDepB._parser,
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'd_tau' / construct.Float64l,
@@ -3605,7 +3605,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / EphemerisCommonContent._parser,
                    'gamma' / construct.Float32l,
                    'tau' / construct.Float32l,
                    'd_tau' / construct.Float32l,
@@ -3804,7 +3804,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'toc_wn' / construct.Int16ul,
                    'valid' / construct.Int8ul,
                    'healthy' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,
                    'reserved' / construct.Int32ul,)
@@ -4471,7 +4471,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'toc_wn' / construct.Int16ul,
                    'valid' / construct.Int8ul,
                    'healthy' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,
                    'reserved' / construct.Int32ul,)
@@ -4623,8 +4623,8 @@ satellite being tracked.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(ObservationHeaderDep._parser),
-                   construct.GreedyRange('obs' / construct.Struct(PackedObsContentDepA._parser)),)
+                   'header' / ObservationHeaderDep._parser,
+                   'obs' / construct.GreedyRange(PackedObsContentDepA._parser),)
   __slots__ = [
                'header',
                'obs',
@@ -4725,8 +4725,8 @@ satellite being tracked.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(ObservationHeaderDep._parser),
-                   construct.GreedyRange('obs' / construct.Struct(PackedObsContentDepB._parser)),)
+                   'header' / ObservationHeaderDep._parser,
+                   'obs' / construct.GreedyRange(PackedObsContentDepB._parser),)
   __slots__ = [
                'header',
                'obs',
@@ -4828,8 +4828,8 @@ satellite being tracked.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(ObservationHeaderDep._parser),
-                   construct.GreedyRange('obs' / construct.Struct(PackedObsContentDepC._parser)),)
+                   'header' / ObservationHeaderDep._parser,
+                   'obs' / construct.GreedyRange(PackedObsContentDepC._parser),)
   __slots__ = [
                'header',
                'obs',
@@ -4931,7 +4931,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 
   """
   _parser = construct.Struct(
-                   't_nmct' / construct.Struct(GPSTimeSec._parser),
+                   't_nmct' / GPSTimeSec._parser,
                    'a0' / construct.Float64l,
                    'a1' / construct.Float64l,
                    'a2' / construct.Float64l,
@@ -5047,7 +5047,7 @@ class MsgSvConfigurationGPSDep(SBP):
 
   """
   _parser = construct.Struct(
-                   't_nmct' / construct.Struct(GPSTimeSec._parser),
+                   't_nmct' / GPSTimeSec._parser,
                    'l2c_mask' / construct.Int32ul,)
   __slots__ = [
                't_nmct',
@@ -5140,8 +5140,8 @@ class MsgGnssCapb(SBP):
 
   """
   _parser = construct.Struct(
-                   't_nmct' / construct.Struct(GPSTimeSec._parser),
-                   'gc' / construct.Struct(GnssCapb._parser),)
+                   't_nmct' / GPSTimeSec._parser,
+                   'gc' / GnssCapb._parser,)
   __slots__ = [
                't_nmct',
                'gc',
@@ -5242,7 +5242,7 @@ LSB indicating tgd validity etc.
 
   """
   _parser = construct.Struct(
-                   't_op' / construct.Struct(GPSTimeDep._parser),
+                   't_op' / GPSTimeDep._parser,
                    'prn' / construct.Int8ul,
                    'valid' / construct.Int8ul,
                    'tgd' / construct.Int16sl,
@@ -5356,8 +5356,8 @@ LSB indicating tgd validity etc.
 
   """
   _parser = construct.Struct(
-                   't_op' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   't_op' / GPSTimeSec._parser,
+                   'sid' / GnssSignalDep._parser,
                    'valid' / construct.Int8ul,
                    'tgd' / construct.Int16sl,
                    'isc_l1ca' / construct.Int16sl,
@@ -5470,8 +5470,8 @@ LSB indicating tgd validity etc.
 
   """
   _parser = construct.Struct(
-                   't_op' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   't_op' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'valid' / construct.Int8ul,
                    'tgd' / construct.Int16sl,
                    'isc_l1ca' / construct.Int16sl,
@@ -5596,7 +5596,7 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(AlmanacCommonContentDep._parser),
+                   'common' / AlmanacCommonContentDep._parser,
                    'm0' / construct.Float64l,
                    'ecc' / construct.Float64l,
                    'sqrta' / construct.Float64l,
@@ -5734,7 +5734,7 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(AlmanacCommonContent._parser),
+                   'common' / AlmanacCommonContent._parser,
                    'm0' / construct.Float64l,
                    'ecc' / construct.Float64l,
                    'sqrta' / construct.Float64l,
@@ -5870,7 +5870,7 @@ coordinate system
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(AlmanacCommonContentDep._parser),
+                   'common' / AlmanacCommonContentDep._parser,
                    'lambda_na' / construct.Float64l,
                    't_lambda_na' / construct.Float64l,
                    'i' / construct.Float64l,
@@ -6000,7 +6000,7 @@ coordinate system
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(AlmanacCommonContent._parser),
+                   'common' / AlmanacCommonContent._parser,
                    'lambda_na' / construct.Float64l,
                    't_lambda_na' / construct.Float64l,
                    'i' / construct.Float64l,
@@ -6225,7 +6225,7 @@ that the device does have ephemeris or almanac for.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('azel' / construct.Struct(SvAzEl._parser)),)
+                   'azel' / construct.GreedyRange(SvAzEl._parser),)
   __slots__ = [
                'azel',
               ]
@@ -6319,8 +6319,8 @@ satellite signal.
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(ObservationHeader._parser),
-                   construct.GreedyRange('obs' / construct.Struct(PackedOsrContent._parser)),)
+                   'header' / ObservationHeader._parser,
+                   'obs' / construct.GreedyRange(PackedOsrContent._parser),)
   __slots__ = [
                'header',
                'obs',

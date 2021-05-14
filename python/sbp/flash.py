@@ -69,7 +69,7 @@ starting address
                    'target' / construct.Int8ul,
                    'addr_start' / construct.Array(3, construct.Int8ul),
                    'addr_len' / construct.Int8ul,
-                   construct.GreedyRange('data' / construct.Int8ul),)
+                   'data' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'target',
                'addr_start',
