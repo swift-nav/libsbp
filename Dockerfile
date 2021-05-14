@@ -82,7 +82,7 @@ RUN mkdir -p $NVM_DIR \
 ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
-RUN npm install npm@latest mocha -g
+RUN npm install npm@latest mocha quicktype -g
 
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might
