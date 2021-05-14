@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Header for observation message.
@@ -3968,6 +3971,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_osr_t, obs ) == 0 + sizeof(observation_heade
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */

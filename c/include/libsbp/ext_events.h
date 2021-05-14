@@ -27,6 +27,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Reports timestamped external pin event
@@ -103,6 +106,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, pin ) == 0 + sizeof(u16) + size
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

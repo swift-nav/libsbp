@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Heading relative to True North
@@ -317,6 +320,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_angular_rate_t, flags ) == 0 + sizeof(u32) +
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */

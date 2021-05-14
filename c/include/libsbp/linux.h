@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** List CPU state on the system. DEPRECATED.
@@ -663,6 +666,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_linux_sys_state_t, flags ) == 0 + sizeof(u16
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_LINUX_MESSAGES_H */

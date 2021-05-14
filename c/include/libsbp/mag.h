@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Raw magnetometer data
@@ -76,6 +79,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_z ) == 0 + sizeof(u32) + size
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_MAG_MESSAGES_H */

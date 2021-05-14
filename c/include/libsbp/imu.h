@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Raw IMU data
@@ -204,6 +207,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_imu_aux_t, imu_conf ) == 0 + sizeof(u8) + si
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

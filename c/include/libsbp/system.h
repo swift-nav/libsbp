@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** System start-up message
@@ -896,6 +899,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_meta_t, group_msgs ) == 0 + sizeof(u8)
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

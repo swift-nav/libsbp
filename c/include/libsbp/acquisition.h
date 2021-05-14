@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Satellite acquisition result
@@ -406,6 +409,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_acq_sv_profile_dep_t, acq_sv_profile ) == 0,
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_ACQUISITION_MESSAGES_H */

@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Plaintext logging messages with levels
@@ -148,6 +151,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_print_dep_t, text ) == 0, offset_of_text_in_
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

@@ -30,6 +30,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Bootloading handshake request (host => device)
@@ -186,6 +189,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_bootloader_handshake_dep_a_t, handshake ) ==
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

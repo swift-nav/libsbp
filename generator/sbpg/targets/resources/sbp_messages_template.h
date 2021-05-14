@@ -30,6 +30,9 @@
 ((*- endfor *))
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 ((* for m in msgs *))
 ((*- if m.desc *))
@@ -112,6 +115,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF( (((-m.identifier|convert))), (((f.identifier)))
 }
 ((* endfor *))
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */

@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Raw SBAS data
@@ -69,6 +72,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sbas_raw_t, data ) == 0 + sizeof(sbp_gnss_si
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SBAS_MESSAGES_H */

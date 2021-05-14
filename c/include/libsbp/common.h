@@ -52,7 +52,7 @@ typedef uint64_t u64;
 #endif
 
 /* Set packing based upon toolchain */
-#if defined(__GNUC__) || defined(__clang__) || defined(__ghs__)
+#if defined(__GNUC__) || defined(__clang__) 
 
 #define SBP_PACK_START /* Intentionally empty */
 #define SBP_PACK_END /* Intentionally empty */
@@ -63,6 +63,12 @@ typedef uint64_t u64;
 #define SBP_PACK_START __pragma(pack(1));
 #define SBP_PACK_END __pragma(pack());
 #define SBP_ATTR_PACKED /* Intentionally empty */
+
+#elif defined(__ghs__)
+
+#define SBP_PACK_START 
+#define SBP_PACK_END
+#define SBP_ATTR_PACKED
 
 #else
 

@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Flags for a given solution input type.
@@ -395,6 +398,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(odo_input_type_t, flags ) == 0, offset_of_flags_
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

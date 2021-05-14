@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Navigation DataBase Event
@@ -174,6 +177,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ndb_event_t, original_sender ) == 0 + sizeof
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_NDB_MESSAGES_H */

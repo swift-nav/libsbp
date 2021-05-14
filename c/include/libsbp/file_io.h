@@ -33,6 +33,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Read file from the file system (host => device)
@@ -373,6 +376,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fileio_config_resp_t, fileio_version ) == 0 
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */

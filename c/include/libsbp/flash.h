@@ -30,6 +30,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Program flash addresses
@@ -381,6 +384,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_m25_flash_write_status_t, status ) == 0, off
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_FLASH_MESSAGES_H */

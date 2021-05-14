@@ -29,6 +29,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Legacy message to load satellite almanac (host => Piksi)
@@ -1209,6 +1212,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_front_end_gain_t, if_gain ) == 0 + (sizeof(s
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

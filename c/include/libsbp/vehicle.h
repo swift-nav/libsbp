@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Vehicle forward (x-axis) velocity
@@ -199,6 +202,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, ticks ) == 0 + sizeof(u64) + si
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_VEHICLE_MESSAGES_H */

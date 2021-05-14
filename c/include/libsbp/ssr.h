@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** SSR code biases corrections for a particular satellite.
@@ -1237,6 +1240,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ssr_grid_definition_dep_a_t, rle_list ) == 0
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SSR_MESSAGES_H */

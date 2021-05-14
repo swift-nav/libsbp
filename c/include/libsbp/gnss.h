@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Represents all the relevant information about the signal
@@ -230,6 +233,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(carrier_phase_t, f ) == 0 + sizeof(s32), offset_
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_GNSS_MESSAGES_H */

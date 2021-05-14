@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** User data
@@ -54,6 +57,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_user_data_t, contents ) == 0, offset_of_cont
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_USER_MESSAGES_H */

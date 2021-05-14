@@ -51,6 +51,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Save settings to flash (host => device)
@@ -374,6 +377,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_resp_t, setting ) == 0 + s
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

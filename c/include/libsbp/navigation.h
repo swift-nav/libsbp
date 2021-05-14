@@ -49,6 +49,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** GPS Time
@@ -3276,6 +3279,9 @@ SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, flags ) == 0 + sizeof(u3
 }
 
 
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_NAVIGATION_MESSAGES_H */
