@@ -29,6 +29,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Legacy message to load satellite almanac (host => Piksi)
@@ -724,7 +727,494 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_ALMANAC(void) {
+}
 
+static inline void static_asserts_for_module_MSG_SET_TIME(void) {
+}
+
+static inline void static_asserts_for_module_MSG_RESET(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_reset_t, flags ) == 0, "Offset of flags in msg_reset_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_reset_t, flags ) == 0, offset_of_flags_in_msg_reset_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_RESET_DEP(void) {
+}
+
+static inline void static_asserts_for_module_MSG_CW_RESULTS(void) {
+}
+
+static inline void static_asserts_for_module_MSG_CW_START(void) {
+}
+
+static inline void static_asserts_for_module_MSG_RESET_FILTERS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_reset_filters_t, filter ) == 0, "Offset of filter in msg_reset_filters_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_reset_filters_t, filter ) == 0, offset_of_filter_in_msg_reset_filters_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_INIT_BASE_DEP(void) {
+}
+
+static inline void static_asserts_for_module_MSG_THREAD_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_thread_state_t, name ) == 0, "Offset of name in msg_thread_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_thread_state_t, name ) == 0, offset_of_name_in_msg_thread_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_thread_state_t, cpu ) == 0 + (sizeof(char) * 20), "Offset of cpu in msg_thread_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_thread_state_t, cpu ) == 0 + (sizeof(char) * 20), offset_of_cpu_in_msg_thread_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_thread_state_t, stack_free ) == 0 + (sizeof(char) * 20) + sizeof(u16), "Offset of stack_free in msg_thread_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_thread_state_t, stack_free ) == 0 + (sizeof(char) * 20) + sizeof(u16), offset_of_stack_free_in_msg_thread_state_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_UARTChannel(void) {
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, tx_throughput ) == 0, "Offset of tx_throughput in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, tx_throughput ) == 0, offset_of_tx_throughput_in_uart_channel_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, rx_throughput ) == 0 + sizeof(float), "Offset of rx_throughput in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, rx_throughput ) == 0 + sizeof(float), offset_of_rx_throughput_in_uart_channel_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, crc_error_count ) == 0 + sizeof(float) + sizeof(float), "Offset of crc_error_count in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, crc_error_count ) == 0 + sizeof(float) + sizeof(float), offset_of_crc_error_count_in_uart_channel_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, io_error_count ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16), "Offset of io_error_count in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, io_error_count ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16), offset_of_io_error_count_in_uart_channel_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, tx_buffer_level ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16) + sizeof(u16), "Offset of tx_buffer_level in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, tx_buffer_level ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16) + sizeof(u16), offset_of_tx_buffer_level_in_uart_channel_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(uart_channel_t, rx_buffer_level ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of rx_buffer_level in uart_channel_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(uart_channel_t, rx_buffer_level ) == 0 + sizeof(float) + sizeof(float) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_rx_buffer_level_in_uart_channel_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_Period(void) {
+#ifdef __cplusplus
+static_assert(offsetof(period_t, avg ) == 0, "Offset of avg in period_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(period_t, avg ) == 0, offset_of_avg_in_period_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(period_t, pmin ) == 0 + sizeof(s32), "Offset of pmin in period_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(period_t, pmin ) == 0 + sizeof(s32), offset_of_pmin_in_period_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(period_t, pmax ) == 0 + sizeof(s32) + sizeof(s32), "Offset of pmax in period_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(period_t, pmax ) == 0 + sizeof(s32) + sizeof(s32), offset_of_pmax_in_period_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(period_t, current ) == 0 + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of current in period_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(period_t, current ) == 0 + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_current_in_period_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_Latency(void) {
+#ifdef __cplusplus
+static_assert(offsetof(latency_t, avg ) == 0, "Offset of avg in latency_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(latency_t, avg ) == 0, offset_of_avg_in_latency_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(latency_t, lmin ) == 0 + sizeof(s32), "Offset of lmin in latency_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(latency_t, lmin ) == 0 + sizeof(s32), offset_of_lmin_in_latency_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(latency_t, lmax ) == 0 + sizeof(s32) + sizeof(s32), "Offset of lmax in latency_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(latency_t, lmax ) == 0 + sizeof(s32) + sizeof(s32), offset_of_lmax_in_latency_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(latency_t, current ) == 0 + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of current in latency_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(latency_t, current ) == 0 + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_current_in_latency_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_UART_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_t, uart_a ) == 0, "Offset of uart_a in msg_uart_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_t, uart_a ) == 0, offset_of_uart_a_in_msg_uart_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_t, uart_b ) == 0 + sizeof(uart_channel_t), "Offset of uart_b in msg_uart_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_t, uart_b ) == 0 + sizeof(uart_channel_t), offset_of_uart_b_in_msg_uart_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_t, uart_ftdi ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t), "Offset of uart_ftdi in msg_uart_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_t, uart_ftdi ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t), offset_of_uart_ftdi_in_msg_uart_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_t, latency ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t), "Offset of latency in msg_uart_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_t, latency ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t), offset_of_latency_in_msg_uart_state_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_t, obs_period ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(latency_t), "Offset of obs_period in msg_uart_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_t, obs_period ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(latency_t), offset_of_obs_period_in_msg_uart_state_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_UART_STATE_DEPA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_depa_t, uart_a ) == 0, "Offset of uart_a in msg_uart_state_depa_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_depa_t, uart_a ) == 0, offset_of_uart_a_in_msg_uart_state_depa_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_depa_t, uart_b ) == 0 + sizeof(uart_channel_t), "Offset of uart_b in msg_uart_state_depa_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_depa_t, uart_b ) == 0 + sizeof(uart_channel_t), offset_of_uart_b_in_msg_uart_state_depa_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_depa_t, uart_ftdi ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t), "Offset of uart_ftdi in msg_uart_state_depa_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_depa_t, uart_ftdi ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t), offset_of_uart_ftdi_in_msg_uart_state_depa_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_uart_state_depa_t, latency ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t), "Offset of latency in msg_uart_state_depa_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_uart_state_depa_t, latency ) == 0 + sizeof(uart_channel_t) + sizeof(uart_channel_t) + sizeof(uart_channel_t), offset_of_latency_in_msg_uart_state_depa_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_IAR_STATE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_iar_state_t, num_hyps ) == 0, "Offset of num_hyps in msg_iar_state_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iar_state_t, num_hyps ) == 0, offset_of_num_hyps_in_msg_iar_state_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_MASK_SATELLITE(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_mask_satellite_t, mask ) == 0, "Offset of mask in msg_mask_satellite_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mask_satellite_t, mask ) == 0, offset_of_mask_in_msg_mask_satellite_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mask_satellite_t, sid ) == 0 + sizeof(u8), "Offset of sid in msg_mask_satellite_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mask_satellite_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_msg_mask_satellite_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_MASK_SATELLITE_DEP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_mask_satellite_dep_t, mask ) == 0, "Offset of mask in msg_mask_satellite_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mask_satellite_dep_t, mask ) == 0, offset_of_mask_in_msg_mask_satellite_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mask_satellite_dep_t, sid ) == 0 + sizeof(u8), "Offset of sid in msg_mask_satellite_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mask_satellite_dep_t, sid ) == 0 + sizeof(u8), offset_of_sid_in_msg_mask_satellite_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_DEVICE_MONITOR(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_device_monitor_t, dev_vin ) == 0, "Offset of dev_vin in msg_device_monitor_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_device_monitor_t, dev_vin ) == 0, offset_of_dev_vin_in_msg_device_monitor_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_device_monitor_t, cpu_vint ) == 0 + sizeof(s16), "Offset of cpu_vint in msg_device_monitor_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_device_monitor_t, cpu_vint ) == 0 + sizeof(s16), offset_of_cpu_vint_in_msg_device_monitor_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_device_monitor_t, cpu_vaux ) == 0 + sizeof(s16) + sizeof(s16), "Offset of cpu_vaux in msg_device_monitor_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_device_monitor_t, cpu_vaux ) == 0 + sizeof(s16) + sizeof(s16), offset_of_cpu_vaux_in_msg_device_monitor_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_device_monitor_t, cpu_temperature ) == 0 + sizeof(s16) + sizeof(s16) + sizeof(s16), "Offset of cpu_temperature in msg_device_monitor_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_device_monitor_t, cpu_temperature ) == 0 + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_cpu_temperature_in_msg_device_monitor_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_device_monitor_t, fe_temperature ) == 0 + sizeof(s16) + sizeof(s16) + sizeof(s16) + sizeof(s16), "Offset of fe_temperature in msg_device_monitor_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_device_monitor_t, fe_temperature ) == 0 + sizeof(s16) + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_fe_temperature_in_msg_device_monitor_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_COMMAND_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_req_t, sequence ) == 0, "Offset of sequence in msg_command_req_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_req_t, sequence ) == 0, offset_of_sequence_in_msg_command_req_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_req_t, command ) == 0 + sizeof(u32), "Offset of command in msg_command_req_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_req_t, command ) == 0 + sizeof(u32), offset_of_command_in_msg_command_req_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_COMMAND_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_resp_t, sequence ) == 0, "Offset of sequence in msg_command_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_resp_t, sequence ) == 0, offset_of_sequence_in_msg_command_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_resp_t, code ) == 0 + sizeof(u32), "Offset of code in msg_command_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_resp_t, code ) == 0 + sizeof(u32), offset_of_code_in_msg_command_resp_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_COMMAND_OUTPUT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_output_t, sequence ) == 0, "Offset of sequence in msg_command_output_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_output_t, sequence ) == 0, offset_of_sequence_in_msg_command_output_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_command_output_t, line ) == 0 + sizeof(u32), "Offset of line in msg_command_output_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_command_output_t, line ) == 0 + sizeof(u32), offset_of_line_in_msg_command_output_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_NETWORK_STATE_REQ(void) {
+}
+
+static inline void static_asserts_for_module_MSG_NETWORK_STATE_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, ipv4_address ) == 0, "Offset of ipv4_address in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, ipv4_address ) == 0, offset_of_ipv4_address_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, ipv4_mask_size ) == 0 + (sizeof(u8) * 4), "Offset of ipv4_mask_size in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, ipv4_mask_size ) == 0 + (sizeof(u8) * 4), offset_of_ipv4_mask_size_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, ipv6_address ) == 0 + (sizeof(u8) * 4) + sizeof(u8), "Offset of ipv6_address in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, ipv6_address ) == 0 + (sizeof(u8) * 4) + sizeof(u8), offset_of_ipv6_address_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, ipv6_mask_size ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16), "Offset of ipv6_mask_size in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, ipv6_mask_size ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16), offset_of_ipv6_mask_size_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, rx_bytes ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8), "Offset of rx_bytes in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, rx_bytes ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8), offset_of_rx_bytes_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, tx_bytes ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32), "Offset of tx_bytes in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, tx_bytes ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32), offset_of_tx_bytes_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, interface_name ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32) + sizeof(u32), "Offset of interface_name in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, interface_name ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32) + sizeof(u32), offset_of_interface_name_in_msg_network_state_resp_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_state_resp_t, flags ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32) + sizeof(u32) + (sizeof(char) * 16), "Offset of flags in msg_network_state_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_state_resp_t, flags ) == 0 + (sizeof(u8) * 4) + sizeof(u8) + (sizeof(u8) * 16) + sizeof(u8) + sizeof(u32) + sizeof(u32) + (sizeof(char) * 16), offset_of_flags_in_msg_network_state_resp_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_NetworkUsage(void) {
+#ifdef __cplusplus
+static_assert(offsetof(network_usage_t, duration ) == 0, "Offset of duration in network_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(network_usage_t, duration ) == 0, offset_of_duration_in_network_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(network_usage_t, total_bytes ) == 0 + sizeof(u64), "Offset of total_bytes in network_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(network_usage_t, total_bytes ) == 0 + sizeof(u64), offset_of_total_bytes_in_network_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(network_usage_t, rx_bytes ) == 0 + sizeof(u64) + sizeof(u64), "Offset of rx_bytes in network_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(network_usage_t, rx_bytes ) == 0 + sizeof(u64) + sizeof(u64), offset_of_rx_bytes_in_network_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(network_usage_t, tx_bytes ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u32), "Offset of tx_bytes in network_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(network_usage_t, tx_bytes ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u32), offset_of_tx_bytes_in_network_usage_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(network_usage_t, interface_name ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32), "Offset of interface_name in network_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(network_usage_t, interface_name ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32), offset_of_interface_name_in_network_usage_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_NETWORK_BANDWIDTH_USAGE(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_network_bandwidth_usage_t, interfaces ) == 0, "Offset of interfaces in msg_network_bandwidth_usage_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_network_bandwidth_usage_t, interfaces ) == 0, offset_of_interfaces_in_msg_network_bandwidth_usage_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_CELL_MODEM_STATUS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_cell_modem_status_t, signal_strength ) == 0, "Offset of signal_strength in msg_cell_modem_status_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_cell_modem_status_t, signal_strength ) == 0, offset_of_signal_strength_in_msg_cell_modem_status_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_cell_modem_status_t, signal_error_rate ) == 0 + sizeof(s8), "Offset of signal_error_rate in msg_cell_modem_status_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_cell_modem_status_t, signal_error_rate ) == 0 + sizeof(s8), offset_of_signal_error_rate_in_msg_cell_modem_status_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_cell_modem_status_t, reserved ) == 0 + sizeof(s8) + sizeof(float), "Offset of reserved in msg_cell_modem_status_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_cell_modem_status_t, reserved ) == 0 + sizeof(s8) + sizeof(float), offset_of_reserved_in_msg_cell_modem_status_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SPECAN_DEP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, channel_tag ) == 0, "Offset of channel_tag in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, channel_tag ) == 0, offset_of_channel_tag_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, t ) == 0 + sizeof(u16), "Offset of t in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, t ) == 0 + sizeof(u16), offset_of_t_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, freq_ref ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t), "Offset of freq_ref in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, freq_ref ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t), offset_of_freq_ref_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, freq_step ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float), "Offset of freq_step in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, freq_step ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float), offset_of_freq_step_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, amplitude_ref ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float), "Offset of amplitude_ref in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, amplitude_ref ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float), offset_of_amplitude_ref_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, amplitude_unit ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of amplitude_unit in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, amplitude_unit ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_amplitude_unit_in_msg_specan_dep_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_dep_t, amplitude_value ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of amplitude_value in msg_specan_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_dep_t, amplitude_value ) == 0 + sizeof(u16) + sizeof(gps_time_dep_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_amplitude_value_in_msg_specan_dep_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SPECAN(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, channel_tag ) == 0, "Offset of channel_tag in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, channel_tag ) == 0, offset_of_channel_tag_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, t ) == 0 + sizeof(u16), "Offset of t in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, t ) == 0 + sizeof(u16), offset_of_t_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, freq_ref ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t), "Offset of freq_ref in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, freq_ref ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t), offset_of_freq_ref_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, freq_step ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float), "Offset of freq_step in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, freq_step ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float), offset_of_freq_step_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, amplitude_ref ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float), "Offset of amplitude_ref in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, amplitude_ref ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float), offset_of_amplitude_ref_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, amplitude_unit ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of amplitude_unit in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, amplitude_unit ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_amplitude_unit_in_msg_specan_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_specan_t, amplitude_value ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of amplitude_value in msg_specan_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_specan_t, amplitude_value ) == 0 + sizeof(u16) + sizeof(sbp_gps_time_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_amplitude_value_in_msg_specan_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_FRONT_END_GAIN(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_front_end_gain_t, rf_gain ) == 0, "Offset of rf_gain in msg_front_end_gain_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_front_end_gain_t, rf_gain ) == 0, offset_of_rf_gain_in_msg_front_end_gain_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_front_end_gain_t, if_gain ) == 0 + (sizeof(s8) * 8), "Offset of if_gain in msg_front_end_gain_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_front_end_gain_t, if_gain ) == 0 + (sizeof(s8) * 8), offset_of_if_gain_in_msg_front_end_gain_t_is_incorrect)
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

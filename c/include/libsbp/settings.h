@@ -51,6 +51,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Save settings to flash (host => device)
@@ -274,7 +277,109 @@ according to the status field.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_SETTINGS_SAVE(void) {
+}
 
+static inline void static_asserts_for_module_MSG_SETTINGS_WRITE(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_write_t, setting ) == 0, "Offset of setting in msg_settings_write_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_t, setting ) == 0, offset_of_setting_in_msg_settings_write_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_WRITE_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_write_resp_t, status ) == 0, "Offset of status in msg_settings_write_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_resp_t, status ) == 0, offset_of_status_in_msg_settings_write_resp_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_write_resp_t, setting ) == 0 + sizeof(u8), "Offset of setting in msg_settings_write_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_write_resp_t, setting ) == 0 + sizeof(u8), offset_of_setting_in_msg_settings_write_resp_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_REQ(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_read_req_t, setting ) == 0, "Offset of setting in msg_settings_read_req_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_req_t, setting ) == 0, offset_of_setting_in_msg_settings_read_req_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_RESP(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_read_resp_t, setting ) == 0, "Offset of setting in msg_settings_read_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_resp_t, setting ) == 0, offset_of_setting_in_msg_settings_read_resp_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_REQ(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_read_by_index_req_t, index ) == 0, "Offset of index in msg_settings_read_by_index_req_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_req_t, index ) == 0, offset_of_index_in_msg_settings_read_by_index_req_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_read_by_index_resp_t, index ) == 0, "Offset of index in msg_settings_read_by_index_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_resp_t, index ) == 0, offset_of_index_in_msg_settings_read_by_index_resp_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_read_by_index_resp_t, setting ) == 0 + sizeof(u16), "Offset of setting in msg_settings_read_by_index_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_read_by_index_resp_t, setting ) == 0 + sizeof(u16), offset_of_setting_in_msg_settings_read_by_index_resp_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_READ_BY_INDEX_DONE(void) {
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_REGISTER(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_register_t, setting ) == 0, "Offset of setting in msg_settings_register_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_t, setting ) == 0, offset_of_setting_in_msg_settings_register_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SETTINGS_REGISTER_RESP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_register_resp_t, status ) == 0, "Offset of status in msg_settings_register_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_resp_t, status ) == 0, offset_of_status_in_msg_settings_register_resp_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_settings_register_resp_t, setting ) == 0 + sizeof(u8), "Offset of setting in msg_settings_register_resp_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_settings_register_resp_t, setting ) == 0 + sizeof(u8), offset_of_setting_in_msg_settings_register_resp_t_is_incorrect)
+#endif
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

@@ -27,6 +27,9 @@
 #include "gnss.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Header for observation message.
@@ -1258,7 +1261,2719 @@ satellite signal.
  
 
 /** \} */
+static inline void static_asserts_for_module_ObservationHeader(void) {
+#ifdef __cplusplus
+static_assert(offsetof(observation_header_t, t ) == 0, "Offset of t in observation_header_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(observation_header_t, t ) == 0, offset_of_t_in_observation_header_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(observation_header_t, n_obs ) == 0 + sizeof(sbp_gps_time_t), "Offset of n_obs in observation_header_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(observation_header_t, n_obs ) == 0 + sizeof(sbp_gps_time_t), offset_of_n_obs_in_observation_header_t_is_incorrect)
+#endif
+}
 
+static inline void static_asserts_for_module_Doppler(void) {
+#ifdef __cplusplus
+static_assert(offsetof(doppler_t, i ) == 0, "Offset of i in doppler_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(doppler_t, i ) == 0, offset_of_i_in_doppler_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(doppler_t, f ) == 0 + sizeof(s16), "Offset of f in doppler_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(doppler_t, f ) == 0 + sizeof(s16), offset_of_f_in_doppler_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_PackedObsContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, P ) == 0, "Offset of P in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, P ) == 0, offset_of_P_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, L ) == 0 + sizeof(u32), "Offset of L in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, L ) == 0 + sizeof(u32), offset_of_L_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, D ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), "Offset of D in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, D ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), offset_of_D_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t), "Offset of cn0 in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t), offset_of_cn0_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8), "Offset of lock in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8), offset_of_lock_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, flags ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8) + sizeof(u8), "Offset of flags in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, flags ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8) + sizeof(u8), offset_of_flags_in_packed_obs_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of sid in packed_obs_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(doppler_t) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_sid_in_packed_obs_content_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_PackedOsrContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, P ) == 0, "Offset of P in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, P ) == 0, offset_of_P_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, L ) == 0 + sizeof(u32), "Offset of L in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, L ) == 0 + sizeof(u32), offset_of_L_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), "Offset of lock in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), offset_of_lock_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, flags ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8), "Offset of flags in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, flags ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8), offset_of_flags_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8), "Offset of sid in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8), offset_of_sid_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, iono_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t), "Offset of iono_std in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, iono_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t), offset_of_iono_std_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, tropo_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16), "Offset of tropo_std in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, tropo_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16), offset_of_tropo_std_in_packed_osr_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_osr_content_t, range_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u16), "Offset of range_std in packed_osr_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_osr_content_t, range_std ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u8) + sizeof(sbp_gnss_signal_t) + sizeof(u16) + sizeof(u16), offset_of_range_std_in_packed_osr_content_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_OBS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_t, header ) == 0, "Offset of header in msg_obs_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_t, header ) == 0, offset_of_header_in_msg_obs_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_t, obs ) == 0 + sizeof(observation_header_t), "Offset of obs in msg_obs_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_t, obs ) == 0 + sizeof(observation_header_t), offset_of_obs_in_msg_obs_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASE_POS_LLH(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_llh_t, lat ) == 0, "Offset of lat in msg_base_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_llh_t, lat ) == 0, offset_of_lat_in_msg_base_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_llh_t, lon ) == 0 + sizeof(double), "Offset of lon in msg_base_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_llh_t, lon ) == 0 + sizeof(double), offset_of_lon_in_msg_base_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_llh_t, height ) == 0 + sizeof(double) + sizeof(double), "Offset of height in msg_base_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_llh_t, height ) == 0 + sizeof(double) + sizeof(double), offset_of_height_in_msg_base_pos_llh_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASE_POS_ECEF(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_ecef_t, x ) == 0, "Offset of x in msg_base_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_ecef_t, x ) == 0, offset_of_x_in_msg_base_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_ecef_t, y ) == 0 + sizeof(double), "Offset of y in msg_base_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_ecef_t, y ) == 0 + sizeof(double), offset_of_y_in_msg_base_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_base_pos_ecef_t, z ) == 0 + sizeof(double) + sizeof(double), "Offset of z in msg_base_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_base_pos_ecef_t, z ) == 0 + sizeof(double) + sizeof(double), offset_of_z_in_msg_base_pos_ecef_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_EphemerisCommonContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, sid ) == 0, "Offset of sid in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, sid ) == 0, offset_of_sid_in_ephemeris_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, toe ) == 0 + sizeof(sbp_gnss_signal_t), "Offset of toe in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, toe ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_toe_in_ephemeris_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), "Offset of ura in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), offset_of_ura_in_ephemeris_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float), "Offset of fit_interval in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float), offset_of_fit_interval_in_ephemeris_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float) + sizeof(u32), "Offset of valid in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float) + sizeof(u32), offset_of_valid_in_ephemeris_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float) + sizeof(u32) + sizeof(u8), "Offset of health_bits in ephemeris_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(float) + sizeof(u32) + sizeof(u8), offset_of_health_bits_in_ephemeris_common_content_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_EphemerisCommonContentDepB(void) {
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, sid ) == 0, "Offset of sid in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, sid ) == 0, offset_of_sid_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, toe ) == 0 + sizeof(sbp_gnss_signal_t), "Offset of toe in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, toe ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_toe_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), "Offset of ura in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), offset_of_ura_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double), "Offset of fit_interval in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double), offset_of_fit_interval_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), "Offset of valid in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), offset_of_valid_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_b_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), "Offset of health_bits in ephemeris_common_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_b_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), offset_of_health_bits_in_ephemeris_common_content_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_EphemerisCommonContentDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, sid ) == 0, "Offset of sid in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, sid ) == 0, offset_of_sid_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, toe ) == 0 + sizeof(gnss_signal_dep_t), "Offset of toe in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, toe ) == 0 + sizeof(gnss_signal_dep_t), offset_of_toe_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, ura ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t), "Offset of ura in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, ura ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t), offset_of_ura_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, fit_interval ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double), "Offset of fit_interval in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, fit_interval ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double), offset_of_fit_interval_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, valid ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double) + sizeof(u32), "Offset of valid in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, valid ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double) + sizeof(u32), offset_of_valid_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(ephemeris_common_content_dep_a_t, health_bits ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double) + sizeof(u32) + sizeof(u8), "Offset of health_bits in ephemeris_common_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(ephemeris_common_content_dep_a_t, health_bits ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_dep_t) + sizeof(double) + sizeof(u32) + sizeof(u8), offset_of_health_bits_in_ephemeris_common_content_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GPS_DEP_E(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, common ) == 0, "Offset of common in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, common ) == 0, offset_of_common_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, tgd ) == 0 + sizeof(ephemeris_common_content_dep_a_t), "Offset of tgd in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, tgd ) == 0 + sizeof(ephemeris_common_content_dep_a_t), offset_of_tgd_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_rs ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double), "Offset of c_rs in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_rs ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double), offset_of_c_rs_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_rc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_rc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_uc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_uc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_us ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_us ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_ic ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_ic ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, c_is ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, c_is ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, dn ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, dn ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, m0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, m0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, ecc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, ecc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, sqrta ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, sqrta ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, omega0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, omega0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, omegadot ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, omegadot ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, w ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, w ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, inc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, inc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, af0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, af0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, af1 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, af1 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, af2 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, af2 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, toc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, toc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, iode ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_dep_t), "Offset of iode in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, iode ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_dep_t), offset_of_iode_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_e_t, iodc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_dep_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_gps_dep_e_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_e_t, iodc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_dep_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_gps_dep_e_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GPS_DEP_F(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, common ) == 0, "Offset of common in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, common ) == 0, offset_of_common_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, tgd ) == 0 + sizeof(ephemeris_common_content_dep_b_t), "Offset of tgd in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, tgd ) == 0 + sizeof(ephemeris_common_content_dep_b_t), offset_of_tgd_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_rs ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), "Offset of c_rs in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_rs ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), offset_of_c_rs_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_rc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_rc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_uc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_uc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_us ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_us ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_ic ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_ic ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, c_is ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, c_is ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, dn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, dn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, m0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, m0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, ecc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, ecc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, sqrta ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, sqrta ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, omega0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, omega0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, omegadot ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, omegadot ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, w ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, w ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, inc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, inc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, af0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, af0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, af1 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, af1 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, af2 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, af2 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, toc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, toc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, iode ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, iode ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_dep_f_t, iodc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_gps_dep_f_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_dep_f_t, iodc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_gps_dep_f_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GPS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, common ) == 0, "Offset of common in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, common ) == 0, offset_of_common_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, tgd ) == 0 + sizeof(ephemeris_common_content_t), "Offset of tgd in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, tgd ) == 0 + sizeof(ephemeris_common_content_t), offset_of_tgd_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of c_rs in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_c_rs_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of c_rc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_c_rc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_uc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_uc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_us in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_us_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_ic in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_ic_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_is in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_is_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of dn in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_dn_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), "Offset of m0 in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), offset_of_m0_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of af1 in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_af1_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of af2 in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_af2_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of toc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_toc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gps_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gps_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_gps_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_QZSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, common ) == 0, "Offset of common in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, common ) == 0, offset_of_common_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, tgd ) == 0 + sizeof(ephemeris_common_content_t), "Offset of tgd in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, tgd ) == 0 + sizeof(ephemeris_common_content_t), offset_of_tgd_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of c_rs in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_c_rs_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of c_rc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_c_rc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_uc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_uc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_us in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_us_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_ic in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_ic_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_is in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_is_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of dn in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_dn_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), "Offset of m0 in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), offset_of_m0_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of af1 in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_af1_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of af2 in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_af2_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of toc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_toc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_qzss_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_qzss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_qzss_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_qzss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_BDS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, common ) == 0, "Offset of common in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, common ) == 0, offset_of_common_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, tgd1 ) == 0 + sizeof(ephemeris_common_content_t), "Offset of tgd1 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, tgd1 ) == 0 + sizeof(ephemeris_common_content_t), offset_of_tgd1_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, tgd2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of tgd2 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, tgd2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_tgd2_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of c_rs in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_c_rs_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_rc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_rc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_uc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_uc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_us in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_us_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_ic in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_ic_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_is in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_is_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of dn in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_dn_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), "Offset of m0 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), offset_of_m0_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of af2 in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_af2_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of toc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_toc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_bds_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_bds_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_bds_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_bds_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GAL_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, common ) == 0, "Offset of common in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, common ) == 0, offset_of_common_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, bgd_e1e5a ) == 0 + sizeof(ephemeris_common_content_t), "Offset of bgd_e1e5a in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, bgd_e1e5a ) == 0 + sizeof(ephemeris_common_content_t), offset_of_bgd_e1e5a_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, bgd_e1e5b ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of bgd_e1e5b in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, bgd_e1e5b ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_bgd_e1e5b_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of c_rs in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_c_rs_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_rc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_rc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_uc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_uc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_us in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_us_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_ic in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_ic_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_is in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_is_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of dn in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_dn_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), "Offset of m0 in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), offset_of_m0_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of toc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_toc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_dep_a_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16), "Offset of iodc in msg_ephemeris_gal_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_dep_a_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16), offset_of_iodc_in_msg_ephemeris_gal_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GAL(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, common ) == 0, "Offset of common in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, common ) == 0, offset_of_common_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, bgd_e1e5a ) == 0 + sizeof(ephemeris_common_content_t), "Offset of bgd_e1e5a in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, bgd_e1e5a ) == 0 + sizeof(ephemeris_common_content_t), offset_of_bgd_e1e5a_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, bgd_e1e5b ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of bgd_e1e5b in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, bgd_e1e5b ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_bgd_e1e5b_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of c_rs in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_rs ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_c_rs_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_rc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_rc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_rc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_uc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_uc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_uc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_us in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_us ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_us_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_ic in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_ic ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_ic_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of c_is in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, c_is ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_c_is_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of dn in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, dn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_dn_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), "Offset of m0 in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, m0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double), offset_of_m0_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, ecc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, sqrta ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, omega0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, omegadot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, w ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, inc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, inc_dot ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, af0 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, af1 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, af2 ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of toc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, toc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_toc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t), "Offset of iode in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, iode ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t), offset_of_iode_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16), "Offset of iodc in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, iodc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16), offset_of_iodc_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_gal_t, source ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), "Offset of source in msg_ephemeris_gal_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_gal_t, source ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(gps_time_sec_t) + sizeof(u16) + sizeof(u16), offset_of_source_in_msg_ephemeris_gal_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_SBAS_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, common ) == 0, "Offset of common in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, common ) == 0, offset_of_common_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_a_t), "Offset of pos in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_a_t), offset_of_pos_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of a_gf0 in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_a_gf0_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_a_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(double), "Offset of a_gf1 in msg_ephemeris_sbas_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_a_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(double), offset_of_a_gf1_in_msg_ephemeris_sbas_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GLO_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, common ) == 0, "Offset of common in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, common ) == 0, offset_of_common_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_a_t), "Offset of gamma in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_a_t), offset_of_gamma_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double), "Offset of tau in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double), offset_of_tau_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double), "Offset of pos in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double), offset_of_pos_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_a_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_glo_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_a_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_a_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_glo_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_SBAS_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, common ) == 0, "Offset of common in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, common ) == 0, offset_of_common_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t), "Offset of pos in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t), offset_of_pos_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of a_gf0 in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_a_gf0_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_dep_b_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(double), "Offset of a_gf1 in msg_ephemeris_sbas_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_dep_b_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(double), offset_of_a_gf1_in_msg_ephemeris_sbas_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_SBAS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, common ) == 0, "Offset of common in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, common ) == 0, offset_of_common_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, pos ) == 0 + sizeof(ephemeris_common_content_t), "Offset of pos in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, pos ) == 0 + sizeof(ephemeris_common_content_t), offset_of_pos_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, vel ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, vel ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, acc ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3), "Offset of acc in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, acc ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3), offset_of_acc_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3) + (sizeof(float) * 3), "Offset of a_gf0 in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, a_gf0 ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3) + (sizeof(float) * 3), offset_of_a_gf0_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_sbas_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3) + (sizeof(float) * 3) + sizeof(float), "Offset of a_gf1 in msg_ephemeris_sbas_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_sbas_t, a_gf1 ) == 0 + sizeof(ephemeris_common_content_t) + (sizeof(double) * 3) + (sizeof(float) * 3) + (sizeof(float) * 3) + sizeof(float), offset_of_a_gf1_in_msg_ephemeris_sbas_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GLO_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, common ) == 0, "Offset of common in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, common ) == 0, offset_of_common_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), "Offset of gamma in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), offset_of_gamma_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), "Offset of tau in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), offset_of_tau_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), "Offset of pos in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), offset_of_pos_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_b_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_glo_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_b_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_glo_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GLO_DEP_C(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, common ) == 0, "Offset of common in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, common ) == 0, offset_of_common_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), "Offset of gamma in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), offset_of_gamma_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), "Offset of tau in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), offset_of_tau_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, d_tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), "Offset of d_tau in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, d_tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), offset_of_d_tau_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of pos in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_pos_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_c_t, fcn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of fcn in msg_ephemeris_glo_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_c_t, fcn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_fcn_in_msg_ephemeris_glo_dep_c_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GLO_DEP_D(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, common ) == 0, "Offset of common in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, common ) == 0, offset_of_common_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), "Offset of gamma in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, gamma ) == 0 + sizeof(ephemeris_common_content_dep_b_t), offset_of_gamma_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), "Offset of tau in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double), offset_of_tau_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, d_tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), "Offset of d_tau in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, d_tau ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double), offset_of_d_tau_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of pos in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, pos ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_pos_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, vel ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, acc ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, fcn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of fcn in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, fcn ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_fcn_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_dep_d_t, iod ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(u8), "Offset of iod in msg_ephemeris_glo_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_dep_d_t, iod ) == 0 + sizeof(ephemeris_common_content_dep_b_t) + sizeof(double) + sizeof(double) + sizeof(double) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(double) * 3) + sizeof(u8), offset_of_iod_in_msg_ephemeris_glo_dep_d_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_GLO(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, common ) == 0, "Offset of common in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, common ) == 0, offset_of_common_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, gamma ) == 0 + sizeof(ephemeris_common_content_t), "Offset of gamma in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, gamma ) == 0 + sizeof(ephemeris_common_content_t), offset_of_gamma_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, tau ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), "Offset of tau in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, tau ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float), offset_of_tau_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, d_tau ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), "Offset of d_tau in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, d_tau ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float), offset_of_d_tau_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, pos ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of pos in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, pos ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_pos_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, vel ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3), "Offset of vel in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, vel ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3), offset_of_vel_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, acc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3), "Offset of acc in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, acc ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3), offset_of_acc_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, fcn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(float) * 3), "Offset of fcn in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, fcn ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(float) * 3), offset_of_fcn_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_glo_t, iod ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(float) * 3) + sizeof(u8), "Offset of iod in msg_ephemeris_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_glo_t, iod ) == 0 + sizeof(ephemeris_common_content_t) + sizeof(float) + sizeof(float) + sizeof(float) + (sizeof(double) * 3) + (sizeof(double) * 3) + (sizeof(float) * 3) + sizeof(u8), offset_of_iod_in_msg_ephemeris_glo_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_DEP_D(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, tgd ) == 0, "Offset of tgd in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, tgd ) == 0, offset_of_tgd_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_rs ) == 0 + sizeof(double), "Offset of c_rs in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_rs ) == 0 + sizeof(double), offset_of_c_rs_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_rc ) == 0 + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_rc ) == 0 + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_tow in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_tow_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_wn in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_wn_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of toc_tow in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_toc_tow_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), "Offset of toc_wn in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), offset_of_toc_wn_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), "Offset of valid in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), offset_of_valid_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of healthy in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_healthy_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, sid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of sid in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, sid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_sid_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t), "Offset of iode in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t), offset_of_iode_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, iodc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, iodc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_d_t, reserved ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(u16), "Offset of reserved in msg_ephemeris_dep_d_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_d_t, reserved ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(u16), offset_of_reserved_in_msg_ephemeris_dep_d_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, tgd ) == 0, "Offset of tgd in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, tgd ) == 0, offset_of_tgd_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_rs ) == 0 + sizeof(double), "Offset of c_rs in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_rs ) == 0 + sizeof(double), offset_of_c_rs_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_rc ) == 0 + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_rc ) == 0 + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_tow in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_tow_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_wn in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_wn_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of toc_tow in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_toc_tow_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), "Offset of toc_wn in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), offset_of_toc_wn_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), "Offset of valid in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), offset_of_valid_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of healthy in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_healthy_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_a_t, prn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of prn in msg_ephemeris_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_a_t, prn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_prn_in_msg_ephemeris_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, tgd ) == 0, "Offset of tgd in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, tgd ) == 0, offset_of_tgd_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_rs ) == 0 + sizeof(double), "Offset of c_rs in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_rs ) == 0 + sizeof(double), offset_of_c_rs_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_rc ) == 0 + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_rc ) == 0 + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_tow in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_tow_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_wn in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_wn_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of toc_tow in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_toc_tow_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), "Offset of toc_wn in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), offset_of_toc_wn_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), "Offset of valid in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), offset_of_valid_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of healthy in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_healthy_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, prn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of prn in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, prn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_prn_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_b_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of iode in msg_ephemeris_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_b_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_iode_in_msg_ephemeris_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_EPHEMERIS_DEP_C(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, tgd ) == 0, "Offset of tgd in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, tgd ) == 0, offset_of_tgd_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_rs ) == 0 + sizeof(double), "Offset of c_rs in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_rs ) == 0 + sizeof(double), offset_of_c_rs_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_rc ) == 0 + sizeof(double) + sizeof(double), "Offset of c_rc in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_rc ) == 0 + sizeof(double) + sizeof(double), offset_of_c_rc_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_uc in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_uc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_uc_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_us in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_us ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_us_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_ic in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_ic ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_ic_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of c_is in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, c_is ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_c_is_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of dn in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, dn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_dn_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of m0 in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, m0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_m0_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of ecc in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, ecc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_ecc_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, sqrta ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, omega0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, omegadot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, w ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, inc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc_dot in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, inc_dot ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_dot_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, af0 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, af1 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af2 in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, af2 ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af2_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_tow in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, toe_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_tow_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of toe_wn in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, toe_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_toe_wn_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of toc_tow in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, toc_tow ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_toc_tow_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), "Offset of toc_wn in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, toc_wn ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double), offset_of_toc_wn_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), "Offset of valid in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, valid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16), offset_of_valid_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of healthy in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, healthy ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_healthy_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, sid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of sid in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, sid ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_sid_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t), "Offset of iode in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, iode ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t), offset_of_iode_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, iodc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8), "Offset of iodc in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, iodc ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8), offset_of_iodc_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ephemeris_dep_c_t, reserved ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(u16), "Offset of reserved in msg_ephemeris_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ephemeris_dep_c_t, reserved ) == 0 + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(double) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(u16), offset_of_reserved_in_msg_ephemeris_dep_c_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_ObservationHeaderDep(void) {
+#ifdef __cplusplus
+static_assert(offsetof(observation_header_dep_t, t ) == 0, "Offset of t in observation_header_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(observation_header_dep_t, t ) == 0, offset_of_t_in_observation_header_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(observation_header_dep_t, n_obs ) == 0 + sizeof(gps_time_dep_t), "Offset of n_obs in observation_header_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(observation_header_dep_t, n_obs ) == 0 + sizeof(gps_time_dep_t), offset_of_n_obs_in_observation_header_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_CarrierPhaseDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(carrier_phase_dep_a_t, i ) == 0, "Offset of i in carrier_phase_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(carrier_phase_dep_a_t, i ) == 0, offset_of_i_in_carrier_phase_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(carrier_phase_dep_a_t, f ) == 0 + sizeof(s32), "Offset of f in carrier_phase_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(carrier_phase_dep_a_t, f ) == 0 + sizeof(s32), offset_of_f_in_carrier_phase_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_PackedObsContentDepA(void) {
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_a_t, P ) == 0, "Offset of P in packed_obs_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_a_t, P ) == 0, offset_of_P_in_packed_obs_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_a_t, L ) == 0 + sizeof(u32), "Offset of L in packed_obs_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_a_t, L ) == 0 + sizeof(u32), offset_of_L_in_packed_obs_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_a_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t), "Offset of cn0 in packed_obs_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_a_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t), offset_of_cn0_in_packed_obs_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_a_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8), "Offset of lock in packed_obs_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_a_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8), offset_of_lock_in_packed_obs_content_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_a_t, prn ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8) + sizeof(u16), "Offset of prn in packed_obs_content_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_a_t, prn ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8) + sizeof(u16), offset_of_prn_in_packed_obs_content_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_PackedObsContentDepB(void) {
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_b_t, P ) == 0, "Offset of P in packed_obs_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_b_t, P ) == 0, offset_of_P_in_packed_obs_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_b_t, L ) == 0 + sizeof(u32), "Offset of L in packed_obs_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_b_t, L ) == 0 + sizeof(u32), offset_of_L_in_packed_obs_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_b_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t), "Offset of cn0 in packed_obs_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_b_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t), offset_of_cn0_in_packed_obs_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_b_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8), "Offset of lock in packed_obs_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_b_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8), offset_of_lock_in_packed_obs_content_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_b_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8) + sizeof(u16), "Offset of sid in packed_obs_content_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_b_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_dep_a_t) + sizeof(u8) + sizeof(u16), offset_of_sid_in_packed_obs_content_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_PackedObsContentDepC(void) {
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_c_t, P ) == 0, "Offset of P in packed_obs_content_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_c_t, P ) == 0, offset_of_P_in_packed_obs_content_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_c_t, L ) == 0 + sizeof(u32), "Offset of L in packed_obs_content_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_c_t, L ) == 0 + sizeof(u32), offset_of_L_in_packed_obs_content_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_c_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), "Offset of cn0 in packed_obs_content_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_c_t, cn0 ) == 0 + sizeof(u32) + sizeof(carrier_phase_t), offset_of_cn0_in_packed_obs_content_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_c_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8), "Offset of lock in packed_obs_content_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_c_t, lock ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8), offset_of_lock_in_packed_obs_content_dep_c_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(packed_obs_content_dep_c_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16), "Offset of sid in packed_obs_content_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(packed_obs_content_dep_c_t, sid ) == 0 + sizeof(u32) + sizeof(carrier_phase_t) + sizeof(u8) + sizeof(u16), offset_of_sid_in_packed_obs_content_dep_c_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_OBS_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_a_t, header ) == 0, "Offset of header in msg_obs_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_a_t, header ) == 0, offset_of_header_in_msg_obs_dep_a_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_a_t, obs ) == 0 + sizeof(observation_header_dep_t), "Offset of obs in msg_obs_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_a_t, obs ) == 0 + sizeof(observation_header_dep_t), offset_of_obs_in_msg_obs_dep_a_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_OBS_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_b_t, header ) == 0, "Offset of header in msg_obs_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_b_t, header ) == 0, offset_of_header_in_msg_obs_dep_b_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_b_t, obs ) == 0 + sizeof(observation_header_dep_t), "Offset of obs in msg_obs_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_b_t, obs ) == 0 + sizeof(observation_header_dep_t), offset_of_obs_in_msg_obs_dep_b_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_OBS_DEP_C(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_c_t, header ) == 0, "Offset of header in msg_obs_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_c_t, header ) == 0, offset_of_header_in_msg_obs_dep_c_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_obs_dep_c_t, obs ) == 0 + sizeof(observation_header_dep_t), "Offset of obs in msg_obs_dep_c_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_obs_dep_c_t, obs ) == 0 + sizeof(observation_header_dep_t), offset_of_obs_in_msg_obs_dep_c_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_IONO(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, t_nmct ) == 0, "Offset of t_nmct in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, t_nmct ) == 0, offset_of_t_nmct_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, a0 ) == 0 + sizeof(gps_time_sec_t), "Offset of a0 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, a0 ) == 0 + sizeof(gps_time_sec_t), offset_of_a0_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, a1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double), "Offset of a1 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, a1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double), offset_of_a1_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, a2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double), "Offset of a2 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, a2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double), offset_of_a2_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, a3 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of a3 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, a3 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_a3_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, b0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of b0 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, b0 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_b0_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, b1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of b1 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, b1 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_b1_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, b2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of b2 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, b2 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_b2_in_msg_iono_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_iono_t, b3 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of b3 in msg_iono_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_iono_t, b3 ) == 0 + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_b3_in_msg_iono_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SV_CONFIGURATION_GPS_DEP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_sv_configuration_gps_dep_t, t_nmct ) == 0, "Offset of t_nmct in msg_sv_configuration_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sv_configuration_gps_dep_t, t_nmct ) == 0, offset_of_t_nmct_in_msg_sv_configuration_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_sv_configuration_gps_dep_t, l2c_mask ) == 0 + sizeof(gps_time_sec_t), "Offset of l2c_mask in msg_sv_configuration_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sv_configuration_gps_dep_t, l2c_mask ) == 0 + sizeof(gps_time_sec_t), offset_of_l2c_mask_in_msg_sv_configuration_gps_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_GnssCapb(void) {
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, gps_active ) == 0, "Offset of gps_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, gps_active ) == 0, offset_of_gps_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, gps_l2c ) == 0 + sizeof(u64), "Offset of gps_l2c in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, gps_l2c ) == 0 + sizeof(u64), offset_of_gps_l2c_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, gps_l5 ) == 0 + sizeof(u64) + sizeof(u64), "Offset of gps_l5 in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, gps_l5 ) == 0 + sizeof(u64) + sizeof(u64), offset_of_gps_l5_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, glo_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64), "Offset of glo_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, glo_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64), offset_of_glo_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, glo_l2of ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32), "Offset of glo_l2of in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, glo_l2of ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32), offset_of_glo_l2of_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, glo_l3 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32), "Offset of glo_l3 in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, glo_l3 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32), offset_of_glo_l3_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, sbas_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32), "Offset of sbas_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, sbas_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32), offset_of_sbas_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, sbas_l5 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64), "Offset of sbas_l5 in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, sbas_l5 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64), offset_of_sbas_l5_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, bds_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64), "Offset of bds_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, bds_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64), offset_of_bds_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, bds_d2nav ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64), "Offset of bds_d2nav in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, bds_d2nav ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64), offset_of_bds_d2nav_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, bds_b2 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), "Offset of bds_b2 in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, bds_b2 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), offset_of_bds_b2_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, bds_b2a ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), "Offset of bds_b2a in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, bds_b2a ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), offset_of_bds_b2a_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, qzss_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), "Offset of qzss_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, qzss_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64), offset_of_qzss_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, gal_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32), "Offset of gal_active in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, gal_active ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32), offset_of_gal_active_in_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(gnss_capb_t, gal_e5 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u64), "Offset of gal_e5 in gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_capb_t, gal_e5 ) == 0 + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u32) + sizeof(u32) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u64) + sizeof(u32) + sizeof(u64), offset_of_gal_e5_in_gnss_capb_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GNSS_CAPB(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_capb_t, t_nmct ) == 0, "Offset of t_nmct in msg_gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_capb_t, t_nmct ) == 0, offset_of_t_nmct_in_msg_gnss_capb_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gnss_capb_t, gc ) == 0 + sizeof(gps_time_sec_t), "Offset of gc in msg_gnss_capb_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gnss_capb_t, gc ) == 0 + sizeof(gps_time_sec_t), offset_of_gc_in_msg_gnss_capb_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GROUP_DELAY_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, t_op ) == 0, "Offset of t_op in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, t_op ) == 0, offset_of_t_op_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, prn ) == 0 + sizeof(gps_time_dep_t), "Offset of prn in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, prn ) == 0 + sizeof(gps_time_dep_t), offset_of_prn_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, valid ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8), "Offset of valid in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, valid ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8), offset_of_valid_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, tgd ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8), "Offset of tgd in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, tgd ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8), offset_of_tgd_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, isc_l1ca ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8) + sizeof(s16), "Offset of isc_l1ca in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, isc_l1ca ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8) + sizeof(s16), offset_of_isc_l1ca_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_a_t, isc_l2c ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8) + sizeof(s16) + sizeof(s16), "Offset of isc_l2c in msg_group_delay_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_a_t, isc_l2c ) == 0 + sizeof(gps_time_dep_t) + sizeof(u8) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_isc_l2c_in_msg_group_delay_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GROUP_DELAY_DEP_B(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, t_op ) == 0, "Offset of t_op in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, t_op ) == 0, offset_of_t_op_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, valid ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t), "Offset of valid in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, valid ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t), offset_of_valid_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, tgd ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8), "Offset of tgd in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, tgd ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8), offset_of_tgd_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, isc_l1ca ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(s16), "Offset of isc_l1ca in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, isc_l1ca ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(s16), offset_of_isc_l1ca_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_dep_b_t, isc_l2c ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(s16) + sizeof(s16), "Offset of isc_l2c in msg_group_delay_dep_b_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_dep_b_t, isc_l2c ) == 0 + sizeof(gps_time_sec_t) + sizeof(gnss_signal_dep_t) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_isc_l2c_in_msg_group_delay_dep_b_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GROUP_DELAY(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, t_op ) == 0, "Offset of t_op in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, t_op ) == 0, offset_of_t_op_in_msg_group_delay_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, sid ) == 0 + sizeof(gps_time_sec_t), "Offset of sid in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, sid ) == 0 + sizeof(gps_time_sec_t), offset_of_sid_in_msg_group_delay_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, valid ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), "Offset of valid in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, valid ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t), offset_of_valid_in_msg_group_delay_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, tgd ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of tgd in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, tgd ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_tgd_in_msg_group_delay_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, isc_l1ca ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(s16), "Offset of isc_l1ca in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, isc_l1ca ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(s16), offset_of_isc_l1ca_in_msg_group_delay_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_group_delay_t, isc_l2c ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(s16) + sizeof(s16), "Offset of isc_l2c in msg_group_delay_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_group_delay_t, isc_l2c ) == 0 + sizeof(gps_time_sec_t) + sizeof(sbp_gnss_signal_t) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_isc_l2c_in_msg_group_delay_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_AlmanacCommonContent(void) {
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, sid ) == 0, "Offset of sid in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, sid ) == 0, offset_of_sid_in_almanac_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, toa ) == 0 + sizeof(sbp_gnss_signal_t), "Offset of toa in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, toa ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_toa_in_almanac_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), "Offset of ura in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, ura ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t), offset_of_ura_in_almanac_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double), "Offset of fit_interval in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, fit_interval ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double), offset_of_fit_interval_in_almanac_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), "Offset of valid in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, valid ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), offset_of_valid_in_almanac_common_content_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), "Offset of health_bits in almanac_common_content_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_t, health_bits ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), offset_of_health_bits_in_almanac_common_content_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_AlmanacCommonContentDep(void) {
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, sid ) == 0, "Offset of sid in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, sid ) == 0, offset_of_sid_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, toa ) == 0 + sizeof(gnss_signal_dep_t), "Offset of toa in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, toa ) == 0 + sizeof(gnss_signal_dep_t), offset_of_toa_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, ura ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t), "Offset of ura in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, ura ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t), offset_of_ura_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, fit_interval ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double), "Offset of fit_interval in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, fit_interval ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double), offset_of_fit_interval_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, valid ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), "Offset of valid in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, valid ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32), offset_of_valid_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(almanac_common_content_dep_t, health_bits ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), "Offset of health_bits in almanac_common_content_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(almanac_common_content_dep_t, health_bits ) == 0 + sizeof(gnss_signal_dep_t) + sizeof(gps_time_sec_t) + sizeof(double) + sizeof(u32) + sizeof(u8), offset_of_health_bits_in_almanac_common_content_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_ALMANAC_GPS_DEP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, common ) == 0, "Offset of common in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, common ) == 0, offset_of_common_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, m0 ) == 0 + sizeof(almanac_common_content_dep_t), "Offset of m0 in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, m0 ) == 0 + sizeof(almanac_common_content_dep_t), offset_of_m0_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, ecc ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double), "Offset of ecc in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, ecc ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double), offset_of_ecc_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, sqrta ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, sqrta ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, omega0 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, omega0 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, omegadot ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, omegadot ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, w ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, w ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, inc ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, inc ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, af0 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, af0 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_dep_t, af1 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_almanac_gps_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_dep_t, af1 ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_almanac_gps_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_ALMANAC_GPS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, common ) == 0, "Offset of common in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, common ) == 0, offset_of_common_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, m0 ) == 0 + sizeof(almanac_common_content_t), "Offset of m0 in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, m0 ) == 0 + sizeof(almanac_common_content_t), offset_of_m0_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, ecc ) == 0 + sizeof(almanac_common_content_t) + sizeof(double), "Offset of ecc in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, ecc ) == 0 + sizeof(almanac_common_content_t) + sizeof(double), offset_of_ecc_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, sqrta ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double), "Offset of sqrta in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, sqrta ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double), offset_of_sqrta_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, omega0 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega0 in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, omega0 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega0_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, omegadot ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omegadot in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, omegadot ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omegadot_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, w ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of w in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, w ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_w_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, inc ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of inc in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, inc ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_inc_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, af0 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af0 in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, af0 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af0_in_msg_almanac_gps_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_gps_t, af1 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of af1 in msg_almanac_gps_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_gps_t, af1 ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_af1_in_msg_almanac_gps_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_ALMANAC_GLO_DEP(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, common ) == 0, "Offset of common in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, common ) == 0, offset_of_common_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, lambda_na ) == 0 + sizeof(almanac_common_content_dep_t), "Offset of lambda_na in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, lambda_na ) == 0 + sizeof(almanac_common_content_dep_t), offset_of_lambda_na_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, t_lambda_na ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double), "Offset of t_lambda_na in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, t_lambda_na ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double), offset_of_t_lambda_na_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, i ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double), "Offset of i in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, i ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double), offset_of_i_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, t ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of t in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, t ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_t_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, t_dot ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of t_dot in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, t_dot ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_t_dot_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, epsilon ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of epsilon in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, epsilon ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_epsilon_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_dep_t, omega ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega in msg_almanac_glo_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_dep_t, omega ) == 0 + sizeof(almanac_common_content_dep_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega_in_msg_almanac_glo_dep_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_ALMANAC_GLO(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, common ) == 0, "Offset of common in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, common ) == 0, offset_of_common_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, lambda_na ) == 0 + sizeof(almanac_common_content_t), "Offset of lambda_na in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, lambda_na ) == 0 + sizeof(almanac_common_content_t), offset_of_lambda_na_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, t_lambda_na ) == 0 + sizeof(almanac_common_content_t) + sizeof(double), "Offset of t_lambda_na in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, t_lambda_na ) == 0 + sizeof(almanac_common_content_t) + sizeof(double), offset_of_t_lambda_na_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, i ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double), "Offset of i in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, i ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double), offset_of_i_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, t ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of t in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, t ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_t_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, t_dot ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of t_dot in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, t_dot ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_t_dot_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, epsilon ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of epsilon in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, epsilon ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_epsilon_in_msg_almanac_glo_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_almanac_glo_t, omega ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of omega in msg_almanac_glo_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_almanac_glo_t, omega ) == 0 + sizeof(almanac_common_content_t) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_omega_in_msg_almanac_glo_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GLO_BIASES(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_glo_biases_t, mask ) == 0, "Offset of mask in msg_glo_biases_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_glo_biases_t, mask ) == 0, offset_of_mask_in_msg_glo_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_glo_biases_t, l1ca_bias ) == 0 + sizeof(u8), "Offset of l1ca_bias in msg_glo_biases_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_glo_biases_t, l1ca_bias ) == 0 + sizeof(u8), offset_of_l1ca_bias_in_msg_glo_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_glo_biases_t, l1p_bias ) == 0 + sizeof(u8) + sizeof(s16), "Offset of l1p_bias in msg_glo_biases_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_glo_biases_t, l1p_bias ) == 0 + sizeof(u8) + sizeof(s16), offset_of_l1p_bias_in_msg_glo_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_glo_biases_t, l2ca_bias ) == 0 + sizeof(u8) + sizeof(s16) + sizeof(s16), "Offset of l2ca_bias in msg_glo_biases_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_glo_biases_t, l2ca_bias ) == 0 + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_l2ca_bias_in_msg_glo_biases_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_glo_biases_t, l2p_bias ) == 0 + sizeof(u8) + sizeof(s16) + sizeof(s16) + sizeof(s16), "Offset of l2p_bias in msg_glo_biases_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_glo_biases_t, l2p_bias ) == 0 + sizeof(u8) + sizeof(s16) + sizeof(s16) + sizeof(s16), offset_of_l2p_bias_in_msg_glo_biases_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_SvAzEl(void) {
+#ifdef __cplusplus
+static_assert(offsetof(sv_az_el_t, sid ) == 0, "Offset of sid in sv_az_el_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sv_az_el_t, sid ) == 0, offset_of_sid_in_sv_az_el_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(sv_az_el_t, az ) == 0 + sizeof(sbp_gnss_signal_t), "Offset of az in sv_az_el_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sv_az_el_t, az ) == 0 + sizeof(sbp_gnss_signal_t), offset_of_az_in_sv_az_el_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(sv_az_el_t, el ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u8), "Offset of el in sv_az_el_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(sv_az_el_t, el ) == 0 + sizeof(sbp_gnss_signal_t) + sizeof(u8), offset_of_el_in_sv_az_el_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SV_AZ_EL(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_sv_az_el_t, azel ) == 0, "Offset of azel in msg_sv_az_el_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_sv_az_el_t, azel ) == 0, offset_of_azel_in_msg_sv_az_el_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_OSR(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_osr_t, header ) == 0, "Offset of header in msg_osr_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_osr_t, header ) == 0, offset_of_header_in_msg_osr_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_osr_t, obs ) == 0 + sizeof(observation_header_t), "Offset of obs in msg_osr_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_osr_t, obs ) == 0 + sizeof(observation_header_t), offset_of_obs_in_msg_osr_t_is_incorrect)
+#endif
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */

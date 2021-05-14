@@ -49,6 +49,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** GPS Time
@@ -1750,7 +1753,1535 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_GPS_TIME(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_t, wn ) == 0, "Offset of wn in msg_gps_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, wn ) == 0, offset_of_wn_in_msg_gps_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_t, tow ) == 0 + sizeof(u16), "Offset of tow in msg_gps_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), "Offset of ns_residual in msg_gps_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), "Offset of flags in msg_gps_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_t_is_incorrect)
+#endif
+}
 
+static inline void static_asserts_for_module_MSG_GPS_TIME_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_gnss_t, wn ) == 0, "Offset of wn in msg_gps_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, wn ) == 0, offset_of_wn_in_msg_gps_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_gnss_t, tow ) == 0 + sizeof(u16), "Offset of tow in msg_gps_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_gnss_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), "Offset of ns_residual in msg_gps_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_gnss_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), "Offset of flags in msg_gps_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_gnss_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_UTC_TIME(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, flags ) == 0, "Offset of flags in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, flags ) == 0, offset_of_flags_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, tow ) == 0 + sizeof(u8), "Offset of tow in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, tow ) == 0 + sizeof(u8), offset_of_tow_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, year ) == 0 + sizeof(u8) + sizeof(u32), "Offset of year in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, year ) == 0 + sizeof(u8) + sizeof(u32), offset_of_year_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), "Offset of month in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), offset_of_month_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), "Offset of day in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), offset_of_day_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of hours in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_hours_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of minutes in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_minutes_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of seconds in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_seconds_in_msg_utc_time_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of ns in msg_utc_time_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_ns_in_msg_utc_time_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_UTC_TIME_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, flags ) == 0, "Offset of flags in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, flags ) == 0, offset_of_flags_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, tow ) == 0 + sizeof(u8), "Offset of tow in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, tow ) == 0 + sizeof(u8), offset_of_tow_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, year ) == 0 + sizeof(u8) + sizeof(u32), "Offset of year in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, year ) == 0 + sizeof(u8) + sizeof(u32), offset_of_year_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), "Offset of month in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, month ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16), offset_of_month_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), "Offset of day in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, day ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8), offset_of_day_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), "Offset of hours in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, hours ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8), offset_of_hours_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of minutes in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, minutes ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_minutes_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of seconds in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, seconds ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_seconds_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_utc_time_gnss_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), "Offset of ns in msg_utc_time_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_utc_time_gnss_t, ns ) == 0 + sizeof(u8) + sizeof(u32) + sizeof(u16) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8), offset_of_ns_in_msg_utc_time_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_DOPS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, tow ) == 0, "Offset of tow in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, tow ) == 0, offset_of_tow_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, gdop ) == 0 + sizeof(u32), "Offset of gdop in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, gdop ) == 0 + sizeof(u32), offset_of_gdop_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), "Offset of pdop in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), offset_of_pdop_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), "Offset of tdop in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_tdop_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of hdop in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_hdop_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of vdop in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_dops_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of flags in msg_dops_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_flags_in_msg_dops_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, tow ) == 0, "Offset of tow in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, x ) == 0 + sizeof(u32), "Offset of x in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, y ) == 0 + sizeof(u32) + sizeof(double), "Offset of y in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of z in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of accuracy in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of n_sats in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_COV(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, tow ) == 0, "Offset of tow in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, x ) == 0 + sizeof(u32), "Offset of x in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(double), "Offset of y in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of z in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of cov_x_x in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_x_x_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of cov_x_y in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_x_y_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of cov_x_z in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_y in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_z in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_z_z in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_pos_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_cov_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, tow ) == 0, "Offset of tow in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, lat ) == 0 + sizeof(u32), "Offset of lat in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, lon ) == 0 + sizeof(u32) + sizeof(double), "Offset of lon in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of height in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of h_accuracy in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of v_accuracy in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_llh_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_COV(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, tow ) == 0, "Offset of tow in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, lat ) == 0 + sizeof(u32), "Offset of lat in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, lon ) == 0 + sizeof(u32) + sizeof(double), "Offset of lon in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of height in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of cov_n_n in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_n_n_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of cov_n_e in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_n_e_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of cov_n_d in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_e in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_d in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_d_d in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_pos_llh_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_llh_cov_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_ECEF(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, tow ) == 0, "Offset of tow in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, tow ) == 0, offset_of_tow_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, x ) == 0 + sizeof(u32), "Offset of x in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of accuracy in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of n_sats in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_baseline_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ecef_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_NED(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, tow ) == 0, "Offset of tow in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, tow ) == 0, offset_of_tow_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, n ) == 0 + sizeof(u32), "Offset of n in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of h_accuracy in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of v_accuracy in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_baseline_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ned_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, tow ) == 0, "Offset of tow in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of accuracy in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of n_sats in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ecef_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_COV(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, tow ) == 0, "Offset of tow in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cov_x_x in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), "Offset of cov_x_y in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), "Offset of cov_x_z in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_y in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_z in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_z_z in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_vel_ecef_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_cov_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, tow ) == 0, "Offset of tow in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, n ) == 0 + sizeof(u32), "Offset of n in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of h_accuracy in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of v_accuracy in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ned_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_COV(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, tow ) == 0, "Offset of tow in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, n ) == 0 + sizeof(u32), "Offset of n in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cov_n_n in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_n_n_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), "Offset of cov_n_e in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_n_e_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), "Offset of cov_n_d in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_e in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_d in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_d_d in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_vel_ned_cov_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ned_cov_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, tow ) == 0, "Offset of tow in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, x ) == 0 + sizeof(u32), "Offset of x in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), "Offset of y in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of z in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of accuracy in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of n_sats in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_COV_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, tow ) == 0, "Offset of tow in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), "Offset of x in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), "Offset of y in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of z in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of cov_x_x in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_x_x_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of cov_x_y in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_x_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of cov_x_z in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_y in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_z in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_z_z in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_pos_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_cov_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, tow ) == 0, "Offset of tow in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, lat ) == 0 + sizeof(u32), "Offset of lat in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), "Offset of lon in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of height in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of h_accuracy in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of v_accuracy in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_llh_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_COV_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, tow ) == 0, "Offset of tow in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, lat ) == 0 + sizeof(u32), "Offset of lat in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), "Offset of lon in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of height in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of cov_n_n in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_cov_n_n_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), "Offset of cov_n_e in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float), offset_of_cov_n_e_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), "Offset of cov_n_d in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_e in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_d in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_d_d in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_pos_llh_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_pos_llh_cov_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, tow ) == 0, "Offset of tow in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of accuracy in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of n_sats in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ecef_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_COV_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, tow ) == 0, "Offset of tow in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cov_x_x in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), "Offset of cov_x_y in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), "Offset of cov_x_z in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_y in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_z in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_z_z in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_vel_ecef_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_cov_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, tow ) == 0, "Offset of tow in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, n ) == 0 + sizeof(u32), "Offset of n in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of h_accuracy in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of v_accuracy in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ned_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_COV_GNSS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, tow ) == 0, "Offset of tow in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, n ) == 0 + sizeof(u32), "Offset of n in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cov_n_n in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_n ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_n_n_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), "Offset of cov_n_e in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_n_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), "Offset of cov_n_d in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_n_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_n_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_e in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_e_e ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_e_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_e_d in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_e_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_e_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_d_d in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, cov_d_d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_d_d_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_vel_ned_cov_gnss_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_cov_gnss_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_ned_cov_gnss_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_BODY(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, tow ) == 0, "Offset of tow in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, tow ) == 0, offset_of_tow_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of cov_x_x in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_x ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_cov_x_x_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), "Offset of cov_x_y in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float), offset_of_cov_x_y_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), "Offset of cov_x_z in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_x_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float), offset_of_cov_x_z_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_y in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_y_y ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_y_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_y_z in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_y_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_y_z_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of cov_z_z in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, cov_z_z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_cov_z_z_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), "Offset of n_sats in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float), offset_of_n_sats_in_msg_vel_body_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_body_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), "Offset of flags in msg_vel_body_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_body_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(u8), offset_of_flags_in_msg_vel_body_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_AGE_CORRECTIONS(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_age_corrections_t, tow ) == 0, "Offset of tow in msg_age_corrections_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_age_corrections_t, tow ) == 0, offset_of_tow_in_msg_age_corrections_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_age_corrections_t, age ) == 0 + sizeof(u32), "Offset of age in msg_age_corrections_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_age_corrections_t, age ) == 0 + sizeof(u32), offset_of_age_in_msg_age_corrections_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_GPS_TIME_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_dep_a_t, wn ) == 0, "Offset of wn in msg_gps_time_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, wn ) == 0, offset_of_wn_in_msg_gps_time_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_dep_a_t, tow ) == 0 + sizeof(u16), "Offset of tow in msg_gps_time_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_gps_time_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_dep_a_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), "Offset of ns_residual in msg_gps_time_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_gps_time_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_gps_time_dep_a_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), "Offset of flags in msg_gps_time_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_gps_time_dep_a_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_gps_time_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_DOPS_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, tow ) == 0, "Offset of tow in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, tow ) == 0, offset_of_tow_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, gdop ) == 0 + sizeof(u32), "Offset of gdop in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, gdop ) == 0 + sizeof(u32), offset_of_gdop_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), "Offset of pdop in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, pdop ) == 0 + sizeof(u32) + sizeof(u16), offset_of_pdop_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), "Offset of tdop in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, tdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_tdop_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of hdop in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, hdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_hdop_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_dops_dep_a_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of vdop in msg_dops_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_dops_dep_a_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_dops_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_ECEF_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, tow ) == 0, "Offset of tow in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, x ) == 0 + sizeof(u32), "Offset of x in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(double), "Offset of y in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(double), offset_of_y_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of z in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_z_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of accuracy in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_accuracy_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of n_sats in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_n_sats_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_ecef_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_POS_LLH_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, tow ) == 0, "Offset of tow in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, tow ) == 0, offset_of_tow_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, lat ) == 0 + sizeof(u32), "Offset of lat in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, lat ) == 0 + sizeof(u32), offset_of_lat_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, lon ) == 0 + sizeof(u32) + sizeof(double), "Offset of lon in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, lon ) == 0 + sizeof(u32) + sizeof(double), offset_of_lon_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), "Offset of height in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, height ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double), offset_of_height_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of h_accuracy in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_h_accuracy_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), "Offset of v_accuracy in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16), offset_of_v_accuracy_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_pos_llh_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_pos_llh_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_pos_llh_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(double) + sizeof(double) + sizeof(double) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_pos_llh_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_ECEF_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, tow ) == 0, "Offset of tow in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, x ) == 0 + sizeof(u32), "Offset of x in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of accuracy in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of n_sats in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_baseline_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ecef_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_NED_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, tow ) == 0, "Offset of tow in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, n ) == 0 + sizeof(u32), "Offset of n in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of h_accuracy in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of v_accuracy in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_baseline_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_baseline_ned_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_ECEF_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, tow ) == 0, "Offset of tow in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, tow ) == 0, offset_of_tow_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, x ) == 0 + sizeof(u32), "Offset of x in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, x ) == 0 + sizeof(u32), offset_of_x_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), "Offset of y in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, y ) == 0 + sizeof(u32) + sizeof(s32), offset_of_y_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of z in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, z ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_z_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of accuracy in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_accuracy_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of n_sats in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_n_sats_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ecef_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ecef_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ecef_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_VEL_NED_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, tow ) == 0, "Offset of tow in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, tow ) == 0, offset_of_tow_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, n ) == 0 + sizeof(u32), "Offset of n in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, n ) == 0 + sizeof(u32), offset_of_n_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), "Offset of e in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, e ) == 0 + sizeof(u32) + sizeof(s32), offset_of_e_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), "Offset of d in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, d ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32), offset_of_d_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), "Offset of h_accuracy in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, h_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32), offset_of_h_accuracy_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), "Offset of v_accuracy in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, v_accuracy ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16), offset_of_v_accuracy_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_vel_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of flags in msg_vel_ned_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_vel_ned_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(s32) + sizeof(s32) + sizeof(s32) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_flags_in_msg_vel_ned_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_BASELINE_HEADING_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_heading_dep_a_t, tow ) == 0, "Offset of tow in msg_baseline_heading_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, tow ) == 0, offset_of_tow_in_msg_baseline_heading_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_heading_dep_a_t, heading ) == 0 + sizeof(u32), "Offset of heading in msg_baseline_heading_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, heading ) == 0 + sizeof(u32), offset_of_heading_in_msg_baseline_heading_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_heading_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(u32), "Offset of n_sats in msg_baseline_heading_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, n_sats ) == 0 + sizeof(u32) + sizeof(u32), offset_of_n_sats_in_msg_baseline_heading_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_baseline_heading_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), "Offset of flags in msg_baseline_heading_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_baseline_heading_dep_a_t, flags ) == 0 + sizeof(u32) + sizeof(u32) + sizeof(u8), offset_of_flags_in_msg_baseline_heading_dep_a_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_PROTECTION_LEVEL(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, tow ) == 0, "Offset of tow in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, tow ) == 0, offset_of_tow_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, vpl ) == 0 + sizeof(u32), "Offset of vpl in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, vpl ) == 0 + sizeof(u32), offset_of_vpl_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, hpl ) == 0 + sizeof(u32) + sizeof(u16), "Offset of hpl in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, hpl ) == 0 + sizeof(u32) + sizeof(u16), offset_of_hpl_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, lat ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), "Offset of lat in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, lat ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_lat_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, lon ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double), "Offset of lon in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, lon ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double), offset_of_lon_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, height ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double), "Offset of height in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, height ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double), offset_of_height_in_msg_protection_level_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_protection_level_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double) + sizeof(double), "Offset of flags in msg_protection_level_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_protection_level_t, flags ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(double) + sizeof(double) + sizeof(double), offset_of_flags_in_msg_protection_level_t_is_incorrect)
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_NAVIGATION_MESSAGES_H */

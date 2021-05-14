@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Plaintext logging messages with levels
@@ -102,7 +105,55 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_LOG(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_log_t, level ) == 0, "Offset of level in msg_log_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_log_t, level ) == 0, offset_of_level_in_msg_log_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_log_t, text ) == 0 + sizeof(u8), "Offset of text in msg_log_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_log_t, text ) == 0 + sizeof(u8), offset_of_text_in_msg_log_t_is_incorrect)
+#endif
+#endif
+}
 
+static inline void static_asserts_for_module_MSG_FWD(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_fwd_t, source ) == 0, "Offset of source in msg_fwd_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fwd_t, source ) == 0, offset_of_source_in_msg_fwd_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_fwd_t, protocol ) == 0 + sizeof(u8), "Offset of protocol in msg_fwd_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fwd_t, protocol ) == 0 + sizeof(u8), offset_of_protocol_in_msg_fwd_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_fwd_t, fwd_payload ) == 0 + sizeof(u8) + sizeof(u8), "Offset of fwd_payload in msg_fwd_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_fwd_t, fwd_payload ) == 0 + sizeof(u8) + sizeof(u8), offset_of_fwd_payload_in_msg_fwd_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_PRINT_DEP(void) {
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_print_dep_t, text ) == 0, "Offset of text in msg_print_dep_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_print_dep_t, text ) == 0, offset_of_text_in_msg_print_dep_t_is_incorrect)
+#endif
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

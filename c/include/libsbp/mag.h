@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Raw magnetometer data
@@ -47,7 +50,38 @@ time is unknown or invalid.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_MAG_RAW(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_mag_raw_t, tow ) == 0, "Offset of tow in msg_mag_raw_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, tow ) == 0, offset_of_tow_in_msg_mag_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mag_raw_t, tow_f ) == 0 + sizeof(u32), "Offset of tow_f in msg_mag_raw_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, tow_f ) == 0 + sizeof(u32), offset_of_tow_f_in_msg_mag_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mag_raw_t, mag_x ) == 0 + sizeof(u32) + sizeof(u8), "Offset of mag_x in msg_mag_raw_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_x ) == 0 + sizeof(u32) + sizeof(u8), offset_of_mag_x_in_msg_mag_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mag_raw_t, mag_y ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16), "Offset of mag_y in msg_mag_raw_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_y ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16), offset_of_mag_y_in_msg_mag_raw_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_mag_raw_t, mag_z ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16), "Offset of mag_z in msg_mag_raw_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_mag_raw_t, mag_z ) == 0 + sizeof(u32) + sizeof(u8) + sizeof(s16) + sizeof(s16), offset_of_mag_z_in_msg_mag_raw_t_is_incorrect)
+#endif
+}
 
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_MAG_MESSAGES_H */

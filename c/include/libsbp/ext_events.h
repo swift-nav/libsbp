@@ -27,6 +27,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Reports timestamped external pin event
@@ -74,7 +77,38 @@ from -500000 to 500000)
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_EXT_EVENT(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_ext_event_t, wn ) == 0, "Offset of wn in msg_ext_event_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, wn ) == 0, offset_of_wn_in_msg_ext_event_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ext_event_t, tow ) == 0 + sizeof(u16), "Offset of tow in msg_ext_event_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, tow ) == 0 + sizeof(u16), offset_of_tow_in_msg_ext_event_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ext_event_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), "Offset of ns_residual in msg_ext_event_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, ns_residual ) == 0 + sizeof(u16) + sizeof(u32), offset_of_ns_residual_in_msg_ext_event_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ext_event_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), "Offset of flags in msg_ext_event_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, flags ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_ext_event_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_ext_event_t, pin ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32) + sizeof(u8), "Offset of pin in msg_ext_event_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_ext_event_t, pin ) == 0 + sizeof(u16) + sizeof(u32) + sizeof(s32) + sizeof(u8), offset_of_pin_in_msg_ext_event_t_is_incorrect)
+#endif
+}
 
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

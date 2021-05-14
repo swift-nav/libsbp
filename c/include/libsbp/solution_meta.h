@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Flags for a given solution input type.
@@ -267,7 +270,137 @@ typedef struct SBP_ATTR_PACKED {
  
 
 /** \} */
+static inline void static_asserts_for_module_SolutionInputType(void) {
+#ifdef __cplusplus
+static_assert(offsetof(solution_input_type_t, sensor_type ) == 0, "Offset of sensor_type in solution_input_type_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(solution_input_type_t, sensor_type ) == 0, offset_of_sensor_type_in_solution_input_type_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(solution_input_type_t, flags ) == 0 + sizeof(u8), "Offset of flags in solution_input_type_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(solution_input_type_t, flags ) == 0 + sizeof(u8), offset_of_flags_in_solution_input_type_t_is_incorrect)
+#endif
+}
 
+static inline void static_asserts_for_module_MSG_SOLN_META_DEP_A(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, pdop ) == 0, "Offset of pdop in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, pdop ) == 0, offset_of_pdop_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, hdop ) == 0 + sizeof(u16), "Offset of hdop in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, hdop ) == 0 + sizeof(u16), offset_of_hdop_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, vdop ) == 0 + sizeof(u16) + sizeof(u16), "Offset of vdop in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, vdop ) == 0 + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, n_sats ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of n_sats in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, n_sats ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_n_sats_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, age_corrections ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8), "Offset of age_corrections in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, age_corrections ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8), offset_of_age_corrections_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, alignment_status ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16), "Offset of alignment_status in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, alignment_status ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16), offset_of_alignment_status_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, last_used_gnss_pos_tow ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8), "Offset of last_used_gnss_pos_tow in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, last_used_gnss_pos_tow ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8), offset_of_last_used_gnss_pos_tow_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, last_used_gnss_vel_tow ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), "Offset of last_used_gnss_vel_tow in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, last_used_gnss_vel_tow ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32), offset_of_last_used_gnss_vel_tow_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_dep_a_t, sol_in ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u32), "Offset of sol_in in msg_soln_meta_dep_a_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_dep_a_t, sol_in ) == 0 + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u32), offset_of_sol_in_in_msg_soln_meta_dep_a_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_MSG_SOLN_META(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, tow ) == 0, "Offset of tow in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, tow ) == 0, offset_of_tow_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, pdop ) == 0 + sizeof(u32), "Offset of pdop in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, pdop ) == 0 + sizeof(u32), offset_of_pdop_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, hdop ) == 0 + sizeof(u32) + sizeof(u16), "Offset of hdop in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, hdop ) == 0 + sizeof(u32) + sizeof(u16), offset_of_hdop_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), "Offset of vdop in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, vdop ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16), offset_of_vdop_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, age_corrections ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of age_corrections in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, age_corrections ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_age_corrections_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, age_gnss ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), "Offset of age_gnss in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, age_gnss ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16), offset_of_age_gnss_in_msg_soln_meta_t_is_incorrect)
+#endif
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
+#ifdef __cplusplus
+static_assert(offsetof(msg_soln_meta_t, sol_in ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32), "Offset of sol_in in msg_soln_meta_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_soln_meta_t, sol_in ) == 0 + sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32), offset_of_sol_in_in_msg_soln_meta_t_is_incorrect)
+#endif
+#endif
+}
+
+static inline void static_asserts_for_module_GNSSInputType(void) {
+#ifdef __cplusplus
+static_assert(offsetof(gnss_input_type_t, flags ) == 0, "Offset of flags in gnss_input_type_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(gnss_input_type_t, flags ) == 0, offset_of_flags_in_gnss_input_type_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_IMUInputType(void) {
+#ifdef __cplusplus
+static_assert(offsetof(imu_input_type_t, flags ) == 0, "Offset of flags in imu_input_type_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(imu_input_type_t, flags ) == 0, offset_of_flags_in_imu_input_type_t_is_incorrect)
+#endif
+}
+
+static inline void static_asserts_for_module_OdoInputType(void) {
+#ifdef __cplusplus
+static_assert(offsetof(odo_input_type_t, flags ) == 0, "Offset of flags in odo_input_type_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(odo_input_type_t, flags ) == 0, offset_of_flags_in_odo_input_type_t_is_incorrect)
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <stddef.h>
 #endif
 
 /* Should match guard in libswiftnav/common.h */
@@ -51,7 +52,7 @@ typedef uint64_t u64;
 #endif
 
 /* Set packing based upon toolchain */
-#if defined(__GNUC__) || defined(__clang__) || defined(__ghs__)
+#if defined(__GNUC__) || defined(__clang__) 
 
 #define SBP_PACK_START /* Intentionally empty */
 #define SBP_PACK_END /* Intentionally empty */
@@ -63,6 +64,12 @@ typedef uint64_t u64;
 #define SBP_PACK_END __pragma(pack());
 #define SBP_ATTR_PACKED /* Intentionally empty */
 
+#elif defined(__ghs__)
+
+#define SBP_PACK_START 
+#define SBP_PACK_END
+#define SBP_ATTR_PACKED
+
 #else
 
 #if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || !defined(SBP_ATTR_PACKED)
@@ -70,6 +77,11 @@ typedef uint64_t u64;
 #endif 
 
 #endif /* toolchaing packing macros */
+
+#define SBP_OFFSET_OF(s,f) ((size_t)(&((s*)0)->f))
+#define STATIC_MSG(msg, l) STATIC_MSG2(msg, l)
+#define STATIC_MSG2(msg,l) on_line_##l##__##msg
+#define SBP_STATIC_ASSERT(x, msg) char STATIC_MSG(msg, __LINE__) [(x)?1:-1]; (void)STATIC_MSG(msg, __LINE__);
 
 /** \} */
 

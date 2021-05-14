@@ -26,6 +26,9 @@
 #include "common.h"
 
 SBP_PACK_START
+#ifdef __ghs__
+#pragma pack(1)
+#endif
 
 
 /** Vehicle forward (x-axis) velocity
@@ -157,7 +160,51 @@ opposite direction.
  
 
 /** \} */
+static inline void static_asserts_for_module_MSG_ODOMETRY(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_odometry_t, tow ) == 0, "Offset of tow in msg_odometry_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, tow ) == 0, offset_of_tow_in_msg_odometry_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_odometry_t, velocity ) == 0 + sizeof(u32), "Offset of velocity in msg_odometry_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, velocity ) == 0 + sizeof(u32), offset_of_velocity_in_msg_odometry_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_odometry_t, flags ) == 0 + sizeof(u32) + sizeof(s32), "Offset of flags in msg_odometry_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_odometry_t, flags ) == 0 + sizeof(u32) + sizeof(s32), offset_of_flags_in_msg_odometry_t_is_incorrect)
+#endif
+}
 
+static inline void static_asserts_for_module_MSG_WHEELTICK(void) {
+#ifdef __cplusplus
+static_assert(offsetof(msg_wheeltick_t, time ) == 0, "Offset of time in msg_wheeltick_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, time ) == 0, offset_of_time_in_msg_wheeltick_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_wheeltick_t, flags ) == 0 + sizeof(u64), "Offset of flags in msg_wheeltick_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, flags ) == 0 + sizeof(u64), offset_of_flags_in_msg_wheeltick_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_wheeltick_t, source ) == 0 + sizeof(u64) + sizeof(u8), "Offset of source in msg_wheeltick_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, source ) == 0 + sizeof(u64) + sizeof(u8), offset_of_source_in_msg_wheeltick_t_is_incorrect)
+#endif
+#ifdef __cplusplus
+static_assert(offsetof(msg_wheeltick_t, ticks ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8), "Offset of ticks in msg_wheeltick_t is incorrect");
+#else
+SBP_STATIC_ASSERT(SBP_OFFSET_OF(msg_wheeltick_t, ticks ) == 0 + sizeof(u64) + sizeof(u8) + sizeof(u8), offset_of_ticks_in_msg_wheeltick_t_is_incorrect)
+#endif
+}
+
+
+#ifdef __ghs__
+#pragma pack()
+#endif
 SBP_PACK_END
 
 #endif /* LIBSBP_VEHICLE_MESSAGES_H */
