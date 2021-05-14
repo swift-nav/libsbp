@@ -98,4 +98,6 @@ USER dockerdev
 
 RUN stack install --resolver lts-10.10 sbp
 
+CMD ["make", "all"]
+
 # vim: ft=dockerfile
