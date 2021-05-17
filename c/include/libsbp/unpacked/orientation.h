@@ -38,6 +38,7 @@ typedef struct {
 } sbp_msg_baseline_heading_t;
 
 
+
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags) \
@@ -70,6 +71,7 @@ typedef struct {
 } sbp_msg_orient_quat_t;
 
 
+
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags) \
@@ -100,6 +102,7 @@ typedef struct {
 } sbp_msg_orient_euler_t;
 
 
+
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags) \
@@ -125,6 +128,7 @@ typedef struct {
   s32 z;
   u8 flags;
 } sbp_msg_angular_rate_t;
+
 
 
 

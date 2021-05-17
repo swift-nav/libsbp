@@ -50,6 +50,7 @@ typedef struct {
 } sbp_msg_startup_t;
 
 
+
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags) \
@@ -75,6 +76,16 @@ typedef struct {
   u8 num_signals;
   sbp_unterminated_string_t source;
 } sbp_msg_dgnss_status_t;
+#define sbp_msg_dgnss_status_t_source_init(f) sbp_unterminated_string_init(f, 251)
+#define sbp_msg_dgnss_status_t_source_valid(f) sbp_unterminated_string_valid(f, 251)
+#define sbp_msg_dgnss_status_t_source_set(f,s) sbp_unterminated_string_set(f,s,251)
+#define sbp_msg_dgnss_status_t_source_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
+#define sbp_msg_dgnss_status_t_source_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
+#define sbp_msg_dgnss_status_t_source_packed_len(f) sbp_unterminated_string_packed_len(f,251)
+#define sbp_msg_dgnss_status_t_source_get(f) sbp_unterminated_string_get(f,251)
+#define sbp_msg_dgnss_status_t_source_len(f) ( sbp_msg_dgnss_status_t_source_packed_len(f))
+#define sbp_msg_dgnss_status_t_source_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+
 
 
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
@@ -174,6 +185,7 @@ typedef struct {
 } sbp_msg_heartbeat_t;
 
 
+
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags) \
@@ -217,6 +229,7 @@ typedef struct {
   u8 generic;
   u8 specific;
 } sbp_sub_system_report_t;
+
 
 
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
@@ -267,6 +280,7 @@ typedef struct {
   sbp_sub_system_report_t status[60];
   u8 n_status;
 } sbp_msg_status_report_t;
+
 
 
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
@@ -379,6 +393,7 @@ typedef struct {
 } sbp_msg_ins_status_t;
 
 
+
 /** Experimental telemetry message
  *
 ((m.desc|commentify)))
@@ -388,6 +403,16 @@ typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry;
 } sbp_msg_csac_telemetry_t;
+#define sbp_msg_csac_telemetry_t_telemetry_init(f) sbp_unterminated_string_init(f, 254)
+#define sbp_msg_csac_telemetry_t_telemetry_valid(f) sbp_unterminated_string_valid(f, 254)
+#define sbp_msg_csac_telemetry_t_telemetry_set(f,s) sbp_unterminated_string_set(f,s,254)
+#define sbp_msg_csac_telemetry_t_telemetry_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
+#define sbp_msg_csac_telemetry_t_telemetry_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
+#define sbp_msg_csac_telemetry_t_telemetry_packed_len(f) sbp_unterminated_string_packed_len(f,254)
+#define sbp_msg_csac_telemetry_t_telemetry_get(f) sbp_unterminated_string_get(f,254)
+#define sbp_msg_csac_telemetry_t_telemetry_len(f) ( sbp_msg_csac_telemetry_t_telemetry_packed_len(f))
+#define sbp_msg_csac_telemetry_t_telemetry_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+
 
 
 /** Experimental telemetry message labels
@@ -399,6 +424,16 @@ typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_init(f) sbp_unterminated_string_init(f, 254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_valid(f) sbp_unterminated_string_valid(f, 254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_set(f,s) sbp_unterminated_string_set(f,s,254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f) sbp_unterminated_string_packed_len(f,254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(f) sbp_unterminated_string_get(f,254)
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_len(f) ( sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f))
+#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+
 
 
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
@@ -549,6 +584,7 @@ typedef struct {
 } sbp_msg_ins_updates_t;
 
 
+
 /** Offset of the local time with respect to GNSS time
  *
 ((m.desc|commentify)))
@@ -560,6 +596,7 @@ typedef struct {
   s16 microseconds;
   u8 flags;
 } sbp_msg_gnss_time_offset_t;
+
 
 
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
@@ -599,6 +636,7 @@ typedef struct {
 } sbp_msg_pps_time_t;
 
 
+
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags) \
@@ -624,6 +662,7 @@ typedef struct {
   u8 n_group_msgs;
   u16 group_msgs[126];
 } sbp_msg_group_meta_t;
+
 
 
 

@@ -37,6 +37,7 @@ typedef struct {
 } sbp_msg_gps_time_t;
 
 
+
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GET(flags) \
@@ -62,6 +63,7 @@ typedef struct {
   s32 ns_residual;
   u8 flags;
 } sbp_msg_gps_time_gnss_t;
+
 
 
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
@@ -110,6 +112,7 @@ typedef struct {
 } sbp_msg_utc_time_t;
 
 
+
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_GET(flags) \
@@ -156,6 +159,7 @@ typedef struct {
 } sbp_msg_utc_time_gnss_t;
 
 
+
 #define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_GET(flags) \
@@ -199,6 +203,7 @@ typedef struct {
   u16 vdop;
   u8 flags;
 } sbp_msg_dops_t;
+
 
 
 #define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
@@ -259,6 +264,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_pos_ecef_t;
+
 
 
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -326,6 +332,7 @@ typedef struct {
 } sbp_msg_pos_ecef_cov_t;
 
 
+
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -385,6 +392,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_pos_llh_t;
+
 
 
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -452,6 +460,7 @@ typedef struct {
 } sbp_msg_pos_llh_cov_t;
 
 
+
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_ECEF_FIX_MODE_GET(flags) \
@@ -481,6 +490,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_baseline_ecef_t;
+
 
 
 #define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
@@ -513,6 +523,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_baseline_ned_t;
+
 
 
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -570,6 +581,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ecef_t;
+
 
 
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -634,6 +646,7 @@ typedef struct {
 } sbp_msg_vel_ecef_cov_t;
 
 
+
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -690,6 +703,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ned_t;
+
 
 
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -754,6 +768,7 @@ typedef struct {
 } sbp_msg_vel_ned_cov_t;
 
 
+
 #define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_GET(flags) \
@@ -785,6 +800,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_pos_ecef_gnss_t;
+
 
 
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
@@ -825,6 +841,7 @@ typedef struct {
 } sbp_msg_pos_ecef_cov_gnss_t;
 
 
+
 #define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_GNSS_FIX_MODE_GET(flags) \
@@ -857,6 +874,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_pos_llh_gnss_t;
+
 
 
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
@@ -898,6 +916,7 @@ typedef struct {
 } sbp_msg_pos_llh_cov_gnss_t;
 
 
+
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_GET(flags) \
@@ -926,6 +945,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ecef_gnss_t;
+
 
 
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
@@ -963,6 +983,7 @@ typedef struct {
 } sbp_msg_vel_ecef_cov_gnss_t;
 
 
+
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_GET(flags) \
@@ -992,6 +1013,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ned_gnss_t;
+
 
 
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
@@ -1027,6 +1049,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ned_cov_gnss_t;
+
 
 
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
@@ -1078,6 +1101,7 @@ typedef struct {
 } sbp_msg_vel_body_t;
 
 
+
 /** Age of corrections
  *
 ((m.desc|commentify)))
@@ -1087,6 +1111,7 @@ typedef struct {
   u32 tow;
   u16 age;
 } sbp_msg_age_corrections_t;
+
 
 
 /** GPS Time (v1.0)
@@ -1102,6 +1127,7 @@ typedef struct {
 } sbp_msg_gps_time_dep_a_t;
 
 
+
 /** Dilution of Precision
  *
 ((m.desc|commentify)))
@@ -1115,6 +1141,7 @@ typedef struct {
   u16 hdop;
   u16 vdop;
 } sbp_msg_dops_dep_a_t;
+
 
 
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
@@ -1171,6 +1198,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_pos_ecef_dep_a_t;
+
 
 
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
@@ -1243,6 +1271,7 @@ typedef struct {
 } sbp_msg_pos_llh_dep_a_t;
 
 
+
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1296,6 +1325,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_baseline_ecef_dep_a_t;
+
 
 
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
@@ -1354,6 +1384,7 @@ typedef struct {
 } sbp_msg_baseline_ned_dep_a_t;
 
 
+
 /** Velocity in ECEF
  *
 ((m.desc|commentify)))
@@ -1368,6 +1399,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ecef_dep_a_t;
+
 
 
 /** Velocity in NED
@@ -1385,6 +1417,7 @@ typedef struct {
   u8 n_sats;
   u8 flags;
 } sbp_msg_vel_ned_dep_a_t;
+
 
 
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
@@ -1439,6 +1472,7 @@ typedef struct {
 } sbp_msg_baseline_heading_dep_a_t;
 
 
+
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1468,6 +1502,7 @@ typedef struct {
   double height;
   u8 flags;
 } sbp_msg_protection_level_dep_a_t;
+
 
 
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
@@ -1674,6 +1709,7 @@ typedef struct {
   s32 heading;
   u32 flags;
 } sbp_msg_protection_level_t;
+
 
 
 

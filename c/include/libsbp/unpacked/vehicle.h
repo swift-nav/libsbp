@@ -66,6 +66,7 @@ typedef struct {
 } sbp_msg_odometry_t;
 
 
+
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
 #define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags) \
@@ -106,6 +107,7 @@ typedef struct {
   u8 source;
   s32 ticks;
 } sbp_msg_wheeltick_t;
+
 
 
 

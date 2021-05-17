@@ -21,6 +21,7 @@ typedef struct {
 } sbp_observation_header_t;
 
 
+
 /** GNSS doppler measurement.
  *
 ((m.desc|commentify)))
@@ -29,6 +30,7 @@ typedef struct {
   s16 i;
   u8 f;
 } sbp_doppler_t;
+
 
 
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK (0x1)
@@ -109,6 +111,7 @@ typedef struct {
   u8 flags;
   sbp_sbp_gnss_signal_t sid;
 } sbp_packed_obs_content_t;
+
 
 
 #define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK (0x1)
@@ -192,6 +195,7 @@ typedef struct {
 } sbp_packed_osr_content_t;
 
 
+
 /** GPS satellite observations
  *
 ((m.desc|commentify)))
@@ -202,6 +206,7 @@ typedef struct {
   sbp_packed_obs_content_t obs[14];
   u8 n_obs;
 } sbp_msg_obs_t;
+
 
 
 /** Base station position
@@ -216,6 +221,7 @@ typedef struct {
 } sbp_msg_base_pos_llh_t;
 
 
+
 /** Base station position in ECEF
  *
 ((m.desc|commentify)))
@@ -228,6 +234,7 @@ typedef struct {
 } sbp_msg_base_pos_ecef_t;
 
 
+
 typedef struct {
   sbp_sbp_gnss_signal_t sid;
   sbp_gps_time_sec_t toe;
@@ -236,6 +243,7 @@ typedef struct {
   u8 valid;
   u8 health_bits;
 } sbp_ephemeris_common_content_t;
+
 
 
 typedef struct {
@@ -248,6 +256,7 @@ typedef struct {
 } sbp_ephemeris_common_content_dep_b_t;
 
 
+
 typedef struct {
   sbp_gnss_signal_dep_t sid;
   sbp_gps_time_dep_t toe;
@@ -256,6 +265,7 @@ typedef struct {
   u8 valid;
   u8 health_bits;
 } sbp_ephemeris_common_content_dep_a_t;
+
 
 
 /** Satellite broadcast ephemeris for GPS
@@ -290,6 +300,7 @@ typedef struct {
 } sbp_msg_ephemeris_gps_dep_e_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -320,6 +331,7 @@ typedef struct {
   u8 iode;
   u16 iodc;
 } sbp_msg_ephemeris_gps_dep_f_t;
+
 
 
 /** Satellite broadcast ephemeris for GPS
@@ -354,6 +366,7 @@ typedef struct {
 } sbp_msg_ephemeris_gps_t;
 
 
+
 /** Satellite broadcast ephemeris for QZSS
  *
 ((m.desc|commentify)))
@@ -384,6 +397,7 @@ typedef struct {
   u8 iode;
   u16 iodc;
 } sbp_msg_ephemeris_qzss_t;
+
 
 
 /** Satellite broadcast ephemeris for BDS
@@ -419,6 +433,7 @@ typedef struct {
 } sbp_msg_ephemeris_bds_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -450,6 +465,7 @@ typedef struct {
   u16 iode;
   u16 iodc;
 } sbp_msg_ephemeris_gal_dep_a_t;
+
 
 
 /** Satellite broadcast ephemeris for Galileo
@@ -486,6 +502,7 @@ typedef struct {
 } sbp_msg_ephemeris_gal_t;
 
 
+
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A     0x0082
 typedef struct {
   sbp_ephemeris_common_content_dep_a_t common;
@@ -495,6 +512,7 @@ typedef struct {
   double a_gf0;
   double a_gf1;
 } sbp_msg_ephemeris_sbas_dep_a_t;
+
 
 
 /** Satellite broadcast ephemeris for GLO
@@ -512,6 +530,7 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_a_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -527,6 +546,7 @@ typedef struct {
 } sbp_msg_ephemeris_sbas_dep_b_t;
 
 
+
 #define SBP_MSG_EPHEMERIS_SBAS           0x008C
 typedef struct {
   sbp_ephemeris_common_content_t common;
@@ -536,6 +556,7 @@ typedef struct {
   float a_gf0;
   float a_gf1;
 } sbp_msg_ephemeris_sbas_t;
+
 
 
 /** Satellite broadcast ephemeris for GLO
@@ -553,6 +574,7 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_b_t;
 
 
+
 /** Satellite broadcast ephemeris for GLO
  *
 ((m.desc|commentify)))
@@ -568,6 +590,7 @@ typedef struct {
   double acc[3];
   u8 fcn;
 } sbp_msg_ephemeris_glo_dep_c_t;
+
 
 
 /** Deprecated
@@ -588,6 +611,7 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_d_t;
 
 
+
 /** Satellite broadcast ephemeris for GLO
  *
 ((m.desc|commentify)))
@@ -604,6 +628,7 @@ typedef struct {
   u8 fcn;
   u8 iod;
 } sbp_msg_ephemeris_glo_t;
+
 
 
 /** Satellite broadcast ephemeris
@@ -644,6 +669,7 @@ typedef struct {
 } sbp_msg_ephemeris_dep_d_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -677,6 +703,7 @@ typedef struct {
   u8 healthy;
   u8 prn;
 } sbp_msg_ephemeris_dep_a_t;
+
 
 
 /** Deprecated
@@ -713,6 +740,7 @@ typedef struct {
   u8 prn;
   u8 iode;
 } sbp_msg_ephemeris_dep_b_t;
+
 
 
 /** Satellite broadcast ephemeris
@@ -753,6 +781,7 @@ typedef struct {
 } sbp_msg_ephemeris_dep_c_t;
 
 
+
 /** Header for observation message.
  *
 ((m.desc|commentify)))
@@ -763,6 +792,7 @@ typedef struct {
 } sbp_observation_header_dep_t;
 
 
+
 /** GPS carrier phase measurement.
  *
 ((m.desc|commentify)))
@@ -771,6 +801,7 @@ typedef struct {
   s32 i;
   u8 f;
 } sbp_carrier_phase_dep_a_t;
+
 
 
 /** Deprecated
@@ -786,6 +817,7 @@ typedef struct {
 } sbp_packed_obs_content_dep_a_t;
 
 
+
 /** GPS observations for a particular satellite signal.
  *
 ((m.desc|commentify)))
@@ -797,6 +829,7 @@ typedef struct {
   u16 lock;
   sbp_gnss_signal_dep_t sid;
 } sbp_packed_obs_content_dep_b_t;
+
 
 
 /** GPS observations for a particular satellite signal.
@@ -812,6 +845,7 @@ typedef struct {
 } sbp_packed_obs_content_dep_c_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -822,6 +856,7 @@ typedef struct {
   sbp_packed_obs_content_dep_a_t obs[19];
   u8 n_obs;
 } sbp_msg_obs_dep_a_t;
+
 
 
 /** Deprecated
@@ -836,6 +871,7 @@ typedef struct {
 } sbp_msg_obs_dep_b_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -846,6 +882,7 @@ typedef struct {
   sbp_packed_obs_content_dep_c_t obs[15];
   u8 n_obs;
 } sbp_msg_obs_dep_c_t;
+
 
 
 /** Iono corrections
@@ -866,6 +903,7 @@ typedef struct {
 } sbp_msg_iono_t;
 
 
+
 /** L2C capability mask
  *
 ((m.desc|commentify)))
@@ -875,6 +913,7 @@ typedef struct {
   sbp_gps_time_sec_t t_nmct;
   u32 l2c_mask;
 } sbp_msg_sv_configuration_gps_dep_t;
+
 
 
 typedef struct {
@@ -896,11 +935,13 @@ typedef struct {
 } sbp_gnss_capb_t;
 
 
+
 #define SBP_MSG_GNSS_CAPB                0x0096
 typedef struct {
   sbp_gps_time_sec_t t_nmct;
   sbp_gnss_capb_t gc;
 } sbp_msg_gnss_capb_t;
+
 
 
 /** Group Delay
@@ -918,6 +959,7 @@ typedef struct {
 } sbp_msg_group_delay_dep_a_t;
 
 
+
 /** Group Delay
  *
 ((m.desc|commentify)))
@@ -931,6 +973,7 @@ typedef struct {
   s16 isc_l1ca;
   s16 isc_l2c;
 } sbp_msg_group_delay_dep_b_t;
+
 
 
 /** Group Delay
@@ -948,6 +991,7 @@ typedef struct {
 } sbp_msg_group_delay_t;
 
 
+
 typedef struct {
   sbp_sbp_gnss_signal_t sid;
   sbp_gps_time_sec_t toa;
@@ -958,6 +1002,7 @@ typedef struct {
 } sbp_almanac_common_content_t;
 
 
+
 typedef struct {
   sbp_gnss_signal_dep_t sid;
   sbp_gps_time_sec_t toa;
@@ -966,6 +1011,7 @@ typedef struct {
   u8 valid;
   u8 health_bits;
 } sbp_almanac_common_content_dep_t;
+
 
 
 /** Satellite broadcast ephemeris for GPS
@@ -987,6 +1033,7 @@ typedef struct {
 } sbp_msg_almanac_gps_dep_t;
 
 
+
 /** Satellite broadcast ephemeris for GPS
  *
 ((m.desc|commentify)))
@@ -1006,6 +1053,7 @@ typedef struct {
 } sbp_msg_almanac_gps_t;
 
 
+
 /** Satellite broadcast ephemeris for GLO
  *
 ((m.desc|commentify)))
@@ -1021,6 +1069,7 @@ typedef struct {
   double epsilon;
   double omega;
 } sbp_msg_almanac_glo_dep_t;
+
 
 
 /** Satellite broadcast ephemeris for GLO
@@ -1040,6 +1089,7 @@ typedef struct {
 } sbp_msg_almanac_glo_t;
 
 
+
 /** GLONASS L1/L2 Code-Phase biases
  *
 ((m.desc|commentify)))
@@ -1054,6 +1104,7 @@ typedef struct {
 } sbp_msg_glo_biases_t;
 
 
+
 /** Satellite azimuth and elevation.
  *
 ((m.desc|commentify)))
@@ -1063,6 +1114,7 @@ typedef struct {
   u8 az;
   s8 el;
 } sbp_sv_az_el_t;
+
 
 
 /** Satellite azimuths and elevations
@@ -1076,6 +1128,7 @@ typedef struct {
 } sbp_msg_sv_az_el_t;
 
 
+
 /** OSR corrections
  *
 ((m.desc|commentify)))
@@ -1086,6 +1139,7 @@ typedef struct {
   sbp_packed_osr_content_t obs[12];
   u8 n_obs;
 } sbp_msg_osr_t;
+
 
 
 

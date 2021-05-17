@@ -244,6 +244,7 @@ typedef struct {
 } sbp_msg_tracking_state_detailed_dep_a_t;
 
 
+
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_GET(flags) \
@@ -477,6 +478,7 @@ typedef struct {
 } sbp_msg_tracking_state_detailed_dep_t;
 
 
+
 /** Signal tracking channel state
  *
 ((m.desc|commentify)))
@@ -486,6 +488,7 @@ typedef struct {
   u8 fcn;
   u8 cn0;
 } sbp_tracking_channel_state_t;
+
 
 
 /** Signal tracking channel states
@@ -499,6 +502,7 @@ typedef struct {
 } sbp_msg_tracking_state_t;
 
 
+
 /** Measurement Engine signal tracking channel state
  *
 ((m.desc|commentify)))
@@ -507,6 +511,7 @@ typedef struct {
   sbp_sbp_gnss_signal_t mesid;
   u8 cn0;
 } sbp_measurement_state_t;
+
 
 
 /** Measurement Engine signal tracking channel states
@@ -520,6 +525,7 @@ typedef struct {
 } sbp_msg_measurement_state_t;
 
 
+
 /** Complex correlation structure
  *
 ((m.desc|commentify)))
@@ -528,6 +534,7 @@ typedef struct {
   s16 I;
   s16 Q;
 } sbp_tracking_channel_correlation_t;
+
 
 
 /** Tracking channel correlations
@@ -542,6 +549,7 @@ typedef struct {
 } sbp_msg_tracking_iq_t;
 
 
+
 /** Complex correlation structure
  *
 ((m.desc|commentify)))
@@ -550,6 +558,7 @@ typedef struct {
   s32 I;
   s32 Q;
 } sbp_tracking_channel_correlation_dep_t;
+
 
 
 /** Tracking channel correlations
@@ -564,6 +573,7 @@ typedef struct {
 } sbp_msg_tracking_iq_dep_b_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -574,6 +584,7 @@ typedef struct {
   sbp_gnss_signal_dep_t sid;
   sbp_tracking_channel_correlation_dep_t corrs[3];
 } sbp_msg_tracking_iq_dep_a_t;
+
 
 
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK (0x3)
@@ -600,6 +611,7 @@ typedef struct {
 } sbp_tracking_channel_state_dep_a_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -609,6 +621,7 @@ typedef struct {
   sbp_tracking_channel_state_dep_a_t states[42];
   u8 n_states;
 } sbp_msg_tracking_state_dep_a_t;
+
 
 
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK (0x3)
@@ -635,6 +648,7 @@ typedef struct {
 } sbp_tracking_channel_state_dep_b_t;
 
 
+
 /** Deprecated.
  *
 ((m.desc|commentify)))
@@ -644,6 +658,7 @@ typedef struct {
   sbp_tracking_channel_state_dep_b_t states[28];
   u8 n_states;
 } sbp_msg_tracking_state_dep_b_t;
+
 
 
 

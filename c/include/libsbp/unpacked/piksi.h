@@ -21,6 +21,7 @@ typedef struct {
 } sbp_msg_almanac_t;
 
 
+
 /** Send GPS time from host (host => Piksi)
  *
 ((m.desc|commentify)))
@@ -29,6 +30,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_set_time_t;
+
 
 
 #define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
@@ -54,6 +56,7 @@ typedef struct {
 } sbp_msg_reset_t;
 
 
+
 /** Reset the device (host => Piksi)
  *
 ((m.desc|commentify)))
@@ -62,6 +65,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_reset_dep_t;
+
 
 
 /** Legacy message for CW interference channel (Piksi => host)
@@ -74,6 +78,7 @@ typedef struct {
 } sbp_msg_cw_results_t;
 
 
+
 /** Legacy message for CW interference channel (host => Piksi)
  *
 ((m.desc|commentify)))
@@ -82,6 +87,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_cw_start_t;
+
 
 
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
@@ -108,6 +114,7 @@ typedef struct {
 } sbp_msg_reset_filters_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -116,6 +123,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_init_base_dep_t;
+
 
 
 /** State of an RTOS thread
@@ -128,6 +136,7 @@ typedef struct {
   u16 cpu;
   u32 stack_free;
 } sbp_msg_thread_state_t;
+
 
 
 /** State of the UART channel
@@ -144,6 +153,7 @@ typedef struct {
 } sbp_uart_channel_t;
 
 
+
 /** base station observation message receipt period
  *
 ((m.desc|commentify)))
@@ -156,6 +166,7 @@ typedef struct {
 } sbp_period_t;
 
 
+
 /** Receiver-to-base station latency
  *
 ((m.desc|commentify)))
@@ -166,6 +177,7 @@ typedef struct {
   s32 lmax;
   s32 current;
 } sbp_latency_t;
+
 
 
 /** State of the UART channels
@@ -182,6 +194,7 @@ typedef struct {
 } sbp_msg_uart_state_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -195,6 +208,7 @@ typedef struct {
 } sbp_msg_uart_state_depa_t;
 
 
+
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
 ((m.desc|commentify)))
@@ -203,6 +217,7 @@ typedef struct {
 typedef struct {
   u32 num_hyps;
 } sbp_msg_iar_state_t;
+
 
 
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
@@ -242,6 +257,7 @@ typedef struct {
 } sbp_msg_mask_satellite_t;
 
 
+
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags) \
@@ -279,6 +295,7 @@ typedef struct {
 } sbp_msg_mask_satellite_dep_t;
 
 
+
 /** Device temperature and voltage levels
  *
 ((m.desc|commentify)))
@@ -293,6 +310,7 @@ typedef struct {
 } sbp_msg_device_monitor_t;
 
 
+
 /** Execute a command (host => device)
  *
 ((m.desc|commentify)))
@@ -302,6 +320,16 @@ typedef struct {
   u32 sequence;
   sbp_null_terminated_string_t command;
 } sbp_msg_command_req_t;
+#define sbp_msg_command_req_t_command_init(f) sbp_null_terminated_string_init(f, 251)
+#define sbp_msg_command_req_t_command_valid(f) sbp_null_terminated_string_valid(f, 251)
+#define sbp_msg_command_req_t_command_set(f,s) sbp_null_terminated_string_set(f,s,251)
+#define sbp_msg_command_req_t_command_printf(f,...) sbp_null_terminated_string_printf(f,251,__VA_ARGS__)
+#define sbp_msg_command_req_t_command_vprintf(f,fmt,ap) sbp_null_terminated_string_vprintf(f,251,fmt,ap)
+#define sbp_msg_command_req_t_command_packed_len(f) sbp_null_terminated_string_packed_len(f,251)
+#define sbp_msg_command_req_t_command_get(f) sbp_null_terminated_string_get(f,251)
+#define sbp_msg_command_req_t_command_len(f) ( sbp_msg_command_req_t_command_packed_len(f) - 1)
+#define sbp_msg_command_req_t_command_strcmp(a,b) sbp_null_terminated_string_strcmp(a,b,251)
+
 
 
 /** Exit code from executed command (device => host)
@@ -315,6 +343,7 @@ typedef struct {
 } sbp_msg_command_resp_t;
 
 
+
 /** Command output
  *
 ((m.desc|commentify)))
@@ -324,6 +353,16 @@ typedef struct {
   u32 sequence;
   sbp_unterminated_string_t line;
 } sbp_msg_command_output_t;
+#define sbp_msg_command_output_t_line_init(f) sbp_unterminated_string_init(f, 251)
+#define sbp_msg_command_output_t_line_valid(f) sbp_unterminated_string_valid(f, 251)
+#define sbp_msg_command_output_t_line_set(f,s) sbp_unterminated_string_set(f,s,251)
+#define sbp_msg_command_output_t_line_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
+#define sbp_msg_command_output_t_line_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
+#define sbp_msg_command_output_t_line_packed_len(f) sbp_unterminated_string_packed_len(f,251)
+#define sbp_msg_command_output_t_line_get(f) sbp_unterminated_string_get(f,251)
+#define sbp_msg_command_output_t_line_len(f) ( sbp_msg_command_output_t_line_packed_len(f))
+#define sbp_msg_command_output_t_line_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+
 
 
 /** Request state of Piksi network interfaces
@@ -334,6 +373,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_network_state_req_t;
+
 
 
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
@@ -529,6 +569,7 @@ typedef struct {
 } sbp_msg_network_state_resp_t;
 
 
+
 /** Bandwidth usage measurement for a single interface.
  *
 ((m.desc|commentify)))
@@ -542,6 +583,7 @@ typedef struct {
 } sbp_network_usage_t;
 
 
+
 /** Bandwidth usage reporting message
  *
 ((m.desc|commentify)))
@@ -551,6 +593,7 @@ typedef struct {
   sbp_network_usage_t interfaces[6];
   u8 n_interfaces;
 } sbp_msg_network_bandwidth_usage_t;
+
 
 
 /** Cell modem information update message
@@ -564,6 +607,7 @@ typedef struct {
   u8 reserved[250];
   u8 n_reserved;
 } sbp_msg_cell_modem_status_t;
+
 
 
 /** Deprecated
@@ -583,6 +627,7 @@ typedef struct {
 } sbp_msg_specan_dep_t;
 
 
+
 /** Spectrum analyzer
  *
 ((m.desc|commentify)))
@@ -600,6 +645,7 @@ typedef struct {
 } sbp_msg_specan_t;
 
 
+
 /** RF AGC status
  *
 ((m.desc|commentify)))
@@ -609,6 +655,7 @@ typedef struct {
   s8 rf_gain[8];
   s8 if_gain[8];
 } sbp_msg_front_end_gain_t;
+
 
 
 

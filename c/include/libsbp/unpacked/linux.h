@@ -22,6 +22,16 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,236,__VA_ARGS__)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,236,fmt,ap)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f,236)
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_len(f) ( sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f))
+#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,236)
+
 
 
 /** List memory state on the system. DEPRECATED.
@@ -36,6 +46,16 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,236,__VA_ARGS__)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,236,fmt,ap)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f,236)
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_len(f) ( sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f))
+#define sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,236)
+
 
 
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
@@ -53,6 +73,7 @@ typedef struct {
 } sbp_msg_linux_sys_state_dep_a_t;
 
 
+
 /** A list of processes with high socket counts
  *
 ((m.desc|commentify)))
@@ -66,6 +87,16 @@ typedef struct {
   u16 socket_states;
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_counts_t;
+#define sbp_msg_linux_process_socket_counts_t_cmdline_init(f) sbp_unterminated_string_init(f, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,246,__VA_ARGS__)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,246,fmt,ap)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_get(f) sbp_unterminated_string_get(f,246)
+#define sbp_msg_linux_process_socket_counts_t_cmdline_len(f) ( sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,246)
+
 
 
 /** A list of processes with deep socket queues
@@ -83,6 +114,16 @@ typedef struct {
   char address_of_largest[64];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_queues_t;
+#define sbp_msg_linux_process_socket_queues_t_cmdline_init(f) sbp_unterminated_string_init(f, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,180,__VA_ARGS__)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,180,fmt,ap)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_get(f) sbp_unterminated_string_get(f,180)
+#define sbp_msg_linux_process_socket_queues_t_cmdline_len(f) ( sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,180)
+
 
 
 /** Summary of socket usage across the system
@@ -98,6 +139,7 @@ typedef struct {
 } sbp_msg_linux_socket_usage_t;
 
 
+
 /** Summary of processes with large amounts of open file descriptors
  *
 ((m.desc|commentify)))
@@ -109,6 +151,16 @@ typedef struct {
   u16 fd_count;
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_fd_count_t;
+#define sbp_msg_linux_process_fd_count_t_cmdline_init(f) sbp_unterminated_string_init(f, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,250,__VA_ARGS__)
+#define sbp_msg_linux_process_fd_count_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,250,fmt,ap)
+#define sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_get(f) sbp_unterminated_string_get(f,250)
+#define sbp_msg_linux_process_fd_count_t_cmdline_len(f) ( sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f))
+#define sbp_msg_linux_process_fd_count_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,250)
+
 
 
 /** Summary of open file descriptors on the system
@@ -120,6 +172,18 @@ typedef struct {
   u32 sys_fd_count;
   sbp_sequence_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
+#define sbp_msg_linux_process_fd_summary_t_most_opened_init(f) sbp_sequence_string_init(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_valid(f) sbp_sequence_string_valid(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(f) sbp_sequence_string_packed_len(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_append(f,s) sbp_sequence_string_append(f, s, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(f, ...) sbp_sequence_string_append_printf(s, 251, 0, __VA_ARGS__)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(f, fmt,ap) sbp_sequence_string_append_vprintf(s, 251, 0, fmt, ap)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(f) sbp_sequence_string_count_sections(f, 251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_get_section(f,s) sbp_sequence_string_get_section(f,s,251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_section_len(f,s) sbp_sequence_string_section_len(f,s,251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(f) sbp_sequence_string_space_remaining(f,251, 0)
+#define sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(a,b) sbp_sequence_string_strcmp(a,b,251, 0)
+
 
 
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
@@ -149,6 +213,16 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_t;
+#define sbp_msg_linux_cpu_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 231)
+#define sbp_msg_linux_cpu_state_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,231)
+#define sbp_msg_linux_cpu_state_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,231,__VA_ARGS__)
+#define sbp_msg_linux_cpu_state_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,231,fmt,ap)
+#define sbp_msg_linux_cpu_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,231)
+#define sbp_msg_linux_cpu_state_t_cmdline_get(f) sbp_unterminated_string_get(f,231)
+#define sbp_msg_linux_cpu_state_t_cmdline_len(f) ( sbp_msg_linux_cpu_state_t_cmdline_packed_len(f))
+#define sbp_msg_linux_cpu_state_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,231)
+
 
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
@@ -178,6 +252,16 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_t;
+#define sbp_msg_linux_mem_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 231)
+#define sbp_msg_linux_mem_state_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,231)
+#define sbp_msg_linux_mem_state_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,231,__VA_ARGS__)
+#define sbp_msg_linux_mem_state_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,231,fmt,ap)
+#define sbp_msg_linux_mem_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,231)
+#define sbp_msg_linux_mem_state_t_cmdline_get(f) sbp_unterminated_string_get(f,231)
+#define sbp_msg_linux_mem_state_t_cmdline_len(f) ( sbp_msg_linux_mem_state_t_cmdline_packed_len(f))
+#define sbp_msg_linux_mem_state_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,231)
+
 
 
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
@@ -208,6 +292,7 @@ typedef struct {
   u32 time;
   u8 flags;
 } sbp_msg_linux_sys_state_t;
+
 
 
 

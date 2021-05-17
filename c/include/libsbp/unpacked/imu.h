@@ -53,6 +53,7 @@ typedef struct {
 } sbp_msg_imu_raw_t;
 
 
+
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
@@ -107,6 +108,7 @@ typedef struct {
   s16 temp;
   u8 imu_conf;
 } sbp_msg_imu_aux_t;
+
 
 
 

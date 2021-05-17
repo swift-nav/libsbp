@@ -20,6 +20,7 @@ typedef struct {
 } sbp_msg_bootloader_handshake_req_t;
 
 
+
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
@@ -51,6 +52,16 @@ typedef struct {
   u32 flags;
   sbp_unterminated_string_t version;
 } sbp_msg_bootloader_handshake_resp_t;
+#define sbp_msg_bootloader_handshake_resp_t_version_init(f) sbp_unterminated_string_init(f, 251)
+#define sbp_msg_bootloader_handshake_resp_t_version_valid(f) sbp_unterminated_string_valid(f, 251)
+#define sbp_msg_bootloader_handshake_resp_t_version_set(f,s) sbp_unterminated_string_set(f,s,251)
+#define sbp_msg_bootloader_handshake_resp_t_version_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
+#define sbp_msg_bootloader_handshake_resp_t_version_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
+#define sbp_msg_bootloader_handshake_resp_t_version_packed_len(f) sbp_unterminated_string_packed_len(f,251)
+#define sbp_msg_bootloader_handshake_resp_t_version_get(f) sbp_unterminated_string_get(f,251)
+#define sbp_msg_bootloader_handshake_resp_t_version_len(f) ( sbp_msg_bootloader_handshake_resp_t_version_packed_len(f))
+#define sbp_msg_bootloader_handshake_resp_t_version_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+
 
 
 /** Bootloader jump to application (host => device)
@@ -63,6 +74,7 @@ typedef struct {
 } sbp_msg_bootloader_jump_to_app_t;
 
 
+
 /** Read FPGA device ID over UART request (host => device)
  *
 ((m.desc|commentify)))
@@ -71,6 +83,7 @@ typedef struct {
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_nap_device_dna_req_t;
+
 
 
 /** Read FPGA device ID over UART response (host <= device)
@@ -83,6 +96,7 @@ typedef struct {
 } sbp_msg_nap_device_dna_resp_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -91,6 +105,16 @@ typedef struct {
 typedef struct {
   sbp_unterminated_string_t handshake;
 } sbp_msg_bootloader_handshake_dep_a_t;
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_init(f) sbp_unterminated_string_init(f, 255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(f) sbp_unterminated_string_valid(f, 255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_set(f,s) sbp_unterminated_string_set(f,s,255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(f,...) sbp_unterminated_string_printf(f,255,__VA_ARGS__)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,255,fmt,ap)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f) sbp_unterminated_string_packed_len(f,255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_get(f) sbp_unterminated_string_get(f,255)
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_len(f) ( sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f))
+#define sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,255)
+
 
 
 
