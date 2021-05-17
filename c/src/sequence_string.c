@@ -1,7 +1,8 @@
-#include <libsbp/string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <libsbp/unpacked/string/sequence.h>
 
 void sbp_sequence_string_init(sbp_sequence_string_t *s, uint8_t max_packed_len, uint8_t terminator)
 {

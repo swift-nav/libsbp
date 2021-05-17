@@ -9,7 +9,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags) \

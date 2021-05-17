@@ -1,7 +1,8 @@
-#include <libsbp/string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <libsbp/unpacked/string/null_terminated.h>
 
 void sbp_null_terminated_string_init(sbp_null_terminated_string_t *s, uint8_t max_packed_len)
 {

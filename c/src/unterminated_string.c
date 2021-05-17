@@ -1,7 +1,8 @@
-#include <libsbp/string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <libsbp/unpacked/string/unterminated.h>
 
 void sbp_unterminated_string_init(sbp_unterminated_string_t *s, uint8_t max_packed_len)
 {

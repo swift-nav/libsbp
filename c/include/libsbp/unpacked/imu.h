@@ -9,7 +9,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \

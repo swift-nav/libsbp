@@ -9,7 +9,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK (0x3)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT (3u)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_GET(flags) \

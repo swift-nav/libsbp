@@ -9,7 +9,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)

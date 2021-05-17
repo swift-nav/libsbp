@@ -7,30 +7,35 @@
 #include <stddef.h>
 #include <string.h>
 
-#include <libsbp/sbp.h>
+#include <libsbp/unpacked/common.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct
-{
-  char data[SBP_MAX_PAYLOAD_LEN + 1];
-  size_t len;
-} sbp_unterminated_string_t;
+  typedef struct
+  {
+    char data[256];
+    uint8_t len;
+  } sbp_unterminated_string_t;
 
-typedef struct {
-  uint8_t max_encoded_len;
-} sbp_unterminated_string_format_t;
-
-void sbp_unterminated_string_init(sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format);
-size_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format);
-size_t sbp_unterminated_string_strlen(const sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format);
-bool sbp_unterminated_string_set(sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format, const char *new_string);
-int sbp_unterminated_string_printf(sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format, const char *fmt, ...);
-int sbp_unterminated_string_vprintf(sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format, const char *fmt, va_list ap);
-const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *string, const sbp_unterminated_string_format_t *format);
-
+  void sbp_unterminated_string_init(sbp_unterminated_string_t *s, uint8_t max_packed_len);
+  bool sbp_unterminated_string_valid(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
+  uint8_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
+  bool sbp_unterminated_string_set(sbp_unterminated_string_t *s, const char *new_str, uint8_t max_packed_len);
+  bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
+      __attribute__((format(printf, 3, 4)));
+  bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap);
+  const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
+  bool sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
+                                       uint8_t max_packed_len,
+                                       sbp_pack_ctx_t *ctx);
+  bool sbp_unterminated_string_unpack(sbp_unterminated_string_t *s,
+                                         uint8_t max_packed_len,
+                                         sbp_unpack_ctx_t *ctx);
+  int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
+                                     const sbp_unterminated_string_t *b,
+                                     uint8_t max_packed_len);
 
 #ifdef __cplusplus
 }

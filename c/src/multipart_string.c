@@ -1,7 +1,8 @@
-#include <libsbp/string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <libsbp/unpacked/string/multipart.h>
 
 void sbp_multipart_string_init(sbp_multipart_string_t *s,
                                uint8_t max_packed_len,

@@ -15,7 +15,10 @@
 #include <libsbp/common.h>
 #include <libsbp/unpacked/base.h>
 #include <libsbp/unpacked/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/null_terminated.h>
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_almanac_t(const sbp_msg_almanac_t *msg) {
   (void)msg;

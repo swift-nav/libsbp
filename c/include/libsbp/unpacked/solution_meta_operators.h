@@ -13,7 +13,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/base.h>
 static inline int sbp_cmp_sbp_solution_input_type_t(const sbp_solution_input_type_t *a, const sbp_solution_input_type_t *b) {
   int ret = 0;

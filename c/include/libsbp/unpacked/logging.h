@@ -9,7 +9,10 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/string.h>
+#include <libsbp/unpacked/string/multipart.h>
+#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/null_terminated.h>
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
