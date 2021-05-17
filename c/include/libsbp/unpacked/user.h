@@ -10,25 +10,13 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string.h>
-  /** User data
-   *
- * This message can contain any application specific user data up to a
- * maximum length of 255 bytes per message.
-   */
+/** User data
+ *
+((m.desc|commentify)))
+ */
 #define SBP_MSG_USER_DATA 0x0800
-
 typedef struct {
-  
-  /**
-* User data payload
-   */
-    u8
-  contents
-    [255]
-  ;
-  /**
-   * Number of items in contents
-   */
+  u8 contents[255];
   u8 n_contents;
 } sbp_msg_user_data_t;
 

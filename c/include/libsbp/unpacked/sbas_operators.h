@@ -13,31 +13,51 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *a, const sbp_msg_sbas_raw_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.message_type != b.message_type) { return false; }
-        for (size_t data_idx = 0; data_idx < 27; data_idx++)
-        {
-            
-    if (a.data[data_idx] != b.data[data_idx]) { return false; }
-        }
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->message_type, &b->message_type);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 27 && ret == 0; i++)
+  {
+    ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) >= 0;
 }
 #endif
 

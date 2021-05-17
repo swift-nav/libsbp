@@ -13,27 +13,51 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_ext_event_t(const sbp_msg_ext_event_t *a, const sbp_msg_ext_event_t *b) {
+  int ret = 0;
   
-        
-    if (a.wn != b.wn) { return false; }
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.ns_residual != b.ns_residual) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
-        
-    if (a.pin != b.pin) { return false; }
+  ret = sbp_cmp_u16(&a->wn, &b->wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->ns_residual, &b->ns_residual);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->pin, &b->pin);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return sbp_cmp_sbp_msg_ext_event_t(&a, &b) >= 0;
 }
 #endif
 

@@ -13,2445 +13,3243 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_observation_header_t(const sbp_observation_header_t *a, const sbp_observation_header_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t.tow != b.t.tow) { return false; }
-        
-    if (a.t.ns_residual != b.t.ns_residual) { return false; }
-        
-    if (a.t.wn != b.t.wn) { return false; }
-        
-    if (a.n_obs != b.n_obs) { return false; }
+  ret = sbp_cmp_sbp_sbp_gps_time_t(&a->t, &b->t);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
+  return sbp_cmp_sbp_observation_header_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_observation_header_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
+  return sbp_cmp_sbp_observation_header_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
+  return sbp_cmp_sbp_observation_header_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
+  return sbp_cmp_sbp_observation_header_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_observation_header_t &a, const sbp_observation_header_t &b) {
+  return sbp_cmp_sbp_observation_header_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_doppler_t &a, const sbp_doppler_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b) {
+  int ret = 0;
   
-        
-    if (a.i != b.i) { return false; }
-        
-    if (a.f != b.f) { return false; }
+  ret = sbp_cmp_s16(&a->i, &b->i);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->f, &b->f);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_doppler_t &a, const sbp_doppler_t &b) {
+  return sbp_cmp_sbp_doppler_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_doppler_t &a, const sbp_doppler_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_doppler_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_doppler_t &a, const sbp_doppler_t &b) {
+  return sbp_cmp_sbp_doppler_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_doppler_t &a, const sbp_doppler_t &b) {
+  return sbp_cmp_sbp_doppler_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_doppler_t &a, const sbp_doppler_t &b) {
+  return sbp_cmp_sbp_doppler_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_doppler_t &a, const sbp_doppler_t &b) {
+  return sbp_cmp_sbp_doppler_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *a, const sbp_packed_obs_content_t *b) {
+  int ret = 0;
   
-        
-    if (a.P != b.P) { return false; }
-        
-        
-    if (a.L.i != b.L.i) { return false; }
-        
-    if (a.L.f != b.L.f) { return false; }
-        
-        
-    if (a.D.i != b.D.i) { return false; }
-        
-    if (a.D.f != b.D.f) { return false; }
-        
-    if (a.cn0 != b.cn0) { return false; }
-        
-    if (a.lock != b.lock) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
+  ret = sbp_cmp_u32(&a->P, &b->P);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_carrier_phase_t(&a->L, &b->L);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_doppler_t(&a->D, &b->D);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->cn0, &b->cn0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->lock, &b->lock);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_packed_obs_content_t &a, const sbp_packed_obs_content_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_packed_osr_content_t(const sbp_packed_osr_content_t *a, const sbp_packed_osr_content_t *b) {
+  int ret = 0;
   
-        
-    if (a.P != b.P) { return false; }
-        
-        
-    if (a.L.i != b.L.i) { return false; }
-        
-    if (a.L.f != b.L.f) { return false; }
-        
-    if (a.lock != b.lock) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.iono_std != b.iono_std) { return false; }
-        
-    if (a.tropo_std != b.tropo_std) { return false; }
-        
-    if (a.range_std != b.range_std) { return false; }
+  ret = sbp_cmp_u32(&a->P, &b->P);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_carrier_phase_t(&a->L, &b->L);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->lock, &b->lock);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iono_std, &b->iono_std);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->tropo_std, &b->tropo_std);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->range_std, &b->range_std);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_packed_osr_content_t &a, const sbp_packed_osr_content_t &b) {
+  return sbp_cmp_sbp_packed_osr_content_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_obs_t(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.header.t.tow != b.header.t.tow) { return false; }
-        
-    if (a.header.t.ns_residual != b.header.t.ns_residual) { return false; }
-        
-    if (a.header.t.wn != b.header.t.wn) { return false; }
-        
-    if (a.header.n_obs != b.header.n_obs) { return false; }
-          if (a.n_obs != b.n_obs) { return false; }
-        for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-        {
-            
-        
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P) { return false; }
-        
-        
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i) { return false; }
-        
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f) { return false; }
-        
-        
-    if (a.obs[obs_idx].D.i != b.obs[obs_idx].D.i) { return false; }
-        
-    if (a.obs[obs_idx].D.f != b.obs[obs_idx].D.f) { return false; }
-        
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0) { return false; }
-        
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock) { return false; }
-        
-    if (a.obs[obs_idx].flags != b.obs[obs_idx].flags) { return false; }
-        
-        
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat) { return false; }
-        
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code) { return false; }
-        }
+  ret = sbp_cmp_sbp_observation_header_t(&a->header, &b->header);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_packed_obs_content_t(&a->obs[i], &b->obs[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b) {
+  return sbp_cmp_sbp_msg_obs_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *a, const sbp_msg_base_pos_llh_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.lat - b.lat ) > 0.001) { return false; }
-        
-    if (fabs( a.lon - b.lon ) > 0.001) { return false; }
-        
-    if (fabs( a.height - b.height ) > 0.001) { return false; }
+  ret = sbp_cmp_double(&a->lat, &b->lat);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->lon, &b->lon);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->height, &b->height);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_llh_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_base_pos_ecef_t(const sbp_msg_base_pos_ecef_t *a, const sbp_msg_base_pos_ecef_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.x - b.x ) > 0.001) { return false; }
-        
-    if (fabs( a.y - b.y ) > 0.001) { return false; }
-        
-    if (fabs( a.z - b.z ) > 0.001) { return false; }
+  ret = sbp_cmp_double(&a->x, &b->x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->y, &b->y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->z, &b->z);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b) {
+  return sbp_cmp_sbp_msg_base_pos_ecef_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_ephemeris_common_content_t(const sbp_ephemeris_common_content_t *a, const sbp_ephemeris_common_content_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-        
-    if (a.toe.tow != b.toe.tow) { return false; }
-        
-    if (a.toe.wn != b.toe.wn) { return false; }
-        
-    if (fabs( a.ura - b.ura ) > 0.001) { return false; }
-        
-    if (a.fit_interval != b.fit_interval) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.health_bits != b.health_bits) { return false; }
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toe, &b->toe);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->ura, &b->ura);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fit_interval, &b->fit_interval);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->health_bits, &b->health_bits);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_ephemeris_common_content_t &a, const sbp_ephemeris_common_content_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_ephemeris_common_content_dep_b_t(const sbp_ephemeris_common_content_dep_b_t *a, const sbp_ephemeris_common_content_dep_b_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-        
-    if (a.toe.tow != b.toe.tow) { return false; }
-        
-    if (a.toe.wn != b.toe.wn) { return false; }
-        
-    if (fabs( a.ura - b.ura ) > 0.001) { return false; }
-        
-    if (a.fit_interval != b.fit_interval) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.health_bits != b.health_bits) { return false; }
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toe, &b->toe);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ura, &b->ura);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fit_interval, &b->fit_interval);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->health_bits, &b->health_bits);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_ephemeris_common_content_dep_b_t &a, const sbp_ephemeris_common_content_dep_b_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_ephemeris_common_content_dep_a_t(const sbp_ephemeris_common_content_dep_a_t *a, const sbp_ephemeris_common_content_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
-        
-        
-    if (a.toe.tow != b.toe.tow) { return false; }
-        
-    if (a.toe.wn != b.toe.wn) { return false; }
-        
-    if (fabs( a.ura - b.ura ) > 0.001) { return false; }
-        
-    if (a.fit_interval != b.fit_interval) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.health_bits != b.health_bits) { return false; }
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_dep_t(&a->toe, &b->toe);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ura, &b->ura);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fit_interval, &b->fit_interval);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->health_bits, &b->health_bits);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_ephemeris_common_content_dep_a_t &a, const sbp_ephemeris_common_content_dep_a_t &b) {
+  return sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(const sbp_msg_ephemeris_gps_dep_e_t *a, const sbp_msg_ephemeris_gps_dep_e_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-    if (a.common.sid.reserved != b.common.sid.reserved) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_dep_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(const sbp_msg_ephemeris_gps_dep_f_t *a, const sbp_msg_ephemeris_gps_dep_f_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *a, const sbp_msg_ephemeris_gps_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gps_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *a, const sbp_msg_ephemeris_qzss_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_qzss_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *a, const sbp_msg_ephemeris_bds_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.tgd1 - b.tgd1 ) > 0.001) { return false; }
-        
-    if (fabs( a.tgd2 - b.tgd2 ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->tgd1, &b->tgd1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->tgd2, &b->tgd2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_bds_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(const sbp_msg_ephemeris_gal_dep_a_t *a, const sbp_msg_ephemeris_gal_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.bgd_e1e5a - b.bgd_e1e5a ) > 0.001) { return false; }
-        
-    if (fabs( a.bgd_e1e5b - b.bgd_e1e5b ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->bgd_e1e5a, &b->bgd_e1e5a);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->bgd_e1e5b, &b->bgd_e1e5b);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *a, const sbp_msg_ephemeris_gal_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.bgd_e1e5a - b.bgd_e1e5a ) > 0.001) { return false; }
-        
-    if (fabs( a.bgd_e1e5b - b.bgd_e1e5b ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-        
-    if (a.toc.tow != b.toc.tow) { return false; }
-        
-    if (a.toc.wn != b.toc.wn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
-        
-    if (a.source != b.source) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->bgd_e1e5a, &b->bgd_e1e5a);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->bgd_e1e5b, &b->bgd_e1e5b);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toc, &b->toc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->source, &b->source);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_gal_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(const sbp_msg_ephemeris_sbas_dep_a_t *a, const sbp_msg_ephemeris_sbas_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-    if (a.common.sid.reserved != b.common.sid.reserved) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (fabs( a.a_gf0 - b.a_gf0 ) > 0.001) { return false; }
-        
-    if (fabs( a.a_gf1 - b.a_gf1 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a_gf0, &b->a_gf0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a_gf1, &b->a_gf1);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(const sbp_msg_ephemeris_glo_dep_a_t *a, const sbp_msg_ephemeris_glo_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-    if (a.common.sid.reserved != b.common.sid.reserved) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.gamma - b.gamma ) > 0.001) { return false; }
-        
-    if (fabs( a.tau - b.tau ) > 0.001) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_a_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->gamma, &b->gamma);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tau, &b->tau);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(const sbp_msg_ephemeris_sbas_dep_b_t *a, const sbp_msg_ephemeris_sbas_dep_b_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (fabs( a.a_gf0 - b.a_gf0 ) > 0.001) { return false; }
-        
-    if (fabs( a.a_gf1 - b.a_gf1 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a_gf0, &b->a_gf0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a_gf1, &b->a_gf1);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *a, const sbp_msg_ephemeris_sbas_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (fabs( a.a_gf0 - b.a_gf0 ) > 0.001) { return false; }
-        
-    if (fabs( a.a_gf1 - b.a_gf1 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_float(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_float(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->a_gf0, &b->a_gf0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->a_gf1, &b->a_gf1);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_sbas_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(const sbp_msg_ephemeris_glo_dep_b_t *a, const sbp_msg_ephemeris_glo_dep_b_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.gamma - b.gamma ) > 0.001) { return false; }
-        
-    if (fabs( a.tau - b.tau ) > 0.001) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->gamma, &b->gamma);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tau, &b->tau);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(const sbp_msg_ephemeris_glo_dep_c_t *a, const sbp_msg_ephemeris_glo_dep_c_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.gamma - b.gamma ) > 0.001) { return false; }
-        
-    if (fabs( a.tau - b.tau ) > 0.001) { return false; }
-        
-    if (fabs( a.d_tau - b.d_tau ) > 0.001) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (a.fcn != b.fcn) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->gamma, &b->gamma);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tau, &b->tau);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->d_tau, &b->d_tau);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->fcn, &b->fcn);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(const sbp_msg_ephemeris_glo_dep_d_t *a, const sbp_msg_ephemeris_glo_dep_d_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.gamma - b.gamma ) > 0.001) { return false; }
-        
-    if (fabs( a.tau - b.tau ) > 0.001) { return false; }
-        
-    if (fabs( a.d_tau - b.d_tau ) > 0.001) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (a.fcn != b.fcn) { return false; }
-        
-    if (a.iod != b.iod) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_dep_b_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->gamma, &b->gamma);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->tau, &b->tau);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->d_tau, &b->d_tau);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->fcn, &b->fcn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iod, &b->iod);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *a, const sbp_msg_ephemeris_glo_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toe.tow != b.common.toe.tow) { return false; }
-        
-    if (a.common.toe.wn != b.common.toe.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.gamma - b.gamma ) > 0.001) { return false; }
-        
-    if (fabs( a.tau - b.tau ) > 0.001) { return false; }
-        
-    if (fabs( a.d_tau - b.d_tau ) > 0.001) { return false; }
-        for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-        {
-            
-    if (fabs( a.pos[pos_idx] - b.pos[pos_idx] ) > 0.001) { return false; }
-        }
-        for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-        {
-            
-    if (fabs( a.vel[vel_idx] - b.vel[vel_idx] ) > 0.001) { return false; }
-        }
-        for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-        {
-            
-    if (fabs( a.acc[acc_idx] - b.acc[acc_idx] ) > 0.001) { return false; }
-        }
-        
-    if (a.fcn != b.fcn) { return false; }
-        
-    if (a.iod != b.iod) { return false; }
+  ret = sbp_cmp_sbp_ephemeris_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->gamma, &b->gamma);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->tau, &b->tau);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->d_tau, &b->d_tau);
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  for (uint8_t i = 0; i < 3 && ret == 0; i++)
+  {
+    ret = sbp_cmp_float(&a->acc[i], &b->acc[i]);
+  }
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->fcn, &b->fcn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iod, &b->iod);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_glo_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *a, const sbp_msg_ephemeris_dep_d_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-    if (fabs( a.toe_tow - b.toe_tow ) > 0.001) { return false; }
-        
-    if (a.toe_wn != b.toe_wn) { return false; }
-        
-    if (fabs( a.toc_tow - b.toc_tow ) > 0.001) { return false; }
-        
-    if (a.toc_wn != b.toc_wn) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.healthy != b.healthy) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
-        
-    if (a.reserved != b.reserved) { return false; }
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toe_tow, &b->toe_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toe_wn, &b->toe_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toc_tow, &b->toc_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toc_wn, &b->toc_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->healthy, &b->healthy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->reserved, &b->reserved);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_d_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *a, const sbp_msg_ephemeris_dep_a_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-    if (fabs( a.toe_tow - b.toe_tow ) > 0.001) { return false; }
-        
-    if (a.toe_wn != b.toe_wn) { return false; }
-        
-    if (fabs( a.toc_tow - b.toc_tow ) > 0.001) { return false; }
-        
-    if (a.toc_wn != b.toc_wn) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.healthy != b.healthy) { return false; }
-        
-    if (a.prn != b.prn) { return false; }
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toe_tow, &b->toe_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toe_wn, &b->toe_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toc_tow, &b->toc_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toc_wn, &b->toc_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->healthy, &b->healthy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->prn, &b->prn);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *a, const sbp_msg_ephemeris_dep_b_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-    if (fabs( a.toe_tow - b.toe_tow ) > 0.001) { return false; }
-        
-    if (a.toe_wn != b.toe_wn) { return false; }
-        
-    if (fabs( a.toc_tow - b.toc_tow ) > 0.001) { return false; }
-        
-    if (a.toc_wn != b.toc_wn) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.healthy != b.healthy) { return false; }
-        
-    if (a.prn != b.prn) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toe_tow, &b->toe_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toe_wn, &b->toe_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toc_tow, &b->toc_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toc_wn, &b->toc_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->healthy, &b->healthy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->prn, &b->prn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_ephemeris_dep_c_t(const sbp_msg_ephemeris_dep_c_t *a, const sbp_msg_ephemeris_dep_c_t *b) {
+  int ret = 0;
   
-        
-    if (fabs( a.tgd - b.tgd ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rs - b.c_rs ) > 0.001) { return false; }
-        
-    if (fabs( a.c_rc - b.c_rc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_uc - b.c_uc ) > 0.001) { return false; }
-        
-    if (fabs( a.c_us - b.c_us ) > 0.001) { return false; }
-        
-    if (fabs( a.c_ic - b.c_ic ) > 0.001) { return false; }
-        
-    if (fabs( a.c_is - b.c_is ) > 0.001) { return false; }
-        
-    if (fabs( a.dn - b.dn ) > 0.001) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.inc_dot - b.inc_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
-        
-    if (fabs( a.af2 - b.af2 ) > 0.001) { return false; }
-        
-    if (fabs( a.toe_tow - b.toe_tow ) > 0.001) { return false; }
-        
-    if (a.toe_wn != b.toe_wn) { return false; }
-        
-    if (fabs( a.toc_tow - b.toc_tow ) > 0.001) { return false; }
-        
-    if (a.toc_wn != b.toc_wn) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.healthy != b.healthy) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
-        
-    if (a.iode != b.iode) { return false; }
-        
-    if (a.iodc != b.iodc) { return false; }
-        
-    if (a.reserved != b.reserved) { return false; }
+  ret = sbp_cmp_double(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rs, &b->c_rs);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_rc, &b->c_rc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_uc, &b->c_uc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_us, &b->c_us);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_ic, &b->c_ic);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->c_is, &b->c_is);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->dn, &b->dn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc_dot, &b->inc_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af2, &b->af2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toe_tow, &b->toe_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toe_wn, &b->toe_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->toc_tow, &b->toc_tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->toc_wn, &b->toc_wn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->healthy, &b->healthy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->iode, &b->iode);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->iodc, &b->iodc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->reserved, &b->reserved);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_ephemeris_dep_c_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_observation_header_dep_t(const sbp_observation_header_dep_t *a, const sbp_observation_header_dep_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t.tow != b.t.tow) { return false; }
-        
-    if (a.t.wn != b.t.wn) { return false; }
-        
-    if (a.n_obs != b.n_obs) { return false; }
+  ret = sbp_cmp_sbp_gps_time_dep_t(&a->t, &b->t);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_observation_header_dep_t &a, const sbp_observation_header_dep_t &b) {
+  return sbp_cmp_sbp_observation_header_dep_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_carrier_phase_dep_a_t(const sbp_carrier_phase_dep_a_t *a, const sbp_carrier_phase_dep_a_t *b) {
+  int ret = 0;
   
-        
-    if (a.i != b.i) { return false; }
-        
-    if (a.f != b.f) { return false; }
+  ret = sbp_cmp_s32(&a->i, &b->i);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->f, &b->f);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_carrier_phase_dep_a_t &a, const sbp_carrier_phase_dep_a_t &b) {
+  return sbp_cmp_sbp_carrier_phase_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_packed_obs_content_dep_a_t(const sbp_packed_obs_content_dep_a_t *a, const sbp_packed_obs_content_dep_a_t *b) {
+  int ret = 0;
   
-        
-    if (a.P != b.P) { return false; }
-        
-        
-    if (a.L.i != b.L.i) { return false; }
-        
-    if (a.L.f != b.L.f) { return false; }
-        
-    if (a.cn0 != b.cn0) { return false; }
-        
-    if (a.lock != b.lock) { return false; }
-        
-    if (a.prn != b.prn) { return false; }
+  ret = sbp_cmp_u32(&a->P, &b->P);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_carrier_phase_dep_a_t(&a->L, &b->L);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->cn0, &b->cn0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->lock, &b->lock);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->prn, &b->prn);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_packed_obs_content_dep_a_t &a, const sbp_packed_obs_content_dep_a_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_packed_obs_content_dep_b_t(const sbp_packed_obs_content_dep_b_t *a, const sbp_packed_obs_content_dep_b_t *b) {
+  int ret = 0;
   
-        
-    if (a.P != b.P) { return false; }
-        
-        
-    if (a.L.i != b.L.i) { return false; }
-        
-    if (a.L.f != b.L.f) { return false; }
-        
-    if (a.cn0 != b.cn0) { return false; }
-        
-    if (a.lock != b.lock) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
+  ret = sbp_cmp_u32(&a->P, &b->P);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_carrier_phase_dep_a_t(&a->L, &b->L);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->cn0, &b->cn0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->lock, &b->lock);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_packed_obs_content_dep_b_t &a, const sbp_packed_obs_content_dep_b_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_packed_obs_content_dep_c_t(const sbp_packed_obs_content_dep_c_t *a, const sbp_packed_obs_content_dep_c_t *b) {
+  int ret = 0;
   
-        
-    if (a.P != b.P) { return false; }
-        
-        
-    if (a.L.i != b.L.i) { return false; }
-        
-    if (a.L.f != b.L.f) { return false; }
-        
-    if (a.cn0 != b.cn0) { return false; }
-        
-    if (a.lock != b.lock) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
+  ret = sbp_cmp_u32(&a->P, &b->P);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_carrier_phase_t(&a->L, &b->L);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->cn0, &b->cn0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->lock, &b->lock);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_packed_obs_content_dep_c_t &a, const sbp_packed_obs_content_dep_c_t &b) {
+  return sbp_cmp_sbp_packed_obs_content_dep_c_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *a, const sbp_msg_obs_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.header.t.tow != b.header.t.tow) { return false; }
-        
-    if (a.header.t.wn != b.header.t.wn) { return false; }
-        
-    if (a.header.n_obs != b.header.n_obs) { return false; }
-          if (a.n_obs != b.n_obs) { return false; }
-        for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-        {
-            
-        
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P) { return false; }
-        
-        
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i) { return false; }
-        
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f) { return false; }
-        
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0) { return false; }
-        
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock) { return false; }
-        
-    if (a.obs[obs_idx].prn != b.obs[obs_idx].prn) { return false; }
-        }
+  ret = sbp_cmp_sbp_observation_header_dep_t(&a->header, &b->header);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_packed_obs_content_dep_a_t(&a->obs[i], &b->obs[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *a, const sbp_msg_obs_dep_b_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.header.t.tow != b.header.t.tow) { return false; }
-        
-    if (a.header.t.wn != b.header.t.wn) { return false; }
-        
-    if (a.header.n_obs != b.header.n_obs) { return false; }
-          if (a.n_obs != b.n_obs) { return false; }
-        for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-        {
-            
-        
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P) { return false; }
-        
-        
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i) { return false; }
-        
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f) { return false; }
-        
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0) { return false; }
-        
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock) { return false; }
-        
-        
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat) { return false; }
-        
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code) { return false; }
-        
-    if (a.obs[obs_idx].sid.reserved != b.obs[obs_idx].sid.reserved) { return false; }
-        }
+  ret = sbp_cmp_sbp_observation_header_dep_t(&a->header, &b->header);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_packed_obs_content_dep_b_t(&a->obs[i], &b->obs[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *a, const sbp_msg_obs_dep_c_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.header.t.tow != b.header.t.tow) { return false; }
-        
-    if (a.header.t.wn != b.header.t.wn) { return false; }
-        
-    if (a.header.n_obs != b.header.n_obs) { return false; }
-          if (a.n_obs != b.n_obs) { return false; }
-        for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-        {
-            
-        
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P) { return false; }
-        
-        
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i) { return false; }
-        
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f) { return false; }
-        
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0) { return false; }
-        
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock) { return false; }
-        
-        
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat) { return false; }
-        
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code) { return false; }
-        
-    if (a.obs[obs_idx].sid.reserved != b.obs[obs_idx].sid.reserved) { return false; }
-        }
+  ret = sbp_cmp_sbp_observation_header_dep_t(&a->header, &b->header);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_packed_obs_content_dep_c_t(&a->obs[i], &b->obs[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_obs_dep_c_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_iono_t(const sbp_msg_iono_t *a, const sbp_msg_iono_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_nmct.tow != b.t_nmct.tow) { return false; }
-        
-    if (a.t_nmct.wn != b.t_nmct.wn) { return false; }
-        
-    if (fabs( a.a0 - b.a0 ) > 0.001) { return false; }
-        
-    if (fabs( a.a1 - b.a1 ) > 0.001) { return false; }
-        
-    if (fabs( a.a2 - b.a2 ) > 0.001) { return false; }
-        
-    if (fabs( a.a3 - b.a3 ) > 0.001) { return false; }
-        
-    if (fabs( a.b0 - b.b0 ) > 0.001) { return false; }
-        
-    if (fabs( a.b1 - b.b1 ) > 0.001) { return false; }
-        
-    if (fabs( a.b2 - b.b2 ) > 0.001) { return false; }
-        
-    if (fabs( a.b3 - b.b3 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->t_nmct, &b->t_nmct);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a0, &b->a0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a1, &b->a1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a2, &b->a2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->a3, &b->a3);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->b0, &b->b0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->b1, &b->b1);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->b2, &b->b2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->b3, &b->b3);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b) {
+  return sbp_cmp_sbp_msg_iono_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(const sbp_msg_sv_configuration_gps_dep_t *a, const sbp_msg_sv_configuration_gps_dep_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_nmct.tow != b.t_nmct.tow) { return false; }
-        
-    if (a.t_nmct.wn != b.t_nmct.wn) { return false; }
-        
-    if (a.l2c_mask != b.l2c_mask) { return false; }
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->t_nmct, &b->t_nmct);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->l2c_mask, &b->l2c_mask);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_gnss_capb_t(const sbp_gnss_capb_t *a, const sbp_gnss_capb_t *b) {
+  int ret = 0;
   
-        
-    if (a.gps_active != b.gps_active) { return false; }
-        
-    if (a.gps_l2c != b.gps_l2c) { return false; }
-        
-    if (a.gps_l5 != b.gps_l5) { return false; }
-        
-    if (a.glo_active != b.glo_active) { return false; }
-        
-    if (a.glo_l2of != b.glo_l2of) { return false; }
-        
-    if (a.glo_l3 != b.glo_l3) { return false; }
-        
-    if (a.sbas_active != b.sbas_active) { return false; }
-        
-    if (a.sbas_l5 != b.sbas_l5) { return false; }
-        
-    if (a.bds_active != b.bds_active) { return false; }
-        
-    if (a.bds_d2nav != b.bds_d2nav) { return false; }
-        
-    if (a.bds_b2 != b.bds_b2) { return false; }
-        
-    if (a.bds_b2a != b.bds_b2a) { return false; }
-        
-    if (a.qzss_active != b.qzss_active) { return false; }
-        
-    if (a.gal_active != b.gal_active) { return false; }
-        
-    if (a.gal_e5 != b.gal_e5) { return false; }
+  ret = sbp_cmp_u64(&a->gps_active, &b->gps_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->gps_l2c, &b->gps_l2c);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->gps_l5, &b->gps_l5);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->glo_active, &b->glo_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->glo_l2of, &b->glo_l2of);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->glo_l3, &b->glo_l3);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->sbas_active, &b->sbas_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->sbas_l5, &b->sbas_l5);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->bds_active, &b->bds_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->bds_d2nav, &b->bds_d2nav);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->bds_b2, &b->bds_b2);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->bds_b2a, &b->bds_b2a);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->qzss_active, &b->qzss_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->gal_active, &b->gal_active);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u64(&a->gal_e5, &b->gal_e5);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_gnss_capb_t &a, const sbp_gnss_capb_t &b) {
+  return sbp_cmp_sbp_gnss_capb_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *a, const sbp_msg_gnss_capb_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_nmct.tow != b.t_nmct.tow) { return false; }
-        
-    if (a.t_nmct.wn != b.t_nmct.wn) { return false; }
-        
-        
-    if (a.gc.gps_active != b.gc.gps_active) { return false; }
-        
-    if (a.gc.gps_l2c != b.gc.gps_l2c) { return false; }
-        
-    if (a.gc.gps_l5 != b.gc.gps_l5) { return false; }
-        
-    if (a.gc.glo_active != b.gc.glo_active) { return false; }
-        
-    if (a.gc.glo_l2of != b.gc.glo_l2of) { return false; }
-        
-    if (a.gc.glo_l3 != b.gc.glo_l3) { return false; }
-        
-    if (a.gc.sbas_active != b.gc.sbas_active) { return false; }
-        
-    if (a.gc.sbas_l5 != b.gc.sbas_l5) { return false; }
-        
-    if (a.gc.bds_active != b.gc.bds_active) { return false; }
-        
-    if (a.gc.bds_d2nav != b.gc.bds_d2nav) { return false; }
-        
-    if (a.gc.bds_b2 != b.gc.bds_b2) { return false; }
-        
-    if (a.gc.bds_b2a != b.gc.bds_b2a) { return false; }
-        
-    if (a.gc.qzss_active != b.gc.qzss_active) { return false; }
-        
-    if (a.gc.gal_active != b.gc.gal_active) { return false; }
-        
-    if (a.gc.gal_e5 != b.gc.gal_e5) { return false; }
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->t_nmct, &b->t_nmct);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_capb_t(&a->gc, &b->gc);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b) {
+  return sbp_cmp_sbp_msg_gnss_capb_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *a, const sbp_msg_group_delay_dep_a_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_op.tow != b.t_op.tow) { return false; }
-        
-    if (a.t_op.wn != b.t_op.wn) { return false; }
-        
-    if (a.prn != b.prn) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.tgd != b.tgd) { return false; }
-        
-    if (a.isc_l1ca != b.isc_l1ca) { return false; }
-        
-    if (a.isc_l2c != b.isc_l2c) { return false; }
+  ret = sbp_cmp_sbp_gps_time_dep_t(&a->t_op, &b->t_op);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->prn, &b->prn);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l1ca, &b->isc_l1ca);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l2c, &b->isc_l2c);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_a_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *a, const sbp_msg_group_delay_dep_b_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_op.tow != b.t_op.tow) { return false; }
-        
-    if (a.t_op.wn != b.t_op.wn) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.tgd != b.tgd) { return false; }
-        
-    if (a.isc_l1ca != b.isc_l1ca) { return false; }
-        
-    if (a.isc_l2c != b.isc_l2c) { return false; }
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->t_op, &b->t_op);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l1ca, &b->isc_l1ca);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l2c, &b->isc_l2c);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_dep_b_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_group_delay_t(const sbp_msg_group_delay_t *a, const sbp_msg_group_delay_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.t_op.tow != b.t_op.tow) { return false; }
-        
-    if (a.t_op.wn != b.t_op.wn) { return false; }
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.tgd != b.tgd) { return false; }
-        
-    if (a.isc_l1ca != b.isc_l1ca) { return false; }
-        
-    if (a.isc_l2c != b.isc_l2c) { return false; }
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->t_op, &b->t_op);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->tgd, &b->tgd);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l1ca, &b->isc_l1ca);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->isc_l2c, &b->isc_l2c);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b) {
+  return sbp_cmp_sbp_msg_group_delay_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_almanac_common_content_t(const sbp_almanac_common_content_t *a, const sbp_almanac_common_content_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-        
-    if (a.toa.tow != b.toa.tow) { return false; }
-        
-    if (a.toa.wn != b.toa.wn) { return false; }
-        
-    if (fabs( a.ura - b.ura ) > 0.001) { return false; }
-        
-    if (a.fit_interval != b.fit_interval) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.health_bits != b.health_bits) { return false; }
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toa, &b->toa);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ura, &b->ura);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fit_interval, &b->fit_interval);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->health_bits, &b->health_bits);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_almanac_common_content_t &a, const sbp_almanac_common_content_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_almanac_common_content_dep_t(const sbp_almanac_common_content_dep_t *a, const sbp_almanac_common_content_dep_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.sid.reserved != b.sid.reserved) { return false; }
-        
-        
-    if (a.toa.tow != b.toa.tow) { return false; }
-        
-    if (a.toa.wn != b.toa.wn) { return false; }
-        
-    if (fabs( a.ura - b.ura ) > 0.001) { return false; }
-        
-    if (a.fit_interval != b.fit_interval) { return false; }
-        
-    if (a.valid != b.valid) { return false; }
-        
-    if (a.health_bits != b.health_bits) { return false; }
+  ret = sbp_cmp_sbp_gnss_signal_dep_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_gps_time_sec_t(&a->toa, &b->toa);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ura, &b->ura);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fit_interval, &b->fit_interval);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->valid, &b->valid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->health_bits, &b->health_bits);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_almanac_common_content_dep_t &a, const sbp_almanac_common_content_dep_t &b) {
+  return sbp_cmp_sbp_almanac_common_content_dep_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *a, const sbp_msg_almanac_gps_dep_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-    if (a.common.sid.reserved != b.common.sid.reserved) { return false; }
-        
-        
-    if (a.common.toa.tow != b.common.toa.tow) { return false; }
-        
-    if (a.common.toa.wn != b.common.toa.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_almanac_common_content_dep_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_dep_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *a, const sbp_msg_almanac_gps_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toa.tow != b.common.toa.tow) { return false; }
-        
-    if (a.common.toa.wn != b.common.toa.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.m0 - b.m0 ) > 0.001) { return false; }
-        
-    if (fabs( a.ecc - b.ecc ) > 0.001) { return false; }
-        
-    if (fabs( a.sqrta - b.sqrta ) > 0.001) { return false; }
-        
-    if (fabs( a.omega0 - b.omega0 ) > 0.001) { return false; }
-        
-    if (fabs( a.omegadot - b.omegadot ) > 0.001) { return false; }
-        
-    if (fabs( a.w - b.w ) > 0.001) { return false; }
-        
-    if (fabs( a.inc - b.inc ) > 0.001) { return false; }
-        
-    if (fabs( a.af0 - b.af0 ) > 0.001) { return false; }
-        
-    if (fabs( a.af1 - b.af1 ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_almanac_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->m0, &b->m0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->ecc, &b->ecc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->sqrta, &b->sqrta);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega0, &b->omega0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omegadot, &b->omegadot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->inc, &b->inc);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af0, &b->af0);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->af1, &b->af1);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b) {
+  return sbp_cmp_sbp_msg_almanac_gps_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *a, const sbp_msg_almanac_glo_dep_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-    if (a.common.sid.reserved != b.common.sid.reserved) { return false; }
-        
-        
-    if (a.common.toa.tow != b.common.toa.tow) { return false; }
-        
-    if (a.common.toa.wn != b.common.toa.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.lambda_na - b.lambda_na ) > 0.001) { return false; }
-        
-    if (fabs( a.t_lambda_na - b.t_lambda_na ) > 0.001) { return false; }
-        
-    if (fabs( a.i - b.i ) > 0.001) { return false; }
-        
-    if (fabs( a.t - b.t ) > 0.001) { return false; }
-        
-    if (fabs( a.t_dot - b.t_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.epsilon - b.epsilon ) > 0.001) { return false; }
-        
-    if (fabs( a.omega - b.omega ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_almanac_common_content_dep_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->lambda_na, &b->lambda_na);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t_lambda_na, &b->t_lambda_na);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->i, &b->i);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t, &b->t);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t_dot, &b->t_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->epsilon, &b->epsilon);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega, &b->omega);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_dep_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *a, const sbp_msg_almanac_glo_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.common.sid.sat != b.common.sid.sat) { return false; }
-        
-    if (a.common.sid.code != b.common.sid.code) { return false; }
-        
-        
-    if (a.common.toa.tow != b.common.toa.tow) { return false; }
-        
-    if (a.common.toa.wn != b.common.toa.wn) { return false; }
-        
-    if (fabs( a.common.ura - b.common.ura ) > 0.001) { return false; }
-        
-    if (a.common.fit_interval != b.common.fit_interval) { return false; }
-        
-    if (a.common.valid != b.common.valid) { return false; }
-        
-    if (a.common.health_bits != b.common.health_bits) { return false; }
-        
-    if (fabs( a.lambda_na - b.lambda_na ) > 0.001) { return false; }
-        
-    if (fabs( a.t_lambda_na - b.t_lambda_na ) > 0.001) { return false; }
-        
-    if (fabs( a.i - b.i ) > 0.001) { return false; }
-        
-    if (fabs( a.t - b.t ) > 0.001) { return false; }
-        
-    if (fabs( a.t_dot - b.t_dot ) > 0.001) { return false; }
-        
-    if (fabs( a.epsilon - b.epsilon ) > 0.001) { return false; }
-        
-    if (fabs( a.omega - b.omega ) > 0.001) { return false; }
+  ret = sbp_cmp_sbp_almanac_common_content_t(&a->common, &b->common);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->lambda_na, &b->lambda_na);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t_lambda_na, &b->t_lambda_na);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->i, &b->i);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t, &b->t);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->t_dot, &b->t_dot);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->epsilon, &b->epsilon);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_double(&a->omega, &b->omega);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b) {
+  return sbp_cmp_sbp_msg_almanac_glo_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_glo_biases_t(const sbp_msg_glo_biases_t *a, const sbp_msg_glo_biases_t *b) {
+  int ret = 0;
   
-        
-    if (a.mask != b.mask) { return false; }
-        
-    if (a.l1ca_bias != b.l1ca_bias) { return false; }
-        
-    if (a.l1p_bias != b.l1p_bias) { return false; }
-        
-    if (a.l2ca_bias != b.l2ca_bias) { return false; }
-        
-    if (a.l2p_bias != b.l2p_bias) { return false; }
+  ret = sbp_cmp_u8(&a->mask, &b->mask);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->l1ca_bias, &b->l1ca_bias);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->l1p_bias, &b->l1p_bias);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->l2ca_bias, &b->l2ca_bias);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->l2p_bias, &b->l2p_bias);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b) {
+  return sbp_cmp_sbp_msg_glo_biases_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_sv_az_el_t(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b) {
+  int ret = 0;
   
-        
-        
-    if (a.sid.sat != b.sid.sat) { return false; }
-        
-    if (a.sid.code != b.sid.code) { return false; }
-        
-    if (a.az != b.az) { return false; }
-        
-    if (a.el != b.el) { return false; }
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->az, &b->az);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s8(&a->el, &b->el);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_sv_az_el_t &a, const sbp_sv_az_el_t &b) {
+  return sbp_cmp_sbp_sv_az_el_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *a, const sbp_msg_sv_az_el_t *b) {
+  int ret = 0;
   
-          if (a.n_azel != b.n_azel) { return false; }
-        for (size_t azel_idx = 0; azel_idx < (size_t)a.n_azel; azel_idx++)
-        {
-            
-        
-        
-    if (a.azel[azel_idx].sid.sat != b.azel[azel_idx].sid.sat) { return false; }
-        
-    if (a.azel[azel_idx].sid.code != b.azel[azel_idx].sid.code) { return false; }
-        
-    if (a.azel[azel_idx].az != b.azel[azel_idx].az) { return false; }
-        
-    if (a.azel[azel_idx].el != b.azel[azel_idx].el) { return false; }
-        }
+  ret = sbp_cmp_u8(&a->n_azel, &b->n_azel);
+  for (uint8_t i = 0; i < a->n_azel && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_sv_az_el_t(&a->azel[i], &b->azel[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b) {
+  return sbp_cmp_sbp_msg_sv_az_el_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_osr_t(const sbp_msg_osr_t *a, const sbp_msg_osr_t *b) {
+  int ret = 0;
   
-        
-        
-        
-    if (a.header.t.tow != b.header.t.tow) { return false; }
-        
-    if (a.header.t.ns_residual != b.header.t.ns_residual) { return false; }
-        
-    if (a.header.t.wn != b.header.t.wn) { return false; }
-        
-    if (a.header.n_obs != b.header.n_obs) { return false; }
-          if (a.n_obs != b.n_obs) { return false; }
-        for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-        {
-            
-        
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P) { return false; }
-        
-        
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i) { return false; }
-        
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f) { return false; }
-        
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock) { return false; }
-        
-    if (a.obs[obs_idx].flags != b.obs[obs_idx].flags) { return false; }
-        
-        
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat) { return false; }
-        
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code) { return false; }
-        
-    if (a.obs[obs_idx].iono_std != b.obs[obs_idx].iono_std) { return false; }
-        
-    if (a.obs[obs_idx].tropo_std != b.obs[obs_idx].tropo_std) { return false; }
-        
-    if (a.obs[obs_idx].range_std != b.obs[obs_idx].range_std) { return false; }
-        }
+  ret = sbp_cmp_sbp_observation_header_t(&a->header, &b->header);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
+  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++)
+  {
+    ret = sbp_cmp_sbp_packed_osr_content_t(&a->obs[i], &b->obs[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
+  return sbp_cmp_sbp_msg_osr_t(&a, &b) >= 0;
 }
 #endif
 

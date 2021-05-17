@@ -13,18 +13,16 @@
 #include <math.h>
 
 #include <libsbp/common.h>
+#include <libsbp/unpacked/base.h>
 #include <libsbp/string.h>
-
-static inline size_t sbp_packed_size_sbp_msg_odometry_t(const sbp_msg_odometry_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->tow )                                                                          
-	  +
-				sizeof( msg->velocity )                                                                          
-	  +
-				sizeof( msg->flags );
+                                                                                                              
+static inline size_t sbp_packed_size_sbp_msg_odometry_t(const sbp_msg_odometry_t *msg) {
+  size_t packed_size = 0;
+  (void)msg;
+  packed_size += sbp_packed_size_u32(&msg->tow);
+  packed_size += sbp_packed_size_s32(&msg->velocity);
+  packed_size += sbp_packed_size_u8(&msg->flags);
+  return packed_size;
 }
 
 static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_msg_odometry_t *msg) {
@@ -34,69 +32,32 @@ static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_ms
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_sbp_msg_odometry_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgtow = htole32( msg->tow );
-  memcpy(buf + offset, & msgtow , 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgvelocity = htole32( *(const u32*)&msg->velocity );
-  memcpy(buf + offset, & msgvelocity , 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-        
-  if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  offset += sbp_pack_u32(buf + offset, len - offset, &msg->tow);
+  offset += sbp_pack_s32(buf + offset, len - offset, &msg->velocity);
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_odometry_t(const u8 *buf, size_t len, sbp_msg_odometry_t *msg) {
+static inline bool sbp_unpack_sbp_msg_odometry_t(const uint8_t *buf, size_t len, sbp_msg_odometry_t *msg) {
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh( msg->tow );
-  // NOLINTNEXTLINE
-  offset += 4;
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->velocity, buf + offset, 4);
-  u32 msgvelocity = *(const u32*)&msg->velocity;
-  msgvelocity = le32toh( msgvelocity );
-  msg->velocity = *(const s32*)&msgvelocity;
-  // NOLINTNEXTLINE
-  offset += 4;
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->flags, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->tow);
+  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->velocity);
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
   return true;
 }
-
-static inline size_t sbp_packed_size_sbp_msg_wheeltick_t(const sbp_msg_wheeltick_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->time )                                                                          
-	  +
-				sizeof( msg->flags )                                                                          
-	  +
-				sizeof( msg->source )                                                                          
-	  +
-				sizeof( msg->ticks );
+                                                                                                              
+static inline size_t sbp_packed_size_sbp_msg_wheeltick_t(const sbp_msg_wheeltick_t *msg) {
+  size_t packed_size = 0;
+  (void)msg;
+  packed_size += sbp_packed_size_u64(&msg->time);
+  packed_size += sbp_packed_size_u8(&msg->flags);
+  packed_size += sbp_packed_size_u8(&msg->source);
+  packed_size += sbp_packed_size_s32(&msg->ticks);
+  return packed_size;
 }
 
 static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_msg_wheeltick_t *msg) {
@@ -106,65 +67,23 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_sbp_msg_wheeltick_t(msg) > len) { return false; }
-  
-        
-  if (offset + 8 > len) { return false; }
-  u64 msgtime = htole64( msg->time );
-  memcpy(buf + offset, & msgtime , 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-        
-  if (offset + 1 > len) { return false; }
-  u8 msgflags = msg->flags;
-  memcpy(buf + offset, & msgflags , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-        
-  if (offset + 1 > len) { return false; }
-  u8 msgsource = msg->source;
-  memcpy(buf + offset, & msgsource , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgticks = htole32( *(const u32*)&msg->ticks );
-  memcpy(buf + offset, & msgticks , 4);
-  // NOLINTNEXTLINE
-  offset += 4;
+  offset += sbp_pack_u64(buf + offset, len - offset, &msg->time);
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->source);
+  offset += sbp_pack_s32(buf + offset, len - offset, &msg->ticks);
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp_msg_wheeltick_t *msg) {
+static inline bool sbp_unpack_sbp_msg_wheeltick_t(const uint8_t *buf, size_t len, sbp_msg_wheeltick_t *msg) {
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 8 > len) { return false; }
-  memcpy(&msg->time, buf + offset, 8);
-  msg->time = le64toh( msg->time );
-  // NOLINTNEXTLINE
-  offset += 8;
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->flags, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->source, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->ticks, buf + offset, 4);
-  u32 msgticks = *(const u32*)&msg->ticks;
-  msgticks = le32toh( msgticks );
-  msg->ticks = *(const s32*)&msgticks;
-  // NOLINTNEXTLINE
-  offset += 4;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  offset += sbp_unpack_u64(buf + offset, len - offset, &msg->time);
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->source);
+  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->ticks);
   return true;
 }
 

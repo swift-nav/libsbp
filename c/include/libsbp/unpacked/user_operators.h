@@ -13,23 +13,43 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_user_data_t(const sbp_msg_user_data_t *a, const sbp_msg_user_data_t *b) {
+  int ret = 0;
   
-          if (a.n_contents != b.n_contents) { return false; }
-        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-        {
-            
-    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
-        }
+  ret = sbp_cmp_u8(&a->n_contents, &b->n_contents);
+  for (uint8_t i = 0; i < a->n_contents && ret == 0; i++)
+  {
+    ret = sbp_cmp_u8(&a->contents[i], &b->contents[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return sbp_cmp_sbp_msg_user_data_t(&a, &b) >= 0;
 }
 #endif
 

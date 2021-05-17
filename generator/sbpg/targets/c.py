@@ -106,6 +106,8 @@ def convert_unpacked(value):
   """Converts to a C language appropriate identifier format.
 
   """
+  if value in PRIMITIVE_TYPES:
+      return value
   return "sbp_" + convert_packed(value)
 
 
@@ -151,58 +153,70 @@ def extensions(includes):
     """
     return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
 
-class BasetypeItem(object):
-    """ PrimitiveItem
+def get_type_packed_size(typename, package_specs):
     """
+    """
+    if typename in PRIMITIVE_TYPES:
+        return PRIMITIVE_SIZES[typename]
 
-    def __init__(self, msg, package_specs, type_id, packed_offset):
-        self.name = type_id
-        #print("Creating basetype item %s" % type_id)
-        if type_id in PRIMITIVE_TYPES:
-            self.packed_size = PRIMITIVE_SIZES[type_id]
-            self.is_primitive = True
-        else:
-            self.fields = []
-            self.packed_size = 0
-            self.is_primitive = False
-            self.generate_as_nested = False
-            for package in package_specs:
-                for definition in package.definitions:
-                    if definition.identifier == type_id:
-                        for f in definition.fields:
-                            new_field = FieldItem(msg, package_specs, f, packed_offset)
-                            packed_offset += new_field.packed_size
-                            self.packed_size += new_field.packed_size
-                            self.fields.append(new_field)
-                            if new_field.generate_as_nested:
-                                self.generate_as_nested = True
-                        return
-            #print("Can't find basetype %s" % type_id)
-            raise "assert"
+    packed_size = 0
+    for package in package_specs:
+        for msg in package.definitions:
+            if msg.identifier == typename:
+                for f in msg.fields:
+                    packed_size = packed_size + get_field_packed_size(f, package_specs)
+    return packed_size
+
+def get_field_packed_size(field, package_specs):
+    """
+    """
+    if field.type_id == "array":
+        if "size" in field.options:
+            return field.options['size'].value * get_type_packed_size(field.options['fill'].value, package_specs)
+        return 0
+    if field.type_id == "string":
+        if "size" in field.options:
+            return field.options['size'].value
+        return 0
+    return get_type_packed_size(field.type_id, package_specs)
+
+
+def get_max_possible_items(msg, field, basetype, package_specs):
+    """
+    """
+    used_space = 0
+    for f in msg.fields:
+        if f.identifier == field.identifier:
+            break
+        used_space = used_space + get_field_packed_size(f, package_specs)
+    available_space = 255 - used_space
+    return int(available_space / get_type_packed_size(basetype, package_specs))
+
 
 class FieldItem(object):
     """FieldItem
     """
 
-    def __init__(self, msg, package_specs, field, packed_offset):
+    def __init__(self, msg, package_specs, field):
         self.name = field.identifier
-        #print("Creating field %s" % self.name)
+        print("Creating field %s" % self.name)
         type_id = field.type_id
         
         self.packed_size = 0
         self.units = field.units
         self.desc = field.desc
         self.generate_as_nested = False
-        if type_id == "string" and 'size' in field.options:
-            self.order = "fixed-array"
-            self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
+
+        if type_id == "string" and "size" in field.options:
+            self.packing = "fixed-array"
+            self.basetype = "char"
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value
             self.options = field.options
-        elif type_id == "string" or field.options.get('encoding', None):
-            self.order = "packed-string"
-            self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
-            self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
+        elif type_id == "string" or "encoding" in field.options:
+            self.packing = "packed-string"
+            self.basetype = "char"
+            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
             self.packed_size = 0
             self.options = field.options
             self.encoding = field.options['encoding'].value
@@ -211,29 +225,29 @@ class FieldItem(object):
                 self.min_sections = field.options['min-sections'].value
             elif self.encoding == "sequence":
                 self.terminator = field.options['terminator'].value
-            if 'size_fn' in field.options:
-                self.size_fn = field.options['size_fn'].value
-            self.generate_as_nested = True
-        elif type_id == "array" and 'size' in field.options:
-            self.order = "fixed-array"
-            self.basetype = BasetypeItem(msg, package_specs, field.options['fill'].value, packed_offset)
+        elif type_id == "array" and "size" in field.options:
+            self.packing = "fixed-array"
+            self.basetype = field.options['fill'].value
             self.max_items = field.options['size'].value
-            self.packed_size = field.options['size'].value * self.basetype.packed_size
+            self.packed_size = field.options['size'].value * get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
         elif type_id == "array":
-            self.order = "variable-array"
-            self.basetype = BasetypeItem(msg, package_specs, field.options['fill'].value, packed_offset)
-            self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
+            self.packing = "variable-array"
+            self.basetype = field.options['fill'].value
+            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
             self.packed_size = 0
-            self.options = field.options
             if 'size_fn' in field.options:
                 self.size_fn = field.options['size_fn'].value
-            self.generate_as_nested = True
+                self.generate_size_fn = False
+            else:
+                self.size_fn = 'n_' + self.name
+                self.generate_size_fn = True
+            self.options = field.options
         else:
-            self.order = "single"
-            self.basetype = BasetypeItem(msg, package_specs, type_id, packed_offset)
+            self.packing = "single"
+            self.basetype = type_id
             self.max_items = 1
-            self.packed_size = self.basetype.packed_size
+            self.packed_size = get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
 
 
@@ -247,13 +261,13 @@ class MsgItem(object):
         self.desc = msg.desc
         self.short_desc = msg.short_desc
         self.fields = []
-        self.generate_as_nested = False
         self.is_real_message = msg.is_real_message
-        packed_offset = 0
-        #print("Creating message %s" % self.name)
+        print("Creating message %s" % self.name)
         for f in msg.fields:
-            new_field = FieldItem(msg, package_specs, f, packed_offset)
-            packed_offset += new_field.packed_size
+            new_field = FieldItem(msg, package_specs, f)
+            if new_field.packed_size == 0 and not self.is_real_message:
+                print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
+                raise "error"
             self.fields.append(new_field)
 
 JENV.filters['convert_packed'] = convert_packed
@@ -297,10 +311,9 @@ def render_unpacked_headers(include_dir, package_specs):
         all_packages.append(name)                                                                             
         for m in package_spec.definitions:                                                                    
             new_msg = MsgItem(m, package_specs)                                                           
-            if m.is_real_message:
-                all_msgs.append(new_msg.name)                                                                 
-            if not new_msg.generate_as_nested:
-                msgs.append(new_msg)                                                                          
+            msgs.append(new_msg)
+            all_msgs.append(new_msg.name)                                                                 
+            print("Adding %s" % new_msg.name)
         destination_filename = "%s/unpacked/%s.h" % (include_dir, name)
         py_template = JENV.get_template(UNPACKED_HEADER_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
@@ -325,13 +338,13 @@ def render_unpacked_headers(include_dir, package_specs):
                 filepath="/".join(package_spec.filepath) + ".yaml",
                 max_msgid_len=package_spec.max_msgid_len,
                 include=extensions(package_spec.includes)))
-    destination_filename = "%s/unpacked/sbp_msg.h" % (include_dir)
-    py_template = JENV.get_template(UNPACKED_UNION_TEMPLATE_NAME)
-    with open(destination_filename, 'w') as f:
-        f.write(py_template.render(msgs = all_msgs,
-            include=extensions(all_packages),
-            filepath="/".join(package_spec.filepath) + ".yaml",
-            max_msgid_len=msg_msgid_len))
+    #destination_filename = "%s/unpacked/sbp_msg.h" % (include_dir)
+    #py_template = JENV.get_template(UNPACKED_UNION_TEMPLATE_NAME)
+    #with open(destination_filename, 'w') as f:
+        #f.write(py_template.render(msgs = all_msgs,
+            #include=extensions(all_packages),
+            #filepath="/".join(package_spec.filepath) + ".yaml",
+            #max_msgid_len=msg_msgid_len))
 
 def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/version.h" % output_dir

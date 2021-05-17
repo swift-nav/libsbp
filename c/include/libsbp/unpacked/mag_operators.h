@@ -13,27 +13,51 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_mag_raw_t(const sbp_msg_mag_raw_t *a, const sbp_msg_mag_raw_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.tow_f != b.tow_f) { return false; }
-        
-    if (a.mag_x != b.mag_x) { return false; }
-        
-    if (a.mag_y != b.mag_y) { return false; }
-        
-    if (a.mag_z != b.mag_z) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->tow_f, &b->tow_f);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->mag_x, &b->mag_x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->mag_y, &b->mag_y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->mag_z, &b->mag_z);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return sbp_cmp_sbp_msg_mag_raw_t(&a, &b) >= 0;
 }
 #endif
 

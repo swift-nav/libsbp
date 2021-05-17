@@ -13,52 +13,99 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a, const sbp_msg_imu_raw_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.tow_f != b.tow_f) { return false; }
-        
-    if (a.acc_x != b.acc_x) { return false; }
-        
-    if (a.acc_y != b.acc_y) { return false; }
-        
-    if (a.acc_z != b.acc_z) { return false; }
-        
-    if (a.gyr_x != b.gyr_x) { return false; }
-        
-    if (a.gyr_y != b.gyr_y) { return false; }
-        
-    if (a.gyr_z != b.gyr_z) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->tow_f, &b->tow_f);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->acc_x, &b->acc_x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->acc_y, &b->acc_y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->acc_z, &b->acc_z);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->gyr_x, &b->gyr_x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->gyr_y, &b->gyr_y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->gyr_z, &b->gyr_z);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_imu_aux_t(const sbp_msg_imu_aux_t *a, const sbp_msg_imu_aux_t *b) {
+  int ret = 0;
   
-        
-    if (a.imu_type != b.imu_type) { return false; }
-        
-    if (a.temp != b.temp) { return false; }
-        
-    if (a.imu_conf != b.imu_conf) { return false; }
+  ret = sbp_cmp_u8(&a->imu_type, &b->imu_type);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s16(&a->temp, &b->temp);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->imu_conf, &b->imu_conf);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) >= 0;
 }
 #endif
 

@@ -13,168 +13,355 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a, const sbp_msg_fileio_read_req_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-        
-    if (a.chunk_size != b.chunk_size) { return false; }
-    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 246)) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->offset, &b->offset);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->chunk_size, &b->chunk_size);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 246
+    );
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a, const sbp_msg_fileio_read_resp_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-          if (a.n_contents != b.n_contents) { return false; }
-        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-        {
-            
-    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
-        }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_contents, &b->n_contents);
+  for (uint8_t i = 0; i < a->n_contents && ret == 0; i++)
+  {
+    ret = sbp_cmp_u8(&a->contents[i], &b->contents[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *a, const sbp_msg_fileio_read_dir_req_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-    if (0 != sbp_null_terminated_string_strcmp(&a.dirname, &b.dirname, 247)) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->offset, &b->offset);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_null_terminated_string_strcmp(&a->dirname, &b->dirname, 247
+    );
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *a, const sbp_msg_fileio_read_dir_resp_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-    if (0 != sbp_sequence_string_strcmp(&a.contents, &b.contents, 251, 255)) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_sequence_string_strcmp(&a->contents, &b->contents, 251,255
+    );
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a, const sbp_msg_fileio_remove_t *b) {
+  int ret = 0;
   
-    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 255)) { return false; }
+  ret = sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 255
+    );
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a, const sbp_msg_fileio_write_req_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-    if (0 != sbp_null_terminated_string_strcmp(&a.filename, &b.filename, 247)) { return false; }
-          if (a.n_data != b.n_data) { return false; }
-        for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
-        {
-            
-    if (a.data[data_idx] != b.data[data_idx]) { return false; }
-        }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->offset, &b->offset);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 247
+    );
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_data, &b->n_data);
+  for (uint8_t i = 0; i < a->n_data && ret == 0; i++)
+  {
+    ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
+  }
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a, const sbp_msg_fileio_write_resp_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a, const sbp_msg_fileio_config_req_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *a, const sbp_msg_fileio_config_resp_t *b) {
+  int ret = 0;
   
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.window_size != b.window_size) { return false; }
-        
-    if (a.batch_size != b.batch_size) { return false; }
-        
-    if (a.fileio_version != b.fileio_version) { return false; }
+  ret = sbp_cmp_u32(&a->sequence, &b->sequence);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->window_size, &b->window_size);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->batch_size, &b->batch_size);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->fileio_version, &b->fileio_version);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) >= 0;
 }
 #endif
 

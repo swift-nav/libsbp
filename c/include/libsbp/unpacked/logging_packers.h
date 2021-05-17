@@ -13,16 +13,16 @@
 #include <math.h>
 
 #include <libsbp/common.h>
+#include <libsbp/unpacked/base.h>
 #include <libsbp/string.h>
-
-static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->level )                                                                          
-	  +
-      sbp_unterminated_string_packed_len(&msg->text, 254);
+                                                                                                              
+static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {
+  size_t packed_size = 0;
+  (void)msg;
+  packed_size += sbp_packed_size_u8(&msg->level);
+  packed_size += sbp_unterminated_string_packed_len(&msg->text, 254
+      );
+  return packed_size;
 }
 
 static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log_t *msg) {
@@ -32,47 +32,31 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_sbp_msg_log_t(msg) > len) { return false; }
-  
-        
-  if (offset + 1 > len) { return false; }
-  u8 msglevel = msg->level;
-  memcpy(buf + offset, & msglevel , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-        offset += sbp_unterminated_string_pack(&msg->text, 254, buf + offset, (uint8_t)(len - offset));
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->level);
+  offset += sbp_unterminated_string_pack(&msg->text, 254,
+      buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_log_t *msg) {
+static inline bool sbp_unpack_sbp_msg_log_t(const uint8_t *buf, size_t len, sbp_msg_log_t *msg) {
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->level, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-      offset += sbp_unterminated_string_unpack(&msg->text, 254, buf + offset, (uint8_t)(len - offset));
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->level);
+  offset += sbp_unterminated_string_unpack(&msg->text, 254,
+      buf + offset, (uint8_t)(len - offset));
   return true;
 }
-
-static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->source )                                                                          
-	  +
-				sizeof( msg->protocol )                                                                          
-	  +
-	    (
-			  msg->n_fwd_payload
-			*
-        sizeof( msg->fwd_payload[0] )
-			);
+                                                                                                              
+static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {
+  size_t packed_size = 0;
+  (void)msg;
+  packed_size += sbp_packed_size_u8(&msg->source);
+  packed_size += sbp_packed_size_u8(&msg->protocol);
+  packed_size += (msg->n_fwd_payload * sbp_packed_size_char(&msg->fwd_payload[0]));
+  return packed_size;
 }
 
 static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg) {
@@ -82,69 +66,38 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_sbp_msg_fwd_t(msg) > len) { return false; }
-  
-        
-  if (offset + 1 > len) { return false; }
-  u8 msgsource = msg->source;
-  memcpy(buf + offset, & msgsource , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-        
-  if (offset + 1 > len) { return false; }
-  u8 msgprotocol = msg->protocol;
-  memcpy(buf + offset, & msgprotocol , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-			for(size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->n_fwd_payload; msgfwd_payload_idx++)
-			{
-          
-  if (offset + 1 > len) { return false; }
-  char msgfwd_payloadmsgfwd_payload_idx = msg->fwd_payload[msgfwd_payload_idx];
-  memcpy(buf + offset, & msgfwd_payloadmsgfwd_payload_idx , 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-			}
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->source);
+  offset += sbp_pack_u8(buf + offset, len - offset, &msg->protocol);
+  for (uint8_t i = 0; i < msg->n_fwd_payload; i++) 
+  {
+    offset += sbp_pack_char(buf + offset, len - offset, &msg->fwd_payload[i]);
+  }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_fwd_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fwd_t(const uint8_t *buf, size_t len, sbp_msg_fwd_t *msg) {
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->source, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-      
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->protocol, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-      msg->n_fwd_payload = (u8)((len - offset) / 1);
-
-	  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx <
-				msg->n_fwd_payload;
-				msgfwd_payload_idx++) 
-		{
-        
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->fwd_payload[msgfwd_payload_idx], buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-		}
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->source);
+  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->protocol);
+  msg->n_fwd_payload = (uint8_t)((len - offset) / sbp_packed_size_char(&msg->fwd_payload[0]));
+  for (uint8_t i = 0; i < msg->n_fwd_payload; i++)
+  {
+    offset += sbp_unpack_char(buf + offset, len - offset, &msg->fwd_payload[i]);
+  }
+  return true;
   return true;
 }
-
-static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-      sbp_unterminated_string_packed_len(&msg->text, 255);
+                                                                                                              
+static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg) {
+  size_t packed_size = 0;
+  (void)msg;
+  packed_size += sbp_unterminated_string_packed_len(&msg->text, 255
+      );
+  return packed_size;
 }
 
 static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_msg_print_dep_t *msg) {
@@ -154,19 +107,19 @@ static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_m
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_sbp_msg_print_dep_t(msg) > len) { return false; }
-  
-        offset += sbp_unterminated_string_pack(&msg->text, 255, buf + offset, (uint8_t)(len - offset));
+  offset += sbp_unterminated_string_pack(&msg->text, 255,
+      buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp_msg_print_dep_t *msg) {
+static inline bool sbp_unpack_sbp_msg_print_dep_t(const uint8_t *buf, size_t len, sbp_msg_print_dep_t *msg) {
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      offset += sbp_unterminated_string_unpack(&msg->text, 255, buf + offset, (uint8_t)(len - offset));
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  offset += sbp_unterminated_string_unpack(&msg->text, 255,
+      buf + offset, (uint8_t)(len - offset));
   return true;
 }
 
