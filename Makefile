@@ -260,7 +260,7 @@ gen-rust:
 
 	$(call announce-begin,"Formatting Rust code")
 
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
+	cd $(SWIFTNAV_ROOT)/rust/sbp && rustup run stable cargo fmt
 
 	$(call announce-end,"Finished formatting Rust code")
 
