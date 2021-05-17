@@ -7,12 +7,14 @@ repositories {
 dependencies {
     implementation 'org.scream3r:jssc:2.8.0'
     implementation 'org.json:json:20131018'
+    testImplementation 'junit:junit:4.13'
 }
 
 sourceSets {
     test {
         java {
             srcDir 'example'
+            srcDir 'test'
         }
 
     }
@@ -29,6 +31,10 @@ sourceSets {
 tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:unchecked'
     options.deprecation = true
+}
+
+test {
+    useJUnit()
 }
 
 archivesBaseName = 'sbp'
