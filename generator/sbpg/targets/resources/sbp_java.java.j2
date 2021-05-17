@@ -52,7 +52,7 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     public (((m.identifier | classnameify))) () { super(TYPE); }
     public (((m.identifier | classnameify))) (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

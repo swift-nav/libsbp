@@ -43,7 +43,7 @@ public class MsgInsStatus extends SBPMessage {
     public MsgInsStatus () { super(TYPE); }
     public MsgInsStatus (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

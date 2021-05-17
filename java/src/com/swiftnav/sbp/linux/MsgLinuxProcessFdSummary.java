@@ -50,7 +50,7 @@ of the list being 2 NULL terminators in a row.
     public MsgLinuxProcessFdSummary () { super(TYPE); }
     public MsgLinuxProcessFdSummary (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

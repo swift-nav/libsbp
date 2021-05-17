@@ -41,7 +41,7 @@ public class MsgAlmanac extends SBPMessage {
     public MsgAlmanac () { super(TYPE); }
     public MsgAlmanac (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -49,7 +49,7 @@ public class MsgBootloaderHandshakeResp extends SBPMessage {
     public MsgBootloaderHandshakeResp () { super(TYPE); }
     public MsgBootloaderHandshakeResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

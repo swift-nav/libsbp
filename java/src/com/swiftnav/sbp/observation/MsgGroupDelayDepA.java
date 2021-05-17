@@ -58,7 +58,7 @@ LSB indicating tgd validity etc.
     public MsgGroupDelayDepA () { super(TYPE); }
     public MsgGroupDelayDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -62,7 +62,7 @@ public class MsgAngularRate extends SBPMessage {
     public MsgAngularRate () { super(TYPE); }
     public MsgAngularRate (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

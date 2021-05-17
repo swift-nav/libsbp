@@ -45,7 +45,7 @@ public class MsgMeasurementState extends SBPMessage {
     public MsgMeasurementState () { super(TYPE); }
     public MsgMeasurementState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

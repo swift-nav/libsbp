@@ -51,7 +51,7 @@ public class MsgStartup extends SBPMessage {
     public MsgStartup () { super(TYPE); }
     public MsgStartup (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

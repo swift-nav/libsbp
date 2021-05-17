@@ -65,7 +65,7 @@ public class MsgLinuxProcessSocketCounts extends SBPMessage {
     public MsgLinuxProcessSocketCounts () { super(TYPE); }
     public MsgLinuxProcessSocketCounts (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -83,7 +83,7 @@ public class MsgPosECEFCovGnss extends SBPMessage {
     public MsgPosECEFCovGnss () { super(TYPE); }
     public MsgPosECEFCovGnss (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

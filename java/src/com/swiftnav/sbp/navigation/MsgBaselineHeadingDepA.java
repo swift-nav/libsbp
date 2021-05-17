@@ -53,7 +53,7 @@ public class MsgBaselineHeadingDepA extends SBPMessage {
     public MsgBaselineHeadingDepA () { super(TYPE); }
     public MsgBaselineHeadingDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -57,7 +57,7 @@ time is unknown or invalid.
     public MsgMagRaw () { super(TYPE); }
     public MsgMagRaw (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

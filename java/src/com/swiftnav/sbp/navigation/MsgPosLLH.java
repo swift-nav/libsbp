@@ -70,7 +70,7 @@ public class MsgPosLLH extends SBPMessage {
     public MsgPosLLH () { super(TYPE); }
     public MsgPosLLH (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

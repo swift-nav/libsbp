@@ -42,7 +42,7 @@ public class MsgBootloaderHandshakeDepA extends SBPMessage {
     public MsgBootloaderHandshakeDepA () { super(TYPE); }
     public MsgBootloaderHandshakeDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

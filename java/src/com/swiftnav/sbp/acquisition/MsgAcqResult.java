@@ -56,7 +56,7 @@ public class MsgAcqResult extends SBPMessage {
     public MsgAcqResult () { super(TYPE); }
     public MsgAcqResult (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

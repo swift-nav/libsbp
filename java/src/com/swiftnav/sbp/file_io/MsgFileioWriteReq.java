@@ -58,7 +58,7 @@ public class MsgFileioWriteReq extends SBPMessage {
     public MsgFileioWriteReq () { super(TYPE); }
     public MsgFileioWriteReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

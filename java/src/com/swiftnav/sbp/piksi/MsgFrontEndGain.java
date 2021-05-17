@@ -51,7 +51,7 @@ public class MsgFrontEndGain extends SBPMessage {
     public MsgFrontEndGain () { super(TYPE); }
     public MsgFrontEndGain (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

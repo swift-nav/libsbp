@@ -131,7 +131,7 @@ public class MsgEphemerisDepD extends SBPMessage {
     public MsgEphemerisDepD () { super(TYPE); }
     public MsgEphemerisDepD (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

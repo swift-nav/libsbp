@@ -51,7 +51,7 @@ according to the status field.
     public MsgSettingsRegisterResp () { super(TYPE); }
     public MsgSettingsRegisterResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

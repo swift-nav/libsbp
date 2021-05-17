@@ -74,7 +74,7 @@ implemented). Defaults to 0.
     public MsgPosLLHDepA () { super(TYPE); }
     public MsgPosLLHDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

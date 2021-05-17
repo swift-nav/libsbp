@@ -61,7 +61,7 @@ public class MsgLinuxCpuState extends SBPMessage {
     public MsgLinuxCpuState () { super(TYPE); }
     public MsgLinuxCpuState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class MsgFileioReadDirResp extends SBPMessage {
     public MsgFileioReadDirResp () { super(TYPE); }
     public MsgFileioReadDirResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

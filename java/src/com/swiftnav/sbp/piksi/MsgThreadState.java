@@ -53,7 +53,7 @@ public class MsgThreadState extends SBPMessage {
     public MsgThreadState () { super(TYPE); }
     public MsgThreadState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

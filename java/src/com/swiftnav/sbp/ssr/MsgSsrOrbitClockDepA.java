@@ -80,7 +80,7 @@ generating configuration
     public MsgSsrOrbitClockDepA () { super(TYPE); }
     public MsgSsrOrbitClockDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

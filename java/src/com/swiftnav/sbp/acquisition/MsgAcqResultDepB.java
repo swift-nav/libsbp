@@ -54,7 +54,7 @@ be in units of dB Hz in a later revision of this message.
     public MsgAcqResultDepB () { super(TYPE); }
     public MsgAcqResultDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

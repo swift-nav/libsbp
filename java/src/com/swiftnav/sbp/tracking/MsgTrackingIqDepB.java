@@ -50,7 +50,7 @@ public class MsgTrackingIqDepB extends SBPMessage {
     public MsgTrackingIqDepB () { super(TYPE); }
     public MsgTrackingIqDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

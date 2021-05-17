@@ -51,7 +51,7 @@ public class MsgLinuxProcessFdCount extends SBPMessage {
     public MsgLinuxProcessFdCount () { super(TYPE); }
     public MsgLinuxProcessFdCount (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

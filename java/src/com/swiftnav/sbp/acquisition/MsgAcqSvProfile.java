@@ -44,7 +44,7 @@ public class MsgAcqSvProfile extends SBPMessage {
     public MsgAcqSvProfile () { super(TYPE); }
     public MsgAcqSvProfile (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

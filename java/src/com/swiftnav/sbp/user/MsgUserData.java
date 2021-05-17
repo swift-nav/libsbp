@@ -43,7 +43,7 @@ public class MsgUserData extends SBPMessage {
     public MsgUserData () { super(TYPE); }
     public MsgUserData (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

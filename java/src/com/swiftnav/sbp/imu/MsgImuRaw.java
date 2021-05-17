@@ -73,7 +73,7 @@ public class MsgImuRaw extends SBPMessage {
     public MsgImuRaw () { super(TYPE); }
     public MsgImuRaw (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

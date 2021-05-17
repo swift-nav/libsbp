@@ -55,7 +55,7 @@ public class MsgLinuxMemStateDepA extends SBPMessage {
     public MsgLinuxMemStateDepA () { super(TYPE); }
     public MsgLinuxMemStateDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

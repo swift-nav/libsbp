@@ -59,7 +59,7 @@ public class MsgEphemerisSbasDepB extends SBPMessage {
     public MsgEphemerisSbasDepB () { super(TYPE); }
     public MsgEphemerisSbasDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

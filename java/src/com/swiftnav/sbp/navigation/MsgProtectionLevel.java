@@ -108,7 +108,7 @@ true along/cross track velocity vector
     public MsgProtectionLevel () { super(TYPE); }
     public MsgProtectionLevel (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

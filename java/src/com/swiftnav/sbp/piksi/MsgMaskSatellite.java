@@ -47,7 +47,7 @@ public class MsgMaskSatellite extends SBPMessage {
     public MsgMaskSatellite () { super(TYPE); }
     public MsgMaskSatellite (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

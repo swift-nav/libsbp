@@ -47,7 +47,7 @@ public class MsgLog extends SBPMessage {
     public MsgLog () { super(TYPE); }
     public MsgLog (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

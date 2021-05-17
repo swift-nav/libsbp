@@ -43,7 +43,7 @@ public class MsgStmFlashUnlockSector extends SBPMessage {
     public MsgStmFlashUnlockSector () { super(TYPE); }
     public MsgStmFlashUnlockSector (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

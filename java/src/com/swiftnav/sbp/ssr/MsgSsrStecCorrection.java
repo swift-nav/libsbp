@@ -51,7 +51,7 @@ public class MsgSsrStecCorrection extends SBPMessage {
     public MsgSsrStecCorrection () { super(TYPE); }
     public MsgSsrStecCorrection (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

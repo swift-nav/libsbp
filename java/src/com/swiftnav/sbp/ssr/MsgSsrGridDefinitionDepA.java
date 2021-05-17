@@ -43,7 +43,7 @@ valid and invalid (and vice versa) are encoded as u8 integers.
     public MsgSsrGridDefinitionDepA () { super(TYPE); }
     public MsgSsrGridDefinitionDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

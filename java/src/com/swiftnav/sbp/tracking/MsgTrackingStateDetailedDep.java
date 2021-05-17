@@ -118,7 +118,7 @@ signal is in continuous track.
     public MsgTrackingStateDetailedDep () { super(TYPE); }
     public MsgTrackingStateDetailedDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

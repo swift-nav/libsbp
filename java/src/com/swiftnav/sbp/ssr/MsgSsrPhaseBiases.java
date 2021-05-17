@@ -81,7 +81,7 @@ satellite being tracked.
     public MsgSsrPhaseBiases () { super(TYPE); }
     public MsgSsrPhaseBiases (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

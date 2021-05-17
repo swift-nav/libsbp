@@ -120,7 +120,7 @@ note the definition of the bits is inverted.
     public MsgSsrTileDefinition () { super(TYPE); }
     public MsgSsrTileDefinition (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

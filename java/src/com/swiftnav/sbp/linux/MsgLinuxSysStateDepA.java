@@ -57,7 +57,7 @@ public class MsgLinuxSysStateDepA extends SBPMessage {
     public MsgLinuxSysStateDepA () { super(TYPE); }
     public MsgLinuxSysStateDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

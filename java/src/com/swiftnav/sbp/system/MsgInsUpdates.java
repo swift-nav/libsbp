@@ -61,7 +61,7 @@ public class MsgInsUpdates extends SBPMessage {
     public MsgInsUpdates () { super(TYPE); }
     public MsgInsUpdates (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

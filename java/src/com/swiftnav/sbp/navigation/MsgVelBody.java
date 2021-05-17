@@ -82,7 +82,7 @@ public class MsgVelBody extends SBPMessage {
     public MsgVelBody () { super(TYPE); }
     public MsgVelBody (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

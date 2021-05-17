@@ -57,7 +57,7 @@ public class MsgPpsTime extends SBPMessage {
     public MsgPpsTime () { super(TYPE); }
     public MsgPpsTime (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -77,7 +77,7 @@ public class MsgVelECEFCov extends SBPMessage {
     public MsgVelECEFCov () { super(TYPE); }
     public MsgVelECEFCov (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

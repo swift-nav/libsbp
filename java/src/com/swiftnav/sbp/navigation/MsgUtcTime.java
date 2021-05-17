@@ -67,7 +67,7 @@ public class MsgUtcTime extends SBPMessage {
     public MsgUtcTime () { super(TYPE); }
     public MsgUtcTime (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

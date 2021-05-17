@@ -54,7 +54,7 @@ including GROUP_META itself
     public MsgGroupMeta () { super(TYPE); }
     public MsgGroupMeta (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

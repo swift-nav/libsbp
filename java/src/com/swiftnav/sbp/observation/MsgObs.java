@@ -54,7 +54,7 @@ satellite being tracked.
     public MsgObs () { super(TYPE); }
     public MsgObs (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

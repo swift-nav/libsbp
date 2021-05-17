@@ -44,7 +44,7 @@ public class MsgResetFilters extends SBPMessage {
     public MsgResetFilters () { super(TYPE); }
     public MsgResetFilters (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

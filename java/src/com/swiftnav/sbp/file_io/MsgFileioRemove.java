@@ -45,7 +45,7 @@ public class MsgFileioRemove extends SBPMessage {
     public MsgFileioRemove () { super(TYPE); }
     public MsgFileioRemove (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

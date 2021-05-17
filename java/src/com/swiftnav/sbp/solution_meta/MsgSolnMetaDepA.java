@@ -67,7 +67,7 @@ public class MsgSolnMetaDepA extends SBPMessage {
     public MsgSolnMetaDepA () { super(TYPE); }
     public MsgSolnMetaDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

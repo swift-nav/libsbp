@@ -45,7 +45,7 @@ public class MsgStmUniqueIdResp extends SBPMessage {
     public MsgStmUniqueIdResp () { super(TYPE); }
     public MsgStmUniqueIdResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

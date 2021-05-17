@@ -70,7 +70,7 @@ implemented). Defaults to 0.
     public MsgVelNEDDepA () { super(TYPE); }
     public MsgVelNEDDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -55,7 +55,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
     public MsgLinuxSocketUsage () { super(TYPE); }
     public MsgLinuxSocketUsage (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

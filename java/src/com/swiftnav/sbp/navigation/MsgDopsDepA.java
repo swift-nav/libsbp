@@ -59,7 +59,7 @@ public class MsgDopsDepA extends SBPMessage {
     public MsgDopsDepA () { super(TYPE); }
     public MsgDopsDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

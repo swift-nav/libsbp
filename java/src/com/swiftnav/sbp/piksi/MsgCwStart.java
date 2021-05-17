@@ -42,7 +42,7 @@ public class MsgCwStart extends SBPMessage {
     public MsgCwStart () { super(TYPE); }
     public MsgCwStart (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

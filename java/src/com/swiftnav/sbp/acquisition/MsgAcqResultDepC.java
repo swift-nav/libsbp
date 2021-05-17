@@ -52,7 +52,7 @@ public class MsgAcqResultDepC extends SBPMessage {
     public MsgAcqResultDepC () { super(TYPE); }
     public MsgAcqResultDepC (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class MsgSettingsWriteResp extends SBPMessage {
     public MsgSettingsWriteResp () { super(TYPE); }
     public MsgSettingsWriteResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

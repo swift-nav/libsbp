@@ -39,7 +39,7 @@ public class MsgSsrGriddedCorrectionNoStdDepA extends SBPMessage {
     public MsgSsrGriddedCorrectionNoStdDepA () { super(TYPE); }
     public MsgSsrGriddedCorrectionNoStdDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

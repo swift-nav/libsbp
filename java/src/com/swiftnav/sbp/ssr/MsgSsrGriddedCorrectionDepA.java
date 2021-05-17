@@ -41,7 +41,7 @@ and standard deviation)
     public MsgSsrGriddedCorrectionDepA () { super(TYPE); }
     public MsgSsrGriddedCorrectionDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

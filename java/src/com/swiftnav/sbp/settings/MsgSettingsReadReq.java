@@ -51,7 +51,7 @@ public class MsgSettingsReadReq extends SBPMessage {
     public MsgSettingsReadReq () { super(TYPE); }
     public MsgSettingsReadReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

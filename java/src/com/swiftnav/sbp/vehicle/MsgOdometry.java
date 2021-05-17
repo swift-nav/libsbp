@@ -59,7 +59,7 @@ for the exact source of this timestamp.
     public MsgOdometry () { super(TYPE); }
     public MsgOdometry (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

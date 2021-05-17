@@ -123,7 +123,7 @@ IODE = mod (t_oc / 720, 240)
     public MsgEphemerisBds () { super(TYPE); }
     public MsgEphemerisBds (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

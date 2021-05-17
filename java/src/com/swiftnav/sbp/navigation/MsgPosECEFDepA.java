@@ -69,7 +69,7 @@ to 0.
     public MsgPosECEFDepA () { super(TYPE); }
     public MsgPosECEFDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

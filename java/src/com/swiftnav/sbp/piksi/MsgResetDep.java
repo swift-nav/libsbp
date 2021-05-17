@@ -41,7 +41,7 @@ public class MsgResetDep extends SBPMessage {
     public MsgResetDep () { super(TYPE); }
     public MsgResetDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

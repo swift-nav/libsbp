@@ -72,7 +72,7 @@ implemented). Defaults to 0.
     public MsgBaselineNEDDepA () { super(TYPE); }
     public MsgBaselineNEDDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

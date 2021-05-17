@@ -62,7 +62,7 @@ public class MsgStatusReport extends SBPMessage {
     public MsgStatusReport () { super(TYPE); }
     public MsgStatusReport (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

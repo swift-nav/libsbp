@@ -43,7 +43,7 @@ public class MsgNetworkBandwidthUsage extends SBPMessage {
     public MsgNetworkBandwidthUsage () { super(TYPE); }
     public MsgNetworkBandwidthUsage (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

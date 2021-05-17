@@ -51,7 +51,7 @@ public class MsgSettingsReadResp extends SBPMessage {
     public MsgSettingsReadResp () { super(TYPE); }
     public MsgSettingsReadResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

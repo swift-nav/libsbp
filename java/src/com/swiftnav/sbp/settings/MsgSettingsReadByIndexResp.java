@@ -58,7 +58,7 @@ public class MsgSettingsReadByIndexResp extends SBPMessage {
     public MsgSettingsReadByIndexResp () { super(TYPE); }
     public MsgSettingsReadByIndexResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class MsgNetworkStateResp extends SBPMessage {
     public MsgNetworkStateResp () { super(TYPE); }
     public MsgNetworkStateResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

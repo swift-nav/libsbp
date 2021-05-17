@@ -62,7 +62,7 @@ public class MsgEphemerisGloDepA extends SBPMessage {
     public MsgEphemerisGloDepA () { super(TYPE); }
     public MsgEphemerisGloDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

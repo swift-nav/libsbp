@@ -73,7 +73,7 @@ of the connection.
     public MsgLinuxProcessSocketQueues () { super(TYPE); }
     public MsgLinuxProcessSocketQueues (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class MsgUartStateDepa extends SBPMessage {
     public MsgUartStateDepa () { super(TYPE); }
     public MsgUartStateDepa (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

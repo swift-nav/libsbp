@@ -49,7 +49,7 @@ public class MsgFileioReadResp extends SBPMessage {
     public MsgFileioReadResp () { super(TYPE); }
     public MsgFileioReadResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

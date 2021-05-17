@@ -51,7 +51,7 @@ public class MsgCellModemStatus extends SBPMessage {
     public MsgCellModemStatus () { super(TYPE); }
     public MsgCellModemStatus (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

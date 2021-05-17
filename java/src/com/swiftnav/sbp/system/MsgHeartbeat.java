@@ -51,7 +51,7 @@ public class MsgHeartbeat extends SBPMessage {
     public MsgHeartbeat () { super(TYPE); }
     public MsgHeartbeat (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class MsgCsacTelemetryLabels extends SBPMessage {
     public MsgCsacTelemetryLabels () { super(TYPE); }
     public MsgCsacTelemetryLabels (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

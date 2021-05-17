@@ -73,7 +73,7 @@ public class MsgAlmanacGPS extends SBPMessage {
     public MsgAlmanacGPS () { super(TYPE); }
     public MsgAlmanacGPS (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

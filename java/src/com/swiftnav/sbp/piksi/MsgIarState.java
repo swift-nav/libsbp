@@ -46,7 +46,7 @@ public class MsgIarState extends SBPMessage {
     public MsgIarState () { super(TYPE); }
     public MsgIarState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

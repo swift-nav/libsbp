@@ -54,7 +54,7 @@ public class MsgBasePosECEF extends SBPMessage {
     public MsgBasePosECEF () { super(TYPE); }
     public MsgBasePosECEF (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

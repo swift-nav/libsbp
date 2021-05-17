@@ -41,7 +41,7 @@ public class MsgBootloaderHandshakeReq extends SBPMessage {
     public MsgBootloaderHandshakeReq () { super(TYPE); }
     public MsgBootloaderHandshakeReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

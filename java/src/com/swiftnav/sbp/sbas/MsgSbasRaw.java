@@ -53,7 +53,7 @@ public class MsgSbasRaw extends SBPMessage {
     public MsgSbasRaw () { super(TYPE); }
     public MsgSbasRaw (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

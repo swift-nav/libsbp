@@ -42,7 +42,7 @@ public class MsgPrintDep extends SBPMessage {
     public MsgPrintDep () { super(TYPE); }
     public MsgPrintDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

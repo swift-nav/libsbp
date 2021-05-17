@@ -65,7 +65,7 @@ from -500000 to 500000)
     public MsgGPSTime () { super(TYPE); }
     public MsgGPSTime (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

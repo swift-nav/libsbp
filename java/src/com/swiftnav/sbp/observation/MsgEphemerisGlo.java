@@ -71,7 +71,7 @@ public class MsgEphemerisGlo extends SBPMessage {
     public MsgEphemerisGlo () { super(TYPE); }
     public MsgEphemerisGlo (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

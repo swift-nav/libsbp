@@ -48,7 +48,7 @@ public class MsgCommandReq extends SBPMessage {
     public MsgCommandReq () { super(TYPE); }
     public MsgCommandReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class MsgFileioConfigResp extends SBPMessage {
     public MsgFileioConfigResp () { super(TYPE); }
     public MsgFileioConfigResp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

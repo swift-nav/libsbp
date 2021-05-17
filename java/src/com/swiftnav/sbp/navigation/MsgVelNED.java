@@ -68,7 +68,7 @@ public class MsgVelNED extends SBPMessage {
     public MsgVelNED () { super(TYPE); }
     public MsgVelNED (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

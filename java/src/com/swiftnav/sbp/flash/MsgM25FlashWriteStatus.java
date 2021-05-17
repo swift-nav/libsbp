@@ -43,7 +43,7 @@ public class MsgM25FlashWriteStatus extends SBPMessage {
     public MsgM25FlashWriteStatus () { super(TYPE); }
     public MsgM25FlashWriteStatus (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

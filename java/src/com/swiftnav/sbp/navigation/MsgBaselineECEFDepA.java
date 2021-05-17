@@ -65,7 +65,7 @@ public class MsgBaselineECEFDepA extends SBPMessage {
     public MsgBaselineECEFDepA () { super(TYPE); }
     public MsgBaselineECEFDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

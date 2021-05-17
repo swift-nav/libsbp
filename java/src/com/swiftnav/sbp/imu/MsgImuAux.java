@@ -50,7 +50,7 @@ public class MsgImuAux extends SBPMessage {
     public MsgImuAux () { super(TYPE); }
     public MsgImuAux (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

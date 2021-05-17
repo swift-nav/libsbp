@@ -43,7 +43,7 @@ public class MsgTrackingStateDepB extends SBPMessage {
     public MsgTrackingStateDepB () { super(TYPE); }
     public MsgTrackingStateDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

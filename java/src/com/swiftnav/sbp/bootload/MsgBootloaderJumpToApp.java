@@ -42,7 +42,7 @@ public class MsgBootloaderJumpToApp extends SBPMessage {
     public MsgBootloaderJumpToApp () { super(TYPE); }
     public MsgBootloaderJumpToApp (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

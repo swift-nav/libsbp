@@ -54,7 +54,7 @@ public class MsgFwd extends SBPMessage {
     public MsgFwd () { super(TYPE); }
     public MsgFwd (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

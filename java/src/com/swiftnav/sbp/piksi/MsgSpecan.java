@@ -66,7 +66,7 @@ public class MsgSpecan extends SBPMessage {
     public MsgSpecan () { super(TYPE); }
     public MsgSpecan (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

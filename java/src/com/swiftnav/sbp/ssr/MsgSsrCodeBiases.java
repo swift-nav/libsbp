@@ -63,7 +63,7 @@ generating configuration
     public MsgSsrCodeBiases () { super(TYPE); }
     public MsgSsrCodeBiases (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

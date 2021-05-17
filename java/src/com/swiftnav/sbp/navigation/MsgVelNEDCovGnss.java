@@ -80,7 +80,7 @@ public class MsgVelNEDCovGnss extends SBPMessage {
     public MsgVelNEDCovGnss () { super(TYPE); }
     public MsgVelNEDCovGnss (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -44,7 +44,7 @@ public class MsgSvAzEl extends SBPMessage {
     public MsgSvAzEl () { super(TYPE); }
     public MsgSvAzEl (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -44,7 +44,7 @@ public class MsgNapDeviceDnaReq extends SBPMessage {
     public MsgNapDeviceDnaReq () { super(TYPE); }
     public MsgNapDeviceDnaReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

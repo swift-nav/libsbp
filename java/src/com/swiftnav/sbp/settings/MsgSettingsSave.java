@@ -40,7 +40,7 @@ public class MsgSettingsSave extends SBPMessage {
     public MsgSettingsSave () { super(TYPE); }
     public MsgSettingsSave (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class MsgSetTime extends SBPMessage {
     public MsgSetTime () { super(TYPE); }
     public MsgSetTime (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

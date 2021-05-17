@@ -113,7 +113,7 @@ public class MsgEphemerisGPSDepE extends SBPMessage {
     public MsgEphemerisGPSDepE () { super(TYPE); }
     public MsgEphemerisGPSDepE (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

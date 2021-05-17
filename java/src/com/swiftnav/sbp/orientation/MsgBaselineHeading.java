@@ -54,7 +54,7 @@ public class MsgBaselineHeading extends SBPMessage {
     public MsgBaselineHeading () { super(TYPE); }
     public MsgBaselineHeading (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override
