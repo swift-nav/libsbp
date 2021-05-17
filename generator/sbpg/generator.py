@@ -50,7 +50,10 @@ def get_args():
                       help='Target language: Haskell.')
   parser.add_argument('--java',
                       action="store_true",
-                      help='Target language: Java!')
+                      help='Target language: Java.')
+  parser.add_argument('--test-java',
+                      action="store_true",
+                      help='Target language: Java tests.')
   parser.add_argument('--rust',
                       action="store_true",
                       help='Target language: Rust.')
@@ -99,7 +102,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.test_java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -110,7 +113,7 @@ def main():
     assert os.path.exists(output_dir), \
         "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
-    test_mode = args.test_c or args.test_rust
+    test_mode = args.test_c or args.test_rust or args.test_java
 
     if test_mode:
       file_index = yaml.resolve_test_deps(*yaml.get_files(input_file))
@@ -160,6 +163,9 @@ def main():
         elif args.java:
           import sbpg.targets.java as java
           java.render_source(output_dir, parsed)
+        elif args.test_java:
+          import sbpg.targets.test_java as test_java
+          test_java.render_source(output_dir, parsed)
         elif args.rust:
           import sbpg.targets.rust as rs
           rs.render_source(output_dir, parsed)

@@ -214,6 +214,16 @@ gen-java:
 		       --java
 	$(call announce-end,"Finished generating Java bindings. Please check $(SWIFTNAV_ROOT)/java/src/sbp")
 
+	$(call announce-begin,"Generating Java tests")
+
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
+	-o $(SWIFTNAV_ROOT)/java/test/ \
+		       -r $(SBP_VERSION_UNPREFIXED) \
+	               --test-java
+
+	$(call announce-end,"Finished generating Java tests")
+
 gen-haskell:
 	$(call announce-begin,"Generating Haskell bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
