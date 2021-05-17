@@ -327,7 +327,7 @@ test-javascript:
 
 test-java:
 	$(call announce-begin,"Running Java tests")
-	cd $(SWIFTNAV_ROOT)/java && gradle test
+	cd $(SWIFTNAV_ROOT)/java && gradle test -i
 	$(call announce-end,"Finished running Java tests")
 
 test-haskell:
