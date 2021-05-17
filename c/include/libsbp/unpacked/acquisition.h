@@ -24,6 +24,7 @@ typedef struct {
 } sbp_msg_acq_result_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -35,6 +36,7 @@ typedef struct {
   float cf;
   sbp_gnss_signal_dep_t sid;
 } sbp_msg_acq_result_dep_c_t;
+
 
 
 /** Deprecated
@@ -50,6 +52,7 @@ typedef struct {
 } sbp_msg_acq_result_dep_b_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -61,6 +64,7 @@ typedef struct {
   float cf;
   u8 prn;
 } sbp_msg_acq_result_dep_a_t;
+
 
 
 /** Acq perfomance measurement and debug
@@ -83,6 +87,7 @@ typedef struct {
 } sbp_acq_sv_profile_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -103,6 +108,7 @@ typedef struct {
 } sbp_acq_sv_profile_dep_t;
 
 
+
 /** Acquisition perfomance measurement and debug
  *
 ((m.desc|commentify)))
@@ -114,6 +120,7 @@ typedef struct {
 } sbp_msg_acq_sv_profile_t;
 
 
+
 /** Deprecated.
  *
 ((m.desc|commentify)))
@@ -123,6 +130,7 @@ typedef struct {
   sbp_acq_sv_profile_dep_t acq_sv_profile[7];
   u8 n_acq_sv_profile;
 } sbp_msg_acq_sv_profile_dep_t;
+
 
 
 

@@ -52,6 +52,7 @@ typedef struct {
 } sbp_solution_input_type_t;
 
 
+
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags) \
@@ -85,6 +86,7 @@ typedef struct {
   sbp_solution_input_type_t sol_in[118];
   u8 n_sol_in;
 } sbp_msg_soln_meta_dep_a_t;
+
 
 
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
@@ -128,6 +130,7 @@ typedef struct {
 } sbp_msg_soln_meta_t;
 
 
+
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK (0x3)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT (0u)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags) \
@@ -149,6 +152,7 @@ typedef struct {
 typedef struct {
   u8 flags;
 } sbp_gnss_input_type_t;
+
 
 
 #define SBP_IMUINPUTTYPE_TIME_STATUS_MASK (0x3)
@@ -203,6 +207,7 @@ typedef struct {
 } sbp_imu_input_type_t;
 
 
+
 #define SBP_ODOINPUTTYPE_RATE_MASK (0x3)
 #define SBP_ODOINPUTTYPE_RATE_SHIFT (4u)
 #define SBP_ODOINPUTTYPE_RATE_GET(flags) \
@@ -252,6 +257,7 @@ typedef struct {
 typedef struct {
   u8 flags;
 } sbp_odo_input_type_t;
+
 
 
 

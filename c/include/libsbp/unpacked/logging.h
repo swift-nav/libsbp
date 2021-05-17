@@ -38,6 +38,16 @@ typedef struct {
   u8 level;
   sbp_unterminated_string_t text;
 } sbp_msg_log_t;
+#define sbp_msg_log_t_text_init(f) sbp_unterminated_string_init(f, 254)
+#define sbp_msg_log_t_text_valid(f) sbp_unterminated_string_valid(f, 254)
+#define sbp_msg_log_t_text_set(f,s) sbp_unterminated_string_set(f,s,254)
+#define sbp_msg_log_t_text_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
+#define sbp_msg_log_t_text_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
+#define sbp_msg_log_t_text_packed_len(f) sbp_unterminated_string_packed_len(f,254)
+#define sbp_msg_log_t_text_get(f) sbp_unterminated_string_get(f,254)
+#define sbp_msg_log_t_text_len(f) ( sbp_msg_log_t_text_packed_len(f))
+#define sbp_msg_log_t_text_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+
 
 
 /** Wrapper for FWD a separate stream of information over SBP
@@ -53,6 +63,7 @@ typedef struct {
 } sbp_msg_fwd_t;
 
 
+
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -61,6 +72,16 @@ typedef struct {
 typedef struct {
   sbp_unterminated_string_t text;
 } sbp_msg_print_dep_t;
+#define sbp_msg_print_dep_t_text_init(f) sbp_unterminated_string_init(f, 255)
+#define sbp_msg_print_dep_t_text_valid(f) sbp_unterminated_string_valid(f, 255)
+#define sbp_msg_print_dep_t_text_set(f,s) sbp_unterminated_string_set(f,s,255)
+#define sbp_msg_print_dep_t_text_printf(f,...) sbp_unterminated_string_printf(f,255,__VA_ARGS__)
+#define sbp_msg_print_dep_t_text_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,255,fmt,ap)
+#define sbp_msg_print_dep_t_text_packed_len(f) sbp_unterminated_string_packed_len(f,255)
+#define sbp_msg_print_dep_t_text_get(f) sbp_unterminated_string_get(f,255)
+#define sbp_msg_print_dep_t_text_len(f) ( sbp_msg_print_dep_t_text_packed_len(f))
+#define sbp_msg_print_dep_t_text_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,255)
+
 
 
 

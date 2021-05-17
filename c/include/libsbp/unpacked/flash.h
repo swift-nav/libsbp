@@ -36,6 +36,7 @@ typedef struct {
 } sbp_msg_flash_program_t;
 
 
+
 #define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
 #define SBP_FLASH_DONE_RESPONSE_CODE_SHIFT (0u)
 #define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags) \
@@ -63,6 +64,7 @@ typedef struct {
 } sbp_msg_flash_done_t;
 
 
+
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags) \
@@ -86,6 +88,7 @@ typedef struct {
   u8 addr_start[3];
   u8 addr_len;
 } sbp_msg_flash_read_req_t;
+
 
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
@@ -113,6 +116,7 @@ typedef struct {
 } sbp_msg_flash_read_resp_t;
 
 
+
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags) \
@@ -137,6 +141,7 @@ typedef struct {
 } sbp_msg_flash_erase_t;
 
 
+
 /** Lock sector of STM flash memory (host => device)
  *
 ((m.desc|commentify)))
@@ -147,6 +152,7 @@ typedef struct {
 } sbp_msg_stm_flash_lock_sector_t;
 
 
+
 /** Unlock sector of STM flash memory (host => device)
  *
 ((m.desc|commentify)))
@@ -155,6 +161,7 @@ typedef struct {
 typedef struct {
   u32 sector;
 } sbp_msg_stm_flash_unlock_sector_t;
+
 
 
 /** Read device's hardcoded unique ID request (host => device)
@@ -168,6 +175,7 @@ typedef struct {
 } sbp_msg_stm_unique_id_req_t;
 
 
+
 /** Read device's hardcoded unique ID response (host <= device)
 
  *
@@ -179,6 +187,7 @@ typedef struct {
 } sbp_msg_stm_unique_id_resp_t;
 
 
+
 /** Write M25 flash status register (host => device)
  *
 ((m.desc|commentify)))
@@ -187,6 +196,7 @@ typedef struct {
 typedef struct {
   u8 status[1];
 } sbp_msg_m25_flash_write_status_t;
+
 
 
 

@@ -20,6 +20,7 @@ typedef struct {
 } sbp_msg_settings_save_t;
 
 
+
 /** Write device configuration settings (host => device)
  *
 ((m.desc|commentify)))
@@ -28,6 +29,18 @@ typedef struct {
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_write_t;
+#define sbp_msg_settings_write_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_valid(f) sbp_multipart_string_valid(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_append(f,s) sbp_multipart_string_append(f, s, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 255, 3, 3, __VA_ARGS__)
+#define sbp_msg_settings_write_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 255, 3, 3, fmt, ap)
+#define sbp_msg_settings_write_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 255, 3, 3)
+#define sbp_msg_settings_write_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,255, 3, 3)
+#define sbp_msg_settings_write_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,255, 3, 3)
+#define sbp_msg_settings_write_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,255, 3, 3)
+#define sbp_msg_settings_write_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,255, 3, 3)
+
 
 
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
@@ -57,6 +70,18 @@ typedef struct {
   u8 status;
   sbp_multipart_string_t setting;
 } sbp_msg_settings_write_resp_t;
+#define sbp_msg_settings_write_resp_t_setting_init(f) sbp_multipart_string_init(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_valid(f) sbp_multipart_string_valid(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_append(f,s) sbp_multipart_string_append(f, s, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 254, 3, 3, __VA_ARGS__)
+#define sbp_msg_settings_write_resp_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 254, 3, 3, fmt, ap)
+#define sbp_msg_settings_write_resp_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,254, 3, 3)
+#define sbp_msg_settings_write_resp_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,254, 3, 3)
+
 
 
 /** Read device configuration settings (host => device)
@@ -67,6 +92,18 @@ typedef struct {
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_req_t;
+#define sbp_msg_settings_read_req_t_setting_init(f) sbp_multipart_string_init(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_valid(f) sbp_multipart_string_valid(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_append(f,s) sbp_multipart_string_append(f, s, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 255, 2, 2, __VA_ARGS__)
+#define sbp_msg_settings_read_req_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 255, 2, 2, fmt, ap)
+#define sbp_msg_settings_read_req_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,255, 2, 2)
+#define sbp_msg_settings_read_req_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,255, 2, 2)
+
 
 
 /** Read device configuration settings (host <= device)
@@ -77,6 +114,18 @@ typedef struct {
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_resp_t;
+#define sbp_msg_settings_read_resp_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_valid(f) sbp_multipart_string_valid(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_append(f,s) sbp_multipart_string_append(f, s, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 255, 3, 3, __VA_ARGS__)
+#define sbp_msg_settings_read_resp_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 255, 3, 3, fmt, ap)
+#define sbp_msg_settings_read_resp_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,255, 3, 3)
+#define sbp_msg_settings_read_resp_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,255, 3, 3)
+
 
 
 /** Read setting by direct index (host => device)
@@ -89,6 +138,7 @@ typedef struct {
 } sbp_msg_settings_read_by_index_req_t;
 
 
+
 /** Read setting by direct index (host <= device)
  *
 ((m.desc|commentify)))
@@ -98,6 +148,18 @@ typedef struct {
   u16 index;
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_by_index_resp_t;
+#define sbp_msg_settings_read_by_index_resp_t_setting_init(f) sbp_multipart_string_init(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_valid(f) sbp_multipart_string_valid(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_append(f,s) sbp_multipart_string_append(f, s, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 253, 3, 4, __VA_ARGS__)
+#define sbp_msg_settings_read_by_index_resp_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 253, 3, 4, fmt, ap)
+#define sbp_msg_settings_read_by_index_resp_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,253, 3, 4)
+#define sbp_msg_settings_read_by_index_resp_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,253, 3, 4)
+
 
 
 /** Finished reading settings (host <= device)
@@ -110,6 +172,7 @@ typedef struct {
 } sbp_msg_settings_read_by_index_done_t;
 
 
+
 /** Register setting and default value (device => host)
  *
 ((m.desc|commentify)))
@@ -118,6 +181,18 @@ typedef struct {
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_register_t;
+#define sbp_msg_settings_register_t_setting_init(f) sbp_multipart_string_init(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_valid(f) sbp_multipart_string_valid(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_append(f,s) sbp_multipart_string_append(f, s, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 255, 3, 3, __VA_ARGS__)
+#define sbp_msg_settings_register_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 255, 3, 3, fmt, ap)
+#define sbp_msg_settings_register_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 255, 3, 3)
+#define sbp_msg_settings_register_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,255, 3, 3)
+#define sbp_msg_settings_register_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,255, 3, 3)
+#define sbp_msg_settings_register_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,255, 3, 3)
+#define sbp_msg_settings_register_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,255, 3, 3)
+
 
 
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
@@ -144,6 +219,18 @@ typedef struct {
   u8 status;
   sbp_multipart_string_t setting;
 } sbp_msg_settings_register_resp_t;
+#define sbp_msg_settings_register_resp_t_setting_init(f) sbp_multipart_string_init(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_valid(f) sbp_multipart_string_valid(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_packed_len(f) sbp_multipart_string_packed_len(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_append(f,s) sbp_multipart_string_append(f, s, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_append_printf(f, ...) sbp_multipart_string_append_printf(s, 254, 3, 3, __VA_ARGS__)
+#define sbp_msg_settings_register_resp_t_setting_append_vprintf(f, fmt,ap) sbp_multipart_string_append_vprintf(s, 254, 3, 3, fmt, ap)
+#define sbp_msg_settings_register_resp_t_setting_count_sections(f) sbp_multipart_string_count_sections(f, 254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_get_section(f,s) sbp_multipart_string_get_section(f,s,254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_section_len(f,s) sbp_multipart_string_section_len(f,s,254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_space_remaining(f) sbp_multipart_string_space_remaining(f,254, 3, 3)
+#define sbp_msg_settings_register_resp_t_setting_strcmp(a,b) sbp_multipart_string_strcmp(a,b,254, 3, 3)
+
 
 
 

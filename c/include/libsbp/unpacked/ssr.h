@@ -21,6 +21,7 @@ typedef struct {
 } sbp_code_biases_content_t;
 
 
+
 /** SSR phase biases corrections for a particular satellite.
  *
 ((m.desc|commentify)))
@@ -32,6 +33,7 @@ typedef struct {
   u8 discontinuity_counter;
   s32 bias;
 } sbp_phase_biases_content_t;
+
 
 
 /** Header for the MSG_SSR_STEC_CORRECTION message.
@@ -47,6 +49,7 @@ typedef struct {
   u8 update_interval;
   u8 iod_atmo;
 } sbp_stec_header_t;
+
 
 
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message.
@@ -65,6 +68,7 @@ typedef struct {
 } sbp_gridded_correction_header_t;
 
 
+
 /** None
  *
 ((m.desc|commentify)))
@@ -76,6 +80,7 @@ typedef struct {
 } sbp_stec_sat_element_t;
 
 
+
 /** None
  *
 ((m.desc|commentify)))
@@ -84,6 +89,7 @@ typedef struct {
   s16 hydro;
   s8 wet;
 } sbp_tropospheric_delay_correction_no_std_t;
+
 
 
 /** None
@@ -97,6 +103,7 @@ typedef struct {
 } sbp_tropospheric_delay_correction_t;
 
 
+
 /** None
  *
 ((m.desc|commentify)))
@@ -105,6 +112,7 @@ typedef struct {
   sbp_sv_id_t sv_id;
   s16 residual;
 } sbp_stec_residual_no_std_t;
+
 
 
 /** None
@@ -116,6 +124,7 @@ typedef struct {
   s16 residual;
   u8 stddev;
 } sbp_stec_residual_t;
+
 
 
 /** Precise orbit and clock correction
@@ -141,6 +150,7 @@ typedef struct {
 } sbp_msg_ssr_orbit_clock_t;
 
 
+
 /** Precise code biases correction
  *
 ((m.desc|commentify)))
@@ -154,6 +164,7 @@ typedef struct {
   sbp_code_biases_content_t biases[81];
   u8 n_biases;
 } sbp_msg_ssr_code_biases_t;
+
 
 
 /** Precise phase biases correction
@@ -175,6 +186,7 @@ typedef struct {
 } sbp_msg_ssr_phase_biases_t;
 
 
+
 /** STEC correction polynomial coeffcients.
  *
 ((m.desc|commentify)))
@@ -185,6 +197,7 @@ typedef struct {
   sbp_stec_sat_element_t stec_sat_list[21];
   u8 n_stec_sat_list;
 } sbp_msg_ssr_stec_correction_t;
+
 
 
 /** Gridded troposphere and STEC correction residuals.
@@ -199,6 +212,7 @@ typedef struct {
   sbp_stec_residual_t stec_residuals[46];
   u8 n_stec_residuals;
 } sbp_msg_ssr_gridded_correction_t;
+
 
 
 /** Definition of a SSR atmospheric correction tile.
@@ -218,6 +232,7 @@ typedef struct {
   u16 cols;
   u64 bitmask;
 } sbp_msg_ssr_tile_definition_t;
+
 
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
@@ -264,11 +279,13 @@ typedef struct {
 } sbp_satellite_apc_t;
 
 
+
 #define SBP_MSG_SSR_SATELLITE_APC                   0x0604
 typedef struct {
   sbp_satellite_apc_t apc[7];
   u8 n_apc;
 } sbp_msg_ssr_satellite_apc_t;
+
 
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
@@ -290,6 +307,7 @@ typedef struct {
 } sbp_msg_ssr_orbit_clock_dep_a_t;
 
 
+
 /** Header for MSG_SSR_STEC_CORRECTION_DEP message
  *
 ((m.desc|commentify)))
@@ -301,6 +319,7 @@ typedef struct {
   u8 update_interval;
   u8 iod_atmo;
 } sbp_stec_header_dep_a_t;
+
 
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
@@ -317,6 +336,7 @@ typedef struct {
 } sbp_gridded_correction_header_dep_a_t;
 
 
+
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
 ((m.desc|commentify)))
@@ -331,12 +351,14 @@ typedef struct {
 } sbp_grid_definition_header_dep_a_t;
 
 
+
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
 typedef struct {
   sbp_stec_header_dep_a_t header;
   sbp_stec_sat_element_t stec_sat_list[22];
   u8 n_stec_sat_list;
 } sbp_msg_ssr_stec_correction_dep_a_t;
+
 
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
@@ -349,6 +371,7 @@ typedef struct {
 } sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
 
 
+
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
 typedef struct {
   sbp_gridded_correction_header_dep_a_t header;
@@ -359,12 +382,14 @@ typedef struct {
 } sbp_msg_ssr_gridded_correction_dep_a_t;
 
 
+
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
 typedef struct {
   sbp_grid_definition_header_dep_a_t header;
   u8 rle_list[246];
   u8 n_rle_list;
 } sbp_msg_ssr_grid_definition_dep_a_t;
+
 
 
 

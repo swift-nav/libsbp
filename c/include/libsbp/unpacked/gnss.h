@@ -43,6 +43,7 @@ typedef struct {
 } sbp_sbp_gnss_signal_t;
 
 
+
 /** Space vehicle identifier
  *
 ((m.desc|commentify)))
@@ -51,6 +52,7 @@ typedef struct {
   u8 satId;
   u8 constellation;
 } sbp_sv_id_t;
+
 
 
 #define SBP_GNSSSIGNALDEP__MASK (0xff)
@@ -82,6 +84,7 @@ typedef struct {
 } sbp_gnss_signal_dep_t;
 
 
+
 /** Millisecond-accurate GPS time
  *
 ((m.desc|commentify)))
@@ -92,6 +95,7 @@ typedef struct {
 } sbp_gps_time_dep_t;
 
 
+
 /** Whole second accurate GPS time
  *
 ((m.desc|commentify)))
@@ -100,6 +104,7 @@ typedef struct {
   u32 tow;
   u16 wn;
 } sbp_gps_time_sec_t;
+
 
 
 /** Nanosecond-accurate receiver clock time
@@ -113,6 +118,7 @@ typedef struct {
 } sbp_sbp_gps_time_t;
 
 
+
 /** GNSS carrier phase measurement.
  *
 ((m.desc|commentify)))
@@ -121,6 +127,7 @@ typedef struct {
   s32 i;
   u8 f;
 } sbp_carrier_phase_t;
+
 
 
 
