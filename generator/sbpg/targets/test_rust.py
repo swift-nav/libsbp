@@ -16,14 +16,8 @@ Generator for rust tests target.
 from sbpg.targets.templating import *
 from sbpg.targets.rust import *
 from sbpg.targets.common import *
-import base64
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
-
-def b64_decode(field):
-    print("Decoding '{}'".format(field))
-    b = base64.standard_b64decode(field)
-    return [ str(ord(ch)) for ch in b ]
 
 
 def str_escape(value):
@@ -32,7 +26,6 @@ def str_escape(value):
 def mod_name(value):
     return value.split('.')[1]
 
-JENV.filters['b64_decode'] = b64_decode
 JENV.filters['to_str'] = to_str
 JENV.filters['str_escape'] = str_escape
 JENV.filters['sorted'] = sorted

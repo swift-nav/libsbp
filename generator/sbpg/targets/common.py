@@ -9,6 +9,8 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import base64
+
 def string_type(value):
     return type(value) == str
 
@@ -27,3 +29,5 @@ def is_empty(value):
 def to_str(value):
     return str(value)
 
+def b64_decode(field):
+    return base64.standard_b64decode(field)

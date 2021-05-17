@@ -16,25 +16,16 @@ Generator for c tests target.
 from sbpg.targets.templating import *
 from sbpg.targets.c import *
 from sbpg.targets.common import *
-import base64
 
 TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
 CPP_TEST_TEMPLATE_NAME = "sbp_cpp_test.cc.j2"
 CHECK_SUITES_TEMPLATE_NAME = "sbp_c_suites.h.j2"
 CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
 
-def b64_decode(field):
-    return base64.standard_b64decode(field)
-
-def strEscape(value):
+def str_escape(value):
     return ",".join(["(char)" + str(ord(ch)) for ch in value])
 
-JENV.filters['commentify'] = commentify
-JENV.filters['mk_id'] = mk_id
-JENV.filters['mk_size'] = mk_size
-JENV.filters['convert'] = convert
-JENV.filters['type'] = type
-JENV.filters['str_escape'] = strEscape
+JENV.filters['str_escape'] = str_escape
 JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
 
