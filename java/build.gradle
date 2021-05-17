@@ -5,8 +5,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.scream3r:jssc:2.8.0'
-    implementation 'org.json:json:20131018'
+    implementation 'io.github.java-native:jssc:2.9.2'
+    implementation 'org.json:json:20210307'
     testImplementation 'junit:junit:4.13'
 }
 
