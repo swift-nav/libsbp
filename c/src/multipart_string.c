@@ -139,31 +139,30 @@ uint8_t sbp_multipart_string_space_remaining(const sbp_multipart_string_t *s,
   return (uint8_t)(max_packed_len - s->packed_len);
 }
 
-uint8_t sbp_multipart_string_pack(const sbp_multipart_string_t *s,
+bool sbp_multipart_string_pack(const sbp_multipart_string_t *s,
                                   uint8_t max_packed_len,
                                   uint8_t min_sections,
                                   uint8_t max_sections,
-                                  uint8_t *buf,
-                                  uint8_t buf_len)
+                                  sbp_pack_ctx_t *ctx)
 {
   if (!sbp_multipart_string_valid(s, max_packed_len, min_sections, max_sections))
-    return 0;
-  if (buf_len < s->packed_len)
-    return 0;
-  memcpy(buf, s->data, (size_t)(s->packed_len));
+    return false;
+  if ((ctx->buf_len - ctx->offset) < s->packed_len)
+    return false;
+  memcpy(&ctx->buf[ctx->offset], s->data, (size_t)(s->packed_len));
   return s->packed_len;
 }
 
-uint8_t sbp_multipart_string_unpack(sbp_multipart_string_t *s,
+bool sbp_multipart_string_unpack(sbp_multipart_string_t *s,
                                     uint8_t max_packed_len,
                                     uint8_t min_sections,
                                     uint8_t max_sections,
-                                    const uint8_t *buf,
-                                    uint8_t buf_len)
+                                    sbp_unpack_ctx_t *ctx)
 {
   sbp_multipart_string_t new_str;
   sbp_multipart_string_init(&new_str, max_packed_len, min_sections, max_sections);
   uint8_t max_len = max_packed_len;
+  uint8_t buf_len = (uint8_t)(ctx->buf_len - ctx->offset);
   if (max_len > buf_len)
     max_len = buf_len;
   bool processing_section = false;
@@ -174,8 +173,8 @@ uint8_t sbp_multipart_string_unpack(sbp_multipart_string_t *s,
       new_str.offsets[new_str.n_sections] = i;
       processing_section = true;
     }
-    new_str.data[i] = (char)buf[i];
-    if (buf[i] == 0)
+    new_str.data[i] = (char)(ctx->buf[ctx->offset + i]);
+    if (ctx->buf[ctx->offset + i] == 0)
     {
       new_str.lens[new_str.n_sections] = (uint8_t)(i - new_str.offsets[new_str.n_sections]);
       new_str.n_sections++;
@@ -191,9 +190,10 @@ uint8_t sbp_multipart_string_unpack(sbp_multipart_string_t *s,
   }
 
   if (!sbp_multipart_string_valid(&new_str, max_packed_len, min_sections, max_sections))
-    return 0;
+    return false;
   memcpy(s, &new_str, sizeof(new_str));
-  return s->packed_len;
+  ctx->offset += s->packed_len;
+  return true;
 }
 
 int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,

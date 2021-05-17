@@ -14,11 +14,11 @@
 
 #include <libsbp/common.h>
 #include <libsbp/unpacked/base.h>
+#include <libsbp/unpacked/common.h>
 #include <libsbp/string.h>
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u32(&msg->tow);
   packed_size += sbp_packed_size_u32(&msg->heading);
   packed_size += sbp_packed_size_u8(&msg->n_sats);
@@ -26,36 +26,26 @@ static inline size_t sbp_packed_size_sbp_msg_baseline_heading_t(const sbp_msg_ba
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_baseline_heading_t(u8 *buf, size_t len, const sbp_msg_baseline_heading_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_baseline_heading_t(msg) > len) { return false; }
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->heading);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->n_sats);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_pack_sbp_msg_baseline_heading_t(sbp_pack_ctx_t *ctx, const sbp_msg_baseline_heading_t *msg)
+{
+  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->heading)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->n_sats)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_baseline_heading_t(const uint8_t *buf, size_t len, sbp_msg_baseline_heading_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->heading);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->n_sats);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_unpack_sbp_msg_baseline_heading_t(sbp_unpack_ctx_t *ctx, sbp_msg_baseline_heading_t *msg)
+{
+  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->heading)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->n_sats)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u32(&msg->tow);
   packed_size += sbp_packed_size_s32(&msg->w);
   packed_size += sbp_packed_size_s32(&msg->x);
@@ -69,48 +59,38 @@ static inline size_t sbp_packed_size_sbp_msg_orient_quat_t(const sbp_msg_orient_
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_orient_quat_t(u8 *buf, size_t len, const sbp_msg_orient_quat_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_orient_quat_t(msg) > len) { return false; }
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->w);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->x);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->y);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->z);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->w_accuracy);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->x_accuracy);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->y_accuracy);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->z_accuracy);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_pack_sbp_msg_orient_quat_t(sbp_pack_ctx_t *ctx, const sbp_msg_orient_quat_t *msg)
+{
+  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->w)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->x)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->y)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->z)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->w_accuracy)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->x_accuracy)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->y_accuracy)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->z_accuracy)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_orient_quat_t(const uint8_t *buf, size_t len, sbp_msg_orient_quat_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->w);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->x);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->y);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->z);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->w_accuracy);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->x_accuracy);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->y_accuracy);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->z_accuracy);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_unpack_sbp_msg_orient_quat_t(sbp_unpack_ctx_t *ctx, sbp_msg_orient_quat_t *msg)
+{
+  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->w)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->x)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->y)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->z)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->w_accuracy)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->x_accuracy)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->y_accuracy)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->z_accuracy)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u32(&msg->tow);
   packed_size += sbp_packed_size_s32(&msg->roll);
   packed_size += sbp_packed_size_s32(&msg->pitch);
@@ -122,44 +102,34 @@ static inline size_t sbp_packed_size_sbp_msg_orient_euler_t(const sbp_msg_orient
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_orient_euler_t(u8 *buf, size_t len, const sbp_msg_orient_euler_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_orient_euler_t(msg) > len) { return false; }
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->roll);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->pitch);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->yaw);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->roll_accuracy);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->pitch_accuracy);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->yaw_accuracy);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_pack_sbp_msg_orient_euler_t(sbp_pack_ctx_t *ctx, const sbp_msg_orient_euler_t *msg)
+{
+  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->roll)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->pitch)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->yaw)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->roll_accuracy)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->pitch_accuracy)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->yaw_accuracy)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_orient_euler_t(const uint8_t *buf, size_t len, sbp_msg_orient_euler_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->roll);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->pitch);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->yaw);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->roll_accuracy);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->pitch_accuracy);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->yaw_accuracy);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_unpack_sbp_msg_orient_euler_t(sbp_unpack_ctx_t *ctx, sbp_msg_orient_euler_t *msg)
+{
+  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->roll)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->pitch)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->yaw)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->roll_accuracy)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->pitch_accuracy)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->yaw_accuracy)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_angular_rate_t(const sbp_msg_angular_rate_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u32(&msg->tow);
   packed_size += sbp_packed_size_s32(&msg->x);
   packed_size += sbp_packed_size_s32(&msg->y);
@@ -168,32 +138,23 @@ static inline size_t sbp_packed_size_sbp_msg_angular_rate_t(const sbp_msg_angula
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_angular_rate_t(u8 *buf, size_t len, const sbp_msg_angular_rate_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_angular_rate_t(msg) > len) { return false; }
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->x);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->y);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->z);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_pack_sbp_msg_angular_rate_t(sbp_pack_ctx_t *ctx, const sbp_msg_angular_rate_t *msg)
+{
+  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->x)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->y)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->z)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_angular_rate_t(const uint8_t *buf, size_t len, sbp_msg_angular_rate_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->tow);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->x);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->y);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->z);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->flags);
+static inline bool sbp_unpack_sbp_msg_angular_rate_t(sbp_unpack_ctx_t *ctx, sbp_msg_angular_rate_t *msg)
+{
+  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->x)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->y)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->z)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 

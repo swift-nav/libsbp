@@ -110,29 +110,29 @@ uint8_t sbp_sequence_string_space_remaining(const sbp_sequence_string_t *s, uint
   return (uint8_t)(max_packed_len - s->packed_len);
 }
 
-uint8_t sbp_sequence_string_pack(const sbp_sequence_string_t *s,
+bool sbp_sequence_string_pack(const sbp_sequence_string_t *s,
                                  uint8_t max_packed_len,
                                  uint8_t terminator,
-                                 uint8_t *buf,
-                                 uint8_t buf_len)
+                                 sbp_pack_ctx_t *ctx)
 {
   if (!sbp_sequence_string_valid(s, max_packed_len, terminator))
-    return 0;
-  if (buf_len < s->packed_len)
-    return 0;
-  memcpy(buf, s->data, (size_t)(s->packed_len));
-  return s->packed_len;
+    return false;
+  if ((ctx->buf_len - ctx->offset) < s->packed_len)
+    return false;
+  memcpy(&ctx->buf[ctx->offset], s->data, (size_t)(s->packed_len));
+  ctx->offset += s->packed_len;
+  return true;
 }
 
-uint8_t sbp_sequence_string_unpack(sbp_sequence_string_t *s,
+bool sbp_sequence_string_unpack(sbp_sequence_string_t *s,
                                    uint8_t max_packed_len,
                                    uint8_t terminator,
-                                   const uint8_t *buf,
-                                   uint8_t buf_len)
+                                   sbp_unpack_ctx_t *ctx)
 {
   sbp_sequence_string_t new_str;
   sbp_sequence_string_init(&new_str, max_packed_len, terminator);
   uint8_t max_len = max_packed_len;
+  uint8_t buf_len = (uint8_t)(ctx->buf_len - ctx->offset);
   if (max_len > buf_len)
     max_len = buf_len;
   bool processing_section = false;
@@ -144,21 +144,22 @@ uint8_t sbp_sequence_string_unpack(sbp_sequence_string_t *s,
       new_str.offsets[new_str.n_sections] = (uint8_t)i;
       processing_section = true;
     }
-    new_str.data[i] = (char)buf[i];
-    if (buf[i] == 0)
+    new_str.data[i] = (char)ctx->buf[ctx->offset + i];
+    if (ctx->buf[ctx->offset + i] == 0)
     {
       new_str.lens[new_str.n_sections] = (uint8_t)(i - new_str.offsets[new_str.n_sections]);
       new_str.n_sections++;
       processing_section = false;
     }
-    if (buf[i] == terminator)
+    if (ctx->buf[ctx->offset + i] == terminator)
       break;
   }
 
   if (i == max_len)
-    return 0;
+    return false;
   memcpy(s, &new_str, sizeof(new_str));
-  return s->packed_len;
+  ctx->offset += s->packed_len;
+  return true;
 }
 
 int sbp_sequence_string_strcmp(const sbp_sequence_string_t *a,

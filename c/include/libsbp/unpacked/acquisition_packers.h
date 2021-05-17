@@ -14,11 +14,11 @@
 
 #include <libsbp/common.h>
 #include <libsbp/unpacked/base.h>
+#include <libsbp/unpacked/common.h>
 #include <libsbp/string.h>
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_float(&msg->cn0);
   packed_size += sbp_packed_size_float(&msg->cp);
   packed_size += sbp_packed_size_float(&msg->cf);
@@ -26,36 +26,26 @@ static inline size_t sbp_packed_size_sbp_msg_acq_result_t(const sbp_msg_acq_resu
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_msg_acq_result_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_result_t(msg) > len) { return false; }
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_sbp_sbp_gnss_signal_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_pack_sbp_msg_acq_result_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_result_t *msg)
+{
+  if (!sbp_pack_float(ctx, &msg->cn0)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_result_t(const uint8_t *buf, size_t len, sbp_msg_acq_result_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_sbp_sbp_gnss_signal_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_unpack_sbp_msg_acq_result_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_result_t *msg)
+{
+  if (!sbp_unpack_float(ctx, &msg->cn0)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_float(&msg->cn0);
   packed_size += sbp_packed_size_float(&msg->cp);
   packed_size += sbp_packed_size_float(&msg->cf);
@@ -63,36 +53,26 @@ static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_c_t(const sbp_msg_ac
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, const sbp_msg_acq_result_dep_c_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_result_dep_c_t(msg) > len) { return false; }
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_result_dep_c_t *msg)
+{
+  if (!sbp_pack_float(ctx, &msg->cn0)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const uint8_t *buf, size_t len, sbp_msg_acq_result_dep_c_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_result_dep_c_t *msg)
+{
+  if (!sbp_unpack_float(ctx, &msg->cn0)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_float(&msg->snr);
   packed_size += sbp_packed_size_float(&msg->cp);
   packed_size += sbp_packed_size_float(&msg->cf);
@@ -100,36 +80,26 @@ static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_b_t(const sbp_msg_ac
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, const sbp_msg_acq_result_dep_b_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_result_dep_b_t(msg) > len) { return false; }
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->snr);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_result_dep_b_t *msg)
+{
+  if (!sbp_pack_float(ctx, &msg->snr)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const uint8_t *buf, size_t len, sbp_msg_acq_result_dep_b_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->snr);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
+static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_result_dep_b_t *msg)
+{
+  if (!sbp_unpack_float(ctx, &msg->snr)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_a_t(const sbp_msg_acq_result_dep_a_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_float(&msg->snr);
   packed_size += sbp_packed_size_float(&msg->cp);
   packed_size += sbp_packed_size_float(&msg->cf);
@@ -137,36 +107,26 @@ static inline size_t sbp_packed_size_sbp_msg_acq_result_dep_a_t(const sbp_msg_ac
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, const sbp_msg_acq_result_dep_a_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_result_dep_a_t(msg) > len) { return false; }
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->snr);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_pack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->prn);
+static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_result_dep_a_t *msg)
+{
+  if (!sbp_pack_float(ctx, &msg->snr)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_pack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->prn)) { return false; }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(const uint8_t *buf, size_t len, sbp_msg_acq_result_dep_a_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->snr);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cp);
-  offset += sbp_unpack_float(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->prn);
+static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_result_dep_a_t *msg)
+{
+  if (!sbp_unpack_float(ctx, &msg->snr)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cp)) { return false; }
+  if (!sbp_unpack_float(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->prn)) { return false; }
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_acq_sv_profile_t(const sbp_acq_sv_profile_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u8(&msg->job_type);
   packed_size += sbp_packed_size_u8(&msg->status);
   packed_size += sbp_packed_size_u16(&msg->cn0);
@@ -182,52 +142,42 @@ static inline size_t sbp_packed_size_sbp_acq_sv_profile_t(const sbp_acq_sv_profi
   return packed_size;
 }
 
-static inline size_t sbp_pack_sbp_acq_sv_profile_t(u8 *buf, size_t len, const sbp_acq_sv_profile_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_acq_sv_profile_t(msg) > len) { return false; }
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->job_type);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->status);
-  offset += sbp_pack_u16(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->int_time);
-  offset += sbp_pack_sbp_sbp_gnss_signal_t(buf + offset, len - offset, &msg->sid);
-  offset += sbp_pack_u16(buf + offset, len - offset, &msg->bin_width);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->timestamp);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->time_spent);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf_min);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf_max);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->cp);
-  return offset;
+static inline bool sbp_pack_sbp_acq_sv_profile_t(sbp_pack_ctx_t *ctx, const sbp_acq_sv_profile_t *msg)
+{
+  if (!sbp_pack_u8(ctx, &msg->job_type)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->status)) { return false; }
+  if (!sbp_pack_u16(ctx, &msg->cn0)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->int_time)) { return false; }
+  if (!sbp_pack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
+  if (!sbp_pack_u16(ctx, &msg->bin_width)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->timestamp)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->time_spent)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf_min)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf_max)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->cp)) { return false; }
+  return true;
 }
 
-static inline size_t sbp_unpack_sbp_acq_sv_profile_t(const uint8_t *buf, size_t len, sbp_acq_sv_profile_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->job_type);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->status);
-  offset += sbp_unpack_u16(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->int_time);
-  offset += sbp_unpack_sbp_sbp_gnss_signal_t(buf + offset, len - offset, &msg->sid);
-  offset += sbp_unpack_u16(buf + offset, len - offset, &msg->bin_width);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->timestamp);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->time_spent);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf_min);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf_max);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->cp);
-  return offset;
+static inline bool sbp_unpack_sbp_acq_sv_profile_t(sbp_unpack_ctx_t *ctx, sbp_acq_sv_profile_t *msg)
+{
+  if (!sbp_unpack_u8(ctx, &msg->job_type)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->status)) { return false; }
+  if (!sbp_unpack_u16(ctx, &msg->cn0)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->int_time)) { return false; }
+  if (!sbp_unpack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
+  if (!sbp_unpack_u16(ctx, &msg->bin_width)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->timestamp)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->time_spent)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf_min)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf_max)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->cp)) { return false; }
+  return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += sbp_packed_size_u8(&msg->job_type);
   packed_size += sbp_packed_size_u8(&msg->status);
   packed_size += sbp_packed_size_u16(&msg->cn0);
@@ -243,118 +193,85 @@ static inline size_t sbp_packed_size_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_p
   return packed_size;
 }
 
-static inline size_t sbp_pack_sbp_acq_sv_profile_dep_t(u8 *buf, size_t len, const sbp_acq_sv_profile_dep_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_acq_sv_profile_dep_t(msg) > len) { return false; }
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->job_type);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->status);
-  offset += sbp_pack_u16(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_pack_u8(buf + offset, len - offset, &msg->int_time);
-  offset += sbp_pack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
-  offset += sbp_pack_u16(buf + offset, len - offset, &msg->bin_width);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->timestamp);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->time_spent);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf_min);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf_max);
-  offset += sbp_pack_s32(buf + offset, len - offset, &msg->cf);
-  offset += sbp_pack_u32(buf + offset, len - offset, &msg->cp);
-  return offset;
+static inline bool sbp_pack_sbp_acq_sv_profile_dep_t(sbp_pack_ctx_t *ctx, const sbp_acq_sv_profile_dep_t *msg)
+{
+  if (!sbp_pack_u8(ctx, &msg->job_type)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->status)) { return false; }
+  if (!sbp_pack_u16(ctx, &msg->cn0)) { return false; }
+  if (!sbp_pack_u8(ctx, &msg->int_time)) { return false; }
+  if (!sbp_pack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
+  if (!sbp_pack_u16(ctx, &msg->bin_width)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->timestamp)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->time_spent)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf_min)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf_max)) { return false; }
+  if (!sbp_pack_s32(ctx, &msg->cf)) { return false; }
+  if (!sbp_pack_u32(ctx, &msg->cp)) { return false; }
+  return true;
 }
 
-static inline size_t sbp_unpack_sbp_acq_sv_profile_dep_t(const uint8_t *buf, size_t len, sbp_acq_sv_profile_dep_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->job_type);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->status);
-  offset += sbp_unpack_u16(buf + offset, len - offset, &msg->cn0);
-  offset += sbp_unpack_u8(buf + offset, len - offset, &msg->int_time);
-  offset += sbp_unpack_sbp_gnss_signal_dep_t(buf + offset, len - offset, &msg->sid);
-  offset += sbp_unpack_u16(buf + offset, len - offset, &msg->bin_width);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->timestamp);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->time_spent);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf_min);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf_max);
-  offset += sbp_unpack_s32(buf + offset, len - offset, &msg->cf);
-  offset += sbp_unpack_u32(buf + offset, len - offset, &msg->cp);
-  return offset;
+static inline bool sbp_unpack_sbp_acq_sv_profile_dep_t(sbp_unpack_ctx_t *ctx, sbp_acq_sv_profile_dep_t *msg)
+{
+  if (!sbp_unpack_u8(ctx, &msg->job_type)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->status)) { return false; }
+  if (!sbp_unpack_u16(ctx, &msg->cn0)) { return false; }
+  if (!sbp_unpack_u8(ctx, &msg->int_time)) { return false; }
+  if (!sbp_unpack_sbp_gnss_signal_dep_t(ctx, &msg->sid)) { return false; }
+  if (!sbp_unpack_u16(ctx, &msg->bin_width)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->timestamp)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->time_spent)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf_min)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf_max)) { return false; }
+  if (!sbp_unpack_s32(ctx, &msg->cf)) { return false; }
+  if (!sbp_unpack_u32(ctx, &msg->cp)) { return false; }
+  return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += (msg->n_acq_sv_profile * sbp_packed_size_sbp_acq_sv_profile_t(&msg->acq_sv_profile[0]));
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const sbp_msg_acq_sv_profile_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_sv_profile_t(msg) > len) { return false; }
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) 
+static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_sv_profile_t *msg)
+{
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++)
   {
-    offset += sbp_pack_sbp_acq_sv_profile_t(buf + offset, len - offset, &msg->acq_sv_profile[i]);
+    if (!sbp_pack_sbp_acq_sv_profile_t(ctx, &msg->acq_sv_profile[i])) { return false; }
   }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const uint8_t *buf, size_t len, sbp_msg_acq_sv_profile_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  msg->n_acq_sv_profile = (uint8_t)((len - offset) / sbp_packed_size_sbp_acq_sv_profile_t(&msg->acq_sv_profile[0]));
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++)
-  {
-    offset += sbp_unpack_sbp_acq_sv_profile_t(buf + offset, len - offset, &msg->acq_sv_profile[i]);
+static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_sv_profile_t *msg)
+{
+    msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_sbp_acq_sv_profile_t(&msg->acq_sv_profile[0]));
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+    if (!sbp_unpack_sbp_acq_sv_profile_t(ctx, &msg->acq_sv_profile[i])) { return false; }
   }
-  return true;
   return true;
 }
                                                                                                               
 static inline size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *msg) {
   size_t packed_size = 0;
-  (void)msg;
   packed_size += (msg->n_acq_sv_profile * sbp_packed_size_sbp_acq_sv_profile_dep_t(&msg->acq_sv_profile[0]));
   return packed_size;
 }
 
-static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, const sbp_msg_acq_sv_profile_dep_t *msg) {
-  size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(msg) > len) { return false; }
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) 
+static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(sbp_pack_ctx_t *ctx, const sbp_msg_acq_sv_profile_dep_t *msg)
+{
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++)
   {
-    offset += sbp_pack_sbp_acq_sv_profile_dep_t(buf + offset, len - offset, &msg->acq_sv_profile[i]);
+    if (!sbp_pack_sbp_acq_sv_profile_dep_t(ctx, &msg->acq_sv_profile[i])) { return false; }
   }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const uint8_t *buf, size_t len, sbp_msg_acq_sv_profile_dep_t *msg) {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  msg->n_acq_sv_profile = (uint8_t)((len - offset) / sbp_packed_size_sbp_acq_sv_profile_dep_t(&msg->acq_sv_profile[0]));
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++)
-  {
-    offset += sbp_unpack_sbp_acq_sv_profile_dep_t(buf + offset, len - offset, &msg->acq_sv_profile[i]);
+static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(sbp_unpack_ctx_t *ctx, sbp_msg_acq_sv_profile_dep_t *msg)
+{
+    msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_sbp_acq_sv_profile_dep_t(&msg->acq_sv_profile[0]));
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+    if (!sbp_unpack_sbp_acq_sv_profile_dep_t(ctx, &msg->acq_sv_profile[i])) { return false; }
   }
-  return true;
   return true;
 }
 

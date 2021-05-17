@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/unpacked/common.h>
 ((*- for i in include *))
 #include <libsbp/unpacked/(((i)))>
 ((*- endfor *))
@@ -15,11 +16,11 @@ typedef union {
 ((*- endfor *))
 } sbp_msg_t;
 
-static inline bool sbp_pack_msg(uint8_t *buf, size_t len, uint16_t msg_type, const sbp_msg_t *msg) {
+static inline bool sbp_pack_msg(sbp_pack_ctx_t *ctx, uint16_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
     case SBP_(((m.ljust(max_msgid_len)))):
-      return sbp_pack_(((m|convert_unpacked)))(buf, len, &msg->(((m))));
+      return sbp_pack_(((m|convert_unpacked)))(ctx, &msg->(((m))));
 ((*- endfor *))
     default:
       break;
@@ -27,11 +28,11 @@ static inline bool sbp_pack_msg(uint8_t *buf, size_t len, uint16_t msg_type, con
   return false;
 }
 
-static inline bool sbp_unpack_msg(const uint8_t *buf, size_t len, uint16_t msg_type, sbp_msg_t *msg) {
+static inline bool sbp_unpack_msg(sbp_unpack_ctx_t *ctx, uint16_t msg_type, sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
     case SBP_(((m.ljust(max_msgid_len)))):
-      return sbp_unpack_(((m|convert_unpacked)))(buf, len, &msg->(((m))));
+      return sbp_unpack_(((m|convert_unpacked)))(ctx, &msg->(((m))));
 ((*- endfor *))
     default:
       break;
@@ -51,21 +52,17 @@ static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
   return 0;
 }
 
-#ifdef __cplusplus
-
-static inline bool sbp_msg_eq(uint16_t msg_type, const sbp_msg_t &a, const sbp_msg_t &b) {
+static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
   switch(msg_type) {
-((*- for m in msgs *))
+    ((*- for m in msgs *))
     case SBP_(((m.ljust(max_msgid_len)))):
-      return a.(((m))) == b.(((m)));
-((*- endfor *))
+      return sbp_cmp_(((m|convert_unpacked)))(&a->(((m))), &b->(((m))));
+    ((*- endfor *))
     default:
       break;
   }
   return false;
 }
-
-#endif
 
 #endif
 

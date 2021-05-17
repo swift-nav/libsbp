@@ -60,26 +60,26 @@ const char *sbp_null_terminated_string_get(const sbp_null_terminated_string_t *s
   return s->data;
 }
 
-uint8_t sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
+bool sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
                                         uint8_t max_packed_len,
-                                        uint8_t *buf,
-                                        uint8_t buf_len)
+                                        sbp_pack_ctx_t *ctx)
 {
   if (!sbp_null_terminated_string_valid(s, max_packed_len))
-    return 0;
-  if (buf_len < s->len + 1)
-    return 0;
-  memcpy(buf, s->data, (size_t)(s->len + 1u));
-  return (uint8_t)(s->len + 1);
+    return false;
+  if ((ctx->buf_len - ctx->offset) < (s->len + 1u))
+    return false;
+  memcpy(&ctx->buf[ctx->offset], s->data, (size_t)(s->len + 1u));
+  ctx->offset += s->len + 1U;
+  return true;
 }
 
-uint8_t sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
+bool sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
                                           uint8_t max_packed_len,
-                                          const uint8_t *buf,
-                                          uint8_t buf_len)
+                                          sbp_unpack_ctx_t *ctx)
 {
   (void)max_packed_len;
-  size_t copy_len = strnlen((const char *)buf, buf_len);
+  size_t buf_len = ctx->buf_len - ctx->offset; 
+  size_t copy_len = strnlen((const char *)&ctx->buf[ctx->offset], buf_len);
   copy_len++;
   if (copy_len > buf_len)
     copy_len = buf_len;
@@ -88,9 +88,10 @@ uint8_t sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
     sbp_null_terminated_string_init(s, max_packed_len);
     return 0;
   }
-  memcpy(s->data, buf, copy_len);
+  memcpy(s->data, &ctx->buf[ctx->offset], copy_len);
   s->len = (uint8_t)(copy_len - 1u);
-  return (uint8_t)copy_len;
+  ctx->offset += copy_len;
+  return true;
 }
 
 int sbp_null_terminated_string_strcmp(const sbp_null_terminated_string_t *a,
