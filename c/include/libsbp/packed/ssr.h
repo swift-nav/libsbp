@@ -303,56 +303,6 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
 } stec_residual_t;
 
 
-/** Correction data for a single grid point.
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
- */
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Index of the grid point 
-   */
-  u16 index;                    
-  
-  /** 
-   * Wet and hydrostatic vertical delays 
-   */
-  tropospheric_delay_correction_no_std_t tropo_delay_correction;   
-  
-  /** 
-   * STEC residuals for each satellite 
-   */
-  stec_residual_no_std_t stec_residuals[0];        
-  
-} grid_element_no_std_t;
-
-
-/** Correction data for a single grid point.
- *
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
- * stddev) for each satellite at the grid point.
- */
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Index of the grid point 
-   */
-  u16 index;                    
-  
-  /** 
-   * Wet and hydrostatic vertical delays (mean, stddev) 
-   */
-  tropospheric_delay_correction_t tropo_delay_correction;   
-  
-  /** 
-   * STEC residuals for each satellite (mean, stddev) 
-   */
-  stec_residual_t stec_residuals[0];        
-  
-} grid_element_t;
-
-
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is
@@ -581,12 +531,22 @@ typedef struct SBP_ATTR_PACKED {
   /** 
    * Header of a gridded correction message 
    */
-  gridded_correction_header_t header;    
+  gridded_correction_header_t header;                   
   
   /** 
-    * Tropo and STEC residuals for the given grid point. 
+   * Index of the grid point 
    */
-  grid_element_t element;   
+  u16 index;                    
+  
+  /** 
+   * Wet and hydrostatic vertical delays (mean, stddev) 
+   */
+  tropospheric_delay_correction_t tropo_delay_correction;   
+  
+  /** 
+   * STEC residuals for each satellite (mean, stddev) 
+   */
+  stec_residual_t stec_residuals[0];        
   
 } msg_ssr_gridded_correction_t;
 
@@ -995,12 +955,22 @@ typedef struct SBP_ATTR_PACKED {
   /** 
    * Header of a Gridded Correction message 
    */
-  gridded_correction_header_dep_a_t header;    
+  gridded_correction_header_dep_a_t header;                   
   
   /** 
-   * Tropo and STEC residuals for the given grid point 
+   * Index of the grid point 
    */
-  grid_element_no_std_t element;   
+  u16 index;                    
+  
+  /** 
+   * Wet and hydrostatic vertical delays 
+   */
+  tropospheric_delay_correction_no_std_t tropo_delay_correction;   
+  
+  /** 
+   * STEC residuals for each satellite 
+   */
+  stec_residual_no_std_t stec_residuals[0];        
   
 } msg_ssr_gridded_correction_no_std_dep_a_t;
 
@@ -1011,13 +981,22 @@ typedef struct SBP_ATTR_PACKED {
   /** 
    * Header of a Gridded Correction message 
    */
-  gridded_correction_header_dep_a_t header;    
+  gridded_correction_header_dep_a_t header;                   
   
   /** 
-    * Tropo and STEC residuals for the given grid point (mean
- * and standard deviation) 
+   * Index of the grid point 
    */
-  grid_element_t element;   
+  u16 index;                    
+  
+  /** 
+   * Wet and hydrostatic vertical delays (mean, stddev) 
+   */
+  tropospheric_delay_correction_t tropo_delay_correction;   
+  
+  /** 
+   * STEC residuals for each satellite (mean, stddev) 
+   */
+  stec_residual_t stec_residuals[0];        
   
 } msg_ssr_gridded_correction_dep_a_t;
 

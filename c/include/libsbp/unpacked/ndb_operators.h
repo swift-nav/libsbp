@@ -13,39 +13,60 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *a, const sbp_msg_ndb_event_t *b) {
+  int ret = 0;
   
-        
-    if (a.recv_time != b.recv_time) { return false; }
-        
-    if (a.event != b.event) { return false; }
-        
-    if (a.object_type != b.object_type) { return false; }
-        
-    if (a.result != b.result) { return false; }
-        
-    if (a.data_source != b.data_source) { return false; }
-        
-        
-    if (a.object_sid.sat != b.object_sid.sat) { return false; }
-        
-    if (a.object_sid.code != b.object_sid.code) { return false; }
-        
-        
-    if (a.src_sid.sat != b.src_sid.sat) { return false; }
-        
-    if (a.src_sid.code != b.src_sid.code) { return false; }
-        
-    if (a.original_sender != b.original_sender) { return false; }
+  ret = sbp_cmp_u64(&a->recv_time, &b->recv_time);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->event, &b->event);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->object_type, &b->object_type);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->result, &b->result);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->data_source, &b->data_source);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->object_sid, &b->object_sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->src_sid, &b->src_sid);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u16(&a->original_sender, &b->original_sender);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) >= 0;
 }
 #endif
 

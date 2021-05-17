@@ -10,45 +10,17 @@
 
 #include <libsbp/common.h>
 #include <libsbp/string.h>
-  /** Raw magnetometer data
-   *
- * Raw data from the magnetometer.
-   */
+/** Raw magnetometer data
+ *
+((m.desc|commentify)))
+ */
 #define SBP_MSG_MAG_RAW 0x0902
-
 typedef struct {
-  
-  /**
- * Milliseconds since start of GPS week. If the high bit is set, the
- * time is unknown or invalid.[ms]
-   */
-    u32
-  tow
-  ;
-  /**
- * Milliseconds since start of GPS week, fractional part[ms / 256]
-   */
-    u8
-  tow_f
-  ;
-  /**
-* Magnetic field in the body frame X axis[microteslas]
-   */
-    s16
-  mag_x
-  ;
-  /**
-* Magnetic field in the body frame Y axis[microteslas]
-   */
-    s16
-  mag_y
-  ;
-  /**
-* Magnetic field in the body frame Z axis[microteslas]
-   */
-    s16
-  mag_z
-  ;
+  u32 tow;
+  u8 tow_f;
+  s16 mag_x;
+  s16 mag_y;
+  s16 mag_z;
 } sbp_msg_mag_raw_t;
 
 

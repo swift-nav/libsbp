@@ -13,110 +13,207 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
-  (void)a;
-  (void)b;
+#include <libsbp/string.h>
+#include <libsbp/unpacked/base.h>
+static inline int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a, const sbp_msg_baseline_heading_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.heading != b.heading) { return false; }
-        
-    if (a.n_sats != b.n_sats) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u32(&a->heading, &b->heading);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->n_sats, &b->n_sats);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return sbp_cmp_sbp_msg_baseline_heading_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a, const sbp_msg_orient_quat_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.w != b.w) { return false; }
-        
-    if (a.x != b.x) { return false; }
-        
-    if (a.y != b.y) { return false; }
-        
-    if (a.z != b.z) { return false; }
-        
-    if (fabs( a.w_accuracy - b.w_accuracy ) > 0.001) { return false; }
-        
-    if (fabs( a.x_accuracy - b.x_accuracy ) > 0.001) { return false; }
-        
-    if (fabs( a.y_accuracy - b.y_accuracy ) > 0.001) { return false; }
-        
-    if (fabs( a.z_accuracy - b.z_accuracy ) > 0.001) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->w, &b->w);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->x, &b->x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->y, &b->y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->z, &b->z);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->w_accuracy, &b->w_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->x_accuracy, &b->x_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->y_accuracy, &b->y_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->z_accuracy, &b->z_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return sbp_cmp_sbp_msg_orient_quat_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a, const sbp_msg_orient_euler_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.roll != b.roll) { return false; }
-        
-    if (a.pitch != b.pitch) { return false; }
-        
-    if (a.yaw != b.yaw) { return false; }
-        
-    if (fabs( a.roll_accuracy - b.roll_accuracy ) > 0.001) { return false; }
-        
-    if (fabs( a.pitch_accuracy - b.pitch_accuracy ) > 0.001) { return false; }
-        
-    if (fabs( a.yaw_accuracy - b.yaw_accuracy ) > 0.001) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->roll, &b->roll);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->pitch, &b->pitch);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->yaw, &b->yaw);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->roll_accuracy, &b->roll_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->pitch_accuracy, &b->pitch_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_float(&a->yaw_accuracy, &b->yaw_accuracy);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return sbp_cmp_sbp_msg_orient_euler_t(&a, &b) >= 0;
 }
 #endif
-#ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
-  (void)a;
-  (void)b;
+static inline int sbp_cmp_sbp_msg_angular_rate_t(const sbp_msg_angular_rate_t *a, const sbp_msg_angular_rate_t *b) {
+  int ret = 0;
   
-        
-    if (a.tow != b.tow) { return false; }
-        
-    if (a.x != b.x) { return false; }
-        
-    if (a.y != b.y) { return false; }
-        
-    if (a.z != b.z) { return false; }
-        
-    if (a.flags != b.flags) { return false; }
+  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->x, &b->x);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->y, &b->y);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_s32(&a->z, &b->z);
+  if (ret != 0) { return ret; }
+  
+  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  if (ret != 0) { return ret; }
+  return ret;
+}
 
-  return true;
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
-  return !(a == b);
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return sbp_cmp_sbp_msg_angular_rate_t(&a, &b) >= 0;
 }
 #endif
 
