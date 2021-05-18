@@ -1,7 +1,5 @@
-use std::borrow::Borrow;
-
 use bytes::{Buf, BufMut, BytesMut};
-use dencode::{Decoder, Encoder, FramedRead, FramedWrite};
+use dencode::{Decoder, Encoder, FramedRead};
 
 use crate::{
     messages::{SBPMessage, SBP},
@@ -73,21 +71,15 @@ impl SbpEncoder {
             frame: Vec::with_capacity(MAX_FRAME_LENGTH),
         }
     }
-
-    pub fn framed<W>(writer: W) -> FramedWrite<W, Self> {
-        FramedWrite::new(writer, Self::new())
-    }
 }
 
-impl<T> Encoder<T> for SbpEncoder
-where
-    T: Borrow<SBP>,
-{
+impl Encoder for SbpEncoder {
+    type Item = SBP;
     type Error = Error;
 
-    fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<()> {
+    fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
         self.frame.clear();
-        match msg.borrow().write_frame(&mut self.frame) {
+        match msg.write_frame(&mut self.frame) {
             Ok(_) => dst.put_slice(self.frame.as_slice()),
             Err(err) => log::error!("Error converting sbp message to frame: {}", err),
         }
