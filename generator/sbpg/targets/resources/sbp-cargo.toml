@@ -56,8 +56,7 @@ version = "0.3"
 optional = true
 
 [dependencies.dencode]
-git = "https://github.com/swift-nav/dencode"
-branch = "steve/generic"
+version = "0.3.0"
 default-features = false
 
 [dev-dependencies]

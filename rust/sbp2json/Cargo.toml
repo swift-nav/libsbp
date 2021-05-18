@@ -21,8 +21,7 @@ serde_json = "1.0"
 structopt = "0.3"
 
 [dependencies.dencode]
-git = "https://github.com/swift-nav/dencode"
-branch = "steve/generic"
+version = "0.3.0"
 default-features = false
 
 [target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
