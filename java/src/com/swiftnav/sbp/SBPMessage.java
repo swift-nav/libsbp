@@ -119,12 +119,8 @@ public class SBPMessage {
         public BigInteger getU64() {
             byte[] tmp = new byte[8];
             buf.get(tmp, 0, 8);
+            tmp = new byte[] { tmp[7], tmp[6], tmp[5], tmp[4], tmp[3], tmp[2], tmp[1], tmp[0] };
             return new BigInteger(1, tmp);
-        }
-        public BigInteger getS64() {
-            byte[] tmp = new byte[8];
-            buf.get(tmp, 0, 8);
-            return new BigInteger(tmp);
         }
         public float getFloat() {
             return buf.getFloat();
