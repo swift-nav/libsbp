@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgInsStatus0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,3,255,21,3,4,9,0,0,32,36,103, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,3,255,21,3,4,9,0,0,32,36,103, };
+
     sbp_msg_ins_status_t test_msg{};
     test_msg.flags = 536870921;
                                                                               

@@ -7,11 +7,10 @@ tests:
 - msg:
     fields:
       flags: 0
-    packed_fields:
       version: 'v1.2
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       version:
         data: 'v1.2
 
@@ -31,9 +30,9 @@ tests:
     preamble: '0x55'
     sender: '0x0'
 - msg:
-    packed_fields:
+    fields:
       handshake: [118, 49, 46, 50] # 'v1.2'
-    unpacked_fields:
+    c_unpacked_fields:
       handshake:
         data: [118, 49, 46, 50] # 'v1.2'
         len: 4

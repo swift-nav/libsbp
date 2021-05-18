@@ -10,6 +10,7 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
+#include <libsbp/internal/unpacked/string/binary.h>
                                                                                                               
 size_t sbp_packed_size_sbp_msg_odometry_t(const sbp_msg_odometry_t *msg) {
   size_t packed_size = 0;

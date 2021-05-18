@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexDone0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,166,0,246,215,0,163,58, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,166,0,246,215,0,163,58, };
+
     sbp_msg_settings_read_by_index_done_t test_msg{};
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);

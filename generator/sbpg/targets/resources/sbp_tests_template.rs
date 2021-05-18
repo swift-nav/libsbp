@@ -56,6 +56,7 @@ fn test_(((s.suite_name)))()
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);
                 ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+                ((*- for f in t.packed_fieldskeys *))(((compare_value( (((f))), (((t.packed_fields[f]))) ))))((*- endfor *))
             },
             _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
         };

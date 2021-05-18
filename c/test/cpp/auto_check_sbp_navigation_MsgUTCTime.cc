@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgUTCTime0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,3,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,199,253, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,3,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,199,253, };
+
     sbp_msg_utc_time_t test_msg{};
     test_msg.day = 9;
     test_msg.flags = 1;

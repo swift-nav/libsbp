@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelEcefGnss0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,45,2,0,16,20,224,229,233,29,253,255,255,255,1,0,0,0,4,0,0,0,89,0,21,2,205,16, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,45,2,0,16,20,224,229,233,29,253,255,255,255,1,0,0,0,4,0,0,0,89,0,21,2,205,16, };
+
     sbp_msg_vel_ecef_gnss_t test_msg{};
     test_msg.accuracy = 89;
     test_msg.flags = 2;

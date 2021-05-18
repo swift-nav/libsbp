@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,246,215,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,156,9,0,0,73,138, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,246,215,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,156,9,0,0,73,138, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 0;
     {
@@ -173,7 +174,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,246,215,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,83,2,36,0,0,0,151,20, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,246,215,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,83,2,36,0,0,0,151,20, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 595;
     {
@@ -265,7 +267,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,246,215,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,14,0,116,4,0,0,226,60, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,246,215,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,14,0,116,4,0,0,226,60, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 14;
     {
@@ -357,7 +360,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,246,215,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,196,19,0,0,90,169, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,246,215,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,196,19,0,0,90,169, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 1;
     {
@@ -449,7 +453,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,246,215,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,7,0,20,9,0,0,47,75, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,246,215,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,7,0,20,9,0,0,47,75, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 7;
     {
@@ -541,7 +546,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState5, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,148,9,0,0,195,212, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,148,9,0,0,195,212, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 0;
     {
@@ -633,7 +639,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState6, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,1,36,0,0,0,225,18, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,1,36,0,0,0,225,18, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 484;
     {
@@ -725,7 +732,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState7, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,138,1,92,7,0,0,166,116, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,138,1,92,7,0,0,166,116, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 394;
     {
@@ -817,7 +825,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState8, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,4,12,0,0,229,174, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,4,12,0,0,229,174, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 1;
     {
@@ -909,7 +918,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState9, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,10,0,124,9,0,0,52,2, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,10,0,124,9,0,0,52,2, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 10;
     {
@@ -1001,7 +1011,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgThreadState10, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,116,114,97,99,107,0,0,0,0,0,0,0,0,0,0,28,9,0,0,122,54, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,116,114,97,99,107,0,0,0,0,0,0,0,0,0,0,28,9,0,0,122,54, };
+
     sbp_msg_thread_state_t test_msg{};
     test_msg.cpu = 0;
     {

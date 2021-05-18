@@ -157,7 +157,7 @@ tests:
           iono_std: 21
           tropo_std: 5
           range_std: 5
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 12
     module: sbp.observation
     name: MsgOsr

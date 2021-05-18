@@ -13,6 +13,7 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+#include <libsbp/unpacked/string/binary.h>
 
 #ifdef __cplusplus
   extern "C" {
@@ -70,9 +71,13 @@ int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b);
 typedef struct {
   u8 source;
   u8 protocol;
-  char fwd_payload[253];
-  u8 n_fwd_payload;
+  sbp_binary_string_t fwd_payload;
 } sbp_msg_fwd_t;
+#define sbp_msg_fwd_t_fwd_payload_init(f) sbp_binary_string_init(f, 253)
+#define sbp_msg_fwd_t_fwd_payload_valid(f) sbp_binary_string_valid(f, 253)
+#define sbp_msg_fwd_t_fwd_payload_set(f,s,n) sbp_binary_string_set(f, s, n, 253)
+#define sbp_msg_fwd_t_fwd_payload_get(f,n) sbp_binary_string_get(f,n,253)
+#define sbp_msg_fwd_t_fwd_payload_strcmp(a,v) sbp_binary_string_strcmp(a,b,253)
 
 size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg);
 s8 sbp_pack_sbp_msg_fwd_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fwd_t *msg);

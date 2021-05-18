@@ -5,11 +5,11 @@ package: sbp.logging
 tests:
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
 
@@ -30,11 +30,11 @@ tests:
     sender: '0x2222'
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
 
@@ -55,11 +55,11 @@ tests:
     sender: '0x2222'
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: Disabling channel 0 (PRN 11)
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: Disabling channel 0 (PRN 11)
 
@@ -80,11 +80,11 @@ tests:
     sender: '0x2222'
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
 
@@ -105,11 +105,11 @@ tests:
     sender: '0x2222'
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
 
@@ -130,11 +130,11 @@ tests:
     sender: '0x2222'
 
 - msg:
-    packed_fields:
+    fields:
       text: 'INFO: Disabling channel 1 (PRN 15)
 
         '
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: 'INFO: Disabling channel 1 (PRN 15)
 

@@ -1063,6 +1063,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObs )
     test_unpacked_msg.MSG_OBS.header.t.tow = 434293400;
     
     test_unpacked_msg.MSG_OBS.header.t.wn = 2154;
+    test_unpacked_msg.MSG_OBS.n_obs = 14;
     
     
     
@@ -1399,7 +1400,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObs )
     test_unpacked_msg.MSG_OBS.obs[13].sid.code = 3;
     
     test_unpacked_msg.MSG_OBS.obs[13].sid.sat = 18;
-    test_unpacked_msg.MSG_OBS.n_obs = 14;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS, 61569, &test_unpacked_msg, &dummy_write);
 
@@ -1432,6 +1432,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObs )
     ck_assert_msg(check_unpacked_msg->MSG_OBS.header.t.tow == 434293400, "incorrect value for check_unpacked_msg->MSG_OBS.header.t.tow, expected 434293400, is %d", check_unpacked_msg->MSG_OBS.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS.header.t.wn == 2154, "incorrect value for check_unpacked_msg->MSG_OBS.header.t.wn, expected 2154, is %d", check_unpacked_msg->MSG_OBS.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS.n_obs == 14, "incorrect value for check_unpacked_msg->MSG_OBS.n_obs, expected 14, is %d", check_unpacked_msg->MSG_OBS.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS.obs[0].D.f == 172, "incorrect value for check_unpacked_msg->MSG_OBS.obs[0].D.f, expected 172, is %d", check_unpacked_msg->MSG_OBS.obs[0].D.f);
@@ -1754,7 +1755,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObs )
     ck_assert_msg(check_unpacked_msg->MSG_OBS.obs[13].sid.code == 3, "incorrect value for check_unpacked_msg->MSG_OBS.obs[13].sid.code, expected 3, is %d", check_unpacked_msg->MSG_OBS.obs[13].sid.code);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS.obs[13].sid.sat == 18, "incorrect value for check_unpacked_msg->MSG_OBS.obs[13].sid.sat, expected 18, is %d", check_unpacked_msg->MSG_OBS.obs[13].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS.n_obs == 14, "incorrect value for check_unpacked_msg->MSG_OBS.n_obs, expected 14, is %d", check_unpacked_msg->MSG_OBS.n_obs);
   }
   // Test successful parsing of a message
   {

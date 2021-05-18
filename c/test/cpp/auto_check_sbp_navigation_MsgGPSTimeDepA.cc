@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,120,46,39,0,0,0,0,0,0,133,36, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,120,46,39,0,0,0,0,0,0,133,36, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 0;
@@ -169,7 +170,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,220,46,39,0,0,0,0,0,0,36,160, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,220,46,39,0,0,0,0,0,0,36,160, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 0;
@@ -257,7 +259,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,64,47,39,0,0,0,0,0,0,171,190, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,64,47,39,0,0,0,0,0,0,171,190, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 0;
@@ -345,7 +348,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,164,47,39,0,0,0,0,0,0,211,101, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,164,47,39,0,0,0,0,0,0,211,101, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 0;
@@ -433,7 +437,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,8,48,39,0,0,0,0,0,0,251,44, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,246,215,11,251,6,8,48,39,0,0,0,0,0,0,251,44, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 0;
@@ -521,7 +526,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA5, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,212,157,67,24,111,147,252,255,0,215,190, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,212,157,67,24,111,147,252,255,0,215,190, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = -224401;
@@ -609,7 +615,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA6, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,56,158,67,24,109,103,3,0,0,134,89, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,56,158,67,24,109,103,3,0,0,134,89, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 223085;
@@ -697,7 +704,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA7, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,156,158,67,24,233,152,252,255,0,206,241, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,156,158,67,24,233,152,252,255,0,206,241, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = -222999;
@@ -785,7 +793,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA8, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,0,159,67,24,240,154,3,0,0,147,98, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,0,159,67,24,240,154,3,0,0,147,98, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 236272;
@@ -873,7 +882,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA9, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,100,159,67,24,144,101,252,255,0,186,152, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,100,159,67,24,144,101,252,255,0,186,152, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = -236144;
@@ -961,7 +971,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA10, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,46,162,68,24,205,230,250,255,0,11,225, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,1,195,4,11,46,7,46,162,68,24,205,230,250,255,0,11,225, };
+
     sbp_msg_gps_time_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = -334131;

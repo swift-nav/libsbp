@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_observation_MsgBasePosEcef0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,72,0,0,0,24,228,131,158,245,87,205,68,193,66,62,232,209,32,118,80,193,213,231,106,251,63,20,77,65,194,125, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,72,0,0,0,24,228,131,158,245,87,205,68,193,66,62,232,209,32,118,80,193,213,231,106,251,63,20,77,65,194,125, };
+
     sbp_msg_base_pos_ecef_t test_msg{};
     test_msg.x = -2726575.9189;
     test_msg.y = -4315267.2798;

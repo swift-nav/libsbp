@@ -847,6 +847,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     test_unpacked_msg.MSG_OSR.header.t.tow = 501867000;
     
     test_unpacked_msg.MSG_OSR.header.t.wn = 2152;
+    test_unpacked_msg.MSG_OSR.n_obs = 12;
     
     
     
@@ -1123,7 +1124,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     test_unpacked_msg.MSG_OSR.obs[11].sid.sat = 15;
     
     test_unpacked_msg.MSG_OSR.obs[11].tropo_std = 5;
-    test_unpacked_msg.MSG_OSR.n_obs = 12;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OSR, 0, &test_unpacked_msg, &dummy_write);
 
@@ -1156,6 +1156,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     ck_assert_msg(check_unpacked_msg->MSG_OSR.header.t.tow == 501867000, "incorrect value for check_unpacked_msg->MSG_OSR.header.t.tow, expected 501867000, is %d", check_unpacked_msg->MSG_OSR.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OSR.header.t.wn == 2152, "incorrect value for check_unpacked_msg->MSG_OSR.header.t.wn, expected 2152, is %d", check_unpacked_msg->MSG_OSR.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OSR.n_obs == 12, "incorrect value for check_unpacked_msg->MSG_OSR.n_obs, expected 12, is %d", check_unpacked_msg->MSG_OSR.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].L.f == 66, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].L.f, expected 66, is %d", check_unpacked_msg->MSG_OSR.obs[0].L.f);
@@ -1420,7 +1421,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].sid.sat, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[11].sid.sat);
     
     ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].tropo_std == 5, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].tropo_std, expected 5, is %d", check_unpacked_msg->MSG_OSR.obs[11].tropo_std);
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.n_obs == 12, "incorrect value for check_unpacked_msg->MSG_OSR.n_obs, expected 12, is %d", check_unpacked_msg->MSG_OSR.n_obs);
   }
 }
 END_TEST

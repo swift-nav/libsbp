@@ -88,18 +88,24 @@ class TestSpecification(object):
     return sorted(self.msg.get('fields', None) or [])
 
   @property
-  def packed_fields(self):
-    return self.msg.get('packed_fields', None) or []
+  def c_unpacked_fields(self):
+    fields = self.msg.get('fields', None) or {}
+    if 'c_unpacked_fields' in self.msg:
+      fields.update(self.msg['c_unpacked_fields'])
+    return fields
 
   @property
-  def packed_fieldskeys(self):
-    return sorted(self.msg.get('packed_fields', None) or [])
+  def c_unpacked_fieldskeys(self):
+    fields = self.msg.get('fields', None) or {}
+    print("here")
+    print(fields)
+    if 'c_unpacked_fields' in self.msg:
+      print("here2")
+      print(self.msg['name'])
+      print(self.msg['c_unpacked_fields'])
+      print("here3")
+      fields.update(self.msg['c_unpacked_fields'])
+      print("here4")
+    return sorted(fields)
 
-  @property
-  def unpacked_fields(self):
-    return self.msg.get('unpacked_fields', None) or []
-
-  @property
-  def unpacked_fieldskeys(self):
-    return sorted(self.msg.get('unpacked_fields', None) or [])
 

@@ -7,9 +7,8 @@ tests:
 - msg:
     fields:
       level: 6
-    packed_fields:
       text: "Filtered all obs from 2314 at tow 83.539019"
-    unpacked_fields:
+    c_unpacked_fields:
       text: 
         data: "Filtered all obs from 2314 at tow 83.539019"
         len: 43

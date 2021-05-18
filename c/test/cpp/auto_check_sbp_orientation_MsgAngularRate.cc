@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_orientation_MsgAngularRate0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,34,2,66,0,17,2,0,0,0,2,0,0,0,5,0,0,0,2,0,0,0,0,88,70, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,34,2,66,0,17,2,0,0,0,2,0,0,0,5,0,0,0,2,0,0,0,0,88,70, };
+
     sbp_msg_angular_rate_t test_msg{};
     test_msg.flags = 0;
     test_msg.tow = 2;

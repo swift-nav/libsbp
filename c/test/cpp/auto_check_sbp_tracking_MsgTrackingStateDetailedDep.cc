@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,17,0,59,103,55,163,151,112,215,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,5,0,0,169,177,208,54,15,0,0,0,85,61,0,0,39,0,1,0,0,0,0,0,0,0,40,0,108,1,0,11,0,0,9,166,214, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,17,0,59,103,55,163,151,112,215,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,5,0,0,169,177,208,54,15,0,0,0,85,61,0,0,39,0,1,0,0,0,0,0,0,0,40,0,108,1,0,11,0,0,9,166,214, };
+
     sbp_msg_tracking_state_detailed_dep_t test_msg{};
     test_msg.L.f = 169;
     test_msg.L.i = 1319;
@@ -211,7 +212,8 @@ protected:
 TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,17,0,59,103,55,97,251,61,245,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,7,0,0,14,175,208,54,15,0,0,0,51,61,0,0,30,0,1,0,0,0,0,0,0,0,40,0,224,1,0,11,0,0,9,136,179, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,17,0,59,103,55,97,251,61,245,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,7,0,0,14,175,208,54,15,0,0,0,51,61,0,0,30,0,1,0,0,0,0,0,0,0,40,0,224,1,0,11,0,0,9,136,179, };
+
     sbp_msg_tracking_state_detailed_dep_t test_msg{};
     test_msg.L.f = 14;
     test_msg.L.i = 1810;
@@ -341,7 +343,8 @@ protected:
 TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,17,0,59,103,55,139,218,236,18,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,8,0,0,8,179,208,54,15,0,0,0,67,61,0,0,22,0,2,0,0,0,0,0,0,0,40,0,27,1,0,11,0,2,9,217,159, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,17,0,59,103,55,139,218,236,18,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,8,0,0,8,179,208,54,15,0,0,0,67,61,0,0,22,0,2,0,0,0,0,0,0,0,40,0,27,1,0,11,0,2,9,217,159, };
+
     sbp_msg_tracking_state_detailed_dep_t test_msg{};
     test_msg.L.f = 8;
     test_msg.L.i = 2298;
@@ -471,7 +474,8 @@ protected:
 TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,17,0,59,103,55,255,251,170,48,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,226,10,0,0,125,181,208,54,15,0,0,0,29,61,0,0,10,0,2,0,0,0,0,0,0,0,40,0,220,1,0,11,0,3,9,66,95, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,17,0,59,103,55,255,251,170,48,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,226,10,0,0,125,181,208,54,15,0,0,0,29,61,0,0,10,0,2,0,0,0,0,0,0,0,40,0,220,1,0,11,0,3,9,66,95, };
+
     sbp_msg_tracking_state_detailed_dep_t test_msg{};
     test_msg.L.f = 125;
     test_msg.L.i = 2786;
@@ -601,7 +605,8 @@ protected:
 TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,17,0,59,103,55,189,95,120,78,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,203,12,0,0,64,184,208,54,15,0,0,0,24,61,0,0,4,0,3,0,0,0,0,0,0,0,40,0,2,1,0,11,0,3,9,194,206, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,17,0,59,103,55,189,95,120,78,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,203,12,0,0,64,184,208,54,15,0,0,0,24,61,0,0,4,0,3,0,0,0,0,0,0,0,40,0,2,1,0,11,0,3,9,194,206, };
+
     sbp_msg_tracking_state_detailed_dep_t test_msg{};
     test_msg.L.f = 64;
     test_msg.L.i = 3275;

@@ -82,6 +82,7 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test)
 {
 
     uint8_t encoded_frame[] = {85,180,0,0,0,9,0,0,0,0,118,49,46,50,10,201,1, };
+
     sbp_msg_bootloader_handshake_resp_t test_msg{};
     test_msg.flags = 0;
     {
@@ -174,6 +175,7 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test)
 {
 
     uint8_t encoded_frame[] = {85,176,0,195,4,4,118,49,46,50,1,206, };
+
     sbp_msg_bootloader_handshake_dep_a_t test_msg{};
     test_msg.handshake.data[0] = 118;
     test_msg.handshake.data[1] = 49;

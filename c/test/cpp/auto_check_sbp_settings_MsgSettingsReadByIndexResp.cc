@@ -82,6 +82,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test)
 {
 
     uint8_t encoded_frame[] = {85,167,0,246,215,78,0,0,116,101,108,101,109,101,116,114,121,95,114,97,100,105,111,0,99,111,110,102,105,103,117,114,97,116,105,111,110,95,115,116,114,105,110,103,0,65,84,38,70,44,65,84,83,49,61,49,49,53,44,65,84,83,50,61,49,50,56,44,65,84,83,53,61,48,44,65,84,38,87,44,65,84,90,0,248,233, };
+
     sbp_msg_settings_read_by_index_resp_t test_msg{};
     test_msg.index = 0;
     {
@@ -188,6 +189,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test)
 {
 
     uint8_t encoded_frame[] = {85,167,0,246,215,35,1,0,117,97,114,116,95,102,116,100,105,0,109,111,100,101,0,83,66,80,0,101,110,117,109,58,83,66,80,44,78,77,69,65,0,167,243, };
+
     sbp_msg_settings_read_by_index_resp_t test_msg{};
     test_msg.index = 1;
     {
@@ -298,6 +300,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test)
 {
 
     uint8_t encoded_frame[] = {85,167,0,246,215,35,2,0,117,97,114,116,95,102,116,100,105,0,115,98,112,95,109,101,115,115,97,103,101,95,109,97,115,107,0,54,53,53,51,53,0,4,56, };
+
     sbp_msg_settings_read_by_index_resp_t test_msg{};
     test_msg.index = 2;
     {
@@ -404,6 +407,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test)
 {
 
     uint8_t encoded_frame[] = {85,167,0,246,215,29,3,0,117,97,114,116,95,102,116,100,105,0,98,97,117,100,114,97,116,101,0,49,48,48,48,48,48,48,0,242,146, };
+
     sbp_msg_settings_read_by_index_resp_t test_msg{};
     test_msg.index = 3;
     {
@@ -510,6 +514,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test)
 {
 
     uint8_t encoded_frame[] = {85,167,0,246,215,36,4,0,117,97,114,116,95,117,97,114,116,97,0,109,111,100,101,0,83,66,80,0,101,110,117,109,58,83,66,80,44,78,77,69,65,0,22,4, };
+
     sbp_msg_settings_read_by_index_resp_t test_msg{};
     test_msg.index = 4;
     {

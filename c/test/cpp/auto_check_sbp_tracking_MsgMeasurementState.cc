@@ -82,7 +82,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgMeasurementState0, Test)
 {
 
     uint8_t encoded_frame[] = {85,97,0,207,121,237,29,0,162,0,0,0,0,0,0,27,0,201,20,0,168,32,0,184,15,0,187,0,0,0,18,0,210,16,0,167,0,0,0,23,0,213,10,0,223,0,0,0,0,0,0,0,0,0,0,0,0,131,2,202,27,1,192,15,1,165,29,1,146,32,1,170,18,1,201,0,0,0,0,0,0,0,0,0,23,1,212,10,1,205,0,0,0,96,3,230,0,0,0,101,3,214,103,3,212,104,3,209,106,3,157,102,3,230,0,0,0,0,0,0,101,4,189,96,4,207,106,4,164,104,4,193,0,0,0,102,4,208,0,0,0,27,12,212,29,12,161,32,12,216,30,12,216,20,12,178,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,14,203,0,0,0,5,14,158,4,14,194,11,14,192,9,14,207,0,0,0,0,0,0,0,0,0,9,20,218,5,20,176,36,20,217,11,20,200,4,20,205,0,0,0,0,0,0,35,54, };
+
     sbp_msg_measurement_state_t test_msg{};
+    test_msg.n_states = 79;
     test_msg.states[0].cn0 = 162;
     test_msg.states[0].mesid.code = 0;
     test_msg.states[0].mesid.sat = 29;
@@ -320,7 +322,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgMeasurementState0, Test)
     test_msg.states[78].cn0 = 0;
     test_msg.states[78].mesid.code = 0;
     test_msg.states[78].mesid.sat = 0;
-    test_msg.n_states = 79;
                                                                               
     EXPECT_EQ(send_message( 31183, test_msg), SBP_OK);
                                                                               
@@ -334,6 +335,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgMeasurementState0, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 31183);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 79) << "incorrect value for n_states, expected 79, is " << last_msg_.n_states;
     EXPECT_EQ(last_msg_.states[0].cn0, 162) << "incorrect value for states[0].cn0, expected 162, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].mesid.code, 0) << "incorrect value for states[0].mesid.code, expected 0, is " << last_msg_.states[0].mesid.code;
     EXPECT_EQ(last_msg_.states[0].mesid.sat, 29) << "incorrect value for states[0].mesid.sat, expected 29, is " << last_msg_.states[0].mesid.sat;
@@ -571,5 +573,4 @@ TEST_F(Test_auto_check_sbp_tracking_MsgMeasurementState0, Test)
     EXPECT_EQ(last_msg_.states[78].cn0, 0) << "incorrect value for states[78].cn0, expected 0, is " << last_msg_.states[78].cn0;
     EXPECT_EQ(last_msg_.states[78].mesid.code, 0) << "incorrect value for states[78].mesid.code, expected 0, is " << last_msg_.states[78].mesid.code;
     EXPECT_EQ(last_msg_.states[78].mesid.sat, 0) << "incorrect value for states[78].mesid.sat, expected 0, is " << last_msg_.states[78].mesid.sat;
-    EXPECT_EQ(last_msg_.n_states, 79) << "incorrect value for n_states, expected 79, is " << last_msg_.n_states;
 }

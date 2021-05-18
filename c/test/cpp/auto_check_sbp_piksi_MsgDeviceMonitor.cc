@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,21,24,168,18,207,233, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,21,24,168,18,207,233, };
+
     sbp_msg_device_monitor_t test_msg{};
     test_msg.cpu_temperature = 6165;
     test_msg.cpu_vaux = 1789;
@@ -171,7 +172,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,254,6,24,24,168,18,169,30, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,254,6,24,24,168,18,169,30, };
+
     sbp_msg_device_monitor_t test_msg{};
     test_msg.cpu_temperature = 6168;
     test_msg.cpu_vaux = 1790;
@@ -261,7 +263,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,22,24,168,18,19,114, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,219,3,253,6,22,24,168,18,19,114, };
+
     sbp_msg_device_monitor_t test_msg{};
     test_msg.cpu_temperature = 6166;
     test_msg.cpu_vaux = 1789;
@@ -351,7 +354,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,218,3,252,6,6,24,168,18,199,107, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,218,3,252,6,6,24,168,18,199,107, };
+
     sbp_msg_device_monitor_t test_msg{};
     test_msg.cpu_temperature = 6150;
     test_msg.cpu_vaux = 1788;
@@ -441,7 +445,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,220,3,253,6,235,23,168,18,241,63, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,181,0,95,66,10,241,216,220,3,253,6,235,23,168,18,241,63, };
+
     sbp_msg_device_monitor_t test_msg{};
     test_msg.cpu_temperature = 6123;
     test_msg.cpu_vaux = 1789;

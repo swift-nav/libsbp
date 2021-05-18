@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,246,215,4,1,0,0,0,216,140, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,246,215,4,1,0,0,0,216,140, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 1;
                                                                               
@@ -163,7 +164,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,0,0,0,0,18,176, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,0,0,0,0,18,176, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 0;
                                                                               
@@ -245,7 +247,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,1,0,0,0,166,198, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,1,0,0,0,166,198, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 1;
                                                                               
@@ -327,7 +330,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,217,2,0,0,6,133, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,217,2,0,0,6,133, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 729;
                                                                               
@@ -409,7 +413,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,216,2,0,0,178,243, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,216,2,0,0,178,243, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 728;
                                                                               
@@ -491,7 +496,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState5, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,215,2,0,0,92,39, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,215,2,0,0,92,39, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 727;
                                                                               
@@ -573,7 +579,8 @@ protected:
 TEST_F(Test_auto_check_sbp_piksi_MsgIarState6, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,25,0,195,4,4,211,2,0,0,173,237, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,25,0,195,4,4,211,2,0,0,173,237, };
+
     sbp_msg_iar_state_t test_msg{};
     test_msg.num_hyps = 723;
                                                                               

@@ -1581,6 +1581,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.tow = 2567800;
     
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.wn = 1787;
+    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
     
     
     
@@ -1695,7 +1696,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.reserved = 0;
     
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.sat = 218;
-    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1726,6 +1726,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow, expected 2567800, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn == 1787, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn, expected 1787, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f == 27, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f, expected 27, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f);
@@ -1834,7 +1835,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat == 218, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat, expected 218, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
   }
   // Test successful parsing of a message
   {
@@ -1862,6 +1862,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.tow = 2567800;
     
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.wn = 1787;
+    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 3;
     
     
     
@@ -1919,7 +1920,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.obs[2].sid.reserved = 0;
     
     test_unpacked_msg.MSG_OBS_DEP_B.obs[2].sid.sat = 225;
-    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 3;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1950,6 +1950,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow, expected 2567800, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn == 1787, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn, expected 1787, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 3, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 3, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f == 219, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f, expected 219, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f);
@@ -2004,7 +2005,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat == 225, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat, expected 225, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 3, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 3, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
   }
   // Test successful parsing of a message
   {
@@ -2032,6 +2032,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.tow = 2568000;
     
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.wn = 1787;
+    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
     
     
     
@@ -2146,7 +2147,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.reserved = 0;
     
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.sat = 218;
-    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -2177,6 +2177,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow == 2568000, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow, expected 2568000, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn == 1787, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn, expected 1787, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f == 94, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f, expected 94, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f);
@@ -2285,7 +2286,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat == 218, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat, expected 218, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
   }
   // Test successful parsing of a message
   {
@@ -2313,6 +2313,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.tow = 2568000;
     
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.wn = 1787;
+    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 3;
     
     
     
@@ -2370,7 +2371,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.obs[2].sid.reserved = 0;
     
     test_unpacked_msg.MSG_OBS_DEP_B.obs[2].sid.sat = 225;
-    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 3;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -2401,6 +2401,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow == 2568000, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow, expected 2568000, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn == 1787, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn, expected 1787, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 3, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 3, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f == 20, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f, expected 20, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f);
@@ -2455,7 +2456,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.reserved);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat == 225, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat, expected 225, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[2].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 3, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 3, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
   }
   // Test successful parsing of a message
   {
@@ -2483,6 +2483,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.tow = 2568200;
     
     test_unpacked_msg.MSG_OBS_DEP_B.header.t.wn = 1787;
+    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
     
     
     
@@ -2597,7 +2598,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.reserved = 0;
     
     test_unpacked_msg.MSG_OBS_DEP_B.obs[5].sid.sat = 218;
-    test_unpacked_msg.MSG_OBS_DEP_B.n_obs = 6;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OBS_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -2628,6 +2628,7 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow == 2568200, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow, expected 2568200, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.tow);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn == 1787, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn, expected 1787, is %d", check_unpacked_msg->MSG_OBS_DEP_B.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
     
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f == 165, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f, expected 165, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[0].L.f);
@@ -2736,7 +2737,6 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgObsDepB )
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.reserved);
     
     ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat == 218, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat, expected 218, is %d", check_unpacked_msg->MSG_OBS_DEP_B.obs[5].sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_OBS_DEP_B.n_obs == 6, "incorrect value for check_unpacked_msg->MSG_OBS_DEP_B.n_obs, expected 6, is %d", check_unpacked_msg->MSG_OBS_DEP_B.n_obs);
   }
 }
 END_TEST

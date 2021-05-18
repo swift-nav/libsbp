@@ -9,9 +9,8 @@ tests:
       flags: 0
       latency: 50
       num_signals: 12
-    packed_fields:
       source: Skylark
-    unpacked_fields:
+    c_unpacked_fields:
       source: 
         data: Skylark
         len: 7

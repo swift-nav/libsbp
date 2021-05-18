@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_imu_MsgImuRaw0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,9,52,18,17,26,1,0,192,206,96,0,223,255,44,16,60,0,208,254,238,255,70,135, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,9,52,18,17,26,1,0,192,206,96,0,223,255,44,16,60,0,208,254,238,255,70,135, };
+
     sbp_msg_imu_raw_t test_msg{};
     test_msg.acc_x = 96;
     test_msg.acc_y = -33;

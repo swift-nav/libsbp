@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_observation_MsgGloBiases0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,117,0,0,0,9,0,0,0,0,0,0,0,0,0,77,211, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,117,0,0,0,9,0,0,0,0,0,0,0,0,0,77,211, };
+
     sbp_msg_glo_biases_t test_msg{};
     test_msg.l1ca_bias = 0;
     test_msg.l1p_bias = 0;

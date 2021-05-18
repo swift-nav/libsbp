@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_orientation_MsgOrientQuat0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
+
     sbp_msg_orient_quat_t test_msg{};
     test_msg.flags = 1;
     test_msg.tow = 0;

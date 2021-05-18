@@ -321,7 +321,7 @@ tests:
         mesid:
           code: 0
           sat: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 79
     module: sbp.tracking
     name: MsgMeasurementState

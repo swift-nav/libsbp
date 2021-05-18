@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_file_io_MsgFileioWriteResp0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,171,0,66,0,4,202,0,0,0,243,243, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,171,0,66,0,4,202,0,0,0,243,243, };
+
     sbp_msg_fileio_write_resp_t test_msg{};
     test_msg.sequence = 202;
                                                                               

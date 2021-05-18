@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgGroupMeta0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,10,255,238,238,9,1,2,3,10,255,10,2,2,255,2,14, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,10,255,238,238,9,1,2,3,10,255,10,2,2,255,2,14, };
+
     sbp_msg_group_meta_t test_msg{};
     test_msg.flags = 2;
     test_msg.group_id = 1;
@@ -173,7 +174,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgGroupMeta1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,10,255,21,3,31,1,1,14,2,1,3,1,10,2,17,2,9,2,20,2,14,2,18,2,13,2,21,2,33,2,3,255,6,255,14,255,82,154, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,10,255,21,3,31,1,1,14,2,1,3,1,10,2,17,2,9,2,20,2,14,2,18,2,13,2,21,2,33,2,3,255,6,255,14,255,82,154, };
+
     sbp_msg_group_meta_t test_msg{};
     test_msg.flags = 1;
     test_msg.group_id = 1;

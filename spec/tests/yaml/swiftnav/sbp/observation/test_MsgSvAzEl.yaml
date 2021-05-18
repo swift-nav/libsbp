@@ -170,7 +170,7 @@ tests:
         sid:
           code: 14
           sat: 36
-    unpacked_fields:
+    c_unpacked_fields:
       n_azel: 33
     module: sbp.observation
     name: MsgSvAzEl

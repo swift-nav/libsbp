@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,40,244,122,19,244,139,2,0,0,153,88, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,40,244,122,19,244,139,2,0,0,153,88, };
+
     sbp_msg_gps_time_gnss_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 166900;
@@ -169,7 +170,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,28,246,122,19,126,234,3,0,0,250,195, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,28,246,122,19,126,234,3,0,0,250,195, };
+
     sbp_msg_gps_time_gnss_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 256638;
@@ -257,7 +259,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,16,248,122,19,129,12,4,0,0,183,148, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,16,248,122,19,129,12,4,0,0,183,148, };
+
     sbp_msg_gps_time_gnss_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 265345;
@@ -345,7 +348,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,4,250,122,19,137,204,4,0,0,137,101, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,4,250,122,19,137,204,4,0,0,137,101, };
+
     sbp_msg_gps_time_gnss_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 314505;
@@ -433,7 +437,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,248,251,122,19,181,137,5,0,0,15,225, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,1,211,136,11,128,7,248,251,122,19,181,137,5,0,0,15,225, };
+
     sbp_msg_gps_time_gnss_t test_msg{};
     test_msg.flags = 0;
     test_msg.ns_residual = 362933;

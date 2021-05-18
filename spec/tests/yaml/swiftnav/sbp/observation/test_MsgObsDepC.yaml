@@ -62,7 +62,7 @@ tests:
           code: 0
           reserved: 0
           sat: 12
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 5
     module: sbp.observation
     name: MsgObsDepC
@@ -124,7 +124,7 @@ tests:
           code: 0
           reserved: 0
           sat: 29
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 3
     module: sbp.observation
     name: MsgObsDepC
@@ -203,7 +203,7 @@ tests:
           code: 0
           reserved: 0
           sat: 12
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 5
     module: sbp.observation
     name: MsgObsDepC
@@ -265,7 +265,7 @@ tests:
           code: 0
           reserved: 0
           sat: 29
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 3
     module: sbp.observation
     name: MsgObsDepC
@@ -344,7 +344,7 @@ tests:
           code: 0
           reserved: 0
           sat: 12
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs:  5
     module: sbp.observation
     name: MsgObsDepC

@@ -466,92 +466,6 @@ at the grid point,
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
-class GridElementNoStd(object):
-  """GridElementNoStd.
-  
-  Contains one tropo delay, plus STEC residuals for each satellite at the
-grid point.
-
-  
-  Parameters
-  ----------
-  index : int
-    Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrectionNoStd
-    Wet and hydrostatic vertical delays
-  stec_residuals : array
-    STEC residuals for each satellite
-
-  """
-  _parser = construct.Struct(
-                     'index' / construct.Int16ul,
-                     'tropo_delay_correction' / TroposphericDelayCorrectionNoStd._parser,
-                     'stec_residuals' / construct.GreedyRange(STECResidualNoStd._parser),)
-  __slots__ = [
-               'index',
-               'tropo_delay_correction',
-               'stec_residuals',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.index = kwargs.pop('index')
-      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.stec_residuals = kwargs.pop('stec_residuals')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = GridElementNoStd._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-    
-class GridElement(object):
-  """GridElement.
-  
-  Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-stddev) for each satellite at the grid point.
-
-  
-  Parameters
-  ----------
-  index : int
-    Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrection
-    Wet and hydrostatic vertical delays (mean, stddev)
-  stec_residuals : array
-    STEC residuals for each satellite (mean, stddev)
-
-  """
-  _parser = construct.Struct(
-                     'index' / construct.Int16ul,
-                     'tropo_delay_correction' / TroposphericDelayCorrection._parser,
-                     'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
-  __slots__ = [
-               'index',
-               'tropo_delay_correction',
-               'stec_residuals',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.index = kwargs.pop('index')
-      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.stec_residuals = kwargs.pop('stec_residuals')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = GridElement._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-    
 class SatelliteAPC(object):
   """SatelliteAPC.
   
@@ -1338,19 +1252,26 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     SBP parent object to inherit from.
   header : GriddedCorrectionHeader
     Header of a gridded correction message
-  element : GridElement
-    Tropo and STEC residuals for the given grid point.
-
+  index : int
+    Index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrection
+    Wet and hydrostatic vertical delays (mean, stddev)
+  stec_residuals : array
+    STEC residuals for each satellite (mean, stddev)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
                    'header' / GriddedCorrectionHeader._parser,
-                   'element' / GridElement._parser,)
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1364,7 +1285,9 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1954,18 +1877,26 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
     SBP parent object to inherit from.
   header : GriddedCorrectionHeaderDepA
     Header of a Gridded Correction message
-  element : GridElementNoStd
-    Tropo and STEC residuals for the given grid point
+  index : int
+    Index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrectionNoStd
+    Wet and hydrostatic vertical delays
+  stec_residuals : array
+    STEC residuals for each satellite
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
                    'header' / GriddedCorrectionHeaderDepA._parser,
-                   'element' / GridElementNoStd._parser,)
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrectionNoStd._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidualNoStd._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1979,7 +1910,9 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2047,20 +1980,26 @@ class MsgSsrGriddedCorrectionDepA(SBP):
     SBP parent object to inherit from.
   header : GriddedCorrectionHeaderDepA
     Header of a Gridded Correction message
-  element : GridElement
-    Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
-
+  index : int
+    Index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrection
+    Wet and hydrostatic vertical delays (mean, stddev)
+  stec_residuals : array
+    STEC residuals for each satellite (mean, stddev)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
                    'header' / GriddedCorrectionHeaderDepA._parser,
-                   'element' / GridElement._parser,)
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2074,7 +2013,9 @@ and standard deviation)
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)

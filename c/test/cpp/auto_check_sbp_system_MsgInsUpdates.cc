@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgInsUpdates0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,6,255,21,3,10,84,229,17,30,0,0,0,0,0,0,81,63, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,6,255,21,3,10,84,229,17,30,0,0,0,0,0,0,81,63, };
+
     sbp_msg_ins_updates_t test_msg{};
     test_msg.gnsspos = 0;
     test_msg.gnssvel = 0;

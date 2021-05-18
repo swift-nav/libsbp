@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_orientation_MsgOrientEuler0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,33,2,66,0,29,1,0,0,0,1,0,0,0,2,0,0,0,8,0,0,0,0,0,224,64,0,0,64,64,0,0,224,64,3,44,226, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,33,2,66,0,29,1,0,0,0,1,0,0,0,2,0,0,0,8,0,0,0,0,0,224,64,0,0,64,64,0,0,224,64,3,44,226, };
+
     sbp_msg_orient_euler_t test_msg{};
     test_msg.flags = 3;
     test_msg.pitch = 2;

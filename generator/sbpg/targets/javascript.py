@@ -145,7 +145,8 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
       field_type_arr = d.get(field_type, field_type)
       return "array('%s', { length: %d, type: %s })" % (f.identifier, size.value, field_type_arr)
     elif f.options.get('size_fn') is not None:
-      return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type, size_fn.value)
+      field_type_arr = d.get(field_type, field_type)
+      return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type_arr, size_fn.value)
     else:
       field_type_arr = d.get(field_type, field_type)
       return "array('%s', { type: %s, readUntil: 'eof' })" % (f_.identifier, field_type_arr)

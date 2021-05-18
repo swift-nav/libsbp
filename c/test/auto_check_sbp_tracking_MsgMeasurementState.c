@@ -1733,6 +1733,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgMeasurementState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_MEASUREMENT_STATE.n_states = 79;
     
     
     test_unpacked_msg.MSG_MEASUREMENT_STATE.states[0].cn0 = 162;
@@ -2365,7 +2366,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgMeasurementState )
     test_unpacked_msg.MSG_MEASUREMENT_STATE.states[78].mesid.code = 0;
     
     test_unpacked_msg.MSG_MEASUREMENT_STATE.states[78].mesid.sat = 0;
-    test_unpacked_msg.MSG_MEASUREMENT_STATE.n_states = 79;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_MEASUREMENT_STATE, 31183, &test_unpacked_msg, &dummy_write);
 
@@ -2389,6 +2389,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgMeasurementState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states == 79, "incorrect value for check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states, expected 79, is %d", check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states);
     
     ck_assert_msg(check_unpacked_msg->MSG_MEASUREMENT_STATE.states[0].cn0 == 162, "incorrect value for check_unpacked_msg->MSG_MEASUREMENT_STATE.states[0].cn0, expected 162, is %d", check_unpacked_msg->MSG_MEASUREMENT_STATE.states[0].cn0);
     
@@ -2942,7 +2943,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgMeasurementState )
     ck_assert_msg(check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.code == 0, "incorrect value for check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.code, expected 0, is %d", check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.code);
     
     ck_assert_msg(check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.sat == 0, "incorrect value for check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.sat, expected 0, is %d", check_unpacked_msg->MSG_MEASUREMENT_STATE.states[78].mesid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states == 79, "incorrect value for check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states, expected 79, is %d", check_unpacked_msg->MSG_MEASUREMENT_STATE.n_states);
   }
 }
 END_TEST

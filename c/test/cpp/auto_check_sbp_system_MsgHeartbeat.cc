@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgHeartbeat0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,255,255,246,215,4,0,50,0,0,249,216, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,255,255,246,215,4,0,50,0,0,249,216, };
+
     sbp_msg_heartbeat_t test_msg{};
     test_msg.flags = 12800;
                                                                               
@@ -163,7 +164,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgHeartbeat1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,255,255,195,4,4,0,0,0,0,66,57, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,255,255,195,4,4,0,0,0,0,66,57, };
+
     sbp_msg_heartbeat_t test_msg{};
     test_msg.flags = 0;
                                                                               

@@ -82,11 +82,13 @@ TEST_F(Test_auto_check_sbp_observation_MsgOsr0, Test)
 {
 
     uint8_t encoded_frame[] = {85,64,6,0,0,239,248,225,233,29,0,0,0,0,104,8,64,75,143,241,68,230,250,62,7,66,15,3,1,0,13,0,7,0,7,0,206,232,105,63,236,49,170,6,75,15,3,13,0,13,0,3,0,3,0,45,145,198,62,33,7,153,6,128,15,3,14,0,13,0,3,0,3,0,89,132,204,67,143,46,32,7,127,15,3,15,0,13,0,5,0,5,0,244,254,164,60,22,176,95,6,55,15,3,17,0,0,0,2,0,2,0,106,157,101,62,151,214,142,6,108,15,3,19,0,13,0,3,0,3,0,81,237,60,63,181,119,165,6,206,15,3,28,0,13,0,3,0,3,0,134,228,110,64,183,159,197,6,200,15,3,30,0,13,0,3,0,3,0,53,144,241,68,78,112,165,5,170,15,3,1,6,21,0,7,0,7,0,251,232,105,63,163,128,49,5,129,15,3,13,6,21,0,3,0,3,0,112,145,198,62,37,32,36,5,46,15,3,14,6,21,0,3,0,3,0,166,132,204,67,184,112,141,5,95,15,3,15,6,21,0,5,0,5,0,121,227, };
+
     sbp_msg_osr_t test_msg{};
     test_msg.header.n_obs = 64;
     test_msg.header.t.ns_residual = 0;
     test_msg.header.t.tow = 501867000;
     test_msg.header.t.wn = 2152;
+    test_msg.n_obs = 12;
     test_msg.obs[0].L.f = 66;
     test_msg.obs[0].L.i = 121567974;
     test_msg.obs[0].P = 1156681547;
@@ -207,7 +209,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgOsr0, Test)
     test_msg.obs[11].sid.code = 6;
     test_msg.obs[11].sid.sat = 15;
     test_msg.obs[11].tropo_std = 5;
-    test_msg.n_obs = 12;
                                                                               
     EXPECT_EQ(send_message( 0, test_msg), SBP_OK);
                                                                               
@@ -225,6 +226,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgOsr0, Test)
     EXPECT_EQ(last_msg_.header.t.ns_residual, 0) << "incorrect value for header.t.ns_residual, expected 0, is " << last_msg_.header.t.ns_residual;
     EXPECT_EQ(last_msg_.header.t.tow, 501867000) << "incorrect value for header.t.tow, expected 501867000, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 2152) << "incorrect value for header.t.wn, expected 2152, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 12) << "incorrect value for n_obs, expected 12, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 66) << "incorrect value for obs[0].L.f, expected 66, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, 121567974) << "incorrect value for obs[0].L.i, expected 121567974, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1156681547) << "incorrect value for obs[0].P, expected 1156681547, is " << last_msg_.obs[0].P;
@@ -345,5 +347,4 @@ TEST_F(Test_auto_check_sbp_observation_MsgOsr0, Test)
     EXPECT_EQ(last_msg_.obs[11].sid.code, 6) << "incorrect value for obs[11].sid.code, expected 6, is " << last_msg_.obs[11].sid.code;
     EXPECT_EQ(last_msg_.obs[11].sid.sat, 15) << "incorrect value for obs[11].sid.sat, expected 15, is " << last_msg_.obs[11].sid.sat;
     EXPECT_EQ(last_msg_.obs[11].tropo_std, 5) << "incorrect value for obs[11].tropo_std, expected 5, is " << last_msg_.obs[11].tropo_std;
-    EXPECT_EQ(last_msg_.n_obs, 12) << "incorrect value for n_obs, expected 12, is " << last_msg_.n_obs;
 }

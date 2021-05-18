@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgUTCTimeGNSS0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,5,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,177,33, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,5,1,21,3,16,1,24,229,233,29,229,7,4,9,19,24,9,0,8,175,47,177,33, };
+
     sbp_msg_utc_time_gnss_t test_msg{};
     test_msg.day = 9;
     test_msg.flags = 1;

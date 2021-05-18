@@ -73,7 +73,7 @@ tests:
           reserved: 0
           sat: 0
         state: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
@@ -169,7 +169,7 @@ tests:
           reserved: 0
           sat: 0
         state: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
@@ -265,7 +265,7 @@ tests:
           reserved: 0
           sat: 0
         state: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
@@ -361,7 +361,7 @@ tests:
           reserved: 0
           sat: 0
         state: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
@@ -457,7 +457,7 @@ tests:
           reserved: 0
           sat: 0
         state: 0
-    unpacked_fields:
+    c_unpacked_fields:
       n_states: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB

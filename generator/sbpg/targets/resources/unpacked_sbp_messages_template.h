@@ -13,6 +13,7 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+#include <libsbp/unpacked/string/binary.h>
 
 ((*- for i in include *))
 #include <libsbp/unpacked/(((i)))>
@@ -70,6 +71,12 @@ typedef struct {
 #define (((m.name|convert_unpacked)))_(((f.name)))_get(f) sbp_(((f.encoding)))_string_get(f,(((f.max_items))))
 #define (((m.name|convert_unpacked)))_(((f.name)))_len(f) ( (((m.name|convert_unpacked)))_(((f.name)))_packed_len(f) ((*- if f.encoding == "null_terminated" *)) - 1((*- endif *)))
 #define (((m.name|convert_unpacked)))_(((f.name)))_strcmp(a,b) sbp_(((f.encoding)))_string_strcmp(a,b,(((f.max_items))))
+  ((*- elif f.encoding == "binary" *))
+#define (((m.name|convert_unpacked)))_(((f.name)))_init(f) sbp_binary_string_init(f, (((f.max_items))))
+#define (((m.name|convert_unpacked)))_(((f.name)))_valid(f) sbp_binary_string_valid(f, (((f.max_items))))
+#define (((m.name|convert_unpacked)))_(((f.name)))_set(f,s,n) sbp_binary_string_set(f, s, n, (((f.max_items))))
+#define (((m.name|convert_unpacked)))_(((f.name)))_get(f,n) sbp_binary_string_get(f,n,(((f.max_items))))
+#define (((m.name|convert_unpacked)))_(((f.name)))_strcmp(a,v) sbp_binary_string_strcmp(a,b,(((f.max_items))))
   ((*- elif f.encoding == "multipart" or f.encoding == "sequence" *))
   ((*- if f.encoding == "multipart" *))((*- set common_args = f.max_items|string + ", " + f.min_sections|string + ", " + f.max_sections|string *))
   ((*- else *))((*- set common_args = f.max_items|string + ", " + f.terminator|string *))((*- endif *))

@@ -82,10 +82,12 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC0, Test)
 {
 
     uint8_t encoded_frame[] = {85,73,0,70,152,87,8,95,183,24,106,7,32,126,250,73,80,113,94,247,255,231,163,229,229,4,0,0,0,60,220,96,70,81,147,250,255,196,208,20,28,6,0,0,0,248,61,62,77,28,60,242,255,110,171,180,178,7,0,0,0,237,84,190,77,172,37,13,0,41,170,233,164,10,0,0,0,36,85,9,75,240,188,21,0,19,182,196,209,12,0,0,0,190,175, };
+
     sbp_msg_obs_dep_c_t test_msg{};
     test_msg.header.n_obs = 32;
     test_msg.header.t.tow = 414670600;
     test_msg.header.t.wn = 1898;
+    test_msg.n_obs = 5;
     test_msg.obs[0].L.f = 231;
     test_msg.obs[0].L.i = -565647;
     test_msg.obs[0].P = 1347025534;
@@ -126,7 +128,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC0, Test)
     test_msg.obs[4].sid.code = 0;
     test_msg.obs[4].sid.reserved = 0;
     test_msg.obs[4].sid.sat = 12;
-    test_msg.n_obs = 5;
                                                                               
     EXPECT_EQ(send_message( 38982, test_msg), SBP_OK);
                                                                               
@@ -143,6 +144,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC0, Test)
     EXPECT_EQ(last_msg_.header.n_obs, 32) << "incorrect value for header.n_obs, expected 32, is " << last_msg_.header.n_obs;
     EXPECT_EQ(last_msg_.header.t.tow, 414670600) << "incorrect value for header.t.tow, expected 414670600, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 1898) << "incorrect value for header.t.wn, expected 1898, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 231) << "incorrect value for obs[0].L.f, expected 231, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, -565647) << "incorrect value for obs[0].L.i, expected -565647, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1347025534) << "incorrect value for obs[0].P, expected 1347025534, is " << last_msg_.obs[0].P;
@@ -183,7 +185,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC0, Test)
     EXPECT_EQ(last_msg_.obs[4].sid.code, 0) << "incorrect value for obs[4].sid.code, expected 0, is " << last_msg_.obs[4].sid.code;
     EXPECT_EQ(last_msg_.obs[4].sid.reserved, 0) << "incorrect value for obs[4].sid.reserved, expected 0, is " << last_msg_.obs[4].sid.reserved;
     EXPECT_EQ(last_msg_.obs[4].sid.sat, 12) << "incorrect value for obs[4].sid.sat, expected 12, is " << last_msg_.obs[4].sid.sat;
-    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
 }                                                     
 class Test_auto_check_sbp_observation_MsgObsDepC1 : 
   public ::testing::Test, 
@@ -250,10 +251,12 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC1, Test)
 {
 
     uint8_t encoded_frame[] = {85,73,0,70,152,55,8,95,183,24,106,7,33,68,166,75,77,186,230,24,0,101,186,162,102,16,0,0,0,87,255,155,69,74,158,5,0,26,190,206,30,27,0,0,0,64,89,124,68,26,22,3,0,114,217,225,73,29,0,0,0,37,179, };
+
     sbp_msg_obs_dep_c_t test_msg{};
     test_msg.header.n_obs = 33;
     test_msg.header.t.tow = 414670600;
     test_msg.header.t.wn = 1898;
+    test_msg.n_obs = 3;
     test_msg.obs[0].L.f = 101;
     test_msg.obs[0].L.i = 1631930;
     test_msg.obs[0].P = 1296803396;
@@ -278,7 +281,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC1, Test)
     test_msg.obs[2].sid.code = 0;
     test_msg.obs[2].sid.reserved = 0;
     test_msg.obs[2].sid.sat = 29;
-    test_msg.n_obs = 3;
                                                                               
     EXPECT_EQ(send_message( 38982, test_msg), SBP_OK);
                                                                               
@@ -295,6 +297,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC1, Test)
     EXPECT_EQ(last_msg_.header.n_obs, 33) << "incorrect value for header.n_obs, expected 33, is " << last_msg_.header.n_obs;
     EXPECT_EQ(last_msg_.header.t.tow, 414670600) << "incorrect value for header.t.tow, expected 414670600, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 1898) << "incorrect value for header.t.wn, expected 1898, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 3) << "incorrect value for n_obs, expected 3, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 101) << "incorrect value for obs[0].L.f, expected 101, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, 1631930) << "incorrect value for obs[0].L.i, expected 1631930, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1296803396) << "incorrect value for obs[0].P, expected 1296803396, is " << last_msg_.obs[0].P;
@@ -319,7 +322,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC1, Test)
     EXPECT_EQ(last_msg_.obs[2].sid.code, 0) << "incorrect value for obs[2].sid.code, expected 0, is " << last_msg_.obs[2].sid.code;
     EXPECT_EQ(last_msg_.obs[2].sid.reserved, 0) << "incorrect value for obs[2].sid.reserved, expected 0, is " << last_msg_.obs[2].sid.reserved;
     EXPECT_EQ(last_msg_.obs[2].sid.sat, 29) << "incorrect value for obs[2].sid.sat, expected 29, is " << last_msg_.obs[2].sid.sat;
-    EXPECT_EQ(last_msg_.n_obs, 3) << "incorrect value for n_obs, expected 3, is " << last_msg_.n_obs;
 }                                                     
 class Test_auto_check_sbp_observation_MsgObsDepC2 : 
   public ::testing::Test, 
@@ -386,10 +388,12 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC2, Test)
 {
 
     uint8_t encoded_frame[] = {85,73,0,0,0,87,8,95,183,24,106,7,32,217,251,73,80,9,72,248,255,30,168,113,81,4,0,0,0,211,220,96,70,198,107,251,255,115,195,53,144,6,0,0,0,77,61,62,77,40,161,243,255,130,176,93,142,7,0,0,0,1,86,190,77,88,77,12,0,116,199,229,213,10,0,0,0,93,85,9,75,64,139,20,0,120,177,196,194,12,0,0,0,141,161, };
+
     sbp_msg_obs_dep_c_t test_msg{};
     test_msg.header.n_obs = 32;
     test_msg.header.t.tow = 414670600;
     test_msg.header.t.wn = 1898;
+    test_msg.n_obs = 5;
     test_msg.obs[0].L.f = 30;
     test_msg.obs[0].L.i = -505847;
     test_msg.obs[0].P = 1347025881;
@@ -430,7 +434,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC2, Test)
     test_msg.obs[4].sid.code = 0;
     test_msg.obs[4].sid.reserved = 0;
     test_msg.obs[4].sid.sat = 12;
-    test_msg.n_obs = 5;
                                                                               
     EXPECT_EQ(send_message( 0, test_msg), SBP_OK);
                                                                               
@@ -447,6 +450,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC2, Test)
     EXPECT_EQ(last_msg_.header.n_obs, 32) << "incorrect value for header.n_obs, expected 32, is " << last_msg_.header.n_obs;
     EXPECT_EQ(last_msg_.header.t.tow, 414670600) << "incorrect value for header.t.tow, expected 414670600, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 1898) << "incorrect value for header.t.wn, expected 1898, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 30) << "incorrect value for obs[0].L.f, expected 30, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, -505847) << "incorrect value for obs[0].L.i, expected -505847, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1347025881) << "incorrect value for obs[0].P, expected 1347025881, is " << last_msg_.obs[0].P;
@@ -487,7 +491,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC2, Test)
     EXPECT_EQ(last_msg_.obs[4].sid.code, 0) << "incorrect value for obs[4].sid.code, expected 0, is " << last_msg_.obs[4].sid.code;
     EXPECT_EQ(last_msg_.obs[4].sid.reserved, 0) << "incorrect value for obs[4].sid.reserved, expected 0, is " << last_msg_.obs[4].sid.reserved;
     EXPECT_EQ(last_msg_.obs[4].sid.sat, 12) << "incorrect value for obs[4].sid.sat, expected 12, is " << last_msg_.obs[4].sid.sat;
-    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
 }                                                     
 class Test_auto_check_sbp_observation_MsgObsDepC3 : 
   public ::testing::Test, 
@@ -554,10 +557,12 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC3, Test)
 {
 
     uint8_t encoded_frame[] = {85,73,0,0,0,55,8,95,183,24,106,7,33,70,167,75,77,140,136,23,0,90,187,158,129,16,0,0,0,232,255,155,69,45,175,5,0,17,208,175,56,27,0,0,0,64,89,124,68,45,96,3,0,75,185,73,206,29,0,0,0,220,158, };
+
     sbp_msg_obs_dep_c_t test_msg{};
     test_msg.header.n_obs = 33;
     test_msg.header.t.tow = 414670600;
     test_msg.header.t.wn = 1898;
+    test_msg.n_obs = 3;
     test_msg.obs[0].L.f = 90;
     test_msg.obs[0].L.i = 1542284;
     test_msg.obs[0].P = 1296803654;
@@ -582,7 +587,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC3, Test)
     test_msg.obs[2].sid.code = 0;
     test_msg.obs[2].sid.reserved = 0;
     test_msg.obs[2].sid.sat = 29;
-    test_msg.n_obs = 3;
                                                                               
     EXPECT_EQ(send_message( 0, test_msg), SBP_OK);
                                                                               
@@ -599,6 +603,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC3, Test)
     EXPECT_EQ(last_msg_.header.n_obs, 33) << "incorrect value for header.n_obs, expected 33, is " << last_msg_.header.n_obs;
     EXPECT_EQ(last_msg_.header.t.tow, 414670600) << "incorrect value for header.t.tow, expected 414670600, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 1898) << "incorrect value for header.t.wn, expected 1898, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 3) << "incorrect value for n_obs, expected 3, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 90) << "incorrect value for obs[0].L.f, expected 90, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, 1542284) << "incorrect value for obs[0].L.i, expected 1542284, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1296803654) << "incorrect value for obs[0].P, expected 1296803654, is " << last_msg_.obs[0].P;
@@ -623,7 +628,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC3, Test)
     EXPECT_EQ(last_msg_.obs[2].sid.code, 0) << "incorrect value for obs[2].sid.code, expected 0, is " << last_msg_.obs[2].sid.code;
     EXPECT_EQ(last_msg_.obs[2].sid.reserved, 0) << "incorrect value for obs[2].sid.reserved, expected 0, is " << last_msg_.obs[2].sid.reserved;
     EXPECT_EQ(last_msg_.obs[2].sid.sat, 29) << "incorrect value for obs[2].sid.sat, expected 29, is " << last_msg_.obs[2].sid.sat;
-    EXPECT_EQ(last_msg_.n_obs, 3) << "incorrect value for n_obs, expected 3, is " << last_msg_.n_obs;
 }                                                     
 class Test_auto_check_sbp_observation_MsgObsDepC4 : 
   public ::testing::Test, 
@@ -690,10 +694,12 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC4, Test)
 {
 
     uint8_t encoded_frame[] = {85,73,0,70,152,87,208,95,183,24,106,7,32,44,8,74,80,86,93,247,255,57,158,229,229,4,0,0,0,224,229,96,70,156,146,250,255,221,200,20,28,6,0,0,0,60,82,62,77,93,58,242,255,39,164,180,178,7,0,0,0,222,73,190,77,46,39,13,0,202,181,233,164,10,0,0,0,149,64,9,75,114,191,21,0,249,182,196,209,12,0,0,0,112,8, };
+
     sbp_msg_obs_dep_c_t test_msg{};
     test_msg.header.n_obs = 32;
     test_msg.header.t.tow = 414670800;
     test_msg.header.t.wn = 1898;
+    test_msg.n_obs = 5;
     test_msg.obs[0].L.f = 57;
     test_msg.obs[0].L.i = -565930;
     test_msg.obs[0].P = 1347029036;
@@ -734,7 +740,6 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC4, Test)
     test_msg.obs[4].sid.code = 0;
     test_msg.obs[4].sid.reserved = 0;
     test_msg.obs[4].sid.sat = 12;
-    test_msg.n_obs = 5;
                                                                               
     EXPECT_EQ(send_message( 38982, test_msg), SBP_OK);
                                                                               
@@ -751,6 +756,7 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC4, Test)
     EXPECT_EQ(last_msg_.header.n_obs, 32) << "incorrect value for header.n_obs, expected 32, is " << last_msg_.header.n_obs;
     EXPECT_EQ(last_msg_.header.t.tow, 414670800) << "incorrect value for header.t.tow, expected 414670800, is " << last_msg_.header.t.tow;
     EXPECT_EQ(last_msg_.header.t.wn, 1898) << "incorrect value for header.t.wn, expected 1898, is " << last_msg_.header.t.wn;
+    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
     EXPECT_EQ(last_msg_.obs[0].L.f, 57) << "incorrect value for obs[0].L.f, expected 57, is " << last_msg_.obs[0].L.f;
     EXPECT_EQ(last_msg_.obs[0].L.i, -565930) << "incorrect value for obs[0].L.i, expected -565930, is " << last_msg_.obs[0].L.i;
     EXPECT_EQ(last_msg_.obs[0].P, 1347029036) << "incorrect value for obs[0].P, expected 1347029036, is " << last_msg_.obs[0].P;
@@ -791,5 +797,4 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepC4, Test)
     EXPECT_EQ(last_msg_.obs[4].sid.code, 0) << "incorrect value for obs[4].sid.code, expected 0, is " << last_msg_.obs[4].sid.code;
     EXPECT_EQ(last_msg_.obs[4].sid.reserved, 0) << "incorrect value for obs[4].sid.reserved, expected 0, is " << last_msg_.obs[4].sid.reserved;
     EXPECT_EQ(last_msg_.obs[4].sid.sat, 12) << "incorrect value for obs[4].sid.sat, expected 12, is " << last_msg_.obs[4].sid.sat;
-    EXPECT_EQ(last_msg_.n_obs, 5) << "incorrect value for n_obs, expected 5, is " << last_msg_.n_obs;
 }

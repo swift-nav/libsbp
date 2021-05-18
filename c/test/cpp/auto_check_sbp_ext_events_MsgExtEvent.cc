@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_ext_events_MsgExtEvent0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,1,1,245,6,12,48,7,199,216,49,15,202,65,15,0,3,0,62,204, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,1,1,245,6,12,48,7,199,216,49,15,202,65,15,0,3,0,62,204, };
+
     sbp_msg_ext_event_t test_msg{};
     test_msg.flags = 3;
     test_msg.ns_residual = 999882;

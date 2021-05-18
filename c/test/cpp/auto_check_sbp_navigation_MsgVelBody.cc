@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelBody0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,19,2,66,0,42,1,0,0,0,4,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,160,64,0,0,224,64,0,0,224,64,0,0,64,64,0,0,0,64,3,8,120,144, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,19,2,66,0,42,1,0,0,0,4,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,160,64,0,0,224,64,0,0,224,64,0,0,64,64,0,0,0,64,3,8,120,144, };
+
     sbp_msg_vel_body_t test_msg{};
     test_msg.cov_x_x = 0.0;
     test_msg.cov_x_y = 5.0;

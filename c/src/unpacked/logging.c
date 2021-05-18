@@ -10,6 +10,7 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
+#include <libsbp/internal/unpacked/string/binary.h>
                                                                                                               
 size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {
   size_t packed_size = 0;
@@ -79,7 +80,8 @@ size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->source);
   packed_size += sbp_packed_size_u8(&msg->protocol);
-  packed_size += (msg->n_fwd_payload * sbp_packed_size_char(&msg->fwd_payload[0]));
+  packed_size += sbp_binary_string_packed_len(&msg->fwd_payload, 253
+      );
   return packed_size;
 }
 
@@ -87,10 +89,8 @@ bool pack_sbp_msg_fwd_t(sbp_pack_ctx_t *ctx, const sbp_msg_fwd_t *msg)
 {
   if (!pack_u8(ctx, &msg->source)) { return false; }
   if (!pack_u8(ctx, &msg->protocol)) { return false; }
-  for (uint8_t i = 0; i < msg->n_fwd_payload; i++)
-  {
-    if (!pack_char(ctx, &msg->fwd_payload[i])) { return false; }
-  }
+  if (!sbp_binary_string_pack(&msg->fwd_payload, 253,
+      ctx)) { return false; }
   return true;
 }
 
@@ -112,10 +112,8 @@ bool unpack_sbp_msg_fwd_t(sbp_unpack_ctx_t *ctx, sbp_msg_fwd_t *msg)
 {
   if (!unpack_u8(ctx, &msg->source)) { return false; }
   if (!unpack_u8(ctx, &msg->protocol)) { return false; }
-    msg->n_fwd_payload = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_char(&msg->fwd_payload[0]));
-  for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
-    if (!unpack_char(ctx, &msg->fwd_payload[i])) { return false; }
-  }
+  if (!sbp_binary_string_unpack(&msg->fwd_payload, 253,
+      ctx)) { return false; }
   return true;
 }
 
@@ -142,11 +140,8 @@ int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
   ret = sbp_cmp_u8(&a->protocol, &b->protocol);
   if (ret != 0) { return ret; }
   
-  ret = sbp_cmp_u8(&a->n_fwd_payload, &b->n_fwd_payload);
-  for (uint8_t i = 0; i < a->n_fwd_payload && ret == 0; i++)
-  {
-    ret = sbp_cmp_char(&a->fwd_payload[i], &b->fwd_payload[i]);
-  }
+  ret = sbp_binary_string_strcmp(&a->fwd_payload, &b->fwd_payload, 253
+    );
   if (ret != 0) { return ret; }
   return ret;
 }

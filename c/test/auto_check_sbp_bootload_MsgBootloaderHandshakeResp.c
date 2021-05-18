@@ -304,6 +304,13 @@ START_TEST( test_packed_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_bootloader_handshake_dep_a_t* check_msg = ( msg_bootloader_handshake_dep_a_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->handshake[0] == 118, "incorrect value for handshake[0], expected 118, is %d", check_msg->handshake[0]);
+    ck_assert_msg(check_msg->handshake[1] == 49, "incorrect value for handshake[1], expected 49, is %d", check_msg->handshake[1]);
+    ck_assert_msg(check_msg->handshake[2] == 46, "incorrect value for handshake[2], expected 46, is %d", check_msg->handshake[2]);
+    ck_assert_msg(check_msg->handshake[3] == 50, "incorrect value for handshake[3], expected 50, is %d", check_msg->handshake[3]);
   }
 }
 END_TEST

@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgStartup0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,255,66,0,4,0,0,0,0,70,160, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,255,66,0,4,0,0,0,0,70,160, };
+
     sbp_msg_startup_t test_msg{};
     test_msg.cause = 0;
     test_msg.reserved = 0;
@@ -167,9 +168,12 @@ protected:
 TEST_F(Test_auto_check_sbp_system_MsgStartup1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,0,255,195,4,4,0,0,0,0,127,181, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,0,255,195,4,4,0,0,0,0,127,181, };
+
     sbp_msg_startup_t test_msg{};
+    test_msg.cause = 0;
     test_msg.reserved = 0;
+    test_msg.startup_type = 0;
                                                                               
     EXPECT_EQ(send_message( 1219, test_msg), SBP_OK);
                                                                               
@@ -183,5 +187,7 @@ TEST_F(Test_auto_check_sbp_system_MsgStartup1, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 1219);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.cause, 0) << "incorrect value for cause, expected 0, is " << last_msg_.cause;
     EXPECT_EQ(last_msg_.reserved, 0) << "incorrect value for reserved, expected 0, is " << last_msg_.reserved;
+    EXPECT_EQ(last_msg_.startup_type, 0) << "incorrect value for startup_type, expected 0, is " << last_msg_.startup_type;
 }

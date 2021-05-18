@@ -120,11 +120,9 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
 
     uint8_t encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
 
-    ((*- if not t.unpacked_fieldskeys *)) //No unpacked fields ((*- endif *))
     (((t.msg_type_name|convert_unpacked))) test_msg{};
-    ((*- if t.fields or t.unpacked_fields *))
-    ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
-    ((*- for f in t.unpacked_fieldskeys *))(((assign_value( (((f))), (((t.unpacked_fields[f])))))))((*- endfor *))
+    ((*- if t.c_unpacked_fields *))
+    ((*- for f in t.c_unpacked_fieldskeys *))(((assign_value( (((f))), (((t.c_unpacked_fields[f]))) ))))((*- endfor *))
     ((*- endif *))
                                                                               
     EXPECT_EQ(send_message( (((t.raw_json_obj.sender))), test_msg), SBP_OK);
@@ -140,9 +138,8 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
     EXPECT_EQ(last_sender_id_, (((t.raw_json_obj.sender))));
     EXPECT_EQ(last_msg_, test_msg);
 
-    ((*- if t.fields or t.unpacked_fields*))
-    ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
-    ((*- for f in t.unpacked_fieldskeys *))(((compare_value( (((f))), (((t.unpacked_fields[f])))))))((*- endfor *))
+    ((*- if t.c_unpacked_fields *))
+    ((*- for f in t.c_unpacked_fieldskeys *))(((compare_value( (((f))), (((t.c_unpacked_fields[f]))) ))))((*- endfor *))
     ((*- endif *))
 }
 ((*- endfor *))

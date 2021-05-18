@@ -10,6 +10,7 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
+#include <libsbp/internal/unpacked/string/binary.h>
 
 ((*- for m in msgs *))
                                                                                                               

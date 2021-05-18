@@ -82,7 +82,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test)
 {
 
     uint8_t encoded_frame[] = {85,19,0,246,215,99,1,202,0,0,0,197,253,28,66,1,203,0,0,0,231,99,16,66,1,208,0,0,0,212,129,22,66,1,212,0,0,0,58,21,28,66,1,217,0,0,0,178,33,40,66,1,218,0,0,0,235,189,21,66,1,220,0,0,0,29,177,25,66,1,222,0,0,0,43,169,27,66,1,225,0,0,0,137,125,42,66,0,0,0,0,0,0,0,128,191,0,0,0,0,0,0,0,128,191,222,97, };
+
     sbp_msg_tracking_state_dep_b_t test_msg{};
+    test_msg.n_states = 11;
     test_msg.states[0].cn0 = 39.24782180786133;
     test_msg.states[0].sid.code = 0;
     test_msg.states[0].sid.reserved = 0;
@@ -138,7 +140,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test)
     test_msg.states[10].sid.reserved = 0;
     test_msg.states[10].sid.sat = 0;
     test_msg.states[10].state = 0;
-    test_msg.n_states = 11;
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);
                                                                               
@@ -152,6 +153,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 55286);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
     EXPECT_LT((last_msg_.states[0].cn0*100 - 39.2478218079*100), 0.05) << "incorrect value for states[0].cn0, expected 39.2478218079, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].sid.code, 0) << "incorrect value for states[0].sid.code, expected 0, is " << last_msg_.states[0].sid.code;
     EXPECT_EQ(last_msg_.states[0].sid.reserved, 0) << "incorrect value for states[0].sid.reserved, expected 0, is " << last_msg_.states[0].sid.reserved;
@@ -207,7 +209,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test)
     EXPECT_EQ(last_msg_.states[10].sid.reserved, 0) << "incorrect value for states[10].sid.reserved, expected 0, is " << last_msg_.states[10].sid.reserved;
     EXPECT_EQ(last_msg_.states[10].sid.sat, 0) << "incorrect value for states[10].sid.sat, expected 0, is " << last_msg_.states[10].sid.sat;
     EXPECT_EQ(last_msg_.states[10].state, 0) << "incorrect value for states[10].state, expected 0, is " << last_msg_.states[10].state;
-    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
 }                                                     
 class Test_auto_check_sbp_tracking_MsgTrackingState1 : 
   public ::testing::Test, 
@@ -274,7 +275,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test)
 {
 
     uint8_t encoded_frame[] = {85,19,0,246,215,99,1,202,0,0,0,250,249,27,66,1,203,0,0,0,40,143,11,66,1,208,0,0,0,190,200,21,66,1,212,0,0,0,251,233,26,66,1,217,0,0,0,209,238,39,66,1,218,0,0,0,162,219,21,66,1,220,0,0,0,162,197,25,66,1,222,0,0,0,14,35,28,66,1,225,0,0,0,9,153,43,66,0,0,0,0,0,0,0,128,191,0,0,0,0,0,0,0,128,191,20,31, };
+
     sbp_msg_tracking_state_dep_b_t test_msg{};
+    test_msg.n_states = 11;
     test_msg.states[0].cn0 = 38.994117736816406;
     test_msg.states[0].sid.code = 0;
     test_msg.states[0].sid.reserved = 0;
@@ -330,7 +333,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test)
     test_msg.states[10].sid.reserved = 0;
     test_msg.states[10].sid.sat = 0;
     test_msg.states[10].state = 0;
-    test_msg.n_states = 11;
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);
                                                                               
@@ -344,6 +346,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 55286);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
     EXPECT_LT((last_msg_.states[0].cn0*100 - 38.9941177368*100), 0.05) << "incorrect value for states[0].cn0, expected 38.9941177368, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].sid.code, 0) << "incorrect value for states[0].sid.code, expected 0, is " << last_msg_.states[0].sid.code;
     EXPECT_EQ(last_msg_.states[0].sid.reserved, 0) << "incorrect value for states[0].sid.reserved, expected 0, is " << last_msg_.states[0].sid.reserved;
@@ -399,7 +402,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test)
     EXPECT_EQ(last_msg_.states[10].sid.reserved, 0) << "incorrect value for states[10].sid.reserved, expected 0, is " << last_msg_.states[10].sid.reserved;
     EXPECT_EQ(last_msg_.states[10].sid.sat, 0) << "incorrect value for states[10].sid.sat, expected 0, is " << last_msg_.states[10].sid.sat;
     EXPECT_EQ(last_msg_.states[10].state, 0) << "incorrect value for states[10].state, expected 0, is " << last_msg_.states[10].state;
-    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
 }                                                     
 class Test_auto_check_sbp_tracking_MsgTrackingState2 : 
   public ::testing::Test, 
@@ -466,7 +468,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test)
 {
 
     uint8_t encoded_frame[] = {85,19,0,246,215,99,1,202,0,0,0,123,209,27,66,1,203,0,0,0,214,64,15,66,1,208,0,0,0,56,55,22,66,1,212,0,0,0,91,142,27,66,1,217,0,0,0,253,154,41,66,1,218,0,0,0,128,142,22,66,1,220,0,0,0,17,174,23,66,1,222,0,0,0,155,2,29,66,1,225,0,0,0,162,100,42,66,0,0,0,0,0,0,0,128,191,0,0,0,0,0,0,0,128,191,233,71, };
+
     sbp_msg_tracking_state_dep_b_t test_msg{};
+    test_msg.n_states = 11;
     test_msg.states[0].cn0 = 38.95457077026367;
     test_msg.states[0].sid.code = 0;
     test_msg.states[0].sid.reserved = 0;
@@ -522,7 +526,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test)
     test_msg.states[10].sid.reserved = 0;
     test_msg.states[10].sid.sat = 0;
     test_msg.states[10].state = 0;
-    test_msg.n_states = 11;
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);
                                                                               
@@ -536,6 +539,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 55286);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
     EXPECT_LT((last_msg_.states[0].cn0*100 - 38.9545707703*100), 0.05) << "incorrect value for states[0].cn0, expected 38.9545707703, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].sid.code, 0) << "incorrect value for states[0].sid.code, expected 0, is " << last_msg_.states[0].sid.code;
     EXPECT_EQ(last_msg_.states[0].sid.reserved, 0) << "incorrect value for states[0].sid.reserved, expected 0, is " << last_msg_.states[0].sid.reserved;
@@ -591,7 +595,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test)
     EXPECT_EQ(last_msg_.states[10].sid.reserved, 0) << "incorrect value for states[10].sid.reserved, expected 0, is " << last_msg_.states[10].sid.reserved;
     EXPECT_EQ(last_msg_.states[10].sid.sat, 0) << "incorrect value for states[10].sid.sat, expected 0, is " << last_msg_.states[10].sid.sat;
     EXPECT_EQ(last_msg_.states[10].state, 0) << "incorrect value for states[10].state, expected 0, is " << last_msg_.states[10].state;
-    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
 }                                                     
 class Test_auto_check_sbp_tracking_MsgTrackingState3 : 
   public ::testing::Test, 
@@ -658,7 +661,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test)
 {
 
     uint8_t encoded_frame[] = {85,19,0,246,215,99,1,202,0,0,0,120,122,29,66,1,203,0,0,0,66,22,18,66,1,208,0,0,0,153,163,24,66,1,212,0,0,0,178,204,28,66,1,217,0,0,0,220,59,38,66,1,218,0,0,0,161,27,20,66,1,220,0,0,0,125,107,24,66,1,222,0,0,0,242,46,28,66,1,225,0,0,0,231,130,41,66,0,0,0,0,0,0,0,128,191,0,0,0,0,0,0,0,128,191,73,193, };
+
     sbp_msg_tracking_state_dep_b_t test_msg{};
+    test_msg.n_states = 11;
     test_msg.states[0].cn0 = 39.369598388671875;
     test_msg.states[0].sid.code = 0;
     test_msg.states[0].sid.reserved = 0;
@@ -714,7 +719,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test)
     test_msg.states[10].sid.reserved = 0;
     test_msg.states[10].sid.sat = 0;
     test_msg.states[10].state = 0;
-    test_msg.n_states = 11;
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);
                                                                               
@@ -728,6 +732,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 55286);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
     EXPECT_LT((last_msg_.states[0].cn0*100 - 39.3695983887*100), 0.05) << "incorrect value for states[0].cn0, expected 39.3695983887, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].sid.code, 0) << "incorrect value for states[0].sid.code, expected 0, is " << last_msg_.states[0].sid.code;
     EXPECT_EQ(last_msg_.states[0].sid.reserved, 0) << "incorrect value for states[0].sid.reserved, expected 0, is " << last_msg_.states[0].sid.reserved;
@@ -783,7 +788,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test)
     EXPECT_EQ(last_msg_.states[10].sid.reserved, 0) << "incorrect value for states[10].sid.reserved, expected 0, is " << last_msg_.states[10].sid.reserved;
     EXPECT_EQ(last_msg_.states[10].sid.sat, 0) << "incorrect value for states[10].sid.sat, expected 0, is " << last_msg_.states[10].sid.sat;
     EXPECT_EQ(last_msg_.states[10].state, 0) << "incorrect value for states[10].state, expected 0, is " << last_msg_.states[10].state;
-    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
 }                                                     
 class Test_auto_check_sbp_tracking_MsgTrackingState4 : 
   public ::testing::Test, 
@@ -850,7 +854,9 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState4, Test)
 {
 
     uint8_t encoded_frame[] = {85,19,0,246,215,99,1,202,0,0,0,103,208,30,66,1,203,0,0,0,117,24,18,66,1,208,0,0,0,200,173,20,66,1,212,0,0,0,137,68,27,66,1,217,0,0,0,243,51,40,66,1,218,0,0,0,225,58,23,66,1,220,0,0,0,132,221,22,66,1,222,0,0,0,157,29,26,66,1,225,0,0,0,133,21,41,66,0,0,0,0,0,0,0,128,191,0,0,0,0,0,0,0,128,191,126,47, };
+
     sbp_msg_tracking_state_dep_b_t test_msg{};
+    test_msg.n_states = 11;
     test_msg.states[0].cn0 = 39.70351791381836;
     test_msg.states[0].sid.code = 0;
     test_msg.states[0].sid.reserved = 0;
@@ -906,7 +912,6 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState4, Test)
     test_msg.states[10].sid.reserved = 0;
     test_msg.states[10].sid.sat = 0;
     test_msg.states[10].state = 0;
-    test_msg.n_states = 11;
                                                                               
     EXPECT_EQ(send_message( 55286, test_msg), SBP_OK);
                                                                               
@@ -920,6 +925,7 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState4, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 55286);
     EXPECT_EQ(last_msg_, test_msg);
+    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
     EXPECT_LT((last_msg_.states[0].cn0*100 - 39.7035179138*100), 0.05) << "incorrect value for states[0].cn0, expected 39.7035179138, is " << last_msg_.states[0].cn0;
     EXPECT_EQ(last_msg_.states[0].sid.code, 0) << "incorrect value for states[0].sid.code, expected 0, is " << last_msg_.states[0].sid.code;
     EXPECT_EQ(last_msg_.states[0].sid.reserved, 0) << "incorrect value for states[0].sid.reserved, expected 0, is " << last_msg_.states[0].sid.reserved;
@@ -975,5 +981,4 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState4, Test)
     EXPECT_EQ(last_msg_.states[10].sid.reserved, 0) << "incorrect value for states[10].sid.reserved, expected 0, is " << last_msg_.states[10].sid.reserved;
     EXPECT_EQ(last_msg_.states[10].sid.sat, 0) << "incorrect value for states[10].sid.sat, expected 0, is " << last_msg_.states[10].sid.sat;
     EXPECT_EQ(last_msg_.states[10].state, 0) << "incorrect value for states[10].state, expected 0, is " << last_msg_.states[10].state;
-    EXPECT_EQ(last_msg_.n_states, 11) << "incorrect value for n_states, expected 11, is " << last_msg_.n_states;
 }

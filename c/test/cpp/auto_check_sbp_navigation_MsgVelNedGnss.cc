@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelNedGnss0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,46,2,0,16,22,168,230,233,29,251,255,255,255,0,0,0,0,246,255,255,255,40,0,89,0,21,2,99,171, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,46,2,0,16,22,168,230,233,29,251,255,255,255,0,0,0,0,246,255,255,255,40,0,89,0,21,2,99,171, };
+
     sbp_msg_vel_ned_gnss_t test_msg{};
     test_msg.d = -10;
     test_msg.e = 0;

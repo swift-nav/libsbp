@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_imu_MsgImuAux0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,1,9,52,18,4,1,244,10,66,200,252, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,1,9,52,18,4,1,244,10,66,200,252, };
+
     sbp_msg_imu_aux_t test_msg{};
     test_msg.imu_conf = 66;
     test_msg.imu_type = 1;

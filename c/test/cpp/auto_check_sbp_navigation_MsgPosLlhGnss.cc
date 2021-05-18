@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosLlhGnss0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,42,2,0,16,34,24,229,233,29,73,123,28,207,101,234,66,64,100,168,19,20,86,146,94,192,214,198,35,120,209,100,49,192,87,0,181,0,18,4,105,55, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,42,2,0,16,34,24,229,233,29,73,123,28,207,101,234,66,64,100,168,19,20,86,146,94,192,214,198,35,120,209,100,49,192,87,0,181,0,18,4,105,55, };
+
     sbp_msg_pos_llh_gnss_t test_msg{};
     test_msg.flags = 4;
     test_msg.h_accuracy = 87;

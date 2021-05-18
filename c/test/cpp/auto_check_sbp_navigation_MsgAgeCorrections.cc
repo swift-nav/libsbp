@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgAgeCorrections0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,16,2,66,0,6,100,0,0,0,30,0,233,202, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,16,2,66,0,6,100,0,0,0,30,0,233,202, };
+
     sbp_msg_age_corrections_t test_msg{};
     test_msg.age = 30;
     test_msg.tow = 100;

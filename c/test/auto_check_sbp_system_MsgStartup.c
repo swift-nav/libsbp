@@ -228,7 +228,9 @@ START_TEST( test_packed_auto_check_sbp_system_MsgStartup )
     u8 test_msg_len = 0;
     msg_startup_t* test_msg = ( msg_startup_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
+    test_msg->cause = 0;
     test_msg->reserved = 0;
+    test_msg->startup_type = 0;
     sbp_send_message(&sbp_state, 0xff00, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -277,7 +279,9 @@ START_TEST( test_packed_auto_check_sbp_system_MsgStartup )
     msg_startup_t* check_msg = ( msg_startup_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->cause == 0, "incorrect value for cause, expected 0, is %d", check_msg->cause);
     ck_assert_msg(check_msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", check_msg->reserved);
+    ck_assert_msg(check_msg->startup_type == 0, "incorrect value for startup_type, expected 0, is %d", check_msg->startup_type);
   }
 }
 END_TEST
@@ -361,7 +365,9 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgStartup )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_STARTUP.cause = 0;
     test_unpacked_msg.MSG_STARTUP.reserved = 0;
+    test_unpacked_msg.MSG_STARTUP.startup_type = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_STARTUP, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -385,7 +391,9 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgStartup )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_STARTUP.cause == 0, "incorrect value for check_unpacked_msg->MSG_STARTUP.cause, expected 0, is %d", check_unpacked_msg->MSG_STARTUP.cause);
     ck_assert_msg(check_unpacked_msg->MSG_STARTUP.reserved == 0, "incorrect value for check_unpacked_msg->MSG_STARTUP.reserved, expected 0, is %d", check_unpacked_msg->MSG_STARTUP.reserved);
+    ck_assert_msg(check_unpacked_msg->MSG_STARTUP.startup_type == 0, "incorrect value for check_unpacked_msg->MSG_STARTUP.startup_type, expected 0, is %d", check_unpacked_msg->MSG_STARTUP.startup_type);
   }
 }
 END_TEST

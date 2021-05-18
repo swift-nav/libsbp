@@ -61,7 +61,7 @@ tests:
         cn0: 52
         lock: 15074
         prn: 30
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 7
     module: sbp.observation
     name: MsgObsDepA
@@ -100,7 +100,7 @@ tests:
         cn0: 62
         lock: 64062
         prn: 31
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 1
     module: sbp.observation
     name: MsgObsDepA
@@ -175,7 +175,7 @@ tests:
         cn0: 52
         lock: 15074
         prn: 30
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs:  7
     module: sbp.observation
     name: MsgObsDepA
@@ -214,7 +214,7 @@ tests:
         cn0: 63
         lock: 64062
         prn: 31
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs:  1
     module: sbp.observation
     name: MsgObsDepA
@@ -275,7 +275,7 @@ tests:
         cn0: 56
         lock: 22736
         prn: 30
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 5
     module: sbp.observation
     name: MsgObsDepA
@@ -340,7 +340,7 @@ tests:
         cn0: 56
         lock: 22736
         prn: 30
-    unpacked_fields:
+    c_unpacked_fields:
       n_obs: 5
     module: sbp.observation
     name: MsgObsDepA

@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,9,2,211,136,32,16,248,122,19,73,29,46,132,182,122,68,193,219,192,29,176,121,119,80,193,83,11,210,90,79,75,77,65,0,0,15,2,84,6, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,9,2,211,136,32,16,248,122,19,73,29,46,132,182,122,68,193,219,192,29,176,121,119,80,193,83,11,210,90,79,75,77,65,0,0,15,2,84,6, };
+
     sbp_msg_pos_ecef_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 2;
@@ -175,7 +176,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,9,2,211,136,32,248,251,122,19,103,106,57,136,182,122,68,193,176,242,200,176,121,119,80,193,244,135,97,59,79,75,77,65,0,0,15,2,147,216, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,9,2,211,136,32,248,251,122,19,103,106,57,136,182,122,68,193,176,242,200,176,121,119,80,193,244,135,97,59,79,75,77,65,0,0,15,2,147,216, };
+
     sbp_msg_pos_ecef_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 2;
@@ -269,7 +271,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,9,2,211,136,32,224,255,122,19,101,179,242,182,182,122,68,193,130,196,145,199,121,119,80,193,212,10,253,15,79,75,77,65,0,0,15,2,40,201, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,9,2,211,136,32,224,255,122,19,101,179,242,182,182,122,68,193,130,196,145,199,121,119,80,193,212,10,253,15,79,75,77,65,0,0,15,2,40,201, };
+
     sbp_msg_pos_ecef_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 2;
@@ -363,7 +366,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,9,2,211,136,32,200,3,123,19,146,214,132,215,182,122,68,193,213,68,49,215,121,119,80,193,71,34,110,243,78,75,77,65,0,0,15,2,187,86, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,9,2,211,136,32,200,3,123,19,146,214,132,215,182,122,68,193,213,68,49,215,121,119,80,193,71,34,110,243,78,75,77,65,0,0,15,2,187,86, };
+
     sbp_msg_pos_ecef_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 2;

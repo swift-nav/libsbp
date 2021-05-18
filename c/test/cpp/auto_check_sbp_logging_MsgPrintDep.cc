@@ -82,6 +82,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,43,73,78,70,79,58,32,97,99,113,58,32,80,82,78,32,49,53,32,102,111,117,110,100,32,64,32,45,50,52,57,55,32,72,122,44,32,50,48,32,83,78,82,10,116,103, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)50,(char)52,(char)57,(char)55,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
@@ -172,6 +173,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,42,73,78,70,79,58,32,97,99,113,58,32,80,82,78,32,51,49,32,102,111,117,110,100,32,64,32,52,50,52,53,32,72,122,44,32,50,49,32,83,78,82,10,140,43, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)51,(char)49,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)52,(char)50,(char)52,(char)53,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)49,(char)32,(char)83,(char)78,(char)82,(char)10 };
@@ -262,6 +264,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,35,73,78,70,79,58,32,68,105,115,97,98,108,105,110,103,32,99,104,97,110,110,101,108,32,48,32,40,80,82,78,32,49,49,41,10,23,143, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)48,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)49,(char)41,(char)10 };
@@ -352,6 +355,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,41,73,78,70,79,58,32,97,99,113,58,32,80,82,78,32,50,32,102,111,117,110,100,32,64,32,51,57,57,54,32,72,122,44,32,50,48,32,83,78,82,10,239,48, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)50,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)51,(char)57,(char)57,(char)54,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
@@ -442,6 +446,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,42,73,78,70,79,58,32,97,99,113,58,32,80,82,78,32,52,32,102,111,117,110,100,32,64,32,45,55,52,57,50,32,72,122,44,32,50,48,32,83,78,82,10,47,248, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)52,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)55,(char)52,(char)57,(char)50,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
@@ -532,6 +537,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test)
 {
 
     uint8_t encoded_frame[] = {85,16,0,34,34,35,73,78,70,79,58,32,68,105,115,97,98,108,105,110,103,32,99,104,97,110,110,101,108,32,49,32,40,80,82,78,32,49,53,41,10,158,139, };
+
     sbp_msg_print_dep_t test_msg{};
     {
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)49,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)41,(char)10 };

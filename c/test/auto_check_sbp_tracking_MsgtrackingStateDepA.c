@@ -1714,6 +1714,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 11.230907440185547;
@@ -1791,7 +1792,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 6;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 1;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1815,6 +1815,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 11.2309074402*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 11.2309074402, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -1881,7 +1882,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 6, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 6, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
   // Test successful parsing of a message
   {
@@ -1902,6 +1902,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 11.014122009277344;
@@ -1979,7 +1980,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 6;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 1;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -2003,6 +2003,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 11.0141220093*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 11.0141220093, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -2069,7 +2070,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 6, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 6, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
   // Test successful parsing of a message
   {
@@ -2090,6 +2090,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 11.768689155578613;
@@ -2167,7 +2168,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 6;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 1;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -2191,6 +2191,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 11.7686891556*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 11.7686891556, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -2257,7 +2258,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 6, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 6, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
   // Test successful parsing of a message
   {
@@ -2278,6 +2278,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 62.13985824584961;
@@ -2355,7 +2356,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 0;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -2379,6 +2379,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 62.1398582458*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 62.1398582458, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -2445,7 +2446,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
   // Test successful parsing of a message
   {
@@ -2466,6 +2466,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 36.764503479003906;
@@ -2543,7 +2544,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 0;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -2567,6 +2567,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 36.764503479*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 36.764503479, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -2633,7 +2634,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
   // Test successful parsing of a message
   {
@@ -2654,6 +2654,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
     
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[0].cn0 = 27.394229888916016;
@@ -2731,7 +2732,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].prn = 0;
     
     test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.states[10].state = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DEP_A.n_states = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -2755,6 +2755,7 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
     
     ck_assert_msg((check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0*100 - 27.3942298889*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0, expected 27.3942298889, is %s", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[0].cn0);
     
@@ -2821,7 +2822,6 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgtrackingStateDepA )
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].prn);
     
     ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.states[10].state);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DEP_A.n_states);
   }
 }
 END_TEST

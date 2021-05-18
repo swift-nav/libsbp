@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_vehicle_MsgOdometry0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,3,9,66,0,9,8,0,0,0,7,0,0,0,1,52,99, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,3,9,66,0,9,8,0,0,0,7,0,0,0,1,52,99, };
+
     sbp_msg_odometry_t test_msg{};
     test_msg.flags = 1;
     test_msg.tow = 8;

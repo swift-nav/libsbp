@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgDops0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,8,2,66,0,15,100,0,0,0,2,0,6,0,5,0,5,0,5,0,0,244,4, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,8,2,66,0,15,100,0,0,0,2,0,6,0,5,0,5,0,5,0,0,244,4, };
+
     sbp_msg_dops_t test_msg{};
     test_msg.flags = 0;
     test_msg.gdop = 2;

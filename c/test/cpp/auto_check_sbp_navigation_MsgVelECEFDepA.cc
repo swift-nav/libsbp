@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,246,215,20,20,46,39,0,218,11,0,0,134,245,255,255,163,252,255,255,0,0,9,0,80,236, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,246,215,20,20,46,39,0,218,11,0,0,134,245,255,255,163,252,255,255,0,0,9,0,80,236, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -175,7 +176,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,246,215,20,120,46,39,0,68,11,0,0,24,246,255,255,220,252,255,255,0,0,9,0,248,138, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,246,215,20,120,46,39,0,68,11,0,0,24,246,255,255,220,252,255,255,0,0,9,0,248,138, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -269,7 +271,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,246,215,20,220,46,39,0,21,11,0,0,77,246,255,255,247,252,255,255,0,0,9,0,25,174, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,246,215,20,220,46,39,0,21,11,0,0,77,246,255,255,247,252,255,255,0,0,9,0,25,174, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -363,7 +366,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,246,215,20,64,47,39,0,121,11,0,0,2,246,255,255,234,252,255,255,0,0,9,0,195,228, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,246,215,20,64,47,39,0,121,11,0,0,2,246,255,255,234,252,255,255,0,0,9,0,195,228, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -457,7 +461,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,246,215,20,164,47,39,0,31,11,0,0,93,246,255,255,16,253,255,255,0,0,9,0,219,164, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,246,215,20,164,47,39,0,31,11,0,0,93,246,255,255,16,253,255,255,0,0,9,0,219,164, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -551,7 +556,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA5, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,212,157,67,24,24,0,0,0,245,255,255,255,219,255,255,255,0,0,8,0,68,255, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,212,157,67,24,24,0,0,0,245,255,255,255,219,255,255,255,0,0,8,0,68,255, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -645,7 +651,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA6, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,56,158,67,24,4,0,0,0,234,255,255,255,18,0,0,0,0,0,8,0,214,136, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,56,158,67,24,4,0,0,0,234,255,255,255,18,0,0,0,0,0,8,0,214,136, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -739,7 +746,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA7, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,156,158,67,24,230,255,255,255,4,0,0,0,1,0,0,0,0,0,8,0,122,159, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,156,158,67,24,230,255,255,255,4,0,0,0,1,0,0,0,0,0,8,0,122,159, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -833,7 +841,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA8, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,0,159,67,24,247,255,255,255,237,255,255,255,28,0,0,0,0,0,8,0,232,146, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,0,159,67,24,247,255,255,255,237,255,255,255,28,0,0,0,0,0,8,0,232,146, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -927,7 +936,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA9, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,100,159,67,24,255,255,255,255,2,0,0,0,245,255,255,255,0,0,8,0,171,238, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,100,159,67,24,255,255,255,255,2,0,0,0,245,255,255,255,0,0,8,0,171,238, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;
@@ -1021,7 +1031,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgVelECEFDepA10, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,4,2,195,4,20,46,162,68,24,207,255,255,255,185,255,255,255,65,0,0,0,0,0,5,0,82,154, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,4,2,195,4,20,46,162,68,24,207,255,255,255,185,255,255,255,65,0,0,0,0,0,5,0,82,154, };
+
     sbp_msg_vel_ecef_dep_a_t test_msg{};
     test_msg.accuracy = 0;
     test_msg.flags = 0;

@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgProtectionLevelDepA0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,22,2,0,16,33,136,227,233,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,82,195, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,22,2,0,16,33,136,227,233,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,82,195, };
+
     sbp_msg_protection_level_dep_a_t test_msg{};
     test_msg.flags = 0;
     test_msg.height = 0.0;

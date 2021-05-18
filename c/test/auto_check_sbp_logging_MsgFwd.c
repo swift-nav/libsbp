@@ -247,13 +247,15 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgFwd )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    
     {
       const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      memcpy(test_unpacked_msg.MSG_FWD.fwd_payload, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.MSG_FWD.fwd_payload.data, assign_string, sizeof(assign_string));
     }
+    
+    test_unpacked_msg.MSG_FWD.fwd_payload.len = 16;
     test_unpacked_msg.MSG_FWD.protocol = 0;
     test_unpacked_msg.MSG_FWD.source = 0;
-    test_unpacked_msg.MSG_FWD.n_fwd_payload = 16;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_FWD, 66, &test_unpacked_msg, &dummy_write);
 
@@ -277,13 +279,15 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgFwd )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    
     {
       const char check_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_FWD.fwd_payload);
+      ck_assert_msg(memcmp(check_unpacked_msg->MSG_FWD.fwd_payload.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_FWD.fwd_payload.data);
     }
+    
+    ck_assert_msg(check_unpacked_msg->MSG_FWD.fwd_payload.len == 16, "incorrect value for check_unpacked_msg->MSG_FWD.fwd_payload.len, expected 16, is %d", check_unpacked_msg->MSG_FWD.fwd_payload.len);
     ck_assert_msg(check_unpacked_msg->MSG_FWD.protocol == 0, "incorrect value for check_unpacked_msg->MSG_FWD.protocol, expected 0, is %d", check_unpacked_msg->MSG_FWD.protocol);
     ck_assert_msg(check_unpacked_msg->MSG_FWD.source == 0, "incorrect value for check_unpacked_msg->MSG_FWD.source, expected 0, is %d", check_unpacked_msg->MSG_FWD.source);
-    ck_assert_msg(check_unpacked_msg->MSG_FWD.n_fwd_payload == 16, "incorrect value for check_unpacked_msg->MSG_FWD.n_fwd_payload, expected 16, is %d", check_unpacked_msg->MSG_FWD.n_fwd_payload);
   }
 }
 END_TEST

@@ -82,6 +82,7 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test)
 {
 
     uint8_t encoded_frame[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
+
     sbp_msg_dgnss_status_t test_msg{};
     test_msg.flags = 0;
     test_msg.latency = 50;

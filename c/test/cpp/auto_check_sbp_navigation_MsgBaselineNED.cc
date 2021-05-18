@@ -81,7 +81,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgBaselineNED0, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,12,2,211,136,22,40,244,122,19,201,115,12,0,179,88,230,255,153,125,0,0,0,0,0,0,14,0,226,70, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,12,2,211,136,22,40,244,122,19,201,115,12,0,179,88,230,255,153,125,0,0,0,0,0,0,14,0,226,70, };
+
     sbp_msg_baseline_ned_t test_msg{};
     test_msg.d = 32153;
     test_msg.e = -1681229;
@@ -177,7 +178,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgBaselineNED1, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,12,2,211,136,22,16,248,122,19,98,115,12,0,194,88,230,255,110,127,0,0,0,0,0,0,15,0,69,93, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,12,2,211,136,22,16,248,122,19,98,115,12,0,194,88,230,255,110,127,0,0,0,0,0,0,15,0,69,93, };
+
     sbp_msg_baseline_ned_t test_msg{};
     test_msg.d = 32622;
     test_msg.e = -1681214;
@@ -273,7 +275,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgBaselineNED2, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,12,2,211,136,22,248,251,122,19,143,114,12,0,173,88,230,255,238,127,0,0,0,0,0,0,15,0,210,169, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,12,2,211,136,22,248,251,122,19,143,114,12,0,173,88,230,255,238,127,0,0,0,0,0,0,15,0,210,169, };
+
     sbp_msg_baseline_ned_t test_msg{};
     test_msg.d = 32750;
     test_msg.e = -1681235;
@@ -369,7 +372,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgBaselineNED3, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,12,2,211,136,22,224,255,122,19,86,112,12,0,51,88,230,255,47,127,0,0,0,0,0,0,15,0,135,107, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,12,2,211,136,22,224,255,122,19,86,112,12,0,51,88,230,255,47,127,0,0,0,0,0,0,15,0,135,107, };
+
     sbp_msg_baseline_ned_t test_msg{};
     test_msg.d = 32559;
     test_msg.e = -1681357;
@@ -465,7 +469,8 @@ protected:
 TEST_F(Test_auto_check_sbp_navigation_MsgBaselineNED4, Test)     
 {
 
-    uint8_t encoded_frame[] = {85,12,2,211,136,22,200,3,123,19,214,110,12,0,220,87,230,255,165,126,0,0,0,0,0,0,15,0,190,80, }; //No unpacked fields
+    uint8_t encoded_frame[] = {85,12,2,211,136,22,200,3,123,19,214,110,12,0,220,87,230,255,165,126,0,0,0,0,0,0,15,0,190,80, };
+
     sbp_msg_baseline_ned_t test_msg{};
     test_msg.d = 32421;
     test_msg.e = -1681444;
