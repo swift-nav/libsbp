@@ -1,7 +1,7 @@
 use std::{borrow::Borrow, collections::HashMap};
 
 use bytes::{Buf, BufMut, BytesMut};
-use dencode::{Decoder, Encoder};
+use dencode::{Decoder, Encoder, FramedWrite};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
 
@@ -155,6 +155,10 @@ impl<F: Formatter + Clone> JsonEncoder<F> {
             payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
             formatter,
         }
+    }
+
+    pub fn framed<W>(writer: W, formatter: F) -> FramedWrite<W, Self> {
+        FramedWrite::new(writer, Self::new(formatter))
     }
 }
 

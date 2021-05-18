@@ -1,7 +1,7 @@
 use std::borrow::Borrow;
 
 use bytes::{Buf, BufMut, BytesMut};
-use dencode::{Decoder, Encoder, FramedRead};
+use dencode::{Decoder, Encoder, FramedRead, FramedWrite};
 
 use crate::{
     messages::{SBPMessage, SBP},
@@ -72,6 +72,10 @@ impl SbpEncoder {
         SbpEncoder {
             frame: Vec::with_capacity(MAX_FRAME_LENGTH),
         }
+    }
+
+    pub fn framed<W>(writer: W) -> FramedWrite<W, Self> {
+        FramedWrite::new(writer, Self::new())
     }
 }
 
