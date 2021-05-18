@@ -1,3 +1,5 @@
+use std::borrow::Borrow;
+
 use bytes::{Buf, BufMut, BytesMut};
 use dencode::{Decoder, Encoder, FramedRead};
 
@@ -75,13 +77,13 @@ impl SbpEncoder {
 
 impl<T> Encoder<T> for SbpEncoder
 where
-    T: AsRef<SBP>,
+    T: Borrow<SBP>,
 {
     type Error = Error;
 
     fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<()> {
         self.frame.clear();
-        match msg.as_ref().write_frame(&mut self.frame) {
+        match msg.borrow().write_frame(&mut self.frame) {
             Ok(_) => dst.put_slice(self.frame.as_slice()),
             Err(err) => log::error!("Error converting sbp message to frame: {}", err),
         }

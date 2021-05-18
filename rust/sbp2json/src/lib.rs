@@ -60,8 +60,8 @@ fn maybe_send_buffered<R, W, D, E>(
 where
     R: Read,
     W: Write,
-    D: Decoder<Item = E::Item, Error = Error>,
-    E: Encoder<E::Item, Error = Error>,
+    D: Decoder<Error = Error>,
+    E: Encoder<D::Item, Error = Error>,
 {
     if buffered {
         sink.send_all(source)?;

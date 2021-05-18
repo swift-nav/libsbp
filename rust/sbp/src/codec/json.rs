@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{borrow::Borrow, collections::HashMap};
 
 use bytes::{Buf, BufMut, BytesMut};
 use dencode::{Decoder, Encoder};
@@ -170,12 +170,12 @@ struct JsonOutput<'a> {
 impl<F, T> Encoder<T> for JsonEncoder<F>
 where
     F: Formatter + Clone,
-    T: AsRef<SBP>,
+    T: Borrow<SBP>,
 {
     type Error = Error;
 
     fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<()> {
-        let msg = msg.as_ref();
+        let msg = msg.borrow();
         let formatter = self.formatter.clone();
         let common = get_common_fields(&mut self.payload_buf, &mut self.frame_buf, msg)?;
         let output = JsonOutput { common, msg };
