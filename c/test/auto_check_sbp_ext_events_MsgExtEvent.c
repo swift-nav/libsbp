@@ -242,11 +242,11 @@ START_TEST( test_unpacked_auto_check_sbp_ext_events_MsgExtEvent )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_EXT_EVENT.flags = 3;
-    test_unpacked_msg.MSG_EXT_EVENT.ns_residual = 999882;
-    test_unpacked_msg.MSG_EXT_EVENT.pin = 0;
-    test_unpacked_msg.MSG_EXT_EVENT.tow = 254924999;
-    test_unpacked_msg.MSG_EXT_EVENT.wn = 1840;
+    test_unpacked_msg.ext_event.flags = 3;
+    test_unpacked_msg.ext_event.ns_residual = 999882;
+    test_unpacked_msg.ext_event.pin = 0;
+    test_unpacked_msg.ext_event.tow = 254924999;
+    test_unpacked_msg.ext_event.wn = 1840;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_EXT_EVENT, 1781, &test_unpacked_msg, &dummy_write);
 
@@ -270,11 +270,11 @@ START_TEST( test_unpacked_auto_check_sbp_ext_events_MsgExtEvent )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_EXT_EVENT.flags == 3, "incorrect value for check_unpacked_msg->MSG_EXT_EVENT.flags, expected 3, is %d", check_unpacked_msg->MSG_EXT_EVENT.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_EXT_EVENT.ns_residual == 999882, "incorrect value for check_unpacked_msg->MSG_EXT_EVENT.ns_residual, expected 999882, is %d", check_unpacked_msg->MSG_EXT_EVENT.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_EXT_EVENT.pin == 0, "incorrect value for check_unpacked_msg->MSG_EXT_EVENT.pin, expected 0, is %d", check_unpacked_msg->MSG_EXT_EVENT.pin);
-    ck_assert_msg(check_unpacked_msg->MSG_EXT_EVENT.tow == 254924999, "incorrect value for check_unpacked_msg->MSG_EXT_EVENT.tow, expected 254924999, is %d", check_unpacked_msg->MSG_EXT_EVENT.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_EXT_EVENT.wn == 1840, "incorrect value for check_unpacked_msg->MSG_EXT_EVENT.wn, expected 1840, is %d", check_unpacked_msg->MSG_EXT_EVENT.wn);
+    ck_assert_msg(check_unpacked_msg->ext_event.flags == 3, "incorrect value for check_unpacked_msg->ext_event.flags, expected 3, is %d", check_unpacked_msg->ext_event.flags);
+    ck_assert_msg(check_unpacked_msg->ext_event.ns_residual == 999882, "incorrect value for check_unpacked_msg->ext_event.ns_residual, expected 999882, is %d", check_unpacked_msg->ext_event.ns_residual);
+    ck_assert_msg(check_unpacked_msg->ext_event.pin == 0, "incorrect value for check_unpacked_msg->ext_event.pin, expected 0, is %d", check_unpacked_msg->ext_event.pin);
+    ck_assert_msg(check_unpacked_msg->ext_event.tow == 254924999, "incorrect value for check_unpacked_msg->ext_event.tow, expected 254924999, is %d", check_unpacked_msg->ext_event.tow);
+    ck_assert_msg(check_unpacked_msg->ext_event.wn == 1840, "incorrect value for check_unpacked_msg->ext_event.wn, expected 1840, is %d", check_unpacked_msg->ext_event.wn);
   }
 }
 END_TEST

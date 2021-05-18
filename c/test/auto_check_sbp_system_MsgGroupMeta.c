@@ -435,15 +435,15 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgGroupMeta )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GROUP_META.flags = 2;
-    test_unpacked_msg.MSG_GROUP_META.group_id = 1;
+    test_unpacked_msg.group_meta.flags = 2;
+    test_unpacked_msg.group_meta.group_id = 1;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[0] = 65290;
+    test_unpacked_msg.group_meta.group_msgs[0] = 65290;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[1] = 522;
+    test_unpacked_msg.group_meta.group_msgs[1] = 522;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[2] = 65282;
-    test_unpacked_msg.MSG_GROUP_META.n_group_msgs = 3;
+    test_unpacked_msg.group_meta.group_msgs[2] = 65282;
+    test_unpacked_msg.group_meta.n_group_msgs = 3;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GROUP_META, 61166, &test_unpacked_msg, &dummy_write);
 
@@ -467,12 +467,12 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgGroupMeta )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.flags == 2, "incorrect value for check_unpacked_msg->MSG_GROUP_META.flags, expected 2, is %d", check_unpacked_msg->MSG_GROUP_META.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_id == 1, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_id, expected 1, is %d", check_unpacked_msg->MSG_GROUP_META.group_id);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[0] == 65290, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[0], expected 65290, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[0]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[1] == 522, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[1], expected 522, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[1]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[2] == 65282, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[2], expected 65282, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[2]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.n_group_msgs == 3, "incorrect value for check_unpacked_msg->MSG_GROUP_META.n_group_msgs, expected 3, is %d", check_unpacked_msg->MSG_GROUP_META.n_group_msgs);
+    ck_assert_msg(check_unpacked_msg->group_meta.flags == 2, "incorrect value for check_unpacked_msg->group_meta.flags, expected 2, is %d", check_unpacked_msg->group_meta.flags);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_id == 1, "incorrect value for check_unpacked_msg->group_meta.group_id, expected 1, is %d", check_unpacked_msg->group_meta.group_id);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[0] == 65290, "incorrect value for check_unpacked_msg->group_meta.group_msgs[0], expected 65290, is %d", check_unpacked_msg->group_meta.group_msgs[0]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[1] == 522, "incorrect value for check_unpacked_msg->group_meta.group_msgs[1], expected 522, is %d", check_unpacked_msg->group_meta.group_msgs[1]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[2] == 65282, "incorrect value for check_unpacked_msg->group_meta.group_msgs[2], expected 65282, is %d", check_unpacked_msg->group_meta.group_msgs[2]);
+    ck_assert_msg(check_unpacked_msg->group_meta.n_group_msgs == 3, "incorrect value for check_unpacked_msg->group_meta.n_group_msgs, expected 3, is %d", check_unpacked_msg->group_meta.n_group_msgs);
   }
   // Test successful parsing of a message
   {
@@ -493,37 +493,37 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgGroupMeta )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GROUP_META.flags = 1;
-    test_unpacked_msg.MSG_GROUP_META.group_id = 1;
+    test_unpacked_msg.group_meta.flags = 1;
+    test_unpacked_msg.group_meta.group_id = 1;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[0] = 258;
+    test_unpacked_msg.group_meta.group_msgs[0] = 258;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[1] = 259;
+    test_unpacked_msg.group_meta.group_msgs[1] = 259;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[2] = 522;
+    test_unpacked_msg.group_meta.group_msgs[2] = 522;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[3] = 529;
+    test_unpacked_msg.group_meta.group_msgs[3] = 529;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[4] = 521;
+    test_unpacked_msg.group_meta.group_msgs[4] = 521;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[5] = 532;
+    test_unpacked_msg.group_meta.group_msgs[5] = 532;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[6] = 526;
+    test_unpacked_msg.group_meta.group_msgs[6] = 526;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[7] = 530;
+    test_unpacked_msg.group_meta.group_msgs[7] = 530;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[8] = 525;
+    test_unpacked_msg.group_meta.group_msgs[8] = 525;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[9] = 533;
+    test_unpacked_msg.group_meta.group_msgs[9] = 533;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[10] = 545;
+    test_unpacked_msg.group_meta.group_msgs[10] = 545;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[11] = 65283;
+    test_unpacked_msg.group_meta.group_msgs[11] = 65283;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[12] = 65286;
+    test_unpacked_msg.group_meta.group_msgs[12] = 65286;
     
-    test_unpacked_msg.MSG_GROUP_META.group_msgs[13] = 65294;
-    test_unpacked_msg.MSG_GROUP_META.n_group_msgs = 14;
+    test_unpacked_msg.group_meta.group_msgs[13] = 65294;
+    test_unpacked_msg.group_meta.n_group_msgs = 14;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GROUP_META, 789, &test_unpacked_msg, &dummy_write);
 
@@ -547,23 +547,23 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgGroupMeta )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.flags == 1, "incorrect value for check_unpacked_msg->MSG_GROUP_META.flags, expected 1, is %d", check_unpacked_msg->MSG_GROUP_META.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_id == 1, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_id, expected 1, is %d", check_unpacked_msg->MSG_GROUP_META.group_id);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[0] == 258, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[0], expected 258, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[0]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[1] == 259, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[1], expected 259, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[1]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[2] == 522, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[2], expected 522, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[2]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[3] == 529, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[3], expected 529, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[3]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[4] == 521, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[4], expected 521, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[4]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[5] == 532, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[5], expected 532, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[5]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[6] == 526, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[6], expected 526, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[6]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[7] == 530, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[7], expected 530, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[7]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[8] == 525, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[8], expected 525, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[8]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[9] == 533, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[9], expected 533, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[9]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[10] == 545, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[10], expected 545, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[10]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[11] == 65283, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[11], expected 65283, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[11]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[12] == 65286, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[12], expected 65286, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[12]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.group_msgs[13] == 65294, "incorrect value for check_unpacked_msg->MSG_GROUP_META.group_msgs[13], expected 65294, is %d", check_unpacked_msg->MSG_GROUP_META.group_msgs[13]);
-    ck_assert_msg(check_unpacked_msg->MSG_GROUP_META.n_group_msgs == 14, "incorrect value for check_unpacked_msg->MSG_GROUP_META.n_group_msgs, expected 14, is %d", check_unpacked_msg->MSG_GROUP_META.n_group_msgs);
+    ck_assert_msg(check_unpacked_msg->group_meta.flags == 1, "incorrect value for check_unpacked_msg->group_meta.flags, expected 1, is %d", check_unpacked_msg->group_meta.flags);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_id == 1, "incorrect value for check_unpacked_msg->group_meta.group_id, expected 1, is %d", check_unpacked_msg->group_meta.group_id);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[0] == 258, "incorrect value for check_unpacked_msg->group_meta.group_msgs[0], expected 258, is %d", check_unpacked_msg->group_meta.group_msgs[0]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[1] == 259, "incorrect value for check_unpacked_msg->group_meta.group_msgs[1], expected 259, is %d", check_unpacked_msg->group_meta.group_msgs[1]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[2] == 522, "incorrect value for check_unpacked_msg->group_meta.group_msgs[2], expected 522, is %d", check_unpacked_msg->group_meta.group_msgs[2]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[3] == 529, "incorrect value for check_unpacked_msg->group_meta.group_msgs[3], expected 529, is %d", check_unpacked_msg->group_meta.group_msgs[3]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[4] == 521, "incorrect value for check_unpacked_msg->group_meta.group_msgs[4], expected 521, is %d", check_unpacked_msg->group_meta.group_msgs[4]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[5] == 532, "incorrect value for check_unpacked_msg->group_meta.group_msgs[5], expected 532, is %d", check_unpacked_msg->group_meta.group_msgs[5]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[6] == 526, "incorrect value for check_unpacked_msg->group_meta.group_msgs[6], expected 526, is %d", check_unpacked_msg->group_meta.group_msgs[6]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[7] == 530, "incorrect value for check_unpacked_msg->group_meta.group_msgs[7], expected 530, is %d", check_unpacked_msg->group_meta.group_msgs[7]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[8] == 525, "incorrect value for check_unpacked_msg->group_meta.group_msgs[8], expected 525, is %d", check_unpacked_msg->group_meta.group_msgs[8]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[9] == 533, "incorrect value for check_unpacked_msg->group_meta.group_msgs[9], expected 533, is %d", check_unpacked_msg->group_meta.group_msgs[9]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[10] == 545, "incorrect value for check_unpacked_msg->group_meta.group_msgs[10], expected 545, is %d", check_unpacked_msg->group_meta.group_msgs[10]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[11] == 65283, "incorrect value for check_unpacked_msg->group_meta.group_msgs[11], expected 65283, is %d", check_unpacked_msg->group_meta.group_msgs[11]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[12] == 65286, "incorrect value for check_unpacked_msg->group_meta.group_msgs[12], expected 65286, is %d", check_unpacked_msg->group_meta.group_msgs[12]);
+    ck_assert_msg(check_unpacked_msg->group_meta.group_msgs[13] == 65294, "incorrect value for check_unpacked_msg->group_meta.group_msgs[13], expected 65294, is %d", check_unpacked_msg->group_meta.group_msgs[13]);
+    ck_assert_msg(check_unpacked_msg->group_meta.n_group_msgs == 14, "incorrect value for check_unpacked_msg->group_meta.n_group_msgs, expected 14, is %d", check_unpacked_msg->group_meta.n_group_msgs);
   }
 }
 END_TEST

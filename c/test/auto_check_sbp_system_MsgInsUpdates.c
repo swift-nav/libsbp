@@ -246,13 +246,13 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgInsUpdates )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_INS_UPDATES.gnsspos = 0;
-    test_unpacked_msg.MSG_INS_UPDATES.gnssvel = 0;
-    test_unpacked_msg.MSG_INS_UPDATES.nhc = 0;
-    test_unpacked_msg.MSG_INS_UPDATES.speed = 0;
-    test_unpacked_msg.MSG_INS_UPDATES.tow = 504489300;
-    test_unpacked_msg.MSG_INS_UPDATES.wheelticks = 0;
-    test_unpacked_msg.MSG_INS_UPDATES.zerovel = 0;
+    test_unpacked_msg.ins_updates.gnsspos = 0;
+    test_unpacked_msg.ins_updates.gnssvel = 0;
+    test_unpacked_msg.ins_updates.nhc = 0;
+    test_unpacked_msg.ins_updates.speed = 0;
+    test_unpacked_msg.ins_updates.tow = 504489300;
+    test_unpacked_msg.ins_updates.wheelticks = 0;
+    test_unpacked_msg.ins_updates.zerovel = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_INS_UPDATES, 789, &test_unpacked_msg, &dummy_write);
 
@@ -276,13 +276,13 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgInsUpdates )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.gnsspos == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.gnsspos, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.gnsspos);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.gnssvel == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.gnssvel, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.gnssvel);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.nhc == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.nhc, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.nhc);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.speed == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.speed, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.speed);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.tow == 504489300, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.tow, expected 504489300, is %d", check_unpacked_msg->MSG_INS_UPDATES.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.wheelticks == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.wheelticks, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.wheelticks);
-    ck_assert_msg(check_unpacked_msg->MSG_INS_UPDATES.zerovel == 0, "incorrect value for check_unpacked_msg->MSG_INS_UPDATES.zerovel, expected 0, is %d", check_unpacked_msg->MSG_INS_UPDATES.zerovel);
+    ck_assert_msg(check_unpacked_msg->ins_updates.gnsspos == 0, "incorrect value for check_unpacked_msg->ins_updates.gnsspos, expected 0, is %d", check_unpacked_msg->ins_updates.gnsspos);
+    ck_assert_msg(check_unpacked_msg->ins_updates.gnssvel == 0, "incorrect value for check_unpacked_msg->ins_updates.gnssvel, expected 0, is %d", check_unpacked_msg->ins_updates.gnssvel);
+    ck_assert_msg(check_unpacked_msg->ins_updates.nhc == 0, "incorrect value for check_unpacked_msg->ins_updates.nhc, expected 0, is %d", check_unpacked_msg->ins_updates.nhc);
+    ck_assert_msg(check_unpacked_msg->ins_updates.speed == 0, "incorrect value for check_unpacked_msg->ins_updates.speed, expected 0, is %d", check_unpacked_msg->ins_updates.speed);
+    ck_assert_msg(check_unpacked_msg->ins_updates.tow == 504489300, "incorrect value for check_unpacked_msg->ins_updates.tow, expected 504489300, is %d", check_unpacked_msg->ins_updates.tow);
+    ck_assert_msg(check_unpacked_msg->ins_updates.wheelticks == 0, "incorrect value for check_unpacked_msg->ins_updates.wheelticks, expected 0, is %d", check_unpacked_msg->ins_updates.wheelticks);
+    ck_assert_msg(check_unpacked_msg->ins_updates.zerovel == 0, "incorrect value for check_unpacked_msg->ins_updates.zerovel, expected 0, is %d", check_unpacked_msg->ins_updates.zerovel);
   }
 }
 END_TEST

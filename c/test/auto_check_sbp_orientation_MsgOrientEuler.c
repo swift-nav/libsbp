@@ -248,14 +248,14 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgOrientEuler )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ORIENT_EULER.flags = 3;
-    test_unpacked_msg.MSG_ORIENT_EULER.pitch = 2;
-    test_unpacked_msg.MSG_ORIENT_EULER.pitch_accuracy = 3.0;
-    test_unpacked_msg.MSG_ORIENT_EULER.roll = 1;
-    test_unpacked_msg.MSG_ORIENT_EULER.roll_accuracy = 7.0;
-    test_unpacked_msg.MSG_ORIENT_EULER.tow = 1;
-    test_unpacked_msg.MSG_ORIENT_EULER.yaw = 8;
-    test_unpacked_msg.MSG_ORIENT_EULER.yaw_accuracy = 7.0;
+    test_unpacked_msg.orient_euler.flags = 3;
+    test_unpacked_msg.orient_euler.pitch = 2;
+    test_unpacked_msg.orient_euler.pitch_accuracy = 3.0;
+    test_unpacked_msg.orient_euler.roll = 1;
+    test_unpacked_msg.orient_euler.roll_accuracy = 7.0;
+    test_unpacked_msg.orient_euler.tow = 1;
+    test_unpacked_msg.orient_euler.yaw = 8;
+    test_unpacked_msg.orient_euler.yaw_accuracy = 7.0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ORIENT_EULER, 66, &test_unpacked_msg, &dummy_write);
 
@@ -279,14 +279,14 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgOrientEuler )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_EULER.flags == 3, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.flags, expected 3, is %d", check_unpacked_msg->MSG_ORIENT_EULER.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_EULER.pitch == 2, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.pitch, expected 2, is %d", check_unpacked_msg->MSG_ORIENT_EULER.pitch);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_EULER.pitch_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.pitch_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_EULER.pitch_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_EULER.roll == 1, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.roll, expected 1, is %d", check_unpacked_msg->MSG_ORIENT_EULER.roll);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_EULER.roll_accuracy*100 - 7.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.roll_accuracy, expected 7.0, is %s", check_unpacked_msg->MSG_ORIENT_EULER.roll_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_EULER.tow == 1, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.tow, expected 1, is %d", check_unpacked_msg->MSG_ORIENT_EULER.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_EULER.yaw == 8, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.yaw, expected 8, is %d", check_unpacked_msg->MSG_ORIENT_EULER.yaw);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_EULER.yaw_accuracy*100 - 7.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_EULER.yaw_accuracy, expected 7.0, is %s", check_unpacked_msg->MSG_ORIENT_EULER.yaw_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_euler.flags == 3, "incorrect value for check_unpacked_msg->orient_euler.flags, expected 3, is %d", check_unpacked_msg->orient_euler.flags);
+    ck_assert_msg(check_unpacked_msg->orient_euler.pitch == 2, "incorrect value for check_unpacked_msg->orient_euler.pitch, expected 2, is %d", check_unpacked_msg->orient_euler.pitch);
+    ck_assert_msg((check_unpacked_msg->orient_euler.pitch_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_euler.pitch_accuracy, expected 3.0, is %s", check_unpacked_msg->orient_euler.pitch_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_euler.roll == 1, "incorrect value for check_unpacked_msg->orient_euler.roll, expected 1, is %d", check_unpacked_msg->orient_euler.roll);
+    ck_assert_msg((check_unpacked_msg->orient_euler.roll_accuracy*100 - 7.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_euler.roll_accuracy, expected 7.0, is %s", check_unpacked_msg->orient_euler.roll_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_euler.tow == 1, "incorrect value for check_unpacked_msg->orient_euler.tow, expected 1, is %d", check_unpacked_msg->orient_euler.tow);
+    ck_assert_msg(check_unpacked_msg->orient_euler.yaw == 8, "incorrect value for check_unpacked_msg->orient_euler.yaw, expected 8, is %d", check_unpacked_msg->orient_euler.yaw);
+    ck_assert_msg((check_unpacked_msg->orient_euler.yaw_accuracy*100 - 7.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_euler.yaw_accuracy, expected 7.0, is %s", check_unpacked_msg->orient_euler.yaw_accuracy);
   }
 }
 END_TEST

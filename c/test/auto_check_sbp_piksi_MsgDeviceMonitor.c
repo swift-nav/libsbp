@@ -570,11 +570,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6165;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+    test_unpacked_msg.device_monitor.cpu_temperature = 6165;
+    test_unpacked_msg.device_monitor.cpu_vaux = 1789;
+    test_unpacked_msg.device_monitor.cpu_vint = 987;
+    test_unpacked_msg.device_monitor.dev_vin = -9999;
+    test_unpacked_msg.device_monitor.fe_temperature = 4776;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
 
@@ -598,11 +598,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6165, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6165, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_temperature == 6165, "incorrect value for check_unpacked_msg->device_monitor.cpu_temperature, expected 6165, is %d", check_unpacked_msg->device_monitor.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->device_monitor.cpu_vaux, expected 1789, is %d", check_unpacked_msg->device_monitor.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vint == 987, "incorrect value for check_unpacked_msg->device_monitor.cpu_vint, expected 987, is %d", check_unpacked_msg->device_monitor.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->device_monitor.dev_vin == -9999, "incorrect value for check_unpacked_msg->device_monitor.dev_vin, expected -9999, is %d", check_unpacked_msg->device_monitor.dev_vin);
+    ck_assert_msg(check_unpacked_msg->device_monitor.fe_temperature == 4776, "incorrect value for check_unpacked_msg->device_monitor.fe_temperature, expected 4776, is %d", check_unpacked_msg->device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -623,11 +623,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6168;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1790;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+    test_unpacked_msg.device_monitor.cpu_temperature = 6168;
+    test_unpacked_msg.device_monitor.cpu_vaux = 1790;
+    test_unpacked_msg.device_monitor.cpu_vint = 987;
+    test_unpacked_msg.device_monitor.dev_vin = -9999;
+    test_unpacked_msg.device_monitor.fe_temperature = 4776;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
 
@@ -651,11 +651,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6168, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6168, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1790, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1790, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_temperature == 6168, "incorrect value for check_unpacked_msg->device_monitor.cpu_temperature, expected 6168, is %d", check_unpacked_msg->device_monitor.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vaux == 1790, "incorrect value for check_unpacked_msg->device_monitor.cpu_vaux, expected 1790, is %d", check_unpacked_msg->device_monitor.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vint == 987, "incorrect value for check_unpacked_msg->device_monitor.cpu_vint, expected 987, is %d", check_unpacked_msg->device_monitor.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->device_monitor.dev_vin == -9999, "incorrect value for check_unpacked_msg->device_monitor.dev_vin, expected -9999, is %d", check_unpacked_msg->device_monitor.dev_vin);
+    ck_assert_msg(check_unpacked_msg->device_monitor.fe_temperature == 4776, "incorrect value for check_unpacked_msg->device_monitor.fe_temperature, expected 4776, is %d", check_unpacked_msg->device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -676,11 +676,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6166;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 987;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+    test_unpacked_msg.device_monitor.cpu_temperature = 6166;
+    test_unpacked_msg.device_monitor.cpu_vaux = 1789;
+    test_unpacked_msg.device_monitor.cpu_vint = 987;
+    test_unpacked_msg.device_monitor.dev_vin = -9999;
+    test_unpacked_msg.device_monitor.fe_temperature = 4776;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
 
@@ -704,11 +704,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6166, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6166, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 987, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 987, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_temperature == 6166, "incorrect value for check_unpacked_msg->device_monitor.cpu_temperature, expected 6166, is %d", check_unpacked_msg->device_monitor.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->device_monitor.cpu_vaux, expected 1789, is %d", check_unpacked_msg->device_monitor.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vint == 987, "incorrect value for check_unpacked_msg->device_monitor.cpu_vint, expected 987, is %d", check_unpacked_msg->device_monitor.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->device_monitor.dev_vin == -9999, "incorrect value for check_unpacked_msg->device_monitor.dev_vin, expected -9999, is %d", check_unpacked_msg->device_monitor.dev_vin);
+    ck_assert_msg(check_unpacked_msg->device_monitor.fe_temperature == 4776, "incorrect value for check_unpacked_msg->device_monitor.fe_temperature, expected 4776, is %d", check_unpacked_msg->device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -729,11 +729,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6150;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1788;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 986;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+    test_unpacked_msg.device_monitor.cpu_temperature = 6150;
+    test_unpacked_msg.device_monitor.cpu_vaux = 1788;
+    test_unpacked_msg.device_monitor.cpu_vint = 986;
+    test_unpacked_msg.device_monitor.dev_vin = -9999;
+    test_unpacked_msg.device_monitor.fe_temperature = 4776;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
 
@@ -757,11 +757,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6150, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6150, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1788, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1788, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 986, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 986, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_temperature == 6150, "incorrect value for check_unpacked_msg->device_monitor.cpu_temperature, expected 6150, is %d", check_unpacked_msg->device_monitor.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vaux == 1788, "incorrect value for check_unpacked_msg->device_monitor.cpu_vaux, expected 1788, is %d", check_unpacked_msg->device_monitor.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vint == 986, "incorrect value for check_unpacked_msg->device_monitor.cpu_vint, expected 986, is %d", check_unpacked_msg->device_monitor.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->device_monitor.dev_vin == -9999, "incorrect value for check_unpacked_msg->device_monitor.dev_vin, expected -9999, is %d", check_unpacked_msg->device_monitor.dev_vin);
+    ck_assert_msg(check_unpacked_msg->device_monitor.fe_temperature == 4776, "incorrect value for check_unpacked_msg->device_monitor.fe_temperature, expected 4776, is %d", check_unpacked_msg->device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -782,11 +782,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_temperature = 6123;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vaux = 1789;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.cpu_vint = 988;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.dev_vin = -9999;
-    test_unpacked_msg.MSG_DEVICE_MONITOR.fe_temperature = 4776;
+    test_unpacked_msg.device_monitor.cpu_temperature = 6123;
+    test_unpacked_msg.device_monitor.cpu_vaux = 1789;
+    test_unpacked_msg.device_monitor.cpu_vint = 988;
+    test_unpacked_msg.device_monitor.dev_vin = -9999;
+    test_unpacked_msg.device_monitor.fe_temperature = 4776;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DEVICE_MONITOR, 16991, &test_unpacked_msg, &dummy_write);
 
@@ -810,11 +810,11 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgDeviceMonitor )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature == 6123, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature, expected 6123, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_temperature);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux, expected 1789, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vaux);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint == 988, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint, expected 988, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.cpu_vint);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin == -9999, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin, expected -9999, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.dev_vin);
-    ck_assert_msg(check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature == 4776, "incorrect value for check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature, expected 4776, is %d", check_unpacked_msg->MSG_DEVICE_MONITOR.fe_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_temperature == 6123, "incorrect value for check_unpacked_msg->device_monitor.cpu_temperature, expected 6123, is %d", check_unpacked_msg->device_monitor.cpu_temperature);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vaux == 1789, "incorrect value for check_unpacked_msg->device_monitor.cpu_vaux, expected 1789, is %d", check_unpacked_msg->device_monitor.cpu_vaux);
+    ck_assert_msg(check_unpacked_msg->device_monitor.cpu_vint == 988, "incorrect value for check_unpacked_msg->device_monitor.cpu_vint, expected 988, is %d", check_unpacked_msg->device_monitor.cpu_vint);
+    ck_assert_msg(check_unpacked_msg->device_monitor.dev_vin == -9999, "incorrect value for check_unpacked_msg->device_monitor.dev_vin, expected -9999, is %d", check_unpacked_msg->device_monitor.dev_vin);
+    ck_assert_msg(check_unpacked_msg->device_monitor.fe_temperature == 4776, "incorrect value for check_unpacked_msg->device_monitor.fe_temperature, expected 4776, is %d", check_unpacked_msg->device_monitor.fe_temperature);
   }
 }
 END_TEST

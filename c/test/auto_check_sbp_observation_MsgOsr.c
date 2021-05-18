@@ -839,291 +839,291 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_OSR.header.n_obs = 64;
+    test_unpacked_msg.osr.header.n_obs = 64;
     
     
-    test_unpacked_msg.MSG_OSR.header.t.ns_residual = 0;
+    test_unpacked_msg.osr.header.t.ns_residual = 0;
     
-    test_unpacked_msg.MSG_OSR.header.t.tow = 501867000;
+    test_unpacked_msg.osr.header.t.tow = 501867000;
     
-    test_unpacked_msg.MSG_OSR.header.t.wn = 2152;
-    test_unpacked_msg.MSG_OSR.n_obs = 12;
+    test_unpacked_msg.osr.header.t.wn = 2152;
+    test_unpacked_msg.osr.n_obs = 12;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[0].L.f = 66;
+    test_unpacked_msg.osr.obs[0].L.f = 66;
     
-    test_unpacked_msg.MSG_OSR.obs[0].L.i = 121567974;
+    test_unpacked_msg.osr.obs[0].L.i = 121567974;
     
-    test_unpacked_msg.MSG_OSR.obs[0].P = 1156681547;
+    test_unpacked_msg.osr.obs[0].P = 1156681547;
     
-    test_unpacked_msg.MSG_OSR.obs[0].flags = 3;
+    test_unpacked_msg.osr.obs[0].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[0].iono_std = 13;
+    test_unpacked_msg.osr.obs[0].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[0].lock = 15;
+    test_unpacked_msg.osr.obs[0].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[0].range_std = 7;
+    test_unpacked_msg.osr.obs[0].range_std = 7;
     
     
-    test_unpacked_msg.MSG_OSR.obs[0].sid.code = 0;
+    test_unpacked_msg.osr.obs[0].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[0].sid.sat = 1;
+    test_unpacked_msg.osr.obs[0].sid.sat = 1;
     
-    test_unpacked_msg.MSG_OSR.obs[0].tropo_std = 7;
+    test_unpacked_msg.osr.obs[0].tropo_std = 7;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[1].L.f = 75;
+    test_unpacked_msg.osr.obs[1].L.f = 75;
     
-    test_unpacked_msg.MSG_OSR.obs[1].L.i = 111817196;
+    test_unpacked_msg.osr.obs[1].L.i = 111817196;
     
-    test_unpacked_msg.MSG_OSR.obs[1].P = 1063905486;
+    test_unpacked_msg.osr.obs[1].P = 1063905486;
     
-    test_unpacked_msg.MSG_OSR.obs[1].flags = 3;
+    test_unpacked_msg.osr.obs[1].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[1].iono_std = 13;
+    test_unpacked_msg.osr.obs[1].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[1].lock = 15;
+    test_unpacked_msg.osr.obs[1].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[1].range_std = 3;
+    test_unpacked_msg.osr.obs[1].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[1].sid.code = 0;
+    test_unpacked_msg.osr.obs[1].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[1].sid.sat = 13;
+    test_unpacked_msg.osr.obs[1].sid.sat = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[1].tropo_std = 3;
+    test_unpacked_msg.osr.obs[1].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[2].L.f = 128;
+    test_unpacked_msg.osr.obs[2].L.f = 128;
     
-    test_unpacked_msg.MSG_OSR.obs[2].L.i = 110692129;
+    test_unpacked_msg.osr.obs[2].L.i = 110692129;
     
-    test_unpacked_msg.MSG_OSR.obs[2].P = 1053200685;
+    test_unpacked_msg.osr.obs[2].P = 1053200685;
     
-    test_unpacked_msg.MSG_OSR.obs[2].flags = 3;
+    test_unpacked_msg.osr.obs[2].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[2].iono_std = 13;
+    test_unpacked_msg.osr.obs[2].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[2].lock = 15;
+    test_unpacked_msg.osr.obs[2].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[2].range_std = 3;
+    test_unpacked_msg.osr.obs[2].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[2].sid.code = 0;
+    test_unpacked_msg.osr.obs[2].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[2].sid.sat = 14;
+    test_unpacked_msg.osr.obs[2].sid.sat = 14;
     
-    test_unpacked_msg.MSG_OSR.obs[2].tropo_std = 3;
+    test_unpacked_msg.osr.obs[2].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[3].L.f = 127;
+    test_unpacked_msg.osr.obs[3].L.f = 127;
     
-    test_unpacked_msg.MSG_OSR.obs[3].L.i = 119549583;
+    test_unpacked_msg.osr.obs[3].L.i = 119549583;
     
-    test_unpacked_msg.MSG_OSR.obs[3].P = 1137476697;
+    test_unpacked_msg.osr.obs[3].P = 1137476697;
     
-    test_unpacked_msg.MSG_OSR.obs[3].flags = 3;
+    test_unpacked_msg.osr.obs[3].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[3].iono_std = 13;
+    test_unpacked_msg.osr.obs[3].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[3].lock = 15;
+    test_unpacked_msg.osr.obs[3].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[3].range_std = 5;
+    test_unpacked_msg.osr.obs[3].range_std = 5;
     
     
-    test_unpacked_msg.MSG_OSR.obs[3].sid.code = 0;
+    test_unpacked_msg.osr.obs[3].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[3].sid.sat = 15;
+    test_unpacked_msg.osr.obs[3].sid.sat = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[3].tropo_std = 5;
+    test_unpacked_msg.osr.obs[3].tropo_std = 5;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[4].L.f = 55;
+    test_unpacked_msg.osr.obs[4].L.f = 55;
     
-    test_unpacked_msg.MSG_OSR.obs[4].L.i = 106934294;
+    test_unpacked_msg.osr.obs[4].L.i = 106934294;
     
-    test_unpacked_msg.MSG_OSR.obs[4].P = 1017446132;
+    test_unpacked_msg.osr.obs[4].P = 1017446132;
     
-    test_unpacked_msg.MSG_OSR.obs[4].flags = 3;
+    test_unpacked_msg.osr.obs[4].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[4].iono_std = 0;
+    test_unpacked_msg.osr.obs[4].iono_std = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[4].lock = 15;
+    test_unpacked_msg.osr.obs[4].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[4].range_std = 2;
+    test_unpacked_msg.osr.obs[4].range_std = 2;
     
     
-    test_unpacked_msg.MSG_OSR.obs[4].sid.code = 0;
+    test_unpacked_msg.osr.obs[4].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[4].sid.sat = 17;
+    test_unpacked_msg.osr.obs[4].sid.sat = 17;
     
-    test_unpacked_msg.MSG_OSR.obs[4].tropo_std = 2;
+    test_unpacked_msg.osr.obs[4].tropo_std = 2;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[5].L.f = 108;
+    test_unpacked_msg.osr.obs[5].L.f = 108;
     
-    test_unpacked_msg.MSG_OSR.obs[5].L.i = 110024343;
+    test_unpacked_msg.osr.obs[5].L.i = 110024343;
     
-    test_unpacked_msg.MSG_OSR.obs[5].P = 1046846826;
+    test_unpacked_msg.osr.obs[5].P = 1046846826;
     
-    test_unpacked_msg.MSG_OSR.obs[5].flags = 3;
+    test_unpacked_msg.osr.obs[5].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[5].iono_std = 13;
+    test_unpacked_msg.osr.obs[5].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[5].lock = 15;
+    test_unpacked_msg.osr.obs[5].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[5].range_std = 3;
+    test_unpacked_msg.osr.obs[5].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[5].sid.code = 0;
+    test_unpacked_msg.osr.obs[5].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[5].sid.sat = 19;
+    test_unpacked_msg.osr.obs[5].sid.sat = 19;
     
-    test_unpacked_msg.MSG_OSR.obs[5].tropo_std = 3;
+    test_unpacked_msg.osr.obs[5].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[6].L.f = 206;
+    test_unpacked_msg.osr.obs[6].L.f = 206;
     
-    test_unpacked_msg.MSG_OSR.obs[6].L.i = 111507381;
+    test_unpacked_msg.osr.obs[6].L.i = 111507381;
     
-    test_unpacked_msg.MSG_OSR.obs[6].P = 1060957521;
+    test_unpacked_msg.osr.obs[6].P = 1060957521;
     
-    test_unpacked_msg.MSG_OSR.obs[6].flags = 3;
+    test_unpacked_msg.osr.obs[6].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[6].iono_std = 13;
+    test_unpacked_msg.osr.obs[6].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[6].lock = 15;
+    test_unpacked_msg.osr.obs[6].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[6].range_std = 3;
+    test_unpacked_msg.osr.obs[6].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[6].sid.code = 0;
+    test_unpacked_msg.osr.obs[6].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[6].sid.sat = 28;
+    test_unpacked_msg.osr.obs[6].sid.sat = 28;
     
-    test_unpacked_msg.MSG_OSR.obs[6].tropo_std = 3;
+    test_unpacked_msg.osr.obs[6].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[7].L.f = 200;
+    test_unpacked_msg.osr.obs[7].L.f = 200;
     
-    test_unpacked_msg.MSG_OSR.obs[7].L.i = 113614775;
+    test_unpacked_msg.osr.obs[7].L.i = 113614775;
     
-    test_unpacked_msg.MSG_OSR.obs[7].P = 1081009286;
+    test_unpacked_msg.osr.obs[7].P = 1081009286;
     
-    test_unpacked_msg.MSG_OSR.obs[7].flags = 3;
+    test_unpacked_msg.osr.obs[7].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[7].iono_std = 13;
+    test_unpacked_msg.osr.obs[7].iono_std = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[7].lock = 15;
+    test_unpacked_msg.osr.obs[7].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[7].range_std = 3;
+    test_unpacked_msg.osr.obs[7].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[7].sid.code = 0;
+    test_unpacked_msg.osr.obs[7].sid.code = 0;
     
-    test_unpacked_msg.MSG_OSR.obs[7].sid.sat = 30;
+    test_unpacked_msg.osr.obs[7].sid.sat = 30;
     
-    test_unpacked_msg.MSG_OSR.obs[7].tropo_std = 3;
+    test_unpacked_msg.osr.obs[7].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[8].L.f = 170;
+    test_unpacked_msg.osr.obs[8].L.f = 170;
     
-    test_unpacked_msg.MSG_OSR.obs[8].L.i = 94728270;
+    test_unpacked_msg.osr.obs[8].L.i = 94728270;
     
-    test_unpacked_msg.MSG_OSR.obs[8].P = 1156681781;
+    test_unpacked_msg.osr.obs[8].P = 1156681781;
     
-    test_unpacked_msg.MSG_OSR.obs[8].flags = 3;
+    test_unpacked_msg.osr.obs[8].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[8].iono_std = 21;
+    test_unpacked_msg.osr.obs[8].iono_std = 21;
     
-    test_unpacked_msg.MSG_OSR.obs[8].lock = 15;
+    test_unpacked_msg.osr.obs[8].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[8].range_std = 7;
+    test_unpacked_msg.osr.obs[8].range_std = 7;
     
     
-    test_unpacked_msg.MSG_OSR.obs[8].sid.code = 6;
+    test_unpacked_msg.osr.obs[8].sid.code = 6;
     
-    test_unpacked_msg.MSG_OSR.obs[8].sid.sat = 1;
+    test_unpacked_msg.osr.obs[8].sid.sat = 1;
     
-    test_unpacked_msg.MSG_OSR.obs[8].tropo_std = 7;
+    test_unpacked_msg.osr.obs[8].tropo_std = 7;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[9].L.f = 129;
+    test_unpacked_msg.osr.obs[9].L.f = 129;
     
-    test_unpacked_msg.MSG_OSR.obs[9].L.i = 87130275;
+    test_unpacked_msg.osr.obs[9].L.i = 87130275;
     
-    test_unpacked_msg.MSG_OSR.obs[9].P = 1063905531;
+    test_unpacked_msg.osr.obs[9].P = 1063905531;
     
-    test_unpacked_msg.MSG_OSR.obs[9].flags = 3;
+    test_unpacked_msg.osr.obs[9].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[9].iono_std = 21;
+    test_unpacked_msg.osr.obs[9].iono_std = 21;
     
-    test_unpacked_msg.MSG_OSR.obs[9].lock = 15;
+    test_unpacked_msg.osr.obs[9].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[9].range_std = 3;
+    test_unpacked_msg.osr.obs[9].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[9].sid.code = 6;
+    test_unpacked_msg.osr.obs[9].sid.code = 6;
     
-    test_unpacked_msg.MSG_OSR.obs[9].sid.sat = 13;
+    test_unpacked_msg.osr.obs[9].sid.sat = 13;
     
-    test_unpacked_msg.MSG_OSR.obs[9].tropo_std = 3;
+    test_unpacked_msg.osr.obs[9].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[10].L.f = 46;
+    test_unpacked_msg.osr.obs[10].L.f = 46;
     
-    test_unpacked_msg.MSG_OSR.obs[10].L.i = 86253605;
+    test_unpacked_msg.osr.obs[10].L.i = 86253605;
     
-    test_unpacked_msg.MSG_OSR.obs[10].P = 1053200752;
+    test_unpacked_msg.osr.obs[10].P = 1053200752;
     
-    test_unpacked_msg.MSG_OSR.obs[10].flags = 3;
+    test_unpacked_msg.osr.obs[10].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[10].iono_std = 21;
+    test_unpacked_msg.osr.obs[10].iono_std = 21;
     
-    test_unpacked_msg.MSG_OSR.obs[10].lock = 15;
+    test_unpacked_msg.osr.obs[10].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[10].range_std = 3;
+    test_unpacked_msg.osr.obs[10].range_std = 3;
     
     
-    test_unpacked_msg.MSG_OSR.obs[10].sid.code = 6;
+    test_unpacked_msg.osr.obs[10].sid.code = 6;
     
-    test_unpacked_msg.MSG_OSR.obs[10].sid.sat = 14;
+    test_unpacked_msg.osr.obs[10].sid.sat = 14;
     
-    test_unpacked_msg.MSG_OSR.obs[10].tropo_std = 3;
+    test_unpacked_msg.osr.obs[10].tropo_std = 3;
     
     
     
-    test_unpacked_msg.MSG_OSR.obs[11].L.f = 95;
+    test_unpacked_msg.osr.obs[11].L.f = 95;
     
-    test_unpacked_msg.MSG_OSR.obs[11].L.i = 93155512;
+    test_unpacked_msg.osr.obs[11].L.i = 93155512;
     
-    test_unpacked_msg.MSG_OSR.obs[11].P = 1137476774;
+    test_unpacked_msg.osr.obs[11].P = 1137476774;
     
-    test_unpacked_msg.MSG_OSR.obs[11].flags = 3;
+    test_unpacked_msg.osr.obs[11].flags = 3;
     
-    test_unpacked_msg.MSG_OSR.obs[11].iono_std = 21;
+    test_unpacked_msg.osr.obs[11].iono_std = 21;
     
-    test_unpacked_msg.MSG_OSR.obs[11].lock = 15;
+    test_unpacked_msg.osr.obs[11].lock = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[11].range_std = 5;
+    test_unpacked_msg.osr.obs[11].range_std = 5;
     
     
-    test_unpacked_msg.MSG_OSR.obs[11].sid.code = 6;
+    test_unpacked_msg.osr.obs[11].sid.code = 6;
     
-    test_unpacked_msg.MSG_OSR.obs[11].sid.sat = 15;
+    test_unpacked_msg.osr.obs[11].sid.sat = 15;
     
-    test_unpacked_msg.MSG_OSR.obs[11].tropo_std = 5;
+    test_unpacked_msg.osr.obs[11].tropo_std = 5;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_OSR, 0, &test_unpacked_msg, &dummy_write);
 
@@ -1148,279 +1148,279 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgOsr )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.header.n_obs == 64, "incorrect value for check_unpacked_msg->MSG_OSR.header.n_obs, expected 64, is %d", check_unpacked_msg->MSG_OSR.header.n_obs);
+    ck_assert_msg(check_unpacked_msg->osr.header.n_obs == 64, "incorrect value for check_unpacked_msg->osr.header.n_obs, expected 64, is %d", check_unpacked_msg->osr.header.n_obs);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.header.t.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_OSR.header.t.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_OSR.header.t.ns_residual);
+    ck_assert_msg(check_unpacked_msg->osr.header.t.ns_residual == 0, "incorrect value for check_unpacked_msg->osr.header.t.ns_residual, expected 0, is %d", check_unpacked_msg->osr.header.t.ns_residual);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.header.t.tow == 501867000, "incorrect value for check_unpacked_msg->MSG_OSR.header.t.tow, expected 501867000, is %d", check_unpacked_msg->MSG_OSR.header.t.tow);
+    ck_assert_msg(check_unpacked_msg->osr.header.t.tow == 501867000, "incorrect value for check_unpacked_msg->osr.header.t.tow, expected 501867000, is %d", check_unpacked_msg->osr.header.t.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.header.t.wn == 2152, "incorrect value for check_unpacked_msg->MSG_OSR.header.t.wn, expected 2152, is %d", check_unpacked_msg->MSG_OSR.header.t.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.n_obs == 12, "incorrect value for check_unpacked_msg->MSG_OSR.n_obs, expected 12, is %d", check_unpacked_msg->MSG_OSR.n_obs);
+    ck_assert_msg(check_unpacked_msg->osr.header.t.wn == 2152, "incorrect value for check_unpacked_msg->osr.header.t.wn, expected 2152, is %d", check_unpacked_msg->osr.header.t.wn);
+    ck_assert_msg(check_unpacked_msg->osr.n_obs == 12, "incorrect value for check_unpacked_msg->osr.n_obs, expected 12, is %d", check_unpacked_msg->osr.n_obs);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].L.f == 66, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].L.f, expected 66, is %d", check_unpacked_msg->MSG_OSR.obs[0].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].L.f == 66, "incorrect value for check_unpacked_msg->osr.obs[0].L.f, expected 66, is %d", check_unpacked_msg->osr.obs[0].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].L.i == 121567974, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].L.i, expected 121567974, is %d", check_unpacked_msg->MSG_OSR.obs[0].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].L.i == 121567974, "incorrect value for check_unpacked_msg->osr.obs[0].L.i, expected 121567974, is %d", check_unpacked_msg->osr.obs[0].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].P == 1156681547, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].P, expected 1156681547, is %d", check_unpacked_msg->MSG_OSR.obs[0].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].P == 1156681547, "incorrect value for check_unpacked_msg->osr.obs[0].P, expected 1156681547, is %d", check_unpacked_msg->osr.obs[0].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[0].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[0].flags, expected 3, is %d", check_unpacked_msg->osr.obs[0].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[0].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[0].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[0].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[0].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[0].lock, expected 15, is %d", check_unpacked_msg->osr.obs[0].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].range_std == 7, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].range_std, expected 7, is %d", check_unpacked_msg->MSG_OSR.obs[0].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].range_std == 7, "incorrect value for check_unpacked_msg->osr.obs[0].range_std, expected 7, is %d", check_unpacked_msg->osr.obs[0].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[0].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[0].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[0].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].sid.sat == 1, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].sid.sat, expected 1, is %d", check_unpacked_msg->MSG_OSR.obs[0].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].sid.sat == 1, "incorrect value for check_unpacked_msg->osr.obs[0].sid.sat, expected 1, is %d", check_unpacked_msg->osr.obs[0].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[0].tropo_std == 7, "incorrect value for check_unpacked_msg->MSG_OSR.obs[0].tropo_std, expected 7, is %d", check_unpacked_msg->MSG_OSR.obs[0].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[0].tropo_std == 7, "incorrect value for check_unpacked_msg->osr.obs[0].tropo_std, expected 7, is %d", check_unpacked_msg->osr.obs[0].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].L.f == 75, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].L.f, expected 75, is %d", check_unpacked_msg->MSG_OSR.obs[1].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].L.f == 75, "incorrect value for check_unpacked_msg->osr.obs[1].L.f, expected 75, is %d", check_unpacked_msg->osr.obs[1].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].L.i == 111817196, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].L.i, expected 111817196, is %d", check_unpacked_msg->MSG_OSR.obs[1].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].L.i == 111817196, "incorrect value for check_unpacked_msg->osr.obs[1].L.i, expected 111817196, is %d", check_unpacked_msg->osr.obs[1].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].P == 1063905486, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].P, expected 1063905486, is %d", check_unpacked_msg->MSG_OSR.obs[1].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].P == 1063905486, "incorrect value for check_unpacked_msg->osr.obs[1].P, expected 1063905486, is %d", check_unpacked_msg->osr.obs[1].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[1].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[1].flags, expected 3, is %d", check_unpacked_msg->osr.obs[1].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[1].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[1].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[1].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[1].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[1].lock, expected 15, is %d", check_unpacked_msg->osr.obs[1].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[1].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[1].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[1].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[1].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[1].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[1].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].sid.sat == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].sid.sat, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[1].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].sid.sat == 13, "incorrect value for check_unpacked_msg->osr.obs[1].sid.sat, expected 13, is %d", check_unpacked_msg->osr.obs[1].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[1].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[1].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[1].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[1].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[1].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[1].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].L.f == 128, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].L.f, expected 128, is %d", check_unpacked_msg->MSG_OSR.obs[2].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].L.f == 128, "incorrect value for check_unpacked_msg->osr.obs[2].L.f, expected 128, is %d", check_unpacked_msg->osr.obs[2].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].L.i == 110692129, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].L.i, expected 110692129, is %d", check_unpacked_msg->MSG_OSR.obs[2].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].L.i == 110692129, "incorrect value for check_unpacked_msg->osr.obs[2].L.i, expected 110692129, is %d", check_unpacked_msg->osr.obs[2].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].P == 1053200685, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].P, expected 1053200685, is %d", check_unpacked_msg->MSG_OSR.obs[2].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].P == 1053200685, "incorrect value for check_unpacked_msg->osr.obs[2].P, expected 1053200685, is %d", check_unpacked_msg->osr.obs[2].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[2].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[2].flags, expected 3, is %d", check_unpacked_msg->osr.obs[2].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[2].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[2].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[2].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[2].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[2].lock, expected 15, is %d", check_unpacked_msg->osr.obs[2].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[2].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[2].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[2].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[2].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[2].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[2].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].sid.sat == 14, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].sid.sat, expected 14, is %d", check_unpacked_msg->MSG_OSR.obs[2].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].sid.sat == 14, "incorrect value for check_unpacked_msg->osr.obs[2].sid.sat, expected 14, is %d", check_unpacked_msg->osr.obs[2].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[2].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[2].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[2].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[2].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[2].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[2].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].L.f == 127, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].L.f, expected 127, is %d", check_unpacked_msg->MSG_OSR.obs[3].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].L.f == 127, "incorrect value for check_unpacked_msg->osr.obs[3].L.f, expected 127, is %d", check_unpacked_msg->osr.obs[3].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].L.i == 119549583, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].L.i, expected 119549583, is %d", check_unpacked_msg->MSG_OSR.obs[3].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].L.i == 119549583, "incorrect value for check_unpacked_msg->osr.obs[3].L.i, expected 119549583, is %d", check_unpacked_msg->osr.obs[3].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].P == 1137476697, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].P, expected 1137476697, is %d", check_unpacked_msg->MSG_OSR.obs[3].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].P == 1137476697, "incorrect value for check_unpacked_msg->osr.obs[3].P, expected 1137476697, is %d", check_unpacked_msg->osr.obs[3].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[3].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[3].flags, expected 3, is %d", check_unpacked_msg->osr.obs[3].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[3].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[3].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[3].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[3].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[3].lock, expected 15, is %d", check_unpacked_msg->osr.obs[3].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].range_std == 5, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].range_std, expected 5, is %d", check_unpacked_msg->MSG_OSR.obs[3].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].range_std == 5, "incorrect value for check_unpacked_msg->osr.obs[3].range_std, expected 5, is %d", check_unpacked_msg->osr.obs[3].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[3].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[3].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[3].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].sid.sat, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[3].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].sid.sat == 15, "incorrect value for check_unpacked_msg->osr.obs[3].sid.sat, expected 15, is %d", check_unpacked_msg->osr.obs[3].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[3].tropo_std == 5, "incorrect value for check_unpacked_msg->MSG_OSR.obs[3].tropo_std, expected 5, is %d", check_unpacked_msg->MSG_OSR.obs[3].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[3].tropo_std == 5, "incorrect value for check_unpacked_msg->osr.obs[3].tropo_std, expected 5, is %d", check_unpacked_msg->osr.obs[3].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].L.f == 55, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].L.f, expected 55, is %d", check_unpacked_msg->MSG_OSR.obs[4].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].L.f == 55, "incorrect value for check_unpacked_msg->osr.obs[4].L.f, expected 55, is %d", check_unpacked_msg->osr.obs[4].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].L.i == 106934294, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].L.i, expected 106934294, is %d", check_unpacked_msg->MSG_OSR.obs[4].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].L.i == 106934294, "incorrect value for check_unpacked_msg->osr.obs[4].L.i, expected 106934294, is %d", check_unpacked_msg->osr.obs[4].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].P == 1017446132, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].P, expected 1017446132, is %d", check_unpacked_msg->MSG_OSR.obs[4].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].P == 1017446132, "incorrect value for check_unpacked_msg->osr.obs[4].P, expected 1017446132, is %d", check_unpacked_msg->osr.obs[4].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[4].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[4].flags, expected 3, is %d", check_unpacked_msg->osr.obs[4].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].iono_std == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].iono_std, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[4].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].iono_std == 0, "incorrect value for check_unpacked_msg->osr.obs[4].iono_std, expected 0, is %d", check_unpacked_msg->osr.obs[4].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[4].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[4].lock, expected 15, is %d", check_unpacked_msg->osr.obs[4].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].range_std == 2, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].range_std, expected 2, is %d", check_unpacked_msg->MSG_OSR.obs[4].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].range_std == 2, "incorrect value for check_unpacked_msg->osr.obs[4].range_std, expected 2, is %d", check_unpacked_msg->osr.obs[4].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[4].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[4].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[4].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].sid.sat == 17, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].sid.sat, expected 17, is %d", check_unpacked_msg->MSG_OSR.obs[4].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].sid.sat == 17, "incorrect value for check_unpacked_msg->osr.obs[4].sid.sat, expected 17, is %d", check_unpacked_msg->osr.obs[4].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[4].tropo_std == 2, "incorrect value for check_unpacked_msg->MSG_OSR.obs[4].tropo_std, expected 2, is %d", check_unpacked_msg->MSG_OSR.obs[4].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[4].tropo_std == 2, "incorrect value for check_unpacked_msg->osr.obs[4].tropo_std, expected 2, is %d", check_unpacked_msg->osr.obs[4].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].L.f == 108, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].L.f, expected 108, is %d", check_unpacked_msg->MSG_OSR.obs[5].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].L.f == 108, "incorrect value for check_unpacked_msg->osr.obs[5].L.f, expected 108, is %d", check_unpacked_msg->osr.obs[5].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].L.i == 110024343, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].L.i, expected 110024343, is %d", check_unpacked_msg->MSG_OSR.obs[5].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].L.i == 110024343, "incorrect value for check_unpacked_msg->osr.obs[5].L.i, expected 110024343, is %d", check_unpacked_msg->osr.obs[5].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].P == 1046846826, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].P, expected 1046846826, is %d", check_unpacked_msg->MSG_OSR.obs[5].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].P == 1046846826, "incorrect value for check_unpacked_msg->osr.obs[5].P, expected 1046846826, is %d", check_unpacked_msg->osr.obs[5].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[5].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[5].flags, expected 3, is %d", check_unpacked_msg->osr.obs[5].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[5].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[5].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[5].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[5].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[5].lock, expected 15, is %d", check_unpacked_msg->osr.obs[5].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[5].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[5].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[5].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[5].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[5].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[5].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].sid.sat == 19, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].sid.sat, expected 19, is %d", check_unpacked_msg->MSG_OSR.obs[5].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].sid.sat == 19, "incorrect value for check_unpacked_msg->osr.obs[5].sid.sat, expected 19, is %d", check_unpacked_msg->osr.obs[5].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[5].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[5].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[5].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[5].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[5].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[5].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].L.f == 206, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].L.f, expected 206, is %d", check_unpacked_msg->MSG_OSR.obs[6].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].L.f == 206, "incorrect value for check_unpacked_msg->osr.obs[6].L.f, expected 206, is %d", check_unpacked_msg->osr.obs[6].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].L.i == 111507381, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].L.i, expected 111507381, is %d", check_unpacked_msg->MSG_OSR.obs[6].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].L.i == 111507381, "incorrect value for check_unpacked_msg->osr.obs[6].L.i, expected 111507381, is %d", check_unpacked_msg->osr.obs[6].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].P == 1060957521, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].P, expected 1060957521, is %d", check_unpacked_msg->MSG_OSR.obs[6].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].P == 1060957521, "incorrect value for check_unpacked_msg->osr.obs[6].P, expected 1060957521, is %d", check_unpacked_msg->osr.obs[6].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[6].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[6].flags, expected 3, is %d", check_unpacked_msg->osr.obs[6].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[6].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[6].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[6].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[6].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[6].lock, expected 15, is %d", check_unpacked_msg->osr.obs[6].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[6].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[6].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[6].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[6].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[6].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[6].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].sid.sat == 28, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].sid.sat, expected 28, is %d", check_unpacked_msg->MSG_OSR.obs[6].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].sid.sat == 28, "incorrect value for check_unpacked_msg->osr.obs[6].sid.sat, expected 28, is %d", check_unpacked_msg->osr.obs[6].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[6].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[6].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[6].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[6].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[6].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[6].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].L.f == 200, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].L.f, expected 200, is %d", check_unpacked_msg->MSG_OSR.obs[7].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].L.f == 200, "incorrect value for check_unpacked_msg->osr.obs[7].L.f, expected 200, is %d", check_unpacked_msg->osr.obs[7].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].L.i == 113614775, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].L.i, expected 113614775, is %d", check_unpacked_msg->MSG_OSR.obs[7].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].L.i == 113614775, "incorrect value for check_unpacked_msg->osr.obs[7].L.i, expected 113614775, is %d", check_unpacked_msg->osr.obs[7].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].P == 1081009286, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].P, expected 1081009286, is %d", check_unpacked_msg->MSG_OSR.obs[7].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].P == 1081009286, "incorrect value for check_unpacked_msg->osr.obs[7].P, expected 1081009286, is %d", check_unpacked_msg->osr.obs[7].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[7].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[7].flags, expected 3, is %d", check_unpacked_msg->osr.obs[7].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].iono_std == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].iono_std, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[7].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].iono_std == 13, "incorrect value for check_unpacked_msg->osr.obs[7].iono_std, expected 13, is %d", check_unpacked_msg->osr.obs[7].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[7].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[7].lock, expected 15, is %d", check_unpacked_msg->osr.obs[7].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[7].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[7].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[7].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].sid.code == 0, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].sid.code, expected 0, is %d", check_unpacked_msg->MSG_OSR.obs[7].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].sid.code == 0, "incorrect value for check_unpacked_msg->osr.obs[7].sid.code, expected 0, is %d", check_unpacked_msg->osr.obs[7].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].sid.sat == 30, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].sid.sat, expected 30, is %d", check_unpacked_msg->MSG_OSR.obs[7].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].sid.sat == 30, "incorrect value for check_unpacked_msg->osr.obs[7].sid.sat, expected 30, is %d", check_unpacked_msg->osr.obs[7].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[7].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[7].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[7].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[7].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[7].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[7].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].L.f == 170, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].L.f, expected 170, is %d", check_unpacked_msg->MSG_OSR.obs[8].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].L.f == 170, "incorrect value for check_unpacked_msg->osr.obs[8].L.f, expected 170, is %d", check_unpacked_msg->osr.obs[8].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].L.i == 94728270, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].L.i, expected 94728270, is %d", check_unpacked_msg->MSG_OSR.obs[8].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].L.i == 94728270, "incorrect value for check_unpacked_msg->osr.obs[8].L.i, expected 94728270, is %d", check_unpacked_msg->osr.obs[8].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].P == 1156681781, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].P, expected 1156681781, is %d", check_unpacked_msg->MSG_OSR.obs[8].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].P == 1156681781, "incorrect value for check_unpacked_msg->osr.obs[8].P, expected 1156681781, is %d", check_unpacked_msg->osr.obs[8].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[8].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[8].flags, expected 3, is %d", check_unpacked_msg->osr.obs[8].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].iono_std == 21, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].iono_std, expected 21, is %d", check_unpacked_msg->MSG_OSR.obs[8].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].iono_std == 21, "incorrect value for check_unpacked_msg->osr.obs[8].iono_std, expected 21, is %d", check_unpacked_msg->osr.obs[8].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[8].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[8].lock, expected 15, is %d", check_unpacked_msg->osr.obs[8].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].range_std == 7, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].range_std, expected 7, is %d", check_unpacked_msg->MSG_OSR.obs[8].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].range_std == 7, "incorrect value for check_unpacked_msg->osr.obs[8].range_std, expected 7, is %d", check_unpacked_msg->osr.obs[8].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].sid.code == 6, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].sid.code, expected 6, is %d", check_unpacked_msg->MSG_OSR.obs[8].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].sid.code == 6, "incorrect value for check_unpacked_msg->osr.obs[8].sid.code, expected 6, is %d", check_unpacked_msg->osr.obs[8].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].sid.sat == 1, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].sid.sat, expected 1, is %d", check_unpacked_msg->MSG_OSR.obs[8].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].sid.sat == 1, "incorrect value for check_unpacked_msg->osr.obs[8].sid.sat, expected 1, is %d", check_unpacked_msg->osr.obs[8].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[8].tropo_std == 7, "incorrect value for check_unpacked_msg->MSG_OSR.obs[8].tropo_std, expected 7, is %d", check_unpacked_msg->MSG_OSR.obs[8].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[8].tropo_std == 7, "incorrect value for check_unpacked_msg->osr.obs[8].tropo_std, expected 7, is %d", check_unpacked_msg->osr.obs[8].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].L.f == 129, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].L.f, expected 129, is %d", check_unpacked_msg->MSG_OSR.obs[9].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].L.f == 129, "incorrect value for check_unpacked_msg->osr.obs[9].L.f, expected 129, is %d", check_unpacked_msg->osr.obs[9].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].L.i == 87130275, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].L.i, expected 87130275, is %d", check_unpacked_msg->MSG_OSR.obs[9].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].L.i == 87130275, "incorrect value for check_unpacked_msg->osr.obs[9].L.i, expected 87130275, is %d", check_unpacked_msg->osr.obs[9].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].P == 1063905531, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].P, expected 1063905531, is %d", check_unpacked_msg->MSG_OSR.obs[9].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].P == 1063905531, "incorrect value for check_unpacked_msg->osr.obs[9].P, expected 1063905531, is %d", check_unpacked_msg->osr.obs[9].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[9].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[9].flags, expected 3, is %d", check_unpacked_msg->osr.obs[9].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].iono_std == 21, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].iono_std, expected 21, is %d", check_unpacked_msg->MSG_OSR.obs[9].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].iono_std == 21, "incorrect value for check_unpacked_msg->osr.obs[9].iono_std, expected 21, is %d", check_unpacked_msg->osr.obs[9].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[9].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[9].lock, expected 15, is %d", check_unpacked_msg->osr.obs[9].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[9].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[9].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[9].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].sid.code == 6, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].sid.code, expected 6, is %d", check_unpacked_msg->MSG_OSR.obs[9].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].sid.code == 6, "incorrect value for check_unpacked_msg->osr.obs[9].sid.code, expected 6, is %d", check_unpacked_msg->osr.obs[9].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].sid.sat == 13, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].sid.sat, expected 13, is %d", check_unpacked_msg->MSG_OSR.obs[9].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].sid.sat == 13, "incorrect value for check_unpacked_msg->osr.obs[9].sid.sat, expected 13, is %d", check_unpacked_msg->osr.obs[9].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[9].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[9].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[9].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[9].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[9].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[9].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].L.f == 46, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].L.f, expected 46, is %d", check_unpacked_msg->MSG_OSR.obs[10].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].L.f == 46, "incorrect value for check_unpacked_msg->osr.obs[10].L.f, expected 46, is %d", check_unpacked_msg->osr.obs[10].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].L.i == 86253605, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].L.i, expected 86253605, is %d", check_unpacked_msg->MSG_OSR.obs[10].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].L.i == 86253605, "incorrect value for check_unpacked_msg->osr.obs[10].L.i, expected 86253605, is %d", check_unpacked_msg->osr.obs[10].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].P == 1053200752, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].P, expected 1053200752, is %d", check_unpacked_msg->MSG_OSR.obs[10].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].P == 1053200752, "incorrect value for check_unpacked_msg->osr.obs[10].P, expected 1053200752, is %d", check_unpacked_msg->osr.obs[10].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[10].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[10].flags, expected 3, is %d", check_unpacked_msg->osr.obs[10].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].iono_std == 21, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].iono_std, expected 21, is %d", check_unpacked_msg->MSG_OSR.obs[10].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].iono_std == 21, "incorrect value for check_unpacked_msg->osr.obs[10].iono_std, expected 21, is %d", check_unpacked_msg->osr.obs[10].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[10].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[10].lock, expected 15, is %d", check_unpacked_msg->osr.obs[10].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].range_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].range_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[10].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].range_std == 3, "incorrect value for check_unpacked_msg->osr.obs[10].range_std, expected 3, is %d", check_unpacked_msg->osr.obs[10].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].sid.code == 6, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].sid.code, expected 6, is %d", check_unpacked_msg->MSG_OSR.obs[10].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].sid.code == 6, "incorrect value for check_unpacked_msg->osr.obs[10].sid.code, expected 6, is %d", check_unpacked_msg->osr.obs[10].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].sid.sat == 14, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].sid.sat, expected 14, is %d", check_unpacked_msg->MSG_OSR.obs[10].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].sid.sat == 14, "incorrect value for check_unpacked_msg->osr.obs[10].sid.sat, expected 14, is %d", check_unpacked_msg->osr.obs[10].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[10].tropo_std == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[10].tropo_std, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[10].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[10].tropo_std == 3, "incorrect value for check_unpacked_msg->osr.obs[10].tropo_std, expected 3, is %d", check_unpacked_msg->osr.obs[10].tropo_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].L.f == 95, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].L.f, expected 95, is %d", check_unpacked_msg->MSG_OSR.obs[11].L.f);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].L.f == 95, "incorrect value for check_unpacked_msg->osr.obs[11].L.f, expected 95, is %d", check_unpacked_msg->osr.obs[11].L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].L.i == 93155512, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].L.i, expected 93155512, is %d", check_unpacked_msg->MSG_OSR.obs[11].L.i);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].L.i == 93155512, "incorrect value for check_unpacked_msg->osr.obs[11].L.i, expected 93155512, is %d", check_unpacked_msg->osr.obs[11].L.i);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].P == 1137476774, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].P, expected 1137476774, is %d", check_unpacked_msg->MSG_OSR.obs[11].P);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].P == 1137476774, "incorrect value for check_unpacked_msg->osr.obs[11].P, expected 1137476774, is %d", check_unpacked_msg->osr.obs[11].P);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].flags == 3, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].flags, expected 3, is %d", check_unpacked_msg->MSG_OSR.obs[11].flags);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].flags == 3, "incorrect value for check_unpacked_msg->osr.obs[11].flags, expected 3, is %d", check_unpacked_msg->osr.obs[11].flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].iono_std == 21, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].iono_std, expected 21, is %d", check_unpacked_msg->MSG_OSR.obs[11].iono_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].iono_std == 21, "incorrect value for check_unpacked_msg->osr.obs[11].iono_std, expected 21, is %d", check_unpacked_msg->osr.obs[11].iono_std);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].lock == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].lock, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[11].lock);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].lock == 15, "incorrect value for check_unpacked_msg->osr.obs[11].lock, expected 15, is %d", check_unpacked_msg->osr.obs[11].lock);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].range_std == 5, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].range_std, expected 5, is %d", check_unpacked_msg->MSG_OSR.obs[11].range_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].range_std == 5, "incorrect value for check_unpacked_msg->osr.obs[11].range_std, expected 5, is %d", check_unpacked_msg->osr.obs[11].range_std);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].sid.code == 6, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].sid.code, expected 6, is %d", check_unpacked_msg->MSG_OSR.obs[11].sid.code);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].sid.code == 6, "incorrect value for check_unpacked_msg->osr.obs[11].sid.code, expected 6, is %d", check_unpacked_msg->osr.obs[11].sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].sid.sat, expected 15, is %d", check_unpacked_msg->MSG_OSR.obs[11].sid.sat);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].sid.sat == 15, "incorrect value for check_unpacked_msg->osr.obs[11].sid.sat, expected 15, is %d", check_unpacked_msg->osr.obs[11].sid.sat);
     
-    ck_assert_msg(check_unpacked_msg->MSG_OSR.obs[11].tropo_std == 5, "incorrect value for check_unpacked_msg->MSG_OSR.obs[11].tropo_std, expected 5, is %d", check_unpacked_msg->MSG_OSR.obs[11].tropo_std);
+    ck_assert_msg(check_unpacked_msg->osr.obs[11].tropo_std == 5, "incorrect value for check_unpacked_msg->osr.obs[11].tropo_std, expected 5, is %d", check_unpacked_msg->osr.obs[11].tropo_std);
   }
 }
 END_TEST

@@ -256,18 +256,18 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelEcefCovGnss )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_x_x = 0.0024547684006392956;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_x_y = 0.0021795108914375305;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_x_z = -0.0016828652005642653;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_y_y = 0.004218944814056158;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_y_z = -0.0024961293675005436;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.cov_z_z = 0.0037804271560162306;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.flags = 2;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.n_sats = 21;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.tow = 501868000;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.x = -3;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.y = 1;
-    test_unpacked_msg.MSG_VEL_ECEF_COV_GNSS.z = 4;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_x_x = 0.0024547684006392956;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_x_y = 0.0021795108914375305;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_x_z = -0.0016828652005642653;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_y_y = 0.004218944814056158;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_y_z = -0.0024961293675005436;
+    test_unpacked_msg.vel_ecef_cov_gnss.cov_z_z = 0.0037804271560162306;
+    test_unpacked_msg.vel_ecef_cov_gnss.flags = 2;
+    test_unpacked_msg.vel_ecef_cov_gnss.n_sats = 21;
+    test_unpacked_msg.vel_ecef_cov_gnss.tow = 501868000;
+    test_unpacked_msg.vel_ecef_cov_gnss.x = -3;
+    test_unpacked_msg.vel_ecef_cov_gnss.y = 1;
+    test_unpacked_msg.vel_ecef_cov_gnss.z = 4;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_COV_GNSS, 4096, &test_unpacked_msg, &dummy_write);
 
@@ -291,18 +291,18 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelEcefCovGnss )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_x*100 - 0.00245476840064*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_x, expected 0.00245476840064, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_x);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_y*100 - 0.00217951089144*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_y, expected 0.00217951089144, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_y);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_z*100 - -0.00168286520056*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_z, expected -0.00168286520056, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_x_z);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_y*100 - 0.00421894481406*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_y, expected 0.00421894481406, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_y);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_z*100 - -0.0024961293675*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_z, expected -0.0024961293675, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_y_z);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_z_z*100 - 0.00378042715602*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_z_z, expected 0.00378042715602, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.cov_z_z);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.flags == 2, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.flags, expected 2, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.n_sats == 21, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.n_sats, expected 21, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.tow == 501868000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.tow, expected 501868000, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.x == -3, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.x, expected -3, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.y == 1, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.y, expected 1, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.z == 4, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.z, expected 4, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV_GNSS.z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_x_x*100 - 0.00245476840064*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_x_x, expected 0.00245476840064, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_x_x);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_x_y*100 - 0.00217951089144*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_x_y, expected 0.00217951089144, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_x_y);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_x_z*100 - -0.00168286520056*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_x_z, expected -0.00168286520056, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_x_z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_y_y*100 - 0.00421894481406*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_y_y, expected 0.00421894481406, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_y_y);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_y_z*100 - -0.0024961293675*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_y_z, expected -0.0024961293675, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_y_z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov_gnss.cov_z_z*100 - 0.00378042715602*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.cov_z_z, expected 0.00378042715602, is %s", check_unpacked_msg->vel_ecef_cov_gnss.cov_z_z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.flags == 2, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.flags, expected 2, is %d", check_unpacked_msg->vel_ecef_cov_gnss.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.n_sats == 21, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.n_sats, expected 21, is %d", check_unpacked_msg->vel_ecef_cov_gnss.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.tow == 501868000, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.tow, expected 501868000, is %d", check_unpacked_msg->vel_ecef_cov_gnss.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.x == -3, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.x, expected -3, is %d", check_unpacked_msg->vel_ecef_cov_gnss.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.y == 1, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.y, expected 1, is %d", check_unpacked_msg->vel_ecef_cov_gnss.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov_gnss.z == 4, "incorrect value for check_unpacked_msg->vel_ecef_cov_gnss.z, expected 4, is %d", check_unpacked_msg->vel_ecef_cov_gnss.z);
   }
 }
 END_TEST

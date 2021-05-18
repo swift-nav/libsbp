@@ -236,8 +236,8 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgAgeCorrections )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_AGE_CORRECTIONS.age = 30;
-    test_unpacked_msg.MSG_AGE_CORRECTIONS.tow = 100;
+    test_unpacked_msg.age_corrections.age = 30;
+    test_unpacked_msg.age_corrections.tow = 100;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_AGE_CORRECTIONS, 66, &test_unpacked_msg, &dummy_write);
 
@@ -261,8 +261,8 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgAgeCorrections )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_AGE_CORRECTIONS.age == 30, "incorrect value for check_unpacked_msg->MSG_AGE_CORRECTIONS.age, expected 30, is %d", check_unpacked_msg->MSG_AGE_CORRECTIONS.age);
-    ck_assert_msg(check_unpacked_msg->MSG_AGE_CORRECTIONS.tow == 100, "incorrect value for check_unpacked_msg->MSG_AGE_CORRECTIONS.tow, expected 100, is %d", check_unpacked_msg->MSG_AGE_CORRECTIONS.tow);
+    ck_assert_msg(check_unpacked_msg->age_corrections.age == 30, "incorrect value for check_unpacked_msg->age_corrections.age, expected 30, is %d", check_unpacked_msg->age_corrections.age);
+    ck_assert_msg(check_unpacked_msg->age_corrections.tow == 100, "incorrect value for check_unpacked_msg->age_corrections.tow, expected 100, is %d", check_unpacked_msg->age_corrections.tow);
   }
 }
 END_TEST

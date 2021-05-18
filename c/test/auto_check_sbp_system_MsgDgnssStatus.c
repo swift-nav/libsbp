@@ -249,16 +249,16 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgDgnssStatus )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DGNSS_STATUS.flags = 0;
-    test_unpacked_msg.MSG_DGNSS_STATUS.latency = 50;
-    test_unpacked_msg.MSG_DGNSS_STATUS.num_signals = 12;
+    test_unpacked_msg.dgnss_status.flags = 0;
+    test_unpacked_msg.dgnss_status.latency = 50;
+    test_unpacked_msg.dgnss_status.num_signals = 12;
     
     {
       const char assign_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      memcpy(test_unpacked_msg.MSG_DGNSS_STATUS.source.data, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.dgnss_status.source.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_DGNSS_STATUS.source.len = 7;
+    test_unpacked_msg.dgnss_status.source.len = 7;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DGNSS_STATUS, 66, &test_unpacked_msg, &dummy_write);
 
@@ -282,16 +282,16 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgDgnssStatus )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DGNSS_STATUS.flags == 0, "incorrect value for check_unpacked_msg->MSG_DGNSS_STATUS.flags, expected 0, is %d", check_unpacked_msg->MSG_DGNSS_STATUS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_DGNSS_STATUS.latency == 50, "incorrect value for check_unpacked_msg->MSG_DGNSS_STATUS.latency, expected 50, is %d", check_unpacked_msg->MSG_DGNSS_STATUS.latency);
-    ck_assert_msg(check_unpacked_msg->MSG_DGNSS_STATUS.num_signals == 12, "incorrect value for check_unpacked_msg->MSG_DGNSS_STATUS.num_signals, expected 12, is %d", check_unpacked_msg->MSG_DGNSS_STATUS.num_signals);
+    ck_assert_msg(check_unpacked_msg->dgnss_status.flags == 0, "incorrect value for check_unpacked_msg->dgnss_status.flags, expected 0, is %d", check_unpacked_msg->dgnss_status.flags);
+    ck_assert_msg(check_unpacked_msg->dgnss_status.latency == 50, "incorrect value for check_unpacked_msg->dgnss_status.latency, expected 50, is %d", check_unpacked_msg->dgnss_status.latency);
+    ck_assert_msg(check_unpacked_msg->dgnss_status.num_signals == 12, "incorrect value for check_unpacked_msg->dgnss_status.num_signals, expected 12, is %d", check_unpacked_msg->dgnss_status.num_signals);
     
     {
       const char check_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_DGNSS_STATUS.source.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_DGNSS_STATUS.source.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_DGNSS_STATUS.source.data);
+      ck_assert_msg(memcmp(check_unpacked_msg->dgnss_status.source.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->dgnss_status.source.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->dgnss_status.source.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_DGNSS_STATUS.source.len == 7, "incorrect value for check_unpacked_msg->MSG_DGNSS_STATUS.source.len, expected 7, is %d", check_unpacked_msg->MSG_DGNSS_STATUS.source.len);
+    ck_assert_msg(check_unpacked_msg->dgnss_status.source.len == 7, "incorrect value for check_unpacked_msg->dgnss_status.source.len, expected 7, is %d", check_unpacked_msg->dgnss_status.source.len);
   }
 }
 END_TEST

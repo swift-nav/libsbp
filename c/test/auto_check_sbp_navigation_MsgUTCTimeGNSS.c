@@ -250,15 +250,15 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgUTCTimeGNSS )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.day = 9;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.flags = 1;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.hours = 19;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.minutes = 24;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.month = 4;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.ns = 800000000;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.seconds = 9;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.tow = 501867800;
-    test_unpacked_msg.MSG_UTC_TIME_GNSS.year = 2021;
+    test_unpacked_msg.utc_time_gnss.day = 9;
+    test_unpacked_msg.utc_time_gnss.flags = 1;
+    test_unpacked_msg.utc_time_gnss.hours = 19;
+    test_unpacked_msg.utc_time_gnss.minutes = 24;
+    test_unpacked_msg.utc_time_gnss.month = 4;
+    test_unpacked_msg.utc_time_gnss.ns = 800000000;
+    test_unpacked_msg.utc_time_gnss.seconds = 9;
+    test_unpacked_msg.utc_time_gnss.tow = 501867800;
+    test_unpacked_msg.utc_time_gnss.year = 2021;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_UTC_TIME_GNSS, 789, &test_unpacked_msg, &dummy_write);
 
@@ -282,15 +282,15 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgUTCTimeGNSS )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.day == 9, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.day, expected 9, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.day);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.flags == 1, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.flags, expected 1, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.hours == 19, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.hours, expected 19, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.hours);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.minutes == 24, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.minutes, expected 24, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.minutes);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.month == 4, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.month, expected 4, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.month);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.ns == 800000000, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.ns, expected 800000000, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.ns);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.seconds == 9, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.seconds, expected 9, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.seconds);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.tow == 501867800, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.tow, expected 501867800, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME_GNSS.year == 2021, "incorrect value for check_unpacked_msg->MSG_UTC_TIME_GNSS.year, expected 2021, is %d", check_unpacked_msg->MSG_UTC_TIME_GNSS.year);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.day == 9, "incorrect value for check_unpacked_msg->utc_time_gnss.day, expected 9, is %d", check_unpacked_msg->utc_time_gnss.day);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.flags == 1, "incorrect value for check_unpacked_msg->utc_time_gnss.flags, expected 1, is %d", check_unpacked_msg->utc_time_gnss.flags);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.hours == 19, "incorrect value for check_unpacked_msg->utc_time_gnss.hours, expected 19, is %d", check_unpacked_msg->utc_time_gnss.hours);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.minutes == 24, "incorrect value for check_unpacked_msg->utc_time_gnss.minutes, expected 24, is %d", check_unpacked_msg->utc_time_gnss.minutes);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.month == 4, "incorrect value for check_unpacked_msg->utc_time_gnss.month, expected 4, is %d", check_unpacked_msg->utc_time_gnss.month);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.ns == 800000000, "incorrect value for check_unpacked_msg->utc_time_gnss.ns, expected 800000000, is %d", check_unpacked_msg->utc_time_gnss.ns);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.seconds == 9, "incorrect value for check_unpacked_msg->utc_time_gnss.seconds, expected 9, is %d", check_unpacked_msg->utc_time_gnss.seconds);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.tow == 501867800, "incorrect value for check_unpacked_msg->utc_time_gnss.tow, expected 501867800, is %d", check_unpacked_msg->utc_time_gnss.tow);
+    ck_assert_msg(check_unpacked_msg->utc_time_gnss.year == 2021, "incorrect value for check_unpacked_msg->utc_time_gnss.year, expected 2021, is %d", check_unpacked_msg->utc_time_gnss.year);
   }
 }
 END_TEST

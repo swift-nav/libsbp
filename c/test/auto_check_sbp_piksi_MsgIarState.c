@@ -678,7 +678,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 1;
+    test_unpacked_msg.iar_state.num_hyps = 1;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -702,7 +702,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 1, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 1, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 1, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 1, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -723,7 +723,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 0;
+    test_unpacked_msg.iar_state.num_hyps = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -747,7 +747,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 0, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 0, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 0, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 0, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -768,7 +768,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 1;
+    test_unpacked_msg.iar_state.num_hyps = 1;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -792,7 +792,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 1, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 1, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 1, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 1, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -813,7 +813,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 729;
+    test_unpacked_msg.iar_state.num_hyps = 729;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -837,7 +837,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 729, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 729, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 729, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 729, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -858,7 +858,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 728;
+    test_unpacked_msg.iar_state.num_hyps = 728;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -882,7 +882,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 728, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 728, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 728, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 728, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -903,7 +903,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 727;
+    test_unpacked_msg.iar_state.num_hyps = 727;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -927,7 +927,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 727, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 727, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 727, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 727, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -948,7 +948,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IAR_STATE.num_hyps = 723;
+    test_unpacked_msg.iar_state.num_hyps = 723;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IAR_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -972,7 +972,7 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgIarState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IAR_STATE.num_hyps == 723, "incorrect value for check_unpacked_msg->MSG_IAR_STATE.num_hyps, expected 723, is %d", check_unpacked_msg->MSG_IAR_STATE.num_hyps);
+    ck_assert_msg(check_unpacked_msg->iar_state.num_hyps == 723, "incorrect value for check_unpacked_msg->iar_state.num_hyps, expected 723, is %d", check_unpacked_msg->iar_state.num_hyps);
   }
 }
 END_TEST

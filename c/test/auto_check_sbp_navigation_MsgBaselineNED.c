@@ -600,14 +600,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASELINE_NED.d = 32153;
-    test_unpacked_msg.MSG_BASELINE_NED.e = -1681229;
-    test_unpacked_msg.MSG_BASELINE_NED.flags = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.h_accuracy = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.n = 816073;
-    test_unpacked_msg.MSG_BASELINE_NED.n_sats = 14;
-    test_unpacked_msg.MSG_BASELINE_NED.tow = 326825000;
-    test_unpacked_msg.MSG_BASELINE_NED.v_accuracy = 0;
+    test_unpacked_msg.baseline_ned.d = 32153;
+    test_unpacked_msg.baseline_ned.e = -1681229;
+    test_unpacked_msg.baseline_ned.flags = 0;
+    test_unpacked_msg.baseline_ned.h_accuracy = 0;
+    test_unpacked_msg.baseline_ned.n = 816073;
+    test_unpacked_msg.baseline_ned.n_sats = 14;
+    test_unpacked_msg.baseline_ned.tow = 326825000;
+    test_unpacked_msg.baseline_ned.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASELINE_NED, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -631,14 +631,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.d == 32153, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.d, expected 32153, is %d", check_unpacked_msg->MSG_BASELINE_NED.d);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.e == -1681229, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.e, expected -1681229, is %d", check_unpacked_msg->MSG_BASELINE_NED.e);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.flags == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.flags, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.h_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n == 816073, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n, expected 816073, is %d", check_unpacked_msg->MSG_BASELINE_NED.n);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n_sats == 14, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n_sats, expected 14, is %d", check_unpacked_msg->MSG_BASELINE_NED.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.tow == 326825000, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.tow, expected 326825000, is %d", check_unpacked_msg->MSG_BASELINE_NED.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.d == 32153, "incorrect value for check_unpacked_msg->baseline_ned.d, expected 32153, is %d", check_unpacked_msg->baseline_ned.d);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.e == -1681229, "incorrect value for check_unpacked_msg->baseline_ned.e, expected -1681229, is %d", check_unpacked_msg->baseline_ned.e);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.flags == 0, "incorrect value for check_unpacked_msg->baseline_ned.flags, expected 0, is %d", check_unpacked_msg->baseline_ned.flags);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.h_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.h_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.h_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n == 816073, "incorrect value for check_unpacked_msg->baseline_ned.n, expected 816073, is %d", check_unpacked_msg->baseline_ned.n);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n_sats == 14, "incorrect value for check_unpacked_msg->baseline_ned.n_sats, expected 14, is %d", check_unpacked_msg->baseline_ned.n_sats);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.tow == 326825000, "incorrect value for check_unpacked_msg->baseline_ned.tow, expected 326825000, is %d", check_unpacked_msg->baseline_ned.tow);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.v_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.v_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -659,14 +659,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASELINE_NED.d = 32622;
-    test_unpacked_msg.MSG_BASELINE_NED.e = -1681214;
-    test_unpacked_msg.MSG_BASELINE_NED.flags = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.h_accuracy = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.n = 815970;
-    test_unpacked_msg.MSG_BASELINE_NED.n_sats = 15;
-    test_unpacked_msg.MSG_BASELINE_NED.tow = 326826000;
-    test_unpacked_msg.MSG_BASELINE_NED.v_accuracy = 0;
+    test_unpacked_msg.baseline_ned.d = 32622;
+    test_unpacked_msg.baseline_ned.e = -1681214;
+    test_unpacked_msg.baseline_ned.flags = 0;
+    test_unpacked_msg.baseline_ned.h_accuracy = 0;
+    test_unpacked_msg.baseline_ned.n = 815970;
+    test_unpacked_msg.baseline_ned.n_sats = 15;
+    test_unpacked_msg.baseline_ned.tow = 326826000;
+    test_unpacked_msg.baseline_ned.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASELINE_NED, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -690,14 +690,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.d == 32622, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.d, expected 32622, is %d", check_unpacked_msg->MSG_BASELINE_NED.d);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.e == -1681214, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.e, expected -1681214, is %d", check_unpacked_msg->MSG_BASELINE_NED.e);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.flags == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.flags, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.h_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n == 815970, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n, expected 815970, is %d", check_unpacked_msg->MSG_BASELINE_NED.n);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n_sats, expected 15, is %d", check_unpacked_msg->MSG_BASELINE_NED.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.tow == 326826000, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.tow, expected 326826000, is %d", check_unpacked_msg->MSG_BASELINE_NED.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.d == 32622, "incorrect value for check_unpacked_msg->baseline_ned.d, expected 32622, is %d", check_unpacked_msg->baseline_ned.d);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.e == -1681214, "incorrect value for check_unpacked_msg->baseline_ned.e, expected -1681214, is %d", check_unpacked_msg->baseline_ned.e);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.flags == 0, "incorrect value for check_unpacked_msg->baseline_ned.flags, expected 0, is %d", check_unpacked_msg->baseline_ned.flags);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.h_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.h_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.h_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n == 815970, "incorrect value for check_unpacked_msg->baseline_ned.n, expected 815970, is %d", check_unpacked_msg->baseline_ned.n);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n_sats == 15, "incorrect value for check_unpacked_msg->baseline_ned.n_sats, expected 15, is %d", check_unpacked_msg->baseline_ned.n_sats);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.tow == 326826000, "incorrect value for check_unpacked_msg->baseline_ned.tow, expected 326826000, is %d", check_unpacked_msg->baseline_ned.tow);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.v_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.v_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -718,14 +718,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASELINE_NED.d = 32750;
-    test_unpacked_msg.MSG_BASELINE_NED.e = -1681235;
-    test_unpacked_msg.MSG_BASELINE_NED.flags = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.h_accuracy = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.n = 815759;
-    test_unpacked_msg.MSG_BASELINE_NED.n_sats = 15;
-    test_unpacked_msg.MSG_BASELINE_NED.tow = 326827000;
-    test_unpacked_msg.MSG_BASELINE_NED.v_accuracy = 0;
+    test_unpacked_msg.baseline_ned.d = 32750;
+    test_unpacked_msg.baseline_ned.e = -1681235;
+    test_unpacked_msg.baseline_ned.flags = 0;
+    test_unpacked_msg.baseline_ned.h_accuracy = 0;
+    test_unpacked_msg.baseline_ned.n = 815759;
+    test_unpacked_msg.baseline_ned.n_sats = 15;
+    test_unpacked_msg.baseline_ned.tow = 326827000;
+    test_unpacked_msg.baseline_ned.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASELINE_NED, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -749,14 +749,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.d == 32750, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.d, expected 32750, is %d", check_unpacked_msg->MSG_BASELINE_NED.d);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.e == -1681235, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.e, expected -1681235, is %d", check_unpacked_msg->MSG_BASELINE_NED.e);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.flags == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.flags, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.h_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n == 815759, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n, expected 815759, is %d", check_unpacked_msg->MSG_BASELINE_NED.n);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n_sats, expected 15, is %d", check_unpacked_msg->MSG_BASELINE_NED.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.tow == 326827000, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.tow, expected 326827000, is %d", check_unpacked_msg->MSG_BASELINE_NED.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.d == 32750, "incorrect value for check_unpacked_msg->baseline_ned.d, expected 32750, is %d", check_unpacked_msg->baseline_ned.d);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.e == -1681235, "incorrect value for check_unpacked_msg->baseline_ned.e, expected -1681235, is %d", check_unpacked_msg->baseline_ned.e);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.flags == 0, "incorrect value for check_unpacked_msg->baseline_ned.flags, expected 0, is %d", check_unpacked_msg->baseline_ned.flags);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.h_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.h_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.h_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n == 815759, "incorrect value for check_unpacked_msg->baseline_ned.n, expected 815759, is %d", check_unpacked_msg->baseline_ned.n);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n_sats == 15, "incorrect value for check_unpacked_msg->baseline_ned.n_sats, expected 15, is %d", check_unpacked_msg->baseline_ned.n_sats);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.tow == 326827000, "incorrect value for check_unpacked_msg->baseline_ned.tow, expected 326827000, is %d", check_unpacked_msg->baseline_ned.tow);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.v_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.v_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -777,14 +777,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASELINE_NED.d = 32559;
-    test_unpacked_msg.MSG_BASELINE_NED.e = -1681357;
-    test_unpacked_msg.MSG_BASELINE_NED.flags = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.h_accuracy = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.n = 815190;
-    test_unpacked_msg.MSG_BASELINE_NED.n_sats = 15;
-    test_unpacked_msg.MSG_BASELINE_NED.tow = 326828000;
-    test_unpacked_msg.MSG_BASELINE_NED.v_accuracy = 0;
+    test_unpacked_msg.baseline_ned.d = 32559;
+    test_unpacked_msg.baseline_ned.e = -1681357;
+    test_unpacked_msg.baseline_ned.flags = 0;
+    test_unpacked_msg.baseline_ned.h_accuracy = 0;
+    test_unpacked_msg.baseline_ned.n = 815190;
+    test_unpacked_msg.baseline_ned.n_sats = 15;
+    test_unpacked_msg.baseline_ned.tow = 326828000;
+    test_unpacked_msg.baseline_ned.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASELINE_NED, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -808,14 +808,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.d == 32559, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.d, expected 32559, is %d", check_unpacked_msg->MSG_BASELINE_NED.d);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.e == -1681357, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.e, expected -1681357, is %d", check_unpacked_msg->MSG_BASELINE_NED.e);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.flags == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.flags, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.h_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n == 815190, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n, expected 815190, is %d", check_unpacked_msg->MSG_BASELINE_NED.n);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n_sats, expected 15, is %d", check_unpacked_msg->MSG_BASELINE_NED.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.tow == 326828000, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.tow, expected 326828000, is %d", check_unpacked_msg->MSG_BASELINE_NED.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.d == 32559, "incorrect value for check_unpacked_msg->baseline_ned.d, expected 32559, is %d", check_unpacked_msg->baseline_ned.d);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.e == -1681357, "incorrect value for check_unpacked_msg->baseline_ned.e, expected -1681357, is %d", check_unpacked_msg->baseline_ned.e);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.flags == 0, "incorrect value for check_unpacked_msg->baseline_ned.flags, expected 0, is %d", check_unpacked_msg->baseline_ned.flags);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.h_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.h_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.h_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n == 815190, "incorrect value for check_unpacked_msg->baseline_ned.n, expected 815190, is %d", check_unpacked_msg->baseline_ned.n);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n_sats == 15, "incorrect value for check_unpacked_msg->baseline_ned.n_sats, expected 15, is %d", check_unpacked_msg->baseline_ned.n_sats);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.tow == 326828000, "incorrect value for check_unpacked_msg->baseline_ned.tow, expected 326828000, is %d", check_unpacked_msg->baseline_ned.tow);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.v_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.v_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -836,14 +836,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASELINE_NED.d = 32421;
-    test_unpacked_msg.MSG_BASELINE_NED.e = -1681444;
-    test_unpacked_msg.MSG_BASELINE_NED.flags = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.h_accuracy = 0;
-    test_unpacked_msg.MSG_BASELINE_NED.n = 814806;
-    test_unpacked_msg.MSG_BASELINE_NED.n_sats = 15;
-    test_unpacked_msg.MSG_BASELINE_NED.tow = 326829000;
-    test_unpacked_msg.MSG_BASELINE_NED.v_accuracy = 0;
+    test_unpacked_msg.baseline_ned.d = 32421;
+    test_unpacked_msg.baseline_ned.e = -1681444;
+    test_unpacked_msg.baseline_ned.flags = 0;
+    test_unpacked_msg.baseline_ned.h_accuracy = 0;
+    test_unpacked_msg.baseline_ned.n = 814806;
+    test_unpacked_msg.baseline_ned.n_sats = 15;
+    test_unpacked_msg.baseline_ned.tow = 326829000;
+    test_unpacked_msg.baseline_ned.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASELINE_NED, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -867,14 +867,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgBaselineNED )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.d == 32421, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.d, expected 32421, is %d", check_unpacked_msg->MSG_BASELINE_NED.d);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.e == -1681444, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.e, expected -1681444, is %d", check_unpacked_msg->MSG_BASELINE_NED.e);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.flags == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.flags, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.h_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n == 814806, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n, expected 814806, is %d", check_unpacked_msg->MSG_BASELINE_NED.n);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.n_sats, expected 15, is %d", check_unpacked_msg->MSG_BASELINE_NED.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.tow == 326829000, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.tow, expected 326829000, is %d", check_unpacked_msg->MSG_BASELINE_NED.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_BASELINE_NED.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_BASELINE_NED.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_BASELINE_NED.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.d == 32421, "incorrect value for check_unpacked_msg->baseline_ned.d, expected 32421, is %d", check_unpacked_msg->baseline_ned.d);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.e == -1681444, "incorrect value for check_unpacked_msg->baseline_ned.e, expected -1681444, is %d", check_unpacked_msg->baseline_ned.e);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.flags == 0, "incorrect value for check_unpacked_msg->baseline_ned.flags, expected 0, is %d", check_unpacked_msg->baseline_ned.flags);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.h_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.h_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.h_accuracy);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n == 814806, "incorrect value for check_unpacked_msg->baseline_ned.n, expected 814806, is %d", check_unpacked_msg->baseline_ned.n);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.n_sats == 15, "incorrect value for check_unpacked_msg->baseline_ned.n_sats, expected 15, is %d", check_unpacked_msg->baseline_ned.n_sats);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.tow == 326829000, "incorrect value for check_unpacked_msg->baseline_ned.tow, expected 326829000, is %d", check_unpacked_msg->baseline_ned.tow);
+    ck_assert_msg(check_unpacked_msg->baseline_ned.v_accuracy == 0, "incorrect value for check_unpacked_msg->baseline_ned.v_accuracy, expected 0, is %d", check_unpacked_msg->baseline_ned.v_accuracy);
   }
 }
 END_TEST

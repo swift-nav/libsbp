@@ -238,9 +238,9 @@ START_TEST( test_unpacked_auto_check_sbp_vehicle_MsgOdometry )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ODOMETRY.flags = 1;
-    test_unpacked_msg.MSG_ODOMETRY.tow = 8;
-    test_unpacked_msg.MSG_ODOMETRY.velocity = 7;
+    test_unpacked_msg.odometry.flags = 1;
+    test_unpacked_msg.odometry.tow = 8;
+    test_unpacked_msg.odometry.velocity = 7;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ODOMETRY, 66, &test_unpacked_msg, &dummy_write);
 
@@ -264,9 +264,9 @@ START_TEST( test_unpacked_auto_check_sbp_vehicle_MsgOdometry )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_ODOMETRY.flags == 1, "incorrect value for check_unpacked_msg->MSG_ODOMETRY.flags, expected 1, is %d", check_unpacked_msg->MSG_ODOMETRY.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_ODOMETRY.tow == 8, "incorrect value for check_unpacked_msg->MSG_ODOMETRY.tow, expected 8, is %d", check_unpacked_msg->MSG_ODOMETRY.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_ODOMETRY.velocity == 7, "incorrect value for check_unpacked_msg->MSG_ODOMETRY.velocity, expected 7, is %d", check_unpacked_msg->MSG_ODOMETRY.velocity);
+    ck_assert_msg(check_unpacked_msg->odometry.flags == 1, "incorrect value for check_unpacked_msg->odometry.flags, expected 1, is %d", check_unpacked_msg->odometry.flags);
+    ck_assert_msg(check_unpacked_msg->odometry.tow == 8, "incorrect value for check_unpacked_msg->odometry.tow, expected 8, is %d", check_unpacked_msg->odometry.tow);
+    ck_assert_msg(check_unpacked_msg->odometry.velocity == 7, "incorrect value for check_unpacked_msg->odometry.velocity, expected 7, is %d", check_unpacked_msg->odometry.velocity);
   }
 }
 END_TEST

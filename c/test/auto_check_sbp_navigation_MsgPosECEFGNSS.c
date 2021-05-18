@@ -246,13 +246,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEFGNSS )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.accuracy = 182;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.flags = 4;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.n_sats = 18;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.tow = 501867800;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.x = -2694229.7079770807;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.y = -4264073.427345817;
-    test_unpacked_msg.MSG_POS_ECEF_GNSS.z = 3890655.013186158;
+    test_unpacked_msg.pos_ecef_gnss.accuracy = 182;
+    test_unpacked_msg.pos_ecef_gnss.flags = 4;
+    test_unpacked_msg.pos_ecef_gnss.n_sats = 18;
+    test_unpacked_msg.pos_ecef_gnss.tow = 501867800;
+    test_unpacked_msg.pos_ecef_gnss.x = -2694229.7079770807;
+    test_unpacked_msg.pos_ecef_gnss.y = -4264073.427345817;
+    test_unpacked_msg.pos_ecef_gnss.z = 3890655.013186158;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_ECEF_GNSS, 4096, &test_unpacked_msg, &dummy_write);
 
@@ -276,13 +276,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEFGNSS )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF_GNSS.accuracy == 182, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.accuracy, expected 182, is %d", check_unpacked_msg->MSG_POS_ECEF_GNSS.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF_GNSS.flags == 4, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.flags, expected 4, is %d", check_unpacked_msg->MSG_POS_ECEF_GNSS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF_GNSS.n_sats == 18, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.n_sats, expected 18, is %d", check_unpacked_msg->MSG_POS_ECEF_GNSS.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF_GNSS.tow == 501867800, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.tow, expected 501867800, is %d", check_unpacked_msg->MSG_POS_ECEF_GNSS.tow);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF_GNSS.x*100 - -2694229.70798*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.x, expected -2694229.70798, is %s", check_unpacked_msg->MSG_POS_ECEF_GNSS.x);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF_GNSS.y*100 - -4264073.42735*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.y, expected -4264073.42735, is %s", check_unpacked_msg->MSG_POS_ECEF_GNSS.y);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF_GNSS.z*100 - 3890655.01319*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF_GNSS.z, expected 3890655.01319, is %s", check_unpacked_msg->MSG_POS_ECEF_GNSS.z);
+    ck_assert_msg(check_unpacked_msg->pos_ecef_gnss.accuracy == 182, "incorrect value for check_unpacked_msg->pos_ecef_gnss.accuracy, expected 182, is %d", check_unpacked_msg->pos_ecef_gnss.accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_ecef_gnss.flags == 4, "incorrect value for check_unpacked_msg->pos_ecef_gnss.flags, expected 4, is %d", check_unpacked_msg->pos_ecef_gnss.flags);
+    ck_assert_msg(check_unpacked_msg->pos_ecef_gnss.n_sats == 18, "incorrect value for check_unpacked_msg->pos_ecef_gnss.n_sats, expected 18, is %d", check_unpacked_msg->pos_ecef_gnss.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_ecef_gnss.tow == 501867800, "incorrect value for check_unpacked_msg->pos_ecef_gnss.tow, expected 501867800, is %d", check_unpacked_msg->pos_ecef_gnss.tow);
+    ck_assert_msg((check_unpacked_msg->pos_ecef_gnss.x*100 - -2694229.70798*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef_gnss.x, expected -2694229.70798, is %s", check_unpacked_msg->pos_ecef_gnss.x);
+    ck_assert_msg((check_unpacked_msg->pos_ecef_gnss.y*100 - -4264073.42735*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef_gnss.y, expected -4264073.42735, is %s", check_unpacked_msg->pos_ecef_gnss.y);
+    ck_assert_msg((check_unpacked_msg->pos_ecef_gnss.z*100 - 3890655.01319*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef_gnss.z, expected 3890655.01319, is %s", check_unpacked_msg->pos_ecef_gnss.z);
   }
 }
 END_TEST

@@ -248,14 +248,14 @@ START_TEST( test_unpacked_auto_check_sbp_imu_MsgImuRaw )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IMU_RAW.acc_x = 96;
-    test_unpacked_msg.MSG_IMU_RAW.acc_y = -33;
-    test_unpacked_msg.MSG_IMU_RAW.acc_z = 4140;
-    test_unpacked_msg.MSG_IMU_RAW.gyr_x = 60;
-    test_unpacked_msg.MSG_IMU_RAW.gyr_y = -304;
-    test_unpacked_msg.MSG_IMU_RAW.gyr_z = -18;
-    test_unpacked_msg.MSG_IMU_RAW.tow = 3221225754;
-    test_unpacked_msg.MSG_IMU_RAW.tow_f = 206;
+    test_unpacked_msg.imu_raw.acc_x = 96;
+    test_unpacked_msg.imu_raw.acc_y = -33;
+    test_unpacked_msg.imu_raw.acc_z = 4140;
+    test_unpacked_msg.imu_raw.gyr_x = 60;
+    test_unpacked_msg.imu_raw.gyr_y = -304;
+    test_unpacked_msg.imu_raw.gyr_z = -18;
+    test_unpacked_msg.imu_raw.tow = 3221225754;
+    test_unpacked_msg.imu_raw.tow_f = 206;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IMU_RAW, 4660, &test_unpacked_msg, &dummy_write);
 
@@ -279,14 +279,14 @@ START_TEST( test_unpacked_auto_check_sbp_imu_MsgImuRaw )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.acc_x == 96, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.acc_x, expected 96, is %d", check_unpacked_msg->MSG_IMU_RAW.acc_x);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.acc_y == -33, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.acc_y, expected -33, is %d", check_unpacked_msg->MSG_IMU_RAW.acc_y);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.acc_z == 4140, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.acc_z, expected 4140, is %d", check_unpacked_msg->MSG_IMU_RAW.acc_z);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.gyr_x == 60, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.gyr_x, expected 60, is %d", check_unpacked_msg->MSG_IMU_RAW.gyr_x);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.gyr_y == -304, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.gyr_y, expected -304, is %d", check_unpacked_msg->MSG_IMU_RAW.gyr_y);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.gyr_z == -18, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.gyr_z, expected -18, is %d", check_unpacked_msg->MSG_IMU_RAW.gyr_z);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.tow == 3221225754, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.tow, expected 3221225754, is %d", check_unpacked_msg->MSG_IMU_RAW.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_RAW.tow_f == 206, "incorrect value for check_unpacked_msg->MSG_IMU_RAW.tow_f, expected 206, is %d", check_unpacked_msg->MSG_IMU_RAW.tow_f);
+    ck_assert_msg(check_unpacked_msg->imu_raw.acc_x == 96, "incorrect value for check_unpacked_msg->imu_raw.acc_x, expected 96, is %d", check_unpacked_msg->imu_raw.acc_x);
+    ck_assert_msg(check_unpacked_msg->imu_raw.acc_y == -33, "incorrect value for check_unpacked_msg->imu_raw.acc_y, expected -33, is %d", check_unpacked_msg->imu_raw.acc_y);
+    ck_assert_msg(check_unpacked_msg->imu_raw.acc_z == 4140, "incorrect value for check_unpacked_msg->imu_raw.acc_z, expected 4140, is %d", check_unpacked_msg->imu_raw.acc_z);
+    ck_assert_msg(check_unpacked_msg->imu_raw.gyr_x == 60, "incorrect value for check_unpacked_msg->imu_raw.gyr_x, expected 60, is %d", check_unpacked_msg->imu_raw.gyr_x);
+    ck_assert_msg(check_unpacked_msg->imu_raw.gyr_y == -304, "incorrect value for check_unpacked_msg->imu_raw.gyr_y, expected -304, is %d", check_unpacked_msg->imu_raw.gyr_y);
+    ck_assert_msg(check_unpacked_msg->imu_raw.gyr_z == -18, "incorrect value for check_unpacked_msg->imu_raw.gyr_z, expected -18, is %d", check_unpacked_msg->imu_raw.gyr_z);
+    ck_assert_msg(check_unpacked_msg->imu_raw.tow == 3221225754, "incorrect value for check_unpacked_msg->imu_raw.tow, expected 3221225754, is %d", check_unpacked_msg->imu_raw.tow);
+    ck_assert_msg(check_unpacked_msg->imu_raw.tow_f == 206, "incorrect value for check_unpacked_msg->imu_raw.tow_f, expected 206, is %d", check_unpacked_msg->imu_raw.tow_f);
   }
 }
 END_TEST

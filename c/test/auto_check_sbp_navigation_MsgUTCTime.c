@@ -250,15 +250,15 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgUTCTime )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_UTC_TIME.day = 9;
-    test_unpacked_msg.MSG_UTC_TIME.flags = 1;
-    test_unpacked_msg.MSG_UTC_TIME.hours = 19;
-    test_unpacked_msg.MSG_UTC_TIME.minutes = 24;
-    test_unpacked_msg.MSG_UTC_TIME.month = 4;
-    test_unpacked_msg.MSG_UTC_TIME.ns = 800000000;
-    test_unpacked_msg.MSG_UTC_TIME.seconds = 9;
-    test_unpacked_msg.MSG_UTC_TIME.tow = 501867800;
-    test_unpacked_msg.MSG_UTC_TIME.year = 2021;
+    test_unpacked_msg.utc_time.day = 9;
+    test_unpacked_msg.utc_time.flags = 1;
+    test_unpacked_msg.utc_time.hours = 19;
+    test_unpacked_msg.utc_time.minutes = 24;
+    test_unpacked_msg.utc_time.month = 4;
+    test_unpacked_msg.utc_time.ns = 800000000;
+    test_unpacked_msg.utc_time.seconds = 9;
+    test_unpacked_msg.utc_time.tow = 501867800;
+    test_unpacked_msg.utc_time.year = 2021;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_UTC_TIME, 789, &test_unpacked_msg, &dummy_write);
 
@@ -282,15 +282,15 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgUTCTime )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.day == 9, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.day, expected 9, is %d", check_unpacked_msg->MSG_UTC_TIME.day);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.flags == 1, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.flags, expected 1, is %d", check_unpacked_msg->MSG_UTC_TIME.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.hours == 19, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.hours, expected 19, is %d", check_unpacked_msg->MSG_UTC_TIME.hours);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.minutes == 24, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.minutes, expected 24, is %d", check_unpacked_msg->MSG_UTC_TIME.minutes);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.month == 4, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.month, expected 4, is %d", check_unpacked_msg->MSG_UTC_TIME.month);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.ns == 800000000, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.ns, expected 800000000, is %d", check_unpacked_msg->MSG_UTC_TIME.ns);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.seconds == 9, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.seconds, expected 9, is %d", check_unpacked_msg->MSG_UTC_TIME.seconds);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.tow == 501867800, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.tow, expected 501867800, is %d", check_unpacked_msg->MSG_UTC_TIME.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_UTC_TIME.year == 2021, "incorrect value for check_unpacked_msg->MSG_UTC_TIME.year, expected 2021, is %d", check_unpacked_msg->MSG_UTC_TIME.year);
+    ck_assert_msg(check_unpacked_msg->utc_time.day == 9, "incorrect value for check_unpacked_msg->utc_time.day, expected 9, is %d", check_unpacked_msg->utc_time.day);
+    ck_assert_msg(check_unpacked_msg->utc_time.flags == 1, "incorrect value for check_unpacked_msg->utc_time.flags, expected 1, is %d", check_unpacked_msg->utc_time.flags);
+    ck_assert_msg(check_unpacked_msg->utc_time.hours == 19, "incorrect value for check_unpacked_msg->utc_time.hours, expected 19, is %d", check_unpacked_msg->utc_time.hours);
+    ck_assert_msg(check_unpacked_msg->utc_time.minutes == 24, "incorrect value for check_unpacked_msg->utc_time.minutes, expected 24, is %d", check_unpacked_msg->utc_time.minutes);
+    ck_assert_msg(check_unpacked_msg->utc_time.month == 4, "incorrect value for check_unpacked_msg->utc_time.month, expected 4, is %d", check_unpacked_msg->utc_time.month);
+    ck_assert_msg(check_unpacked_msg->utc_time.ns == 800000000, "incorrect value for check_unpacked_msg->utc_time.ns, expected 800000000, is %d", check_unpacked_msg->utc_time.ns);
+    ck_assert_msg(check_unpacked_msg->utc_time.seconds == 9, "incorrect value for check_unpacked_msg->utc_time.seconds, expected 9, is %d", check_unpacked_msg->utc_time.seconds);
+    ck_assert_msg(check_unpacked_msg->utc_time.tow == 501867800, "incorrect value for check_unpacked_msg->utc_time.tow, expected 501867800, is %d", check_unpacked_msg->utc_time.tow);
+    ck_assert_msg(check_unpacked_msg->utc_time.year == 2021, "incorrect value for check_unpacked_msg->utc_time.year, expected 2021, is %d", check_unpacked_msg->utc_time.year);
   }
 }
 END_TEST

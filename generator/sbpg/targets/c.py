@@ -110,6 +110,11 @@ def convert_unpacked(value):
       return value
   return "sbp_" + convert_packed(value)
 
+def convert_unpacked_union(value):
+    """
+    """
+    return value.lower()[4:]
+
 
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get('desc', '').replace(" ", "_").upper()
@@ -199,7 +204,7 @@ class FieldItem(object):
 
     def __init__(self, msg, package_specs, field):
         self.name = field.identifier
-        print("Creating field %s" % self.name)
+        #print("Creating field %s" % self.name)
         type_id = field.type_id
         
         self.packed_size = 0
@@ -262,7 +267,7 @@ class MsgItem(object):
         self.short_desc = msg.short_desc
         self.fields = []
         self.is_real_message = msg.is_real_message
-        print("Creating message %s" % self.name)
+        #print("Creating message %s" % self.name)
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
             if new_field.packed_size == 0 and not self.is_real_message:
@@ -272,6 +277,7 @@ class MsgItem(object):
 
 JENV.filters['convert_packed'] = convert_packed
 JENV.filters['convert_unpacked'] = convert_unpacked
+JENV.filters['convert_unpacked_union'] = convert_unpacked_union
 JENV.filters['mk_packed_id'] = mk_packed_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['commentify'] = commentify
@@ -314,7 +320,7 @@ def render_unpacked_headers(include_dir, package_specs):
             msgs.append(new_msg)
             if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
-            print("Adding %s" % new_msg.name)
+            #print("Adding %s" % new_msg.name)
         destination_filename = "%s/unpacked/%s.h" % (include_dir, name)
         py_template = JENV.get_template(UNPACKED_HEADER_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
@@ -349,7 +355,7 @@ def render_unpacked_sources(output_dir, package_specs):
             msgs.append(new_msg)
             if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
-            print("Adding %s" % new_msg.name)
+            #print("Adding %s" % new_msg.name)
         destination_filename = "%s/unpacked/%s.c" % (output_dir, name)
         py_template = JENV.get_template(UNPACKED_SOURCE_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:

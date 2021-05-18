@@ -32,11 +32,15 @@ def strEscape(value):
 def convert_upper(value):
     return convert_unpacked(value)[4:-2].upper()
 
+def convert_unpacked_union(value):
+    return convert_unpacked(value)[8:-2].lower()
+
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_packed_id'] = mk_packed_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert_packed'] = convert_packed
 JENV.filters['convert_unpacked'] = convert_unpacked
+JENV.filters['convert_unpacked_union'] = convert_unpacked_union
 JENV.filters['convert_upper'] = convert_upper
 JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape

@@ -242,11 +242,11 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgAngularRate )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ANGULAR_RATE.flags = 0;
-    test_unpacked_msg.MSG_ANGULAR_RATE.tow = 2;
-    test_unpacked_msg.MSG_ANGULAR_RATE.x = 2;
-    test_unpacked_msg.MSG_ANGULAR_RATE.y = 5;
-    test_unpacked_msg.MSG_ANGULAR_RATE.z = 2;
+    test_unpacked_msg.angular_rate.flags = 0;
+    test_unpacked_msg.angular_rate.tow = 2;
+    test_unpacked_msg.angular_rate.x = 2;
+    test_unpacked_msg.angular_rate.y = 5;
+    test_unpacked_msg.angular_rate.z = 2;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ANGULAR_RATE, 66, &test_unpacked_msg, &dummy_write);
 
@@ -270,11 +270,11 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgAngularRate )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_ANGULAR_RATE.flags == 0, "incorrect value for check_unpacked_msg->MSG_ANGULAR_RATE.flags, expected 0, is %d", check_unpacked_msg->MSG_ANGULAR_RATE.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_ANGULAR_RATE.tow == 2, "incorrect value for check_unpacked_msg->MSG_ANGULAR_RATE.tow, expected 2, is %d", check_unpacked_msg->MSG_ANGULAR_RATE.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_ANGULAR_RATE.x == 2, "incorrect value for check_unpacked_msg->MSG_ANGULAR_RATE.x, expected 2, is %d", check_unpacked_msg->MSG_ANGULAR_RATE.x);
-    ck_assert_msg(check_unpacked_msg->MSG_ANGULAR_RATE.y == 5, "incorrect value for check_unpacked_msg->MSG_ANGULAR_RATE.y, expected 5, is %d", check_unpacked_msg->MSG_ANGULAR_RATE.y);
-    ck_assert_msg(check_unpacked_msg->MSG_ANGULAR_RATE.z == 2, "incorrect value for check_unpacked_msg->MSG_ANGULAR_RATE.z, expected 2, is %d", check_unpacked_msg->MSG_ANGULAR_RATE.z);
+    ck_assert_msg(check_unpacked_msg->angular_rate.flags == 0, "incorrect value for check_unpacked_msg->angular_rate.flags, expected 0, is %d", check_unpacked_msg->angular_rate.flags);
+    ck_assert_msg(check_unpacked_msg->angular_rate.tow == 2, "incorrect value for check_unpacked_msg->angular_rate.tow, expected 2, is %d", check_unpacked_msg->angular_rate.tow);
+    ck_assert_msg(check_unpacked_msg->angular_rate.x == 2, "incorrect value for check_unpacked_msg->angular_rate.x, expected 2, is %d", check_unpacked_msg->angular_rate.x);
+    ck_assert_msg(check_unpacked_msg->angular_rate.y == 5, "incorrect value for check_unpacked_msg->angular_rate.y, expected 5, is %d", check_unpacked_msg->angular_rate.y);
+    ck_assert_msg(check_unpacked_msg->angular_rate.z == 2, "incorrect value for check_unpacked_msg->angular_rate.z, expected 2, is %d", check_unpacked_msg->angular_rate.z);
   }
 }
 END_TEST

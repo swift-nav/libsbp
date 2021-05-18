@@ -248,14 +248,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLlhGnss )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_GNSS.flags = 4;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.h_accuracy = 87;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.height = -17.39382124780135;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.lat = 37.83123196497633;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.lon = -122.28650381011681;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.n_sats = 18;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.tow = 501867800;
-    test_unpacked_msg.MSG_POS_LLH_GNSS.v_accuracy = 181;
+    test_unpacked_msg.pos_llh_gnss.flags = 4;
+    test_unpacked_msg.pos_llh_gnss.h_accuracy = 87;
+    test_unpacked_msg.pos_llh_gnss.height = -17.39382124780135;
+    test_unpacked_msg.pos_llh_gnss.lat = 37.83123196497633;
+    test_unpacked_msg.pos_llh_gnss.lon = -122.28650381011681;
+    test_unpacked_msg.pos_llh_gnss.n_sats = 18;
+    test_unpacked_msg.pos_llh_gnss.tow = 501867800;
+    test_unpacked_msg.pos_llh_gnss.v_accuracy = 181;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_GNSS, 4096, &test_unpacked_msg, &dummy_write);
 
@@ -279,14 +279,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLlhGnss )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_GNSS.flags == 4, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.flags, expected 4, is %d", check_unpacked_msg->MSG_POS_LLH_GNSS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_GNSS.h_accuracy == 87, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.h_accuracy, expected 87, is %d", check_unpacked_msg->MSG_POS_LLH_GNSS.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_GNSS.height*100 - -17.3938212478*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.height, expected -17.3938212478, is %s", check_unpacked_msg->MSG_POS_LLH_GNSS.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_GNSS.lat*100 - 37.831231965*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.lat, expected 37.831231965, is %s", check_unpacked_msg->MSG_POS_LLH_GNSS.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_GNSS.lon*100 - -122.28650381*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.lon, expected -122.28650381, is %s", check_unpacked_msg->MSG_POS_LLH_GNSS.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_GNSS.n_sats == 18, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.n_sats, expected 18, is %d", check_unpacked_msg->MSG_POS_LLH_GNSS.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_GNSS.tow == 501867800, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.tow, expected 501867800, is %d", check_unpacked_msg->MSG_POS_LLH_GNSS.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_GNSS.v_accuracy == 181, "incorrect value for check_unpacked_msg->MSG_POS_LLH_GNSS.v_accuracy, expected 181, is %d", check_unpacked_msg->MSG_POS_LLH_GNSS.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_gnss.flags == 4, "incorrect value for check_unpacked_msg->pos_llh_gnss.flags, expected 4, is %d", check_unpacked_msg->pos_llh_gnss.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_gnss.h_accuracy == 87, "incorrect value for check_unpacked_msg->pos_llh_gnss.h_accuracy, expected 87, is %d", check_unpacked_msg->pos_llh_gnss.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_gnss.height*100 - -17.3938212478*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_gnss.height, expected -17.3938212478, is %s", check_unpacked_msg->pos_llh_gnss.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_gnss.lat*100 - 37.831231965*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_gnss.lat, expected 37.831231965, is %s", check_unpacked_msg->pos_llh_gnss.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_gnss.lon*100 - -122.28650381*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_gnss.lon, expected -122.28650381, is %s", check_unpacked_msg->pos_llh_gnss.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_gnss.n_sats == 18, "incorrect value for check_unpacked_msg->pos_llh_gnss.n_sats, expected 18, is %d", check_unpacked_msg->pos_llh_gnss.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_gnss.tow == 501867800, "incorrect value for check_unpacked_msg->pos_llh_gnss.tow, expected 501867800, is %d", check_unpacked_msg->pos_llh_gnss.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_gnss.v_accuracy == 181, "incorrect value for check_unpacked_msg->pos_llh_gnss.v_accuracy, expected 181, is %d", check_unpacked_msg->pos_llh_gnss.v_accuracy);
   }
 }
 END_TEST

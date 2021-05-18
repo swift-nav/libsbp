@@ -1117,12 +1117,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 0;
+    test_unpacked_msg.thread_state.cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 2460;
+    test_unpacked_msg.thread_state.stack_free = 2460;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1146,12 +1146,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 0, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 0, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 0, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 2460, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 2460, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 2460, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 2460, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1172,12 +1172,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 595;
+    test_unpacked_msg.thread_state.cpu = 595;
     {
       const char assign_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 36;
+    test_unpacked_msg.thread_state.stack_free = 36;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1201,12 +1201,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 595, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 595, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 595, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 595, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 36, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 36, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 36, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 36, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1227,12 +1227,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 14;
+    test_unpacked_msg.thread_state.cpu = 14;
     {
       const char assign_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 1140;
+    test_unpacked_msg.thread_state.stack_free = 1140;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1256,12 +1256,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 14, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 14, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 14, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 14, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 1140, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 1140, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 1140, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 1140, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1282,12 +1282,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 1;
+    test_unpacked_msg.thread_state.cpu = 1;
     {
       const char assign_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 5060;
+    test_unpacked_msg.thread_state.stack_free = 5060;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1311,12 +1311,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 1, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 1, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 1, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 1, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 5060, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 5060, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 5060, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 5060, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1337,12 +1337,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 7;
+    test_unpacked_msg.thread_state.cpu = 7;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 2324;
+    test_unpacked_msg.thread_state.stack_free = 2324;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1366,12 +1366,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 7, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 7, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 7, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 7, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 2324, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 2324, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 2324, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 2324, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1392,12 +1392,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 0;
+    test_unpacked_msg.thread_state.cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 2452;
+    test_unpacked_msg.thread_state.stack_free = 2452;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1421,12 +1421,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 0, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 0, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 0, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 2452, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 2452, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 2452, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 2452, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1447,12 +1447,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 484;
+    test_unpacked_msg.thread_state.cpu = 484;
     {
       const char assign_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 36;
+    test_unpacked_msg.thread_state.stack_free = 36;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1476,12 +1476,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 484, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 484, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 484, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 484, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 36, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 36, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 36, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 36, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1502,12 +1502,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 394;
+    test_unpacked_msg.thread_state.cpu = 394;
     {
       const char assign_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 1884;
+    test_unpacked_msg.thread_state.stack_free = 1884;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1531,12 +1531,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 394, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 394, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 394, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 394, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 1884, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 1884, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 1884, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 1884, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1557,12 +1557,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 1;
+    test_unpacked_msg.thread_state.cpu = 1;
     {
       const char assign_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 3076;
+    test_unpacked_msg.thread_state.stack_free = 3076;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1586,12 +1586,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 1, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 1, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 1, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 1, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 3076, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 3076, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 3076, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 3076, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1612,12 +1612,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 10;
+    test_unpacked_msg.thread_state.cpu = 10;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 2428;
+    test_unpacked_msg.thread_state.stack_free = 2428;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1641,12 +1641,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 10, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 10, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 10, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 10, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 2428, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 2428, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 2428, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 2428, is %d", check_unpacked_msg->thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1667,12 +1667,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_THREAD_STATE.cpu = 0;
+    test_unpacked_msg.thread_state.cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_THREAD_STATE.name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.thread_state.name, assign_string, sizeof(assign_string));
     }
-    test_unpacked_msg.MSG_THREAD_STATE.stack_free = 2332;
+    test_unpacked_msg.thread_state.stack_free = 2332;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_THREAD_STATE, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1696,12 +1696,12 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgThreadState )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.cpu == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.cpu, expected 0, is %d", check_unpacked_msg->MSG_THREAD_STATE.cpu);
+    ck_assert_msg(check_unpacked_msg->thread_state.cpu == 0, "incorrect value for check_unpacked_msg->thread_state.cpu, expected 0, is %d", check_unpacked_msg->thread_state.cpu);
     {
       const char check_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_THREAD_STATE.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_THREAD_STATE.name);
+      ck_assert_msg(memcmp(check_unpacked_msg->thread_state.name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->thread_state.name, expected string '%s', is '%s'", check_string, check_unpacked_msg->thread_state.name);
     }
-    ck_assert_msg(check_unpacked_msg->MSG_THREAD_STATE.stack_free == 2332, "incorrect value for check_unpacked_msg->MSG_THREAD_STATE.stack_free, expected 2332, is %d", check_unpacked_msg->MSG_THREAD_STATE.stack_free);
+    ck_assert_msg(check_unpacked_msg->thread_state.stack_free == 2332, "incorrect value for check_unpacked_msg->thread_state.stack_free, expected 2332, is %d", check_unpacked_msg->thread_state.stack_free);
   }
 }
 END_TEST

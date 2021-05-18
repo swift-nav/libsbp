@@ -308,7 +308,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgHeartbeat )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_HEARTBEAT.flags = 12800;
+    test_unpacked_msg.heartbeat.flags = 12800;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_HEARTBEAT, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -332,7 +332,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgHeartbeat )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_HEARTBEAT.flags == 12800, "incorrect value for check_unpacked_msg->MSG_HEARTBEAT.flags, expected 12800, is %d", check_unpacked_msg->MSG_HEARTBEAT.flags);
+    ck_assert_msg(check_unpacked_msg->heartbeat.flags == 12800, "incorrect value for check_unpacked_msg->heartbeat.flags, expected 12800, is %d", check_unpacked_msg->heartbeat.flags);
   }
   // Test successful parsing of a message
   {
@@ -353,7 +353,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgHeartbeat )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_HEARTBEAT.flags = 0;
+    test_unpacked_msg.heartbeat.flags = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_HEARTBEAT, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -377,7 +377,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgHeartbeat )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_HEARTBEAT.flags == 0, "incorrect value for check_unpacked_msg->MSG_HEARTBEAT.flags, expected 0, is %d", check_unpacked_msg->MSG_HEARTBEAT.flags);
+    ck_assert_msg(check_unpacked_msg->heartbeat.flags == 0, "incorrect value for check_unpacked_msg->heartbeat.flags, expected 0, is %d", check_unpacked_msg->heartbeat.flags);
   }
 }
 END_TEST

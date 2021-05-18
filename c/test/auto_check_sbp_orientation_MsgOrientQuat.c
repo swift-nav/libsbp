@@ -252,16 +252,16 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgOrientQuat )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ORIENT_QUAT.flags = 1;
-    test_unpacked_msg.MSG_ORIENT_QUAT.tow = 0;
-    test_unpacked_msg.MSG_ORIENT_QUAT.w = 3;
-    test_unpacked_msg.MSG_ORIENT_QUAT.w_accuracy = 3.0;
-    test_unpacked_msg.MSG_ORIENT_QUAT.x = 7;
-    test_unpacked_msg.MSG_ORIENT_QUAT.x_accuracy = 4.0;
-    test_unpacked_msg.MSG_ORIENT_QUAT.y = 8;
-    test_unpacked_msg.MSG_ORIENT_QUAT.y_accuracy = 8.0;
-    test_unpacked_msg.MSG_ORIENT_QUAT.z = 4;
-    test_unpacked_msg.MSG_ORIENT_QUAT.z_accuracy = 3.0;
+    test_unpacked_msg.orient_quat.flags = 1;
+    test_unpacked_msg.orient_quat.tow = 0;
+    test_unpacked_msg.orient_quat.w = 3;
+    test_unpacked_msg.orient_quat.w_accuracy = 3.0;
+    test_unpacked_msg.orient_quat.x = 7;
+    test_unpacked_msg.orient_quat.x_accuracy = 4.0;
+    test_unpacked_msg.orient_quat.y = 8;
+    test_unpacked_msg.orient_quat.y_accuracy = 8.0;
+    test_unpacked_msg.orient_quat.z = 4;
+    test_unpacked_msg.orient_quat.z_accuracy = 3.0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ORIENT_QUAT, 66, &test_unpacked_msg, &dummy_write);
 
@@ -285,16 +285,16 @@ START_TEST( test_unpacked_auto_check_sbp_orientation_MsgOrientQuat )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.flags == 1, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.flags, expected 1, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.tow == 0, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.tow, expected 0, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.w == 3, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w, expected 3, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.w);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.x == 7, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x, expected 7, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.x);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy, expected 4.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.y == 8, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y, expected 8, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.y);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy, expected 8.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.z == 4, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z, expected 4, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.z);
-    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_quat.flags == 1, "incorrect value for check_unpacked_msg->orient_quat.flags, expected 1, is %d", check_unpacked_msg->orient_quat.flags);
+    ck_assert_msg(check_unpacked_msg->orient_quat.tow == 0, "incorrect value for check_unpacked_msg->orient_quat.tow, expected 0, is %d", check_unpacked_msg->orient_quat.tow);
+    ck_assert_msg(check_unpacked_msg->orient_quat.w == 3, "incorrect value for check_unpacked_msg->orient_quat.w, expected 3, is %d", check_unpacked_msg->orient_quat.w);
+    ck_assert_msg((check_unpacked_msg->orient_quat.w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_quat.w_accuracy, expected 3.0, is %s", check_unpacked_msg->orient_quat.w_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_quat.x == 7, "incorrect value for check_unpacked_msg->orient_quat.x, expected 7, is %d", check_unpacked_msg->orient_quat.x);
+    ck_assert_msg((check_unpacked_msg->orient_quat.x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_quat.x_accuracy, expected 4.0, is %s", check_unpacked_msg->orient_quat.x_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_quat.y == 8, "incorrect value for check_unpacked_msg->orient_quat.y, expected 8, is %d", check_unpacked_msg->orient_quat.y);
+    ck_assert_msg((check_unpacked_msg->orient_quat.y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_quat.y_accuracy, expected 8.0, is %s", check_unpacked_msg->orient_quat.y_accuracy);
+    ck_assert_msg(check_unpacked_msg->orient_quat.z == 4, "incorrect value for check_unpacked_msg->orient_quat.z, expected 4, is %d", check_unpacked_msg->orient_quat.z);
+    ck_assert_msg((check_unpacked_msg->orient_quat.z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->orient_quat.z_accuracy, expected 3.0, is %s", check_unpacked_msg->orient_quat.z_accuracy);
   }
 }
 END_TEST

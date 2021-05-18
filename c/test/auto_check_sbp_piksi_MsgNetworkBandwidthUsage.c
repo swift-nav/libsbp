@@ -404,75 +404,75 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgNetworkBandwidthUsage )
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].duration = 2159176030;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[0].duration = 2159176030;
     
     {
       const char assign_string[] = { (char)99,(char)97,(char)110,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].interface_name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.network_bandwidth_usage.interfaces[0].interface_name, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].rx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[0].rx_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].total_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[0].total_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].tx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[0].tx_bytes = 0;
     
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].duration = 2159176030;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[1].duration = 2159176030;
     
     {
       const char assign_string[] = { (char)99,(char)97,(char)110,(char)49,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].interface_name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.network_bandwidth_usage.interfaces[1].interface_name, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].rx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[1].rx_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].total_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[1].total_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].tx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[1].tx_bytes = 0;
     
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].duration = 2159176030;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[2].duration = 2159176030;
     
     {
       const char assign_string[] = { (char)101,(char)116,(char)104,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].interface_name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.network_bandwidth_usage.interfaces[2].interface_name, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].rx_bytes = 4036234989;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[2].rx_bytes = 4036234989;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].total_bytes = 3411995557;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[2].total_bytes = 3411995557;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].tx_bytes = 3670727864;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[2].tx_bytes = 3670727864;
     
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].duration = 2159176030;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[3].duration = 2159176030;
     
     {
       const char assign_string[] = { (char)108,(char)111,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].interface_name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.network_bandwidth_usage.interfaces[3].interface_name, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].rx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[3].rx_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].total_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[3].total_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].tx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[3].tx_bytes = 0;
     
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].duration = 2159176030;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[4].duration = 2159176030;
     
     {
       const char assign_string[] = { (char)115,(char)105,(char)116,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].interface_name, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.network_bandwidth_usage.interfaces[4].interface_name, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].rx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[4].rx_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].total_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[4].total_bytes = 0;
     
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].tx_bytes = 0;
-    test_unpacked_msg.MSG_NETWORK_BANDWIDTH_USAGE.n_interfaces = 5;
+    test_unpacked_msg.network_bandwidth_usage.interfaces[4].tx_bytes = 0;
+    test_unpacked_msg.network_bandwidth_usage.n_interfaces = 5;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_NETWORK_BANDWIDTH_USAGE, 31183, &test_unpacked_msg, &dummy_write);
 
@@ -497,71 +497,71 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgNetworkBandwidthUsage )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].duration == 2159176030, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].duration, expected 2159176030, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].duration);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[0].duration == 2159176030, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[0].duration, expected 2159176030, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[0].duration);
     
     {
       const char check_string[] = { (char)99,(char)97,(char)110,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].interface_name);
+      ck_assert_msg(memcmp(check_unpacked_msg->network_bandwidth_usage.interfaces[0].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[0].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->network_bandwidth_usage.interfaces[0].interface_name);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].rx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].rx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].rx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[0].rx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[0].rx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[0].rx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].total_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].total_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].total_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[0].total_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[0].total_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[0].total_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].tx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].tx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[0].tx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[0].tx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[0].tx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[0].tx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].duration == 2159176030, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].duration, expected 2159176030, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].duration);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[1].duration == 2159176030, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[1].duration, expected 2159176030, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[1].duration);
     
     {
       const char check_string[] = { (char)99,(char)97,(char)110,(char)49,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].interface_name);
+      ck_assert_msg(memcmp(check_unpacked_msg->network_bandwidth_usage.interfaces[1].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[1].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->network_bandwidth_usage.interfaces[1].interface_name);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].rx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].rx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].rx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[1].rx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[1].rx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[1].rx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].total_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].total_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].total_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[1].total_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[1].total_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[1].total_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].tx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].tx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[1].tx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[1].tx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[1].tx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[1].tx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].duration == 2159176030, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].duration, expected 2159176030, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].duration);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[2].duration == 2159176030, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[2].duration, expected 2159176030, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[2].duration);
     
     {
       const char check_string[] = { (char)101,(char)116,(char)104,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].interface_name);
+      ck_assert_msg(memcmp(check_unpacked_msg->network_bandwidth_usage.interfaces[2].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[2].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->network_bandwidth_usage.interfaces[2].interface_name);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].rx_bytes == 4036234989, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].rx_bytes, expected 4036234989, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].rx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[2].rx_bytes == 4036234989, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[2].rx_bytes, expected 4036234989, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[2].rx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].total_bytes == 3411995557, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].total_bytes, expected 3411995557, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].total_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[2].total_bytes == 3411995557, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[2].total_bytes, expected 3411995557, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[2].total_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].tx_bytes == 3670727864, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].tx_bytes, expected 3670727864, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[2].tx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[2].tx_bytes == 3670727864, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[2].tx_bytes, expected 3670727864, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[2].tx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].duration == 2159176030, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].duration, expected 2159176030, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].duration);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[3].duration == 2159176030, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[3].duration, expected 2159176030, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[3].duration);
     
     {
       const char check_string[] = { (char)108,(char)111,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].interface_name);
+      ck_assert_msg(memcmp(check_unpacked_msg->network_bandwidth_usage.interfaces[3].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[3].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->network_bandwidth_usage.interfaces[3].interface_name);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].rx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].rx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].rx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[3].rx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[3].rx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[3].rx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].total_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].total_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].total_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[3].total_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[3].total_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[3].total_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].tx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].tx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[3].tx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[3].tx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[3].tx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[3].tx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].duration == 2159176030, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].duration, expected 2159176030, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].duration);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[4].duration == 2159176030, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[4].duration, expected 2159176030, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[4].duration);
     
     {
       const char check_string[] = { (char)115,(char)105,(char)116,(char)48,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].interface_name);
+      ck_assert_msg(memcmp(check_unpacked_msg->network_bandwidth_usage.interfaces[4].interface_name, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[4].interface_name, expected string '%s', is '%s'", check_string, check_unpacked_msg->network_bandwidth_usage.interfaces[4].interface_name);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].rx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].rx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].rx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[4].rx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[4].rx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[4].rx_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].total_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].total_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].total_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[4].total_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[4].total_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[4].total_bytes);
     
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].tx_bytes == 0, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].tx_bytes, expected 0, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.interfaces[4].tx_bytes);
-    ck_assert_msg(check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.n_interfaces == 5, "incorrect value for check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.n_interfaces, expected 5, is %d", check_unpacked_msg->MSG_NETWORK_BANDWIDTH_USAGE.n_interfaces);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.interfaces[4].tx_bytes == 0, "incorrect value for check_unpacked_msg->network_bandwidth_usage.interfaces[4].tx_bytes, expected 0, is %d", check_unpacked_msg->network_bandwidth_usage.interfaces[4].tx_bytes);
+    ck_assert_msg(check_unpacked_msg->network_bandwidth_usage.n_interfaces == 5, "incorrect value for check_unpacked_msg->network_bandwidth_usage.n_interfaces, expected 5, is %d", check_unpacked_msg->network_bandwidth_usage.n_interfaces);
   }
 }
 END_TEST

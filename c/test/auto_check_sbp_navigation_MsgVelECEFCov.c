@@ -256,18 +256,18 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEFCov )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_x_x = 2.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_x_y = 2.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_x_z = 2.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_y_y = 2.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_y_z = 1.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.cov_z_z = 3.0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.flags = 4;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.n_sats = 3;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.tow = 2;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.x = 0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.y = 0;
-    test_unpacked_msg.MSG_VEL_ECEF_COV.z = 6;
+    test_unpacked_msg.vel_ecef_cov.cov_x_x = 2.0;
+    test_unpacked_msg.vel_ecef_cov.cov_x_y = 2.0;
+    test_unpacked_msg.vel_ecef_cov.cov_x_z = 2.0;
+    test_unpacked_msg.vel_ecef_cov.cov_y_y = 2.0;
+    test_unpacked_msg.vel_ecef_cov.cov_y_z = 1.0;
+    test_unpacked_msg.vel_ecef_cov.cov_z_z = 3.0;
+    test_unpacked_msg.vel_ecef_cov.flags = 4;
+    test_unpacked_msg.vel_ecef_cov.n_sats = 3;
+    test_unpacked_msg.vel_ecef_cov.tow = 2;
+    test_unpacked_msg.vel_ecef_cov.x = 0;
+    test_unpacked_msg.vel_ecef_cov.y = 0;
+    test_unpacked_msg.vel_ecef_cov.z = 6;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_COV, 66, &test_unpacked_msg, &dummy_write);
 
@@ -291,18 +291,18 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEFCov )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_x*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_x, expected 2.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_x);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_y*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_y, expected 2.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_y);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_z*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_z, expected 2.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_x_z);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_y*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_y, expected 2.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_y);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_z*100 - 1.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_z, expected 1.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_y_z);
-    ck_assert_msg((check_unpacked_msg->MSG_VEL_ECEF_COV.cov_z_z*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.cov_z_z, expected 3.0, is %s", check_unpacked_msg->MSG_VEL_ECEF_COV.cov_z_z);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.flags == 4, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.flags, expected 4, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.n_sats == 3, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.n_sats, expected 3, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.tow == 2, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.tow, expected 2, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.x == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.x, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.y == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.y, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_COV.z == 6, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_COV.z, expected 6, is %d", check_unpacked_msg->MSG_VEL_ECEF_COV.z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_x_x*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_x_x, expected 2.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_x_x);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_x_y*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_x_y, expected 2.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_x_y);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_x_z*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_x_z, expected 2.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_x_z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_y_y*100 - 2.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_y_y, expected 2.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_y_y);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_y_z*100 - 1.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_y_z, expected 1.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_y_z);
+    ck_assert_msg((check_unpacked_msg->vel_ecef_cov.cov_z_z*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->vel_ecef_cov.cov_z_z, expected 3.0, is %s", check_unpacked_msg->vel_ecef_cov.cov_z_z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.flags == 4, "incorrect value for check_unpacked_msg->vel_ecef_cov.flags, expected 4, is %d", check_unpacked_msg->vel_ecef_cov.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.n_sats == 3, "incorrect value for check_unpacked_msg->vel_ecef_cov.n_sats, expected 3, is %d", check_unpacked_msg->vel_ecef_cov.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.tow == 2, "incorrect value for check_unpacked_msg->vel_ecef_cov.tow, expected 2, is %d", check_unpacked_msg->vel_ecef_cov.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.x == 0, "incorrect value for check_unpacked_msg->vel_ecef_cov.x, expected 0, is %d", check_unpacked_msg->vel_ecef_cov.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.y == 0, "incorrect value for check_unpacked_msg->vel_ecef_cov.y, expected 0, is %d", check_unpacked_msg->vel_ecef_cov.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_cov.z == 6, "incorrect value for check_unpacked_msg->vel_ecef_cov.z, expected 6, is %d", check_unpacked_msg->vel_ecef_cov.z);
   }
 }
 END_TEST

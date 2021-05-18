@@ -345,14 +345,14 @@ START_TEST( test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.flags = 0;
+    test_unpacked_msg.bootloader_handshake_resp.flags = 0;
     
     {
       const char assign_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
-      memcpy(test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.bootloader_handshake_resp.version.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_RESP.version.len = 5;
+    test_unpacked_msg.bootloader_handshake_resp.version.len = 5;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0, &test_unpacked_msg, &dummy_write);
 
@@ -376,14 +376,14 @@ START_TEST( test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags == 0, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags, expected 0, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.flags);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_resp.flags == 0, "incorrect value for check_unpacked_msg->bootloader_handshake_resp.flags, expected 0, is %d", check_unpacked_msg->bootloader_handshake_resp.flags);
     
     {
       const char check_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
-      ck_assert_msg(memcmp(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.data);
+      ck_assert_msg(memcmp(check_unpacked_msg->bootloader_handshake_resp.version.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->bootloader_handshake_resp.version.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->bootloader_handshake_resp.version.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len == 5, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len, expected 5, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_RESP.version.len);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_resp.version.len == 5, "incorrect value for check_unpacked_msg->bootloader_handshake_resp.version.len, expected 5, is %d", check_unpacked_msg->bootloader_handshake_resp.version.len);
   }
   // Test successful parsing of a message
   {
@@ -406,15 +406,15 @@ START_TEST( test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0] = 118;
+    test_unpacked_msg.bootloader_handshake_dep_a.handshake.data[0] = 118;
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1] = 49;
+    test_unpacked_msg.bootloader_handshake_dep_a.handshake.data[1] = 49;
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2] = 46;
+    test_unpacked_msg.bootloader_handshake_dep_a.handshake.data[2] = 46;
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3] = 50;
+    test_unpacked_msg.bootloader_handshake_dep_a.handshake.data[3] = 50;
     
-    test_unpacked_msg.MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len = 4;
+    test_unpacked_msg.bootloader_handshake_dep_a.handshake.len = 4;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -439,12 +439,12 @@ START_TEST( test_unpacked_auto_check_sbp_bootload_MsgBootloaderHandshakeResp )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0] == 118, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0], expected 118, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[0]);
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1] == 49, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1], expected 49, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[1]);
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2] == 46, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2], expected 46, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[2]);
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3] == 50, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3], expected 50, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.data[3]);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[0] == 118, "incorrect value for check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[0], expected 118, is %d", check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[0]);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[1] == 49, "incorrect value for check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[1], expected 49, is %d", check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[1]);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[2] == 46, "incorrect value for check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[2], expected 46, is %d", check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[2]);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[3] == 50, "incorrect value for check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[3], expected 50, is %d", check_unpacked_msg->bootloader_handshake_dep_a.handshake.data[3]);
     
-    ck_assert_msg(check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len == 4, "incorrect value for check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len, expected 4, is %d", check_unpacked_msg->MSG_BOOTLOADER_HANDSHAKE_DEP_A.handshake.len);
+    ck_assert_msg(check_unpacked_msg->bootloader_handshake_dep_a.handshake.len == 4, "incorrect value for check_unpacked_msg->bootloader_handshake_dep_a.handshake.len, expected 4, is %d", check_unpacked_msg->bootloader_handshake_dep_a.handshake.len);
   }
 }
 END_TEST

@@ -481,49 +481,49 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgUartState )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.avg = -1;
+    test_unpacked_msg.uart_state_depa.latency.avg = -1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.current = -1;
+    test_unpacked_msg.uart_state_depa.latency.current = -1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.lmax = 0;
+    test_unpacked_msg.uart_state_depa.latency.lmax = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.lmin = 0;
+    test_unpacked_msg.uart_state_depa.latency.lmin = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.rx_buffer_level = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.rx_buffer_level = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.rx_throughput = 0.0;
+    test_unpacked_msg.uart_state_depa.uart_a.rx_throughput = 0.0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.tx_buffer_level = 24;
+    test_unpacked_msg.uart_state_depa.uart_a.tx_buffer_level = 24;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.tx_throughput = 0.8661972284317017;
+    test_unpacked_msg.uart_state_depa.uart_a.tx_throughput = 0.8661972284317017;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.rx_buffer_level = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.rx_buffer_level = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.rx_throughput = 0.0;
+    test_unpacked_msg.uart_state_depa.uart_b.rx_throughput = 0.0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.tx_buffer_level = 40;
+    test_unpacked_msg.uart_state_depa.uart_b.tx_buffer_level = 40;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.tx_throughput = 2.9718310832977295;
+    test_unpacked_msg.uart_state_depa.uart_b.tx_throughput = 2.9718310832977295;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level = 1;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.rx_buffer_level = 1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput = 0.035211268812417984;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.rx_throughput = 0.035211268812417984;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level = 81;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.tx_buffer_level = 81;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput = 5.063380241394043;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.tx_throughput = 5.063380241394043;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -548,49 +548,49 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgUartState )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg == -1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg, expected -1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.avg == -1, "incorrect value for check_unpacked_msg->uart_state_depa.latency.avg, expected -1, is %d", check_unpacked_msg->uart_state_depa.latency.avg);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current == -1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current, expected -1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.current == -1, "incorrect value for check_unpacked_msg->uart_state_depa.latency.current, expected -1, is %d", check_unpacked_msg->uart_state_depa.latency.current);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.lmax == 0, "incorrect value for check_unpacked_msg->uart_state_depa.latency.lmax, expected 0, is %d", check_unpacked_msg->uart_state_depa.latency.lmax);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.lmin == 0, "incorrect value for check_unpacked_msg->uart_state_depa.latency.lmin, expected 0, is %d", check_unpacked_msg->uart_state_depa.latency.lmin);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput, expected 0.0, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.rx_throughput, expected 0.0, is %s", check_unpacked_msg->uart_state_depa.uart_a.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level == 24, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level, expected 24, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level == 24, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level, expected 24, is %d", check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput*100 - 0.866197228432*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput, expected 0.866197228432, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_a.tx_throughput*100 - 0.866197228432*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.tx_throughput, expected 0.866197228432, is %s", check_unpacked_msg->uart_state_depa.uart_a.tx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput, expected 0.0, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.rx_throughput, expected 0.0, is %s", check_unpacked_msg->uart_state_depa.uart_b.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level == 40, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level, expected 40, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level == 40, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level, expected 40, is %d", check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput*100 - 2.9718310833*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput, expected 2.9718310833, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_b.tx_throughput*100 - 2.9718310833*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.tx_throughput, expected 2.9718310833, is %s", check_unpacked_msg->uart_state_depa.uart_b.tx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level == 1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level, expected 1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level == 1, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level, expected 1, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput*100 - 0.0352112688124*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput, expected 0.0352112688124, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput*100 - 0.0352112688124*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput, expected 0.0352112688124, is %s", check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level == 81, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level, expected 81, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level == 81, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level, expected 81, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput*100 - 5.06338024139*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput, expected 5.06338024139, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput*100 - 5.06338024139*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput, expected 5.06338024139, is %s", check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
   {
@@ -612,49 +612,49 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgUartState )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.avg = -1;
+    test_unpacked_msg.uart_state_depa.latency.avg = -1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.current = -1;
+    test_unpacked_msg.uart_state_depa.latency.current = -1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.lmax = 0;
+    test_unpacked_msg.uart_state_depa.latency.lmax = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.latency.lmin = 0;
+    test_unpacked_msg.uart_state_depa.latency.lmin = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.rx_buffer_level = 0;
+    test_unpacked_msg.uart_state_depa.uart_a.rx_buffer_level = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.rx_throughput = 0.0;
+    test_unpacked_msg.uart_state_depa.uart_a.rx_throughput = 0.0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.tx_buffer_level = 24;
+    test_unpacked_msg.uart_state_depa.uart_a.tx_buffer_level = 24;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_a.tx_throughput = 0.8746479153633118;
+    test_unpacked_msg.uart_state_depa.uart_a.tx_throughput = 0.8746479153633118;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.rx_buffer_level = 0;
+    test_unpacked_msg.uart_state_depa.uart_b.rx_buffer_level = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.rx_throughput = 0.0;
+    test_unpacked_msg.uart_state_depa.uart_b.rx_throughput = 0.0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.tx_buffer_level = 40;
+    test_unpacked_msg.uart_state_depa.uart_b.tx_buffer_level = 40;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_b.tx_throughput = 2.995774745941162;
+    test_unpacked_msg.uart_state_depa.uart_b.tx_throughput = 2.995774745941162;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.crc_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.io_error_count = 0;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.io_error_count = 0;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level = 1;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.rx_buffer_level = 1;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput = 0.35211268067359924;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.rx_throughput = 0.35211268067359924;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level = 85;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.tx_buffer_level = 85;
     
-    test_unpacked_msg.MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput = 6.7901411056518555;
+    test_unpacked_msg.uart_state_depa.uart_ftdi.tx_throughput = 6.7901411056518555;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -679,49 +679,49 @@ START_TEST( test_unpacked_auto_check_sbp_piksi_MsgUartState )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg == -1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg, expected -1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.avg);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.avg == -1, "incorrect value for check_unpacked_msg->uart_state_depa.latency.avg, expected -1, is %d", check_unpacked_msg->uart_state_depa.latency.avg);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current == -1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current, expected -1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.current);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.current == -1, "incorrect value for check_unpacked_msg->uart_state_depa.latency.current, expected -1, is %d", check_unpacked_msg->uart_state_depa.latency.current);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmax);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.lmax == 0, "incorrect value for check_unpacked_msg->uart_state_depa.latency.lmax, expected 0, is %d", check_unpacked_msg->uart_state_depa.latency.lmax);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.latency.lmin);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.latency.lmin == 0, "incorrect value for check_unpacked_msg->uart_state_depa.latency.lmin, expected 0, is %d", check_unpacked_msg->uart_state_depa.latency.lmin);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_a.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput, expected 0.0, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.rx_throughput, expected 0.0, is %s", check_unpacked_msg->uart_state_depa.uart_a.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level == 24, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level, expected 24, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level == 24, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level, expected 24, is %d", check_unpacked_msg->uart_state_depa.uart_a.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput*100 - 0.874647915363*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput, expected 0.874647915363, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_a.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_a.tx_throughput*100 - 0.874647915363*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_a.tx_throughput, expected 0.874647915363, is %s", check_unpacked_msg->uart_state_depa.uart_a.tx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_b.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput, expected 0.0, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.rx_throughput, expected 0.0, is %s", check_unpacked_msg->uart_state_depa.uart_b.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level == 40, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level, expected 40, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level == 40, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level, expected 40, is %d", check_unpacked_msg->uart_state_depa.uart_b.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput*100 - 2.99577474594*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput, expected 2.99577474594, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_b.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_b.tx_throughput*100 - 2.99577474594*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_b.tx_throughput, expected 2.99577474594, is %s", check_unpacked_msg->uart_state_depa.uart_b.tx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.crc_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.crc_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count == 0, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count, expected 0, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.io_error_count);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count == 0, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count, expected 0, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.io_error_count);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level == 1, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level, expected 1, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level == 1, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level, expected 1, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.rx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput*100 - 0.352112680674*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput, expected 0.352112680674, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.rx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput*100 - 0.352112680674*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput, expected 0.352112680674, is %s", check_unpacked_msg->uart_state_depa.uart_ftdi.rx_throughput);
     
-    ck_assert_msg(check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level == 85, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level, expected 85, is %d", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level == 85, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level, expected 85, is %d", check_unpacked_msg->uart_state_depa.uart_ftdi.tx_buffer_level);
     
-    ck_assert_msg((check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput*100 - 6.79014110565*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput, expected 6.79014110565, is %s", check_unpacked_msg->MSG_UART_STATE_DEPA.uart_ftdi.tx_throughput);
+    ck_assert_msg((check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput*100 - 6.79014110565*100) < 0.05, "incorrect value for check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput, expected 6.79014110565, is %s", check_unpacked_msg->uart_state_depa.uart_ftdi.tx_throughput);
   }
 }
 END_TEST

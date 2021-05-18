@@ -246,13 +246,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDops )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS.flags = 0;
-    test_unpacked_msg.MSG_DOPS.gdop = 2;
-    test_unpacked_msg.MSG_DOPS.hdop = 5;
-    test_unpacked_msg.MSG_DOPS.pdop = 6;
-    test_unpacked_msg.MSG_DOPS.tdop = 5;
-    test_unpacked_msg.MSG_DOPS.tow = 100;
-    test_unpacked_msg.MSG_DOPS.vdop = 5;
+    test_unpacked_msg.dops.flags = 0;
+    test_unpacked_msg.dops.gdop = 2;
+    test_unpacked_msg.dops.hdop = 5;
+    test_unpacked_msg.dops.pdop = 6;
+    test_unpacked_msg.dops.tdop = 5;
+    test_unpacked_msg.dops.tow = 100;
+    test_unpacked_msg.dops.vdop = 5;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS, 66, &test_unpacked_msg, &dummy_write);
 
@@ -276,13 +276,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDops )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.flags == 0, "incorrect value for check_unpacked_msg->MSG_DOPS.flags, expected 0, is %d", check_unpacked_msg->MSG_DOPS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.gdop == 2, "incorrect value for check_unpacked_msg->MSG_DOPS.gdop, expected 2, is %d", check_unpacked_msg->MSG_DOPS.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.hdop == 5, "incorrect value for check_unpacked_msg->MSG_DOPS.hdop, expected 5, is %d", check_unpacked_msg->MSG_DOPS.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.pdop == 6, "incorrect value for check_unpacked_msg->MSG_DOPS.pdop, expected 6, is %d", check_unpacked_msg->MSG_DOPS.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.tdop == 5, "incorrect value for check_unpacked_msg->MSG_DOPS.tdop, expected 5, is %d", check_unpacked_msg->MSG_DOPS.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.tow == 100, "incorrect value for check_unpacked_msg->MSG_DOPS.tow, expected 100, is %d", check_unpacked_msg->MSG_DOPS.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS.vdop == 5, "incorrect value for check_unpacked_msg->MSG_DOPS.vdop, expected 5, is %d", check_unpacked_msg->MSG_DOPS.vdop);
+    ck_assert_msg(check_unpacked_msg->dops.flags == 0, "incorrect value for check_unpacked_msg->dops.flags, expected 0, is %d", check_unpacked_msg->dops.flags);
+    ck_assert_msg(check_unpacked_msg->dops.gdop == 2, "incorrect value for check_unpacked_msg->dops.gdop, expected 2, is %d", check_unpacked_msg->dops.gdop);
+    ck_assert_msg(check_unpacked_msg->dops.hdop == 5, "incorrect value for check_unpacked_msg->dops.hdop, expected 5, is %d", check_unpacked_msg->dops.hdop);
+    ck_assert_msg(check_unpacked_msg->dops.pdop == 6, "incorrect value for check_unpacked_msg->dops.pdop, expected 6, is %d", check_unpacked_msg->dops.pdop);
+    ck_assert_msg(check_unpacked_msg->dops.tdop == 5, "incorrect value for check_unpacked_msg->dops.tdop, expected 5, is %d", check_unpacked_msg->dops.tdop);
+    ck_assert_msg(check_unpacked_msg->dops.tow == 100, "incorrect value for check_unpacked_msg->dops.tow, expected 100, is %d", check_unpacked_msg->dops.tow);
+    ck_assert_msg(check_unpacked_msg->dops.vdop == 5, "incorrect value for check_unpacked_msg->dops.vdop, expected 5, is %d", check_unpacked_msg->dops.vdop);
   }
 }
 END_TEST

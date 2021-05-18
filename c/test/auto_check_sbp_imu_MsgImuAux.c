@@ -238,9 +238,9 @@ START_TEST( test_unpacked_auto_check_sbp_imu_MsgImuAux )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_IMU_AUX.imu_conf = 66;
-    test_unpacked_msg.MSG_IMU_AUX.imu_type = 1;
-    test_unpacked_msg.MSG_IMU_AUX.temp = 2804;
+    test_unpacked_msg.imu_aux.imu_conf = 66;
+    test_unpacked_msg.imu_aux.imu_type = 1;
+    test_unpacked_msg.imu_aux.temp = 2804;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_IMU_AUX, 4660, &test_unpacked_msg, &dummy_write);
 
@@ -264,9 +264,9 @@ START_TEST( test_unpacked_auto_check_sbp_imu_MsgImuAux )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_AUX.imu_conf == 66, "incorrect value for check_unpacked_msg->MSG_IMU_AUX.imu_conf, expected 66, is %d", check_unpacked_msg->MSG_IMU_AUX.imu_conf);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_AUX.imu_type == 1, "incorrect value for check_unpacked_msg->MSG_IMU_AUX.imu_type, expected 1, is %d", check_unpacked_msg->MSG_IMU_AUX.imu_type);
-    ck_assert_msg(check_unpacked_msg->MSG_IMU_AUX.temp == 2804, "incorrect value for check_unpacked_msg->MSG_IMU_AUX.temp, expected 2804, is %d", check_unpacked_msg->MSG_IMU_AUX.temp);
+    ck_assert_msg(check_unpacked_msg->imu_aux.imu_conf == 66, "incorrect value for check_unpacked_msg->imu_aux.imu_conf, expected 66, is %d", check_unpacked_msg->imu_aux.imu_conf);
+    ck_assert_msg(check_unpacked_msg->imu_aux.imu_type == 1, "incorrect value for check_unpacked_msg->imu_aux.imu_type, expected 1, is %d", check_unpacked_msg->imu_aux.imu_type);
+    ck_assert_msg(check_unpacked_msg->imu_aux.temp == 2804, "incorrect value for check_unpacked_msg->imu_aux.temp, expected 2804, is %d", check_unpacked_msg->imu_aux.temp);
   }
 }
 END_TEST

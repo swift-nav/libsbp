@@ -1128,14 +1128,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.80437675175607;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42906890908121;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17338662202773;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567700;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 69.80437675175607;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.42906890908121;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.17338662202773;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 9;
+    test_unpacked_msg.pos_llh_dep_a.tow = 2567700;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1159,14 +1159,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 69.8043767518*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 69.8043767518, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.4290689091*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.4290689091, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.173386622*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.173386622, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 2567700, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 69.8043767518*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 69.8043767518, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.4290689091*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.4290689091, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.173386622*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.173386622, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 9, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 9, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 2567700, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 2567700, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1187,14 +1187,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 1;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.68814067715354;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42906430885274;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340826071865;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567700;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 1;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 69.68814067715354;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.42906430885274;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.17340826071865;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 9;
+    test_unpacked_msg.pos_llh_dep_a.tow = 2567700;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1218,14 +1218,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 1, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 69.6881406772*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 69.6881406772, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.4290643089*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.4290643089, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.173408261*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.173408261, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 2567700, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 1, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 1, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 69.6881406772*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 69.6881406772, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.4290643089*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.4290643089, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.173408261*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.173408261, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 9, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 9, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 2567700, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 2567700, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1246,14 +1246,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.49608854815264;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42905447764173;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17342007549469;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567800;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 69.49608854815264;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.42905447764173;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.17342007549469;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 9;
+    test_unpacked_msg.pos_llh_dep_a.tow = 2567800;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1277,14 +1277,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 69.4960885482*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 69.4960885482, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.4290544776*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.4290544776, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.173420075*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.173420075, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 2567800, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 69.4960885482*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 69.4960885482, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.4290544776*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.4290544776, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.173420075*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.173420075, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 9, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 9, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 2567800, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 2567800, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1305,14 +1305,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 1;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.68780458819901;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.429063373925565;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340389594972;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567800;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 1;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 69.68780458819901;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.429063373925565;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.17340389594972;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 9;
+    test_unpacked_msg.pos_llh_dep_a.tow = 2567800;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1336,14 +1336,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 1, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 69.6878045882*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 69.6878045882, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.4290633739*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.4290633739, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.173403896*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.173403896, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 2567800, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 1, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 1, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 69.6878045882*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 69.6878045882, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.4290633739*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.4290633739, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.173403896*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.173403896, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 9, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 9, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 2567800, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 2567800, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1364,14 +1364,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 70.5249547317965;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42907659359516;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340492645452;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567900;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 70.5249547317965;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.42907659359516;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.17340492645452;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 9;
+    test_unpacked_msg.pos_llh_dep_a.tow = 2567900;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1395,14 +1395,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 70.5249547318*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 70.5249547318, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.4290765936*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.4290765936, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.173404926*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.173404926, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 9, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567900, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 2567900, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 70.5249547318*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 70.5249547318, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.4290765936*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.4290765936, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.173404926*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.173404926, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 9, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 9, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 2567900, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 2567900, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1423,14 +1423,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 4.039810885214956;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242171418386;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38908437889262;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084500;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 4.039810885214956;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.76242171418386;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.38908437889262;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 8;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407084500;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1454,14 +1454,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 4.03981088521*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 4.03981088521, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.7624217142*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.7624217142, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389084379*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389084379, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084500, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407084500, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 4.03981088521*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 4.03981088521, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.7624217142*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.7624217142, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389084379*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389084379, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 8, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 8, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407084500, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407084500, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1482,14 +1482,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 2.926714087009657;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242361423985;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909053700489;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084600;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 2.926714087009657;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.76242361423985;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.38909053700489;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 8;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407084600;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1513,14 +1513,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 2.92671408701*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 2.92671408701, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.7624236142*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.7624236142, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389090537*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389090537, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084600, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407084600, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 2.92671408701*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 2.92671408701, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.7624236142*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.7624236142, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389090537*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389090537, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 8, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 8, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407084600, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407084600, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1541,14 +1541,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 0.9512146647395566;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.762422076126406;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.3890907340148;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084700;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 0.9512146647395566;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.762422076126406;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.3890907340148;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 8;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407084700;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1572,14 +1572,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 0.95121466474*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 0.95121466474, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.7624220761*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.7624220761, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389090734*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389090734, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084700, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407084700, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 0.95121466474*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 0.95121466474, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.7624220761*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.7624220761, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389090734*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389090734, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 8, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 8, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407084700, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407084700, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1600,14 +1600,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 2.354135752047538;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.762421610632735;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909854449612;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084800;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 2.354135752047538;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.762421610632735;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.38909854449612;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 8;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407084800;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1631,14 +1631,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 2.35413575205*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 2.35413575205, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.7624216106*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.7624216106, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389098544*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389098544, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084800, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407084800, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 2.35413575205*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 2.35413575205, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.7624216106*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.7624216106, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389098544*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389098544, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 8, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 8, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407084800, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407084800, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1659,14 +1659,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 1.0876763181642641;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242334502801;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909230523223;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084900;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 1.0876763181642641;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.76242334502801;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.38909230523223;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 8;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407084900;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1690,14 +1690,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 1.08767631816*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 1.08767631816, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.762423345*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.762423345, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389092305*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389092305, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 8, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084900, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407084900, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 1.08767631816*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 1.08767631816, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.762423345*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.762423345, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389092305*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389092305, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 8, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 8, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407084900, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407084900, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1718,14 +1718,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 5.171533844654222;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76244082253376;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38908288868525;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 5;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407151150;
-    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.flags = 0;
+    test_unpacked_msg.pos_llh_dep_a.h_accuracy = 0;
+    test_unpacked_msg.pos_llh_dep_a.height = 5.171533844654222;
+    test_unpacked_msg.pos_llh_dep_a.lat = 37.76244082253376;
+    test_unpacked_msg.pos_llh_dep_a.lon = -122.38908288868525;
+    test_unpacked_msg.pos_llh_dep_a.n_sats = 5;
+    test_unpacked_msg.pos_llh_dep_a.tow = 407151150;
+    test_unpacked_msg.pos_llh_dep_a.v_accuracy = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_LLH_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1749,14 +1749,14 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosLLHDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.height*100 - 5.17153384465*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, expected 5.17153384465, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lat*100 - 37.7624408225*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, expected 37.7624408225, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_LLH_DEP_A.lon*100 - -122.389082889*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, expected -122.389082889, is %s", check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 5, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, expected 5, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407151150, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, expected 407151150, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.flags == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.flags, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.h_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.h_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.h_accuracy);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.height*100 - 5.17153384465*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.height, expected 5.17153384465, is %s", check_unpacked_msg->pos_llh_dep_a.height);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lat*100 - 37.7624408225*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lat, expected 37.7624408225, is %s", check_unpacked_msg->pos_llh_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->pos_llh_dep_a.lon*100 - -122.389082889*100) < 0.05, "incorrect value for check_unpacked_msg->pos_llh_dep_a.lon, expected -122.389082889, is %s", check_unpacked_msg->pos_llh_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.n_sats == 5, "incorrect value for check_unpacked_msg->pos_llh_dep_a.n_sats, expected 5, is %d", check_unpacked_msg->pos_llh_dep_a.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.tow == 407151150, "incorrect value for check_unpacked_msg->pos_llh_dep_a.tow, expected 407151150, is %d", check_unpacked_msg->pos_llh_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->pos_llh_dep_a.v_accuracy == 0, "incorrect value for check_unpacked_msg->pos_llh_dep_a.v_accuracy, expected 0, is %d", check_unpacked_msg->pos_llh_dep_a.v_accuracy);
   }
 }
 END_TEST

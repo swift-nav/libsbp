@@ -590,13 +590,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.flags = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.n_sats = 14;
-    test_unpacked_msg.MSG_VEL_ECEF.tow = 326825000;
-    test_unpacked_msg.MSG_VEL_ECEF.x = -8;
-    test_unpacked_msg.MSG_VEL_ECEF.y = -5;
-    test_unpacked_msg.MSG_VEL_ECEF.z = 10;
+    test_unpacked_msg.vel_ecef.accuracy = 0;
+    test_unpacked_msg.vel_ecef.flags = 0;
+    test_unpacked_msg.vel_ecef.n_sats = 14;
+    test_unpacked_msg.vel_ecef.tow = 326825000;
+    test_unpacked_msg.vel_ecef.x = -8;
+    test_unpacked_msg.vel_ecef.y = -5;
+    test_unpacked_msg.vel_ecef.z = 10;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -620,13 +620,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.n_sats == 14, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.n_sats, expected 14, is %d", check_unpacked_msg->MSG_VEL_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.tow == 326825000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.tow, expected 326825000, is %d", check_unpacked_msg->MSG_VEL_ECEF.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.x == -8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.x, expected -8, is %d", check_unpacked_msg->MSG_VEL_ECEF.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.y == -5, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.y, expected -5, is %d", check_unpacked_msg->MSG_VEL_ECEF.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.z == 10, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.z, expected 10, is %d", check_unpacked_msg->MSG_VEL_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->vel_ecef.accuracy, expected 0, is %d", check_unpacked_msg->vel_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.flags == 0, "incorrect value for check_unpacked_msg->vel_ecef.flags, expected 0, is %d", check_unpacked_msg->vel_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.n_sats == 14, "incorrect value for check_unpacked_msg->vel_ecef.n_sats, expected 14, is %d", check_unpacked_msg->vel_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.tow == 326825000, "incorrect value for check_unpacked_msg->vel_ecef.tow, expected 326825000, is %d", check_unpacked_msg->vel_ecef.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.x == -8, "incorrect value for check_unpacked_msg->vel_ecef.x, expected -8, is %d", check_unpacked_msg->vel_ecef.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.y == -5, "incorrect value for check_unpacked_msg->vel_ecef.y, expected -5, is %d", check_unpacked_msg->vel_ecef.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.z == 10, "incorrect value for check_unpacked_msg->vel_ecef.z, expected 10, is %d", check_unpacked_msg->vel_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -647,13 +647,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.flags = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_VEL_ECEF.tow = 326825500;
-    test_unpacked_msg.MSG_VEL_ECEF.x = -12;
-    test_unpacked_msg.MSG_VEL_ECEF.y = -18;
-    test_unpacked_msg.MSG_VEL_ECEF.z = 11;
+    test_unpacked_msg.vel_ecef.accuracy = 0;
+    test_unpacked_msg.vel_ecef.flags = 0;
+    test_unpacked_msg.vel_ecef.n_sats = 15;
+    test_unpacked_msg.vel_ecef.tow = 326825500;
+    test_unpacked_msg.vel_ecef.x = -12;
+    test_unpacked_msg.vel_ecef.y = -18;
+    test_unpacked_msg.vel_ecef.z = 11;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -677,13 +677,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_VEL_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.tow == 326825500, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.tow, expected 326825500, is %d", check_unpacked_msg->MSG_VEL_ECEF.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.x == -12, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.x, expected -12, is %d", check_unpacked_msg->MSG_VEL_ECEF.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.y == -18, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.y, expected -18, is %d", check_unpacked_msg->MSG_VEL_ECEF.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.z == 11, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.z, expected 11, is %d", check_unpacked_msg->MSG_VEL_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->vel_ecef.accuracy, expected 0, is %d", check_unpacked_msg->vel_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.flags == 0, "incorrect value for check_unpacked_msg->vel_ecef.flags, expected 0, is %d", check_unpacked_msg->vel_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->vel_ecef.n_sats, expected 15, is %d", check_unpacked_msg->vel_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.tow == 326825500, "incorrect value for check_unpacked_msg->vel_ecef.tow, expected 326825500, is %d", check_unpacked_msg->vel_ecef.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.x == -12, "incorrect value for check_unpacked_msg->vel_ecef.x, expected -12, is %d", check_unpacked_msg->vel_ecef.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.y == -18, "incorrect value for check_unpacked_msg->vel_ecef.y, expected -18, is %d", check_unpacked_msg->vel_ecef.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.z == 11, "incorrect value for check_unpacked_msg->vel_ecef.z, expected 11, is %d", check_unpacked_msg->vel_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -704,13 +704,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.flags = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_VEL_ECEF.tow = 326826000;
-    test_unpacked_msg.MSG_VEL_ECEF.x = -8;
-    test_unpacked_msg.MSG_VEL_ECEF.y = -6;
-    test_unpacked_msg.MSG_VEL_ECEF.z = 7;
+    test_unpacked_msg.vel_ecef.accuracy = 0;
+    test_unpacked_msg.vel_ecef.flags = 0;
+    test_unpacked_msg.vel_ecef.n_sats = 15;
+    test_unpacked_msg.vel_ecef.tow = 326826000;
+    test_unpacked_msg.vel_ecef.x = -8;
+    test_unpacked_msg.vel_ecef.y = -6;
+    test_unpacked_msg.vel_ecef.z = 7;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -734,13 +734,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_VEL_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.tow == 326826000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.tow, expected 326826000, is %d", check_unpacked_msg->MSG_VEL_ECEF.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.x == -8, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.x, expected -8, is %d", check_unpacked_msg->MSG_VEL_ECEF.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.y == -6, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.y, expected -6, is %d", check_unpacked_msg->MSG_VEL_ECEF.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.z == 7, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.z, expected 7, is %d", check_unpacked_msg->MSG_VEL_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->vel_ecef.accuracy, expected 0, is %d", check_unpacked_msg->vel_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.flags == 0, "incorrect value for check_unpacked_msg->vel_ecef.flags, expected 0, is %d", check_unpacked_msg->vel_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->vel_ecef.n_sats, expected 15, is %d", check_unpacked_msg->vel_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.tow == 326826000, "incorrect value for check_unpacked_msg->vel_ecef.tow, expected 326826000, is %d", check_unpacked_msg->vel_ecef.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.x == -8, "incorrect value for check_unpacked_msg->vel_ecef.x, expected -8, is %d", check_unpacked_msg->vel_ecef.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.y == -6, "incorrect value for check_unpacked_msg->vel_ecef.y, expected -6, is %d", check_unpacked_msg->vel_ecef.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.z == 7, "incorrect value for check_unpacked_msg->vel_ecef.z, expected 7, is %d", check_unpacked_msg->vel_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -761,13 +761,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.flags = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_VEL_ECEF.tow = 326826500;
-    test_unpacked_msg.MSG_VEL_ECEF.x = -7;
-    test_unpacked_msg.MSG_VEL_ECEF.y = -17;
-    test_unpacked_msg.MSG_VEL_ECEF.z = 16;
+    test_unpacked_msg.vel_ecef.accuracy = 0;
+    test_unpacked_msg.vel_ecef.flags = 0;
+    test_unpacked_msg.vel_ecef.n_sats = 15;
+    test_unpacked_msg.vel_ecef.tow = 326826500;
+    test_unpacked_msg.vel_ecef.x = -7;
+    test_unpacked_msg.vel_ecef.y = -17;
+    test_unpacked_msg.vel_ecef.z = 16;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -791,13 +791,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_VEL_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.tow == 326826500, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.tow, expected 326826500, is %d", check_unpacked_msg->MSG_VEL_ECEF.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.x == -7, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.x, expected -7, is %d", check_unpacked_msg->MSG_VEL_ECEF.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.y == -17, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.y, expected -17, is %d", check_unpacked_msg->MSG_VEL_ECEF.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.z == 16, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.z, expected 16, is %d", check_unpacked_msg->MSG_VEL_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->vel_ecef.accuracy, expected 0, is %d", check_unpacked_msg->vel_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.flags == 0, "incorrect value for check_unpacked_msg->vel_ecef.flags, expected 0, is %d", check_unpacked_msg->vel_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->vel_ecef.n_sats, expected 15, is %d", check_unpacked_msg->vel_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.tow == 326826500, "incorrect value for check_unpacked_msg->vel_ecef.tow, expected 326826500, is %d", check_unpacked_msg->vel_ecef.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.x == -7, "incorrect value for check_unpacked_msg->vel_ecef.x, expected -7, is %d", check_unpacked_msg->vel_ecef.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.y == -17, "incorrect value for check_unpacked_msg->vel_ecef.y, expected -17, is %d", check_unpacked_msg->vel_ecef.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.z == 16, "incorrect value for check_unpacked_msg->vel_ecef.z, expected 16, is %d", check_unpacked_msg->vel_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -818,13 +818,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.flags = 0;
-    test_unpacked_msg.MSG_VEL_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_VEL_ECEF.tow = 326827000;
-    test_unpacked_msg.MSG_VEL_ECEF.x = -9;
-    test_unpacked_msg.MSG_VEL_ECEF.y = -13;
-    test_unpacked_msg.MSG_VEL_ECEF.z = 14;
+    test_unpacked_msg.vel_ecef.accuracy = 0;
+    test_unpacked_msg.vel_ecef.flags = 0;
+    test_unpacked_msg.vel_ecef.n_sats = 15;
+    test_unpacked_msg.vel_ecef.tow = 326827000;
+    test_unpacked_msg.vel_ecef.x = -9;
+    test_unpacked_msg.vel_ecef.y = -13;
+    test_unpacked_msg.vel_ecef.z = 14;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -848,13 +848,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.flags == 0, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.flags, expected 0, is %d", check_unpacked_msg->MSG_VEL_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_VEL_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.tow == 326827000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.tow, expected 326827000, is %d", check_unpacked_msg->MSG_VEL_ECEF.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.x == -9, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.x, expected -9, is %d", check_unpacked_msg->MSG_VEL_ECEF.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.y == -13, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.y, expected -13, is %d", check_unpacked_msg->MSG_VEL_ECEF.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF.z == 14, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF.z, expected 14, is %d", check_unpacked_msg->MSG_VEL_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->vel_ecef.accuracy, expected 0, is %d", check_unpacked_msg->vel_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.flags == 0, "incorrect value for check_unpacked_msg->vel_ecef.flags, expected 0, is %d", check_unpacked_msg->vel_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->vel_ecef.n_sats, expected 15, is %d", check_unpacked_msg->vel_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.tow == 326827000, "incorrect value for check_unpacked_msg->vel_ecef.tow, expected 326827000, is %d", check_unpacked_msg->vel_ecef.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.x == -9, "incorrect value for check_unpacked_msg->vel_ecef.x, expected -9, is %d", check_unpacked_msg->vel_ecef.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.y == -13, "incorrect value for check_unpacked_msg->vel_ecef.y, expected -13, is %d", check_unpacked_msg->vel_ecef.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef.z == 14, "incorrect value for check_unpacked_msg->vel_ecef.z, expected 14, is %d", check_unpacked_msg->vel_ecef.z);
   }
 }
 END_TEST

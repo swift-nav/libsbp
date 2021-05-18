@@ -841,37 +841,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.f = 169;
+    test_unpacked_msg.tracking_state_detailed_dep.L.f = 169;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.i = 1319;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P_std = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.acceleration = 108;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_drift = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_offset = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.cn0 = 177;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing = 40;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler = 15701;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler_std = 39;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.lock = 14032;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.misc_flags = 9;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.nav_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.pset_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.recv_time = 7909447587;
+    test_unpacked_msg.tracking_state_detailed_dep.L.i = 1319;
+    test_unpacked_msg.tracking_state_detailed_dep.P = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.P_std = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.acceleration = 108;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_drift = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_offset = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.cn0 = 177;
+    test_unpacked_msg.tracking_state_detailed_dep.corr_spacing = 40;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler = 15701;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler_std = 39;
+    test_unpacked_msg.tracking_state_detailed_dep.lock = 14032;
+    test_unpacked_msg.tracking_state_detailed_dep.misc_flags = 9;
+    test_unpacked_msg.tracking_state_detailed_dep.nav_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.pset_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.recv_time = 7909447587;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.code = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.code = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.sat = 15;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sync_flags = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.sat = 15;
+    test_unpacked_msg.tracking_state_detailed_dep.sync_flags = 1;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.tow = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.tow = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.wn = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tow_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.track_flags = 11;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.uptime = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.wn = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tow_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.track_flags = 11;
+    test_unpacked_msg.tracking_state_detailed_dep.uptime = 1;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427, &test_unpacked_msg, &dummy_write);
 
@@ -896,37 +896,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f == 169, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f, expected 169, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.f == 169, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.f, expected 169, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i == 1319, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i, expected 1319, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration == 108, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration, expected 108, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0 == 177, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0, expected 177, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing == 40, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing, expected 40, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler == 15701, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler, expected 15701, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std == 39, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std, expected 39, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock == 14032, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock, expected 14032, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags == 9, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags, expected 9, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time == 7909447587, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time, expected 7909447587, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.i == 1319, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.i, expected 1319, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.i);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P_std == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P_std, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.acceleration == 108, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.acceleration, expected 108, is %d", check_unpacked_msg->tracking_state_detailed_dep.acceleration);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_drift == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_drift, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_drift);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_offset == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_offset, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_offset);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.cn0 == 177, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.cn0, expected 177, is %d", check_unpacked_msg->tracking_state_detailed_dep.cn0);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.corr_spacing == 40, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.corr_spacing, expected 40, is %d", check_unpacked_msg->tracking_state_detailed_dep.corr_spacing);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler == 15701, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler, expected 15701, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler_std == 39, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler_std, expected 39, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.lock == 14032, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.lock, expected 14032, is %d", check_unpacked_msg->tracking_state_detailed_dep.lock);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.misc_flags == 9, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.misc_flags, expected 9, is %d", check_unpacked_msg->tracking_state_detailed_dep.misc_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.nav_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.nav_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.nav_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.pset_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.pset_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.pset_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.recv_time == 7909447587, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.recv_time, expected 7909447587, is %d", check_unpacked_msg->tracking_state_detailed_dep.recv_time);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.code == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.code, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.reserved == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.reserved, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat, expected 15, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.sat == 15, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.sat, expected 15, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.sat);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sync_flags == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sync_flags, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.sync_flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.tow == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.tow, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.wn == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.wn, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.wn);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tow_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tow_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tow_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.track_flags == 11, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.track_flags, expected 11, is %d", check_unpacked_msg->tracking_state_detailed_dep.track_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.uptime == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.uptime, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.uptime);
   }
   // Test successful parsing of a message
   {
@@ -948,37 +948,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.f = 14;
+    test_unpacked_msg.tracking_state_detailed_dep.L.f = 14;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.i = 1810;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P_std = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.acceleration = -32;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_drift = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_offset = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.cn0 = 175;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing = 40;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler = 15667;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler_std = 30;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.lock = 14032;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.misc_flags = 9;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.nav_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.pset_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.recv_time = 8409447265;
+    test_unpacked_msg.tracking_state_detailed_dep.L.i = 1810;
+    test_unpacked_msg.tracking_state_detailed_dep.P = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.P_std = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.acceleration = -32;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_drift = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_offset = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.cn0 = 175;
+    test_unpacked_msg.tracking_state_detailed_dep.corr_spacing = 40;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler = 15667;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler_std = 30;
+    test_unpacked_msg.tracking_state_detailed_dep.lock = 14032;
+    test_unpacked_msg.tracking_state_detailed_dep.misc_flags = 9;
+    test_unpacked_msg.tracking_state_detailed_dep.nav_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.pset_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.recv_time = 8409447265;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.code = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.code = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.sat = 15;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sync_flags = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.sat = 15;
+    test_unpacked_msg.tracking_state_detailed_dep.sync_flags = 1;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.tow = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.tow = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.wn = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tow_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.track_flags = 11;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.uptime = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.wn = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tow_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.track_flags = 11;
+    test_unpacked_msg.tracking_state_detailed_dep.uptime = 1;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427, &test_unpacked_msg, &dummy_write);
 
@@ -1003,37 +1003,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f == 14, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f, expected 14, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.f == 14, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.f, expected 14, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i == 1810, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i, expected 1810, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration == -32, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration, expected -32, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0 == 175, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0, expected 175, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing == 40, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing, expected 40, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler == 15667, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler, expected 15667, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std == 30, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std, expected 30, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock == 14032, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock, expected 14032, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags == 9, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags, expected 9, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time == 8409447265, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time, expected 8409447265, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.i == 1810, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.i, expected 1810, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.i);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P_std == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P_std, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.acceleration == -32, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.acceleration, expected -32, is %d", check_unpacked_msg->tracking_state_detailed_dep.acceleration);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_drift == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_drift, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_drift);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_offset == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_offset, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_offset);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.cn0 == 175, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.cn0, expected 175, is %d", check_unpacked_msg->tracking_state_detailed_dep.cn0);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.corr_spacing == 40, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.corr_spacing, expected 40, is %d", check_unpacked_msg->tracking_state_detailed_dep.corr_spacing);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler == 15667, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler, expected 15667, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler_std == 30, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler_std, expected 30, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.lock == 14032, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.lock, expected 14032, is %d", check_unpacked_msg->tracking_state_detailed_dep.lock);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.misc_flags == 9, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.misc_flags, expected 9, is %d", check_unpacked_msg->tracking_state_detailed_dep.misc_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.nav_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.nav_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.nav_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.pset_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.pset_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.pset_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.recv_time == 8409447265, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.recv_time, expected 8409447265, is %d", check_unpacked_msg->tracking_state_detailed_dep.recv_time);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.code == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.code, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.reserved == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.reserved, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat, expected 15, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.sat == 15, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.sat, expected 15, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.sat);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sync_flags == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sync_flags, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.sync_flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.tow == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.tow, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.wn == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.wn, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.wn);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tow_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tow_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tow_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.track_flags == 11, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.track_flags, expected 11, is %d", check_unpacked_msg->tracking_state_detailed_dep.track_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.uptime == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.uptime, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.uptime);
   }
   // Test successful parsing of a message
   {
@@ -1055,37 +1055,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.f = 8;
+    test_unpacked_msg.tracking_state_detailed_dep.L.f = 8;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.i = 2298;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P_std = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.acceleration = 27;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_drift = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_offset = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.cn0 = 179;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing = 40;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler = 15683;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler_std = 22;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.lock = 14032;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.misc_flags = 9;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.nav_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.pset_flags = 2;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.recv_time = 8907446923;
+    test_unpacked_msg.tracking_state_detailed_dep.L.i = 2298;
+    test_unpacked_msg.tracking_state_detailed_dep.P = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.P_std = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.acceleration = 27;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_drift = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_offset = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.cn0 = 179;
+    test_unpacked_msg.tracking_state_detailed_dep.corr_spacing = 40;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler = 15683;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler_std = 22;
+    test_unpacked_msg.tracking_state_detailed_dep.lock = 14032;
+    test_unpacked_msg.tracking_state_detailed_dep.misc_flags = 9;
+    test_unpacked_msg.tracking_state_detailed_dep.nav_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.pset_flags = 2;
+    test_unpacked_msg.tracking_state_detailed_dep.recv_time = 8907446923;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.code = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.code = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.sat = 15;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sync_flags = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.sat = 15;
+    test_unpacked_msg.tracking_state_detailed_dep.sync_flags = 1;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.tow = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.tow = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.wn = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tow_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.track_flags = 11;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.uptime = 2;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.wn = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tow_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.track_flags = 11;
+    test_unpacked_msg.tracking_state_detailed_dep.uptime = 2;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427, &test_unpacked_msg, &dummy_write);
 
@@ -1110,37 +1110,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f == 8, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f, expected 8, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.f == 8, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.f, expected 8, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i == 2298, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i, expected 2298, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration == 27, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration, expected 27, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0 == 179, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0, expected 179, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing == 40, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing, expected 40, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler == 15683, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler, expected 15683, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std == 22, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std, expected 22, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock == 14032, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock, expected 14032, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags == 9, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags, expected 9, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags == 2, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags, expected 2, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time == 8907446923, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time, expected 8907446923, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.i == 2298, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.i, expected 2298, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.i);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P_std == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P_std, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.acceleration == 27, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.acceleration, expected 27, is %d", check_unpacked_msg->tracking_state_detailed_dep.acceleration);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_drift == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_drift, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_drift);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_offset == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_offset, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_offset);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.cn0 == 179, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.cn0, expected 179, is %d", check_unpacked_msg->tracking_state_detailed_dep.cn0);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.corr_spacing == 40, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.corr_spacing, expected 40, is %d", check_unpacked_msg->tracking_state_detailed_dep.corr_spacing);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler == 15683, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler, expected 15683, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler_std == 22, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler_std, expected 22, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.lock == 14032, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.lock, expected 14032, is %d", check_unpacked_msg->tracking_state_detailed_dep.lock);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.misc_flags == 9, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.misc_flags, expected 9, is %d", check_unpacked_msg->tracking_state_detailed_dep.misc_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.nav_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.nav_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.nav_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.pset_flags == 2, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.pset_flags, expected 2, is %d", check_unpacked_msg->tracking_state_detailed_dep.pset_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.recv_time == 8907446923, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.recv_time, expected 8907446923, is %d", check_unpacked_msg->tracking_state_detailed_dep.recv_time);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.code == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.code, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.reserved == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.reserved, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat, expected 15, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.sat == 15, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.sat, expected 15, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.sat);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sync_flags == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sync_flags, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.sync_flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.tow == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.tow, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime == 2, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime, expected 2, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.wn == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.wn, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.wn);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tow_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tow_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tow_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.track_flags == 11, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.track_flags, expected 11, is %d", check_unpacked_msg->tracking_state_detailed_dep.track_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.uptime == 2, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.uptime, expected 2, is %d", check_unpacked_msg->tracking_state_detailed_dep.uptime);
   }
   // Test successful parsing of a message
   {
@@ -1162,37 +1162,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.f = 125;
+    test_unpacked_msg.tracking_state_detailed_dep.L.f = 125;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.i = 2786;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P_std = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.acceleration = -36;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_drift = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_offset = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.cn0 = 181;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing = 40;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler = 15645;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler_std = 10;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.lock = 14032;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.misc_flags = 9;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.nav_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.pset_flags = 3;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.recv_time = 9406446591;
+    test_unpacked_msg.tracking_state_detailed_dep.L.i = 2786;
+    test_unpacked_msg.tracking_state_detailed_dep.P = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.P_std = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.acceleration = -36;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_drift = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_offset = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.cn0 = 181;
+    test_unpacked_msg.tracking_state_detailed_dep.corr_spacing = 40;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler = 15645;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler_std = 10;
+    test_unpacked_msg.tracking_state_detailed_dep.lock = 14032;
+    test_unpacked_msg.tracking_state_detailed_dep.misc_flags = 9;
+    test_unpacked_msg.tracking_state_detailed_dep.nav_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.pset_flags = 3;
+    test_unpacked_msg.tracking_state_detailed_dep.recv_time = 9406446591;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.code = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.code = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.sat = 15;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sync_flags = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.sat = 15;
+    test_unpacked_msg.tracking_state_detailed_dep.sync_flags = 1;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.tow = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.tow = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.wn = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tow_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.track_flags = 11;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.uptime = 2;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.wn = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tow_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.track_flags = 11;
+    test_unpacked_msg.tracking_state_detailed_dep.uptime = 2;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427, &test_unpacked_msg, &dummy_write);
 
@@ -1217,37 +1217,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f == 125, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f, expected 125, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.f == 125, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.f, expected 125, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i == 2786, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i, expected 2786, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration == -36, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration, expected -36, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0 == 181, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0, expected 181, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing == 40, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing, expected 40, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler == 15645, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler, expected 15645, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std == 10, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std, expected 10, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock == 14032, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock, expected 14032, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags == 9, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags, expected 9, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags == 3, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags, expected 3, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time == 9406446591, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time, expected 9406446591, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.i == 2786, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.i, expected 2786, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.i);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P_std == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P_std, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.acceleration == -36, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.acceleration, expected -36, is %d", check_unpacked_msg->tracking_state_detailed_dep.acceleration);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_drift == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_drift, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_drift);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_offset == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_offset, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_offset);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.cn0 == 181, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.cn0, expected 181, is %d", check_unpacked_msg->tracking_state_detailed_dep.cn0);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.corr_spacing == 40, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.corr_spacing, expected 40, is %d", check_unpacked_msg->tracking_state_detailed_dep.corr_spacing);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler == 15645, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler, expected 15645, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler_std == 10, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler_std, expected 10, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.lock == 14032, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.lock, expected 14032, is %d", check_unpacked_msg->tracking_state_detailed_dep.lock);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.misc_flags == 9, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.misc_flags, expected 9, is %d", check_unpacked_msg->tracking_state_detailed_dep.misc_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.nav_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.nav_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.nav_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.pset_flags == 3, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.pset_flags, expected 3, is %d", check_unpacked_msg->tracking_state_detailed_dep.pset_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.recv_time == 9406446591, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.recv_time, expected 9406446591, is %d", check_unpacked_msg->tracking_state_detailed_dep.recv_time);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.code == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.code, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.reserved == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.reserved, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat, expected 15, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.sat == 15, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.sat, expected 15, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.sat);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sync_flags == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sync_flags, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.sync_flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.tow == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.tow, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime == 2, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime, expected 2, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.wn == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.wn, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.wn);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tow_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tow_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tow_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.track_flags == 11, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.track_flags, expected 11, is %d", check_unpacked_msg->tracking_state_detailed_dep.track_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.uptime == 2, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.uptime, expected 2, is %d", check_unpacked_msg->tracking_state_detailed_dep.uptime);
   }
   // Test successful parsing of a message
   {
@@ -1269,37 +1269,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.f = 64;
+    test_unpacked_msg.tracking_state_detailed_dep.L.f = 64;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.L.i = 3275;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.P_std = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.acceleration = 2;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_drift = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.clock_offset = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.cn0 = 184;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing = 40;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler = 15640;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.doppler_std = 4;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.lock = 14032;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.misc_flags = 9;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.nav_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.pset_flags = 3;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.recv_time = 9906446269;
+    test_unpacked_msg.tracking_state_detailed_dep.L.i = 3275;
+    test_unpacked_msg.tracking_state_detailed_dep.P = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.P_std = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.acceleration = 2;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_drift = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.clock_offset = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.cn0 = 184;
+    test_unpacked_msg.tracking_state_detailed_dep.corr_spacing = 40;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler = 15640;
+    test_unpacked_msg.tracking_state_detailed_dep.doppler_std = 4;
+    test_unpacked_msg.tracking_state_detailed_dep.lock = 14032;
+    test_unpacked_msg.tracking_state_detailed_dep.misc_flags = 9;
+    test_unpacked_msg.tracking_state_detailed_dep.nav_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.pset_flags = 3;
+    test_unpacked_msg.tracking_state_detailed_dep.recv_time = 9906446269;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.code = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.code = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sid.sat = 15;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.sync_flags = 1;
+    test_unpacked_msg.tracking_state_detailed_dep.sid.sat = 15;
+    test_unpacked_msg.tracking_state_detailed_dep.sync_flags = 1;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.tow = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.tow = 0;
     
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tot.wn = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.tow_flags = 0;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.track_flags = 11;
-    test_unpacked_msg.MSG_TRACKING_STATE_DETAILED_DEP.uptime = 3;
+    test_unpacked_msg.tracking_state_detailed_dep.tot.wn = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.tow_flags = 0;
+    test_unpacked_msg.tracking_state_detailed_dep.track_flags = 11;
+    test_unpacked_msg.tracking_state_detailed_dep.uptime = 3;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427, &test_unpacked_msg, &dummy_write);
 
@@ -1324,37 +1324,37 @@ START_TEST( test_unpacked_auto_check_sbp_tracking_MsgTrackingStateDetailedDep )
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f == 64, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f, expected 64, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.f);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.f == 64, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.f, expected 64, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.f);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i == 3275, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i, expected 3275, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.L.i);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.P_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration == 2, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration, expected 2, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.acceleration);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_drift);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.clock_offset);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0 == 184, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0, expected 184, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.cn0);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing == 40, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing, expected 40, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.corr_spacing);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler == 15640, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler, expected 15640, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std == 4, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std, expected 4, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.doppler_std);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock == 14032, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock, expected 14032, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.lock);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags == 9, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags, expected 9, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.misc_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.nav_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags == 3, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags, expected 3, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.pset_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time == 9906446269, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time, expected 9906446269, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.recv_time);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.L.i == 3275, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.L.i, expected 3275, is %d", check_unpacked_msg->tracking_state_detailed_dep.L.i);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.P_std == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.P_std, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.P_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.acceleration == 2, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.acceleration, expected 2, is %d", check_unpacked_msg->tracking_state_detailed_dep.acceleration);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_drift == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_drift, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_drift);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.clock_offset == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.clock_offset, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.clock_offset);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.cn0 == 184, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.cn0, expected 184, is %d", check_unpacked_msg->tracking_state_detailed_dep.cn0);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.corr_spacing == 40, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.corr_spacing, expected 40, is %d", check_unpacked_msg->tracking_state_detailed_dep.corr_spacing);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler == 15640, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler, expected 15640, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.doppler_std == 4, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.doppler_std, expected 4, is %d", check_unpacked_msg->tracking_state_detailed_dep.doppler_std);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.lock == 14032, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.lock, expected 14032, is %d", check_unpacked_msg->tracking_state_detailed_dep.lock);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.misc_flags == 9, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.misc_flags, expected 9, is %d", check_unpacked_msg->tracking_state_detailed_dep.misc_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.nav_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.nav_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.nav_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.pset_flags == 3, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.pset_flags, expected 3, is %d", check_unpacked_msg->tracking_state_detailed_dep.pset_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.recv_time == 9906446269, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.recv_time, expected 9906446269, is %d", check_unpacked_msg->tracking_state_detailed_dep.recv_time);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.code);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.code == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.code, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.reserved == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.reserved, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat == 15, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat, expected 15, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags == 1, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags, expected 1, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.sync_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sid.sat == 15, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sid.sat, expected 15, is %d", check_unpacked_msg->tracking_state_detailed_dep.sid.sat);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.sync_flags == 1, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.sync_flags, expected 1, is %d", check_unpacked_msg->tracking_state_detailed_dep.sync_flags);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.tow);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.tow == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.tow, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tot.wn);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags == 0, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags, expected 0, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.tow_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags == 11, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags, expected 11, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.track_flags);
-    ck_assert_msg(check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime == 3, "incorrect value for check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime, expected 3, is %d", check_unpacked_msg->MSG_TRACKING_STATE_DETAILED_DEP.uptime);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tot.wn == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tot.wn, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tot.wn);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.tow_flags == 0, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.tow_flags, expected 0, is %d", check_unpacked_msg->tracking_state_detailed_dep.tow_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.track_flags == 11, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.track_flags, expected 11, is %d", check_unpacked_msg->tracking_state_detailed_dep.track_flags);
+    ck_assert_msg(check_unpacked_msg->tracking_state_detailed_dep.uptime == 3, "incorrect value for check_unpacked_msg->tracking_state_detailed_dep.uptime, expected 3, is %d", check_unpacked_msg->tracking_state_detailed_dep.uptime);
   }
 }
 END_TEST

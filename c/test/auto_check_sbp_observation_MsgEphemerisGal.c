@@ -322,51 +322,51 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgEphemerisGal )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.af0 = -1.7088896129280325e-05;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.af1 = -8.185452315956353e-12;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.af2 = 0.0;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.bgd_e1e5a = 2.0954757928848267e-09;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.bgd_e1e5b = 2.0954757928848267e-09;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_ic = -3.166496753692627e-08;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_is = -3.166496753692627e-08;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_rc = 265.4375;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_rs = 10.125;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_uc = 5.364418029785156e-07;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.c_us = 3.993511199951172e-06;
+    test_unpacked_msg.ephemeris_gal.af0 = -1.7088896129280325e-05;
+    test_unpacked_msg.ephemeris_gal.af1 = -8.185452315956353e-12;
+    test_unpacked_msg.ephemeris_gal.af2 = 0.0;
+    test_unpacked_msg.ephemeris_gal.bgd_e1e5a = 2.0954757928848267e-09;
+    test_unpacked_msg.ephemeris_gal.bgd_e1e5b = 2.0954757928848267e-09;
+    test_unpacked_msg.ephemeris_gal.c_ic = -3.166496753692627e-08;
+    test_unpacked_msg.ephemeris_gal.c_is = -3.166496753692627e-08;
+    test_unpacked_msg.ephemeris_gal.c_rc = 265.4375;
+    test_unpacked_msg.ephemeris_gal.c_rs = 10.125;
+    test_unpacked_msg.ephemeris_gal.c_uc = 5.364418029785156e-07;
+    test_unpacked_msg.ephemeris_gal.c_us = 3.993511199951172e-06;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.fit_interval = 14400;
+    test_unpacked_msg.ephemeris_gal.common.fit_interval = 14400;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.health_bits = 0;
-    
-    
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.sid.code = 14;
-    
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.sid.sat = 27;
+    test_unpacked_msg.ephemeris_gal.common.health_bits = 0;
     
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.toe.tow = 448800;
+    test_unpacked_msg.ephemeris_gal.common.sid.code = 14;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.toe.wn = 2154;
+    test_unpacked_msg.ephemeris_gal.common.sid.sat = 27;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.ura = 3.119999885559082;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.common.valid = 1;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.dn = 3.2262058129932258e-09;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.ecc = 0.00017060607206076384;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.inc = 0.9777456094977858;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.inc_dot = -3.1787038343451465e-10;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.iodc = 108;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.iode = 108;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.m0 = -1.8457115744155868;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.omega0 = 1.16967730598334;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.omegadot = -5.757382675240872e-09;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.source = 0;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.sqrta = 5440.602401733398;
+    test_unpacked_msg.ephemeris_gal.common.toe.tow = 448800;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.toc.tow = 448800;
+    test_unpacked_msg.ephemeris_gal.common.toe.wn = 2154;
     
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.toc.wn = 2154;
-    test_unpacked_msg.MSG_EPHEMERIS_GAL.w = 0.12250912091662625;
+    test_unpacked_msg.ephemeris_gal.common.ura = 3.119999885559082;
+    
+    test_unpacked_msg.ephemeris_gal.common.valid = 1;
+    test_unpacked_msg.ephemeris_gal.dn = 3.2262058129932258e-09;
+    test_unpacked_msg.ephemeris_gal.ecc = 0.00017060607206076384;
+    test_unpacked_msg.ephemeris_gal.inc = 0.9777456094977858;
+    test_unpacked_msg.ephemeris_gal.inc_dot = -3.1787038343451465e-10;
+    test_unpacked_msg.ephemeris_gal.iodc = 108;
+    test_unpacked_msg.ephemeris_gal.iode = 108;
+    test_unpacked_msg.ephemeris_gal.m0 = -1.8457115744155868;
+    test_unpacked_msg.ephemeris_gal.omega0 = 1.16967730598334;
+    test_unpacked_msg.ephemeris_gal.omegadot = -5.757382675240872e-09;
+    test_unpacked_msg.ephemeris_gal.source = 0;
+    test_unpacked_msg.ephemeris_gal.sqrta = 5440.602401733398;
+    
+    test_unpacked_msg.ephemeris_gal.toc.tow = 448800;
+    
+    test_unpacked_msg.ephemeris_gal.toc.wn = 2154;
+    test_unpacked_msg.ephemeris_gal.w = 0.12250912091662625;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_EPHEMERIS_GAL, 61568, &test_unpacked_msg, &dummy_write);
 
@@ -390,51 +390,51 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgEphemerisGal )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.af0*100 - -1.70888961293e-05*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.af0, expected -1.70888961293e-05, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.af0);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.af1*100 - -8.18545231596e-12*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.af1, expected -8.18545231596e-12, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.af1);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.af2*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.af2, expected 0.0, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.af2);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5a*100 - 2.09547579288e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5a, expected 2.09547579288e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5a);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5b*100 - 2.09547579288e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5b, expected 2.09547579288e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.bgd_e1e5b);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_ic*100 - -3.16649675369e-08*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_ic, expected -3.16649675369e-08, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_ic);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_is*100 - -3.16649675369e-08*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_is, expected -3.16649675369e-08, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_is);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rc*100 - 265.4375*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rc, expected 265.4375, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rc);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rs*100 - 10.125*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rs, expected 10.125, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_rs);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_uc*100 - 5.36441802979e-07*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_uc, expected 5.36441802979e-07, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_uc);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.c_us*100 - 3.99351119995e-06*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.c_us, expected 3.99351119995e-06, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.c_us);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.af0*100 - -1.70888961293e-05*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.af0, expected -1.70888961293e-05, is %s", check_unpacked_msg->ephemeris_gal.af0);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.af1*100 - -8.18545231596e-12*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.af1, expected -8.18545231596e-12, is %s", check_unpacked_msg->ephemeris_gal.af1);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.af2*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.af2, expected 0.0, is %s", check_unpacked_msg->ephemeris_gal.af2);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.bgd_e1e5a*100 - 2.09547579288e-09*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.bgd_e1e5a, expected 2.09547579288e-09, is %s", check_unpacked_msg->ephemeris_gal.bgd_e1e5a);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.bgd_e1e5b*100 - 2.09547579288e-09*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.bgd_e1e5b, expected 2.09547579288e-09, is %s", check_unpacked_msg->ephemeris_gal.bgd_e1e5b);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_ic*100 - -3.16649675369e-08*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_ic, expected -3.16649675369e-08, is %s", check_unpacked_msg->ephemeris_gal.c_ic);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_is*100 - -3.16649675369e-08*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_is, expected -3.16649675369e-08, is %s", check_unpacked_msg->ephemeris_gal.c_is);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_rc*100 - 265.4375*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_rc, expected 265.4375, is %s", check_unpacked_msg->ephemeris_gal.c_rc);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_rs*100 - 10.125*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_rs, expected 10.125, is %s", check_unpacked_msg->ephemeris_gal.c_rs);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_uc*100 - 5.36441802979e-07*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_uc, expected 5.36441802979e-07, is %s", check_unpacked_msg->ephemeris_gal.c_uc);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.c_us*100 - 3.99351119995e-06*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.c_us, expected 3.99351119995e-06, is %s", check_unpacked_msg->ephemeris_gal.c_us);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.fit_interval == 14400, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.fit_interval, expected 14400, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.fit_interval);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.fit_interval == 14400, "incorrect value for check_unpacked_msg->ephemeris_gal.common.fit_interval, expected 14400, is %d", check_unpacked_msg->ephemeris_gal.common.fit_interval);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.health_bits == 0, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.health_bits, expected 0, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.health_bits);
-    
-    
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.code == 14, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.code, expected 14, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.code);
-    
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.sat == 27, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.sat, expected 27, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.sid.sat);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.health_bits == 0, "incorrect value for check_unpacked_msg->ephemeris_gal.common.health_bits, expected 0, is %d", check_unpacked_msg->ephemeris_gal.common.health_bits);
     
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.tow == 448800, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.tow, expected 448800, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.tow);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.sid.code == 14, "incorrect value for check_unpacked_msg->ephemeris_gal.common.sid.code, expected 14, is %d", check_unpacked_msg->ephemeris_gal.common.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.wn == 2154, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.wn, expected 2154, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.toe.wn);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.sid.sat == 27, "incorrect value for check_unpacked_msg->ephemeris_gal.common.sid.sat, expected 27, is %d", check_unpacked_msg->ephemeris_gal.common.sid.sat);
     
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.common.ura*100 - 3.11999988556*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.ura, expected 3.11999988556, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.ura);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.common.valid == 1, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.common.valid, expected 1, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.common.valid);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.dn*100 - 3.22620581299e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.dn, expected 3.22620581299e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.dn);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.ecc*100 - 0.000170606072061*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.ecc, expected 0.000170606072061, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.ecc);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.inc*100 - 0.977745609498*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.inc, expected 0.977745609498, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.inc);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.inc_dot*100 - -3.17870383435e-10*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.inc_dot, expected -3.17870383435e-10, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.inc_dot);
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.iodc == 108, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.iodc, expected 108, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.iodc);
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.iode == 108, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.iode, expected 108, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.iode);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.m0*100 - -1.84571157442*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.m0, expected -1.84571157442, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.m0);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.omega0*100 - 1.16967730598*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.omega0, expected 1.16967730598, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.omega0);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.omegadot*100 - -5.75738267524e-09*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.omegadot, expected -5.75738267524e-09, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.omegadot);
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.source == 0, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.source, expected 0, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.source);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.sqrta*100 - 5440.60240173*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.sqrta, expected 5440.60240173, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.sqrta);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.toe.tow == 448800, "incorrect value for check_unpacked_msg->ephemeris_gal.common.toe.tow, expected 448800, is %d", check_unpacked_msg->ephemeris_gal.common.toe.tow);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.tow == 448800, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.tow, expected 448800, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.tow);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.toe.wn == 2154, "incorrect value for check_unpacked_msg->ephemeris_gal.common.toe.wn, expected 2154, is %d", check_unpacked_msg->ephemeris_gal.common.toe.wn);
     
-    ck_assert_msg(check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.wn == 2154, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.wn, expected 2154, is %d", check_unpacked_msg->MSG_EPHEMERIS_GAL.toc.wn);
-    ck_assert_msg((check_unpacked_msg->MSG_EPHEMERIS_GAL.w*100 - 0.122509120917*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_EPHEMERIS_GAL.w, expected 0.122509120917, is %s", check_unpacked_msg->MSG_EPHEMERIS_GAL.w);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.common.ura*100 - 3.11999988556*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.common.ura, expected 3.11999988556, is %s", check_unpacked_msg->ephemeris_gal.common.ura);
+    
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.common.valid == 1, "incorrect value for check_unpacked_msg->ephemeris_gal.common.valid, expected 1, is %d", check_unpacked_msg->ephemeris_gal.common.valid);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.dn*100 - 3.22620581299e-09*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.dn, expected 3.22620581299e-09, is %s", check_unpacked_msg->ephemeris_gal.dn);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.ecc*100 - 0.000170606072061*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.ecc, expected 0.000170606072061, is %s", check_unpacked_msg->ephemeris_gal.ecc);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.inc*100 - 0.977745609498*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.inc, expected 0.977745609498, is %s", check_unpacked_msg->ephemeris_gal.inc);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.inc_dot*100 - -3.17870383435e-10*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.inc_dot, expected -3.17870383435e-10, is %s", check_unpacked_msg->ephemeris_gal.inc_dot);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.iodc == 108, "incorrect value for check_unpacked_msg->ephemeris_gal.iodc, expected 108, is %d", check_unpacked_msg->ephemeris_gal.iodc);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.iode == 108, "incorrect value for check_unpacked_msg->ephemeris_gal.iode, expected 108, is %d", check_unpacked_msg->ephemeris_gal.iode);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.m0*100 - -1.84571157442*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.m0, expected -1.84571157442, is %s", check_unpacked_msg->ephemeris_gal.m0);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.omega0*100 - 1.16967730598*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.omega0, expected 1.16967730598, is %s", check_unpacked_msg->ephemeris_gal.omega0);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.omegadot*100 - -5.75738267524e-09*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.omegadot, expected -5.75738267524e-09, is %s", check_unpacked_msg->ephemeris_gal.omegadot);
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.source == 0, "incorrect value for check_unpacked_msg->ephemeris_gal.source, expected 0, is %d", check_unpacked_msg->ephemeris_gal.source);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.sqrta*100 - 5440.60240173*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.sqrta, expected 5440.60240173, is %s", check_unpacked_msg->ephemeris_gal.sqrta);
+    
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.toc.tow == 448800, "incorrect value for check_unpacked_msg->ephemeris_gal.toc.tow, expected 448800, is %d", check_unpacked_msg->ephemeris_gal.toc.tow);
+    
+    ck_assert_msg(check_unpacked_msg->ephemeris_gal.toc.wn == 2154, "incorrect value for check_unpacked_msg->ephemeris_gal.toc.wn, expected 2154, is %d", check_unpacked_msg->ephemeris_gal.toc.wn);
+    ck_assert_msg((check_unpacked_msg->ephemeris_gal.w*100 - 0.122509120917*100) < 0.05, "incorrect value for check_unpacked_msg->ephemeris_gal.w, expected 0.122509120917, is %s", check_unpacked_msg->ephemeris_gal.w);
   }
 }
 END_TEST

@@ -916,12 +916,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 180;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 160;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 190;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 170;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 2568200;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 150;
+    test_unpacked_msg.dops_dep_a.gdop = 180;
+    test_unpacked_msg.dops_dep_a.hdop = 160;
+    test_unpacked_msg.dops_dep_a.pdop = 190;
+    test_unpacked_msg.dops_dep_a.tdop = 170;
+    test_unpacked_msg.dops_dep_a.tow = 2568200;
+    test_unpacked_msg.dops_dep_a.vdop = 150;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -945,12 +945,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 180, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 180, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 160, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 160, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 190, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 190, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 170, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 170, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 2568200, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 2568200, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 150, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 150, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 180, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 180, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 160, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 160, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 190, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 190, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 170, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 170, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 2568200, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 2568200, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 150, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 150, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -971,12 +971,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 180;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 160;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 190;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 170;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 2569200;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 150;
+    test_unpacked_msg.dops_dep_a.gdop = 180;
+    test_unpacked_msg.dops_dep_a.hdop = 160;
+    test_unpacked_msg.dops_dep_a.pdop = 190;
+    test_unpacked_msg.dops_dep_a.tdop = 170;
+    test_unpacked_msg.dops_dep_a.tow = 2569200;
+    test_unpacked_msg.dops_dep_a.vdop = 150;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1000,12 +1000,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 180, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 180, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 160, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 160, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 190, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 190, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 170, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 170, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 2569200, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 2569200, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 150, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 150, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 180, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 180, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 160, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 160, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 190, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 190, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 170, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 170, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 2569200, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 2569200, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 150, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 150, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1026,12 +1026,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 180;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 160;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 190;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 170;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 2570200;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 150;
+    test_unpacked_msg.dops_dep_a.gdop = 180;
+    test_unpacked_msg.dops_dep_a.hdop = 160;
+    test_unpacked_msg.dops_dep_a.pdop = 190;
+    test_unpacked_msg.dops_dep_a.tdop = 170;
+    test_unpacked_msg.dops_dep_a.tow = 2570200;
+    test_unpacked_msg.dops_dep_a.vdop = 150;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1055,12 +1055,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 180, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 180, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 160, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 160, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 190, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 190, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 170, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 170, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 2570200, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 2570200, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 150, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 150, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 180, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 180, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 160, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 160, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 190, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 190, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 170, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 170, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 2570200, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 2570200, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 150, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 150, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1081,12 +1081,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 247;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 273;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 215;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 123;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 407084500;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 44;
+    test_unpacked_msg.dops_dep_a.gdop = 247;
+    test_unpacked_msg.dops_dep_a.hdop = 273;
+    test_unpacked_msg.dops_dep_a.pdop = 215;
+    test_unpacked_msg.dops_dep_a.tdop = 123;
+    test_unpacked_msg.dops_dep_a.tow = 407084500;
+    test_unpacked_msg.dops_dep_a.vdop = 44;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1110,12 +1110,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 247, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 247, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 273, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 273, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 215, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 215, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 123, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 123, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 407084500, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 407084500, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 44, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 44, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 247, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 247, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 273, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 273, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 215, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 215, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 123, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 123, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 407084500, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 407084500, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 44, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 44, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1136,12 +1136,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 65535;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 0;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 65535;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 0;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 0;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 0;
+    test_unpacked_msg.dops_dep_a.gdop = 65535;
+    test_unpacked_msg.dops_dep_a.hdop = 0;
+    test_unpacked_msg.dops_dep_a.pdop = 65535;
+    test_unpacked_msg.dops_dep_a.tdop = 0;
+    test_unpacked_msg.dops_dep_a.tow = 0;
+    test_unpacked_msg.dops_dep_a.vdop = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1165,12 +1165,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 65535, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 65535, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 0, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 0, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 65535, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 65535, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 0, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 0, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 0, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 0, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 0, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 0, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 65535, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 65535, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 0, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 0, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 65535, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 65535, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 0, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 0, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 0, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 0, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 0, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 0, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1191,12 +1191,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 348;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 637;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 312;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 155;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 407152000;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 113;
+    test_unpacked_msg.dops_dep_a.gdop = 348;
+    test_unpacked_msg.dops_dep_a.hdop = 637;
+    test_unpacked_msg.dops_dep_a.pdop = 312;
+    test_unpacked_msg.dops_dep_a.tdop = 155;
+    test_unpacked_msg.dops_dep_a.tow = 407152000;
+    test_unpacked_msg.dops_dep_a.vdop = 113;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1220,12 +1220,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 348, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 348, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 637, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 637, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 312, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 312, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 155, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 155, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 407152000, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 407152000, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 113, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 113, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 348, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 348, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 637, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 637, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 312, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 312, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 155, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 155, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 407152000, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 407152000, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 113, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 113, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1246,12 +1246,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 348;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 637;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 311;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 155;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 407153000;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 113;
+    test_unpacked_msg.dops_dep_a.gdop = 348;
+    test_unpacked_msg.dops_dep_a.hdop = 637;
+    test_unpacked_msg.dops_dep_a.pdop = 311;
+    test_unpacked_msg.dops_dep_a.tdop = 155;
+    test_unpacked_msg.dops_dep_a.tow = 407153000;
+    test_unpacked_msg.dops_dep_a.vdop = 113;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1275,12 +1275,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 348, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 348, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 637, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 637, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 311, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 311, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 155, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 155, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 407153000, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 407153000, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 113, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 113, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 348, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 348, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 637, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 637, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 311, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 311, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 155, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 155, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 407153000, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 407153000, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 113, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 113, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1301,12 +1301,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 348;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 637;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 311;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 155;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 407154000;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 112;
+    test_unpacked_msg.dops_dep_a.gdop = 348;
+    test_unpacked_msg.dops_dep_a.hdop = 637;
+    test_unpacked_msg.dops_dep_a.pdop = 311;
+    test_unpacked_msg.dops_dep_a.tdop = 155;
+    test_unpacked_msg.dops_dep_a.tow = 407154000;
+    test_unpacked_msg.dops_dep_a.vdop = 112;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1330,12 +1330,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 348, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 348, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 637, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 637, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 311, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 311, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 155, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 155, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 407154000, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 407154000, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 112, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 112, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 348, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 348, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 637, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 637, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 311, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 311, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 155, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 155, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 407154000, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 407154000, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 112, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 112, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -1356,12 +1356,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_DOPS_DEP_A.gdop = 348;
-    test_unpacked_msg.MSG_DOPS_DEP_A.hdop = 637;
-    test_unpacked_msg.MSG_DOPS_DEP_A.pdop = 311;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tdop = 155;
-    test_unpacked_msg.MSG_DOPS_DEP_A.tow = 407155000;
-    test_unpacked_msg.MSG_DOPS_DEP_A.vdop = 112;
+    test_unpacked_msg.dops_dep_a.gdop = 348;
+    test_unpacked_msg.dops_dep_a.hdop = 637;
+    test_unpacked_msg.dops_dep_a.pdop = 311;
+    test_unpacked_msg.dops_dep_a.tdop = 155;
+    test_unpacked_msg.dops_dep_a.tow = 407155000;
+    test_unpacked_msg.dops_dep_a.vdop = 112;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DOPS_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1385,12 +1385,12 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgDopsDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.gdop == 348, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.gdop, expected 348, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.gdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.hdop == 637, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.hdop, expected 637, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.hdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.pdop == 311, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.pdop, expected 311, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.pdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tdop == 155, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tdop, expected 155, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tdop);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.tow == 407155000, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.tow, expected 407155000, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_DOPS_DEP_A.vdop == 112, "incorrect value for check_unpacked_msg->MSG_DOPS_DEP_A.vdop, expected 112, is %d", check_unpacked_msg->MSG_DOPS_DEP_A.vdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.gdop == 348, "incorrect value for check_unpacked_msg->dops_dep_a.gdop, expected 348, is %d", check_unpacked_msg->dops_dep_a.gdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.hdop == 637, "incorrect value for check_unpacked_msg->dops_dep_a.hdop, expected 637, is %d", check_unpacked_msg->dops_dep_a.hdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.pdop == 311, "incorrect value for check_unpacked_msg->dops_dep_a.pdop, expected 311, is %d", check_unpacked_msg->dops_dep_a.pdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tdop == 155, "incorrect value for check_unpacked_msg->dops_dep_a.tdop, expected 155, is %d", check_unpacked_msg->dops_dep_a.tdop);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.tow == 407155000, "incorrect value for check_unpacked_msg->dops_dep_a.tow, expected 407155000, is %d", check_unpacked_msg->dops_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->dops_dep_a.vdop == 112, "incorrect value for check_unpacked_msg->dops_dep_a.vdop, expected 112, is %d", check_unpacked_msg->dops_dep_a.vdop);
   }
 }
 END_TEST

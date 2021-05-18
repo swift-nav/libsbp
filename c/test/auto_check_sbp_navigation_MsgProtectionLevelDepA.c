@@ -246,13 +246,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgProtectionLevelDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.height = 0.0;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.hpl = 0;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.lat = 0.0;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.lon = 0.0;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.tow = 501867400;
-    test_unpacked_msg.MSG_PROTECTION_LEVEL_DEP_A.vpl = 0;
+    test_unpacked_msg.protection_level_dep_a.flags = 0;
+    test_unpacked_msg.protection_level_dep_a.height = 0.0;
+    test_unpacked_msg.protection_level_dep_a.hpl = 0;
+    test_unpacked_msg.protection_level_dep_a.lat = 0.0;
+    test_unpacked_msg.protection_level_dep_a.lon = 0.0;
+    test_unpacked_msg.protection_level_dep_a.tow = 501867400;
+    test_unpacked_msg.protection_level_dep_a.vpl = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PROTECTION_LEVEL_DEP_A, 4096, &test_unpacked_msg, &dummy_write);
 
@@ -276,13 +276,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgProtectionLevelDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.flags);
-    ck_assert_msg((check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.height*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.height, expected 0.0, is %s", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.height);
-    ck_assert_msg(check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.hpl == 0, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.hpl, expected 0, is %d", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.hpl);
-    ck_assert_msg((check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lat*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lat, expected 0.0, is %s", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lat);
-    ck_assert_msg((check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lon*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lon, expected 0.0, is %s", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.lon);
-    ck_assert_msg(check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.tow == 501867400, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.tow, expected 501867400, is %d", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.vpl == 0, "incorrect value for check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.vpl, expected 0, is %d", check_unpacked_msg->MSG_PROTECTION_LEVEL_DEP_A.vpl);
+    ck_assert_msg(check_unpacked_msg->protection_level_dep_a.flags == 0, "incorrect value for check_unpacked_msg->protection_level_dep_a.flags, expected 0, is %d", check_unpacked_msg->protection_level_dep_a.flags);
+    ck_assert_msg((check_unpacked_msg->protection_level_dep_a.height*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->protection_level_dep_a.height, expected 0.0, is %s", check_unpacked_msg->protection_level_dep_a.height);
+    ck_assert_msg(check_unpacked_msg->protection_level_dep_a.hpl == 0, "incorrect value for check_unpacked_msg->protection_level_dep_a.hpl, expected 0, is %d", check_unpacked_msg->protection_level_dep_a.hpl);
+    ck_assert_msg((check_unpacked_msg->protection_level_dep_a.lat*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->protection_level_dep_a.lat, expected 0.0, is %s", check_unpacked_msg->protection_level_dep_a.lat);
+    ck_assert_msg((check_unpacked_msg->protection_level_dep_a.lon*100 - 0.0*100) < 0.05, "incorrect value for check_unpacked_msg->protection_level_dep_a.lon, expected 0.0, is %s", check_unpacked_msg->protection_level_dep_a.lon);
+    ck_assert_msg(check_unpacked_msg->protection_level_dep_a.tow == 501867400, "incorrect value for check_unpacked_msg->protection_level_dep_a.tow, expected 501867400, is %d", check_unpacked_msg->protection_level_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->protection_level_dep_a.vpl == 0, "incorrect value for check_unpacked_msg->protection_level_dep_a.vpl, expected 0, is %d", check_unpacked_msg->protection_level_dep_a.vpl);
   }
 }
 END_TEST

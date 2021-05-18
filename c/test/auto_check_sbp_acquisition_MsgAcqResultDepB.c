@@ -610,15 +610,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cf = 4995.1171875;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cp = 322.0;
+    test_unpacked_msg.acq_result_dep_b.cf = 4995.1171875;
+    test_unpacked_msg.acq_result_dep_b.cp = 322.0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.code = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.code = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.reserved = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.sat = 9;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.snr = 36.66360855102539;
+    test_unpacked_msg.acq_result_dep_b.sid.sat = 9;
+    test_unpacked_msg.acq_result_dep_b.snr = 36.66360855102539;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ACQ_RESULT_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -642,15 +642,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf*100 - 4995.1171875*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf, expected 4995.1171875, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp*100 - 322.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp, expected 322.0, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cf*100 - 4995.1171875*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cf, expected 4995.1171875, is %s", check_unpacked_msg->acq_result_dep_b.cf);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cp*100 - 322.0*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cp, expected 322.0, is %s", check_unpacked_msg->acq_result_dep_b.cp);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.code == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.code, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.reserved == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.reserved, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat == 9, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat, expected 9, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr*100 - 36.663608551*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr, expected 36.663608551, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.sat == 9, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.sat, expected 9, is %d", check_unpacked_msg->acq_result_dep_b.sid.sat);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.snr*100 - 36.663608551*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.snr, expected 36.663608551, is %s", check_unpacked_msg->acq_result_dep_b.snr);
   }
   // Test successful parsing of a message
   {
@@ -671,15 +671,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cf = -8241.943359375;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cp = 843.0;
+    test_unpacked_msg.acq_result_dep_b.cf = -8241.943359375;
+    test_unpacked_msg.acq_result_dep_b.cp = 843.0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.code = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.code = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.reserved = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.sat = 3;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.snr = 36.16875457763672;
+    test_unpacked_msg.acq_result_dep_b.sid.sat = 3;
+    test_unpacked_msg.acq_result_dep_b.snr = 36.16875457763672;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ACQ_RESULT_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -703,15 +703,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf*100 - -8241.94335938*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf, expected -8241.94335938, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp*100 - 843.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp, expected 843.0, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cf*100 - -8241.94335938*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cf, expected -8241.94335938, is %s", check_unpacked_msg->acq_result_dep_b.cf);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cp*100 - 843.0*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cp, expected 843.0, is %s", check_unpacked_msg->acq_result_dep_b.cp);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.code == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.code, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.reserved == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.reserved, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat == 3, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat, expected 3, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr*100 - 36.1687545776*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr, expected 36.1687545776, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.sat == 3, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.sat, expected 3, is %d", check_unpacked_msg->acq_result_dep_b.sid.sat);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.snr*100 - 36.1687545776*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.snr, expected 36.1687545776, is %s", check_unpacked_msg->acq_result_dep_b.snr);
   }
   // Test successful parsing of a message
   {
@@ -732,15 +732,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cf = 4745.361328125;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cp = 794.0;
+    test_unpacked_msg.acq_result_dep_b.cf = 4745.361328125;
+    test_unpacked_msg.acq_result_dep_b.cp = 794.0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.code = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.code = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.reserved = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.sat = 18;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.snr = 35.77723693847656;
+    test_unpacked_msg.acq_result_dep_b.sid.sat = 18;
+    test_unpacked_msg.acq_result_dep_b.snr = 35.77723693847656;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ACQ_RESULT_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -764,15 +764,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf*100 - 4745.36132812*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf, expected 4745.36132812, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp*100 - 794.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp, expected 794.0, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cf*100 - 4745.36132812*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cf, expected 4745.36132812, is %s", check_unpacked_msg->acq_result_dep_b.cf);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cp*100 - 794.0*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cp, expected 794.0, is %s", check_unpacked_msg->acq_result_dep_b.cp);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.code == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.code, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.reserved == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.reserved, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat == 18, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat, expected 18, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr*100 - 35.7772369385*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr, expected 35.7772369385, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.sat == 18, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.sat, expected 18, is %d", check_unpacked_msg->acq_result_dep_b.sid.sat);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.snr*100 - 35.7772369385*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.snr, expected 35.7772369385, is %s", check_unpacked_msg->acq_result_dep_b.snr);
   }
   // Test successful parsing of a message
   {
@@ -793,15 +793,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cf = 2497.55859375;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cp = 258.5;
+    test_unpacked_msg.acq_result_dep_b.cf = 2497.55859375;
+    test_unpacked_msg.acq_result_dep_b.cp = 258.5;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.code = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.code = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.reserved = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.sat = 17;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.snr = 35.69451141357422;
+    test_unpacked_msg.acq_result_dep_b.sid.sat = 17;
+    test_unpacked_msg.acq_result_dep_b.snr = 35.69451141357422;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ACQ_RESULT_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -825,15 +825,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf*100 - 2497.55859375*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf, expected 2497.55859375, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp*100 - 258.5*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp, expected 258.5, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cf*100 - 2497.55859375*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cf, expected 2497.55859375, is %s", check_unpacked_msg->acq_result_dep_b.cf);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cp*100 - 258.5*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cp, expected 258.5, is %s", check_unpacked_msg->acq_result_dep_b.cp);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.code == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.code, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.reserved == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.reserved, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat == 17, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat, expected 17, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr*100 - 35.6945114136*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr, expected 35.6945114136, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.sat == 17, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.sat, expected 17, is %d", check_unpacked_msg->acq_result_dep_b.sid.sat);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.snr*100 - 35.6945114136*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.snr, expected 35.6945114136, is %s", check_unpacked_msg->acq_result_dep_b.snr);
   }
   // Test successful parsing of a message
   {
@@ -854,15 +854,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cf = -499.5117492675781;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.cp = 522.0;
+    test_unpacked_msg.acq_result_dep_b.cf = -499.5117492675781;
+    test_unpacked_msg.acq_result_dep_b.cp = 522.0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.code = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.code = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.reserved = 0;
+    test_unpacked_msg.acq_result_dep_b.sid.reserved = 0;
     
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.sid.sat = 5;
-    test_unpacked_msg.MSG_ACQ_RESULT_DEP_B.snr = 35.52417755126953;
+    test_unpacked_msg.acq_result_dep_b.sid.sat = 5;
+    test_unpacked_msg.acq_result_dep_b.snr = 35.52417755126953;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_ACQ_RESULT_DEP_B, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -886,15 +886,15 @@ START_TEST( test_unpacked_auto_check_sbp_acquisition_MsgAcqResultDepB )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf*100 - -499.511749268*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf, expected -499.511749268, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cf);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp*100 - 522.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp, expected 522.0, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.cp);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cf*100 - -499.511749268*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cf, expected -499.511749268, is %s", check_unpacked_msg->acq_result_dep_b.cf);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.cp*100 - 522.0*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.cp, expected 522.0, is %s", check_unpacked_msg->acq_result_dep_b.cp);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.code);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.code == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.code, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved == 0, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved, expected 0, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.reserved);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.reserved == 0, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.reserved, expected 0, is %d", check_unpacked_msg->acq_result_dep_b.sid.reserved);
     
-    ck_assert_msg(check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat == 5, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat, expected 5, is %d", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.sid.sat);
-    ck_assert_msg((check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr*100 - 35.5241775513*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr, expected 35.5241775513, is %s", check_unpacked_msg->MSG_ACQ_RESULT_DEP_B.snr);
+    ck_assert_msg(check_unpacked_msg->acq_result_dep_b.sid.sat == 5, "incorrect value for check_unpacked_msg->acq_result_dep_b.sid.sat, expected 5, is %d", check_unpacked_msg->acq_result_dep_b.sid.sat);
+    ck_assert_msg((check_unpacked_msg->acq_result_dep_b.snr*100 - 35.5241775513*100) < 0.05, "incorrect value for check_unpacked_msg->acq_result_dep_b.snr, expected 35.5241775513, is %s", check_unpacked_msg->acq_result_dep_b.snr);
   }
 }
 END_TEST

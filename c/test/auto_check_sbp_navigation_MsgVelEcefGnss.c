@@ -246,13 +246,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelEcefGnss )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.accuracy = 89;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.flags = 2;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.n_sats = 21;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.tow = 501868000;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.x = -3;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.y = 1;
-    test_unpacked_msg.MSG_VEL_ECEF_GNSS.z = 4;
+    test_unpacked_msg.vel_ecef_gnss.accuracy = 89;
+    test_unpacked_msg.vel_ecef_gnss.flags = 2;
+    test_unpacked_msg.vel_ecef_gnss.n_sats = 21;
+    test_unpacked_msg.vel_ecef_gnss.tow = 501868000;
+    test_unpacked_msg.vel_ecef_gnss.x = -3;
+    test_unpacked_msg.vel_ecef_gnss.y = 1;
+    test_unpacked_msg.vel_ecef_gnss.z = 4;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_VEL_ECEF_GNSS, 4096, &test_unpacked_msg, &dummy_write);
 
@@ -276,13 +276,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgVelEcefGnss )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.accuracy == 89, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.accuracy, expected 89, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.flags == 2, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.flags, expected 2, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.n_sats == 21, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.n_sats, expected 21, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.tow == 501868000, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.tow, expected 501868000, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.x == -3, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.x, expected -3, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.x);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.y == 1, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.y, expected 1, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.y);
-    ck_assert_msg(check_unpacked_msg->MSG_VEL_ECEF_GNSS.z == 4, "incorrect value for check_unpacked_msg->MSG_VEL_ECEF_GNSS.z, expected 4, is %d", check_unpacked_msg->MSG_VEL_ECEF_GNSS.z);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.accuracy == 89, "incorrect value for check_unpacked_msg->vel_ecef_gnss.accuracy, expected 89, is %d", check_unpacked_msg->vel_ecef_gnss.accuracy);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.flags == 2, "incorrect value for check_unpacked_msg->vel_ecef_gnss.flags, expected 2, is %d", check_unpacked_msg->vel_ecef_gnss.flags);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.n_sats == 21, "incorrect value for check_unpacked_msg->vel_ecef_gnss.n_sats, expected 21, is %d", check_unpacked_msg->vel_ecef_gnss.n_sats);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.tow == 501868000, "incorrect value for check_unpacked_msg->vel_ecef_gnss.tow, expected 501868000, is %d", check_unpacked_msg->vel_ecef_gnss.tow);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.x == -3, "incorrect value for check_unpacked_msg->vel_ecef_gnss.x, expected -3, is %d", check_unpacked_msg->vel_ecef_gnss.x);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.y == 1, "incorrect value for check_unpacked_msg->vel_ecef_gnss.y, expected 1, is %d", check_unpacked_msg->vel_ecef_gnss.y);
+    ck_assert_msg(check_unpacked_msg->vel_ecef_gnss.z == 4, "incorrect value for check_unpacked_msg->vel_ecef_gnss.z, expected 4, is %d", check_unpacked_msg->vel_ecef_gnss.z);
   }
 }
 END_TEST

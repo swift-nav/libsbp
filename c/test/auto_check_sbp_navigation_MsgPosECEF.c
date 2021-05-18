@@ -504,13 +504,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_POS_ECEF.flags = 2;
-    test_unpacked_msg.MSG_POS_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_POS_ECEF.tow = 326826000;
-    test_unpacked_msg.MSG_POS_ECEF.x = -2684269.0326572997;
-    test_unpacked_msg.MSG_POS_ECEF.y = -4316646.751816;
-    test_unpacked_msg.MSG_POS_ECEF.z = 3839646.7095350414;
+    test_unpacked_msg.pos_ecef.accuracy = 0;
+    test_unpacked_msg.pos_ecef.flags = 2;
+    test_unpacked_msg.pos_ecef.n_sats = 15;
+    test_unpacked_msg.pos_ecef.tow = 326826000;
+    test_unpacked_msg.pos_ecef.x = -2684269.0326572997;
+    test_unpacked_msg.pos_ecef.y = -4316646.751816;
+    test_unpacked_msg.pos_ecef.z = 3839646.7095350414;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -534,13 +534,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.flags == 2, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.flags, expected 2, is %d", check_unpacked_msg->MSG_POS_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_POS_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.tow == 326826000, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.tow, expected 326826000, is %d", check_unpacked_msg->MSG_POS_ECEF.tow);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.x*100 - -2684269.03266*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.x, expected -2684269.03266, is %s", check_unpacked_msg->MSG_POS_ECEF.x);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.y*100 - -4316646.75182*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.y, expected -4316646.75182, is %s", check_unpacked_msg->MSG_POS_ECEF.y);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.z*100 - 3839646.70954*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.z, expected 3839646.70954, is %s", check_unpacked_msg->MSG_POS_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->pos_ecef.accuracy, expected 0, is %d", check_unpacked_msg->pos_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.flags == 2, "incorrect value for check_unpacked_msg->pos_ecef.flags, expected 2, is %d", check_unpacked_msg->pos_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->pos_ecef.n_sats, expected 15, is %d", check_unpacked_msg->pos_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.tow == 326826000, "incorrect value for check_unpacked_msg->pos_ecef.tow, expected 326826000, is %d", check_unpacked_msg->pos_ecef.tow);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.x*100 - -2684269.03266*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.x, expected -2684269.03266, is %s", check_unpacked_msg->pos_ecef.x);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.y*100 - -4316646.75182*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.y, expected -4316646.75182, is %s", check_unpacked_msg->pos_ecef.y);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.z*100 - 3839646.70954*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.z, expected 3839646.70954, is %s", check_unpacked_msg->pos_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -561,13 +561,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_POS_ECEF.flags = 2;
-    test_unpacked_msg.MSG_POS_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_POS_ECEF.tow = 326827000;
-    test_unpacked_msg.MSG_POS_ECEF.x = -2684269.064252186;
-    test_unpacked_msg.MSG_POS_ECEF.y = -4316646.762264892;
-    test_unpacked_msg.MSG_POS_ECEF.z = 3839646.463913912;
+    test_unpacked_msg.pos_ecef.accuracy = 0;
+    test_unpacked_msg.pos_ecef.flags = 2;
+    test_unpacked_msg.pos_ecef.n_sats = 15;
+    test_unpacked_msg.pos_ecef.tow = 326827000;
+    test_unpacked_msg.pos_ecef.x = -2684269.064252186;
+    test_unpacked_msg.pos_ecef.y = -4316646.762264892;
+    test_unpacked_msg.pos_ecef.z = 3839646.463913912;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -591,13 +591,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.flags == 2, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.flags, expected 2, is %d", check_unpacked_msg->MSG_POS_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_POS_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.tow == 326827000, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.tow, expected 326827000, is %d", check_unpacked_msg->MSG_POS_ECEF.tow);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.x*100 - -2684269.06425*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.x, expected -2684269.06425, is %s", check_unpacked_msg->MSG_POS_ECEF.x);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.y*100 - -4316646.76226*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.y, expected -4316646.76226, is %s", check_unpacked_msg->MSG_POS_ECEF.y);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.z*100 - 3839646.46391*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.z, expected 3839646.46391, is %s", check_unpacked_msg->MSG_POS_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->pos_ecef.accuracy, expected 0, is %d", check_unpacked_msg->pos_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.flags == 2, "incorrect value for check_unpacked_msg->pos_ecef.flags, expected 2, is %d", check_unpacked_msg->pos_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->pos_ecef.n_sats, expected 15, is %d", check_unpacked_msg->pos_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.tow == 326827000, "incorrect value for check_unpacked_msg->pos_ecef.tow, expected 326827000, is %d", check_unpacked_msg->pos_ecef.tow);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.x*100 - -2684269.06425*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.x, expected -2684269.06425, is %s", check_unpacked_msg->pos_ecef.x);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.y*100 - -4316646.76226*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.y, expected -4316646.76226, is %s", check_unpacked_msg->pos_ecef.y);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.z*100 - 3839646.46391*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.z, expected 3839646.46391, is %s", check_unpacked_msg->pos_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -618,13 +618,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_POS_ECEF.flags = 2;
-    test_unpacked_msg.MSG_POS_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_POS_ECEF.tow = 326828000;
-    test_unpacked_msg.MSG_POS_ECEF.x = -2684269.4292816394;
-    test_unpacked_msg.MSG_POS_ECEF.y = -4316647.118271949;
-    test_unpacked_msg.MSG_POS_ECEF.z = 3839646.124909738;
+    test_unpacked_msg.pos_ecef.accuracy = 0;
+    test_unpacked_msg.pos_ecef.flags = 2;
+    test_unpacked_msg.pos_ecef.n_sats = 15;
+    test_unpacked_msg.pos_ecef.tow = 326828000;
+    test_unpacked_msg.pos_ecef.x = -2684269.4292816394;
+    test_unpacked_msg.pos_ecef.y = -4316647.118271949;
+    test_unpacked_msg.pos_ecef.z = 3839646.124909738;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -648,13 +648,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.flags == 2, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.flags, expected 2, is %d", check_unpacked_msg->MSG_POS_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_POS_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.tow == 326828000, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.tow, expected 326828000, is %d", check_unpacked_msg->MSG_POS_ECEF.tow);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.x*100 - -2684269.42928*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.x, expected -2684269.42928, is %s", check_unpacked_msg->MSG_POS_ECEF.x);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.y*100 - -4316647.11827*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.y, expected -4316647.11827, is %s", check_unpacked_msg->MSG_POS_ECEF.y);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.z*100 - 3839646.12491*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.z, expected 3839646.12491, is %s", check_unpacked_msg->MSG_POS_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->pos_ecef.accuracy, expected 0, is %d", check_unpacked_msg->pos_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.flags == 2, "incorrect value for check_unpacked_msg->pos_ecef.flags, expected 2, is %d", check_unpacked_msg->pos_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->pos_ecef.n_sats, expected 15, is %d", check_unpacked_msg->pos_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.tow == 326828000, "incorrect value for check_unpacked_msg->pos_ecef.tow, expected 326828000, is %d", check_unpacked_msg->pos_ecef.tow);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.x*100 - -2684269.42928*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.x, expected -2684269.42928, is %s", check_unpacked_msg->pos_ecef.x);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.y*100 - -4316647.11827*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.y, expected -4316647.11827, is %s", check_unpacked_msg->pos_ecef.y);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.z*100 - 3839646.12491*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.z, expected 3839646.12491, is %s", check_unpacked_msg->pos_ecef.z);
   }
   // Test successful parsing of a message
   {
@@ -675,13 +675,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_POS_ECEF.accuracy = 0;
-    test_unpacked_msg.MSG_POS_ECEF.flags = 2;
-    test_unpacked_msg.MSG_POS_ECEF.n_sats = 15;
-    test_unpacked_msg.MSG_POS_ECEF.tow = 326829000;
-    test_unpacked_msg.MSG_POS_ECEF.x = -2684269.683741399;
-    test_unpacked_msg.MSG_POS_ECEF.y = -4316647.3623821335;
-    test_unpacked_msg.MSG_POS_ECEF.z = 3839645.90179852;
+    test_unpacked_msg.pos_ecef.accuracy = 0;
+    test_unpacked_msg.pos_ecef.flags = 2;
+    test_unpacked_msg.pos_ecef.n_sats = 15;
+    test_unpacked_msg.pos_ecef.tow = 326829000;
+    test_unpacked_msg.pos_ecef.x = -2684269.683741399;
+    test_unpacked_msg.pos_ecef.y = -4316647.3623821335;
+    test_unpacked_msg.pos_ecef.z = 3839645.90179852;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_POS_ECEF, 35027, &test_unpacked_msg, &dummy_write);
 
@@ -705,13 +705,13 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgPosECEF )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.accuracy == 0, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.accuracy, expected 0, is %d", check_unpacked_msg->MSG_POS_ECEF.accuracy);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.flags == 2, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.flags, expected 2, is %d", check_unpacked_msg->MSG_POS_ECEF.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.n_sats == 15, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.n_sats, expected 15, is %d", check_unpacked_msg->MSG_POS_ECEF.n_sats);
-    ck_assert_msg(check_unpacked_msg->MSG_POS_ECEF.tow == 326829000, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.tow, expected 326829000, is %d", check_unpacked_msg->MSG_POS_ECEF.tow);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.x*100 - -2684269.68374*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.x, expected -2684269.68374, is %s", check_unpacked_msg->MSG_POS_ECEF.x);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.y*100 - -4316647.36238*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.y, expected -4316647.36238, is %s", check_unpacked_msg->MSG_POS_ECEF.y);
-    ck_assert_msg((check_unpacked_msg->MSG_POS_ECEF.z*100 - 3839645.9018*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_POS_ECEF.z, expected 3839645.9018, is %s", check_unpacked_msg->MSG_POS_ECEF.z);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.accuracy == 0, "incorrect value for check_unpacked_msg->pos_ecef.accuracy, expected 0, is %d", check_unpacked_msg->pos_ecef.accuracy);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.flags == 2, "incorrect value for check_unpacked_msg->pos_ecef.flags, expected 2, is %d", check_unpacked_msg->pos_ecef.flags);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.n_sats == 15, "incorrect value for check_unpacked_msg->pos_ecef.n_sats, expected 15, is %d", check_unpacked_msg->pos_ecef.n_sats);
+    ck_assert_msg(check_unpacked_msg->pos_ecef.tow == 326829000, "incorrect value for check_unpacked_msg->pos_ecef.tow, expected 326829000, is %d", check_unpacked_msg->pos_ecef.tow);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.x*100 - -2684269.68374*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.x, expected -2684269.68374, is %s", check_unpacked_msg->pos_ecef.x);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.y*100 - -4316647.36238*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.y, expected -4316647.36238, is %s", check_unpacked_msg->pos_ecef.y);
+    ck_assert_msg((check_unpacked_msg->pos_ecef.z*100 - 3839645.9018*100) < 0.05, "incorrect value for check_unpacked_msg->pos_ecef.z, expected 3839645.9018, is %s", check_unpacked_msg->pos_ecef.z);
   }
 }
 END_TEST

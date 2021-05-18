@@ -242,11 +242,11 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgGloBiases )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GLO_BIASES.l1ca_bias = 0;
-    test_unpacked_msg.MSG_GLO_BIASES.l1p_bias = 0;
-    test_unpacked_msg.MSG_GLO_BIASES.l2ca_bias = 0;
-    test_unpacked_msg.MSG_GLO_BIASES.l2p_bias = 0;
-    test_unpacked_msg.MSG_GLO_BIASES.mask = 0;
+    test_unpacked_msg.glo_biases.l1ca_bias = 0;
+    test_unpacked_msg.glo_biases.l1p_bias = 0;
+    test_unpacked_msg.glo_biases.l2ca_bias = 0;
+    test_unpacked_msg.glo_biases.l2p_bias = 0;
+    test_unpacked_msg.glo_biases.mask = 0;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GLO_BIASES, 0, &test_unpacked_msg, &dummy_write);
 
@@ -270,11 +270,11 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgGloBiases )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GLO_BIASES.l1ca_bias == 0, "incorrect value for check_unpacked_msg->MSG_GLO_BIASES.l1ca_bias, expected 0, is %d", check_unpacked_msg->MSG_GLO_BIASES.l1ca_bias);
-    ck_assert_msg(check_unpacked_msg->MSG_GLO_BIASES.l1p_bias == 0, "incorrect value for check_unpacked_msg->MSG_GLO_BIASES.l1p_bias, expected 0, is %d", check_unpacked_msg->MSG_GLO_BIASES.l1p_bias);
-    ck_assert_msg(check_unpacked_msg->MSG_GLO_BIASES.l2ca_bias == 0, "incorrect value for check_unpacked_msg->MSG_GLO_BIASES.l2ca_bias, expected 0, is %d", check_unpacked_msg->MSG_GLO_BIASES.l2ca_bias);
-    ck_assert_msg(check_unpacked_msg->MSG_GLO_BIASES.l2p_bias == 0, "incorrect value for check_unpacked_msg->MSG_GLO_BIASES.l2p_bias, expected 0, is %d", check_unpacked_msg->MSG_GLO_BIASES.l2p_bias);
-    ck_assert_msg(check_unpacked_msg->MSG_GLO_BIASES.mask == 0, "incorrect value for check_unpacked_msg->MSG_GLO_BIASES.mask, expected 0, is %d", check_unpacked_msg->MSG_GLO_BIASES.mask);
+    ck_assert_msg(check_unpacked_msg->glo_biases.l1ca_bias == 0, "incorrect value for check_unpacked_msg->glo_biases.l1ca_bias, expected 0, is %d", check_unpacked_msg->glo_biases.l1ca_bias);
+    ck_assert_msg(check_unpacked_msg->glo_biases.l1p_bias == 0, "incorrect value for check_unpacked_msg->glo_biases.l1p_bias, expected 0, is %d", check_unpacked_msg->glo_biases.l1p_bias);
+    ck_assert_msg(check_unpacked_msg->glo_biases.l2ca_bias == 0, "incorrect value for check_unpacked_msg->glo_biases.l2ca_bias, expected 0, is %d", check_unpacked_msg->glo_biases.l2ca_bias);
+    ck_assert_msg(check_unpacked_msg->glo_biases.l2p_bias == 0, "incorrect value for check_unpacked_msg->glo_biases.l2p_bias, expected 0, is %d", check_unpacked_msg->glo_biases.l2p_bias);
+    ck_assert_msg(check_unpacked_msg->glo_biases.mask == 0, "incorrect value for check_unpacked_msg->glo_biases.mask, expected 0, is %d", check_unpacked_msg->glo_biases.mask);
   }
 }
 END_TEST

@@ -1040,10 +1040,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 2567800;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1787;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 0;
+    test_unpacked_msg.gps_time_dep_a.tow = 2567800;
+    test_unpacked_msg.gps_time_dep_a.wn = 1787;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1067,10 +1067,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 2567800, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 2567800, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1787, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1787, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 2567800, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 2567800, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1787, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1787, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1091,10 +1091,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 2567900;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1787;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 0;
+    test_unpacked_msg.gps_time_dep_a.tow = 2567900;
+    test_unpacked_msg.gps_time_dep_a.wn = 1787;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1118,10 +1118,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 2567900, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 2567900, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1787, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1787, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 2567900, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 2567900, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1787, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1787, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1142,10 +1142,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 2568000;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1787;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 0;
+    test_unpacked_msg.gps_time_dep_a.tow = 2568000;
+    test_unpacked_msg.gps_time_dep_a.wn = 1787;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1169,10 +1169,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 2568000, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 2568000, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1787, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1787, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 2568000, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 2568000, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1787, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1787, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1193,10 +1193,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 2568100;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1787;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 0;
+    test_unpacked_msg.gps_time_dep_a.tow = 2568100;
+    test_unpacked_msg.gps_time_dep_a.wn = 1787;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1220,10 +1220,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 2568100, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 2568100, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1787, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1787, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 2568100, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 2568100, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1787, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1787, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1244,10 +1244,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 2568200;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1787;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 0;
+    test_unpacked_msg.gps_time_dep_a.tow = 2568200;
+    test_unpacked_msg.gps_time_dep_a.wn = 1787;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_unpacked_msg, &dummy_write);
 
@@ -1271,10 +1271,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 2568200, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 2568200, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1787, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1787, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 2568200, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 2568200, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1787, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1787, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1295,10 +1295,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = -224401;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407084500;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = -224401;
+    test_unpacked_msg.gps_time_dep_a.tow = 407084500;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1322,10 +1322,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == -224401, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected -224401, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407084500, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407084500, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == -224401, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected -224401, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407084500, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407084500, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1346,10 +1346,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 223085;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407084600;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 223085;
+    test_unpacked_msg.gps_time_dep_a.tow = 407084600;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1373,10 +1373,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 223085, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 223085, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407084600, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407084600, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 223085, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 223085, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407084600, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407084600, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1397,10 +1397,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = -222999;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407084700;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = -222999;
+    test_unpacked_msg.gps_time_dep_a.tow = 407084700;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1424,10 +1424,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == -222999, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected -222999, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407084700, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407084700, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == -222999, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected -222999, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407084700, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407084700, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1448,10 +1448,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = 236272;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407084800;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = 236272;
+    test_unpacked_msg.gps_time_dep_a.tow = 407084800;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1475,10 +1475,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == 236272, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected 236272, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407084800, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407084800, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == 236272, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected 236272, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407084800, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407084800, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1499,10 +1499,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = -236144;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407084900;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = -236144;
+    test_unpacked_msg.gps_time_dep_a.tow = 407084900;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1526,10 +1526,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == -236144, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected -236144, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407084900, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407084900, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == -236144, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected -236144, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407084900, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407084900, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -1550,10 +1550,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.flags = 0;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.ns_residual = -334131;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.tow = 407151150;
-    test_unpacked_msg.MSG_GPS_TIME_DEP_A.wn = 1838;
+    test_unpacked_msg.gps_time_dep_a.flags = 0;
+    test_unpacked_msg.gps_time_dep_a.ns_residual = -334131;
+    test_unpacked_msg.gps_time_dep_a.tow = 407151150;
+    test_unpacked_msg.gps_time_dep_a.wn = 1838;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_unpacked_msg, &dummy_write);
 
@@ -1577,10 +1577,10 @@ START_TEST( test_unpacked_auto_check_sbp_navigation_MsgGPSTimeDepA )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags == 0, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags, expected 0, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.flags);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual == -334131, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual, expected -334131, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.ns_residual);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow == 407151150, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow, expected 407151150, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.tow);
-    ck_assert_msg(check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn == 1838, "incorrect value for check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn, expected 1838, is %d", check_unpacked_msg->MSG_GPS_TIME_DEP_A.wn);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.flags == 0, "incorrect value for check_unpacked_msg->gps_time_dep_a.flags, expected 0, is %d", check_unpacked_msg->gps_time_dep_a.flags);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.ns_residual == -334131, "incorrect value for check_unpacked_msg->gps_time_dep_a.ns_residual, expected -334131, is %d", check_unpacked_msg->gps_time_dep_a.ns_residual);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.tow == 407151150, "incorrect value for check_unpacked_msg->gps_time_dep_a.tow, expected 407151150, is %d", check_unpacked_msg->gps_time_dep_a.tow);
+    ck_assert_msg(check_unpacked_msg->gps_time_dep_a.wn == 1838, "incorrect value for check_unpacked_msg->gps_time_dep_a.wn, expected 1838, is %d", check_unpacked_msg->gps_time_dep_a.wn);
   }
 }
 END_TEST

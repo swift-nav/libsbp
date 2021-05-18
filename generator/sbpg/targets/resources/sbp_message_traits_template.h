@@ -34,7 +34,7 @@ struct MessageTraits;
 template<>
 struct MessageTraits<(((m.identifier|convert_unpacked)))> {
   static constexpr u16 id = (((m.sbp_id)));
-  static const (((m.identifier|convert_unpacked))) &get(const sbp_msg_t &msg) { return msg.(((m.identifier))); }
+  static const (((m.identifier|convert_unpacked))) &get(const sbp_msg_t &msg) { return msg.(((m.identifier|convert_unpacked_union))); }
 };
 
 ((* endif *))

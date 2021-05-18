@@ -238,9 +238,9 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgBasePosEcef )
 
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.MSG_BASE_POS_ECEF.x = -2726575.9189;
-    test_unpacked_msg.MSG_BASE_POS_ECEF.y = -4315267.2798;
-    test_unpacked_msg.MSG_BASE_POS_ECEF.z = 3811455.9642;
+    test_unpacked_msg.base_pos_ecef.x = -2726575.9189;
+    test_unpacked_msg.base_pos_ecef.y = -4315267.2798;
+    test_unpacked_msg.base_pos_ecef.z = 3811455.9642;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_BASE_POS_ECEF, 0, &test_unpacked_msg, &dummy_write);
 
@@ -264,9 +264,9 @@ START_TEST( test_unpacked_auto_check_sbp_observation_MsgBasePosEcef )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.x*100 - -2726575.9189*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.x, expected -2726575.9189, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.x);
-    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.y*100 - -4315267.2798*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.y, expected -4315267.2798, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.y);
-    ck_assert_msg((check_unpacked_msg->MSG_BASE_POS_ECEF.z*100 - 3811455.9642*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_BASE_POS_ECEF.z, expected 3811455.9642, is %s", check_unpacked_msg->MSG_BASE_POS_ECEF.z);
+    ck_assert_msg((check_unpacked_msg->base_pos_ecef.x*100 - -2726575.9189*100) < 0.05, "incorrect value for check_unpacked_msg->base_pos_ecef.x, expected -2726575.9189, is %s", check_unpacked_msg->base_pos_ecef.x);
+    ck_assert_msg((check_unpacked_msg->base_pos_ecef.y*100 - -4315267.2798*100) < 0.05, "incorrect value for check_unpacked_msg->base_pos_ecef.y, expected -4315267.2798, is %s", check_unpacked_msg->base_pos_ecef.y);
+    ck_assert_msg((check_unpacked_msg->base_pos_ecef.z*100 - 3811455.9642*100) < 0.05, "incorrect value for check_unpacked_msg->base_pos_ecef.z, expected 3811455.9642, is %s", check_unpacked_msg->base_pos_ecef.z);
   }
 }
 END_TEST

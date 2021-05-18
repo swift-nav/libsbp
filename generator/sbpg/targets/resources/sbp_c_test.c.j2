@@ -275,7 +275,7 @@ START_TEST( test_unpacked_(((s.suite_name))) )
     ((*- if value is string_type *))
     {
       const char check_string[] = { (((value|str_escape))) };
-      ck_assert_msg(memcmp(check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected string '%s', is '%s'", check_string, check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+      ck_assert_msg(memcmp(check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))), check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))), expected string '%s', is '%s'", check_string, check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))));
     }
     ((*- elif value is array_type *))
     ((*- for ff in value *))((( compare_value(test, (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff)))) )))((*- endfor *))
@@ -286,9 +286,9 @@ START_TEST( test_unpacked_(((s.suite_name))) )
     ((*- elif value is float_type *))((=
         Note: the ("%.12g"|format(value)|float) filter is intended to keep float
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
-    ck_assert_msg((check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected ((("%.12g"|format(value)|float))), is %s", check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+    ck_assert_msg((check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))), expected ((("%.12g"|format(value)|float))), is %s", check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))));
     ((*- else *))
-    ck_assert_msg(check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))) == (((value))), "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))), expected (((value))), is %d", check_unpacked_msg->(((test.msg_type_name|convert_upper))).(((prefix))));
+    ck_assert_msg(check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))) == (((value))), "incorrect value for check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))), expected (((value))), is %d", check_unpacked_msg->(((test.msg_type_name|convert_unpacked_union))).(((prefix))));
     ((*- endif *))
     ((*- endmacro *))
 
@@ -296,7 +296,7 @@ START_TEST( test_unpacked_(((s.suite_name))) )
     ((*- if value is string_type *))
     {
       const char assign_string[] = { (((value|str_escape))) };
-      memcpy(test_unpacked_msg.(((test.msg_type_name|convert_upper))).(((prefix))), assign_string, sizeof(assign_string));
+      memcpy(test_unpacked_msg.(((test.msg_type_name|convert_unpacked_union))).(((prefix))), assign_string, sizeof(assign_string));
     }
     ((*- elif value is array_type *))
     ((*- for ff in value *))
@@ -307,7 +307,7 @@ START_TEST( test_unpacked_(((s.suite_name))) )
     ((( assign_value(test, (((prefix))) + '.' + (((k))), (((value[k])))) )))
     ((*- endfor *))
     ((*- else *))
-    test_unpacked_msg.(((test.msg_type_name|convert_upper))).(((prefix))) = (((value)));
+    test_unpacked_msg.(((test.msg_type_name|convert_unpacked_union))).(((prefix))) = (((value)));
     ((*- endif *))
     ((*- endmacro *))
 

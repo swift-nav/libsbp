@@ -434,65 +434,65 @@ START_TEST( test_unpacked_auto_check_sbp_sbas_MsgSbasRaw )
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[0] = 23;
+    test_unpacked_msg.sbas_raw.data[0] = 23;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[1] = 255;
+    test_unpacked_msg.sbas_raw.data[1] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[2] = 0;
+    test_unpacked_msg.sbas_raw.data[2] = 0;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[3] = 23;
+    test_unpacked_msg.sbas_raw.data[3] = 23;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[4] = 255;
+    test_unpacked_msg.sbas_raw.data[4] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[5] = 0;
+    test_unpacked_msg.sbas_raw.data[5] = 0;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[6] = 23;
+    test_unpacked_msg.sbas_raw.data[6] = 23;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[7] = 255;
+    test_unpacked_msg.sbas_raw.data[7] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[8] = 127;
+    test_unpacked_msg.sbas_raw.data[8] = 127;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[9] = 240;
+    test_unpacked_msg.sbas_raw.data[9] = 240;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[10] = 2;
+    test_unpacked_msg.sbas_raw.data[10] = 2;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[11] = 255;
+    test_unpacked_msg.sbas_raw.data[11] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[12] = 192;
+    test_unpacked_msg.sbas_raw.data[12] = 192;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[13] = 3;
+    test_unpacked_msg.sbas_raw.data[13] = 3;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[14] = 127;
+    test_unpacked_msg.sbas_raw.data[14] = 127;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[15] = 247;
+    test_unpacked_msg.sbas_raw.data[15] = 247;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[16] = 255;
+    test_unpacked_msg.sbas_raw.data[16] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[17] = 127;
+    test_unpacked_msg.sbas_raw.data[17] = 127;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[18] = 247;
+    test_unpacked_msg.sbas_raw.data[18] = 247;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[19] = 255;
+    test_unpacked_msg.sbas_raw.data[19] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[20] = 229;
+    test_unpacked_msg.sbas_raw.data[20] = 229;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[21] = 229;
+    test_unpacked_msg.sbas_raw.data[21] = 229;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[22] = 238;
+    test_unpacked_msg.sbas_raw.data[22] = 238;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[23] = 170;
+    test_unpacked_msg.sbas_raw.data[23] = 170;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[24] = 175;
+    test_unpacked_msg.sbas_raw.data[24] = 175;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[25] = 255;
+    test_unpacked_msg.sbas_raw.data[25] = 255;
     
-    test_unpacked_msg.MSG_SBAS_RAW.data[26] = 240;
-    test_unpacked_msg.MSG_SBAS_RAW.message_type = 4;
+    test_unpacked_msg.sbas_raw.data[26] = 240;
+    test_unpacked_msg.sbas_raw.message_type = 4;
     
-    test_unpacked_msg.MSG_SBAS_RAW.sid.code = 2;
+    test_unpacked_msg.sbas_raw.sid.code = 2;
     
-    test_unpacked_msg.MSG_SBAS_RAW.sid.sat = 131;
-    test_unpacked_msg.MSG_SBAS_RAW.tow = 501867721;
+    test_unpacked_msg.sbas_raw.sid.sat = 131;
+    test_unpacked_msg.sbas_raw.tow = 501867721;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_SBAS_RAW, 51228, &test_unpacked_msg, &dummy_write);
 
@@ -516,39 +516,39 @@ START_TEST( test_unpacked_auto_check_sbp_sbas_MsgSbasRaw )
     const sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[0] == 23, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[0], expected 23, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[0]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[1] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[1], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[1]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[2] == 0, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[2], expected 0, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[2]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[3] == 23, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[3], expected 23, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[3]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[4] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[4], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[4]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[5] == 0, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[5], expected 0, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[5]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[6] == 23, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[6], expected 23, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[6]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[7] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[7], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[7]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[8] == 127, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[8], expected 127, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[8]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[9] == 240, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[9], expected 240, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[9]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[10] == 2, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[10], expected 2, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[10]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[11] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[11], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[11]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[12] == 192, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[12], expected 192, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[12]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[13] == 3, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[13], expected 3, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[13]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[14] == 127, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[14], expected 127, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[14]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[15] == 247, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[15], expected 247, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[15]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[16] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[16], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[16]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[17] == 127, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[17], expected 127, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[17]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[18] == 247, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[18], expected 247, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[18]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[19] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[19], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[19]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[20] == 229, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[20], expected 229, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[20]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[21] == 229, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[21], expected 229, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[21]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[22] == 238, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[22], expected 238, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[22]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[23] == 170, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[23], expected 170, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[23]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[24] == 175, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[24], expected 175, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[24]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[25] == 255, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[25], expected 255, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[25]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.data[26] == 240, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.data[26], expected 240, is %d", check_unpacked_msg->MSG_SBAS_RAW.data[26]);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.message_type == 4, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.message_type, expected 4, is %d", check_unpacked_msg->MSG_SBAS_RAW.message_type);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[0] == 23, "incorrect value for check_unpacked_msg->sbas_raw.data[0], expected 23, is %d", check_unpacked_msg->sbas_raw.data[0]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[1] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[1], expected 255, is %d", check_unpacked_msg->sbas_raw.data[1]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[2] == 0, "incorrect value for check_unpacked_msg->sbas_raw.data[2], expected 0, is %d", check_unpacked_msg->sbas_raw.data[2]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[3] == 23, "incorrect value for check_unpacked_msg->sbas_raw.data[3], expected 23, is %d", check_unpacked_msg->sbas_raw.data[3]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[4] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[4], expected 255, is %d", check_unpacked_msg->sbas_raw.data[4]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[5] == 0, "incorrect value for check_unpacked_msg->sbas_raw.data[5], expected 0, is %d", check_unpacked_msg->sbas_raw.data[5]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[6] == 23, "incorrect value for check_unpacked_msg->sbas_raw.data[6], expected 23, is %d", check_unpacked_msg->sbas_raw.data[6]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[7] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[7], expected 255, is %d", check_unpacked_msg->sbas_raw.data[7]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[8] == 127, "incorrect value for check_unpacked_msg->sbas_raw.data[8], expected 127, is %d", check_unpacked_msg->sbas_raw.data[8]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[9] == 240, "incorrect value for check_unpacked_msg->sbas_raw.data[9], expected 240, is %d", check_unpacked_msg->sbas_raw.data[9]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[10] == 2, "incorrect value for check_unpacked_msg->sbas_raw.data[10], expected 2, is %d", check_unpacked_msg->sbas_raw.data[10]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[11] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[11], expected 255, is %d", check_unpacked_msg->sbas_raw.data[11]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[12] == 192, "incorrect value for check_unpacked_msg->sbas_raw.data[12], expected 192, is %d", check_unpacked_msg->sbas_raw.data[12]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[13] == 3, "incorrect value for check_unpacked_msg->sbas_raw.data[13], expected 3, is %d", check_unpacked_msg->sbas_raw.data[13]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[14] == 127, "incorrect value for check_unpacked_msg->sbas_raw.data[14], expected 127, is %d", check_unpacked_msg->sbas_raw.data[14]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[15] == 247, "incorrect value for check_unpacked_msg->sbas_raw.data[15], expected 247, is %d", check_unpacked_msg->sbas_raw.data[15]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[16] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[16], expected 255, is %d", check_unpacked_msg->sbas_raw.data[16]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[17] == 127, "incorrect value for check_unpacked_msg->sbas_raw.data[17], expected 127, is %d", check_unpacked_msg->sbas_raw.data[17]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[18] == 247, "incorrect value for check_unpacked_msg->sbas_raw.data[18], expected 247, is %d", check_unpacked_msg->sbas_raw.data[18]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[19] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[19], expected 255, is %d", check_unpacked_msg->sbas_raw.data[19]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[20] == 229, "incorrect value for check_unpacked_msg->sbas_raw.data[20], expected 229, is %d", check_unpacked_msg->sbas_raw.data[20]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[21] == 229, "incorrect value for check_unpacked_msg->sbas_raw.data[21], expected 229, is %d", check_unpacked_msg->sbas_raw.data[21]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[22] == 238, "incorrect value for check_unpacked_msg->sbas_raw.data[22], expected 238, is %d", check_unpacked_msg->sbas_raw.data[22]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[23] == 170, "incorrect value for check_unpacked_msg->sbas_raw.data[23], expected 170, is %d", check_unpacked_msg->sbas_raw.data[23]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[24] == 175, "incorrect value for check_unpacked_msg->sbas_raw.data[24], expected 175, is %d", check_unpacked_msg->sbas_raw.data[24]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[25] == 255, "incorrect value for check_unpacked_msg->sbas_raw.data[25], expected 255, is %d", check_unpacked_msg->sbas_raw.data[25]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.data[26] == 240, "incorrect value for check_unpacked_msg->sbas_raw.data[26], expected 240, is %d", check_unpacked_msg->sbas_raw.data[26]);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.message_type == 4, "incorrect value for check_unpacked_msg->sbas_raw.message_type, expected 4, is %d", check_unpacked_msg->sbas_raw.message_type);
     
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.sid.code == 2, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.sid.code, expected 2, is %d", check_unpacked_msg->MSG_SBAS_RAW.sid.code);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.sid.code == 2, "incorrect value for check_unpacked_msg->sbas_raw.sid.code, expected 2, is %d", check_unpacked_msg->sbas_raw.sid.code);
     
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.sid.sat == 131, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.sid.sat, expected 131, is %d", check_unpacked_msg->MSG_SBAS_RAW.sid.sat);
-    ck_assert_msg(check_unpacked_msg->MSG_SBAS_RAW.tow == 501867721, "incorrect value for check_unpacked_msg->MSG_SBAS_RAW.tow, expected 501867721, is %d", check_unpacked_msg->MSG_SBAS_RAW.tow);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.sid.sat == 131, "incorrect value for check_unpacked_msg->sbas_raw.sid.sat, expected 131, is %d", check_unpacked_msg->sbas_raw.sid.sat);
+    ck_assert_msg(check_unpacked_msg->sbas_raw.tow == 501867721, "incorrect value for check_unpacked_msg->sbas_raw.tow, expected 501867721, is %d", check_unpacked_msg->sbas_raw.tow);
   }
 }
 END_TEST
