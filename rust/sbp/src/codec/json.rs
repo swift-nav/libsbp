@@ -1,7 +1,7 @@
-use std::collections::HashMap;
+use std::{borrow::Borrow, collections::HashMap};
 
 use bytes::{Buf, BufMut, BytesMut};
-use dencode::{Decoder, Encoder};
+use dencode::{Decoder, Encoder, FramedWrite};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
 
@@ -156,6 +156,10 @@ impl<F: Formatter + Clone> JsonEncoder<F> {
             formatter,
         }
     }
+
+    pub fn framed<W>(writer: W, formatter: F) -> FramedWrite<W, Self> {
+        FramedWrite::new(writer, Self::new(formatter))
+    }
 }
 
 #[derive(Debug, Serialize)]
@@ -164,16 +168,20 @@ struct JsonOutput<'a> {
     common: CommonJson<'a>,
 
     #[serde(flatten)]
-    msg: SBP,
+    msg: &'a SBP,
 }
 
-impl<F: Formatter + Clone> Encoder for JsonEncoder<F> {
-    type Item = SBP;
+impl<F, T> Encoder<T> for JsonEncoder<F>
+where
+    F: Formatter + Clone,
+    T: Borrow<SBP>,
+{
     type Error = Error;
 
-    fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
+    fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<()> {
+        let msg = msg.borrow();
         let formatter = self.formatter.clone();
-        let common = get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?;
+        let common = get_common_fields(&mut self.payload_buf, &mut self.frame_buf, msg)?;
         let output = JsonOutput { common, msg };
 
         let mut ser = Serializer::with_formatter(dst.writer(), formatter);
@@ -208,8 +216,7 @@ impl<F: Formatter + Clone> Json2JsonEncoder<F> {
     }
 }
 
-impl<F: Formatter + Clone> Encoder for Json2JsonEncoder<F> {
-    type Item = Json2JsonInput;
+impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoder<F> {
     type Error = Error;
 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<()> {
@@ -227,7 +234,7 @@ impl<F: Formatter + Clone> Encoder for Json2JsonEncoder<F> {
         let output = Json2JsonOutput {
             data: JsonOutput {
                 common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
-                msg,
+                msg: &msg,
             },
             other: input.other,
         };

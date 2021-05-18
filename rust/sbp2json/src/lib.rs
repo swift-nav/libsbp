@@ -17,7 +17,7 @@ where
     W: Write,
 {
     let source = FramedRead::new(input, JsonDecoder::new());
-    let sink = FramedWrite::new(output, SbpEncoder::new());
+    let sink = SbpEncoder::framed(output);
 
     maybe_send_buffered(source, sink, buffered)?;
 
@@ -45,7 +45,7 @@ where
     F: Formatter + Clone,
 {
     let source = FramedRead::new(input, SbpDecoder {});
-    let sink = FramedWrite::new(output, JsonEncoder::new(formatter));
+    let sink = JsonEncoder::framed(output, formatter);
 
     maybe_send_buffered(source, sink, buffered)?;
 
@@ -60,8 +60,8 @@ fn maybe_send_buffered<R, W, D, E>(
 where
     R: Read,
     W: Write,
-    D: Decoder<Item = E::Item, Error = Error>,
-    E: Encoder<Error = Error>,
+    D: Decoder<Error = Error>,
+    E: Encoder<D::Item, Error = Error>,
 {
     if buffered {
         sink.send_all(source)?;
