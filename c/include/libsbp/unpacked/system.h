@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags) \
@@ -58,32 +62,6 @@ s8 sbp_unpack_sbp_msg_startup_t(const uint8_t *buf, uint8_t len, uint8_t *n_read
 
 int sbp_cmp_sbp_msg_startup_t(const sbp_msg_startup_t *a, const sbp_msg_startup_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
-  return sbp_cmp_sbp_msg_startup_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
@@ -125,32 +103,6 @@ s8 sbp_pack_sbp_msg_dgnss_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written
 s8 sbp_unpack_sbp_msg_dgnss_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_dgnss_status_t *msg);
 
 int sbp_cmp_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *a, const sbp_msg_dgnss_status_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
-  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
@@ -255,32 +207,6 @@ s8 sbp_unpack_sbp_msg_heartbeat_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 
 int sbp_cmp_sbp_msg_heartbeat_t(const sbp_msg_heartbeat_t *a, const sbp_msg_heartbeat_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
-  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
@@ -331,32 +257,6 @@ s8 sbp_pack_sbp_sub_system_report_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
 s8 sbp_unpack_sbp_sub_system_report_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sub_system_report_t *msg);
 
 int sbp_cmp_sbp_sub_system_report_t(const sbp_sub_system_report_t *a, const sbp_sub_system_report_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
-  return sbp_cmp_sbp_sub_system_report_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
@@ -413,32 +313,6 @@ s8 sbp_pack_sbp_msg_status_report_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
 s8 sbp_unpack_sbp_msg_status_report_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_status_report_t *msg);
 
 int sbp_cmp_sbp_msg_status_report_t(const sbp_msg_status_report_t *a, const sbp_msg_status_report_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
-  return sbp_cmp_sbp_msg_status_report_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
@@ -556,32 +430,6 @@ s8 sbp_unpack_sbp_msg_ins_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
 
 int sbp_cmp_sbp_msg_ins_status_t(const sbp_msg_ins_status_t *a, const sbp_msg_ins_status_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
-  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Experimental telemetry message
  *
@@ -608,32 +456,6 @@ s8 sbp_unpack_sbp_msg_csac_telemetry_t(const uint8_t *buf, uint8_t len, uint8_t 
 
 int sbp_cmp_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *a, const sbp_msg_csac_telemetry_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Experimental telemetry message labels
  *
@@ -659,32 +481,6 @@ s8 sbp_pack_sbp_msg_csac_telemetry_labels_t(uint8_t *buf, uint8_t len, uint8_t *
 s8 sbp_unpack_sbp_msg_csac_telemetry_labels_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_csac_telemetry_labels_t *msg);
 
 int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_t *a, const sbp_msg_csac_telemetry_labels_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
-  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
@@ -840,32 +636,6 @@ s8 sbp_unpack_sbp_msg_ins_updates_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 
 int sbp_cmp_sbp_msg_ins_updates_t(const sbp_msg_ins_updates_t *a, const sbp_msg_ins_updates_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
-  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Offset of the local time with respect to GNSS time
  *
@@ -884,32 +654,6 @@ s8 sbp_pack_sbp_msg_gnss_time_offset_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
 s8 sbp_unpack_sbp_msg_gnss_time_offset_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_gnss_time_offset_t *msg);
 
 int sbp_cmp_sbp_msg_gnss_time_offset_t(const sbp_msg_gnss_time_offset_t *a, const sbp_msg_gnss_time_offset_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
@@ -954,32 +698,6 @@ s8 sbp_unpack_sbp_msg_pps_time_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
 
 int sbp_cmp_sbp_msg_pps_time_t(const sbp_msg_pps_time_t *a, const sbp_msg_pps_time_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
-  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
@@ -1013,7 +731,263 @@ s8 sbp_unpack_sbp_msg_group_meta_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
 
 int sbp_cmp_sbp_msg_group_meta_t(const sbp_msg_group_meta_t *a, const sbp_msg_group_meta_t *b);
 
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return sbp_cmp_sbp_msg_startup_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return sbp_cmp_sbp_msg_dgnss_status_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return sbp_cmp_sbp_msg_heartbeat_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_sub_system_report_t &a, const sbp_sub_system_report_t &b) {
+  return sbp_cmp_sbp_sub_system_report_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return sbp_cmp_sbp_msg_status_report_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return sbp_cmp_sbp_msg_ins_status_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return sbp_cmp_sbp_msg_csac_telemetry_labels_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return sbp_cmp_sbp_msg_ins_updates_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return sbp_cmp_sbp_msg_gnss_time_offset_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_pps_time_t &a, const sbp_msg_pps_time_t &b) {
+  return sbp_cmp_sbp_msg_pps_time_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_group_meta_t &a, const sbp_msg_group_meta_t &b) {
   return sbp_cmp_sbp_msg_group_meta_t(&a, &b) == 0;
 }
@@ -1037,8 +1011,7 @@ static inline bool operator>(const sbp_msg_group_meta_t &a, const sbp_msg_group_
 static inline bool operator>=(const sbp_msg_group_meta_t &a, const sbp_msg_group_meta_t &b) {
   return sbp_cmp_sbp_msg_group_meta_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

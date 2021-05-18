@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
 #define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
 #define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags) \
@@ -74,32 +78,6 @@ s8 sbp_unpack_sbp_msg_odometry_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
 
 int sbp_cmp_sbp_msg_odometry_t(const sbp_msg_odometry_t *a, const sbp_msg_odometry_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
-  return sbp_cmp_sbp_msg_odometry_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
@@ -148,7 +126,33 @@ s8 sbp_unpack_sbp_msg_wheeltick_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 
 int sbp_cmp_sbp_msg_wheeltick_t(const sbp_msg_wheeltick_t *a, const sbp_msg_wheeltick_t *b);
 
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_odometry_t &a, const sbp_msg_odometry_t &b) {
+  return sbp_cmp_sbp_msg_odometry_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_wheeltick_t &a, const sbp_msg_wheeltick_t &b) {
   return sbp_cmp_sbp_msg_wheeltick_t(&a, &b) == 0;
 }
@@ -172,8 +176,7 @@ static inline bool operator>(const sbp_msg_wheeltick_t &a, const sbp_msg_wheelti
 static inline bool operator>=(const sbp_msg_wheeltick_t &a, const sbp_msg_wheeltick_t &b) {
   return sbp_cmp_sbp_msg_wheeltick_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_VEHICLE_MESSAGES_H */

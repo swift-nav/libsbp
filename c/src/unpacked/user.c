@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/user.h>
 #include <libsbp/internal/unpacked/user.h>
@@ -20,7 +21,7 @@ bool pack_sbp_msg_user_data_t(sbp_pack_ctx_t *ctx, const sbp_msg_user_data_t *ms
 {
   for (uint8_t i = 0; i < msg->n_contents; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->contents[i])) { return false; }
+    if (!pack_u8(ctx, &msg->contents[i])) { return false; }
   }
   return true;
 }
@@ -31,10 +32,10 @@ s8 sbp_pack_sbp_msg_user_data_t(uint8_t *buf, uint8_t len, uint8_t *n_written, c
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_user_data_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -43,7 +44,7 @@ bool unpack_sbp_msg_user_data_t(sbp_unpack_ctx_t *ctx, sbp_msg_user_data_t *msg)
 {
     msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_u8(&msg->contents[0]));
   for (uint8_t i = 0; i < msg->n_contents; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->contents[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->contents[i])) { return false; }
   }
   return true;
 }
@@ -54,10 +55,10 @@ s8 sbp_unpack_sbp_msg_user_data_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_user_data_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

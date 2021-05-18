@@ -152,6 +152,7 @@ bool sbp_multipart_string_pack(const sbp_multipart_string_t *s,
   if ((ctx->buf_len - ctx->offset) < s->packed_len)
     return false;
   memcpy(&ctx->buf[ctx->offset], s->data, (size_t)(s->packed_len));
+  ctx->offset += s->packed_len;
   return s->packed_len;
 }
 

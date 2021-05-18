@@ -14,6 +14,10 @@
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 /** Satellite acquisition result
  *
 ((m.desc|commentify)))
@@ -31,32 +35,6 @@ s8 sbp_pack_sbp_msg_acq_result_t(uint8_t *buf, uint8_t len, uint8_t *n_written, 
 s8 sbp_unpack_sbp_msg_acq_result_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_result_t *msg);
 
 int sbp_cmp_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *a, const sbp_msg_acq_result_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Deprecated
@@ -77,32 +55,6 @@ s8 sbp_unpack_sbp_msg_acq_result_dep_c_t(const uint8_t *buf, uint8_t len, uint8_
 
 int sbp_cmp_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *a, const sbp_msg_acq_result_dep_c_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Deprecated
  *
@@ -122,32 +74,6 @@ s8 sbp_unpack_sbp_msg_acq_result_dep_b_t(const uint8_t *buf, uint8_t len, uint8_
 
 int sbp_cmp_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *a, const sbp_msg_acq_result_dep_b_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Deprecated
  *
@@ -166,32 +92,6 @@ s8 sbp_pack_sbp_msg_acq_result_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
 s8 sbp_unpack_sbp_msg_acq_result_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_result_dep_a_t *msg);
 
 int sbp_cmp_sbp_msg_acq_result_dep_a_t(const sbp_msg_acq_result_dep_a_t *a, const sbp_msg_acq_result_dep_a_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Acq perfomance measurement and debug
@@ -219,32 +119,6 @@ s8 sbp_unpack_sbp_acq_sv_profile_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
 
 int sbp_cmp_sbp_acq_sv_profile_t(const sbp_acq_sv_profile_t *a, const sbp_acq_sv_profile_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
-  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Deprecated
  *
@@ -271,7 +145,159 @@ s8 sbp_unpack_sbp_acq_sv_profile_dep_t(const uint8_t *buf, uint8_t len, uint8_t 
 
 int sbp_cmp_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *a, const sbp_acq_sv_profile_dep_t *b);
 
+
+/** Acquisition perfomance measurement and debug
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_ACQ_SV_PROFILE     0x002E
+typedef struct {
+  sbp_acq_sv_profile_t acq_sv_profile[7];
+  u8 n_acq_sv_profile;
+} sbp_msg_acq_sv_profile_t;
+
+size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *msg);
+s8 sbp_pack_sbp_msg_acq_sv_profile_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_acq_sv_profile_t *msg);
+s8 sbp_unpack_sbp_msg_acq_sv_profile_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_sv_profile_t *msg);
+
+int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a, const sbp_msg_acq_sv_profile_t *b);
+
+
+/** Deprecated.
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+typedef struct {
+  sbp_acq_sv_profile_dep_t acq_sv_profile[7];
+  u8 n_acq_sv_profile;
+} sbp_msg_acq_sv_profile_dep_t;
+
+size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *msg);
+s8 sbp_pack_sbp_msg_acq_sv_profile_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_acq_sv_profile_dep_t *msg);
+s8 sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_sv_profile_dep_t *msg);
+
+int sbp_cmp_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *a, const sbp_msg_acq_sv_profile_dep_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_acq_result_t &a, const sbp_msg_acq_result_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_acq_result_dep_c_t &a, const sbp_msg_acq_result_dep_c_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_c_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_acq_result_dep_b_t &a, const sbp_msg_acq_result_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_b_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_acq_result_dep_a_t &a, const sbp_msg_acq_result_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_acq_result_dep_a_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_acq_sv_profile_t &a, const sbp_acq_sv_profile_t &b) {
+  return sbp_cmp_sbp_acq_sv_profile_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_acq_sv_profile_dep_t &a, const sbp_acq_sv_profile_dep_t &b) {
   return sbp_cmp_sbp_acq_sv_profile_dep_t(&a, &b) == 0;
 }
@@ -295,26 +321,6 @@ static inline bool operator>(const sbp_acq_sv_profile_dep_t &a, const sbp_acq_sv
 static inline bool operator>=(const sbp_acq_sv_profile_dep_t &a, const sbp_acq_sv_profile_dep_t &b) {
   return sbp_cmp_sbp_acq_sv_profile_dep_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Acquisition perfomance measurement and debug
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_ACQ_SV_PROFILE     0x002E
-typedef struct {
-  sbp_acq_sv_profile_t acq_sv_profile[7];
-  u8 n_acq_sv_profile;
-} sbp_msg_acq_sv_profile_t;
-
-size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *msg);
-s8 sbp_pack_sbp_msg_acq_sv_profile_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_acq_sv_profile_t *msg);
-s8 sbp_unpack_sbp_msg_acq_sv_profile_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_sv_profile_t *msg);
-
-int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a, const sbp_msg_acq_sv_profile_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_acq_sv_profile_t &a, const sbp_msg_acq_sv_profile_t &b) {
   return sbp_cmp_sbp_msg_acq_sv_profile_t(&a, &b) == 0;
 }
@@ -338,26 +344,6 @@ static inline bool operator>(const sbp_msg_acq_sv_profile_t &a, const sbp_msg_ac
 static inline bool operator>=(const sbp_msg_acq_sv_profile_t &a, const sbp_msg_acq_sv_profile_t &b) {
   return sbp_cmp_sbp_msg_acq_sv_profile_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Deprecated.
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
-typedef struct {
-  sbp_acq_sv_profile_dep_t acq_sv_profile[7];
-  u8 n_acq_sv_profile;
-} sbp_msg_acq_sv_profile_dep_t;
-
-size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *msg);
-s8 sbp_pack_sbp_msg_acq_sv_profile_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_acq_sv_profile_dep_t *msg);
-s8 sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_acq_sv_profile_dep_t *msg);
-
-int sbp_cmp_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *a, const sbp_msg_acq_sv_profile_dep_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_acq_sv_profile_dep_t &a, const sbp_msg_acq_sv_profile_dep_t &b) {
   return sbp_cmp_sbp_msg_acq_sv_profile_dep_t(&a, &b) == 0;
 }
@@ -381,8 +367,7 @@ static inline bool operator>(const sbp_msg_acq_sv_profile_dep_t &a, const sbp_ms
 static inline bool operator>=(const sbp_msg_acq_sv_profile_dep_t &a, const sbp_msg_acq_sv_profile_dep_t &b) {
   return sbp_cmp_sbp_msg_acq_sv_profile_dep_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_ACQUISITION_MESSAGES_H */

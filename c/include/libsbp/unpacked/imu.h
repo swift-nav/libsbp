@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
@@ -60,32 +64,6 @@ s8 sbp_pack_sbp_msg_imu_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written, con
 s8 sbp_unpack_sbp_msg_imu_raw_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_imu_raw_t *msg);
 
 int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a, const sbp_msg_imu_raw_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
@@ -149,7 +127,33 @@ s8 sbp_unpack_sbp_msg_imu_aux_t(const uint8_t *buf, uint8_t len, uint8_t *n_read
 
 int sbp_cmp_sbp_msg_imu_aux_t(const sbp_msg_imu_aux_t *a, const sbp_msg_imu_aux_t *b);
 
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
   return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) == 0;
 }
@@ -173,8 +177,7 @@ static inline bool operator>(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t
 static inline bool operator>=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
   return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

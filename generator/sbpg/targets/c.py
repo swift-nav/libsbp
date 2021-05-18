@@ -24,7 +24,7 @@ UNPACKED_UNION_TEMPLATE_NAME = "unpacked_union_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
 UNPACKED_SOURCE_TEMPLATE_NAME = "unpacked_sbp_messages_template.c"
-UNPACKED_PRIVATE_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template.h"
+UNPACKED_PRIVATE_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template_private.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])

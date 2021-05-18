@@ -80,6 +80,7 @@ sbp_unterminated_string_pack(const sbp_unterminated_string_t *s, uint8_t max_pac
     return false;
   }
   memcpy(&ctx->buf[ctx->offset], s->data, s->len);
+  ctx->offset += s->len;
   return true;
 }
 

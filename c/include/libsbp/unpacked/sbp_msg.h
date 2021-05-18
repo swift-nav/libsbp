@@ -28,6 +28,10 @@
 #include <libsbp/unpacked/ext_events.h>
 #include <libsbp/unpacked/system.h>
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 typedef union {
   sbp_msg_sbas_raw_t MSG_SBAS_RAW;
   sbp_msg_baseline_heading_t MSG_BASELINE_HEADING;
@@ -1871,5 +1875,9 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
   }
   return false;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

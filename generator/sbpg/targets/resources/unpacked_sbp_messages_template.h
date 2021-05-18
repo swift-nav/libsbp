@@ -18,6 +18,10 @@
 #include <libsbp/unpacked/(((i)))>
 ((*- endfor *))
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 ((*- for m in msgs *))
 ((*- if m.fields *))
 ((*- for f in m.fields *))
@@ -92,7 +96,12 @@ s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uin
 
 int sbp_cmp_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *a, const (((m.name|convert_unpacked))) *b);
 
+((* endfor *))
+
 #ifdef __cplusplus
+  }
+
+((*- for m in msgs *))
 static inline bool operator==(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
   return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) == 0;
 }
@@ -116,9 +125,9 @@ static inline bool operator>(const (((m.name|convert_unpacked))) &a, const (((m.
 static inline bool operator>=(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
   return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) >= 0;
 }
-#endif
+((*- endfor *))
 
-((* endfor *))
+#endif
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
 

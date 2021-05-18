@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags) \
@@ -43,32 +47,6 @@ s8 sbp_pack_sbp_msg_flash_program_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
 s8 sbp_unpack_sbp_msg_flash_program_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_program_t *msg);
 
 int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_msg_flash_program_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
-  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
@@ -103,32 +81,6 @@ s8 sbp_unpack_sbp_msg_flash_done_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
 
 int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_flash_done_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
-  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
@@ -159,32 +111,6 @@ s8 sbp_pack_sbp_msg_flash_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_writt
 s8 sbp_unpack_sbp_msg_flash_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_read_req_t *msg);
 
 int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sbp_msg_flash_read_req_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
@@ -217,32 +143,6 @@ s8 sbp_unpack_sbp_msg_flash_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t
 
 int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const sbp_msg_flash_read_resp_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
@@ -273,7 +173,184 @@ s8 sbp_unpack_sbp_msg_flash_erase_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 
 int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a, const sbp_msg_flash_erase_t *b);
 
+
+/** Lock sector of STM flash memory (host => device)
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
+typedef struct {
+  u32 sector;
+} sbp_msg_stm_flash_lock_sector_t;
+
+size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *msg);
+s8 sbp_pack_sbp_msg_stm_flash_lock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_lock_sector_t *msg);
+s8 sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_lock_sector_t *msg);
+
+int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *a, const sbp_msg_stm_flash_lock_sector_t *b);
+
+
+/** Unlock sector of STM flash memory (host => device)
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
+typedef struct {
+  u32 sector;
+} sbp_msg_stm_flash_unlock_sector_t;
+
+size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *msg);
+s8 sbp_pack_sbp_msg_stm_flash_unlock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_unlock_sector_t *msg);
+s8 sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_unlock_sector_t *msg);
+
+int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *a, const sbp_msg_stm_flash_unlock_sector_t *b);
+
+
+/** Read device's hardcoded unique ID request (host => device)
+
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_STM_UNIQUE_ID_REQ       0x00E8
+typedef struct {
+  char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
+} sbp_msg_stm_unique_id_req_t;
+
+size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *msg);
+s8 sbp_pack_sbp_msg_stm_unique_id_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_req_t *msg);
+s8 sbp_unpack_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_req_t *msg);
+
+int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, const sbp_msg_stm_unique_id_req_t *b);
+
+
+/** Read device's hardcoded unique ID response (host <= device)
+
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_STM_UNIQUE_ID_RESP      0x00E5
+typedef struct {
+  u8 stm_id[12];
+} sbp_msg_stm_unique_id_resp_t;
+
+size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *msg);
+s8 sbp_pack_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_resp_t *msg);
+s8 sbp_unpack_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_resp_t *msg);
+
+int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, const sbp_msg_stm_unique_id_resp_t *b);
+
+
+/** Write M25 flash status register (host => device)
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
+typedef struct {
+  u8 status[1];
+} sbp_msg_m25_flash_write_status_t;
+
+size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *msg);
+s8 sbp_pack_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_m25_flash_write_status_t *msg);
+s8 sbp_unpack_sbp_msg_m25_flash_write_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_m25_flash_write_status_t *msg);
+
+int sbp_cmp_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *a, const sbp_msg_m25_flash_write_status_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return sbp_cmp_sbp_msg_flash_program_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return sbp_cmp_sbp_msg_flash_done_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_req_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_flash_read_resp_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b) {
   return sbp_cmp_sbp_msg_flash_erase_t(&a, &b) == 0;
 }
@@ -297,25 +374,6 @@ static inline bool operator>(const sbp_msg_flash_erase_t &a, const sbp_msg_flash
 static inline bool operator>=(const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b) {
   return sbp_cmp_sbp_msg_flash_erase_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Lock sector of STM flash memory (host => device)
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
-typedef struct {
-  u32 sector;
-} sbp_msg_stm_flash_lock_sector_t;
-
-size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *msg);
-s8 sbp_pack_sbp_msg_stm_flash_lock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_lock_sector_t *msg);
-s8 sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_lock_sector_t *msg);
-
-int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *a, const sbp_msg_stm_flash_lock_sector_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b) {
   return sbp_cmp_sbp_msg_stm_flash_lock_sector_t(&a, &b) == 0;
 }
@@ -339,25 +397,6 @@ static inline bool operator>(const sbp_msg_stm_flash_lock_sector_t &a, const sbp
 static inline bool operator>=(const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b) {
   return sbp_cmp_sbp_msg_stm_flash_lock_sector_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Unlock sector of STM flash memory (host => device)
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
-typedef struct {
-  u32 sector;
-} sbp_msg_stm_flash_unlock_sector_t;
-
-size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *msg);
-s8 sbp_pack_sbp_msg_stm_flash_unlock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_unlock_sector_t *msg);
-s8 sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_unlock_sector_t *msg);
-
-int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *a, const sbp_msg_stm_flash_unlock_sector_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b) {
   return sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(&a, &b) == 0;
 }
@@ -381,26 +420,6 @@ static inline bool operator>(const sbp_msg_stm_flash_unlock_sector_t &a, const s
 static inline bool operator>=(const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b) {
   return sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Read device's hardcoded unique ID request (host => device)
-
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_STM_UNIQUE_ID_REQ       0x00E8
-typedef struct {
-  char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
-} sbp_msg_stm_unique_id_req_t;
-
-size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *msg);
-s8 sbp_pack_sbp_msg_stm_unique_id_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_req_t *msg);
-s8 sbp_unpack_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_req_t *msg);
-
-int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, const sbp_msg_stm_unique_id_req_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b) {
   return sbp_cmp_sbp_msg_stm_unique_id_req_t(&a, &b) == 0;
 }
@@ -424,26 +443,6 @@ static inline bool operator>(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg
 static inline bool operator>=(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b) {
   return sbp_cmp_sbp_msg_stm_unique_id_req_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Read device's hardcoded unique ID response (host <= device)
-
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_STM_UNIQUE_ID_RESP      0x00E5
-typedef struct {
-  u8 stm_id[12];
-} sbp_msg_stm_unique_id_resp_t;
-
-size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *msg);
-s8 sbp_pack_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_resp_t *msg);
-s8 sbp_unpack_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_resp_t *msg);
-
-int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, const sbp_msg_stm_unique_id_resp_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b) {
   return sbp_cmp_sbp_msg_stm_unique_id_resp_t(&a, &b) == 0;
 }
@@ -467,25 +466,6 @@ static inline bool operator>(const sbp_msg_stm_unique_id_resp_t &a, const sbp_ms
 static inline bool operator>=(const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b) {
   return sbp_cmp_sbp_msg_stm_unique_id_resp_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Write M25 flash status register (host => device)
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
-typedef struct {
-  u8 status[1];
-} sbp_msg_m25_flash_write_status_t;
-
-size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *msg);
-s8 sbp_pack_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_m25_flash_write_status_t *msg);
-s8 sbp_unpack_sbp_msg_m25_flash_write_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_m25_flash_write_status_t *msg);
-
-int sbp_cmp_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *a, const sbp_msg_m25_flash_write_status_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b) {
   return sbp_cmp_sbp_msg_m25_flash_write_status_t(&a, &b) == 0;
 }
@@ -509,8 +489,7 @@ static inline bool operator>(const sbp_msg_m25_flash_write_status_t &a, const sb
 static inline bool operator>=(const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b) {
   return sbp_cmp_sbp_msg_m25_flash_write_status_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_FLASH_MESSAGES_H */

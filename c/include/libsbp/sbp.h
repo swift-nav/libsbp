@@ -41,6 +41,8 @@ extern "C" {
 #define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR           (-6)
+#define SBP_PACK_ERROR (-5)
+#define SBP_UNPACK_ERROR (-6)
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42

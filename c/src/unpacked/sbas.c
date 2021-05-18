@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/sbas.h>
 #include <libsbp/internal/unpacked/sbas.h>
@@ -21,12 +22,12 @@ size_t sbp_packed_size_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *msg) {
 
 bool pack_sbp_msg_sbas_raw_t(sbp_pack_ctx_t *ctx, const sbp_msg_sbas_raw_t *msg)
 {
-  if (!sbp_pack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->message_type)) { return false; }
+  if (!pack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
+  if (!pack_u32(ctx, &msg->tow)) { return false; }
+  if (!pack_u8(ctx, &msg->message_type)) { return false; }
   for (uint8_t i = 0; i < 27; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->data[i])) { return false; }
+    if (!pack_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
@@ -37,21 +38,21 @@ s8 sbp_pack_sbp_msg_sbas_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written, co
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_sbas_raw_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_sbas_raw_t(sbp_unpack_ctx_t *ctx, sbp_msg_sbas_raw_t *msg)
 {
-  if (!sbp_unpack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->message_type)) { return false; }
+  if (!unpack_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) { return false; }
+  if (!unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!unpack_u8(ctx, &msg->message_type)) { return false; }
   for (uint8_t i = 0; i < 27; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->data[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
@@ -62,10 +63,10 @@ s8 sbp_unpack_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_sbas_raw_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

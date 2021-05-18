@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1)
 #define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
 #define SBP_EXT_EVENT_TIME_QUALITY_GET(flags) \
@@ -58,7 +62,10 @@ s8 sbp_unpack_sbp_msg_ext_event_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 
 int sbp_cmp_sbp_msg_ext_event_t(const sbp_msg_ext_event_t *a, const sbp_msg_ext_event_t *b);
 
+
+
 #ifdef __cplusplus
+  }
 static inline bool operator==(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
   return sbp_cmp_sbp_msg_ext_event_t(&a, &b) == 0;
 }
@@ -82,8 +89,7 @@ static inline bool operator>(const sbp_msg_ext_event_t &a, const sbp_msg_ext_eve
 static inline bool operator>=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
   return sbp_cmp_sbp_msg_ext_event_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

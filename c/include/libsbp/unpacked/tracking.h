@@ -14,6 +14,10 @@
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_GET(flags) \
@@ -251,32 +255,6 @@ s8 sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(uint8_t *buf, uint8_t len, u
 s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_detailed_dep_a_t *msg);
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *a, const sbp_msg_tracking_state_detailed_dep_a_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK (0x7)
@@ -517,32 +495,6 @@ s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const uint8_t *buf, uint8_t 
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_detailed_dep_t *a, const sbp_msg_tracking_state_detailed_dep_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Signal tracking channel state
  *
@@ -559,32 +511,6 @@ s8 sbp_pack_sbp_tracking_channel_state_t(uint8_t *buf, uint8_t len, uint8_t *n_w
 s8 sbp_unpack_sbp_tracking_channel_state_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tracking_channel_state_t *msg);
 
 int sbp_cmp_sbp_tracking_channel_state_t(const sbp_tracking_channel_state_t *a, const sbp_tracking_channel_state_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Signal tracking channel states
@@ -603,32 +529,6 @@ s8 sbp_unpack_sbp_msg_tracking_state_t(const uint8_t *buf, uint8_t len, uint8_t 
 
 int sbp_cmp_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *a, const sbp_msg_tracking_state_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Measurement Engine signal tracking channel state
  *
@@ -644,32 +544,6 @@ s8 sbp_pack_sbp_measurement_state_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
 s8 sbp_unpack_sbp_measurement_state_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_measurement_state_t *msg);
 
 int sbp_cmp_sbp_measurement_state_t(const sbp_measurement_state_t *a, const sbp_measurement_state_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
-  return sbp_cmp_sbp_measurement_state_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Measurement Engine signal tracking channel states
@@ -688,32 +562,6 @@ s8 sbp_unpack_sbp_msg_measurement_state_t(const uint8_t *buf, uint8_t len, uint8
 
 int sbp_cmp_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *a, const sbp_msg_measurement_state_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
-  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Complex correlation structure
  *
@@ -729,32 +577,6 @@ s8 sbp_pack_sbp_tracking_channel_correlation_t(uint8_t *buf, uint8_t len, uint8_
 s8 sbp_unpack_sbp_tracking_channel_correlation_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tracking_channel_correlation_t *msg);
 
 int sbp_cmp_sbp_tracking_channel_correlation_t(const sbp_tracking_channel_correlation_t *a, const sbp_tracking_channel_correlation_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Tracking channel correlations
@@ -774,32 +596,6 @@ s8 sbp_unpack_sbp_msg_tracking_iq_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 
 int sbp_cmp_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *a, const sbp_msg_tracking_iq_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Complex correlation structure
  *
@@ -815,32 +611,6 @@ s8 sbp_pack_sbp_tracking_channel_correlation_dep_t(uint8_t *buf, uint8_t len, ui
 s8 sbp_unpack_sbp_tracking_channel_correlation_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tracking_channel_correlation_dep_t *msg);
 
 int sbp_cmp_sbp_tracking_channel_correlation_dep_t(const sbp_tracking_channel_correlation_dep_t *a, const sbp_tracking_channel_correlation_dep_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
-  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Tracking channel correlations
@@ -860,32 +630,6 @@ s8 sbp_unpack_sbp_msg_tracking_iq_dep_b_t(const uint8_t *buf, uint8_t len, uint8
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a, const sbp_msg_tracking_iq_dep_b_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Deprecated
  *
@@ -903,32 +647,6 @@ s8 sbp_pack_sbp_msg_tracking_iq_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_wr
 s8 sbp_unpack_sbp_msg_tracking_iq_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_iq_dep_a_t *msg);
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, const sbp_msg_tracking_iq_dep_a_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK (0x3)
@@ -960,32 +678,6 @@ s8 sbp_unpack_sbp_tracking_channel_state_dep_a_t(const uint8_t *buf, uint8_t len
 
 int sbp_cmp_sbp_tracking_channel_state_dep_a_t(const sbp_tracking_channel_state_dep_a_t *a, const sbp_tracking_channel_state_dep_a_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
-  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Deprecated
  *
@@ -1002,32 +694,6 @@ s8 sbp_pack_sbp_msg_tracking_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n
 s8 sbp_unpack_sbp_msg_tracking_state_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_dep_a_t *msg);
 
 int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *a, const sbp_msg_tracking_state_dep_a_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
-  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK (0x3)
@@ -1059,7 +725,326 @@ s8 sbp_unpack_sbp_tracking_channel_state_dep_b_t(const uint8_t *buf, uint8_t len
 
 int sbp_cmp_sbp_tracking_channel_state_dep_b_t(const sbp_tracking_channel_state_dep_b_t *a, const sbp_tracking_channel_state_dep_b_t *b);
 
+
+/** Deprecated.
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
+typedef struct {
+  sbp_tracking_channel_state_dep_b_t states[28];
+  u8 n_states;
+} sbp_msg_tracking_state_dep_b_t;
+
+size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *msg);
+s8 sbp_pack_sbp_msg_tracking_state_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_dep_b_t *msg);
+s8 sbp_unpack_sbp_msg_tracking_state_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_dep_b_t *msg);
+
+int sbp_cmp_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *a, const sbp_msg_tracking_state_dep_b_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_state_detailed_dep_a_t &a, const sbp_msg_tracking_state_detailed_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_state_detailed_dep_t &a, const sbp_msg_tracking_state_detailed_dep_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tracking_channel_state_t &a, const sbp_tracking_channel_state_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_state_t &a, const sbp_msg_tracking_state_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_measurement_state_t &a, const sbp_measurement_state_t &b) {
+  return sbp_cmp_sbp_measurement_state_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_measurement_state_t &a, const sbp_msg_measurement_state_t &b) {
+  return sbp_cmp_sbp_msg_measurement_state_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tracking_channel_correlation_t &a, const sbp_tracking_channel_correlation_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_iq_t &a, const sbp_msg_tracking_iq_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tracking_channel_correlation_dep_t &a, const sbp_tracking_channel_correlation_dep_t &b) {
+  return sbp_cmp_sbp_tracking_channel_correlation_dep_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_iq_dep_b_t &a, const sbp_msg_tracking_iq_dep_b_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_b_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_iq_dep_a_t &a, const sbp_msg_tracking_iq_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_iq_dep_a_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tracking_channel_state_dep_a_t &a, const sbp_tracking_channel_state_dep_a_t &b) {
+  return sbp_cmp_sbp_tracking_channel_state_dep_a_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_tracking_state_dep_a_t &a, const sbp_msg_tracking_state_dep_a_t &b) {
+  return sbp_cmp_sbp_msg_tracking_state_dep_a_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_tracking_channel_state_dep_b_t &a, const sbp_tracking_channel_state_dep_b_t &b) {
   return sbp_cmp_sbp_tracking_channel_state_dep_b_t(&a, &b) == 0;
 }
@@ -1083,26 +1068,6 @@ static inline bool operator>(const sbp_tracking_channel_state_dep_b_t &a, const 
 static inline bool operator>=(const sbp_tracking_channel_state_dep_b_t &a, const sbp_tracking_channel_state_dep_b_t &b) {
   return sbp_cmp_sbp_tracking_channel_state_dep_b_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Deprecated.
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
-typedef struct {
-  sbp_tracking_channel_state_dep_b_t states[28];
-  u8 n_states;
-} sbp_msg_tracking_state_dep_b_t;
-
-size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_tracking_state_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_tracking_state_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_dep_b_t *msg);
-
-int sbp_cmp_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *a, const sbp_msg_tracking_state_dep_b_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_tracking_state_dep_b_t &a, const sbp_msg_tracking_state_dep_b_t &b) {
   return sbp_cmp_sbp_msg_tracking_state_dep_b_t(&a, &b) == 0;
 }
@@ -1126,8 +1091,7 @@ static inline bool operator>(const sbp_msg_tracking_state_dep_b_t &a, const sbp_
 static inline bool operator>=(const sbp_msg_tracking_state_dep_b_t &a, const sbp_msg_tracking_state_dep_b_t &b) {
   return sbp_cmp_sbp_msg_tracking_state_dep_b_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_TRACKING_MESSAGES_H */

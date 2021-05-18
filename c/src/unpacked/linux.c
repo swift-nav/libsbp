@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/linux.h>
 #include <libsbp/internal/unpacked/linux.h>
@@ -23,12 +24,12 @@ size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(const sbp_msg_linux_cpu_s
 
 bool pack_sbp_msg_linux_cpu_state_dep_a_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_cpu_state_dep_a_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u8(ctx, &msg->pcpu)) { return false; }
   for (uint8_t i = 0; i < 15; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->tname[i])) { return false; }
+    if (!pack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 236,
       ctx)) { return false; }
@@ -41,21 +42,21 @@ s8 sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_cpu_state_dep_a_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_cpu_state_dep_a_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_cpu_state_dep_a_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u8(ctx, &msg->pcpu)) { return false; }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!sbp_unpack_char(ctx, &msg->tname[i])) { return false; }
+    if (!unpack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 236,
       ctx)) { return false; }
@@ -68,10 +69,10 @@ s8 sbp_unpack_sbp_msg_linux_cpu_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_cpu_state_dep_a_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -113,12 +114,12 @@ size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(const sbp_msg_linux_mem_s
 
 bool pack_sbp_msg_linux_mem_state_dep_a_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_mem_state_dep_a_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pmem)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u8(ctx, &msg->pmem)) { return false; }
   for (uint8_t i = 0; i < 15; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->tname[i])) { return false; }
+    if (!pack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 236,
       ctx)) { return false; }
@@ -131,21 +132,21 @@ s8 sbp_pack_sbp_msg_linux_mem_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_mem_state_dep_a_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_mem_state_dep_a_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_mem_state_dep_a_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pmem)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u8(ctx, &msg->pmem)) { return false; }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!sbp_unpack_char(ctx, &msg->tname[i])) { return false; }
+    if (!unpack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 236,
       ctx)) { return false; }
@@ -158,10 +159,10 @@ s8 sbp_unpack_sbp_msg_linux_mem_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_mem_state_dep_a_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -203,12 +204,12 @@ size_t sbp_packed_size_sbp_msg_linux_sys_state_dep_a_t(const sbp_msg_linux_sys_s
 
 bool pack_sbp_msg_linux_sys_state_dep_a_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_sys_state_dep_a_t *msg)
 {
-  if (!sbp_pack_u16(ctx, &msg->mem_total)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->procs_starting)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->procs_stopping)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid_count)) { return false; }
+  if (!pack_u16(ctx, &msg->mem_total)) { return false; }
+  if (!pack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!pack_u8(ctx, &msg->pmem)) { return false; }
+  if (!pack_u16(ctx, &msg->procs_starting)) { return false; }
+  if (!pack_u16(ctx, &msg->procs_stopping)) { return false; }
+  if (!pack_u16(ctx, &msg->pid_count)) { return false; }
   return true;
 }
 
@@ -218,22 +219,22 @@ s8 sbp_pack_sbp_msg_linux_sys_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_sys_state_dep_a_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_sys_state_dep_a_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_sys_state_dep_a_t *msg)
 {
-  if (!sbp_unpack_u16(ctx, &msg->mem_total)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->procs_starting)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->procs_stopping)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid_count)) { return false; }
+  if (!unpack_u16(ctx, &msg->mem_total)) { return false; }
+  if (!unpack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!unpack_u8(ctx, &msg->pmem)) { return false; }
+  if (!unpack_u16(ctx, &msg->procs_starting)) { return false; }
+  if (!unpack_u16(ctx, &msg->procs_stopping)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid_count)) { return false; }
   return true;
 }
 
@@ -243,10 +244,10 @@ s8 sbp_unpack_sbp_msg_linux_sys_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_sys_state_dep_a_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -288,11 +289,11 @@ size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(const sbp_msg_linux
 
 bool pack_sbp_msg_linux_process_socket_counts_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_process_socket_counts_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->socket_count)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->socket_types)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->socket_states)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u16(ctx, &msg->socket_count)) { return false; }
+  if (!pack_u16(ctx, &msg->socket_types)) { return false; }
+  if (!pack_u16(ctx, &msg->socket_states)) { return false; }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 246,
       ctx)) { return false; }
   return true;
@@ -304,21 +305,21 @@ s8 sbp_pack_sbp_msg_linux_process_socket_counts_t(uint8_t *buf, uint8_t len, uin
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_process_socket_counts_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_process_socket_counts_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_process_socket_counts_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->socket_count)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->socket_types)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->socket_states)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u16(ctx, &msg->socket_count)) { return false; }
+  if (!unpack_u16(ctx, &msg->socket_types)) { return false; }
+  if (!unpack_u16(ctx, &msg->socket_states)) { return false; }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 246,
       ctx)) { return false; }
   return true;
@@ -330,10 +331,10 @@ s8 sbp_unpack_sbp_msg_linux_process_socket_counts_t(const uint8_t *buf, uint8_t 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_process_socket_counts_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -378,15 +379,15 @@ size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(const sbp_msg_linux
 
 bool pack_sbp_msg_linux_process_socket_queues_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_process_socket_queues_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->recv_queued)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->send_queued)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->socket_types)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->socket_states)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u16(ctx, &msg->recv_queued)) { return false; }
+  if (!pack_u16(ctx, &msg->send_queued)) { return false; }
+  if (!pack_u16(ctx, &msg->socket_types)) { return false; }
+  if (!pack_u16(ctx, &msg->socket_states)) { return false; }
   for (uint8_t i = 0; i < 64; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->address_of_largest[i])) { return false; }
+    if (!pack_char(ctx, &msg->address_of_largest[i])) { return false; }
   }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 180,
       ctx)) { return false; }
@@ -399,24 +400,24 @@ s8 sbp_pack_sbp_msg_linux_process_socket_queues_t(uint8_t *buf, uint8_t len, uin
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_process_socket_queues_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_process_socket_queues_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_process_socket_queues_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->recv_queued)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->send_queued)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->socket_types)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->socket_states)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u16(ctx, &msg->recv_queued)) { return false; }
+  if (!unpack_u16(ctx, &msg->send_queued)) { return false; }
+  if (!unpack_u16(ctx, &msg->socket_types)) { return false; }
+  if (!unpack_u16(ctx, &msg->socket_states)) { return false; }
   for (uint8_t i = 0; i < 64; i++) {
-    if (!sbp_unpack_char(ctx, &msg->address_of_largest[i])) { return false; }
+    if (!unpack_char(ctx, &msg->address_of_largest[i])) { return false; }
   }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 180,
       ctx)) { return false; }
@@ -429,10 +430,10 @@ s8 sbp_unpack_sbp_msg_linux_process_socket_queues_t(const uint8_t *buf, uint8_t 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_process_socket_queues_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -481,15 +482,15 @@ size_t sbp_packed_size_sbp_msg_linux_socket_usage_t(const sbp_msg_linux_socket_u
 
 bool pack_sbp_msg_linux_socket_usage_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_socket_usage_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->avg_queue_depth)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->max_queue_depth)) { return false; }
+  if (!pack_u32(ctx, &msg->avg_queue_depth)) { return false; }
+  if (!pack_u32(ctx, &msg->max_queue_depth)) { return false; }
   for (uint8_t i = 0; i < 16; i++)
   {
-    if (!sbp_pack_u16(ctx, &msg->socket_state_counts[i])) { return false; }
+    if (!pack_u16(ctx, &msg->socket_state_counts[i])) { return false; }
   }
   for (uint8_t i = 0; i < 16; i++)
   {
-    if (!sbp_pack_u16(ctx, &msg->socket_type_counts[i])) { return false; }
+    if (!pack_u16(ctx, &msg->socket_type_counts[i])) { return false; }
   }
   return true;
 }
@@ -500,23 +501,23 @@ s8 sbp_pack_sbp_msg_linux_socket_usage_t(uint8_t *buf, uint8_t len, uint8_t *n_w
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_socket_usage_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_socket_usage_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_socket_usage_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->avg_queue_depth)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->max_queue_depth)) { return false; }
+  if (!unpack_u32(ctx, &msg->avg_queue_depth)) { return false; }
+  if (!unpack_u32(ctx, &msg->max_queue_depth)) { return false; }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!sbp_unpack_u16(ctx, &msg->socket_state_counts[i])) { return false; }
+    if (!unpack_u16(ctx, &msg->socket_state_counts[i])) { return false; }
   }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!sbp_unpack_u16(ctx, &msg->socket_type_counts[i])) { return false; }
+    if (!unpack_u16(ctx, &msg->socket_type_counts[i])) { return false; }
   }
   return true;
 }
@@ -527,10 +528,10 @@ s8 sbp_unpack_sbp_msg_linux_socket_usage_t(const uint8_t *buf, uint8_t len, uint
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_socket_usage_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -570,9 +571,9 @@ size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_proc
 
 bool pack_sbp_msg_linux_process_fd_count_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_process_fd_count_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->fd_count)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u16(ctx, &msg->fd_count)) { return false; }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 250,
       ctx)) { return false; }
   return true;
@@ -584,19 +585,19 @@ s8 sbp_pack_sbp_msg_linux_process_fd_count_t(uint8_t *buf, uint8_t len, uint8_t 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_process_fd_count_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_process_fd_count_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_process_fd_count_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->fd_count)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u16(ctx, &msg->fd_count)) { return false; }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 250,
       ctx)) { return false; }
   return true;
@@ -608,10 +609,10 @@ s8 sbp_unpack_sbp_msg_linux_process_fd_count_t(const uint8_t *buf, uint8_t len, 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_process_fd_count_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -645,7 +646,7 @@ size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_pr
 
 bool pack_sbp_msg_linux_process_fd_summary_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_process_fd_summary_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->sys_fd_count)) { return false; }
+  if (!pack_u32(ctx, &msg->sys_fd_count)) { return false; }
   if (!sbp_sequence_string_pack(&msg->most_opened, 251,0,
       ctx)) { return false; }
   return true;
@@ -657,17 +658,17 @@ s8 sbp_pack_sbp_msg_linux_process_fd_summary_t(uint8_t *buf, uint8_t len, uint8_
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_process_fd_summary_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_process_fd_summary_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_process_fd_summary_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->sys_fd_count)) { return false; }
+  if (!unpack_u32(ctx, &msg->sys_fd_count)) { return false; }
   if (!sbp_sequence_string_unpack(&msg->most_opened, 251,0,
       ctx)) { return false; }
   return true;
@@ -679,10 +680,10 @@ s8 sbp_unpack_sbp_msg_linux_process_fd_summary_t(const uint8_t *buf, uint8_t len
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_process_fd_summary_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -714,14 +715,14 @@ size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t
 
 bool pack_sbp_msg_linux_cpu_state_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_cpu_state_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!pack_u32(ctx, &msg->time)) { return false; }
+  if (!pack_u8(ctx, &msg->flags)) { return false; }
   for (uint8_t i = 0; i < 15; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->tname[i])) { return false; }
+    if (!pack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 231,
       ctx)) { return false; }
@@ -734,23 +735,23 @@ s8 sbp_pack_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_cpu_state_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_cpu_state_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_cpu_state_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!unpack_u32(ctx, &msg->time)) { return false; }
+  if (!unpack_u8(ctx, &msg->flags)) { return false; }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!sbp_unpack_char(ctx, &msg->tname[i])) { return false; }
+    if (!unpack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 231,
       ctx)) { return false; }
@@ -763,10 +764,10 @@ s8 sbp_unpack_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len, uint8_t
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_cpu_state_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -816,14 +817,14 @@ size_t sbp_packed_size_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t
 
 bool pack_sbp_msg_linux_mem_state_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_mem_state_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
+  if (!pack_u8(ctx, &msg->index)) { return false; }
+  if (!pack_u16(ctx, &msg->pid)) { return false; }
+  if (!pack_u8(ctx, &msg->pmem)) { return false; }
+  if (!pack_u32(ctx, &msg->time)) { return false; }
+  if (!pack_u8(ctx, &msg->flags)) { return false; }
   for (uint8_t i = 0; i < 15; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->tname[i])) { return false; }
+    if (!pack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_pack(&msg->cmdline, 231,
       ctx)) { return false; }
@@ -836,23 +837,23 @@ s8 sbp_pack_sbp_msg_linux_mem_state_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_mem_state_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_mem_state_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_mem_state_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->index)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
+  if (!unpack_u8(ctx, &msg->index)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid)) { return false; }
+  if (!unpack_u8(ctx, &msg->pmem)) { return false; }
+  if (!unpack_u32(ctx, &msg->time)) { return false; }
+  if (!unpack_u8(ctx, &msg->flags)) { return false; }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!sbp_unpack_char(ctx, &msg->tname[i])) { return false; }
+    if (!unpack_char(ctx, &msg->tname[i])) { return false; }
   }
   if (!sbp_unterminated_string_unpack(&msg->cmdline, 231,
       ctx)) { return false; }
@@ -865,10 +866,10 @@ s8 sbp_unpack_sbp_msg_linux_mem_state_t(const uint8_t *buf, uint8_t len, uint8_t
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_mem_state_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -918,14 +919,14 @@ size_t sbp_packed_size_sbp_msg_linux_sys_state_t(const sbp_msg_linux_sys_state_t
 
 bool pack_sbp_msg_linux_sys_state_t(sbp_pack_ctx_t *ctx, const sbp_msg_linux_sys_state_t *msg)
 {
-  if (!sbp_pack_u16(ctx, &msg->mem_total)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->procs_starting)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->procs_stopping)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->pid_count)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
+  if (!pack_u16(ctx, &msg->mem_total)) { return false; }
+  if (!pack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!pack_u8(ctx, &msg->pmem)) { return false; }
+  if (!pack_u16(ctx, &msg->procs_starting)) { return false; }
+  if (!pack_u16(ctx, &msg->procs_stopping)) { return false; }
+  if (!pack_u16(ctx, &msg->pid_count)) { return false; }
+  if (!pack_u32(ctx, &msg->time)) { return false; }
+  if (!pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
@@ -935,24 +936,24 @@ s8 sbp_pack_sbp_msg_linux_sys_state_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_linux_sys_state_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_linux_sys_state_t(sbp_unpack_ctx_t *ctx, sbp_msg_linux_sys_state_t *msg)
 {
-  if (!sbp_unpack_u16(ctx, &msg->mem_total)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pcpu)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->pmem)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->procs_starting)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->procs_stopping)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->pid_count)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->time)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
+  if (!unpack_u16(ctx, &msg->mem_total)) { return false; }
+  if (!unpack_u8(ctx, &msg->pcpu)) { return false; }
+  if (!unpack_u8(ctx, &msg->pmem)) { return false; }
+  if (!unpack_u16(ctx, &msg->procs_starting)) { return false; }
+  if (!unpack_u16(ctx, &msg->procs_stopping)) { return false; }
+  if (!unpack_u16(ctx, &msg->pid_count)) { return false; }
+  if (!unpack_u32(ctx, &msg->time)) { return false; }
+  if (!unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
@@ -962,10 +963,10 @@ s8 sbp_unpack_sbp_msg_linux_sys_state_t(const uint8_t *buf, uint8_t len, uint8_t
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_linux_sys_state_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

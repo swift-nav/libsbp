@@ -9,6 +9,10 @@
 #include <libsbp/unpacked/(((i)))>
 ((*- endfor *))
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 typedef union {
 ((*- for m in msgs *))
   (((m|convert_unpacked))) (((m)));
@@ -62,6 +66,10 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
   }
   return false;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

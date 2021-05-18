@@ -14,6 +14,10 @@
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags) \
@@ -106,7 +110,10 @@ s8 sbp_unpack_sbp_msg_ndb_event_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 
 int sbp_cmp_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *a, const sbp_msg_ndb_event_t *b);
 
+
+
 #ifdef __cplusplus
+  }
 static inline bool operator==(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
   return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) == 0;
 }
@@ -130,8 +137,7 @@ static inline bool operator>(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_eve
 static inline bool operator>=(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_event_t &b) {
   return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_NDB_MESSAGES_H */

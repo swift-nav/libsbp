@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 #define SBP_GNSSSIGNAL__MASK (0xff)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \
@@ -51,32 +55,6 @@ s8 sbp_unpack_sbp_sbp_gnss_signal_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 
 int sbp_cmp_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *a, const sbp_sbp_gnss_signal_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
-  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Space vehicle identifier
  *
@@ -92,32 +70,6 @@ s8 sbp_pack_sbp_sv_id_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp
 s8 sbp_unpack_sbp_sv_id_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_id_t *msg);
 
 int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
-  return sbp_cmp_sbp_sv_id_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_GNSSSIGNALDEP__MASK (0xff)
@@ -154,7 +106,121 @@ s8 sbp_unpack_sbp_gnss_signal_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 
 int sbp_cmp_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *a, const sbp_gnss_signal_dep_t *b);
 
+
+/** Millisecond-accurate GPS time
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  u32 tow;
+  u16 wn;
+} sbp_gps_time_dep_t;
+
+size_t sbp_packed_size_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *msg);
+s8 sbp_pack_sbp_gps_time_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_dep_t *msg);
+s8 sbp_unpack_sbp_gps_time_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_dep_t *msg);
+
+int sbp_cmp_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *a, const sbp_gps_time_dep_t *b);
+
+
+/** Whole second accurate GPS time
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  u32 tow;
+  u16 wn;
+} sbp_gps_time_sec_t;
+
+size_t sbp_packed_size_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *msg);
+s8 sbp_pack_sbp_gps_time_sec_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_sec_t *msg);
+s8 sbp_unpack_sbp_gps_time_sec_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_sec_t *msg);
+
+int sbp_cmp_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *a, const sbp_gps_time_sec_t *b);
+
+
+/** Nanosecond-accurate receiver clock time
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  u32 tow;
+  s32 ns_residual;
+  u16 wn;
+} sbp_sbp_gps_time_t;
+
+size_t sbp_packed_size_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *msg);
+s8 sbp_pack_sbp_sbp_gps_time_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gps_time_t *msg);
+s8 sbp_unpack_sbp_sbp_gps_time_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gps_time_t *msg);
+
+int sbp_cmp_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *a, const sbp_sbp_gps_time_t *b);
+
+
+/** GNSS carrier phase measurement.
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  s32 i;
+  u8 f;
+} sbp_carrier_phase_t;
+
+size_t sbp_packed_size_sbp_carrier_phase_t(const sbp_carrier_phase_t *msg);
+s8 sbp_pack_sbp_carrier_phase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_t *msg);
+s8 sbp_unpack_sbp_carrier_phase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_t *msg);
+
+int sbp_cmp_sbp_carrier_phase_t(const sbp_carrier_phase_t *a, const sbp_carrier_phase_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_sbp_gnss_signal_t &a, const sbp_sbp_gnss_signal_t &b) {
+  return sbp_cmp_sbp_sbp_gnss_signal_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_sv_id_t &a, const sbp_sv_id_t &b) {
+  return sbp_cmp_sbp_sv_id_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_gnss_signal_dep_t &a, const sbp_gnss_signal_dep_t &b) {
   return sbp_cmp_sbp_gnss_signal_dep_t(&a, &b) == 0;
 }
@@ -178,25 +244,6 @@ static inline bool operator>(const sbp_gnss_signal_dep_t &a, const sbp_gnss_sign
 static inline bool operator>=(const sbp_gnss_signal_dep_t &a, const sbp_gnss_signal_dep_t &b) {
   return sbp_cmp_sbp_gnss_signal_dep_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Millisecond-accurate GPS time
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  u32 tow;
-  u16 wn;
-} sbp_gps_time_dep_t;
-
-size_t sbp_packed_size_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *msg);
-s8 sbp_pack_sbp_gps_time_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_dep_t *msg);
-s8 sbp_unpack_sbp_gps_time_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_dep_t *msg);
-
-int sbp_cmp_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *a, const sbp_gps_time_dep_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_gps_time_dep_t &a, const sbp_gps_time_dep_t &b) {
   return sbp_cmp_sbp_gps_time_dep_t(&a, &b) == 0;
 }
@@ -220,25 +267,6 @@ static inline bool operator>(const sbp_gps_time_dep_t &a, const sbp_gps_time_dep
 static inline bool operator>=(const sbp_gps_time_dep_t &a, const sbp_gps_time_dep_t &b) {
   return sbp_cmp_sbp_gps_time_dep_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Whole second accurate GPS time
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  u32 tow;
-  u16 wn;
-} sbp_gps_time_sec_t;
-
-size_t sbp_packed_size_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *msg);
-s8 sbp_pack_sbp_gps_time_sec_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_sec_t *msg);
-s8 sbp_unpack_sbp_gps_time_sec_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_sec_t *msg);
-
-int sbp_cmp_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *a, const sbp_gps_time_sec_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_gps_time_sec_t &a, const sbp_gps_time_sec_t &b) {
   return sbp_cmp_sbp_gps_time_sec_t(&a, &b) == 0;
 }
@@ -262,26 +290,6 @@ static inline bool operator>(const sbp_gps_time_sec_t &a, const sbp_gps_time_sec
 static inline bool operator>=(const sbp_gps_time_sec_t &a, const sbp_gps_time_sec_t &b) {
   return sbp_cmp_sbp_gps_time_sec_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Nanosecond-accurate receiver clock time
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  u32 tow;
-  s32 ns_residual;
-  u16 wn;
-} sbp_sbp_gps_time_t;
-
-size_t sbp_packed_size_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *msg);
-s8 sbp_pack_sbp_sbp_gps_time_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gps_time_t *msg);
-s8 sbp_unpack_sbp_sbp_gps_time_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gps_time_t *msg);
-
-int sbp_cmp_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *a, const sbp_sbp_gps_time_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_sbp_gps_time_t &a, const sbp_sbp_gps_time_t &b) {
   return sbp_cmp_sbp_sbp_gps_time_t(&a, &b) == 0;
 }
@@ -305,25 +313,6 @@ static inline bool operator>(const sbp_sbp_gps_time_t &a, const sbp_sbp_gps_time
 static inline bool operator>=(const sbp_sbp_gps_time_t &a, const sbp_sbp_gps_time_t &b) {
   return sbp_cmp_sbp_sbp_gps_time_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** GNSS carrier phase measurement.
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  s32 i;
-  u8 f;
-} sbp_carrier_phase_t;
-
-size_t sbp_packed_size_sbp_carrier_phase_t(const sbp_carrier_phase_t *msg);
-s8 sbp_pack_sbp_carrier_phase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_t *msg);
-s8 sbp_unpack_sbp_carrier_phase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_t *msg);
-
-int sbp_cmp_sbp_carrier_phase_t(const sbp_carrier_phase_t *a, const sbp_carrier_phase_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_carrier_phase_t &a, const sbp_carrier_phase_t &b) {
   return sbp_cmp_sbp_carrier_phase_t(&a, &b) == 0;
 }
@@ -347,8 +336,7 @@ static inline bool operator>(const sbp_carrier_phase_t &a, const sbp_carrier_pha
 static inline bool operator>=(const sbp_carrier_phase_t &a, const sbp_carrier_phase_t &b) {
   return sbp_cmp_sbp_carrier_phase_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_GNSS_MESSAGES_H */

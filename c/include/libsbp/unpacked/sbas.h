@@ -14,6 +14,10 @@
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 /** Raw SBAS data
  *
 ((m.desc|commentify)))
@@ -32,7 +36,10 @@ s8 sbp_unpack_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
 
 int sbp_cmp_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *a, const sbp_msg_sbas_raw_t *b);
 
+
+
 #ifdef __cplusplus
+  }
 static inline bool operator==(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
   return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) == 0;
 }
@@ -56,8 +63,7 @@ static inline bool operator>(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw
 static inline bool operator>=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
   return sbp_cmp_sbp_msg_sbas_raw_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_SBAS_MESSAGES_H */

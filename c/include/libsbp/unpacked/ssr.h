@@ -14,6 +14,10 @@
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/gnss.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 /** SSR code biases corrections for a particular satellite.
  *
 ((m.desc|commentify)))
@@ -28,32 +32,6 @@ s8 sbp_pack_sbp_code_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
 s8 sbp_unpack_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_code_biases_content_t *msg);
 
 int sbp_cmp_sbp_code_biases_content_t(const sbp_code_biases_content_t *a, const sbp_code_biases_content_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
-  return sbp_cmp_sbp_code_biases_content_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** SSR phase biases corrections for a particular satellite.
@@ -73,32 +51,6 @@ s8 sbp_pack_sbp_phase_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
 s8 sbp_unpack_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_phase_biases_content_t *msg);
 
 int sbp_cmp_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *a, const sbp_phase_biases_content_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
-  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Header for the MSG_SSR_STEC_CORRECTION message.
@@ -120,32 +72,6 @@ s8 sbp_pack_sbp_stec_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, con
 s8 sbp_unpack_sbp_stec_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_t *msg);
 
 int sbp_cmp_sbp_stec_header_t(const sbp_stec_header_t *a, const sbp_stec_header_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
-  return sbp_cmp_sbp_stec_header_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message.
@@ -169,32 +95,6 @@ s8 sbp_unpack_sbp_gridded_correction_header_t(const uint8_t *buf, uint8_t len, u
 
 int sbp_cmp_sbp_gridded_correction_header_t(const sbp_gridded_correction_header_t *a, const sbp_gridded_correction_header_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
-  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** None
  *
@@ -212,32 +112,6 @@ s8 sbp_unpack_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len, uint8_t *n
 
 int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a, const sbp_stec_sat_element_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
-  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** None
  *
@@ -253,32 +127,6 @@ s8 sbp_pack_sbp_tropospheric_delay_correction_no_std_t(uint8_t *buf, uint8_t len
 s8 sbp_unpack_sbp_tropospheric_delay_correction_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_no_std_t *msg);
 
 int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(const sbp_tropospheric_delay_correction_no_std_t *a, const sbp_tropospheric_delay_correction_no_std_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** None
@@ -297,32 +145,6 @@ s8 sbp_unpack_sbp_tropospheric_delay_correction_t(const uint8_t *buf, uint8_t le
 
 int sbp_cmp_sbp_tropospheric_delay_correction_t(const sbp_tropospheric_delay_correction_t *a, const sbp_tropospheric_delay_correction_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** None
  *
@@ -338,32 +160,6 @@ s8 sbp_pack_sbp_stec_residual_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
 s8 sbp_unpack_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_no_std_t *msg);
 
 int sbp_cmp_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *a, const sbp_stec_residual_no_std_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
-  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** None
@@ -381,32 +177,6 @@ s8 sbp_pack_sbp_stec_residual_t(uint8_t *buf, uint8_t len, uint8_t *n_written, c
 s8 sbp_unpack_sbp_stec_residual_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_t *msg);
 
 int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a, const sbp_stec_residual_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
-  return sbp_cmp_sbp_stec_residual_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Precise orbit and clock correction
@@ -437,32 +207,6 @@ s8 sbp_unpack_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len, uint8_t
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a, const sbp_msg_ssr_orbit_clock_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
-  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Precise code biases correction
  *
@@ -483,32 +227,6 @@ s8 sbp_pack_sbp_msg_ssr_code_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
 s8 sbp_unpack_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_code_biases_t *msg);
 
 int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a, const sbp_msg_ssr_code_biases_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Precise phase biases correction
@@ -535,32 +253,6 @@ s8 sbp_unpack_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len, uint8_
 
 int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a, const sbp_msg_ssr_phase_biases_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
-  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** STEC correction polynomial coeffcients.
  *
@@ -578,32 +270,6 @@ s8 sbp_pack_sbp_msg_ssr_stec_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_
 s8 sbp_unpack_sbp_msg_ssr_stec_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_t *msg);
 
 int sbp_cmp_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *a, const sbp_msg_ssr_stec_correction_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Gridded troposphere and STEC correction residuals.
@@ -624,32 +290,6 @@ s8 sbp_pack_sbp_msg_ssr_gridded_correction_t(uint8_t *buf, uint8_t len, uint8_t 
 s8 sbp_unpack_sbp_msg_ssr_gridded_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_t *msg);
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *a, const sbp_msg_ssr_gridded_correction_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
-  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Definition of a SSR atmospheric correction tile.
@@ -675,32 +315,6 @@ s8 sbp_pack_sbp_msg_ssr_tile_definition_t(uint8_t *buf, uint8_t len, uint8_t *n_
 s8 sbp_unpack_sbp_msg_ssr_tile_definition_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_tile_definition_t *msg);
 
 int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a, const sbp_msg_ssr_tile_definition_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
-  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
@@ -752,32 +366,6 @@ s8 sbp_unpack_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 
 int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a, const sbp_satellite_apc_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
-  return sbp_cmp_sbp_satellite_apc_t(&a, &b) >= 0;
-}
-#endif
-
 
 #define SBP_MSG_SSR_SATELLITE_APC                   0x0604
 typedef struct {
@@ -790,32 +378,6 @@ s8 sbp_pack_sbp_msg_ssr_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_wr
 s8 sbp_unpack_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_satellite_apc_t *msg);
 
 int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a, const sbp_msg_ssr_satellite_apc_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
-  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
@@ -842,7 +404,520 @@ s8 sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const uint8_t *buf, uint8_t len, u
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *a, const sbp_msg_ssr_orbit_clock_dep_a_t *b);
 
+
+/** Header for MSG_SSR_STEC_CORRECTION_DEP message
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  sbp_gps_time_sec_t time;
+  u8 num_msgs;
+  u8 seq_num;
+  u8 update_interval;
+  u8 iod_atmo;
+} sbp_stec_header_dep_a_t;
+
+size_t sbp_packed_size_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *msg);
+s8 sbp_pack_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_dep_a_t *msg);
+s8 sbp_unpack_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_dep_a_t *msg);
+
+int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a, const sbp_stec_header_dep_a_t *b);
+
+
+/** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  sbp_gps_time_sec_t time;
+  u16 num_msgs;
+  u16 seq_num;
+  u8 update_interval;
+  u8 iod_atmo;
+  u8 tropo_quality_indicator;
+} sbp_gridded_correction_header_dep_a_t;
+
+size_t sbp_packed_size_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_pack_sbp_gridded_correction_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_unpack_sbp_gridded_correction_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_dep_a_t *msg);
+
+int sbp_cmp_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *a, const sbp_gridded_correction_header_dep_a_t *b);
+
+
+/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+ *
+((m.desc|commentify)))
+ */
+typedef struct {
+  u8 region_size_inverse;
+  u16 area_width;
+  u16 lat_nw_corner_enc;
+  u16 lon_nw_corner_enc;
+  u8 num_msgs;
+  u8 seq_num;
+} sbp_grid_definition_header_dep_a_t;
+
+size_t sbp_packed_size_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_pack_sbp_grid_definition_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_unpack_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_grid_definition_header_dep_a_t *msg);
+
+int sbp_cmp_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *a, const sbp_grid_definition_header_dep_a_t *b);
+
+
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
+typedef struct {
+  sbp_stec_header_dep_a_t header;
+  sbp_stec_sat_element_t stec_sat_list[22];
+  u8 n_stec_sat_list;
+} sbp_msg_ssr_stec_correction_dep_a_t;
+
+size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_dep_a_t *msg);
+
+int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b);
+
+
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+typedef struct {
+  sbp_gridded_correction_header_dep_a_t header;
+  u16 index;
+  sbp_tropospheric_delay_correction_no_std_t tropo_delay_correction;
+  sbp_stec_residual_no_std_t stec_residuals[59];
+  u8 n_stec_residuals;
+} sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
+
+size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+
+int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
+
+
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
+typedef struct {
+  sbp_gridded_correction_header_dep_a_t header;
+  u16 index;
+  sbp_tropospheric_delay_correction_t tropo_delay_correction;
+  sbp_stec_residual_t stec_residuals[47];
+  u8 n_stec_residuals;
+} sbp_msg_ssr_gridded_correction_dep_a_t;
+
+size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+
+int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b);
+
+
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
+typedef struct {
+  sbp_grid_definition_header_dep_a_t header;
+  u8 rle_list[246];
+  u8 n_rle_list;
+} sbp_msg_ssr_grid_definition_dep_a_t;
+
+size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_grid_definition_dep_a_t *msg);
+
+int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *a, const sbp_msg_ssr_grid_definition_dep_a_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+  return sbp_cmp_sbp_code_biases_content_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+  return sbp_cmp_sbp_phase_biases_content_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+  return sbp_cmp_sbp_stec_header_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+  return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+  return sbp_cmp_sbp_stec_sat_element_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+  return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+  return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+  return sbp_cmp_sbp_stec_residual_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+  return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+  return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+  return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+  return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+  return sbp_cmp_sbp_satellite_apc_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+  return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) == 0;
 }
@@ -866,28 +941,6 @@ static inline bool operator>(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp
 static inline bool operator>=(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Header for MSG_SSR_STEC_CORRECTION_DEP message
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  sbp_gps_time_sec_t time;
-  u8 num_msgs;
-  u8 seq_num;
-  u8 update_interval;
-  u8 iod_atmo;
-} sbp_stec_header_dep_a_t;
-
-size_t sbp_packed_size_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *msg);
-s8 sbp_pack_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_dep_a_t *msg);
-
-int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a, const sbp_stec_header_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) == 0;
 }
@@ -911,29 +964,6 @@ static inline bool operator>(const sbp_stec_header_dep_a_t &a, const sbp_stec_he
 static inline bool operator>=(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  sbp_gps_time_sec_t time;
-  u16 num_msgs;
-  u16 seq_num;
-  u8 update_interval;
-  u8 iod_atmo;
-  u8 tropo_quality_indicator;
-} sbp_gridded_correction_header_dep_a_t;
-
-size_t sbp_packed_size_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_pack_sbp_gridded_correction_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_gridded_correction_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_dep_a_t *msg);
-
-int sbp_cmp_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *a, const sbp_gridded_correction_header_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) == 0;
 }
@@ -957,29 +987,6 @@ static inline bool operator>(const sbp_gridded_correction_header_dep_a_t &a, con
 static inline bool operator>=(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
- *
-((m.desc|commentify)))
- */
-typedef struct {
-  u8 region_size_inverse;
-  u16 area_width;
-  u16 lat_nw_corner_enc;
-  u16 lon_nw_corner_enc;
-  u8 num_msgs;
-  u8 seq_num;
-} sbp_grid_definition_header_dep_a_t;
-
-size_t sbp_packed_size_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_pack_sbp_grid_definition_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_grid_definition_header_dep_a_t *msg);
-
-int sbp_cmp_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *a, const sbp_grid_definition_header_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) == 0;
 }
@@ -1003,23 +1010,6 @@ static inline bool operator>(const sbp_grid_definition_header_dep_a_t &a, const 
 static inline bool operator>=(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
-typedef struct {
-  sbp_stec_header_dep_a_t header;
-  sbp_stec_sat_element_t stec_sat_list[22];
-  u8 n_stec_sat_list;
-} sbp_msg_ssr_stec_correction_dep_a_t;
-
-size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_dep_a_t *msg);
-
-int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) == 0;
 }
@@ -1043,25 +1033,6 @@ static inline bool operator>(const sbp_msg_ssr_stec_correction_dep_a_t &a, const
 static inline bool operator>=(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
-typedef struct {
-  sbp_gridded_correction_header_dep_a_t header;
-  u16 index;
-  sbp_tropospheric_delay_correction_no_std_t tropo_delay_correction;
-  sbp_stec_residual_no_std_t stec_residuals[59];
-  u8 n_stec_residuals;
-} sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
-
-size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-
-int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) == 0;
 }
@@ -1085,25 +1056,6 @@ static inline bool operator>(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t
 static inline bool operator>=(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
-typedef struct {
-  sbp_gridded_correction_header_dep_a_t header;
-  u16 index;
-  sbp_tropospheric_delay_correction_t tropo_delay_correction;
-  sbp_stec_residual_t stec_residuals[47];
-  u8 n_stec_residuals;
-} sbp_msg_ssr_gridded_correction_dep_a_t;
-
-size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-
-int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) == 0;
 }
@@ -1127,23 +1079,6 @@ static inline bool operator>(const sbp_msg_ssr_gridded_correction_dep_a_t &a, co
 static inline bool operator>=(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) >= 0;
 }
-#endif
-
-
-#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
-typedef struct {
-  sbp_grid_definition_header_dep_a_t header;
-  u8 rle_list[246];
-  u8 n_rle_list;
-} sbp_msg_ssr_grid_definition_dep_a_t;
-
-size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_grid_definition_dep_a_t *msg);
-
-int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *a, const sbp_msg_ssr_grid_definition_dep_a_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) == 0;
 }
@@ -1167,8 +1102,7 @@ static inline bool operator>(const sbp_msg_ssr_grid_definition_dep_a_t &a, const
 static inline bool operator>=(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_SSR_MESSAGES_H */

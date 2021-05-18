@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/logging.h>
 #include <libsbp/internal/unpacked/logging.h>
@@ -20,7 +21,7 @@ size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {
 
 bool pack_sbp_msg_log_t(sbp_pack_ctx_t *ctx, const sbp_msg_log_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->level)) { return false; }
+  if (!pack_u8(ctx, &msg->level)) { return false; }
   if (!sbp_unterminated_string_pack(&msg->text, 254,
       ctx)) { return false; }
   return true;
@@ -32,17 +33,17 @@ s8 sbp_pack_sbp_msg_log_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const s
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_log_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_log_t(sbp_unpack_ctx_t *ctx, sbp_msg_log_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->level)) { return false; }
+  if (!unpack_u8(ctx, &msg->level)) { return false; }
   if (!sbp_unterminated_string_unpack(&msg->text, 254,
       ctx)) { return false; }
   return true;
@@ -54,10 +55,10 @@ s8 sbp_unpack_sbp_msg_log_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sb
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_log_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -84,11 +85,11 @@ size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {
 
 bool pack_sbp_msg_fwd_t(sbp_pack_ctx_t *ctx, const sbp_msg_fwd_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->source)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->protocol)) { return false; }
+  if (!pack_u8(ctx, &msg->source)) { return false; }
+  if (!pack_u8(ctx, &msg->protocol)) { return false; }
   for (uint8_t i = 0; i < msg->n_fwd_payload; i++)
   {
-    if (!sbp_pack_char(ctx, &msg->fwd_payload[i])) { return false; }
+    if (!pack_char(ctx, &msg->fwd_payload[i])) { return false; }
   }
   return true;
 }
@@ -99,21 +100,21 @@ s8 sbp_pack_sbp_msg_fwd_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const s
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_fwd_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_fwd_t(sbp_unpack_ctx_t *ctx, sbp_msg_fwd_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->source)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->protocol)) { return false; }
+  if (!unpack_u8(ctx, &msg->source)) { return false; }
+  if (!unpack_u8(ctx, &msg->protocol)) { return false; }
     msg->n_fwd_payload = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_char(&msg->fwd_payload[0]));
   for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
-    if (!sbp_unpack_char(ctx, &msg->fwd_payload[i])) { return false; }
+    if (!unpack_char(ctx, &msg->fwd_payload[i])) { return false; }
   }
   return true;
 }
@@ -124,10 +125,10 @@ s8 sbp_unpack_sbp_msg_fwd_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sb
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_fwd_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -170,10 +171,10 @@ s8 sbp_pack_sbp_msg_print_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, c
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_print_dep_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -191,10 +192,10 @@ s8 sbp_unpack_sbp_msg_print_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_print_dep_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

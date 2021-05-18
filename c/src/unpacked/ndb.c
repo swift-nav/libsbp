@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/ndb.h>
 #include <libsbp/internal/unpacked/ndb.h>
@@ -25,14 +26,14 @@ size_t sbp_packed_size_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *msg) {
 
 bool pack_sbp_msg_ndb_event_t(sbp_pack_ctx_t *ctx, const sbp_msg_ndb_event_t *msg)
 {
-  if (!sbp_pack_u64(ctx, &msg->recv_time)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->event)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->object_type)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->result)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->data_source)) { return false; }
-  if (!sbp_pack_sbp_sbp_gnss_signal_t(ctx, &msg->object_sid)) { return false; }
-  if (!sbp_pack_sbp_sbp_gnss_signal_t(ctx, &msg->src_sid)) { return false; }
-  if (!sbp_pack_u16(ctx, &msg->original_sender)) { return false; }
+  if (!pack_u64(ctx, &msg->recv_time)) { return false; }
+  if (!pack_u8(ctx, &msg->event)) { return false; }
+  if (!pack_u8(ctx, &msg->object_type)) { return false; }
+  if (!pack_u8(ctx, &msg->result)) { return false; }
+  if (!pack_u8(ctx, &msg->data_source)) { return false; }
+  if (!pack_sbp_sbp_gnss_signal_t(ctx, &msg->object_sid)) { return false; }
+  if (!pack_sbp_sbp_gnss_signal_t(ctx, &msg->src_sid)) { return false; }
+  if (!pack_u16(ctx, &msg->original_sender)) { return false; }
   return true;
 }
 
@@ -42,24 +43,24 @@ s8 sbp_pack_sbp_msg_ndb_event_t(uint8_t *buf, uint8_t len, uint8_t *n_written, c
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_ndb_event_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_ndb_event_t(sbp_unpack_ctx_t *ctx, sbp_msg_ndb_event_t *msg)
 {
-  if (!sbp_unpack_u64(ctx, &msg->recv_time)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->event)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->object_type)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->result)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->data_source)) { return false; }
-  if (!sbp_unpack_sbp_sbp_gnss_signal_t(ctx, &msg->object_sid)) { return false; }
-  if (!sbp_unpack_sbp_sbp_gnss_signal_t(ctx, &msg->src_sid)) { return false; }
-  if (!sbp_unpack_u16(ctx, &msg->original_sender)) { return false; }
+  if (!unpack_u64(ctx, &msg->recv_time)) { return false; }
+  if (!unpack_u8(ctx, &msg->event)) { return false; }
+  if (!unpack_u8(ctx, &msg->object_type)) { return false; }
+  if (!unpack_u8(ctx, &msg->result)) { return false; }
+  if (!unpack_u8(ctx, &msg->data_source)) { return false; }
+  if (!unpack_sbp_sbp_gnss_signal_t(ctx, &msg->object_sid)) { return false; }
+  if (!unpack_sbp_sbp_gnss_signal_t(ctx, &msg->src_sid)) { return false; }
+  if (!unpack_u16(ctx, &msg->original_sender)) { return false; }
   return true;
 }
 
@@ -69,10 +70,10 @@ s8 sbp_unpack_sbp_msg_ndb_event_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_ndb_event_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 /** Read file from the file system (host => device)
  *
 ((m.desc|commentify)))
@@ -40,32 +44,6 @@ s8 sbp_unpack_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len, uint8_t
 
 int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a, const sbp_msg_fileio_read_req_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** File read from the file system (host <= device)
  *
@@ -83,32 +61,6 @@ s8 sbp_pack_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
 s8 sbp_unpack_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_resp_t *msg);
 
 int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a, const sbp_msg_fileio_read_resp_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** List files in a directory (host => device)
@@ -136,32 +88,6 @@ s8 sbp_pack_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_
 s8 sbp_unpack_sbp_msg_fileio_read_dir_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_req_t *msg);
 
 int sbp_cmp_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *a, const sbp_msg_fileio_read_dir_req_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Files listed in a directory (host <= device)
@@ -191,32 +117,6 @@ s8 sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const uint8_t *buf, uint8_t len, ui
 
 int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *a, const sbp_msg_fileio_read_dir_resp_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
-  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Delete a file from the file system (host => device)
  *
@@ -241,32 +141,6 @@ s8 sbp_pack_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
 s8 sbp_unpack_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_remove_t *msg);
 
 int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a, const sbp_msg_fileio_remove_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
-  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Write to file (host => device)
@@ -297,7 +171,177 @@ s8 sbp_unpack_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len, uint8_
 
 int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a, const sbp_msg_fileio_write_req_t *b);
 
+
+/** File written to (host <= device)
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+typedef struct {
+  u32 sequence;
+} sbp_msg_fileio_write_resp_t;
+
+size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg);
+s8 sbp_pack_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg);
+s8 sbp_unpack_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg);
+
+int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a, const sbp_msg_fileio_write_resp_t *b);
+
+
+/** Request advice on the optimal configuration for FileIO.
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+typedef struct {
+  u32 sequence;
+} sbp_msg_fileio_config_req_t;
+
+size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg);
+s8 sbp_pack_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg);
+s8 sbp_unpack_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg);
+
+int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a, const sbp_msg_fileio_config_req_t *b);
+
+
+/** Response with advice on the optimal configuration for FileIO.
+
+ *
+((m.desc|commentify)))
+ */
+#define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+typedef struct {
+  u32 sequence;
+  u32 window_size;
+  u32 batch_size;
+  u32 fileio_version;
+} sbp_msg_fileio_config_resp_t;
+
+size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg);
+s8 sbp_pack_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg);
+s8 sbp_unpack_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg);
+
+int sbp_cmp_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *a, const sbp_msg_fileio_config_resp_t *b);
+
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_req_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_resp_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_req_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return sbp_cmp_sbp_msg_fileio_read_dir_resp_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return sbp_cmp_sbp_msg_fileio_remove_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
   return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) == 0;
 }
@@ -321,25 +365,6 @@ static inline bool operator>(const sbp_msg_fileio_write_req_t &a, const sbp_msg_
 static inline bool operator>=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
   return sbp_cmp_sbp_msg_fileio_write_req_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** File written to (host <= device)
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
-typedef struct {
-  u32 sequence;
-} sbp_msg_fileio_write_resp_t;
-
-size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg);
-
-int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a, const sbp_msg_fileio_write_resp_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
   return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) == 0;
 }
@@ -363,25 +388,6 @@ static inline bool operator>(const sbp_msg_fileio_write_resp_t &a, const sbp_msg
 static inline bool operator>=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
   return sbp_cmp_sbp_msg_fileio_write_resp_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Request advice on the optimal configuration for FileIO.
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
-typedef struct {
-  u32 sequence;
-} sbp_msg_fileio_config_req_t;
-
-size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg);
-s8 sbp_pack_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg);
-
-int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a, const sbp_msg_fileio_config_req_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
   return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) == 0;
 }
@@ -405,29 +411,6 @@ static inline bool operator>(const sbp_msg_fileio_config_req_t &a, const sbp_msg
 static inline bool operator>=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
   return sbp_cmp_sbp_msg_fileio_config_req_t(&a, &b) >= 0;
 }
-#endif
-
-
-/** Response with advice on the optimal configuration for FileIO.
-
- *
-((m.desc|commentify)))
- */
-#define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
-typedef struct {
-  u32 sequence;
-  u32 window_size;
-  u32 batch_size;
-  u32 fileio_version;
-} sbp_msg_fileio_config_resp_t;
-
-size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg);
-
-int sbp_cmp_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *a, const sbp_msg_fileio_config_resp_t *b);
-
-#ifdef __cplusplus
 static inline bool operator==(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
   return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) == 0;
 }
@@ -451,8 +434,7 @@ static inline bool operator>(const sbp_msg_fileio_config_resp_t &a, const sbp_ms
 static inline bool operator>=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
   return sbp_cmp_sbp_msg_fileio_config_resp_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */

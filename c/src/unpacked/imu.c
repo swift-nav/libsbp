@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/imu.h>
 #include <libsbp/internal/unpacked/imu.h>
@@ -25,14 +26,14 @@ size_t sbp_packed_size_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *msg) {
 
 bool pack_sbp_msg_imu_raw_t(sbp_pack_ctx_t *ctx, const sbp_msg_imu_raw_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->tow_f)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->acc_x)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->acc_y)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->acc_z)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->gyr_x)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->gyr_y)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->gyr_z)) { return false; }
+  if (!pack_u32(ctx, &msg->tow)) { return false; }
+  if (!pack_u8(ctx, &msg->tow_f)) { return false; }
+  if (!pack_s16(ctx, &msg->acc_x)) { return false; }
+  if (!pack_s16(ctx, &msg->acc_y)) { return false; }
+  if (!pack_s16(ctx, &msg->acc_z)) { return false; }
+  if (!pack_s16(ctx, &msg->gyr_x)) { return false; }
+  if (!pack_s16(ctx, &msg->gyr_y)) { return false; }
+  if (!pack_s16(ctx, &msg->gyr_z)) { return false; }
   return true;
 }
 
@@ -42,24 +43,24 @@ s8 sbp_pack_sbp_msg_imu_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written, con
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_imu_raw_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_imu_raw_t(sbp_unpack_ctx_t *ctx, sbp_msg_imu_raw_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->tow_f)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->acc_x)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->acc_y)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->acc_z)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->gyr_x)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->gyr_y)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->gyr_z)) { return false; }
+  if (!unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!unpack_u8(ctx, &msg->tow_f)) { return false; }
+  if (!unpack_s16(ctx, &msg->acc_x)) { return false; }
+  if (!unpack_s16(ctx, &msg->acc_y)) { return false; }
+  if (!unpack_s16(ctx, &msg->acc_z)) { return false; }
+  if (!unpack_s16(ctx, &msg->gyr_x)) { return false; }
+  if (!unpack_s16(ctx, &msg->gyr_y)) { return false; }
+  if (!unpack_s16(ctx, &msg->gyr_z)) { return false; }
   return true;
 }
 
@@ -69,10 +70,10 @@ s8 sbp_unpack_sbp_msg_imu_raw_t(const uint8_t *buf, uint8_t len, uint8_t *n_read
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_imu_raw_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -116,9 +117,9 @@ size_t sbp_packed_size_sbp_msg_imu_aux_t(const sbp_msg_imu_aux_t *msg) {
 
 bool pack_sbp_msg_imu_aux_t(sbp_pack_ctx_t *ctx, const sbp_msg_imu_aux_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->imu_type)) { return false; }
-  if (!sbp_pack_s16(ctx, &msg->temp)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->imu_conf)) { return false; }
+  if (!pack_u8(ctx, &msg->imu_type)) { return false; }
+  if (!pack_s16(ctx, &msg->temp)) { return false; }
+  if (!pack_u8(ctx, &msg->imu_conf)) { return false; }
   return true;
 }
 
@@ -128,19 +129,19 @@ s8 sbp_pack_sbp_msg_imu_aux_t(uint8_t *buf, uint8_t len, uint8_t *n_written, con
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_imu_aux_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_imu_aux_t(sbp_unpack_ctx_t *ctx, sbp_msg_imu_aux_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->imu_type)) { return false; }
-  if (!sbp_unpack_s16(ctx, &msg->temp)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->imu_conf)) { return false; }
+  if (!unpack_u8(ctx, &msg->imu_type)) { return false; }
+  if (!unpack_s16(ctx, &msg->temp)) { return false; }
+  if (!unpack_u8(ctx, &msg->imu_conf)) { return false; }
   return true;
 }
 
@@ -150,10 +151,10 @@ s8 sbp_unpack_sbp_msg_imu_aux_t(const uint8_t *buf, uint8_t len, uint8_t *n_read
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_imu_aux_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

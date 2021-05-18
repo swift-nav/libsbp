@@ -13,6 +13,10 @@
 #include <libsbp/unpacked/string/sequence.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
 /** Bootloading handshake request (host => device)
  *
 ((m.desc|commentify)))
@@ -27,32 +31,6 @@ s8 sbp_pack_sbp_msg_bootloader_handshake_req_t(uint8_t *buf, uint8_t len, uint8_
 s8 sbp_unpack_sbp_msg_bootloader_handshake_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_req_t *msg);
 
 int sbp_cmp_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshake_req_t *a, const sbp_msg_bootloader_handshake_req_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) >= 0;
-}
-#endif
 
 
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
@@ -102,32 +80,6 @@ s8 sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const uint8_t *buf, uint8_t le
 
 int sbp_cmp_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *a, const sbp_msg_bootloader_handshake_resp_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Bootloader jump to application (host => device)
  *
@@ -143,32 +95,6 @@ s8 sbp_pack_sbp_msg_bootloader_jump_to_app_t(uint8_t *buf, uint8_t len, uint8_t 
 s8 sbp_unpack_sbp_msg_bootloader_jump_to_app_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_jump_to_app_t *msg);
 
 int sbp_cmp_sbp_msg_bootloader_jump_to_app_t(const sbp_msg_bootloader_jump_to_app_t *a, const sbp_msg_bootloader_jump_to_app_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
-  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Read FPGA device ID over UART request (host => device)
@@ -186,32 +112,6 @@ s8 sbp_unpack_sbp_msg_nap_device_dna_req_t(const uint8_t *buf, uint8_t len, uint
 
 int sbp_cmp_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna_req_t *a, const sbp_msg_nap_device_dna_req_t *b);
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) >= 0;
-}
-#endif
-
 
 /** Read FPGA device ID over UART response (host <= device)
  *
@@ -227,32 +127,6 @@ s8 sbp_pack_sbp_msg_nap_device_dna_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_
 s8 sbp_unpack_sbp_msg_nap_device_dna_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_nap_device_dna_resp_t *msg);
 
 int sbp_cmp_sbp_msg_nap_device_dna_resp_t(const sbp_msg_nap_device_dna_resp_t *a, const sbp_msg_nap_device_dna_resp_t *b);
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) != 0;
-}
-
-static inline bool operator<(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) < 0;
-}
-
-static inline bool operator<=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) <= 0;
-}
-
-static inline bool operator>(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) > 0;
-}
-
-static inline bool operator>=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
-  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) >= 0;
-}
-#endif
 
 
 /** Deprecated
@@ -279,7 +153,125 @@ s8 sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const uint8_t *buf, uint8_t l
 
 int sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootloader_handshake_dep_a_t *a, const sbp_msg_bootloader_handshake_dep_a_t *b);
 
+
+
 #ifdef __cplusplus
+  }
+static inline bool operator==(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_req_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_handshake_resp_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return sbp_cmp_sbp_msg_bootloader_jump_to_app_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_req_t(&a, &b) >= 0;
+}
+static inline bool operator==(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) == 0;
+}
+
+static inline bool operator!=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) != 0;
+}
+
+static inline bool operator<(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) < 0;
+}
+
+static inline bool operator<=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) <= 0;
+}
+
+static inline bool operator>(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return sbp_cmp_sbp_msg_nap_device_dna_resp_t(&a, &b) >= 0;
+}
 static inline bool operator==(const sbp_msg_bootloader_handshake_dep_a_t &a, const sbp_msg_bootloader_handshake_dep_a_t &b) {
   return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&a, &b) == 0;
 }
@@ -303,8 +295,7 @@ static inline bool operator>(const sbp_msg_bootloader_handshake_dep_a_t &a, cons
 static inline bool operator>=(const sbp_msg_bootloader_handshake_dep_a_t &a, const sbp_msg_bootloader_handshake_dep_a_t &b) {
   return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&a, &b) >= 0;
 }
+
 #endif
-
-
 
 #endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

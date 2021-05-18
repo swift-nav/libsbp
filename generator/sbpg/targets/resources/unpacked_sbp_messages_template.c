@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/(((pkg_name))).h>
 #include <libsbp/internal/unpacked/(((pkg_name))).h>
@@ -53,11 +54,11 @@ bool pack_(((m.name|convert_unpacked)))(sbp_pack_ctx_t *ctx, const (((m.name|con
       ((*- if f.encoding == "sequence" *))(((f.terminator))),((*- endif *))
       ctx)) { return false; }
   ((*- elif f.packing == "single" *))
-  if (!sbp_pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
+  if (!pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
   ((*- else *))
   for (uint8_t i = 0; i < ((* if f.packing == "fixed-array" *))(((f.max_items)))((* else *))msg->(((f.size_fn)))((*- endif *)); i++)
   {
-    if (!sbp_pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- endif *))
   ((*- endfor *))
@@ -71,10 +72,10 @@ s8 sbp_pack_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_(((m.name|convert_unpacked)))(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -94,15 +95,15 @@ bool unpack_(((m.name|convert_unpacked)))(sbp_unpack_ctx_t *ctx, (((m.name|conve
       ((*- if f.encoding == "sequence" *))(((f.terminator))),((*- endif *))
       ctx)) { return false; }
   ((*- elif f.packing == "single" *))
-  if (!sbp_unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
+  if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
   ((*- elif f.packing == "fixed-array" *))
   for (uint8_t i = 0; i < (((f.max_items))); i++) {
-    if (!sbp_unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- elif f.packing == "variable-array" *))
     msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_(((f.basetype|convert_unpacked)))(&msg->(((f.name)))[0]));
   for (uint8_t i = 0; i < msg->(((f.size_fn))); i++) {
-    if (!sbp_unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- endif *))
   ((*- endfor *))
@@ -116,10 +117,10 @@ s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uin
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_(((m.name|convert_unpacked)))(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

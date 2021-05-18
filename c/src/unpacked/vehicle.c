@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/vehicle.h>
 #include <libsbp/internal/unpacked/vehicle.h>
@@ -20,9 +21,9 @@ size_t sbp_packed_size_sbp_msg_odometry_t(const sbp_msg_odometry_t *msg) {
 
 bool pack_sbp_msg_odometry_t(sbp_pack_ctx_t *ctx, const sbp_msg_odometry_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_pack_s32(ctx, &msg->velocity)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
+  if (!pack_u32(ctx, &msg->tow)) { return false; }
+  if (!pack_s32(ctx, &msg->velocity)) { return false; }
+  if (!pack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
@@ -32,19 +33,19 @@ s8 sbp_pack_sbp_msg_odometry_t(uint8_t *buf, uint8_t len, uint8_t *n_written, co
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_odometry_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_odometry_t(sbp_unpack_ctx_t *ctx, sbp_msg_odometry_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->tow)) { return false; }
-  if (!sbp_unpack_s32(ctx, &msg->velocity)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
+  if (!unpack_u32(ctx, &msg->tow)) { return false; }
+  if (!unpack_s32(ctx, &msg->velocity)) { return false; }
+  if (!unpack_u8(ctx, &msg->flags)) { return false; }
   return true;
 }
 
@@ -54,10 +55,10 @@ s8 sbp_unpack_sbp_msg_odometry_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_odometry_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -87,10 +88,10 @@ size_t sbp_packed_size_sbp_msg_wheeltick_t(const sbp_msg_wheeltick_t *msg) {
 
 bool pack_sbp_msg_wheeltick_t(sbp_pack_ctx_t *ctx, const sbp_msg_wheeltick_t *msg)
 {
-  if (!sbp_pack_u64(ctx, &msg->time)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->flags)) { return false; }
-  if (!sbp_pack_u8(ctx, &msg->source)) { return false; }
-  if (!sbp_pack_s32(ctx, &msg->ticks)) { return false; }
+  if (!pack_u64(ctx, &msg->time)) { return false; }
+  if (!pack_u8(ctx, &msg->flags)) { return false; }
+  if (!pack_u8(ctx, &msg->source)) { return false; }
+  if (!pack_s32(ctx, &msg->ticks)) { return false; }
   return true;
 }
 
@@ -100,20 +101,20 @@ s8 sbp_pack_sbp_msg_wheeltick_t(uint8_t *buf, uint8_t len, uint8_t *n_written, c
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_wheeltick_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_wheeltick_t(sbp_unpack_ctx_t *ctx, sbp_msg_wheeltick_t *msg)
 {
-  if (!sbp_unpack_u64(ctx, &msg->time)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->flags)) { return false; }
-  if (!sbp_unpack_u8(ctx, &msg->source)) { return false; }
-  if (!sbp_unpack_s32(ctx, &msg->ticks)) { return false; }
+  if (!unpack_u64(ctx, &msg->time)) { return false; }
+  if (!unpack_u8(ctx, &msg->flags)) { return false; }
+  if (!unpack_u8(ctx, &msg->source)) { return false; }
+  if (!unpack_s32(ctx, &msg->ticks)) { return false; }
   return true;
 }
 
@@ -123,10 +124,10 @@ s8 sbp_unpack_sbp_msg_wheeltick_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_wheeltick_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }

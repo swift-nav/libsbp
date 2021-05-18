@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include <libsbp/sbp.h>
 #include <libsbp/internal/unpacked/common.h>
 #include <libsbp/unpacked/flash.h>
 #include <libsbp/internal/unpacked/flash.h>
@@ -21,15 +22,15 @@ size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *ms
 
 bool pack_sbp_msg_flash_program_t(sbp_pack_ctx_t *ctx, const sbp_msg_flash_program_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->target)) { return false; }
+  if (!pack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!pack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_pack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!pack_u8(ctx, &msg->addr_len)) { return false; }
   for (uint8_t i = 0; i < msg->addr_len; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->data[i])) { return false; }
+    if (!pack_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
@@ -40,24 +41,24 @@ s8 sbp_pack_sbp_msg_flash_program_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_flash_program_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_flash_program_t(sbp_unpack_ctx_t *ctx, sbp_msg_flash_program_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->target)) { return false; }
+  if (!unpack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_unpack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!unpack_u8(ctx, &msg->addr_len)) { return false; }
     msg->addr_len = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_u8(&msg->data[0]));
   for (uint8_t i = 0; i < msg->addr_len; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->data[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
@@ -68,10 +69,10 @@ s8 sbp_unpack_sbp_msg_flash_program_t(const uint8_t *buf, uint8_t len, uint8_t *
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_flash_program_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -108,7 +109,7 @@ size_t sbp_packed_size_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *msg) {
 
 bool pack_sbp_msg_flash_done_t(sbp_pack_ctx_t *ctx, const sbp_msg_flash_done_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->response)) { return false; }
+  if (!pack_u8(ctx, &msg->response)) { return false; }
   return true;
 }
 
@@ -118,17 +119,17 @@ s8 sbp_pack_sbp_msg_flash_done_t(uint8_t *buf, uint8_t len, uint8_t *n_written, 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_flash_done_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_flash_done_t(sbp_unpack_ctx_t *ctx, sbp_msg_flash_done_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->response)) { return false; }
+  if (!unpack_u8(ctx, &msg->response)) { return false; }
   return true;
 }
 
@@ -138,10 +139,10 @@ s8 sbp_unpack_sbp_msg_flash_done_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_flash_done_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -164,12 +165,12 @@ size_t sbp_packed_size_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *
 
 bool pack_sbp_msg_flash_read_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_flash_read_req_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->target)) { return false; }
+  if (!pack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!pack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_pack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!pack_u8(ctx, &msg->addr_len)) { return false; }
   return true;
 }
 
@@ -179,21 +180,21 @@ s8 sbp_pack_sbp_msg_flash_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_writt
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_flash_read_req_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_flash_read_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_flash_read_req_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->target)) { return false; }
+  if (!unpack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_unpack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!unpack_u8(ctx, &msg->addr_len)) { return false; }
   return true;
 }
 
@@ -203,10 +204,10 @@ s8 sbp_unpack_sbp_msg_flash_read_req_t(const uint8_t *buf, uint8_t len, uint8_t 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_flash_read_req_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -238,12 +239,12 @@ size_t sbp_packed_size_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t
 
 bool pack_sbp_msg_flash_read_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_flash_read_resp_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->target)) { return false; }
+  if (!pack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!pack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_pack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!pack_u8(ctx, &msg->addr_len)) { return false; }
   return true;
 }
 
@@ -253,21 +254,21 @@ s8 sbp_pack_sbp_msg_flash_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_flash_read_resp_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_flash_read_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_flash_read_resp_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->target)) { return false; }
+  if (!unpack_u8(ctx, &msg->target)) { return false; }
   for (uint8_t i = 0; i < 3; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->addr_start[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->addr_start[i])) { return false; }
   }
-  if (!sbp_unpack_u8(ctx, &msg->addr_len)) { return false; }
+  if (!unpack_u8(ctx, &msg->addr_len)) { return false; }
   return true;
 }
 
@@ -277,10 +278,10 @@ s8 sbp_unpack_sbp_msg_flash_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_flash_read_resp_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -311,8 +312,8 @@ size_t sbp_packed_size_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *msg) {
 
 bool pack_sbp_msg_flash_erase_t(sbp_pack_ctx_t *ctx, const sbp_msg_flash_erase_t *msg)
 {
-  if (!sbp_pack_u8(ctx, &msg->target)) { return false; }
-  if (!sbp_pack_u32(ctx, &msg->sector_num)) { return false; }
+  if (!pack_u8(ctx, &msg->target)) { return false; }
+  if (!pack_u32(ctx, &msg->sector_num)) { return false; }
   return true;
 }
 
@@ -322,18 +323,18 @@ s8 sbp_pack_sbp_msg_flash_erase_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_flash_erase_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_flash_erase_t(sbp_unpack_ctx_t *ctx, sbp_msg_flash_erase_t *msg)
 {
-  if (!sbp_unpack_u8(ctx, &msg->target)) { return false; }
-  if (!sbp_unpack_u32(ctx, &msg->sector_num)) { return false; }
+  if (!unpack_u8(ctx, &msg->target)) { return false; }
+  if (!unpack_u32(ctx, &msg->sector_num)) { return false; }
   return true;
 }
 
@@ -343,10 +344,10 @@ s8 sbp_unpack_sbp_msg_flash_erase_t(const uint8_t *buf, uint8_t len, uint8_t *n_
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_flash_erase_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -370,7 +371,7 @@ size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_l
 
 bool pack_sbp_msg_stm_flash_lock_sector_t(sbp_pack_ctx_t *ctx, const sbp_msg_stm_flash_lock_sector_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->sector)) { return false; }
+  if (!pack_u32(ctx, &msg->sector)) { return false; }
   return true;
 }
 
@@ -380,17 +381,17 @@ s8 sbp_pack_sbp_msg_stm_flash_lock_sector_t(uint8_t *buf, uint8_t len, uint8_t *
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_stm_flash_lock_sector_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_stm_flash_lock_sector_t(sbp_unpack_ctx_t *ctx, sbp_msg_stm_flash_lock_sector_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->sector)) { return false; }
+  if (!unpack_u32(ctx, &msg->sector)) { return false; }
   return true;
 }
 
@@ -400,10 +401,10 @@ s8 sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const uint8_t *buf, uint8_t len, u
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_stm_flash_lock_sector_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -424,7 +425,7 @@ size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash
 
 bool pack_sbp_msg_stm_flash_unlock_sector_t(sbp_pack_ctx_t *ctx, const sbp_msg_stm_flash_unlock_sector_t *msg)
 {
-  if (!sbp_pack_u32(ctx, &msg->sector)) { return false; }
+  if (!pack_u32(ctx, &msg->sector)) { return false; }
   return true;
 }
 
@@ -434,17 +435,17 @@ s8 sbp_pack_sbp_msg_stm_flash_unlock_sector_t(uint8_t *buf, uint8_t len, uint8_t
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_stm_flash_unlock_sector_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
 
 bool unpack_sbp_msg_stm_flash_unlock_sector_t(sbp_unpack_ctx_t *ctx, sbp_msg_stm_flash_unlock_sector_t *msg)
 {
-  if (!sbp_unpack_u32(ctx, &msg->sector)) { return false; }
+  if (!unpack_u32(ctx, &msg->sector)) { return false; }
   return true;
 }
 
@@ -454,10 +455,10 @@ s8 sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const uint8_t *buf, uint8_t len,
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_stm_flash_unlock_sector_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -489,10 +490,10 @@ s8 sbp_pack_sbp_msg_stm_unique_id_req_t(uint8_t *buf, uint8_t len, uint8_t *n_wr
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_stm_unique_id_req_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -510,10 +511,10 @@ s8 sbp_unpack_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len, uint8
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_stm_unique_id_req_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -535,7 +536,7 @@ bool pack_sbp_msg_stm_unique_id_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_stm_un
 {
   for (uint8_t i = 0; i < 12; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->stm_id[i])) { return false; }
+    if (!pack_u8(ctx, &msg->stm_id[i])) { return false; }
   }
   return true;
 }
@@ -546,10 +547,10 @@ s8 sbp_pack_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_w
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_stm_unique_id_resp_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -557,7 +558,7 @@ s8 sbp_pack_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_w
 bool unpack_sbp_msg_stm_unique_id_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_stm_unique_id_resp_t *msg)
 {
   for (uint8_t i = 0; i < 12; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->stm_id[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->stm_id[i])) { return false; }
   }
   return true;
 }
@@ -568,10 +569,10 @@ s8 sbp_unpack_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len, uint
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_stm_unique_id_resp_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -597,7 +598,7 @@ bool pack_sbp_msg_m25_flash_write_status_t(sbp_pack_ctx_t *ctx, const sbp_msg_m2
 {
   for (uint8_t i = 0; i < 1; i++)
   {
-    if (!sbp_pack_u8(ctx, &msg->status[i])) { return false; }
+    if (!pack_u8(ctx, &msg->status[i])) { return false; }
   }
   return true;
 }
@@ -608,10 +609,10 @@ s8 sbp_pack_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!pack_sbp_msg_m25_flash_write_status_t(&ctx, msg)) {
-    return SBP_WRITE_ERROR;
+    return SBP_PACK_ERROR;
   }
   if (n_written != NULL) {
-    *n_written = ctx.offset;
+    *n_written = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
@@ -619,7 +620,7 @@ s8 sbp_pack_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t 
 bool unpack_sbp_msg_m25_flash_write_status_t(sbp_unpack_ctx_t *ctx, sbp_msg_m25_flash_write_status_t *msg)
 {
   for (uint8_t i = 0; i < 1; i++) {
-    if (!sbp_unpack_u8(ctx, &msg->status[i])) { return false; }
+    if (!unpack_u8(ctx, &msg->status[i])) { return false; }
   }
   return true;
 }
@@ -630,10 +631,10 @@ s8 sbp_unpack_sbp_msg_m25_flash_write_status_t(const uint8_t *buf, uint8_t len, 
   ctx.buf_len = len;
   ctx.offset = 0;
   if (!unpack_sbp_msg_m25_flash_write_status_t(&ctx, msg)) {
-    return SBP_READ_ERROR;
+    return SBP_UNPACK_ERROR;
   }
   if (n_read != NULL) {
-    *n_read = ctx.offset;
+    *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
 }
