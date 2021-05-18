@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include <libsbp/unpacked/common.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,17 +67,7 @@ extern "C" {
                                                uint8_t max_packed_len,
                                                uint8_t min_sections,
                                                uint8_t max_sections);
-  bool sbp_multipart_string_pack(const sbp_multipart_string_t *s,
-                                    uint8_t max_packed_len,
-                                    uint8_t min_sections,
-                                    uint8_t max_sections,
-                                    sbp_pack_ctx_t *ctx);
-  bool sbp_multipart_string_unpack(sbp_multipart_string_t *s,
-                                      uint8_t max_packed_len,
-                                      uint8_t min_sections,
-                                      uint8_t max_sections,
-                                      sbp_unpack_ctx_t *ctx);
-  int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,
+ int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,
                                   const sbp_multipart_string_t *b,
                                   uint8_t max_packed_len,
                                   uint8_t min_sections,

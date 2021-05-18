@@ -7,8 +7,6 @@
 #include <stddef.h>
 #include <string.h>
 
-#include <libsbp/unpacked/common.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -27,12 +25,6 @@ extern "C" {
       __attribute__((format(printf, 3, 4)));
   bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap);
   const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
-  bool sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
-                                       uint8_t max_packed_len,
-                                       sbp_pack_ctx_t *ctx);
-  bool sbp_unterminated_string_unpack(sbp_unterminated_string_t *s,
-                                         uint8_t max_packed_len,
-                                         sbp_unpack_ctx_t *ctx);
   int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
                                      const sbp_unterminated_string_t *b,
                                      uint8_t max_packed_len);

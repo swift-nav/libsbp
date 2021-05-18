@@ -86,11 +86,39 @@ typedef struct {
   ((*- endif *))
 ((*- endfor *))
 
+size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *msg);
+s8 sbp_pack_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.name|convert_unpacked))) *msg);
+s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.name|convert_unpacked))) *msg);
+
+int sbp_cmp_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *a, const (((m.name|convert_unpacked))) *b);
+
+#ifdef __cplusplus
+static inline bool operator==(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) == 0;
+}
+
+static inline bool operator!=(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) != 0;
+}
+
+static inline bool operator<(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) < 0;
+}
+
+static inline bool operator<=(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) <= 0;
+}
+
+static inline bool operator>(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) > 0;
+}
+
+static inline bool operator>=(const (((m.name|convert_unpacked))) &a, const (((m.name|convert_unpacked))) &b) {
+  return sbp_cmp_(((m.name|convert_unpacked)))(&a, &b) >= 0;
+}
+#endif
 
 ((* endfor *))
-
-#include <libsbp/unpacked/(((pkg_name)))_operators.h>
-#include <libsbp/unpacked/(((pkg_name)))_packers.h>
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
 

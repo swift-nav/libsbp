@@ -23,8 +23,8 @@ UNPACKED_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template.h"
 UNPACKED_UNION_TEMPLATE_NAME = "unpacked_union_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
-PACKERS_TEMPLATE_NAME = "packers_sbp_messages_template.h"
-OPERATORS_TEMPLATE_NAME = "operators_sbp_messages_template.h"
+UNPACKED_SOURCE_TEMPLATE_NAME = "unpacked_sbp_messages_template.c"
+UNPACKED_PRIVATE_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
@@ -323,22 +323,6 @@ def render_unpacked_headers(include_dir, package_specs):
                 filepath="/".join(package_spec.filepath) + ".yaml",
                 max_msgid_len=package_spec.max_msgid_len,
                 include=extensions(package_spec.includes)))
-        destination_filename = "%s/unpacked/%s_packers.h" % (include_dir, name)
-        py_template = JENV.get_template(PACKERS_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
-        destination_filename = "%s/unpacked/%s_operators.h" % (include_dir, name)
-        py_template = JENV.get_template(OPERATORS_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
     destination_filename = "%s/unpacked/sbp_msg.h" % (include_dir)
     py_template = JENV.get_template(UNPACKED_UNION_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
@@ -346,6 +330,43 @@ def render_unpacked_headers(include_dir, package_specs):
             include=extensions(all_packages),
             filepath="/".join(package_spec.filepath) + ".yaml",
             max_msgid_len=msg_msgid_len))
+
+def render_unpacked_sources(output_dir, package_specs):
+    all_msgs = []
+    all_packages = []
+    msg_msgid_len =0
+    for package_spec in package_specs:
+        msgs = []
+        msg_msgid_len = package_spec.max_msgid_len
+        if not package_spec.render_source:
+            continue
+        name = package_spec.identifier.split('.', 2)[2]
+        if name == 'types' or name == 'base':
+            continue                                                                                          
+        all_packages.append(name)                                                                             
+        for m in package_spec.definitions:                                                                    
+            new_msg = MsgItem(m, package_specs)                                                           
+            msgs.append(new_msg)
+            if m.is_real_message:
+                all_msgs.append(new_msg.name)                                                                 
+            print("Adding %s" % new_msg.name)
+        destination_filename = "%s/unpacked/%s.c" % (output_dir, name)
+        py_template = JENV.get_template(UNPACKED_SOURCE_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/include/libsbp/internal/unpacked/%s.h" % (output_dir, name)
+        py_template = JENV.get_template(UNPACKED_PRIVATE_HEADER_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+
 
 def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/version.h" % output_dir
