@@ -73,13 +73,15 @@ impl SbpEncoder {
     }
 }
 
-impl Encoder for SbpEncoder {
-    type Item = SBP;
+impl<T> Encoder<T> for SbpEncoder
+where
+    T: AsRef<SBP>,
+{
     type Error = Error;
 
-    fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
+    fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<()> {
         self.frame.clear();
-        match msg.write_frame(&mut self.frame) {
+        match msg.as_ref().write_frame(&mut self.frame) {
             Ok(_) => dst.put_slice(self.frame.as_slice()),
             Err(err) => log::error!("Error converting sbp message to frame: {}", err),
         }

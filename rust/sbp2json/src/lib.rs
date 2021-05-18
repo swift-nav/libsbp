@@ -61,7 +61,7 @@ where
     R: Read,
     W: Write,
     D: Decoder<Item = E::Item, Error = Error>,
-    E: Encoder<Error = Error>,
+    E: Encoder<E::Item, Error = Error>,
 {
     if buffered {
         sink.send_all(source)?;

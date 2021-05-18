@@ -16,10 +16,14 @@ path = "../sbp"
 features = ["json"]
 
 [dependencies]
-dencode = "0.1"
 env_logger = "0.8"
 serde_json = "1.0"
 structopt = "0.3"
+
+[dependencies.dencode]
+git = "https://github.com/swift-nav/dencode"
+branch = "steve/generic"
+default-features = false
 
 [target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
 jemallocator = "0.3"
