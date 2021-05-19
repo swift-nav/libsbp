@@ -34,6 +34,7 @@ RUN \
       build-essential \
       pandoc \
       llvm \
+      clang \
       gradle \
       texlive-science \
       texlive-fonts-extra \
@@ -48,8 +49,7 @@ RUN \
       uuid-dev \
       libgmp-dev \
       zlib1g-dev \
-      clang-format-6.0 \
-      clang
+      clang-format-6.0
 
 RUN add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
