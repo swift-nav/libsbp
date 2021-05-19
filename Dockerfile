@@ -34,6 +34,7 @@ RUN \
       build-essential \
       pandoc \
       llvm \
+      clang \
       gradle \
       texlive-science \
       texlive-fonts-extra \
