@@ -53,7 +53,7 @@ TEMPLATE_NAME = "sbp_messages_desc.tex"
 LATEX_SUBS = (
     (re.compile(r'\\'), r'\\textbackslash'),
     (re.compile(r'([{}_#%&$])'), r'\\\1'),
-    (re.compile(r'@@(\S+)\[(.+)\]'), r'\\href{\1}{\2}'),
+    (re.compile(r'@@(\S+)\[([^\]]+)\]'), r'\\href{\1}{\2}'),
     (re.compile(r'~'), r'\~{}'),
     (re.compile(r'\^'), r'\^{}'),
     (re.compile(r'"'), r"''"),

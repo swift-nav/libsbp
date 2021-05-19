@@ -54,9 +54,9 @@ def rejig_bitfields(bfs):
     return new_bfs, n_with_values
 
 def comment_links(input_string):
-   pattern = re.compile(r'@@(\S+)\[(.+)\]')
+   pattern = re.compile(r'@@(\S+)\[([^\]]+)\]')
    return pattern.sub( r'\1', input_string) 
 
 def markdown_links(input_string):
-   pattern = re.compile(r'@@(\S+)\[(.+)\]')
+   pattern = re.compile(r'@@(\S+)\[([^\]]+)\]')
    return pattern.sub( r'[\2](\1)', input_string) 
