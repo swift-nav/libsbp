@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "rust/**"
+      - ".cargo/*"
       - Cargo.toml
       - Cargo.lock
       - scripts/ci_prepare_rust.bash
