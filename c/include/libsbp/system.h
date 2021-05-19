@@ -61,9 +61,11 @@ SBP_PACK_START
                              << (SBP_STARTUP__SHIFT)));} while(0)
                              
 
-#define SBP_STARTUP__COLD_START (0)
-#define SBP_STARTUP__WARM_START (1)
-#define SBP_STARTUP__HOT_START (2)
+#define SBP_STARTUP_COLD_START (0)
+#define SBP_STARTUP_WARM_START (1)
+#define SBP_STARTUP_WARM_START (1)
+#define SBP_STARTUP_HOT_START (2)
+#define SBP_STARTUP_HOT_START (2)
 
 typedef struct SBP_ATTR_PACKED {
   u8 cause;           /**< Cause of startup */
@@ -660,9 +662,13 @@ typedef struct SBP_ATTR_PACKED {
                              
 
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_UNKNOWN (0)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_UNKNOWN (0)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MILLISECONDS (1)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_10_MILLISECONDS (1)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MICROSECONDS (2)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_10_MICROSECONDS (2)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_1_MICROSECONDS (3)
 
 typedef struct SBP_ATTR_PACKED {
   u64 time;     /**< Local time in microseconds [microseconds] */

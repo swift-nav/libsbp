@@ -121,6 +121,12 @@ def create_bitfield_macros(field, msg):
         value_description = re.sub('[ \-]+', '_', value_description.strip())
         value_description = re.sub('[^A-Za-z0-9_]+', '', value_description)
         if value_description and value_description.upper() != 'RESERVED':
+          # backwards compatibility
+          if base_string in ["SBP_IMU_AUX_GYROSCOPE_RANGE", "SBP_IMU_AUX_ACCELEROMETER_RANGE", "SBP_STARTUP", "SBP_PPS_TIME_TIME_UNCERTAINTY"]:
+            ret_list.append("#define {}_{} ({})".format(base_string, value_description,
+                                                        value_numerical))
+          base_string = re.sub('__+', '_', base_string).strip('_')
+          value_description = re.sub('__+', '_', value_description).strip('_')
           ret_list.append("#define {}_{} ({})".format(base_string, value_description,
                                                       value_numerical))
   return "\n".join(ret_list)
