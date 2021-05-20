@@ -418,15 +418,17 @@ typedef struct {
   u32 sequence;
   sbp_null_terminated_string_t command;
 } sbp_msg_command_req_t;
-#define sbp_msg_command_req_t_command_init(f) sbp_null_terminated_string_init(f, 251)
-#define sbp_msg_command_req_t_command_valid(f) sbp_null_terminated_string_valid(f, 251)
-#define sbp_msg_command_req_t_command_set(f,s) sbp_null_terminated_string_set(f,s,251)
-#define sbp_msg_command_req_t_command_printf(f,...) sbp_null_terminated_string_printf(f,251,__VA_ARGS__)
-#define sbp_msg_command_req_t_command_vprintf(f,fmt,ap) sbp_null_terminated_string_vprintf(f,251,fmt,ap)
-#define sbp_msg_command_req_t_command_packed_len(f) sbp_null_terminated_string_packed_len(f,251)
-#define sbp_msg_command_req_t_command_get(f) sbp_null_terminated_string_get(f,251)
-#define sbp_msg_command_req_t_command_len(f) ( sbp_msg_command_req_t_command_packed_len(f) - 1)
-#define sbp_msg_command_req_t_command_strcmp(a,b) sbp_null_terminated_string_strcmp(a,b,251)
+  void sbp_msg_command_req_t_command_init(sbp_null_terminated_string_t *s);
+  bool sbp_msg_command_req_t_command_valid(const sbp_null_terminated_string_t *s);
+  int sbp_msg_command_req_t_command_strcmp(const sbp_null_terminated_string_t *a, const sbp_null_terminated_string_t *b);
+  uint8_t sbp_msg_command_req_t_command_packed_len(const sbp_null_terminated_string_t *s);
+  uint8_t sbp_msg_command_req_t_command_space_remaining(const sbp_null_terminated_string_t *s);
+  bool sbp_msg_command_req_t_command_set(sbp_null_terminated_string_t *s, const char *new_str);
+  bool sbp_msg_command_req_t_command_printf(sbp_null_terminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_command_req_t_command_vprintf(sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_command_req_t_command_append_printf(sbp_null_terminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_command_req_t_command_append_vprintf(sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_command_req_t_command_get(const sbp_null_terminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_command_req_t(const sbp_msg_command_req_t *msg);
 s8 sbp_pack_sbp_msg_command_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_command_req_t *msg);
@@ -461,15 +463,17 @@ typedef struct {
   u32 sequence;
   sbp_unterminated_string_t line;
 } sbp_msg_command_output_t;
-#define sbp_msg_command_output_t_line_init(f) sbp_unterminated_string_init(f, 251)
-#define sbp_msg_command_output_t_line_valid(f) sbp_unterminated_string_valid(f, 251)
-#define sbp_msg_command_output_t_line_set(f,s) sbp_unterminated_string_set(f,s,251)
-#define sbp_msg_command_output_t_line_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
-#define sbp_msg_command_output_t_line_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
-#define sbp_msg_command_output_t_line_packed_len(f) sbp_unterminated_string_packed_len(f,251)
-#define sbp_msg_command_output_t_line_get(f) sbp_unterminated_string_get(f,251)
-#define sbp_msg_command_output_t_line_len(f) ( sbp_msg_command_output_t_line_packed_len(f))
-#define sbp_msg_command_output_t_line_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+  void sbp_msg_command_output_t_line_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_command_output_t_line_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_command_output_t_line_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_command_output_t_line_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_command_output_t_line_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_command_output_t_line_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_command_output_t_line_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_command_output_t_line_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_command_output_t_line_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_command_output_t_line_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_command_output_t_line_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_command_output_t(const sbp_msg_command_output_t *msg);
 s8 sbp_pack_sbp_msg_command_output_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_command_output_t *msg);

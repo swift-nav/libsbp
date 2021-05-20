@@ -3,31 +3,60 @@
 
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <string.h>
 
+#include <libsbp/common.h>
+
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
   typedef struct
   {
     char data[256];
-    uint8_t len;
+    uint8_t packed_len;
   } sbp_unterminated_string_t;
 
-  void sbp_unterminated_string_init(sbp_unterminated_string_t *s, uint8_t max_packed_len);
-  bool sbp_unterminated_string_valid(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
-  uint8_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
-  bool sbp_unterminated_string_set(sbp_unterminated_string_t *s, const char *new_str, uint8_t max_packed_len);
-  bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
-      __attribute__((format(printf, 3, 4)));
-  bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap);
-  const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s, uint8_t max_packed_len);
+  typedef struct
+  {
+    uint8_t max_packed_len;
+  } sbp_unterminated_string_params_t;
+
+  void sbp_unterminated_string_init(sbp_unterminated_string_t *s,
+                                       const sbp_unterminated_string_params_t *params);
+  bool sbp_unterminated_string_valid(const sbp_unterminated_string_t *s,
+                                        const sbp_unterminated_string_params_t *params);
   int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
-                                     const sbp_unterminated_string_t *b,
-                                     uint8_t max_packed_len);
+                                        const sbp_unterminated_string_t *b,
+                                        const sbp_unterminated_string_params_t *params);
+  uint8_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *s,
+                                                const sbp_unterminated_string_params_t *params);
+  uint8_t sbp_unterminated_string_space_remaining(const sbp_unterminated_string_t *s, const sbp_unterminated_string_params_t *params);
+  uint8_t sbp_unterminated_string_strlen(const sbp_unterminated_string_t *s, const sbp_unterminated_string_params_t *params);
+
+  bool sbp_unterminated_string_set(sbp_unterminated_string_t *s,
+                                      const sbp_unterminated_string_params_t *params,
+                                      const char *new_str);
+  bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s,
+                                         const sbp_unterminated_string_params_t *params,
+                                         const char *fmt,
+                                         ...) SBP_ATTR_FORMAT(3, 4);
+  bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s,
+                                          const sbp_unterminated_string_params_t *params,
+                                          const char *fmt,
+                                          va_list);
+  bool sbp_unterminated_string_append(sbp_unterminated_string_t *s,
+                                         const sbp_unterminated_string_params_t *params,
+                                         const char *new_str);
+  bool sbp_unterminated_string_append_vprintf(sbp_unterminated_string_t *s,
+                                          const sbp_unterminated_string_params_t *params,
+                                          const char *fmt,
+                                          va_list);
+  const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s,
+                                             const sbp_unterminated_string_params_t *params);
 
 #ifdef __cplusplus
 }

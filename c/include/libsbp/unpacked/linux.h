@@ -30,15 +30,17 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 236)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,236)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,236,__VA_ARGS__)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,236,fmt,ap)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,236)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f,236)
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_len(f) ( sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(f))
-#define sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,236)
+  void sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(const sbp_msg_linux_cpu_state_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_cpu_state_dep_a_t *msg);
@@ -59,15 +61,17 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_init(f) sbp_unterminated_string_init(f, 236)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 236)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,236)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,236,__VA_ARGS__)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,236,fmt,ap)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,236)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_get(f) sbp_unterminated_string_get(f,236)
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_len(f) ( sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(f))
-#define sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,236)
+  void sbp_msg_linux_mem_state_dep_a_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_mem_state_dep_a_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(const sbp_msg_linux_mem_state_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_linux_mem_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_mem_state_dep_a_t *msg);
@@ -110,15 +114,17 @@ typedef struct {
   u16 socket_states;
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_counts_t;
-#define sbp_msg_linux_process_socket_counts_t_cmdline_init(f) sbp_unterminated_string_init(f, 246)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 246)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,246)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,246,__VA_ARGS__)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,246,fmt,ap)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,246)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_get(f) sbp_unterminated_string_get(f,246)
-#define sbp_msg_linux_process_socket_counts_t_cmdline_len(f) ( sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(f))
-#define sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,246)
+  void sbp_msg_linux_process_socket_counts_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_socket_counts_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_process_socket_counts_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(const sbp_msg_linux_process_socket_counts_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_socket_counts_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_socket_counts_t *msg);
@@ -142,15 +148,17 @@ typedef struct {
   char address_of_largest[64];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_queues_t;
-#define sbp_msg_linux_process_socket_queues_t_cmdline_init(f) sbp_unterminated_string_init(f, 180)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 180)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,180)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,180,__VA_ARGS__)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,180,fmt,ap)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,180)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_get(f) sbp_unterminated_string_get(f,180)
-#define sbp_msg_linux_process_socket_queues_t_cmdline_len(f) ( sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(f))
-#define sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,180)
+  void sbp_msg_linux_process_socket_queues_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_socket_queues_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_process_socket_queues_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(const sbp_msg_linux_process_socket_queues_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_socket_queues_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_socket_queues_t *msg);
@@ -189,15 +197,17 @@ typedef struct {
   u16 fd_count;
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_fd_count_t;
-#define sbp_msg_linux_process_fd_count_t_cmdline_init(f) sbp_unterminated_string_init(f, 250)
-#define sbp_msg_linux_process_fd_count_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 250)
-#define sbp_msg_linux_process_fd_count_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,250)
-#define sbp_msg_linux_process_fd_count_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,250,__VA_ARGS__)
-#define sbp_msg_linux_process_fd_count_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,250,fmt,ap)
-#define sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,250)
-#define sbp_msg_linux_process_fd_count_t_cmdline_get(f) sbp_unterminated_string_get(f,250)
-#define sbp_msg_linux_process_fd_count_t_cmdline_len(f) ( sbp_msg_linux_process_fd_count_t_cmdline_packed_len(f))
-#define sbp_msg_linux_process_fd_count_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,250)
+  void sbp_msg_linux_process_fd_count_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_process_fd_count_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_process_fd_count_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_process_fd_count_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_count_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_process_fd_count_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_count_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_fd_count_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_fd_count_t *msg);
@@ -215,17 +225,20 @@ typedef struct {
   u32 sys_fd_count;
   sbp_sequence_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
-#define sbp_msg_linux_process_fd_summary_t_most_opened_init(f) sbp_sequence_string_init(f, 251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_valid(f) sbp_sequence_string_valid(f, 251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(f) sbp_sequence_string_packed_len(f, 251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_append(f,s) sbp_sequence_string_append(f, s, 251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(f, ...) sbp_sequence_string_append_printf(s, 251, 0, __VA_ARGS__)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(f, fmt,ap) sbp_sequence_string_append_vprintf(s, 251, 0, fmt, ap)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(f) sbp_sequence_string_count_sections(f, 251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_get_section(f,s) sbp_sequence_string_get_section(f,s,251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_section_len(f,s) sbp_sequence_string_section_len(f,s,251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(f) sbp_sequence_string_space_remaining(f,251, 0)
-#define sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(a,b) sbp_sequence_string_strcmp(a,b,251, 0)
+  void sbp_msg_linux_process_fd_summary_t_most_opened_init(sbp_sequence_string_t *s);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_valid(const sbp_sequence_string_t *s);
+  int sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(const sbp_sequence_string_t *a, const sbp_sequence_string_t *b);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(const sbp_sequence_string_t *s);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(const sbp_sequence_string_t *s);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(const sbp_sequence_string_t *s);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section(sbp_sequence_string_t *s, const char *new_str);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(sbp_sequence_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf(sbp_sequence_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append(sbp_sequence_string_t *s, const char *str);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(sbp_sequence_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(sbp_sequence_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(sbp_sequence_string_t *s, uint8_t section);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(sbp_sequence_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_fd_summary_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_fd_summary_t *msg);
@@ -261,15 +274,17 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_t;
-#define sbp_msg_linux_cpu_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
-#define sbp_msg_linux_cpu_state_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 231)
-#define sbp_msg_linux_cpu_state_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,231)
-#define sbp_msg_linux_cpu_state_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,231,__VA_ARGS__)
-#define sbp_msg_linux_cpu_state_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,231,fmt,ap)
-#define sbp_msg_linux_cpu_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,231)
-#define sbp_msg_linux_cpu_state_t_cmdline_get(f) sbp_unterminated_string_get(f,231)
-#define sbp_msg_linux_cpu_state_t_cmdline_len(f) ( sbp_msg_linux_cpu_state_t_cmdline_packed_len(f))
-#define sbp_msg_linux_cpu_state_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,231)
+  void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_cpu_state_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_cpu_state_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_cpu_state_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_cpu_state_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_cpu_state_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *msg);
 s8 sbp_pack_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_cpu_state_t *msg);
@@ -305,15 +320,17 @@ typedef struct {
   char tname[15];
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_t;
-#define sbp_msg_linux_mem_state_t_cmdline_init(f) sbp_unterminated_string_init(f, 231)
-#define sbp_msg_linux_mem_state_t_cmdline_valid(f) sbp_unterminated_string_valid(f, 231)
-#define sbp_msg_linux_mem_state_t_cmdline_set(f,s) sbp_unterminated_string_set(f,s,231)
-#define sbp_msg_linux_mem_state_t_cmdline_printf(f,...) sbp_unterminated_string_printf(f,231,__VA_ARGS__)
-#define sbp_msg_linux_mem_state_t_cmdline_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,231,fmt,ap)
-#define sbp_msg_linux_mem_state_t_cmdline_packed_len(f) sbp_unterminated_string_packed_len(f,231)
-#define sbp_msg_linux_mem_state_t_cmdline_get(f) sbp_unterminated_string_get(f,231)
-#define sbp_msg_linux_mem_state_t_cmdline_len(f) ( sbp_msg_linux_mem_state_t_cmdline_packed_len(f))
-#define sbp_msg_linux_mem_state_t_cmdline_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,231)
+  void sbp_msg_linux_mem_state_t_cmdline_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_mem_state_t_cmdline_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_linux_mem_state_t_cmdline_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_linux_mem_state_t_cmdline_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_linux_mem_state_t_cmdline_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_linux_mem_state_t_cmdline_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_mem_state_t_cmdline_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_mem_state_t_cmdline_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_mem_state_t_cmdline_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_mem_state_t_cmdline_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_mem_state_t_cmdline_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *msg);
 s8 sbp_pack_sbp_msg_linux_mem_state_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_mem_state_t *msg);

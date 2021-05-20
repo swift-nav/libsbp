@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_float(&msg->cn0);
@@ -83,7 +83,7 @@ int sbp_cmp_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *a, const sbp_msg_ac
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_float(&msg->cn0);
@@ -155,7 +155,7 @@ int sbp_cmp_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *a, cons
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_float(&msg->snr);
@@ -227,7 +227,7 @@ int sbp_cmp_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *a, cons
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_result_dep_a_t(const sbp_msg_acq_result_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_float(&msg->snr);
@@ -299,7 +299,7 @@ int sbp_cmp_sbp_msg_acq_result_dep_a_t(const sbp_msg_acq_result_dep_a_t *a, cons
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_acq_sv_profile_t(const sbp_acq_sv_profile_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->job_type);
@@ -419,7 +419,7 @@ int sbp_cmp_sbp_acq_sv_profile_t(const sbp_acq_sv_profile_t *a, const sbp_acq_sv
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->job_type);
@@ -539,7 +539,7 @@ int sbp_cmp_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_acq_sv_profile * sbp_packed_size_sbp_acq_sv_profile_t(&msg->acq_sv_profile[0]));
@@ -603,7 +603,7 @@ int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_acq_sv_profile * sbp_packed_size_sbp_acq_sv_profile_dep_t(&msg->acq_sv_profile[0]));

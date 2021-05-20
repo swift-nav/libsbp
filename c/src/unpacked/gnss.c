@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->sat);
@@ -71,7 +71,7 @@ int sbp_cmp_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *a, const sbp_sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_sv_id_t(const sbp_sv_id_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->satId);
@@ -131,7 +131,7 @@ int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b) {
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u16(&msg->sat);
@@ -197,7 +197,7 @@ int sbp_cmp_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *a, const sbp_gnss
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -257,7 +257,7 @@ int sbp_cmp_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *a, const sbp_gps_time_d
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -317,7 +317,7 @@ int sbp_cmp_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *a, const sbp_gps_time_s
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -383,7 +383,7 @@ int sbp_cmp_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *a, const sbp_sbp_gps_ti
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_carrier_phase_t(const sbp_carrier_phase_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_s32(&msg->i);

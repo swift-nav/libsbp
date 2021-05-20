@@ -89,7 +89,7 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test)
       const char assign_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
       memcpy(test_msg.version.data, assign_string, sizeof(assign_string));
     }
-    test_msg.version.len = 5;
+    test_msg.version.packed_len = 5;
                                                                               
     EXPECT_EQ(send_message( 0, test_msg), SBP_OK);
                                                                               
@@ -108,7 +108,7 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test)
       const char check_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.version.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.version.data, expected string '" << check_string << "', is '" << last_msg_.version.data << "'";
     }
-    EXPECT_EQ(last_msg_.version.len, 5) << "incorrect value for version.len, expected 5, is " << last_msg_.version.len;
+    EXPECT_EQ(last_msg_.version.packed_len, 5) << "incorrect value for version.packed_len, expected 5, is " << last_msg_.version.packed_len;
 }                                                     
 class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1 : 
   public ::testing::Test, 
@@ -181,7 +181,7 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test)
     test_msg.handshake.data[1] = 49;
     test_msg.handshake.data[2] = 46;
     test_msg.handshake.data[3] = 50;
-    test_msg.handshake.len = 4;
+    test_msg.handshake.packed_len = 4;
                                                                               
     EXPECT_EQ(send_message( 1219, test_msg), SBP_OK);
                                                                               
@@ -199,5 +199,5 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test)
     EXPECT_EQ(last_msg_.handshake.data[1], 49) << "incorrect value for handshake.data[1], expected 49, is " << last_msg_.handshake.data[1];
     EXPECT_EQ(last_msg_.handshake.data[2], 46) << "incorrect value for handshake.data[2], expected 46, is " << last_msg_.handshake.data[2];
     EXPECT_EQ(last_msg_.handshake.data[3], 50) << "incorrect value for handshake.data[3], expected 50, is " << last_msg_.handshake.data[3];
-    EXPECT_EQ(last_msg_.handshake.len, 4) << "incorrect value for handshake.len, expected 4, is " << last_msg_.handshake.len;
+    EXPECT_EQ(last_msg_.handshake.packed_len, 4) << "incorrect value for handshake.packed_len, expected 4, is " << last_msg_.handshake.packed_len;
 }

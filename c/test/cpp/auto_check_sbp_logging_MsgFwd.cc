@@ -88,7 +88,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgFwd0, Test)
       const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
       memcpy(test_msg.fwd_payload.data, assign_string, sizeof(assign_string));
     }
-    test_msg.fwd_payload.len = 16;
+    test_msg.fwd_payload.packed_len = 16;
     test_msg.protocol = 0;
     test_msg.source = 0;
                                                                               
@@ -108,7 +108,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgFwd0, Test)
       const char check_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
       EXPECT_EQ(memcmp(last_msg_.fwd_payload.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.fwd_payload.data, expected string '" << check_string << "', is '" << last_msg_.fwd_payload.data << "'";
     }
-    EXPECT_EQ(last_msg_.fwd_payload.len, 16) << "incorrect value for fwd_payload.len, expected 16, is " << last_msg_.fwd_payload.len;
+    EXPECT_EQ(last_msg_.fwd_payload.packed_len, 16) << "incorrect value for fwd_payload.packed_len, expected 16, is " << last_msg_.fwd_payload.packed_len;
     EXPECT_EQ(last_msg_.protocol, 0) << "incorrect value for protocol, expected 0, is " << last_msg_.protocol;
     EXPECT_EQ(last_msg_.source, 0) << "incorrect value for source, expected 0, is " << last_msg_.source;
 }

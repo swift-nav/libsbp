@@ -2,118 +2,198 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
+#include <libsbp/unpacked/string/unterminated.h>
 
-void sbp_unterminated_string_init(sbp_unterminated_string_t *s, uint8_t max_packed_len)
+static void maybe_init(sbp_unterminated_string_t *s, const sbp_unterminated_string_params_t *params)
 {
-  (void)max_packed_len;
-  memset(s->data, 0, sizeof(s->data));
-  s->len = 0;
+  if (!sbp_unterminated_string_valid(s, params))
+    sbp_unterminated_string_init(s, params);
 }
 
-bool sbp_unterminated_string_valid(const sbp_unterminated_string_t *s, uint8_t max_packed_len)
+void sbp_unterminated_string_init(sbp_unterminated_string_t *s, const sbp_unterminated_string_params_t *params)
 {
-  return s->len <= max_packed_len;
+  (void)params;
+  memset(s, 0, sizeof(*s));
 }
 
-uint8_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *s, uint8_t max_packed_len)
+bool sbp_unterminated_string_valid(const sbp_unterminated_string_t *s,
+                                      const sbp_unterminated_string_params_t *params)
 {
-  if (!sbp_unterminated_string_valid(s, max_packed_len))
+  if (s->packed_len > params->max_packed_len)
+  {
+    return false;
+  }
+  // for this string to be valid there must be a NULL terminated immediately after the unpacked representation
+  return s->data[s->packed_len] == 0;
+}
+
+int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
+                                      const sbp_unterminated_string_t *b,
+                                      const sbp_unterminated_string_params_t *params)
+{
+  bool avalid = sbp_unterminated_string_valid(a, params);
+  bool bvalid = sbp_unterminated_string_valid(b, params);
+  if (!avalid)
+    return bvalid ? -1 : 0;
+  if (!bvalid)
+    return avalid ? 1 : 0;
+  uint8_t cmp_len = params->max_packed_len;
+  if (a->packed_len < cmp_len)
+    cmp_len = a->packed_len;
+  if (b->packed_len < cmp_len)
+    cmp_len = b->packed_len;
+  int ret = memcmp(a->data, b->data, cmp_len);
+  if (ret != 0)
+    return ret;
+  if (a->packed_len == b->packed_len)
     return 0;
-  return s->len;
+  return a->packed_len > b->packed_len ? 1 : -1;
 }
 
-bool sbp_unterminated_string_set(sbp_unterminated_string_t *s, const char *new_str, uint8_t max_packed_len)
+uint8_t sbp_unterminated_string_packed_len(const sbp_unterminated_string_t *s,
+                                              const sbp_unterminated_string_params_t *params)
 {
-  size_t new_len = strlen(new_str);
-  if (new_len > max_packed_len)
-  {
+  if (!sbp_unterminated_string_valid(s, params))
+    return 0;
+  return s->packed_len;
+}
+
+uint8_t sbp_unterminated_string_strlen(const sbp_unterminated_string_t *s,
+                                          const sbp_unterminated_string_params_t *params)
+{
+  return (uint8_t)(sbp_unterminated_string_packed_len(s, params));
+}
+
+uint8_t sbp_unterminated_string_space_remaining(const sbp_unterminated_string_t *s,
+                                                   const sbp_unterminated_string_params_t *params)
+{
+  return (uint8_t)(params->max_packed_len - sbp_unterminated_string_packed_len(s, params));
+}
+
+bool sbp_unterminated_string_set(sbp_unterminated_string_t *s,
+                                    const sbp_unterminated_string_params_t *params,
+                                    const char *new_str)
+{
+  size_t new_str_len = strnlen(new_str, params->max_packed_len + 1u);
+  if (new_str_len == params->max_packed_len + 1u)
     return false;
-  }
-  strncpy(s->data, new_str, sizeof(s->data));
-  s->len = (uint8_t)new_len;
+  strncpy(s->data, new_str, new_str_len);
+  s->packed_len = (uint8_t)(new_str_len);
+  s->data[s->packed_len] = 0;
   return true;
 }
 
-bool sbp_unterminated_string_printf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, ...)
+bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s,
+                                        const sbp_unterminated_string_params_t *params,
+                                        const char *fmt,
+                                        va_list ap)
 {
-  va_list ap;
-  va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(s, max_packed_len, fmt, ap);
-  va_end(ap);
-  return ret;
+  size_t max_write = params->max_packed_len;
+
+  int n = vsnprintf(s->data, max_write, fmt, ap);
+
+  if (n >= 0 && n < (int)max_write)
+  {
+    s->packed_len = (uint8_t)(n);
+    return true;
+  }
+
+  // Not great, invalidates the string since vsnprintf probably wrote at least something and destroyed whatever was
+  // already there
+  s->data[0] = 0;
+  s->packed_len = 0;
+  return false;
 }
 
-bool sbp_unterminated_string_vprintf(sbp_unterminated_string_t *s, uint8_t max_packed_len, const char *fmt, va_list ap)
+bool sbp_unterminated_string_append(sbp_unterminated_string_t *s,
+                                       const sbp_unterminated_string_params_t *params,
+                                       const char *new_str)
 {
-  char new_str[256];
-  int len = vsnprintf(new_str, max_packed_len + 1u, fmt, ap);
-
-  if ((size_t)len >= max_packed_len + 1u)
-  {
+  maybe_init(s, params);
+  size_t new_str_len = strnlen(new_str, params->max_packed_len);
+  if (new_str_len == params->max_packed_len)
     return false;
-  }
-  strncpy(s->data, new_str, (size_t)len + 1);
-  s->len = (uint8_t)len;
+  uint8_t max_copy = sbp_unterminated_string_space_remaining(s, params);
+  if (new_str_len  > max_copy)
+    return false;
+  if (new_str_len  < max_copy)
+    max_copy = (uint8_t)(new_str_len);
+  uint8_t offset = (uint8_t)(s->packed_len);
+  memcpy(s->data + offset, new_str, max_copy);
+  s->packed_len = (uint8_t)(s->packed_len + max_copy);
+  s->data[s->packed_len] = 0;
   return true;
 }
 
-const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s, uint8_t max_packed_len)
+bool sbp_unterminated_string_append_vprintf(sbp_unterminated_string_t *s,
+                                               const sbp_unterminated_string_params_t *params,
+                                               const char *fmt,
+                                               va_list ap)
 {
-  if (!sbp_unterminated_string_valid(s, max_packed_len))
+  maybe_init(s, params);
+  size_t max_write = sbp_unterminated_string_space_remaining(s, params);
+  if (max_write == 0)
+    return false;
+  size_t offset = params->max_packed_len - max_write;
+  max_write++; // Overwrite terminating null
+
+  int n = vsnprintf(s->data + offset, max_write, fmt, ap);
+
+  if (n >= 0 && n < (int)max_write)
   {
-    return NULL;
+    s->packed_len = (uint8_t)(s->packed_len + n);
+    return true;
   }
+
+  // Print was going to overrun the buffer. Insert a NULL back in to the right place to "undo" what it did
+  s->data[s->packed_len] = 0;
+  return false;
+}
+
+const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s,
+                                           const sbp_unterminated_string_params_t *params)
+{
+  if (!sbp_unterminated_string_valid(s, params))
+    return "";
   return s->data;
 }
 
-bool
-sbp_unterminated_string_pack(const sbp_unterminated_string_t *s, uint8_t max_packed_len, sbp_pack_ctx_t *ctx)
+bool sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
+                                     const sbp_unterminated_string_params_t *params,
+                                     sbp_pack_ctx_t *ctx)
 {
-  if (!sbp_unterminated_string_valid(s, max_packed_len))
-  {
+  if ((ctx->buf_len - ctx->offset) < sbp_unterminated_string_packed_len(s, params))
     return false;
-  }
-  if ((ctx->buf_len - ctx->offset) < s->len)
+  if (!sbp_unterminated_string_valid(s, params) || s->packed_len == 0)
   {
-    return false;
+    return true;
   }
-  memcpy(&ctx->buf[ctx->offset], s->data, s->len);
-  ctx->offset += s->len;
+  memcpy(&ctx->buf[ctx->offset], s->data, s->packed_len);
+  ctx->offset += s->packed_len;
   return true;
 }
 
 bool sbp_unterminated_string_unpack(sbp_unterminated_string_t *s,
-                                       uint8_t max_packed_len,
+                                       const sbp_unterminated_string_params_t *params,
                                        sbp_unpack_ctx_t *ctx)
 {
-  uint8_t copy_len = (uint8_t)(ctx->buf_len - ctx->offset);
-  if (copy_len > max_packed_len)
-    copy_len = max_packed_len;
-  memcpy(s->data, &ctx->buf[ctx->offset], copy_len);
-  s->data[copy_len] = 0;
-  s->len = copy_len;
-  ctx->offset += copy_len;
+  // Unterminated string simply take all the available input data, so long as it fits in the string object
+  uint8_t max_copy = params->max_packed_len;
+  uint8_t max_buf_copy = (uint8_t)(ctx->buf_len - ctx->offset);
+  if (max_copy < max_buf_copy)
+  {
+    // More data is available in the input than we can store
+    s->data[0] = 0;
+    s->packed_len = 0;
+    return false;
+  }
+  if (max_buf_copy < max_copy)
+    max_copy = max_buf_copy; // less data is available in the input that we can store, truncate
+  memcpy(s->data, ctx->buf + ctx->offset, max_copy);
+  ctx->offset += max_copy;
+  s->packed_len = max_copy;
+  s->data[max_copy] = 0;
   return true;
 }
 
-int sbp_unterminated_string_strcmp(const sbp_unterminated_string_t *a,
-                                   const sbp_unterminated_string_t *b,
-                                   uint8_t max_packed_len)
-{
-  bool avalid = sbp_unterminated_string_valid(a, max_packed_len);
-  bool bvalid = sbp_unterminated_string_valid(b, max_packed_len);
-  if (!avalid)
-    return bvalid ? 1 : 0;
-  if (!bvalid)
-    return avalid ? -1 : 0;
-  uint8_t cmp_len = max_packed_len;
-  if (a->len < cmp_len)
-    cmp_len = a->len;
-  if (b->len < cmp_len)
-    cmp_len = b->len;
-  if (memcmp(a->data, b->data, cmp_len) == 0)
-    return 0;
-  return (int)b->len - (int)a->len;
-}

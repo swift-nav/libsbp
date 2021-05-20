@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u64(&msg->recv_time);
@@ -185,7 +185,7 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_detailed_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u64(&msg->recv_time);
@@ -359,7 +359,7 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_d
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_tracking_channel_state_t(const sbp_tracking_channel_state_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_sbp_sbp_gnss_signal_t(&msg->sid);
@@ -425,7 +425,7 @@ int sbp_cmp_sbp_tracking_channel_state_t(const sbp_tracking_channel_state_t *a, 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_states * sbp_packed_size_sbp_tracking_channel_state_t(&msg->states[0]));
@@ -489,7 +489,7 @@ int sbp_cmp_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_measurement_state_t(const sbp_measurement_state_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_sbp_sbp_gnss_signal_t(&msg->mesid);
@@ -549,7 +549,7 @@ int sbp_cmp_sbp_measurement_state_t(const sbp_measurement_state_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_states * sbp_packed_size_sbp_measurement_state_t(&msg->states[0]));
@@ -613,7 +613,7 @@ int sbp_cmp_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *a, co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_tracking_channel_correlation_t(const sbp_tracking_channel_correlation_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_s16(&msg->I);
@@ -673,7 +673,7 @@ int sbp_cmp_sbp_tracking_channel_correlation_t(const sbp_tracking_channel_correl
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->channel);
@@ -747,7 +747,7 @@ int sbp_cmp_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *a, const sbp_msg_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_tracking_channel_correlation_dep_t(const sbp_tracking_channel_correlation_dep_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_s32(&msg->I);
@@ -807,7 +807,7 @@ int sbp_cmp_sbp_tracking_channel_correlation_dep_t(const sbp_tracking_channel_co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->channel);
@@ -881,7 +881,7 @@ int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a, co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->channel);
@@ -955,7 +955,7 @@ int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_tracking_channel_state_dep_a_t(const sbp_tracking_channel_state_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->state);
@@ -1021,7 +1021,7 @@ int sbp_cmp_sbp_tracking_channel_state_dep_a_t(const sbp_tracking_channel_state_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_states * sbp_packed_size_sbp_tracking_channel_state_dep_a_t(&msg->states[0]));
@@ -1085,7 +1085,7 @@ int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_tracking_channel_state_dep_b_t(const sbp_tracking_channel_state_dep_b_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->state);
@@ -1151,7 +1151,7 @@ int sbp_cmp_sbp_tracking_channel_state_dep_b_t(const sbp_tracking_channel_state_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *msg) {
   size_t packed_size = 0;
   packed_size += (msg->n_states * sbp_packed_size_sbp_tracking_channel_state_dep_b_t(&msg->states[0]));

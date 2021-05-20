@@ -252,7 +252,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgLog )
       memcpy(test_unpacked_msg.log.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.log.text.len = 43;
+    test_unpacked_msg.log.text.packed_len = 43;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_LOG, 2314, &test_unpacked_msg, &dummy_write);
 
@@ -283,7 +283,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgLog )
       ck_assert_msg(memcmp(check_unpacked_msg->log.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->log.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->log.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->log.text.len == 43, "incorrect value for check_unpacked_msg->log.text.len, expected 43, is %d", check_unpacked_msg->log.text.len);
+    ck_assert_msg(check_unpacked_msg->log.text.packed_len == 43, "incorrect value for check_unpacked_msg->log.text.packed_len, expected 43, is %d", check_unpacked_msg->log.text.packed_len);
   }
 }
 END_TEST

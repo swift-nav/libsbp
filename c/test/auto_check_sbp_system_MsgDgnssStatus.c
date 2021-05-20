@@ -258,7 +258,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgDgnssStatus )
       memcpy(test_unpacked_msg.dgnss_status.source.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.dgnss_status.source.len = 7;
+    test_unpacked_msg.dgnss_status.source.packed_len = 7;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_DGNSS_STATUS, 66, &test_unpacked_msg, &dummy_write);
 
@@ -291,7 +291,7 @@ START_TEST( test_unpacked_auto_check_sbp_system_MsgDgnssStatus )
       ck_assert_msg(memcmp(check_unpacked_msg->dgnss_status.source.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->dgnss_status.source.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->dgnss_status.source.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->dgnss_status.source.len == 7, "incorrect value for check_unpacked_msg->dgnss_status.source.len, expected 7, is %d", check_unpacked_msg->dgnss_status.source.len);
+    ck_assert_msg(check_unpacked_msg->dgnss_status.source.packed_len == 7, "incorrect value for check_unpacked_msg->dgnss_status.source.packed_len, expected 7, is %d", check_unpacked_msg->dgnss_status.source.packed_len);
   }
 }
 END_TEST

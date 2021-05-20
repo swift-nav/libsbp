@@ -664,7 +664,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 43;
+    test_unpacked_msg.print_dep.text.packed_len = 43;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -694,7 +694,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 43, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 43, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 43, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 43, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -721,7 +721,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 42;
+    test_unpacked_msg.print_dep.text.packed_len = 42;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -751,7 +751,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 42, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 42, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 42, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 42, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -778,7 +778,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 35;
+    test_unpacked_msg.print_dep.text.packed_len = 35;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -808,7 +808,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 35, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 35, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 35, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 35, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -835,7 +835,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 41;
+    test_unpacked_msg.print_dep.text.packed_len = 41;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -865,7 +865,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 41, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 41, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 41, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 41, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -892,7 +892,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 42;
+    test_unpacked_msg.print_dep.text.packed_len = 42;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -922,7 +922,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 42, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 42, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 42, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 42, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -949,7 +949,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       memcpy(test_unpacked_msg.print_dep.text.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.print_dep.text.len = 35;
+    test_unpacked_msg.print_dep.text.packed_len = 35;
 
     sbp_pack_and_send_message(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_unpacked_msg, &dummy_write);
 
@@ -979,7 +979,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgPrintDep )
       ck_assert_msg(memcmp(check_unpacked_msg->print_dep.text.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->print_dep.text.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->print_dep.text.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->print_dep.text.len == 35, "incorrect value for check_unpacked_msg->print_dep.text.len, expected 35, is %d", check_unpacked_msg->print_dep.text.len);
+    ck_assert_msg(check_unpacked_msg->print_dep.text.packed_len == 35, "incorrect value for check_unpacked_msg->print_dep.text.packed_len, expected 35, is %d", check_unpacked_msg->print_dep.text.packed_len);
   }
 }
 END_TEST

@@ -46,15 +46,17 @@ typedef struct {
   u8 level;
   sbp_unterminated_string_t text;
 } sbp_msg_log_t;
-#define sbp_msg_log_t_text_init(f) sbp_unterminated_string_init(f, 254)
-#define sbp_msg_log_t_text_valid(f) sbp_unterminated_string_valid(f, 254)
-#define sbp_msg_log_t_text_set(f,s) sbp_unterminated_string_set(f,s,254)
-#define sbp_msg_log_t_text_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
-#define sbp_msg_log_t_text_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
-#define sbp_msg_log_t_text_packed_len(f) sbp_unterminated_string_packed_len(f,254)
-#define sbp_msg_log_t_text_get(f) sbp_unterminated_string_get(f,254)
-#define sbp_msg_log_t_text_len(f) ( sbp_msg_log_t_text_packed_len(f))
-#define sbp_msg_log_t_text_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+  void sbp_msg_log_t_text_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_log_t_text_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_log_t_text_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_log_t_text_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_log_t_text_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_log_t_text_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_log_t_text_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_log_t_text_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_log_t_text_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_log_t_text_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_log_t_text_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg);
 s8 sbp_pack_sbp_msg_log_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_log_t *msg);
@@ -73,11 +75,13 @@ typedef struct {
   u8 protocol;
   sbp_binary_string_t fwd_payload;
 } sbp_msg_fwd_t;
-#define sbp_msg_fwd_t_fwd_payload_init(f) sbp_binary_string_init(f, 253)
-#define sbp_msg_fwd_t_fwd_payload_valid(f) sbp_binary_string_valid(f, 253)
-#define sbp_msg_fwd_t_fwd_payload_set(f,s,n) sbp_binary_string_set(f, s, n, 253)
-#define sbp_msg_fwd_t_fwd_payload_get(f,n) sbp_binary_string_get(f,n,253)
-#define sbp_msg_fwd_t_fwd_payload_strcmp(a,v) sbp_binary_string_strcmp(a,b,253)
+  void sbp_msg_fwd_t_fwd_payload_init(sbp_binary_string_t *s);
+  bool sbp_msg_fwd_t_fwd_payload_valid(const sbp_binary_string_t *s);
+  int sbp_msg_fwd_t_fwd_payload_strcmp(const sbp_binary_string_t *a, const sbp_binary_string_t *b);
+  uint8_t sbp_msg_fwd_t_fwd_payload_packed_len(const sbp_binary_string_t *s);
+  uint8_t sbp_msg_fwd_t_fwd_payload_space_remaining(const sbp_binary_string_t *s);
+  bool sbp_msg_fwd_t_fwd_payload_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len);
+  bool sbp_msg_fwd_t_fwd_payload_get(const sbp_binary_string_t *s, uint8_t *str_len);
 
 size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg);
 s8 sbp_pack_sbp_msg_fwd_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fwd_t *msg);
@@ -94,15 +98,17 @@ int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b);
 typedef struct {
   sbp_unterminated_string_t text;
 } sbp_msg_print_dep_t;
-#define sbp_msg_print_dep_t_text_init(f) sbp_unterminated_string_init(f, 255)
-#define sbp_msg_print_dep_t_text_valid(f) sbp_unterminated_string_valid(f, 255)
-#define sbp_msg_print_dep_t_text_set(f,s) sbp_unterminated_string_set(f,s,255)
-#define sbp_msg_print_dep_t_text_printf(f,...) sbp_unterminated_string_printf(f,255,__VA_ARGS__)
-#define sbp_msg_print_dep_t_text_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,255,fmt,ap)
-#define sbp_msg_print_dep_t_text_packed_len(f) sbp_unterminated_string_packed_len(f,255)
-#define sbp_msg_print_dep_t_text_get(f) sbp_unterminated_string_get(f,255)
-#define sbp_msg_print_dep_t_text_len(f) ( sbp_msg_print_dep_t_text_packed_len(f))
-#define sbp_msg_print_dep_t_text_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,255)
+  void sbp_msg_print_dep_t_text_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_print_dep_t_text_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_print_dep_t_text_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_print_dep_t_text_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_print_dep_t_text_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_print_dep_t_text_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_print_dep_t_text_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_print_dep_t_text_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_print_dep_t_text_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_print_dep_t_text_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_print_dep_t_text_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg);
 s8 sbp_pack_sbp_msg_print_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_print_dep_t *msg);

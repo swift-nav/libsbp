@@ -5,89 +5,95 @@
 #include <libsbp/unpacked/string/binary.h>
 #include <libsbp/internal/unpacked/string/binary.h>
 
-void sbp_binary_string_init(sbp_binary_string_t *s, uint8_t max_packed_len)
+void sbp_binary_string_init(sbp_binary_string_t *s, const sbp_binary_string_params_t *params)
 {
-  (void)max_packed_len;
-  memset(s->data, 0, sizeof(s->data));
-  s->len = 0;
+  (void)params;
+  memset(s, 0, sizeof(*s));
 }
 
-bool sbp_binary_string_valid(const sbp_binary_string_t *s, uint8_t max_packed_len)
+bool sbp_binary_string_valid(const sbp_binary_string_t *s, const sbp_binary_string_params_t *params)
 {
-  return s->len <= max_packed_len;
+  return s->packed_len <= params->max_packed_len;
 }
 
-uint8_t sbp_binary_string_packed_len(const sbp_binary_string_t *s, uint8_t max_packed_len)
+int sbp_binary_string_strcmp(const sbp_binary_string_t *a,
+                             const sbp_binary_string_t *b,
+                             const sbp_binary_string_params_t *params)
 {
-  if (!sbp_binary_string_valid(s, max_packed_len))
+  bool avalid = sbp_binary_string_valid(a, params);
+  bool bvalid = sbp_binary_string_valid(b, params);
+  if (!avalid)
+    return bvalid ? -1 : 0;
+  if (!bvalid)
+    return avalid ? 1 : 0;
+  uint8_t cmp_len = params->max_packed_len;
+  if (a->packed_len < cmp_len)
+    cmp_len = a->packed_len;
+  if (b->packed_len < cmp_len)
+    cmp_len = b->packed_len;
+  int ret = memcmp(a->data, b->data, cmp_len);
+  if (ret != 0)
+    return ret;
+  if (a->packed_len == b->packed_len)
     return 0;
-  return s->len;
+  return a->packed_len > b->packed_len ? 1 : -1;
 }
 
-bool sbp_binary_string_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len, uint8_t max_packed_len)
+uint8_t sbp_binary_string_packed_len(const sbp_binary_string_t *s, const sbp_binary_string_params_t *params)
 {
-  if (new_str_len > max_packed_len)
-  {
-    return false;
-  }
+  if (!sbp_binary_string_valid(s, params)) return 0;
+  return s->packed_len;
+}
+
+uint8_t sbp_binary_string_space_remaining(const sbp_binary_string_t *s, const sbp_binary_string_params_t *params)
+{
+  return (uint8_t)(params->max_packed_len - sbp_binary_string_packed_len(s, params));
+}
+
+bool sbp_binary_string_set(sbp_binary_string_t *s,
+                           const sbp_binary_string_params_t *params,
+                           const char *new_str,
+                           uint8_t new_str_len)
+{
+  if (new_str_len <= params->max_packed_len) return false;
   memcpy(s->data, new_str, new_str_len);
-  s->len = new_str_len;
+  s->packed_len = new_str_len;
   return true;
 }
 
-const char * sbp_binary_string_get(const sbp_binary_string_t *s, uint8_t *len, uint8_t max_packed_len)
+const char * sbp_binary_string_get(const sbp_binary_string_t *s, const sbp_binary_string_params_t *params, uint8_t *len)
 {
-  if (!sbp_binary_string_valid(s, max_packed_len))
-      {
-      return NULL;
-      }
-  if (len != NULL) {
-    *len = s->len;
-  }
+  if (!sbp_binary_string_valid(s, params)) return false;
+  if (len) *len = s->packed_len;
   return s->data;
 }
 
-int sbp_binary_string_strcmp(const sbp_binary_string_t *a, const sbp_binary_string_t *b, uint8_t max_packed_len)
+bool sbp_binary_string_pack(const sbp_binary_string_t *s, const sbp_binary_string_params_t *params, sbp_pack_ctx_t *ctx)
 {
-  bool avalid = sbp_binary_string_valid(a, max_packed_len);
-  bool bvalid = sbp_binary_string_valid(b, max_packed_len);
-  if (!avalid)
-    return bvalid ? 1 : 0;
-  if (!bvalid)
-    return avalid ? -1 : 0;
-  uint8_t cmp_len = max_packed_len;
-  if (a->len < cmp_len)
-    cmp_len = a->len;
-  if (b->len < cmp_len)
-    cmp_len = b->len;
-  if (memcmp(a->data, b->data, cmp_len) == 0)
-    return 0;
-  return (int)b->len - (int)a->len;
-}
-
-bool sbp_binary_string_pack(const sbp_binary_string_t *s, uint8_t max_packed_len, sbp_pack_ctx_t *ctx)
-{
-  if (!sbp_binary_string_valid(s, max_packed_len))
-  {
+  if ((ctx->buf_len - ctx->offset) < sbp_binary_string_packed_len(s, params))
     return false;
-  }
-  if ((ctx->buf_len - ctx->offset) < s->len)
+  if (!sbp_binary_string_valid(s, params) || s->packed_len == 0)
   {
-    return false;
+    return true;
   }
-  memcpy(&ctx->buf[ctx->offset], s->data, s->len);
-  ctx->offset += s->len;
+  memcpy(&ctx->buf[ctx->offset], s->data, s->packed_len);
+  ctx->offset += s->packed_len;
   return true;
 }
 
-bool sbp_binary_string_unpack(sbp_binary_string_t *s, uint8_t max_packed_len, sbp_unpack_ctx_t *ctx)
+bool sbp_binary_string_unpack(sbp_binary_string_t *s, const sbp_binary_string_params_t *params, sbp_unpack_ctx_t *ctx)
 {
-  uint8_t copy_len = (uint8_t)(ctx->buf_len - ctx->offset);
-  if (copy_len > max_packed_len)
-    copy_len = max_packed_len;
-  memcpy(s->data, &ctx->buf[ctx->offset], copy_len);
-  s->data[copy_len] = 0;
-  s->len = copy_len;
-  ctx->offset += copy_len;
+  uint8_t max_copy = params->max_packed_len;
+  uint8_t max_buf_copy = (uint8_t)(ctx->buf_len - ctx->offset);
+  if (max_copy < max_buf_copy)
+  {
+    // More data is available in the input than we can store
+    s->packed_len = 0;
+    return false;
+  }
+  if (max_buf_copy < max_copy) max_copy = max_buf_copy;
+  memcpy(s->data, ctx->buf + ctx->offset, max_copy);
+  ctx->offset += max_copy;
+  s->packed_len = max_copy;
   return true;
 }

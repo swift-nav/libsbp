@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u16(&msg->wn);
@@ -83,7 +83,7 @@ int sbp_cmp_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *a, const sbp_msg_gps_ti
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_gps_time_gnss_t(const sbp_msg_gps_time_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u16(&msg->wn);
@@ -155,7 +155,7 @@ int sbp_cmp_sbp_msg_gps_time_gnss_t(const sbp_msg_gps_time_gnss_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_utc_time_t(const sbp_msg_utc_time_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->flags);
@@ -257,7 +257,7 @@ int sbp_cmp_sbp_msg_utc_time_t(const sbp_msg_utc_time_t *a, const sbp_msg_utc_ti
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_utc_time_gnss_t(const sbp_msg_utc_time_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->flags);
@@ -359,7 +359,7 @@ int sbp_cmp_sbp_msg_utc_time_gnss_t(const sbp_msg_utc_time_gnss_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_dops_t(const sbp_msg_dops_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -449,7 +449,7 @@ int sbp_cmp_sbp_msg_dops_t(const sbp_msg_dops_t *a, const sbp_msg_dops_t *b) {
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_ecef_t(const sbp_msg_pos_ecef_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -539,7 +539,7 @@ int sbp_cmp_sbp_msg_pos_ecef_t(const sbp_msg_pos_ecef_t *a, const sbp_msg_pos_ec
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_ecef_cov_t(const sbp_msg_pos_ecef_cov_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -659,7 +659,7 @@ int sbp_cmp_sbp_msg_pos_ecef_cov_t(const sbp_msg_pos_ecef_cov_t *a, const sbp_ms
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_llh_t(const sbp_msg_pos_llh_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -755,7 +755,7 @@ int sbp_cmp_sbp_msg_pos_llh_t(const sbp_msg_pos_llh_t *a, const sbp_msg_pos_llh_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_llh_cov_t(const sbp_msg_pos_llh_cov_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -875,7 +875,7 @@ int sbp_cmp_sbp_msg_pos_llh_cov_t(const sbp_msg_pos_llh_cov_t *a, const sbp_msg_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_baseline_ecef_t(const sbp_msg_baseline_ecef_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -965,7 +965,7 @@ int sbp_cmp_sbp_msg_baseline_ecef_t(const sbp_msg_baseline_ecef_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_baseline_ned_t(const sbp_msg_baseline_ned_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1061,7 +1061,7 @@ int sbp_cmp_sbp_msg_baseline_ned_t(const sbp_msg_baseline_ned_t *a, const sbp_ms
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ecef_t(const sbp_msg_vel_ecef_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1151,7 +1151,7 @@ int sbp_cmp_sbp_msg_vel_ecef_t(const sbp_msg_vel_ecef_t *a, const sbp_msg_vel_ec
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ecef_cov_t(const sbp_msg_vel_ecef_cov_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1271,7 +1271,7 @@ int sbp_cmp_sbp_msg_vel_ecef_cov_t(const sbp_msg_vel_ecef_cov_t *a, const sbp_ms
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ned_t(const sbp_msg_vel_ned_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1367,7 +1367,7 @@ int sbp_cmp_sbp_msg_vel_ned_t(const sbp_msg_vel_ned_t *a, const sbp_msg_vel_ned_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ned_cov_t(const sbp_msg_vel_ned_cov_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1487,7 +1487,7 @@ int sbp_cmp_sbp_msg_vel_ned_cov_t(const sbp_msg_vel_ned_cov_t *a, const sbp_msg_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_ecef_gnss_t(const sbp_msg_pos_ecef_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1577,7 +1577,7 @@ int sbp_cmp_sbp_msg_pos_ecef_gnss_t(const sbp_msg_pos_ecef_gnss_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_ecef_cov_gnss_t(const sbp_msg_pos_ecef_cov_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1697,7 +1697,7 @@ int sbp_cmp_sbp_msg_pos_ecef_cov_gnss_t(const sbp_msg_pos_ecef_cov_gnss_t *a, co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_llh_gnss_t(const sbp_msg_pos_llh_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1793,7 +1793,7 @@ int sbp_cmp_sbp_msg_pos_llh_gnss_t(const sbp_msg_pos_llh_gnss_t *a, const sbp_ms
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_llh_cov_gnss_t(const sbp_msg_pos_llh_cov_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -1913,7 +1913,7 @@ int sbp_cmp_sbp_msg_pos_llh_cov_gnss_t(const sbp_msg_pos_llh_cov_gnss_t *a, cons
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ecef_gnss_t(const sbp_msg_vel_ecef_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2003,7 +2003,7 @@ int sbp_cmp_sbp_msg_vel_ecef_gnss_t(const sbp_msg_vel_ecef_gnss_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ecef_cov_gnss_t(const sbp_msg_vel_ecef_cov_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2123,7 +2123,7 @@ int sbp_cmp_sbp_msg_vel_ecef_cov_gnss_t(const sbp_msg_vel_ecef_cov_gnss_t *a, co
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ned_gnss_t(const sbp_msg_vel_ned_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2219,7 +2219,7 @@ int sbp_cmp_sbp_msg_vel_ned_gnss_t(const sbp_msg_vel_ned_gnss_t *a, const sbp_ms
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ned_cov_gnss_t(const sbp_msg_vel_ned_cov_gnss_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2339,7 +2339,7 @@ int sbp_cmp_sbp_msg_vel_ned_cov_gnss_t(const sbp_msg_vel_ned_cov_gnss_t *a, cons
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_body_t(const sbp_msg_vel_body_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2459,7 +2459,7 @@ int sbp_cmp_sbp_msg_vel_body_t(const sbp_msg_vel_body_t *a, const sbp_msg_vel_bo
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_age_corrections_t(const sbp_msg_age_corrections_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2519,7 +2519,7 @@ int sbp_cmp_sbp_msg_age_corrections_t(const sbp_msg_age_corrections_t *a, const 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_gps_time_dep_a_t(const sbp_msg_gps_time_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u16(&msg->wn);
@@ -2591,7 +2591,7 @@ int sbp_cmp_sbp_msg_gps_time_dep_a_t(const sbp_msg_gps_time_dep_a_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_dops_dep_a_t(const sbp_msg_dops_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2675,7 +2675,7 @@ int sbp_cmp_sbp_msg_dops_dep_a_t(const sbp_msg_dops_dep_a_t *a, const sbp_msg_do
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_ecef_dep_a_t(const sbp_msg_pos_ecef_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2765,7 +2765,7 @@ int sbp_cmp_sbp_msg_pos_ecef_dep_a_t(const sbp_msg_pos_ecef_dep_a_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_pos_llh_dep_a_t(const sbp_msg_pos_llh_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2861,7 +2861,7 @@ int sbp_cmp_sbp_msg_pos_llh_dep_a_t(const sbp_msg_pos_llh_dep_a_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_baseline_ecef_dep_a_t(const sbp_msg_baseline_ecef_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -2951,7 +2951,7 @@ int sbp_cmp_sbp_msg_baseline_ecef_dep_a_t(const sbp_msg_baseline_ecef_dep_a_t *a
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_baseline_ned_dep_a_t(const sbp_msg_baseline_ned_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -3047,7 +3047,7 @@ int sbp_cmp_sbp_msg_baseline_ned_dep_a_t(const sbp_msg_baseline_ned_dep_a_t *a, 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ecef_dep_a_t(const sbp_msg_vel_ecef_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -3137,7 +3137,7 @@ int sbp_cmp_sbp_msg_vel_ecef_dep_a_t(const sbp_msg_vel_ecef_dep_a_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_vel_ned_dep_a_t(const sbp_msg_vel_ned_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -3233,7 +3233,7 @@ int sbp_cmp_sbp_msg_vel_ned_dep_a_t(const sbp_msg_vel_ned_dep_a_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_baseline_heading_dep_a_t(const sbp_msg_baseline_heading_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -3305,7 +3305,7 @@ int sbp_cmp_sbp_msg_baseline_heading_dep_a_t(const sbp_msg_baseline_heading_dep_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_protection_level_dep_a_t(const sbp_msg_protection_level_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -3395,7 +3395,7 @@ int sbp_cmp_sbp_msg_protection_level_dep_a_t(const sbp_msg_protection_level_dep_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_protection_level_t(const sbp_msg_protection_level_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);

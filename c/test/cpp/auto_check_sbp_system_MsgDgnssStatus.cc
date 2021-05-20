@@ -91,7 +91,7 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test)
       const char assign_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
       memcpy(test_msg.source.data, assign_string, sizeof(assign_string));
     }
-    test_msg.source.len = 7;
+    test_msg.source.packed_len = 7;
                                                                               
     EXPECT_EQ(send_message( 66, test_msg), SBP_OK);
                                                                               
@@ -112,5 +112,5 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test)
       const char check_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
       EXPECT_EQ(memcmp(last_msg_.source.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.source.data, expected string '" << check_string << "', is '" << last_msg_.source.data << "'";
     }
-    EXPECT_EQ(last_msg_.source.len, 7) << "incorrect value for source.len, expected 7, is " << last_msg_.source.len;
+    EXPECT_EQ(last_msg_.source.packed_len, 7) << "incorrect value for source.packed_len, expected 7, is " << last_msg_.source.packed_len;
 }

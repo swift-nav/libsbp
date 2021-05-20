@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->target);
@@ -101,7 +101,7 @@ int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->response);
@@ -155,7 +155,7 @@ int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_fl
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->target);
@@ -229,7 +229,7 @@ int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sb
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->target);
@@ -303,7 +303,7 @@ int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->target);
@@ -363,7 +363,7 @@ int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a, const sbp_msg_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->sector);
@@ -417,7 +417,7 @@ int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->sector);
@@ -471,7 +471,7 @@ int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sec
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *msg) {
   (void)msg;
   return 0;
@@ -481,7 +481,6 @@ bool pack_sbp_msg_stm_unique_id_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_stm_uni
 {
   (void)ctx;
   (void)msg;
-  return true;
   return true;
 }
 
@@ -526,7 +525,7 @@ int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, co
   int ret = 0;
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *msg) {
   size_t packed_size = 0;
   packed_size += ( 12 * sbp_packed_size_u8(&msg->stm_id[0]));
@@ -588,7 +587,7 @@ int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *msg) {
   size_t packed_size = 0;
   packed_size += ( 1 * sbp_packed_size_u8(&msg->status[0]));

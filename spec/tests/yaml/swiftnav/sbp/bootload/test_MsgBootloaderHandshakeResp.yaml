@@ -15,7 +15,7 @@ tests:
         data: 'v1.2
 
           '
-        len: 5
+        packed_len: 5
     module: sbp.bootload
     name: MsgBootloaderHandshakeResp
   msg_type: '0xb4'
@@ -35,7 +35,7 @@ tests:
     c_unpacked_fields:
       handshake:
         data: [118, 49, 46, 50] # 'v1.2'
-        len: 4
+        packed_len: 4
     module: sbp.bootload
     name: MsgBootloaderHandshakeDepA
   msg_type: '0xb0'

@@ -12,7 +12,7 @@ tests:
     c_unpacked_fields:
       fwd_payload: 
         data: VQD/QgAEAAAAAEag
-        len: 16
+        packed_len: 16
     module: sbp.logging
     name: MsgFwd
   msg_type: '0x402'

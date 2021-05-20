@@ -13,7 +13,7 @@ tests:
     c_unpacked_fields:
       source: 
         data: Skylark
-        len: 7
+        packed_len: 7
     module: sbp.system
     name: MsgDgnssStatus
   msg_type: '0xff02'

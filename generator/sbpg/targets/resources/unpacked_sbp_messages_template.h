@@ -61,39 +61,35 @@ typedef struct {
 
 ((*- for f in m.fields *))
   ((*- if f.packing == "packed-string" *))
+  void (((m.name|convert_unpacked)))_(((f.name)))_init(sbp_(((f.encoding)))_string_t *s);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_valid(const sbp_(((f.encoding)))_string_t *s);
+  int (((m.name|convert_unpacked)))_(((f.name)))_strcmp(const sbp_(((f.encoding)))_string_t *a, const sbp_(((f.encoding)))_string_t *b);
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_packed_len(const sbp_(((f.encoding)))_string_t *s);
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_space_remaining(const sbp_(((f.encoding)))_string_t *s);
+
   ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
-#define (((m.name|convert_unpacked)))_(((f.name)))_init(f) sbp_(((f.encoding)))_string_init(f, (((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_valid(f) sbp_(((f.encoding)))_string_valid(f, (((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_set(f,s) sbp_(((f.encoding)))_string_set(f,s,(((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_printf(f,...) sbp_(((f.encoding)))_string_printf(f,(((f.max_items))),__VA_ARGS__)
-#define (((m.name|convert_unpacked)))_(((f.name)))_vprintf(f,fmt,ap) sbp_(((f.encoding)))_string_vprintf(f,(((f.max_items))),fmt,ap)
-#define (((m.name|convert_unpacked)))_(((f.name)))_packed_len(f) sbp_(((f.encoding)))_string_packed_len(f,(((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_get(f) sbp_(((f.encoding)))_string_get(f,(((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_len(f) ( (((m.name|convert_unpacked)))_(((f.name)))_packed_len(f) ((*- if f.encoding == "null_terminated" *)) - 1((*- endif *)))
-#define (((m.name|convert_unpacked)))_(((f.name)))_strcmp(a,b) sbp_(((f.encoding)))_string_strcmp(a,b,(((f.max_items))))
+  bool (((m.name|convert_unpacked)))_(((f.name)))_set(sbp_(((f.encoding)))_string_t *s, const char *new_str);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_append_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_append_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
+  const char *(((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_(((f.encoding)))_string_t *s);
   ((*- elif f.encoding == "binary" *))
-#define (((m.name|convert_unpacked)))_(((f.name)))_init(f) sbp_binary_string_init(f, (((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_valid(f) sbp_binary_string_valid(f, (((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_set(f,s,n) sbp_binary_string_set(f, s, n, (((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_get(f,n) sbp_binary_string_get(f,n,(((f.max_items))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_strcmp(a,v) sbp_binary_string_strcmp(a,b,(((f.max_items))))
+  bool (((m.name|convert_unpacked)))_(((f.name)))_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_binary_string_t *s, uint8_t *str_len);
   ((*- elif f.encoding == "multipart" or f.encoding == "sequence" *))
-  ((*- if f.encoding == "multipart" *))((*- set common_args = f.max_items|string + ", " + f.min_sections|string + ", " + f.max_sections|string *))
-  ((*- else *))((*- set common_args = f.max_items|string + ", " + f.terminator|string *))((*- endif *))
-#define (((m.name|convert_unpacked)))_(((f.name)))_init(f) sbp_(((f.encoding)))_string_init(f, (((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_valid(f) sbp_(((f.encoding)))_string_valid(f, (((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_packed_len(f) sbp_(((f.encoding)))_string_packed_len(f, (((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_append(f,s) sbp_(((f.encoding)))_string_append(f, s, (((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_append_printf(f, ...) sbp_(((f.encoding)))_string_append_printf(s, (((common_args))), __VA_ARGS__)
-#define (((m.name|convert_unpacked)))_(((f.name)))_append_vprintf(f, fmt,ap) sbp_(((f.encoding)))_string_append_vprintf(s, (((common_args))), fmt, ap)
-#define (((m.name|convert_unpacked)))_(((f.name)))_count_sections(f) sbp_(((f.encoding)))_string_count_sections(f, (((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_get_section(f,s) sbp_(((f.encoding)))_string_get_section(f,s,(((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_section_len(f,s) sbp_(((f.encoding)))_string_section_len(f,s,(((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_space_remaining(f) sbp_(((f.encoding)))_string_space_remaining(f,(((common_args))))
-#define (((m.name|convert_unpacked)))_(((f.name)))_strcmp(a,b) sbp_(((f.encoding)))_string_strcmp(a,b,(((common_args))))
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_count_sections(const sbp_(((f.encoding)))_string_t *s);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_add_section(sbp_(((f.encoding)))_string_t *s, const char *new_str);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_add_section_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_add_section_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_append(sbp_(((f.encoding)))_string_t *s, const char *str);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_append_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((m.name|convert_unpacked)))_(((f.name)))_append_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
+  const char *(((m.name|convert_unpacked)))_(((f.name)))_get_section(sbp_(((f.encoding)))_string_t *s, uint8_t section);
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_section_strlen(sbp_(((f.encoding)))_string_t *s, uint8_t section);
   ((*- else *))
-  bad string encoding (((f.encoding)))
-  ((*- endif *))
+  **** INVALID STRING ENCODING : (((f.encoding))) ****
+  ((* endif *))
   ((*- endif *))
 ((*- endfor *))
 

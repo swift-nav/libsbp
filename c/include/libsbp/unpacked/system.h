@@ -89,15 +89,17 @@ typedef struct {
   u8 num_signals;
   sbp_unterminated_string_t source;
 } sbp_msg_dgnss_status_t;
-#define sbp_msg_dgnss_status_t_source_init(f) sbp_unterminated_string_init(f, 251)
-#define sbp_msg_dgnss_status_t_source_valid(f) sbp_unterminated_string_valid(f, 251)
-#define sbp_msg_dgnss_status_t_source_set(f,s) sbp_unterminated_string_set(f,s,251)
-#define sbp_msg_dgnss_status_t_source_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
-#define sbp_msg_dgnss_status_t_source_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
-#define sbp_msg_dgnss_status_t_source_packed_len(f) sbp_unterminated_string_packed_len(f,251)
-#define sbp_msg_dgnss_status_t_source_get(f) sbp_unterminated_string_get(f,251)
-#define sbp_msg_dgnss_status_t_source_len(f) ( sbp_msg_dgnss_status_t_source_packed_len(f))
-#define sbp_msg_dgnss_status_t_source_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+  void sbp_msg_dgnss_status_t_source_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_dgnss_status_t_source_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_dgnss_status_t_source_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_dgnss_status_t_source_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_dgnss_status_t_source_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_dgnss_status_t_source_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_dgnss_status_t_source_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_dgnss_status_t_source_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_dgnss_status_t_source_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_dgnss_status_t_source_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_dgnss_status_t_source_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *msg);
 s8 sbp_pack_sbp_msg_dgnss_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_dgnss_status_t *msg);
@@ -441,15 +443,17 @@ typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry;
 } sbp_msg_csac_telemetry_t;
-#define sbp_msg_csac_telemetry_t_telemetry_init(f) sbp_unterminated_string_init(f, 254)
-#define sbp_msg_csac_telemetry_t_telemetry_valid(f) sbp_unterminated_string_valid(f, 254)
-#define sbp_msg_csac_telemetry_t_telemetry_set(f,s) sbp_unterminated_string_set(f,s,254)
-#define sbp_msg_csac_telemetry_t_telemetry_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
-#define sbp_msg_csac_telemetry_t_telemetry_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
-#define sbp_msg_csac_telemetry_t_telemetry_packed_len(f) sbp_unterminated_string_packed_len(f,254)
-#define sbp_msg_csac_telemetry_t_telemetry_get(f) sbp_unterminated_string_get(f,254)
-#define sbp_msg_csac_telemetry_t_telemetry_len(f) ( sbp_msg_csac_telemetry_t_telemetry_packed_len(f))
-#define sbp_msg_csac_telemetry_t_telemetry_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+  void sbp_msg_csac_telemetry_t_telemetry_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_csac_telemetry_t_telemetry_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_csac_telemetry_t_telemetry_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_csac_telemetry_t_telemetry_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_csac_telemetry_t_telemetry_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_csac_telemetry_t_telemetry_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_csac_telemetry_t_telemetry_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_csac_telemetry_t_telemetry_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_csac_telemetry_t_telemetry_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_csac_telemetry_t_telemetry_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_csac_telemetry_t_telemetry_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *msg);
 s8 sbp_pack_sbp_msg_csac_telemetry_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_csac_telemetry_t *msg);
@@ -467,15 +471,17 @@ typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_init(f) sbp_unterminated_string_init(f, 254)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_valid(f) sbp_unterminated_string_valid(f, 254)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_set(f,s) sbp_unterminated_string_set(f,s,254)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_printf(f,...) sbp_unterminated_string_printf(f,254,__VA_ARGS__)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,254,fmt,ap)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f) sbp_unterminated_string_packed_len(f,254)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(f) sbp_unterminated_string_get(f,254)
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_len(f) ( sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(f))
-#define sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,254)
+  void sbp_msg_csac_telemetry_labels_t_telemetry_labels_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_t *msg);
 s8 sbp_pack_sbp_msg_csac_telemetry_labels_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_csac_telemetry_labels_t *msg);

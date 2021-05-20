@@ -65,15 +65,17 @@ typedef struct {
   u32 flags;
   sbp_unterminated_string_t version;
 } sbp_msg_bootloader_handshake_resp_t;
-#define sbp_msg_bootloader_handshake_resp_t_version_init(f) sbp_unterminated_string_init(f, 251)
-#define sbp_msg_bootloader_handshake_resp_t_version_valid(f) sbp_unterminated_string_valid(f, 251)
-#define sbp_msg_bootloader_handshake_resp_t_version_set(f,s) sbp_unterminated_string_set(f,s,251)
-#define sbp_msg_bootloader_handshake_resp_t_version_printf(f,...) sbp_unterminated_string_printf(f,251,__VA_ARGS__)
-#define sbp_msg_bootloader_handshake_resp_t_version_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,251,fmt,ap)
-#define sbp_msg_bootloader_handshake_resp_t_version_packed_len(f) sbp_unterminated_string_packed_len(f,251)
-#define sbp_msg_bootloader_handshake_resp_t_version_get(f) sbp_unterminated_string_get(f,251)
-#define sbp_msg_bootloader_handshake_resp_t_version_len(f) ( sbp_msg_bootloader_handshake_resp_t_version_packed_len(f))
-#define sbp_msg_bootloader_handshake_resp_t_version_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,251)
+  void sbp_msg_bootloader_handshake_resp_t_version_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_bootloader_handshake_resp_t_version_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_bootloader_handshake_resp_t_version_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_bootloader_handshake_resp_t_version_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_bootloader_handshake_resp_t_version_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_bootloader_handshake_resp_t_version_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_bootloader_handshake_resp_t_version_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_bootloader_handshake_resp_t_version_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_bootloader_handshake_resp_t_version_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_bootloader_handshake_resp_t_version_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_bootloader_handshake_resp_t_version_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *msg);
 s8 sbp_pack_sbp_msg_bootloader_handshake_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_resp_t *msg);
@@ -138,15 +140,17 @@ int sbp_cmp_sbp_msg_nap_device_dna_resp_t(const sbp_msg_nap_device_dna_resp_t *a
 typedef struct {
   sbp_unterminated_string_t handshake;
 } sbp_msg_bootloader_handshake_dep_a_t;
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_init(f) sbp_unterminated_string_init(f, 255)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(f) sbp_unterminated_string_valid(f, 255)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_set(f,s) sbp_unterminated_string_set(f,s,255)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(f,...) sbp_unterminated_string_printf(f,255,__VA_ARGS__)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(f,fmt,ap) sbp_unterminated_string_vprintf(f,255,fmt,ap)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f) sbp_unterminated_string_packed_len(f,255)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_get(f) sbp_unterminated_string_get(f,255)
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_len(f) ( sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(f))
-#define sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(a,b) sbp_unterminated_string_strcmp(a,b,255)
+  void sbp_msg_bootloader_handshake_dep_a_t_handshake_init(sbp_unterminated_string_t *s);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(const sbp_unterminated_string_t *s);
+  int sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+  uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(const sbp_unterminated_string_t *s);
+  uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_space_remaining(const sbp_unterminated_string_t *s);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_set(sbp_unterminated_string_t *s, const char *new_str);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf(sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_vprintf(sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_bootloader_handshake_dep_a_t_handshake_get(const sbp_unterminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootloader_handshake_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_dep_a_t *msg);

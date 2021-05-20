@@ -88,7 +88,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)50,(char)52,(char)57,(char)55,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 43;
+    test_msg.text.packed_len = 43;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -106,7 +106,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)50,(char)52,(char)57,(char)55,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 43) << "incorrect value for text.len, expected 43, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 43) << "incorrect value for text.packed_len, expected 43, is " << last_msg_.text.packed_len;
 }                                                     
 class Test_auto_check_sbp_logging_MsgPrintDep1 : 
   public ::testing::Test, 
@@ -179,7 +179,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)51,(char)49,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)52,(char)50,(char)52,(char)53,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)49,(char)32,(char)83,(char)78,(char)82,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 42;
+    test_msg.text.packed_len = 42;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -197,7 +197,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)51,(char)49,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)52,(char)50,(char)52,(char)53,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)49,(char)32,(char)83,(char)78,(char)82,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 42) << "incorrect value for text.len, expected 42, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 42) << "incorrect value for text.packed_len, expected 42, is " << last_msg_.text.packed_len;
 }                                                     
 class Test_auto_check_sbp_logging_MsgPrintDep2 : 
   public ::testing::Test, 
@@ -270,7 +270,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)48,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)49,(char)41,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 35;
+    test_msg.text.packed_len = 35;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -288,7 +288,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)48,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)49,(char)41,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 35) << "incorrect value for text.len, expected 35, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 35) << "incorrect value for text.packed_len, expected 35, is " << last_msg_.text.packed_len;
 }                                                     
 class Test_auto_check_sbp_logging_MsgPrintDep3 : 
   public ::testing::Test, 
@@ -361,7 +361,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)50,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)51,(char)57,(char)57,(char)54,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 41;
+    test_msg.text.packed_len = 41;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -379,7 +379,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)50,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)51,(char)57,(char)57,(char)54,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 41) << "incorrect value for text.len, expected 41, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 41) << "incorrect value for text.packed_len, expected 41, is " << last_msg_.text.packed_len;
 }                                                     
 class Test_auto_check_sbp_logging_MsgPrintDep4 : 
   public ::testing::Test, 
@@ -452,7 +452,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)52,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)55,(char)52,(char)57,(char)50,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 42;
+    test_msg.text.packed_len = 42;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -470,7 +470,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)97,(char)99,(char)113,(char)58,(char)32,(char)80,(char)82,(char)78,(char)32,(char)52,(char)32,(char)102,(char)111,(char)117,(char)110,(char)100,(char)32,(char)64,(char)32,(char)45,(char)55,(char)52,(char)57,(char)50,(char)32,(char)72,(char)122,(char)44,(char)32,(char)50,(char)48,(char)32,(char)83,(char)78,(char)82,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 42) << "incorrect value for text.len, expected 42, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 42) << "incorrect value for text.packed_len, expected 42, is " << last_msg_.text.packed_len;
 }                                                     
 class Test_auto_check_sbp_logging_MsgPrintDep5 : 
   public ::testing::Test, 
@@ -543,7 +543,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test)
       const char assign_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)49,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)41,(char)10 };
       memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
     }
-    test_msg.text.len = 35;
+    test_msg.text.packed_len = 35;
                                                                               
     EXPECT_EQ(send_message( 8738, test_msg), SBP_OK);
                                                                               
@@ -561,5 +561,5 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test)
       const char check_string[] = { (char)73,(char)78,(char)70,(char)79,(char)58,(char)32,(char)68,(char)105,(char)115,(char)97,(char)98,(char)108,(char)105,(char)110,(char)103,(char)32,(char)99,(char)104,(char)97,(char)110,(char)110,(char)101,(char)108,(char)32,(char)49,(char)32,(char)40,(char)80,(char)82,(char)78,(char)32,(char)49,(char)53,(char)41,(char)10 };
       EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.text.data, expected string '" << check_string << "', is '" << last_msg_.text.data << "'";
     }
-    EXPECT_EQ(last_msg_.text.len, 35) << "incorrect value for text.len, expected 35, is " << last_msg_.text.len;
+    EXPECT_EQ(last_msg_.text.packed_len, 35) << "incorrect value for text.packed_len, expected 35, is " << last_msg_.text.packed_len;
 }

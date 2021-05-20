@@ -253,7 +253,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgFwd )
       memcpy(test_unpacked_msg.fwd.fwd_payload.data, assign_string, sizeof(assign_string));
     }
     
-    test_unpacked_msg.fwd.fwd_payload.len = 16;
+    test_unpacked_msg.fwd.fwd_payload.packed_len = 16;
     test_unpacked_msg.fwd.protocol = 0;
     test_unpacked_msg.fwd.source = 0;
 
@@ -285,7 +285,7 @@ START_TEST( test_unpacked_auto_check_sbp_logging_MsgFwd )
       ck_assert_msg(memcmp(check_unpacked_msg->fwd.fwd_payload.data, check_string, sizeof(check_string)) == 0, "incorrect value for check_unpacked_msg->fwd.fwd_payload.data, expected string '%s', is '%s'", check_string, check_unpacked_msg->fwd.fwd_payload.data);
     }
     
-    ck_assert_msg(check_unpacked_msg->fwd.fwd_payload.len == 16, "incorrect value for check_unpacked_msg->fwd.fwd_payload.len, expected 16, is %d", check_unpacked_msg->fwd.fwd_payload.len);
+    ck_assert_msg(check_unpacked_msg->fwd.fwd_payload.packed_len == 16, "incorrect value for check_unpacked_msg->fwd.fwd_payload.packed_len, expected 16, is %d", check_unpacked_msg->fwd.fwd_payload.packed_len);
     ck_assert_msg(check_unpacked_msg->fwd.protocol == 0, "incorrect value for check_unpacked_msg->fwd.protocol, expected 0, is %d", check_unpacked_msg->fwd.protocol);
     ck_assert_msg(check_unpacked_msg->fwd.source == 0, "incorrect value for check_unpacked_msg->fwd.source, expected 0, is %d", check_unpacked_msg->fwd.source);
   }

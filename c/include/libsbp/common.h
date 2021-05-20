@@ -57,11 +57,15 @@ typedef uint64_t u64;
 #define SBP_PACK_END /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
 
+#define SBP_ATTR_FORMAT(a,b) __attribute__((format(printf,a,b)))
+
 #elif defined(_MSC_VER)
 
 #define SBP_PACK_START __pragma(pack(1));
 #define SBP_PACK_END __pragma(pack());
 #define SBP_ATTR_PACKED /* Intentionally empty */
+
+#define SBP_ATTR_FORMAT(a,b)
 
 #else
 

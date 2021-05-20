@@ -11,7 +11,7 @@
 #include <libsbp/internal/unpacked/string/sequence.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
-                                                                                                              
+
 size_t sbp_packed_size_sbp_solution_input_type_t(const sbp_solution_input_type_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->sensor_type);
@@ -71,7 +71,7 @@ int sbp_cmp_sbp_solution_input_type_t(const sbp_solution_input_type_t *a, const 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u16(&msg->pdop);
@@ -183,7 +183,7 @@ int sbp_cmp_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *a, const 
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u32(&msg->tow);
@@ -283,7 +283,7 @@ int sbp_cmp_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *a, const sbp_msg_soln
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_gnss_input_type_t(const sbp_gnss_input_type_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->flags);
@@ -337,7 +337,7 @@ int sbp_cmp_sbp_gnss_input_type_t(const sbp_gnss_input_type_t *a, const sbp_gnss
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_imu_input_type_t(const sbp_imu_input_type_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->flags);
@@ -391,7 +391,7 @@ int sbp_cmp_sbp_imu_input_type_t(const sbp_imu_input_type_t *a, const sbp_imu_in
   if (ret != 0) { return ret; }
   return ret;
 }
-                                                                                                              
+
 size_t sbp_packed_size_sbp_odo_input_type_t(const sbp_odo_input_type_t *msg) {
   size_t packed_size = 0;
   packed_size += sbp_packed_size_u8(&msg->flags);

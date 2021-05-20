@@ -11,7 +11,7 @@ tests:
     c_unpacked_fields:
       text: 
         data: "Filtered all obs from 2314 at tow 83.539019"
-        len: 43
+        packed_len: 43
     module: sbp.logging
     name: MsgLog
   msg_type: '0x0401'
