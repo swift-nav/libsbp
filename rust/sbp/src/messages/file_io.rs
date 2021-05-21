@@ -272,8 +272,8 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 /// device's onboard flash file system. Message contains the directory
 /// listings as a NULL delimited list. The listing is chunked over
 /// multiple SBP packets and the end of the list is identified by an
-/// entry containing just the character 0xFF. The sequence number in
-/// the response is preserved from the request.
+/// packet with no entries. The sequence number in the response is
+/// preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioReadDirResp",
   "title":"MsgFileioReadDirResp",
-  "description":"The read directory message lists the files in a directory on the,\ndevice's onboard flash file system. Message contains the directory,\nlistings as a NULL delimited list. The listing is chunked over,\nmultiple SBP packets and the end of the list is identified by an,\nentry containing just the character 0xFF. The sequence number in,\nthe response is preserved from the request.\n",
+  "description":"The read directory message lists the files in a directory on the,\ndevice's onboard flash file system. Message contains the directory,\nlistings as a NULL delimited list. The listing is chunked over,\nmultiple SBP packets and the end of the list is identified by an,\npacket with no entries. The sequence number in the response is,\npreserved from the request.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},
