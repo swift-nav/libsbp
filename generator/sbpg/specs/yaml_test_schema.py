@@ -19,6 +19,7 @@ SBP_EXTENSION = "/*.yaml"
 
 msg = Schema({
   'fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
+  'c_unpacked_fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
   'module': Coerce(str),
   'name': Coerce(str)
 })

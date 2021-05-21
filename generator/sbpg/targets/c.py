@@ -225,10 +225,7 @@ class FieldItem(object):
             self.packed_size = 0
             self.options = field.options
             self.encoding = field.options['encoding'].value
-            if self.encoding == "multipart":
-                self.max_sections = field.options['max-sections'].value
-                self.min_sections = field.options['min-sections'].value
-            elif self.encoding == "sequence":
+            if self.encoding == "sequence":
                 self.terminator = field.options['terminator'].value
         elif type_id == "array" and "size" in field.options:
             self.packing = "fixed-array"

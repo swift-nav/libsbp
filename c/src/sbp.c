@@ -411,8 +411,8 @@ static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
     if (0 > rd) {
       return SBP_READ_ERROR;
     }
-    s->frame_len += rd;
-    s->n_read += rd;
+    s->frame_len = (u16)(s->frame_len + rd);
+    s->n_read = (u8)(s->n_read + rd);
     return SBP_OK;
 }
 
@@ -434,7 +434,7 @@ static void sbp_state_frame_buffer_clear(sbp_state_t *s)
  */
 static u16 sbp_u8_array_to_u16(u8 *array_start)
 {
-  return (u16) array_start[0] + ((u16) array_start[1] << 8);
+  return (u16)((u16)array_start[0] + ((u16)array_start[1] << 8));
 }
 
 /** Read and process SBP messages.
@@ -506,7 +506,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_TYPE:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->msg_type)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -518,7 +518,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_SENDER:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->sender_id)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -530,7 +530,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_LEN:
-    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->msg_len)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -543,7 +543,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
-    ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(s->msg_len - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -554,7 +554,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_CRC:
-    ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(SBP_CRC_LEN - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -693,7 +693,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
         case SBP_UNPACKED_CALLBACK: {
-          if (need_unpacked) {
+          if (need_unpack) {
             need_unpack = false;
             if (sbp_unpack_msg(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
               unpacked_successfully = true;

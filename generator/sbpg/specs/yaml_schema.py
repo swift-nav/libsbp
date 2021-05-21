@@ -31,6 +31,8 @@ sbp_identifier = Schema(int)
 units = Coerce(str)
 bitmask = Coerce(str)
 size = Schema(int)
+encoding = Schema(str)
+terminator = Schema(int)
 
 bitfield = Schema([{Optional(bitmask):
                            {Optional('units'): units,
@@ -43,6 +45,8 @@ field = Schema({identifier:
                  Optional('map_by'): identifier,
                  Optional('fill'): identifier,
                  Optional('size'): size,
+                 Optional('encoding'): encoding,
+                 Optional('terminator'): terminator,
                  Optional('size_fn'): identifier,
                  Optional('fields'): bitfield}})
 definition = Schema({identifier:

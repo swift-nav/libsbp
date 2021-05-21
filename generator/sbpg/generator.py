@@ -105,7 +105,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.test_java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.unpacked_c or args.haskell or args.latex or args.protobuf or args.java or args.test_java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
