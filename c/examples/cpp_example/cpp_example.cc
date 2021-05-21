@@ -34,28 +34,26 @@ class SbpFileReader : public sbp::IReader {
   std::ifstream file_stream_;
 };
 
-class ECEFHandler : private sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t> {
+class ECEFHandler : private sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t> {
   public:
-    ECEFHandler(sbp::State *state) : sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+    ECEFHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t>(state) {
     }
 
-    void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_gps_time_t& msg) {
+    void handle_sbp_msg(uint16_t sender_id, const sbp_msg_gps_time_t& msg) {
       (void)sender_id;
-      (void)message_length;
       std::cout << "Received new GPS_TME message with WN = " << msg.wn << ", TOW = " << msg.tow << "\n";
     }
 
-    void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_pos_ecef_t& msg) {
+    void handle_sbp_msg(uint16_t sender_id, const sbp_msg_pos_ecef_t& msg) {
       (void)sender_id;
-      (void)message_length;
       std::cout << "Received new POS_ECEF message with TOW = " << msg.tow;
       std::cout << ", (X,Y,Z) = (" << msg.x << "," << msg.y << "," << msg.z << ")\n";
     }
 };
 
-class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t> {
+class LLHFrameHandler : private sbp::FrameHandler<sbp_msg_gps_time_t, sbp_msg_pos_llh_t> {
   public:
-    LLHFrameHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>(state) {
+    LLHFrameHandler(sbp::State *state) : sbp::FrameHandler<sbp_msg_gps_time_t, sbp_msg_pos_llh_t>(state) {
     }
 
     void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,

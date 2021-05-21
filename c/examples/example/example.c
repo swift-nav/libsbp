@@ -6,7 +6,7 @@
 #include <libserialport.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/system.h>
+#include <libsbp/packed/system.h>
 
 char *serial_port_name = NULL;
 struct sp_port *piksi_port = NULL;

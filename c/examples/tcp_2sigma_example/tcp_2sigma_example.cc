@@ -40,7 +40,7 @@
 #endif /* SHOW_PLOT */
 
 #include <libsbp/sbp.h>
-#include <libsbp/navigation.h>
+#include <libsbp/packed/navigation.h>
 
 // width and height of the plot window in pixels
 #define SIZE_PIXELS 300

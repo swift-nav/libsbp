@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/system.h>
+#include <libsbp/packed/system.h>
 
 char *tcp_ip_addr = NULL;
 char *tcp_ip_port = NULL;
