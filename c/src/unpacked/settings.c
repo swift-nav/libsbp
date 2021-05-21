@@ -137,12 +137,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_write_tsetting_param
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_write_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_write_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_write_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_write_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_write_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_write_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_write_tsetting_params, section);
 }
@@ -272,12 +272,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_write_resp_tsetting_
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_write_resp_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_write_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_write_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_write_resp_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_write_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_write_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_write_resp_tsetting_params, section);
 }
@@ -413,12 +413,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_read_req_tsetting_pa
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_read_req_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_read_req_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_read_req_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_req_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_read_req_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_read_req_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_read_req_tsetting_params, section);
 }
@@ -548,12 +548,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_read_resp_tsetting_p
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_read_resp_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_read_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_read_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_resp_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_read_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_read_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_read_resp_tsetting_params, section);
 }
@@ -737,12 +737,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_read_by_index_resp_t
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_read_by_index_resp_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_read_by_index_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_read_by_index_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_by_index_resp_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_read_by_index_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_read_by_index_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_read_by_index_resp_tsetting_params, section);
 }
@@ -932,12 +932,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_register_tsetting_pa
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_register_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_register_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_register_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_register_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_register_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_register_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_register_tsetting_params, section);
 }
@@ -1067,12 +1067,12 @@ static const sbp_multipart_string_params_t sbp_msg_settings_register_resp_tsetti
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_settings_register_resp_tsetting_params, fmt, ap);
 }
 
-  const char *sbp_msg_settings_register_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_settings_register_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_settings_register_resp_tsetting_params, section);
 }
 
-  uint8_t sbp_msg_settings_register_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_settings_register_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_settings_register_resp_tsetting_params, section);
 }

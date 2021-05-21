@@ -423,12 +423,12 @@ static const sbp_multipart_string_params_t sbp_msg_fileio_read_dir_resp_tcontent
   return sbp_multipart_string_append_vprintf(s, &sbp_msg_fileio_read_dir_resp_tcontents_params, fmt, ap);
 }
 
-  const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(sbp_multipart_string_t *s, uint8_t section)
+  const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_get_section(s, &sbp_msg_fileio_read_dir_resp_tcontents_params, section);
 }
 
-  uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(sbp_multipart_string_t *s, uint8_t section)
+  uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(const sbp_multipart_string_t *s, uint8_t section)
 {
   return sbp_multipart_string_section_strlen(s, &sbp_msg_fileio_read_dir_resp_tcontents_params, section);
 }

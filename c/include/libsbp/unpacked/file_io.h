@@ -116,8 +116,8 @@ typedef struct {
   bool sbp_msg_fileio_read_dir_resp_t_contents_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_fileio_read_dir_resp_t_contents_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_fileio_read_dir_resp_t_contents_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg);
 s8 sbp_pack_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_resp_t *msg);

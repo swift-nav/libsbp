@@ -141,12 +141,12 @@ static const sbp_(((f.encoding)))_string_params_t (((params))) =
   return sbp_(((f.encoding)))_string_append_vprintf(s, &(((params))), fmt, ap);
 }
 
-  const char *(((m.name|convert_unpacked)))_(((f.name)))_get_section(sbp_(((f.encoding)))_string_t *s, uint8_t section)
+  const char *(((m.name|convert_unpacked)))_(((f.name)))_get_section(const sbp_(((f.encoding)))_string_t *s, uint8_t section)
 {
   return sbp_(((f.encoding)))_string_get_section(s, &(((params))), section);
 }
 
-  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_section_strlen(sbp_(((f.encoding)))_string_t *s, uint8_t section)
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_section_strlen(const sbp_(((f.encoding)))_string_t *s, uint8_t section)
 {
   return sbp_(((f.encoding)))_string_section_strlen(s, &(((params))), section);
 }

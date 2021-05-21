@@ -54,8 +54,8 @@ typedef struct {
   bool sbp_msg_settings_write_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_write_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_write_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_write_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_write_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_write_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_write_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *msg);
 s8 sbp_pack_sbp_msg_settings_write_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_write_t *msg);
@@ -103,8 +103,8 @@ typedef struct {
   bool sbp_msg_settings_write_resp_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_write_resp_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_write_resp_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_write_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_write_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_write_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_write_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_write_resp_t(const sbp_msg_settings_write_resp_t *msg);
 s8 sbp_pack_sbp_msg_settings_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_write_resp_t *msg);
@@ -133,8 +133,8 @@ typedef struct {
   bool sbp_msg_settings_read_req_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_read_req_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_read_req_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_read_req_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_read_req_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_read_req_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_read_req_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_read_req_t(const sbp_msg_settings_read_req_t *msg);
 s8 sbp_pack_sbp_msg_settings_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_read_req_t *msg);
@@ -163,8 +163,8 @@ typedef struct {
   bool sbp_msg_settings_read_resp_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_read_resp_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_read_resp_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_read_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_read_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_read_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_read_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_read_resp_t(const sbp_msg_settings_read_resp_t *msg);
 s8 sbp_pack_sbp_msg_settings_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_read_resp_t *msg);
@@ -210,8 +210,8 @@ typedef struct {
   bool sbp_msg_settings_read_by_index_resp_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_read_by_index_resp_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_read_by_index_resp_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_read_by_index_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_read_by_index_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_read_by_index_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_read_by_index_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(const sbp_msg_settings_read_by_index_resp_t *msg);
 s8 sbp_pack_sbp_msg_settings_read_by_index_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_read_by_index_resp_t *msg);
@@ -256,8 +256,8 @@ typedef struct {
   bool sbp_msg_settings_register_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_register_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_register_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_register_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_register_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_register_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_register_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *msg);
 s8 sbp_pack_sbp_msg_settings_register_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_register_t *msg);
@@ -302,8 +302,8 @@ typedef struct {
   bool sbp_msg_settings_register_resp_t_setting_append(sbp_multipart_string_t *s, const char *str);
   bool sbp_msg_settings_register_resp_t_setting_append_printf(sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_settings_register_resp_t_setting_append_vprintf(sbp_multipart_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_settings_register_resp_t_setting_get_section(sbp_multipart_string_t *s, uint8_t section);
-  uint8_t sbp_msg_settings_register_resp_t_setting_section_strlen(sbp_multipart_string_t *s, uint8_t section);
+  const char *sbp_msg_settings_register_resp_t_setting_get_section(const sbp_multipart_string_t *s, uint8_t section);
+  uint8_t sbp_msg_settings_register_resp_t_setting_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_settings_register_resp_t(const sbp_msg_settings_register_resp_t *msg);
 s8 sbp_pack_sbp_msg_settings_register_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_settings_register_resp_t *msg);

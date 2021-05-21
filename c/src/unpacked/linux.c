@@ -1017,12 +1017,12 @@ static const sbp_double_null_terminated_string_params_t sbp_msg_linux_process_fd
   return sbp_double_null_terminated_string_append_vprintf(s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, fmt, ap);
 }
 
-  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(sbp_double_null_terminated_string_t *s, uint8_t section)
+  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(const sbp_double_null_terminated_string_t *s, uint8_t section)
 {
   return sbp_double_null_terminated_string_get_section(s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, section);
 }
 
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(sbp_double_null_terminated_string_t *s, uint8_t section)
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(const sbp_double_null_terminated_string_t *s, uint8_t section)
 {
   return sbp_double_null_terminated_string_section_strlen(s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, section);
 }

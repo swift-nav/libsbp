@@ -237,8 +237,8 @@ typedef struct {
   bool sbp_msg_linux_process_fd_summary_t_most_opened_append(sbp_double_null_terminated_string_t *s, const char *str);
   bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(sbp_double_null_terminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(sbp_double_null_terminated_string_t *s, uint8_t section);
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(sbp_double_null_terminated_string_t *s, uint8_t section);
+  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(const sbp_double_null_terminated_string_t *s, uint8_t section);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(const sbp_double_null_terminated_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_fd_summary_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_fd_summary_t *msg);

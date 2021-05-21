@@ -85,8 +85,8 @@ typedef struct {
   bool (((m.name|convert_unpacked)))_(((f.name)))_append(sbp_(((f.encoding)))_string_t *s, const char *str);
   bool (((m.name|convert_unpacked)))_(((f.name)))_append_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool (((m.name|convert_unpacked)))_(((f.name)))_append_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
-  const char *(((m.name|convert_unpacked)))_(((f.name)))_get_section(sbp_(((f.encoding)))_string_t *s, uint8_t section);
-  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_section_strlen(sbp_(((f.encoding)))_string_t *s, uint8_t section);
+  const char *(((m.name|convert_unpacked)))_(((f.name)))_get_section(const sbp_(((f.encoding)))_string_t *s, uint8_t section);
+  uint8_t (((m.name|convert_unpacked)))_(((f.name)))_section_strlen(const sbp_(((f.encoding)))_string_t *s, uint8_t section);
   ((*- else *))
   **** INVALID STRING ENCODING : (((f.encoding))) ****
   ((* endif *))
