@@ -15,8 +15,8 @@
 #include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/unpacked_message_traits.h>
+#include <libsbp/cpp/unpacked_handler.h>
 
 ((*- for t in s.tests *))                                                     
 class Test_(((s.suite_name)))(((loop.index0))) : 
@@ -24,7 +24,7 @@ class Test_(((s.suite_name)))(((loop.index0))) :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<(((t.msg_type_name|convert_unpacked)))>
+  sbp::UnpackedMessageHandler<(((t.msg_type_name|convert_unpacked)))>
 {
 public:
   Test_(((s.suite_name)))(((loop.index0)))() : 
@@ -32,7 +32,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<(((t.msg_type_name|convert_unpacked)))>(this), 
+        sbp::UnpackedMessageHandler<(((t.msg_type_name|convert_unpacked)))>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 

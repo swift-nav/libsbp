@@ -17,7 +17,7 @@
 #include <stdlib.h> // for malloc
 #include <libsbp/sbp.h>
 #include <libsbp/unpacked/piksi.h>
-#include <libsbp/packed/piksi.h>
+#include <libsbp/piksi.h>
 
 static struct {
   u32 n_callbacks_logged;

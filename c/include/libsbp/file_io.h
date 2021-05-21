@@ -30,6 +30,10 @@
 #ifndef LIBSBP_PACKED_FILE_IO_MESSAGES_H
 #define LIBSBP_PACKED_FILE_IO_MESSAGES_H
 
+#ifdef SBP_DISABLE_PACKED_HEADERS
+#error "Packed SBP headers are disabled"
+#endif
+
 #include <libsbp/common.h>
 
 SBP_PACK_START

@@ -28,6 +28,7 @@ set_target_properties(sbp PROPERTIES
 target_code_coverage(sbp AUTO ALL)
 swift_set_language_standards(sbp)
 swift_set_compile_options(sbp ADD -pedantic)
+target_compile_definitions(sbp PRIVATE SBP_DISABLE_PACKED_HEADERS)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")

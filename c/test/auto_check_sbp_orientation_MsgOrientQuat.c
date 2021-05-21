@@ -17,7 +17,7 @@
 #include <stdlib.h> // for malloc
 #include <libsbp/sbp.h>
 #include <libsbp/unpacked/orientation.h>
-#include <libsbp/packed/orientation.h>
+#include <libsbp/orientation.h>
 
 static struct {
   u32 n_callbacks_logged;

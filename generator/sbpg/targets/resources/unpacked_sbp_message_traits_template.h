@@ -10,11 +10,12 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_MESSAGE_TRAITS_H
-#define SBP_CPP_MESSAGE_TRAITS_H
+#ifndef SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
+#define SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
 
+#include <libsbp/unpacked/sbp_msg.h>
 ((*- for i in includes *))
-#include <libsbp/(((i))).h>
+#include <libsbp/unpacked/(((i))).h>
 ((*- endfor *))
 
 namespace sbp {
@@ -29,11 +30,17 @@ template<typename>
 struct MessageTraits;
 
 ((* for m in msgs *))
-((*- if m.fields *))
+((*- if m.is_real_message *))
 template<>
-struct MessageTraits<(((m.identifier|convert_packed)))> {
+struct MessageTraits<(((m.identifier|convert_unpacked)))> {
   static constexpr u16 id = (((m.sbp_id)));
-  static constexpr bool is_unpacked = false;
+  static constexpr bool is_unpacked = true;
+  static const (((m.identifier|convert_unpacked)))& get(const sbp_msg_t &msg) {
+    return msg.(((m.identifier|convert_unpacked_union)));
+  }
+  static (((m.identifier|convert_unpacked)))& get(sbp_msg_t &msg) {
+    return msg.(((m.identifier|convert_unpacked_union)));
+  }
 };
 ((* endif *))
 ((* endfor *))
@@ -42,3 +49,4 @@ struct MessageTraits<(((m.identifier|convert_packed)))> {
 } // namespace sbp
 
 #endif //SBP_CPP_MESSAGE_TRAITS_H
+

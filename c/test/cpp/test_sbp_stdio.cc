@@ -13,7 +13,7 @@
 #include <gtest/gtest.h>
 
 #include <libsbp/cpp/sbp_stdio.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/unpacked_handler.h>
 
 namespace {
 
@@ -23,9 +23,9 @@ struct SbpHeaderParams {
   sbp_msg_obs_t payload;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t> {
+class MsgObsHandler : private sbp::UnpackedMessageHandler<sbp_msg_obs_t> {
 public:
-  explicit MsgObsHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_obs_t>(state), state_(state) {}
+  explicit MsgObsHandler(sbp::State *state) : sbp::UnpackedMessageHandler<sbp_msg_obs_t>(state), state_(state) {}
 
   void handle_sbp_msg(uint16_t sender_id, const sbp_msg_obs_t &msg) override {
     header_params_.sender_id = sender_id;

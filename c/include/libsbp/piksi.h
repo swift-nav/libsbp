@@ -25,8 +25,12 @@
 #ifndef LIBSBP_PACKED_PIKSI_MESSAGES_H
 #define LIBSBP_PACKED_PIKSI_MESSAGES_H
 
+#ifdef SBP_DISABLE_PACKED_HEADERS
+#error "Packed SBP headers are disabled"
+#endif
+
 #include <libsbp/common.h>
-#include <libsbp/packed/gnss.h>
+#include <libsbp/gnss.h>
 
 SBP_PACK_START
 

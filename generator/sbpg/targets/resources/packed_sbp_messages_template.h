@@ -23,10 +23,14 @@
 #ifndef LIBSBP_PACKED_(((pkg_name|upper)))_MESSAGES_H
 #define LIBSBP_PACKED_(((pkg_name|upper)))_MESSAGES_H
 
+#ifdef SBP_DISABLE_PACKED_HEADERS
+#error "Packed SBP headers are disabled"
+#endif
+
 #include <libsbp/common.h>
 
 ((*- for i in include *))
-#include <libsbp/packed/(((i)))>
+#include <libsbp/(((i)))>
 ((*- endfor *))
 
 SBP_PACK_START

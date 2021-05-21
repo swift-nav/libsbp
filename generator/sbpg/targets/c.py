@@ -23,6 +23,7 @@ UNPACKED_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template.h"
 UNPACKED_UNION_TEMPLATE_NAME = "unpacked_union_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
+UNPACKED_MESSAGE_TRAITS_TEMPLATE_NAME = "unpacked_sbp_message_traits_template.h"
 UNPACKED_SOURCE_TEMPLATE_NAME = "unpacked_sbp_messages_template.c"
 UNPACKED_PRIVATE_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template_private.h"
 
@@ -286,7 +287,7 @@ def render_packed_headers(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/packed/%s.h" % (output_dir, name)
+  destination_filename = "%s/%s.h" % (output_dir, name)
   py_template = JENV.get_template(PACKED_HEADER_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
@@ -394,6 +395,12 @@ def render_traits(output_dir, package_specs):
         msgs.append(m)
   destination_filename = "%s/cpp/message_traits.h" % output_dir
   py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(packages=package_specs,
+                               msgs=sorted(msgs, key=lambda msg: msg.sbp_id),
+                               includes=sorted(includes)))
+  destination_filename = "%s/cpp/unpacked_message_traits.h" % output_dir
+  py_template = JENV.get_template(UNPACKED_MESSAGE_TRAITS_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(packages=package_specs,
                                msgs=sorted(msgs, key=lambda msg: msg.sbp_id),

@@ -15,14 +15,14 @@
 #include <cstring>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>                                                     
+#include <libsbp/cpp/unpacked_message_traits.h>
+#include <libsbp/cpp/unpacked_handler.h>                                                     
 class Test_auto_check_sbp_observation_msgEphemerisDepB0 : 
   public ::testing::Test, 
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB0() : 
@@ -30,7 +30,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
@@ -157,7 +157,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB1 :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB1() : 
@@ -165,7 +165,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
@@ -292,7 +292,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB2 :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB2() : 
@@ -300,7 +300,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
@@ -427,7 +427,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB3 :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB3() : 
@@ -435,7 +435,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
@@ -562,7 +562,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB4 :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB4() : 
@@ -570,7 +570,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 
@@ -697,7 +697,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB5 :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>
+  sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>
 {
 public:
   Test_auto_check_sbp_observation_msgEphemerisDepB5() : 
@@ -705,7 +705,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
+        sbp::UnpackedMessageHandler<sbp_msg_ephemeris_dep_b_t>(this), 
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(), 

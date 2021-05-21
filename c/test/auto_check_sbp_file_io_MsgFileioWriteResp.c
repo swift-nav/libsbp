@@ -17,7 +17,7 @@
 #include <stdlib.h> // for malloc
 #include <libsbp/sbp.h>
 #include <libsbp/unpacked/file_io.h>
-#include <libsbp/packed/file_io.h>
+#include <libsbp/file_io.h>
 
 static struct {
   u32 n_callbacks_logged;
