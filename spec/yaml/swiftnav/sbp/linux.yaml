@@ -43,6 +43,7 @@ definitions:
           desc: fixed length string representing the thread name
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_MEM_STATE_DEP_A:
@@ -68,6 +69,7 @@ definitions:
           desc: fixed length string representing the thread name
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_SYS_STATE_DEP_A:
@@ -128,6 +130,7 @@ definitions:
              and 0x8000 (unknown)
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
  
  - MSG_LINUX_PROCESS_SOCKET_QUEUES:
@@ -171,6 +174,7 @@ definitions:
              of the connection.
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
  
  - MSG_LINUX_SOCKET_USAGE:
@@ -219,6 +223,7 @@ definitions:
           desc: a count of the number of file descriptors opened by the process
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
           
  - MSG_LINUX_PROCESS_FD_SUMMARY:
@@ -233,6 +238,8 @@ definitions:
           desc: count of total FDs open on the system
       - most_opened:
           type: string
+          encoding: sequence
+          terminator: 0x00
           desc: |
              A null delimited list of strings which alternates between
              a string representation of the process count and the file
@@ -275,6 +282,7 @@ definitions:
            desc: fixed length string representing the thread name
        - cmdline:
            type: string
+           encoding: unterminated
            desc: the command line (as much as it fits in the remaining packet)
 
 
@@ -313,6 +321,7 @@ definitions:
            desc: fixed length string representing the thread name
        - cmdline:
            type: string
+           encoding: unterminated
            desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_SYS_STATE:

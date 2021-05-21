@@ -170,6 +170,8 @@ tests:
         sid:
           code: 14
           sat: 36
+    c_unpacked_fields:
+      n_azel: 33
     module: sbp.observation
     name: MsgSvAzEl
   msg_type: '0x97'

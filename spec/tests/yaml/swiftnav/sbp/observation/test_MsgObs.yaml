@@ -195,6 +195,8 @@ tests:
         sid:
           sat: 18
           code: 3
+    c_unpacked_fields:
+      n_obs: 14
     module: sbp.observation 
     name: MsgObs
   msg_type: '0x4a'

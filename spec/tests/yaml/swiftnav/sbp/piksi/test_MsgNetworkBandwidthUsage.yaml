@@ -30,6 +30,8 @@ tests:
         rx_bytes: 0
         total_bytes: 0
         tx_bytes: 0
+    c_unpacked_fields:
+      n_interfaces: 5
     module: sbp.piksi
     name: MsgNetworkBandwidthUsage
   msg_type: '0xBD'

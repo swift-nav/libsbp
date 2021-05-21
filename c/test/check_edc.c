@@ -11,7 +11,7 @@
  */
 
 #include <check.h>
-#include <edc.h>
+#include <libsbp/edc.h>
 
 const u8 *test_data = (const u8*)"123456789";
 

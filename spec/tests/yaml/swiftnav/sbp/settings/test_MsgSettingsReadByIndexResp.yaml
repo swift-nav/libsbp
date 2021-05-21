@@ -8,6 +8,13 @@ tests:
     fields:
       index: 0
       setting: "telemetry_radio\0configuration_string\0AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ\0"
+    c_unpacked_fields:
+      setting:
+        data: "telemetry_radio\0configuration_string\0AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ\0"
+        packed_len: 76
+        n_sections: 3
+        offsets: [ 0, 16, 37 ]
+        lens: [ 15, 20, 38 ]
     module: sbp.settings
     name: MsgSettingsReadByIndexResp
   msg_type: '0xa7'
@@ -27,6 +34,13 @@ tests:
     fields:
       index: 1
       setting: "uart_ftdi\0mode\0SBP\0enum:SBP,NMEA\0"
+    c_unpacked_fields:
+      setting: 
+        data: "uart_ftdi\0mode\0SBP\0enum:SBP,NMEA\0"
+        packed_len: 33
+        n_sections: 4
+        offsets: [0, 10, 15, 19]
+        lens: [9, 4, 3, 13]
     module: sbp.settings
     name: MsgSettingsReadByIndexResp
   msg_type: '0xa7'
@@ -46,6 +60,13 @@ tests:
     fields:
       index: 2
       setting: "uart_ftdi\0sbp_message_mask\065535\0"
+    c_unpacked_fields:
+      setting: 
+        data: "uart_ftdi\0sbp_message_mask\065535\0"
+        packed_len: 33
+        n_sections: 3
+        offsets: [0, 10, 27]
+        lens: [9, 16, 5]
     module: sbp.settings
     name: MsgSettingsReadByIndexResp
   msg_type: '0xa7'
@@ -65,6 +86,13 @@ tests:
     fields:
       index: 3
       setting: "uart_ftdi\0baudrate\01000000\0"
+    c_unpacked_fields:
+      setting: 
+        data: "uart_ftdi\0baudrate\01000000\0"
+        packed_len: 27
+        n_sections: 3
+        offsets: [0, 10, 19]
+        lens: [9, 8, 7]
     module: sbp.settings
     name: MsgSettingsReadByIndexResp
   msg_type: '0xa7'
@@ -84,6 +112,13 @@ tests:
     fields:
       index: 4
       setting: "uart_uarta\0mode\0SBP\0enum:SBP,NMEA\0"
+    c_unpacked_fields:
+      setting: 
+        data: "uart_uarta\0mode\0SBP\0enum:SBP,NMEA\0"
+        packed_len: 34
+        n_sections: 4
+        offsets: [0, 11, 16, 20]
+        lens: [10, 4, 3, 13]
     module: sbp.settings
     name: MsgSettingsReadByIndexResp
   msg_type: '0xa7'

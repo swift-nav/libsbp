@@ -8,7 +8,7 @@ endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
 FILE(GLOB generated_c_sources auto*.c)
 
-set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include/libsbp)
+set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include)
 
 if(APPLE)
   # Some libraries are available in non-standard places on apple.
@@ -49,3 +49,4 @@ swift_set_compile_options(test-libsbp
 )
 
 add_subdirectory(cpp)
+add_subdirectory(string)
