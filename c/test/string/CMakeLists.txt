@@ -5,7 +5,7 @@ swift_add_test(test-libsbp-string
     test_unterminated.cc
     test_binary.cc
     test_multipart.cc
-    test_sequence.cc
+    test_double_null_terminated.cc
     test_null_terminated.cc
   INCLUDE
     ${PROJECT_SOURCE_DIR}/src/include

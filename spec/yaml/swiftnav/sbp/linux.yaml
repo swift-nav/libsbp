@@ -238,8 +238,7 @@ definitions:
           desc: count of total FDs open on the system
       - most_opened:
           type: string
-          encoding: sequence
-          terminator: 0x00
+          encoding: double_null_terminated
           desc: |
              A null delimited list of strings which alternates between
              a string representation of the process count and the file

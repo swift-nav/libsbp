@@ -10,7 +10,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/unpacked/string/multipart.h>
-#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/double_null_terminated.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/string/binary.h>
@@ -223,22 +223,22 @@ int sbp_cmp_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_coun
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY    0x7F07
 typedef struct {
   u32 sys_fd_count;
-  sbp_sequence_string_t most_opened;
+  sbp_double_null_terminated_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
-  void sbp_msg_linux_process_fd_summary_t_most_opened_init(sbp_sequence_string_t *s);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_valid(const sbp_sequence_string_t *s);
-  int sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(const sbp_sequence_string_t *a, const sbp_sequence_string_t *b);
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(const sbp_sequence_string_t *s);
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(const sbp_sequence_string_t *s);
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(const sbp_sequence_string_t *s);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section(sbp_sequence_string_t *s, const char *new_str);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(sbp_sequence_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf(sbp_sequence_string_t *s, const char *fmt, va_list ap);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_append(sbp_sequence_string_t *s, const char *str);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(sbp_sequence_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
-  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(sbp_sequence_string_t *s, const char *fmt, va_list ap);
-  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(sbp_sequence_string_t *s, uint8_t section);
-  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(sbp_sequence_string_t *s, uint8_t section);
+  void sbp_msg_linux_process_fd_summary_t_most_opened_init(sbp_double_null_terminated_string_t *s);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_valid(const sbp_double_null_terminated_string_t *s);
+  int sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(const sbp_double_null_terminated_string_t *a, const sbp_double_null_terminated_string_t *b);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(const sbp_double_null_terminated_string_t *s);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(const sbp_double_null_terminated_string_t *s);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(const sbp_double_null_terminated_string_t *s);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section(sbp_double_null_terminated_string_t *s, const char *new_str);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(sbp_double_null_terminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf(sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append(sbp_double_null_terminated_string_t *s, const char *str);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(sbp_double_null_terminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+  const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(sbp_double_null_terminated_string_t *s, uint8_t section);
+  uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(sbp_double_null_terminated_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *msg);
 s8 sbp_pack_sbp_msg_linux_process_fd_summary_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_linux_process_fd_summary_t *msg);

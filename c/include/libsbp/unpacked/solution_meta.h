@@ -10,7 +10,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/unpacked/string/multipart.h>
-#include <libsbp/unpacked/string/sequence.h>
+#include <libsbp/unpacked/string/double_null_terminated.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
 #include <libsbp/unpacked/string/binary.h>

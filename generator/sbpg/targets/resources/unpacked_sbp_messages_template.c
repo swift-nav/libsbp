@@ -8,7 +8,7 @@
 #include <libsbp/internal/unpacked/(((pkg_name))).h>
 #include <libsbp/internal/unpacked/string/multipart.h>
 #include <libsbp/internal/unpacked/string/null_terminated.h>
-#include <libsbp/internal/unpacked/string/sequence.h>
+#include <libsbp/internal/unpacked/string/double_null_terminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
 #include <libsbp/internal/unpacked/string/binary.h>
 
@@ -20,9 +20,6 @@
 static const sbp_(((f.encoding)))_string_params_t (((params))) = 
 {
   .max_packed_len = (((f.max_items)))
-((*- if f.encoding == "sequence" *))
-  ,.terminator = (((f.terminator )))
-((*- endif *))
 };
 
   void (((m.name|convert_unpacked)))_(((f.name)))_init(sbp_(((f.encoding)))_string_t *s)
@@ -100,7 +97,7 @@ static const sbp_(((f.encoding)))_string_params_t (((params))) =
   return sbp_binary_string_get(s, &(((params))), str_len);
 }
 
-  ((*- elif f.encoding == "multipart" or f.encoding == "sequence" *))
+  ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   uint8_t (((m.name|convert_unpacked)))_(((f.name)))_count_sections(const sbp_(((f.encoding)))_string_t *s)
 {
   return sbp_(((f.encoding)))_string_count_sections(s, &(((params))));
