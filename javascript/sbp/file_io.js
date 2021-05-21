@@ -149,8 +149,8 @@ MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string', null]);
  * The read directory message lists the files in a directory on the device's
  * onboard flash file system. Message contains the directory listings as a NULL
  * delimited list. The listing is chunked over multiple SBP packets and the end of
- * the list is identified by an entry containing just the character 0xFF. The
- * sequence number in the response is preserved from the request.
+ * the list is identified by an packet with no entries. The sequence number in the
+ * response is preserved from the request.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Read sequence number

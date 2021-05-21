@@ -101,8 +101,8 @@ typedef struct SBP_ATTR_PACKED {
  * device's onboard flash file system. Message contains the directory
  * listings as a NULL delimited list. The listing is chunked over
  * multiple SBP packets and the end of the list is identified by an
- * entry containing just the character 0xFF. The sequence number in
- * the response is preserved from the request.
+ * packet with no entries. The sequence number in the response is
+ * preserved from the request.
  */
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
 
