@@ -117,6 +117,14 @@ s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const uint8_t *buf, uint8_
   }
   return SBP_OK;
 }
+s8 sbp_send_sbp_msg_tracking_state_detailed_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_state_detailed_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP_A, sender_id, payload_len, payload, write);
+}
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *a, const sbp_msg_tracking_state_detailed_dep_a_t *b) {
   int ret = 0;
@@ -290,6 +298,14 @@ s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const uint8_t *buf, uint8_t 
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_tracking_state_detailed_dep_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_state_detailed_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_state_detailed_dep_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_detailed_dep_t *a, const sbp_msg_tracking_state_detailed_dep_t *b) {
@@ -477,6 +493,14 @@ s8 sbp_unpack_sbp_msg_tracking_state_t(const uint8_t *buf, uint8_t len, uint8_t 
   }
   return SBP_OK;
 }
+s8 sbp_send_sbp_msg_tracking_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_state_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_STATE, sender_id, payload_len, payload, write);
+}
 
 int sbp_cmp_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *a, const sbp_msg_tracking_state_t *b) {
   int ret = 0;
@@ -600,6 +624,14 @@ s8 sbp_unpack_sbp_msg_measurement_state_t(const uint8_t *buf, uint8_t len, uint8
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_measurement_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_measurement_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_measurement_state_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_MEASUREMENT_STATE, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *a, const sbp_msg_measurement_state_t *b) {
@@ -729,6 +761,14 @@ s8 sbp_unpack_sbp_msg_tracking_iq_t(const uint8_t *buf, uint8_t len, uint8_t *n_
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_tracking_iq_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_iq_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_iq_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_IQ, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *a, const sbp_msg_tracking_iq_t *b) {
@@ -864,6 +904,14 @@ s8 sbp_unpack_sbp_msg_tracking_iq_dep_b_t(const uint8_t *buf, uint8_t len, uint8
   }
   return SBP_OK;
 }
+s8 sbp_send_sbp_msg_tracking_iq_dep_b_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_iq_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_iq_dep_b_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_IQ_DEP_B, sender_id, payload_len, payload, write);
+}
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a, const sbp_msg_tracking_iq_dep_b_t *b) {
   int ret = 0;
@@ -937,6 +985,14 @@ s8 sbp_unpack_sbp_msg_tracking_iq_dep_a_t(const uint8_t *buf, uint8_t len, uint8
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_tracking_iq_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_iq_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_iq_dep_a_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_IQ_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, const sbp_msg_tracking_iq_dep_a_t *b) {
@@ -1073,6 +1129,14 @@ s8 sbp_unpack_sbp_msg_tracking_state_dep_a_t(const uint8_t *buf, uint8_t len, ui
   }
   return SBP_OK;
 }
+s8 sbp_send_sbp_msg_tracking_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_state_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_state_dep_a_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_STATE_DEP_A, sender_id, payload_len, payload, write);
+}
 
 int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *a, const sbp_msg_tracking_state_dep_a_t *b) {
   int ret = 0;
@@ -1202,6 +1266,14 @@ s8 sbp_unpack_sbp_msg_tracking_state_dep_b_t(const uint8_t *buf, uint8_t len, ui
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_tracking_state_dep_b_t(struct sbp_state *s, u16 sender_id, const sbp_msg_tracking_state_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_tracking_state_dep_b_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_TRACKING_STATE_DEP_B, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *a, const sbp_msg_tracking_state_dep_b_t *b) {

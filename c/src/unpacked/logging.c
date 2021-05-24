@@ -126,6 +126,14 @@ s8 sbp_unpack_sbp_msg_log_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sb
   }
   return SBP_OK;
 }
+s8 sbp_send_sbp_msg_log_t(struct sbp_state *s, u16 sender_id, const sbp_msg_log_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_log_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_LOG, sender_id, payload_len, payload, write);
+}
 
 int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
   int ret = 0;
@@ -226,6 +234,14 @@ s8 sbp_unpack_sbp_msg_fwd_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sb
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_fwd_t(struct sbp_state *s, u16 sender_id, const sbp_msg_fwd_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_fwd_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_FWD, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
@@ -352,6 +368,14 @@ s8 sbp_unpack_sbp_msg_print_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
     *n_read = (uint8_t)ctx.offset;
   }
   return SBP_OK;
+}
+s8 sbp_send_sbp_msg_print_dep_t(struct sbp_state *s, u16 sender_id, const sbp_msg_print_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_sbp_msg_print_dep_t(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_MSG_PRINT_DEP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *a, const sbp_msg_print_dep_t *b) {

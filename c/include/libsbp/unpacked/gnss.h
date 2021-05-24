@@ -18,6 +18,8 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+
+struct sbp_state;
 #define SBP_GNSSSIGNAL__MASK (0xff)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \

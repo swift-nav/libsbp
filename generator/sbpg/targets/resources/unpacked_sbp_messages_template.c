@@ -257,6 +257,17 @@ s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uin
   return SBP_OK;
 }
 
+((*- if m.is_real_message *))
+s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state *s, u16 sender_id, const (((m.name|convert_unpacked))) *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+{
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_pack_(((m.name|convert_unpacked)))(payload, sizeof(payload), &payload_len, msg);
+  if (ret != SBP_OK) { return ret; }
+  return sbp_send_message(s, SBP_(((m.name))), sender_id, payload_len, payload, write);
+}
+((*- endif *))
+
 int sbp_cmp_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *a, const (((m.name|convert_unpacked))) *b) {
   ((*- if not m.fields *))
   (void)a;

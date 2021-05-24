@@ -41,6 +41,9 @@ struct MessageTraits<(((m.identifier|convert_unpacked)))> {
   static (((m.identifier|convert_unpacked)))& get(sbp_msg_t &msg) {
     return msg.(((m.identifier|convert_unpacked_union)));
   }
+  static s8 send(sbp_state_t *state, u16 sender_id, const (((m.identifier|convert_unpacked))) &msg, s32 (*write)(u8 *, u32, void *)) {
+    return sbp_send_(((m.identifier|convert_unpacked)))(state, sender_id, &msg, write);
+  }
 };
 ((* endif *))
 ((* endfor *))

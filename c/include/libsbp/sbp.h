@@ -120,7 +120,7 @@ typedef struct sbp_msg_callbacks_node {
 } sbp_msg_callbacks_node_t;
 
 /** State structure for processing SBP messages. */
-typedef struct {
+typedef struct sbp_state {
   enum {
     WAITING = 0,
     GET_TYPE,
@@ -168,7 +168,6 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
 s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     s32 (*write)(u8 *buff, u32 n, void* context));
-s8 sbp_pack_and_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 #ifdef __cplusplus
 }

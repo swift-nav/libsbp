@@ -90,8 +90,7 @@ class State {
 
   template <typename T>
   s8 send_message(u16 sender_id, const T &msg) {
-    return sbp_pack_and_send_message(
-        &state_, sbp::MessageTraits<T>::id, sender_id, reinterpret_cast<const sbp_msg_t *>(&msg), &write_func);
+    return sbp::MessageTraits<T>::send(&state_, sender_id, msg, write_func);
   }
 
   s8 process_message(u16 sender_id, u16 msg_type, const sbp_msg_t &msg) {

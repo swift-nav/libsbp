@@ -18,6 +18,8 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+
+struct sbp_state;
 #define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_HEADING_FIX_MODE_GET(flags) \
@@ -48,6 +50,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *msg);
 s8 sbp_pack_sbp_msg_baseline_heading_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_baseline_heading_t *msg);
 s8 sbp_unpack_sbp_msg_baseline_heading_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_baseline_heading_t *msg);
+s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_baseline_heading_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a, const sbp_msg_baseline_heading_t *b);
 
@@ -86,6 +89,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *msg);
 s8 sbp_pack_sbp_msg_orient_quat_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_orient_quat_t *msg);
 s8 sbp_unpack_sbp_msg_orient_quat_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_orient_quat_t *msg);
+s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_orient_quat_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a, const sbp_msg_orient_quat_t *b);
 
@@ -122,6 +126,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *msg);
 s8 sbp_pack_sbp_msg_orient_euler_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_orient_euler_t *msg);
 s8 sbp_unpack_sbp_msg_orient_euler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_orient_euler_t *msg);
+s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_orient_euler_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a, const sbp_msg_orient_euler_t *b);
 
@@ -155,6 +160,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_angular_rate_t(const sbp_msg_angular_rate_t *msg);
 s8 sbp_pack_sbp_msg_angular_rate_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_angular_rate_t *msg);
 s8 sbp_unpack_sbp_msg_angular_rate_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_angular_rate_t *msg);
+s8 sbp_send_sbp_msg_angular_rate_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_angular_rate_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_angular_rate_t(const sbp_msg_angular_rate_t *a, const sbp_msg_angular_rate_t *b);
 

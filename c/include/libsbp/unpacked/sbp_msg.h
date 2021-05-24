@@ -32,6 +32,8 @@
   extern "C" {
 #endif
 
+struct sbp_state;
+
 typedef union {
   sbp_msg_sbas_raw_t sbas_raw;
   sbp_msg_baseline_heading_t baseline_heading;
@@ -1875,6 +1877,8 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
   }
   return false;
 }
+
+s8 sbp_pack_and_send_message(struct sbp_state *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 #ifdef __cplusplus
 }

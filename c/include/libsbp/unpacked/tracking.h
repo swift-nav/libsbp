@@ -19,6 +19,8 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+
+struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_GET(flags) \
@@ -254,6 +256,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_detailed_dep_a_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_detailed_dep_a_t *msg);
+s8 sbp_send_sbp_msg_tracking_state_detailed_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_state_detailed_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *a, const sbp_msg_tracking_state_detailed_dep_a_t *b);
 
@@ -493,6 +496,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_detailed_dep_t *msg);
 s8 sbp_pack_sbp_msg_tracking_state_detailed_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_detailed_dep_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_detailed_dep_t *msg);
+s8 sbp_send_sbp_msg_tracking_state_detailed_dep_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_state_detailed_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(const sbp_msg_tracking_state_detailed_dep_t *a, const sbp_msg_tracking_state_detailed_dep_t *b);
 
@@ -527,6 +531,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *msg);
 s8 sbp_pack_sbp_msg_tracking_state_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_state_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_t *msg);
+s8 sbp_send_sbp_msg_tracking_state_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *a, const sbp_msg_tracking_state_t *b);
 
@@ -560,6 +565,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *msg);
 s8 sbp_pack_sbp_msg_measurement_state_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_measurement_state_t *msg);
 s8 sbp_unpack_sbp_msg_measurement_state_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_measurement_state_t *msg);
+s8 sbp_send_sbp_msg_measurement_state_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_measurement_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *a, const sbp_msg_measurement_state_t *b);
 
@@ -594,6 +600,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *msg);
 s8 sbp_pack_sbp_msg_tracking_iq_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_iq_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_iq_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_iq_t *msg);
+s8 sbp_send_sbp_msg_tracking_iq_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_iq_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *a, const sbp_msg_tracking_iq_t *b);
 
@@ -628,6 +635,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *msg);
 s8 sbp_pack_sbp_msg_tracking_iq_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_iq_dep_b_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_iq_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_iq_dep_b_t *msg);
+s8 sbp_send_sbp_msg_tracking_iq_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_iq_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a, const sbp_msg_tracking_iq_dep_b_t *b);
 
@@ -646,6 +654,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_tracking_iq_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_iq_dep_a_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_iq_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_iq_dep_a_t *msg);
+s8 sbp_send_sbp_msg_tracking_iq_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_iq_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, const sbp_msg_tracking_iq_dep_a_t *b);
 
@@ -693,6 +702,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *msg);
 s8 sbp_pack_sbp_msg_tracking_state_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_dep_a_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_state_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_dep_a_t *msg);
+s8 sbp_send_sbp_msg_tracking_state_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_state_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *a, const sbp_msg_tracking_state_dep_a_t *b);
 
@@ -740,6 +750,7 @@ typedef struct {
 size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *msg);
 s8 sbp_pack_sbp_msg_tracking_state_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_tracking_state_dep_b_t *msg);
 s8 sbp_unpack_sbp_msg_tracking_state_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_tracking_state_dep_b_t *msg);
+s8 sbp_send_sbp_msg_tracking_state_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_tracking_state_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *a, const sbp_msg_tracking_state_dep_b_t *b);
 
