@@ -645,7 +645,7 @@ static inline s8 sbp_pack_msg(uint8_t *buf, uint8_t len, uint8_t *n_written, uin
     default:
       break;
   }
-  return false;
+  return -1;
 }
 
 static inline s8 sbp_unpack_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
@@ -1055,7 +1055,7 @@ static inline s8 sbp_unpack_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read
     default:
       break;
   }
-  return false;
+  return -1;
 }
 
 static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
@@ -1875,7 +1875,7 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
     default:
       break;
   }
-  return false;
+  return 0;
 }
 
 s8 sbp_pack_and_send_message(struct sbp_state *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
