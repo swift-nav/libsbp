@@ -99,7 +99,7 @@ typedef struct SBP_ATTR_PACKED {
   /** 
    * variable length wrapped binary message 
    */
-  char fwd_payload[0];
+  u8 fwd_payload[0];
   
 } msg_fwd_t;
 

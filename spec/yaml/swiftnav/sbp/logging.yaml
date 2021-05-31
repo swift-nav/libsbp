@@ -66,8 +66,8 @@ definitions:
           type: u8
           desc: protocol identifier
       - fwd_payload:
-          type: string
-          encoding: binary
+          type: array
+          fill: u8
           desc: variable length wrapped binary message     
 
  - MSG_PRINT_DEP:

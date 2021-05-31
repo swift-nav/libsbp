@@ -76,15 +76,9 @@ int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b);
 typedef struct {
   u8 source;
   u8 protocol;
-  sbp_binary_string_t fwd_payload;
+  u8 fwd_payload[253];
+  u8 n_fwd_payload;
 } sbp_msg_fwd_t;
-  void sbp_msg_fwd_t_fwd_payload_init(sbp_binary_string_t *s);
-  bool sbp_msg_fwd_t_fwd_payload_valid(const sbp_binary_string_t *s);
-  int sbp_msg_fwd_t_fwd_payload_strcmp(const sbp_binary_string_t *a, const sbp_binary_string_t *b);
-  uint8_t sbp_msg_fwd_t_fwd_payload_packed_len(const sbp_binary_string_t *s);
-  uint8_t sbp_msg_fwd_t_fwd_payload_space_remaining(const sbp_binary_string_t *s);
-  bool sbp_msg_fwd_t_fwd_payload_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len);
-  bool sbp_msg_fwd_t_fwd_payload_get(const sbp_binary_string_t *s, uint8_t *str_len);
 
 size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg);
 s8 sbp_pack_sbp_msg_fwd_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fwd_t *msg);

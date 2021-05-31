@@ -149,7 +149,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     source identifier
   protocol : int
     protocol identifier
-  fwd_payload : string
+  fwd_payload : array
     variable length wrapped binary message
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -158,7 +158,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
   _parser = construct.Struct(
                    'source' / construct.Int8ul,
                    'protocol' / construct.Int8ul,
-                   'fwd_payload' / construct.GreedyBytes,)
+                   'fwd_payload' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'source',
                'protocol',

@@ -84,11 +84,23 @@ TEST_F(Test_auto_check_sbp_logging_MsgFwd0, Test)
     uint8_t encoded_frame[] = {85,2,4,66,0,18,0,0,86,81,68,47,81,103,65,69,65,65,65,65,65,69,97,103,125,95, };
 
     sbp_msg_fwd_t test_msg{};
-    {
-      const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      memcpy(test_msg.fwd_payload.data, assign_string, sizeof(assign_string));
-    }
-    test_msg.fwd_payload.packed_len = 16;
+    test_msg.fwd_payload[0] = 86;
+    test_msg.fwd_payload[1] = 81;
+    test_msg.fwd_payload[2] = 68;
+    test_msg.fwd_payload[3] = 47;
+    test_msg.fwd_payload[4] = 81;
+    test_msg.fwd_payload[5] = 103;
+    test_msg.fwd_payload[6] = 65;
+    test_msg.fwd_payload[7] = 69;
+    test_msg.fwd_payload[8] = 65;
+    test_msg.fwd_payload[9] = 65;
+    test_msg.fwd_payload[10] = 65;
+    test_msg.fwd_payload[11] = 65;
+    test_msg.fwd_payload[12] = 65;
+    test_msg.fwd_payload[13] = 69;
+    test_msg.fwd_payload[14] = 97;
+    test_msg.fwd_payload[15] = 103;
+    test_msg.n_fwd_payload = 16;
     test_msg.protocol = 0;
     test_msg.source = 0;
                                                                               
@@ -104,11 +116,23 @@ TEST_F(Test_auto_check_sbp_logging_MsgFwd0, Test)
     EXPECT_EQ(n_callbacks_logged_, 1);
     EXPECT_EQ(last_sender_id_, 66);
     EXPECT_EQ(last_msg_, test_msg);
-    {
-      const char check_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      EXPECT_EQ(memcmp(last_msg_.fwd_payload.data, check_string, sizeof(check_string)), 0) << "incorrect value for last_msg_.fwd_payload.data, expected string '" << check_string << "', is '" << last_msg_.fwd_payload.data << "'";
-    }
-    EXPECT_EQ(last_msg_.fwd_payload.packed_len, 16) << "incorrect value for fwd_payload.packed_len, expected 16, is " << last_msg_.fwd_payload.packed_len;
+    EXPECT_EQ(last_msg_.fwd_payload[0], 86) << "incorrect value for fwd_payload[0], expected 86, is " << last_msg_.fwd_payload[0];
+    EXPECT_EQ(last_msg_.fwd_payload[1], 81) << "incorrect value for fwd_payload[1], expected 81, is " << last_msg_.fwd_payload[1];
+    EXPECT_EQ(last_msg_.fwd_payload[2], 68) << "incorrect value for fwd_payload[2], expected 68, is " << last_msg_.fwd_payload[2];
+    EXPECT_EQ(last_msg_.fwd_payload[3], 47) << "incorrect value for fwd_payload[3], expected 47, is " << last_msg_.fwd_payload[3];
+    EXPECT_EQ(last_msg_.fwd_payload[4], 81) << "incorrect value for fwd_payload[4], expected 81, is " << last_msg_.fwd_payload[4];
+    EXPECT_EQ(last_msg_.fwd_payload[5], 103) << "incorrect value for fwd_payload[5], expected 103, is " << last_msg_.fwd_payload[5];
+    EXPECT_EQ(last_msg_.fwd_payload[6], 65) << "incorrect value for fwd_payload[6], expected 65, is " << last_msg_.fwd_payload[6];
+    EXPECT_EQ(last_msg_.fwd_payload[7], 69) << "incorrect value for fwd_payload[7], expected 69, is " << last_msg_.fwd_payload[7];
+    EXPECT_EQ(last_msg_.fwd_payload[8], 65) << "incorrect value for fwd_payload[8], expected 65, is " << last_msg_.fwd_payload[8];
+    EXPECT_EQ(last_msg_.fwd_payload[9], 65) << "incorrect value for fwd_payload[9], expected 65, is " << last_msg_.fwd_payload[9];
+    EXPECT_EQ(last_msg_.fwd_payload[10], 65) << "incorrect value for fwd_payload[10], expected 65, is " << last_msg_.fwd_payload[10];
+    EXPECT_EQ(last_msg_.fwd_payload[11], 65) << "incorrect value for fwd_payload[11], expected 65, is " << last_msg_.fwd_payload[11];
+    EXPECT_EQ(last_msg_.fwd_payload[12], 65) << "incorrect value for fwd_payload[12], expected 65, is " << last_msg_.fwd_payload[12];
+    EXPECT_EQ(last_msg_.fwd_payload[13], 69) << "incorrect value for fwd_payload[13], expected 69, is " << last_msg_.fwd_payload[13];
+    EXPECT_EQ(last_msg_.fwd_payload[14], 97) << "incorrect value for fwd_payload[14], expected 97, is " << last_msg_.fwd_payload[14];
+    EXPECT_EQ(last_msg_.fwd_payload[15], 103) << "incorrect value for fwd_payload[15], expected 103, is " << last_msg_.fwd_payload[15];
+    EXPECT_EQ(last_msg_.n_fwd_payload, 16) << "incorrect value for n_fwd_payload, expected 16, is " << last_msg_.n_fwd_payload;
     EXPECT_EQ(last_msg_.protocol, 0) << "incorrect value for protocol, expected 0, is " << last_msg_.protocol;
     EXPECT_EQ(last_msg_.source, 0) << "incorrect value for source, expected 0, is " << last_msg_.source;
 }
