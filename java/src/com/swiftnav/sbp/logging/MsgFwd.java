@@ -47,7 +47,7 @@ public class MsgFwd extends SBPMessage {
     public int protocol;
     
     /** variable length wrapped binary message */
-    public String fwd_payload;
+    public int[] fwd_payload;
     
 
     public MsgFwd (int sender) { super(sender, TYPE); }
@@ -62,14 +62,14 @@ public class MsgFwd extends SBPMessage {
         /* Parse fields from binary */
         source = parser.getU8();
         protocol = parser.getU8();
-        fwd_payload = parser.getString();
+        fwd_payload = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU8(source);
         builder.putU8(protocol);
-        builder.putString(fwd_payload);
+        builder.putArrayofU8(fwd_payload);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MsgFwd extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("source", source);
         obj.put("protocol", protocol);
-        obj.put("fwd_payload", fwd_payload);
+        obj.put("fwd_payload", new JSONArray(fwd_payload));
         return obj;
     }
 }

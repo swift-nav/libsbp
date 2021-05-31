@@ -76,7 +76,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
-  char fwd_payload[0]; /**< variable length wrapped binary message */
+  u8 fwd_payload[0]; /**< variable length wrapped binary message */
 } msg_fwd_t;
 
 

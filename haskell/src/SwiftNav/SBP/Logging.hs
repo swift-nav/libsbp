@@ -81,7 +81,7 @@ data MsgFwd = MsgFwd
     -- ^ source identifier
   , _msgFwd_protocol  :: !Word8
     -- ^ protocol identifier
-  , _msgFwd_fwd_payload :: !Text
+  , _msgFwd_fwd_payload :: ![Word8]
     -- ^ variable length wrapped binary message
   } deriving ( Show, Read, Eq )
 
@@ -89,13 +89,13 @@ instance Binary MsgFwd where
   get = do
     _msgFwd_source <- getWord8
     _msgFwd_protocol <- getWord8
-    _msgFwd_fwd_payload <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    _msgFwd_fwd_payload <- whileM (not <$> isEmpty) getWord8
     pure MsgFwd {..}
 
   put MsgFwd {..} = do
     putWord8 _msgFwd_source
     putWord8 _msgFwd_protocol
-    putByteString $ encodeUtf8 _msgFwd_fwd_payload
+    mapM_ putWord8 _msgFwd_fwd_payload
 
 $(makeSBP 'msgFwd ''MsgFwd)
 $(makeJSON "_msgFwd_" ''MsgFwd)

@@ -50,11 +50,84 @@ fn test_auto_check_sbp_logging_MsgFwd() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.fwd_payload.clone()),
-                    "VQD/QgAEAAAAAEag".to_string(),
-                    "incorrect value for msg.fwd_payload, expected string '{}', is '{}'",
-                    "VQD/QgAEAAAAAEag".to_string(),
-                    msg.fwd_payload
+                    msg.fwd_payload[0], 86,
+                    "incorrect value for fwd_payload[0], expected 86, is {}",
+                    msg.fwd_payload[0]
+                );
+                assert_eq!(
+                    msg.fwd_payload[1], 81,
+                    "incorrect value for fwd_payload[1], expected 81, is {}",
+                    msg.fwd_payload[1]
+                );
+                assert_eq!(
+                    msg.fwd_payload[2], 68,
+                    "incorrect value for fwd_payload[2], expected 68, is {}",
+                    msg.fwd_payload[2]
+                );
+                assert_eq!(
+                    msg.fwd_payload[3], 47,
+                    "incorrect value for fwd_payload[3], expected 47, is {}",
+                    msg.fwd_payload[3]
+                );
+                assert_eq!(
+                    msg.fwd_payload[4], 81,
+                    "incorrect value for fwd_payload[4], expected 81, is {}",
+                    msg.fwd_payload[4]
+                );
+                assert_eq!(
+                    msg.fwd_payload[5], 103,
+                    "incorrect value for fwd_payload[5], expected 103, is {}",
+                    msg.fwd_payload[5]
+                );
+                assert_eq!(
+                    msg.fwd_payload[6], 65,
+                    "incorrect value for fwd_payload[6], expected 65, is {}",
+                    msg.fwd_payload[6]
+                );
+                assert_eq!(
+                    msg.fwd_payload[7], 69,
+                    "incorrect value for fwd_payload[7], expected 69, is {}",
+                    msg.fwd_payload[7]
+                );
+                assert_eq!(
+                    msg.fwd_payload[8], 65,
+                    "incorrect value for fwd_payload[8], expected 65, is {}",
+                    msg.fwd_payload[8]
+                );
+                assert_eq!(
+                    msg.fwd_payload[9], 65,
+                    "incorrect value for fwd_payload[9], expected 65, is {}",
+                    msg.fwd_payload[9]
+                );
+                assert_eq!(
+                    msg.fwd_payload[10], 65,
+                    "incorrect value for fwd_payload[10], expected 65, is {}",
+                    msg.fwd_payload[10]
+                );
+                assert_eq!(
+                    msg.fwd_payload[11], 65,
+                    "incorrect value for fwd_payload[11], expected 65, is {}",
+                    msg.fwd_payload[11]
+                );
+                assert_eq!(
+                    msg.fwd_payload[12], 65,
+                    "incorrect value for fwd_payload[12], expected 65, is {}",
+                    msg.fwd_payload[12]
+                );
+                assert_eq!(
+                    msg.fwd_payload[13], 69,
+                    "incorrect value for fwd_payload[13], expected 69, is {}",
+                    msg.fwd_payload[13]
+                );
+                assert_eq!(
+                    msg.fwd_payload[14], 97,
+                    "incorrect value for fwd_payload[14], expected 97, is {}",
+                    msg.fwd_payload[14]
+                );
+                assert_eq!(
+                    msg.fwd_payload[15], 103,
+                    "incorrect value for fwd_payload[15], expected 103, is {}",
+                    msg.fwd_payload[15]
                 );
                 assert_eq!(
                     msg.protocol, 0,
