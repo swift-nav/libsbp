@@ -3,7 +3,6 @@ swift_add_test(test-libsbp-string
   POST_BUILD
   SRCS
     test_unterminated.cc
-    test_binary.cc
     test_multipart.cc
     test_double_null_terminated.cc
     test_null_terminated.cc

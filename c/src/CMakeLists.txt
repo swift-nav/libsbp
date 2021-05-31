@@ -7,7 +7,6 @@ set(libsbp_SRCS
   unpacked/string/null_terminated.c
   unpacked/string/multipart.c
   unpacked/string/double_null_terminated.c
-  unpacked/string/binary.c
   ${generated_c_sources}
   )
 

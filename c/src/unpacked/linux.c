@@ -10,7 +10,6 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/double_null_terminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
-#include <libsbp/internal/unpacked/string/binary.h>
 static const sbp_unterminated_string_params_t sbp_msg_linux_cpu_state_dep_a_tcmdline_params = 
 {
   .max_packed_len = 236

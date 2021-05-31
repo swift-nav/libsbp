@@ -10,7 +10,6 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/double_null_terminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
-#include <libsbp/internal/unpacked/string/binary.h>
 
 size_t sbp_packed_size_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *msg) {
   size_t packed_size = 0;

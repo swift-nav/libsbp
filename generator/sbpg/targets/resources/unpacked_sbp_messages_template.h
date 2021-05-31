@@ -13,7 +13,6 @@
 #include <libsbp/unpacked/string/double_null_terminated.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
-#include <libsbp/unpacked/string/binary.h>
 
 ((*- for i in include *))
 #include <libsbp/unpacked/(((i)))>
@@ -76,9 +75,6 @@ typedef struct {
   bool (((m.name|convert_unpacked)))_(((f.name)))_append_printf(sbp_(((f.encoding)))_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
   bool (((m.name|convert_unpacked)))_(((f.name)))_append_vprintf(sbp_(((f.encoding)))_string_t *s, const char *fmt, va_list ap);
   const char *(((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_(((f.encoding)))_string_t *s);
-  ((*- elif f.encoding == "binary" *))
-  bool (((m.name|convert_unpacked)))_(((f.name)))_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len);
-  bool (((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_binary_string_t *s, uint8_t *str_len);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   uint8_t (((m.name|convert_unpacked)))_(((f.name)))_count_sections(const sbp_(((f.encoding)))_string_t *s);
   bool (((m.name|convert_unpacked)))_(((f.name)))_add_section(sbp_(((f.encoding)))_string_t *s, const char *new_str);

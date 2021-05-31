@@ -10,7 +10,6 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/double_null_terminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
-#include <libsbp/internal/unpacked/string/binary.h>
 
 ((*- for m in msgs *))
                                                                                                               
@@ -84,17 +83,6 @@ static const sbp_(((f.encoding)))_string_params_t (((params))) =
   const char *(((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_(((f.encoding)))_string_t *s)
 {
   return sbp_(((f.encoding)))_string_get(s, &(((params))));
-}
-
-  ((*- elif f.encoding == "binary" *))
-  bool (((m.name|convert_unpacked)))_(((f.name)))_set(sbp_binary_string_t *s, const char *new_str, uint8_t new_str_len)
-{
-  return sbp_binary_string_set(s, &(((params))), new_str, new_str_len);
-}
-
-  bool (((m.name|convert_unpacked)))_(((f.name)))_get(const sbp_binary_string_t *s, uint8_t *str_len)
-{
-  return sbp_binary_string_get(s, &(((params))), str_len);
 }
 
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))

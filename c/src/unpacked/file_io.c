@@ -10,7 +10,6 @@
 #include <libsbp/internal/unpacked/string/null_terminated.h>
 #include <libsbp/internal/unpacked/string/double_null_terminated.h>
 #include <libsbp/internal/unpacked/string/unterminated.h>
-#include <libsbp/internal/unpacked/string/binary.h>
 static const sbp_null_terminated_string_params_t sbp_msg_fileio_read_req_tfilename_params = 
 {
   .max_packed_len = 246

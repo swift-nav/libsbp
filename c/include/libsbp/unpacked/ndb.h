@@ -13,7 +13,6 @@
 #include <libsbp/unpacked/string/double_null_terminated.h>
 #include <libsbp/unpacked/string/unterminated.h>
 #include <libsbp/unpacked/string/null_terminated.h>
-#include <libsbp/unpacked/string/binary.h>
 #include <libsbp/unpacked/gnss.h>
 
 #ifdef __cplusplus
