@@ -13,6 +13,7 @@
 #ifndef SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
 #define SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
 
+#include <libsbp/sbp.h>
 #include <libsbp/unpacked/sbp_msg.h>
 ((*- for i in includes *))
 #include <libsbp/unpacked/(((i))).h>
