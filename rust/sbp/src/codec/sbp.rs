@@ -12,6 +12,8 @@ use crate::{
 const MAX_FRAME_LENGTH: usize =
     crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN;
 
+const PREAMBLE: u8 = 0x55;
+
 #[cfg(feature = "async")]
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
@@ -36,6 +38,16 @@ impl Decoder for SbpDecoder {
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
+        let start = match src.iter().position(|b| b == &PREAMBLE) {
+            Some(idx) => idx,
+            None => {
+                src.clear();
+                return Ok(None);
+            }
+        };
+
+        src.advance(start);
+
         match parse_sbp(&src) {
             ParseResult::Ok((bytes_read, msg)) => {
                 src.advance(bytes_read);
@@ -92,5 +104,21 @@ where
             Err(err) => log::error!("Error converting sbp message to frame: {}", err),
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_nothing() {
+        let mut decoder = SbpDecoder::new();
+        let data = vec![0u8; 1000];
+        let mut bytes = BytesMut::from(&data[..]);
+
+        assert_eq!(bytes.len(), 1000);
+        assert!(matches!(decoder.decode(&mut bytes), Ok(None)));
+        assert!(bytes.is_empty());
     }
 }
