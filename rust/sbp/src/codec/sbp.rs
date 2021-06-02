@@ -106,3 +106,19 @@ where
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_nothing() {
+        let mut decoder = SbpDecoder::new();
+        let data = vec![0u8; 1000];
+        let mut bytes = BytesMut::from(&data[..]);
+
+        assert_eq!(bytes.len(), 1000);
+        assert!(matches!(decoder.decode(&mut bytes), Ok(None)));
+        assert!(bytes.is_empty());
+    }
+}
