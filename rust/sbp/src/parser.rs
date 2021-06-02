@@ -134,8 +134,6 @@ pub mod frame {
     pub type Error<'a> = (&'a [u8], ErrorKind);
 
     pub fn parse(i: &[u8]) -> IResult<&[u8], Frame, Error> {
-        let (i, _) = bytes::streaming::take_while(is_not_preamble)(i)?;
-
         tuple((
             parse_preamble,
             parse_msg_type,
@@ -154,10 +152,6 @@ pub mod frame {
         crc.update(payload);
 
         crc.get() == *crc_in
-    }
-
-    fn is_not_preamble(b: u8) -> bool {
-        b != 0x55
     }
 
     fn parse_preamble(i: &[u8]) -> IResult<&[u8], &[u8], Error> {
