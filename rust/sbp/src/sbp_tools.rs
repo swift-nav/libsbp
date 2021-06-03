@@ -1,13 +1,52 @@
+use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
+
 #[cfg(feature = "swiftnav-rs")]
 use swiftnav_rs::time::GpsTime;
 
 #[cfg(feature = "swiftnav-rs")]
-use crate::{
-    messages::SBPMessage,
-    time::{GpsTimeError, MessageTime, RoverTime},
-};
+use crate::time::{GpsTimeError, MessageTime, RoverTime};
 
-use crate::messages::SBP;
+use crate::messages::{SBPMessage, SBP};
+
+pub struct Dispatcher {
+    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP)>>>,
+}
+
+impl Dispatcher {
+    pub fn new() -> Self {
+        Self {
+            callbacks: HashMap::new(),
+        }
+    }
+
+    pub fn on<F, M>(&mut self, mut func: F)
+    where
+        F: FnMut(M) + 'static,
+        M: SBPMessage + TryFrom<SBP> + 'static,
+        <M as TryFrom<SBP>>::Error: Debug,
+    {
+        let cb = Box::new(move |msg: SBP| {
+            let msg = M::try_from(msg).unwrap();
+            func(msg)
+        });
+        self.callbacks
+            .entry(M::message_type())
+            .or_default()
+            .push(cb);
+    }
+
+    pub fn handle(&mut self, msg: SBP) -> bool {
+        match self.callbacks.get_mut(&msg.get_message_type()) {
+            Some(cbs) => {
+                for cb in cbs.iter_mut() {
+                    cb(msg.clone());
+                }
+                true
+            }
+            None => false,
+        }
+    }
+}
 
 pub trait SBPTools: Iterator {
     fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
@@ -174,7 +213,10 @@ where
 mod tests {
     use std::io::Cursor;
 
-    use crate::iter_messages;
+    use crate::{
+        iter_messages,
+        messages::navigation::{MsgAgeCorrections, MsgBaselineECEF},
+    };
 
     use super::*;
 
@@ -268,5 +310,30 @@ mod tests {
 
         assert_eq!(messages.count(), 0);
         assert_eq!(err_count, 1);
+    }
+
+    fn test_dispatcher() {
+        let mut d = Dispatcher::new();
+
+        d.on(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
+
+        let msg = MsgAgeCorrections {
+            sender_id: Some(1),
+            tow: 1,
+            age: 1,
+        };
+        assert!(d.handle(msg.into()));
+
+        let msg = MsgBaselineECEF {
+            sender_id: Some(1),
+            tow: 1,
+            x: 1,
+            y: 1,
+            z: 1,
+            accuracy: 1,
+            n_sats: 1,
+            flags: 1,
+        };
+        assert_eq!(d.handle(msg.into()), false);
     }
 }

@@ -85,6 +85,13 @@ impl super::SBPMessage for MsgAgeCorrections {
         528
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        528
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -113,6 +120,16 @@ impl super::SBPMessage for MsgAgeCorrections {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgAgeCorrections {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAgeCorrections(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -185,6 +202,13 @@ impl super::SBPMessage for MsgBaselineECEF {
         523
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        523
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -213,6 +237,16 @@ impl super::SBPMessage for MsgBaselineECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineECEF {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineECEF(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -295,6 +329,13 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
         514
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        514
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -323,6 +364,16 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineECEFDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineECEFDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -394,6 +445,13 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
         519
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        519
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -422,6 +480,16 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineHeadingDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineHeadingDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -502,6 +570,13 @@ impl super::SBPMessage for MsgBaselineNED {
         524
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        524
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -530,6 +605,16 @@ impl super::SBPMessage for MsgBaselineNED {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineNED {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineNED(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -618,6 +703,13 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
         515
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        515
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -646,6 +738,16 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineNEDDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineNEDDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -729,6 +831,13 @@ impl super::SBPMessage for MsgDops {
         520
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        520
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -757,6 +866,16 @@ impl super::SBPMessage for MsgDops {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgDops {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgDops(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -834,6 +953,13 @@ impl super::SBPMessage for MsgDopsDepA {
         518
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        518
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -862,6 +988,16 @@ impl super::SBPMessage for MsgDopsDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgDopsDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgDopsDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -942,6 +1078,13 @@ impl super::SBPMessage for MsgGPSTime {
         258
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        258
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -974,6 +1117,16 @@ impl super::SBPMessage for MsgGPSTime {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgGPSTime {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTime(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1050,6 +1203,13 @@ impl super::SBPMessage for MsgGPSTimeDepA {
         256
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        256
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1082,6 +1242,16 @@ impl super::SBPMessage for MsgGPSTimeDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgGPSTimeDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTimeDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1158,6 +1328,13 @@ impl super::SBPMessage for MsgGPSTimeGnss {
         260
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        260
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1190,6 +1367,16 @@ impl super::SBPMessage for MsgGPSTimeGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgGPSTimeGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTimeGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1269,6 +1456,13 @@ impl super::SBPMessage for MsgPosECEF {
         521
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        521
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1297,6 +1491,16 @@ impl super::SBPMessage for MsgPosECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosECEF {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEF(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1398,6 +1602,13 @@ impl super::SBPMessage for MsgPosECEFCov {
         532
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        532
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1426,6 +1637,16 @@ impl super::SBPMessage for MsgPosECEFCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosECEFCov {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFCov(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1537,6 +1758,13 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
         564
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        564
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1565,6 +1793,16 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosECEFCovGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFCovGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1660,6 +1898,13 @@ impl super::SBPMessage for MsgPosECEFDepA {
         512
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        512
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1688,6 +1933,16 @@ impl super::SBPMessage for MsgPosECEFDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosECEFDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1773,6 +2028,13 @@ impl super::SBPMessage for MsgPosECEFGnss {
         553
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        553
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1801,6 +2063,16 @@ impl super::SBPMessage for MsgPosECEFGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosECEFGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -1889,6 +2161,13 @@ impl super::SBPMessage for MsgPosLLH {
         522
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        522
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1917,6 +2196,16 @@ impl super::SBPMessage for MsgPosLLH {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosLLH {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLH(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2019,6 +2308,13 @@ impl super::SBPMessage for MsgPosLLHCov {
         529
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        529
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2047,6 +2343,16 @@ impl super::SBPMessage for MsgPosLLHCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosLLHCov {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHCov(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2157,6 +2463,13 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
         561
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        561
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2185,6 +2498,16 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosLLHCovGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHCovGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2283,6 +2606,13 @@ impl super::SBPMessage for MsgPosLLHDepA {
         513
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        513
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2311,6 +2641,16 @@ impl super::SBPMessage for MsgPosLLHDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosLLHDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2401,6 +2741,13 @@ impl super::SBPMessage for MsgPosLLHGnss {
         554
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        554
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2429,6 +2776,16 @@ impl super::SBPMessage for MsgPosLLHGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgPosLLHGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2555,6 +2912,13 @@ impl super::SBPMessage for MsgProtectionLevel {
         535
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        535
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2587,6 +2951,16 @@ impl super::SBPMessage for MsgProtectionLevel {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgProtectionLevel {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgProtectionLevel(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2695,6 +3069,13 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
         534
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        534
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2723,6 +3104,16 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgProtectionLevelDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgProtectionLevelDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2808,6 +3199,13 @@ impl super::SBPMessage for MsgUtcTime {
         259
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        259
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2836,6 +3234,16 @@ impl super::SBPMessage for MsgUtcTime {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgUtcTime {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUtcTime(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -2925,6 +3333,13 @@ impl super::SBPMessage for MsgUtcTimeGnss {
         261
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        261
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2953,6 +3368,16 @@ impl super::SBPMessage for MsgUtcTimeGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgUtcTimeGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUtcTimeGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3057,6 +3482,13 @@ impl super::SBPMessage for MsgVelBody {
         531
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        531
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3085,6 +3517,16 @@ impl super::SBPMessage for MsgVelBody {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelBody {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelBody(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3175,6 +3617,13 @@ impl super::SBPMessage for MsgVelECEF {
         525
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        525
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3203,6 +3652,16 @@ impl super::SBPMessage for MsgVelECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelECEF {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEF(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3298,6 +3757,13 @@ impl super::SBPMessage for MsgVelECEFCov {
         533
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        533
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3326,6 +3792,16 @@ impl super::SBPMessage for MsgVelECEFCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelECEFCov {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFCov(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3431,6 +3907,13 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
         565
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        565
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3459,6 +3942,16 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelECEFCovGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFCovGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3549,6 +4042,13 @@ impl super::SBPMessage for MsgVelECEFDepA {
         516
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        516
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3577,6 +4077,16 @@ impl super::SBPMessage for MsgVelECEFDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelECEFDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3657,6 +4167,13 @@ impl super::SBPMessage for MsgVelECEFGnss {
         557
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        557
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3685,6 +4202,16 @@ impl super::SBPMessage for MsgVelECEFGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelECEFGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3769,6 +4296,13 @@ impl super::SBPMessage for MsgVelNED {
         526
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        526
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3797,6 +4331,16 @@ impl super::SBPMessage for MsgVelNED {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelNED {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNED(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -3897,6 +4441,13 @@ impl super::SBPMessage for MsgVelNEDCov {
         530
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        530
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3925,6 +4476,16 @@ impl super::SBPMessage for MsgVelNEDCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelNEDCov {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDCov(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -4033,6 +4594,13 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
         562
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        562
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4061,6 +4629,16 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelNEDCovGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDCovGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -4155,6 +4733,13 @@ impl super::SBPMessage for MsgVelNEDDepA {
         517
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        517
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4183,6 +4768,16 @@ impl super::SBPMessage for MsgVelNEDDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelNEDDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -4269,6 +4864,13 @@ impl super::SBPMessage for MsgVelNEDGnss {
         558
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        558
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4297,6 +4899,16 @@ impl super::SBPMessage for MsgVelNEDGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgVelNEDGnss {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDGnss(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

@@ -61,6 +61,13 @@ impl super::SBPMessage for MsgMeasurementState {
         97
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        97
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -77,6 +84,16 @@ impl super::SBPMessage for MsgMeasurementState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgMeasurementState {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgMeasurementState(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -132,6 +149,13 @@ impl super::SBPMessage for MsgTrackingIq {
         45
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        45
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -148,6 +172,16 @@ impl super::SBPMessage for MsgTrackingIq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingIq {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIq(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -206,6 +240,13 @@ impl super::SBPMessage for MsgTrackingIqDepA {
         28
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        28
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -222,6 +263,16 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingIqDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIqDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -281,6 +332,13 @@ impl super::SBPMessage for MsgTrackingIqDepB {
         44
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        44
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -297,6 +355,16 @@ impl super::SBPMessage for MsgTrackingIqDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingIqDepB {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIqDepB(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -351,6 +419,13 @@ impl super::SBPMessage for MsgTrackingState {
         65
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        65
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -367,6 +442,16 @@ impl super::SBPMessage for MsgTrackingState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingState {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingState(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -415,6 +500,13 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         22
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        22
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -431,6 +523,16 @@ impl super::SBPMessage for MsgTrackingStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -479,6 +581,13 @@ impl super::SBPMessage for MsgTrackingStateDepB {
         19
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        19
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -495,6 +604,16 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDepB {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDepB(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -609,6 +728,13 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
         17
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        17
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -625,6 +751,16 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDetailedDep(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -780,6 +916,13 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
         33
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        33
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -796,6 +939,16 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDetailedDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

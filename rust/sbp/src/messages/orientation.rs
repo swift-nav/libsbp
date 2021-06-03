@@ -77,6 +77,13 @@ impl super::SBPMessage for MsgAngularRate {
         546
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        546
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -105,6 +112,16 @@ impl super::SBPMessage for MsgAngularRate {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgAngularRate {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAngularRate(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -173,6 +190,13 @@ impl super::SBPMessage for MsgBaselineHeading {
         527
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        527
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -201,6 +225,16 @@ impl super::SBPMessage for MsgBaselineHeading {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgBaselineHeading {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineHeading(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -280,6 +314,13 @@ impl super::SBPMessage for MsgOrientEuler {
         545
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        545
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -308,6 +349,16 @@ impl super::SBPMessage for MsgOrientEuler {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgOrientEuler {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOrientEuler(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -401,6 +452,13 @@ impl super::SBPMessage for MsgOrientQuat {
         544
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        544
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -429,6 +487,16 @@ impl super::SBPMessage for MsgOrientQuat {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgOrientQuat {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOrientQuat(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

@@ -73,6 +73,13 @@ impl super::SBPMessage for MsgExtEvent {
         257
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        257
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -105,6 +112,16 @@ impl super::SBPMessage for MsgExtEvent {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgExtEvent {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgExtEvent(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

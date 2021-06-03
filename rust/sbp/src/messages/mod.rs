@@ -239,6 +239,9 @@ use crate::serialize::SbpSerialize;
 pub trait SBPMessage: SbpSerialize {
     fn get_message_name(&self) -> &'static str;
     fn get_message_type(&self) -> u16;
+    fn message_type() -> u16
+    where
+        Self: Sized;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
@@ -1888,6 +1891,10 @@ impl crate::SBPMessage for SBP {
             SBP::MsgHeartbeat(msg) => msg.get_message_type(),
             SBP::Unknown(msg) => msg.get_message_type(),
         }
+    }
+
+    fn message_type() -> u16 {
+        0
     }
 
     fn get_sender_id(&self) -> Option<u16> {

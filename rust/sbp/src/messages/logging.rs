@@ -70,6 +70,13 @@ impl super::SBPMessage for MsgFwd {
         1026
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        1026
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -86,6 +93,16 @@ impl super::SBPMessage for MsgFwd {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgFwd {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFwd(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -143,6 +160,13 @@ impl super::SBPMessage for MsgLog {
         1025
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        1025
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -159,6 +183,16 @@ impl super::SBPMessage for MsgLog {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLog {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLog(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -209,6 +243,13 @@ impl super::SBPMessage for MsgPrintDep {
         16
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        16
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -225,6 +266,16 @@ impl super::SBPMessage for MsgPrintDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgPrintDep {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPrintDep(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

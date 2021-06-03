@@ -77,6 +77,13 @@ impl super::SBPMessage for MsgLinuxCpuState {
         32520
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32520
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -93,6 +100,16 @@ impl super::SBPMessage for MsgLinuxCpuState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxCpuState {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxCpuState(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -166,6 +183,13 @@ impl super::SBPMessage for MsgLinuxCpuStateDepA {
         32512
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32512
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -182,6 +206,16 @@ impl super::SBPMessage for MsgLinuxCpuStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxCpuStateDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -257,6 +291,13 @@ impl super::SBPMessage for MsgLinuxMemState {
         32521
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32521
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -273,6 +314,16 @@ impl super::SBPMessage for MsgLinuxMemState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxMemState {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxMemState(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -346,6 +397,13 @@ impl super::SBPMessage for MsgLinuxMemStateDepA {
         32513
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32513
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -362,6 +420,16 @@ impl super::SBPMessage for MsgLinuxMemStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxMemStateDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -427,6 +495,13 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
         32518
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32518
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -443,6 +518,16 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessFdCount(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -504,6 +589,13 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
         32519
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32519
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -520,6 +612,16 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessFdSummary(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -589,6 +691,13 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
         32515
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32515
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -605,6 +714,16 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessSocketCounts(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -689,6 +808,13 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
         32516
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32516
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -705,6 +831,16 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessSocketQueues(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -780,6 +916,13 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
         32517
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32517
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -796,6 +939,16 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSocketUsage(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -871,6 +1024,13 @@ impl super::SBPMessage for MsgLinuxSysState {
         32522
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32522
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -887,6 +1047,16 @@ impl super::SBPMessage for MsgLinuxSysState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxSysState {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSysState(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -964,6 +1134,13 @@ impl super::SBPMessage for MsgLinuxSysStateDepA {
         32514
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        32514
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -980,6 +1157,16 @@ impl super::SBPMessage for MsgLinuxSysStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSysStateDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

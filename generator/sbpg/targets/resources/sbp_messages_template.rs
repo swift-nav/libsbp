@@ -95,6 +95,12 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
         (((m.sbp_id)))
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized, {
+        (((m.sbp_id)))
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -117,6 +123,19 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
     }
 
     (((m|gps_time(msgs))))
+}
+((*- endif *))
+
+((*- if m.is_real_message *))
+impl TryFrom<super::SBP> for (((m.identifier|camel_case))) {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::(((m.identifier|camel_case)))(m) => Ok(m),
+            _ => Err(()),
+        }
+    }
 }
 ((*- endif *))
 

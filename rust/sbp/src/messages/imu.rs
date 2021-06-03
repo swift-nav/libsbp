@@ -65,6 +65,13 @@ impl super::SBPMessage for MsgImuAux {
         2305
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        2305
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -81,6 +88,16 @@ impl super::SBPMessage for MsgImuAux {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgImuAux {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgImuAux(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -162,6 +179,13 @@ impl super::SBPMessage for MsgImuRaw {
         2304
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        2304
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -194,6 +218,16 @@ impl super::SBPMessage for MsgImuRaw {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl TryFrom<super::SBP> for MsgImuRaw {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgImuRaw(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 

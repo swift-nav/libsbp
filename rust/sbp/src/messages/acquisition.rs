@@ -284,6 +284,13 @@ impl super::SBPMessage for MsgAcqResult {
         47
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        47
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -300,6 +307,16 @@ impl super::SBPMessage for MsgAcqResult {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqResult {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResult(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -365,6 +382,13 @@ impl super::SBPMessage for MsgAcqResultDepA {
         21
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        21
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -381,6 +405,16 @@ impl super::SBPMessage for MsgAcqResultDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepA {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepA(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -445,6 +479,13 @@ impl super::SBPMessage for MsgAcqResultDepB {
         20
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        20
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -461,6 +502,16 @@ impl super::SBPMessage for MsgAcqResultDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepB {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepB(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -524,6 +575,13 @@ impl super::SBPMessage for MsgAcqResultDepC {
         31
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        31
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -540,6 +598,16 @@ impl super::SBPMessage for MsgAcqResultDepC {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepC {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepC(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -595,6 +663,13 @@ impl super::SBPMessage for MsgAcqSvProfile {
         46
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        46
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -611,6 +686,16 @@ impl super::SBPMessage for MsgAcqSvProfile {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqSvProfile {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqSvProfile(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
@@ -659,6 +744,13 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
         30
     }
 
+    fn message_type() -> u16
+    where
+        Self: Sized,
+    {
+        30
+    }
+
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -675,6 +767,16 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
+    type Error = ();
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqSvProfileDep(m) => Ok(m),
+            _ => Err(()),
+        }
     }
 }
 
