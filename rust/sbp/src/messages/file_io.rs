@@ -68,13 +68,6 @@ impl super::SBPMessage for MsgFileioConfigReq {
         4097
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        4097
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -91,6 +84,11 @@ impl super::SBPMessage for MsgFileioConfigReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioConfigReq {
+    fn message_type() -> u16 {
+        4097
     }
 }
 impl TryFrom<super::SBP> for MsgFileioConfigReq {
@@ -162,13 +160,6 @@ impl super::SBPMessage for MsgFileioConfigResp {
         4098
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        4098
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -185,6 +176,11 @@ impl super::SBPMessage for MsgFileioConfigResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioConfigResp {
+    fn message_type() -> u16 {
+        4098
     }
 }
 impl TryFrom<super::SBP> for MsgFileioConfigResp {
@@ -264,13 +260,6 @@ impl super::SBPMessage for MsgFileioReadDirReq {
         169
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        169
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -287,6 +276,11 @@ impl super::SBPMessage for MsgFileioReadDirReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioReadDirReq {
+    fn message_type() -> u16 {
+        169
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirReq {
@@ -357,13 +351,6 @@ impl super::SBPMessage for MsgFileioReadDirResp {
         170
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        170
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -380,6 +367,11 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioReadDirResp {
+    fn message_type() -> u16 {
+        170
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirResp {
@@ -456,13 +448,6 @@ impl super::SBPMessage for MsgFileioReadReq {
         168
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        168
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -479,6 +464,11 @@ impl super::SBPMessage for MsgFileioReadReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioReadReq {
+    fn message_type() -> u16 {
+        168
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadReq {
@@ -550,13 +540,6 @@ impl super::SBPMessage for MsgFileioReadResp {
         163
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        163
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -573,6 +556,11 @@ impl super::SBPMessage for MsgFileioReadResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioReadResp {
+    fn message_type() -> u16 {
+        163
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadResp {
@@ -636,13 +624,6 @@ impl super::SBPMessage for MsgFileioRemove {
         172
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        172
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -659,6 +640,11 @@ impl super::SBPMessage for MsgFileioRemove {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioRemove {
+    fn message_type() -> u16 {
+        172
     }
 }
 impl TryFrom<super::SBP> for MsgFileioRemove {
@@ -733,13 +719,6 @@ impl super::SBPMessage for MsgFileioWriteReq {
         173
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        173
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -756,6 +735,11 @@ impl super::SBPMessage for MsgFileioWriteReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioWriteReq {
+    fn message_type() -> u16 {
+        173
     }
 }
 impl TryFrom<super::SBP> for MsgFileioWriteReq {
@@ -824,13 +808,6 @@ impl super::SBPMessage for MsgFileioWriteResp {
         171
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        171
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -847,6 +824,11 @@ impl super::SBPMessage for MsgFileioWriteResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFileioWriteResp {
+    fn message_type() -> u16 {
+        171
     }
 }
 impl TryFrom<super::SBP> for MsgFileioWriteResp {

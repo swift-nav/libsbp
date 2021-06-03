@@ -191,13 +191,6 @@ impl super::SBPMessage for MsgSolnMeta {
         65294
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        65294
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -226,6 +219,11 @@ impl super::SBPMessage for MsgSolnMeta {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgSolnMeta {
+    fn message_type() -> u16 {
+        65294
     }
 }
 impl TryFrom<super::SBP> for MsgSolnMeta {
@@ -329,13 +327,6 @@ impl super::SBPMessage for MsgSolnMetaDepA {
         65295
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        65295
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -352,6 +343,11 @@ impl super::SBPMessage for MsgSolnMetaDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSolnMetaDepA {
+    fn message_type() -> u16 {
+        65295
     }
 }
 impl TryFrom<super::SBP> for MsgSolnMetaDepA {

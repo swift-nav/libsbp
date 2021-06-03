@@ -72,13 +72,6 @@ impl super::SBPMessage for MsgOdometry {
         2307
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        2307
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -107,6 +100,11 @@ impl super::SBPMessage for MsgOdometry {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgOdometry {
+    fn message_type() -> u16 {
+        2307
     }
 }
 impl TryFrom<super::SBP> for MsgOdometry {
@@ -192,13 +190,6 @@ impl super::SBPMessage for MsgWheeltick {
         2308
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        2308
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -231,6 +222,11 @@ impl super::SBPMessage for MsgWheeltick {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgWheeltick {
+    fn message_type() -> u16 {
+        2308
     }
 }
 impl TryFrom<super::SBP> for MsgWheeltick {

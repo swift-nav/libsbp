@@ -704,13 +704,6 @@ impl super::SBPMessage for MsgAlmanacGlo {
         115
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        115
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -727,6 +720,11 @@ impl super::SBPMessage for MsgAlmanacGlo {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgAlmanacGlo {
+    fn message_type() -> u16 {
+        115
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGlo {
@@ -824,13 +822,6 @@ impl super::SBPMessage for MsgAlmanacGloDep {
         113
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        113
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -847,6 +838,11 @@ impl super::SBPMessage for MsgAlmanacGloDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgAlmanacGloDep {
+    fn message_type() -> u16 {
+        113
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGloDep {
@@ -949,13 +945,6 @@ impl super::SBPMessage for MsgAlmanacGPS {
         114
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        114
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -972,6 +961,11 @@ impl super::SBPMessage for MsgAlmanacGPS {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgAlmanacGPS {
+    fn message_type() -> u16 {
+        114
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGPS {
@@ -1078,13 +1072,6 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
         112
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        112
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1101,6 +1088,11 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgAlmanacGPSDep {
+    fn message_type() -> u16 {
+        112
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGPSDep {
@@ -1188,13 +1180,6 @@ impl super::SBPMessage for MsgBasePosECEF {
         72
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        72
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1211,6 +1196,11 @@ impl super::SBPMessage for MsgBasePosECEF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBasePosECEF {
+    fn message_type() -> u16 {
+        72
     }
 }
 impl TryFrom<super::SBP> for MsgBasePosECEF {
@@ -1283,13 +1273,6 @@ impl super::SBPMessage for MsgBasePosLLH {
         68
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        68
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1306,6 +1289,11 @@ impl super::SBPMessage for MsgBasePosLLH {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBasePosLLH {
+    fn message_type() -> u16 {
+        68
     }
 }
 impl TryFrom<super::SBP> for MsgBasePosLLH {
@@ -1446,13 +1434,6 @@ impl super::SBPMessage for MsgEphemerisBds {
         137
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        137
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1469,6 +1450,11 @@ impl super::SBPMessage for MsgEphemerisBds {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisBds {
+    fn message_type() -> u16 {
+        137
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisBds {
@@ -1652,13 +1638,6 @@ impl super::SBPMessage for MsgEphemerisDepA {
         26
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        26
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1675,6 +1654,11 @@ impl super::SBPMessage for MsgEphemerisDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisDepA {
+    fn message_type() -> u16 {
+        26
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepA {
@@ -1865,13 +1849,6 @@ impl super::SBPMessage for MsgEphemerisDepB {
         70
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        70
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1888,6 +1865,11 @@ impl super::SBPMessage for MsgEphemerisDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisDepB {
+    fn message_type() -> u16 {
+        70
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepB {
@@ -2090,13 +2072,6 @@ impl super::SBPMessage for MsgEphemerisDepC {
         71
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        71
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2113,6 +2088,11 @@ impl super::SBPMessage for MsgEphemerisDepC {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisDepC {
+    fn message_type() -> u16 {
+        71
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepC {
@@ -2319,13 +2299,6 @@ impl super::SBPMessage for MsgEphemerisDepD {
         128
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        128
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2342,6 +2315,11 @@ impl super::SBPMessage for MsgEphemerisDepD {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisDepD {
+    fn message_type() -> u16 {
+        128
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepD {
@@ -2535,13 +2513,6 @@ impl super::SBPMessage for MsgEphemerisGal {
         141
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        141
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2558,6 +2529,11 @@ impl super::SBPMessage for MsgEphemerisGal {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGal {
+    fn message_type() -> u16 {
+        141
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGal {
@@ -2738,13 +2714,6 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
         149
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        149
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2761,6 +2730,11 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGalDepA {
+    fn message_type() -> u16 {
+        149
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGalDepA {
@@ -2893,13 +2867,6 @@ impl super::SBPMessage for MsgEphemerisGlo {
         139
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        139
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -2916,6 +2883,11 @@ impl super::SBPMessage for MsgEphemerisGlo {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGlo {
+    fn message_type() -> u16 {
+        139
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGlo {
@@ -3009,13 +2981,6 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
         131
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        131
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3032,6 +2997,11 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGloDepA {
+    fn message_type() -> u16 {
+        131
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepA {
@@ -3119,13 +3089,6 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
         133
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        133
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3142,6 +3105,11 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGloDepB {
+    fn message_type() -> u16 {
+        133
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepB {
@@ -3235,13 +3203,6 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
         135
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        135
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3258,6 +3219,11 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGloDepC {
+    fn message_type() -> u16 {
+        135
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepC {
@@ -3355,13 +3321,6 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
         136
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        136
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3378,6 +3337,11 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGloDepD {
+    fn message_type() -> u16 {
+        136
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepD {
@@ -3526,13 +3490,6 @@ impl super::SBPMessage for MsgEphemerisGPS {
         138
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        138
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3549,6 +3506,11 @@ impl super::SBPMessage for MsgEphemerisGPS {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGPS {
+    fn message_type() -> u16 {
+        138
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPS {
@@ -3725,13 +3687,6 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
         129
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        129
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3748,6 +3703,11 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGPSDepE {
+    fn message_type() -> u16 {
+        129
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPSDepE {
@@ -3921,13 +3881,6 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
         134
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        134
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -3944,6 +3897,11 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisGPSDepF {
+    fn message_type() -> u16 {
+        134
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPSDepF {
@@ -4118,13 +4076,6 @@ impl super::SBPMessage for MsgEphemerisQzss {
         142
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        142
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4141,6 +4092,11 @@ impl super::SBPMessage for MsgEphemerisQzss {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisQzss {
+    fn message_type() -> u16 {
+        142
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisQzss {
@@ -4254,13 +4210,6 @@ impl super::SBPMessage for MsgEphemerisSbas {
         140
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        140
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4277,6 +4226,11 @@ impl super::SBPMessage for MsgEphemerisSbas {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisSbas {
+    fn message_type() -> u16 {
+        140
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbas {
@@ -4356,13 +4310,6 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
         130
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        130
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4379,6 +4326,11 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisSbasDepA {
+    fn message_type() -> u16 {
+        130
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbasDepA {
@@ -4463,13 +4415,6 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
         132
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        132
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4486,6 +4431,11 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgEphemerisSbasDepB {
+    fn message_type() -> u16 {
+        132
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbasDepB {
@@ -4569,13 +4519,6 @@ impl super::SBPMessage for MsgGloBiases {
         117
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        117
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4592,6 +4535,11 @@ impl super::SBPMessage for MsgGloBiases {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgGloBiases {
+    fn message_type() -> u16 {
+        117
     }
 }
 impl TryFrom<super::SBP> for MsgGloBiases {
@@ -4657,13 +4605,6 @@ impl super::SBPMessage for MsgGnssCapb {
         150
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        150
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4680,6 +4621,11 @@ impl super::SBPMessage for MsgGnssCapb {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgGnssCapb {
+    fn message_type() -> u16 {
+        150
     }
 }
 impl TryFrom<super::SBP> for MsgGnssCapb {
@@ -4753,13 +4699,6 @@ impl super::SBPMessage for MsgGroupDelay {
         148
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        148
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4776,6 +4715,11 @@ impl super::SBPMessage for MsgGroupDelay {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgGroupDelay {
+    fn message_type() -> u16 {
+        148
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelay {
@@ -4857,13 +4801,6 @@ impl super::SBPMessage for MsgGroupDelayDepA {
         146
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        146
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4880,6 +4817,11 @@ impl super::SBPMessage for MsgGroupDelayDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgGroupDelayDepA {
+    fn message_type() -> u16 {
+        146
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelayDepA {
@@ -4961,13 +4903,6 @@ impl super::SBPMessage for MsgGroupDelayDepB {
         147
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        147
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -4984,6 +4919,11 @@ impl super::SBPMessage for MsgGroupDelayDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgGroupDelayDepB {
+    fn message_type() -> u16 {
+        147
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelayDepB {
@@ -5070,13 +5010,6 @@ impl super::SBPMessage for MsgIono {
         144
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        144
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5093,6 +5026,11 @@ impl super::SBPMessage for MsgIono {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgIono {
+    fn message_type() -> u16 {
+        144
     }
 }
 impl TryFrom<super::SBP> for MsgIono {
@@ -5176,13 +5114,6 @@ impl super::SBPMessage for MsgObs {
         74
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        74
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5215,6 +5146,11 @@ impl super::SBPMessage for MsgObs {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgObs {
+    fn message_type() -> u16 {
+        74
     }
 }
 impl TryFrom<super::SBP> for MsgObs {
@@ -5278,13 +5214,6 @@ impl super::SBPMessage for MsgObsDepA {
         69
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        69
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5317,6 +5246,11 @@ impl super::SBPMessage for MsgObsDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgObsDepA {
+    fn message_type() -> u16 {
+        69
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepA {
@@ -5385,13 +5319,6 @@ impl super::SBPMessage for MsgObsDepB {
         67
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        67
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5424,6 +5351,11 @@ impl super::SBPMessage for MsgObsDepB {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgObsDepB {
+    fn message_type() -> u16 {
+        67
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepB {
@@ -5493,13 +5425,6 @@ impl super::SBPMessage for MsgObsDepC {
         73
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        73
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5532,6 +5457,11 @@ impl super::SBPMessage for MsgObsDepC {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgObsDepC {
+    fn message_type() -> u16 {
+        73
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepC {
@@ -5595,13 +5525,6 @@ impl super::SBPMessage for MsgOsr {
         1600
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1600
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5634,6 +5557,11 @@ impl super::SBPMessage for MsgOsr {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgOsr {
+    fn message_type() -> u16 {
+        1600
     }
 }
 impl TryFrom<super::SBP> for MsgOsr {
@@ -5695,13 +5623,6 @@ impl super::SBPMessage for MsgSvAzEl {
         151
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        151
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5718,6 +5639,11 @@ impl super::SBPMessage for MsgSvAzEl {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSvAzEl {
+    fn message_type() -> u16 {
+        151
     }
 }
 impl TryFrom<super::SBP> for MsgSvAzEl {
@@ -5779,13 +5705,6 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
         145
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        145
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -5802,6 +5721,11 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSvConfigurationGPSDep {
+    fn message_type() -> u16 {
+        145
     }
 }
 impl TryFrom<super::SBP> for MsgSvConfigurationGPSDep {

@@ -95,12 +95,6 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
         (((m.sbp_id)))
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized, {
-        (((m.sbp_id)))
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -123,6 +117,14 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
     }
 
     (((m|gps_time(msgs))))
+}
+((*- endif *))
+
+((*- if m.is_real_message *))
+impl super::MessageType for (((m.identifier|camel_case))) {
+    fn message_type() -> u16 {
+        (((m.sbp_id)))
+    }
 }
 ((*- endif *))
 

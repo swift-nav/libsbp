@@ -62,13 +62,6 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
         176
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        176
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -85,6 +78,11 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBootloaderHandshakeDepA {
+    fn message_type() -> u16 {
+        176
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeDepA {
@@ -142,13 +140,6 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
         179
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        179
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -165,6 +156,11 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBootloaderHandshakeReq {
+    fn message_type() -> u16 {
+        179
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeReq {
@@ -226,13 +222,6 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
         180
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        180
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -249,6 +238,11 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBootloaderHandshakeResp {
+    fn message_type() -> u16 {
+        180
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeResp {
@@ -309,13 +303,6 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
         177
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        177
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -332,6 +319,11 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgBootloaderJumpToApp {
+    fn message_type() -> u16 {
+        177
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderJumpToApp {
@@ -392,13 +384,6 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
         222
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        222
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -415,6 +400,11 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgNapDeviceDnaReq {
+    fn message_type() -> u16 {
+        222
     }
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaReq {
@@ -474,13 +464,6 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
         221
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        221
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -497,6 +480,11 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgNapDeviceDnaResp {
+    fn message_type() -> u16 {
+        221
     }
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaResp {

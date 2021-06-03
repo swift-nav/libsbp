@@ -4,9 +4,12 @@ use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 use swiftnav_rs::time::GpsTime;
 
 #[cfg(feature = "swiftnav-rs")]
-use crate::time::{GpsTimeError, MessageTime, RoverTime};
+use crate::{
+    messages::SBPMessage,
+    time::{GpsTimeError, MessageTime, RoverTime},
+};
 
-use crate::messages::{SBPMessage, SBP};
+use crate::messages::{MessageType, SBP};
 
 pub struct Dispatcher {
     callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP)>>>,
@@ -22,7 +25,7 @@ impl Dispatcher {
     pub fn on<F, M>(&mut self, mut func: F)
     where
         F: FnMut(M) + 'static,
-        M: SBPMessage + TryFrom<SBP> + 'static,
+        M: MessageType + TryFrom<SBP> + 'static,
         <M as TryFrom<SBP>>::Error: Debug,
     {
         let cb = Box::new(move |msg: SBP| {

@@ -27,7 +27,6 @@ use crate::serialize::SbpSerialize;
 pub trait SBPMessage: SbpSerialize {
     fn get_message_name(&self) -> &'static str;
     fn get_message_type(&self) -> u16;
-    fn message_type() -> u16 where Self: Sized;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
@@ -36,6 +35,10 @@ pub trait SBPMessage: SbpSerialize {
     fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
+}
+
+pub trait MessageType: Sized {
+    fn message_type() -> u16;
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
@@ -87,10 +90,6 @@ impl crate::SBPMessage for SBP {
                 msg.get_message_type()
             },
         }
-    }
-
-    fn message_type() -> u16 {
-        0
     }
 
     fn get_sender_id(&self) -> Option<u16> {

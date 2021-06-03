@@ -70,13 +70,6 @@ impl super::SBPMessage for MsgFwd {
         1026
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1026
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -93,6 +86,11 @@ impl super::SBPMessage for MsgFwd {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgFwd {
+    fn message_type() -> u16 {
+        1026
     }
 }
 impl TryFrom<super::SBP> for MsgFwd {
@@ -160,13 +158,6 @@ impl super::SBPMessage for MsgLog {
         1025
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1025
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -183,6 +174,11 @@ impl super::SBPMessage for MsgLog {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgLog {
+    fn message_type() -> u16 {
+        1025
     }
 }
 impl TryFrom<super::SBP> for MsgLog {
@@ -243,13 +239,6 @@ impl super::SBPMessage for MsgPrintDep {
         16
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        16
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -266,6 +255,11 @@ impl super::SBPMessage for MsgPrintDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgPrintDep {
+    fn message_type() -> u16 {
+        16
     }
 }
 impl TryFrom<super::SBP> for MsgPrintDep {

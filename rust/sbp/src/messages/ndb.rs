@@ -87,13 +87,6 @@ impl super::SBPMessage for MsgNdbEvent {
         1024
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1024
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -110,6 +103,11 @@ impl super::SBPMessage for MsgNdbEvent {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgNdbEvent {
+    fn message_type() -> u16 {
+        1024
     }
 }
 impl TryFrom<super::SBP> for MsgNdbEvent {

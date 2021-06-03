@@ -70,13 +70,6 @@ impl super::SBPMessage for MsgMagRaw {
         2306
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        2306
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -105,6 +98,11 @@ impl super::SBPMessage for MsgMagRaw {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::MessageType for MsgMagRaw {
+    fn message_type() -> u16 {
+        2306
     }
 }
 impl TryFrom<super::SBP> for MsgMagRaw {

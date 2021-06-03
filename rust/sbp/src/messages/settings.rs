@@ -80,13 +80,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
         166
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        166
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -103,6 +96,11 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsReadByIndexDone {
+    fn message_type() -> u16 {
+        166
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
@@ -160,13 +158,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
         162
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        162
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -183,6 +174,11 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsReadByIndexReq {
+    fn message_type() -> u16 {
+        162
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
@@ -255,13 +251,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
         167
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        167
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -278,6 +267,11 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsReadByIndexResp {
+    fn message_type() -> u16 {
+        167
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
@@ -346,13 +340,6 @@ impl super::SBPMessage for MsgSettingsReadReq {
         164
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        164
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -369,6 +356,11 @@ impl super::SBPMessage for MsgSettingsReadReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsReadReq {
+    fn message_type() -> u16 {
+        164
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadReq {
@@ -434,13 +426,6 @@ impl super::SBPMessage for MsgSettingsReadResp {
         165
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        165
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -457,6 +442,11 @@ impl super::SBPMessage for MsgSettingsReadResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsReadResp {
+    fn message_type() -> u16 {
+        165
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadResp {
@@ -518,13 +508,6 @@ impl super::SBPMessage for MsgSettingsRegister {
         174
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        174
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -541,6 +524,11 @@ impl super::SBPMessage for MsgSettingsRegister {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsRegister {
+    fn message_type() -> u16 {
+        174
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsRegister {
@@ -607,13 +595,6 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
         431
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        431
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -630,6 +611,11 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsRegisterResp {
+    fn message_type() -> u16 {
+        431
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
@@ -688,13 +674,6 @@ impl super::SBPMessage for MsgSettingsSave {
         161
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        161
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -711,6 +690,11 @@ impl super::SBPMessage for MsgSettingsSave {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsSave {
+    fn message_type() -> u16 {
+        161
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsSave {
@@ -772,13 +756,6 @@ impl super::SBPMessage for MsgSettingsWrite {
         160
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        160
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -795,6 +772,11 @@ impl super::SBPMessage for MsgSettingsWrite {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsWrite {
+    fn message_type() -> u16 {
+        160
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsWrite {
@@ -863,13 +845,6 @@ impl super::SBPMessage for MsgSettingsWriteResp {
         175
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        175
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -886,6 +861,11 @@ impl super::SBPMessage for MsgSettingsWriteResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSettingsWriteResp {
+    fn message_type() -> u16 {
+        175
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsWriteResp {

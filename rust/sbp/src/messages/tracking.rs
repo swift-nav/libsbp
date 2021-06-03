@@ -61,13 +61,6 @@ impl super::SBPMessage for MsgMeasurementState {
         97
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        97
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -84,6 +77,11 @@ impl super::SBPMessage for MsgMeasurementState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgMeasurementState {
+    fn message_type() -> u16 {
+        97
     }
 }
 impl TryFrom<super::SBP> for MsgMeasurementState {
@@ -149,13 +147,6 @@ impl super::SBPMessage for MsgTrackingIq {
         45
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        45
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -172,6 +163,11 @@ impl super::SBPMessage for MsgTrackingIq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingIq {
+    fn message_type() -> u16 {
+        45
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIq {
@@ -240,13 +236,6 @@ impl super::SBPMessage for MsgTrackingIqDepA {
         28
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        28
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -263,6 +252,11 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingIqDepA {
+    fn message_type() -> u16 {
+        28
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepA {
@@ -332,13 +326,6 @@ impl super::SBPMessage for MsgTrackingIqDepB {
         44
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        44
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -355,6 +342,11 @@ impl super::SBPMessage for MsgTrackingIqDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingIqDepB {
+    fn message_type() -> u16 {
+        44
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepB {
@@ -419,13 +411,6 @@ impl super::SBPMessage for MsgTrackingState {
         65
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        65
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -442,6 +427,11 @@ impl super::SBPMessage for MsgTrackingState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingState {
+    fn message_type() -> u16 {
+        65
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingState {
@@ -500,13 +490,6 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         22
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        22
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -523,6 +506,11 @@ impl super::SBPMessage for MsgTrackingStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingStateDepA {
+    fn message_type() -> u16 {
+        22
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepA {
@@ -581,13 +569,6 @@ impl super::SBPMessage for MsgTrackingStateDepB {
         19
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        19
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -604,6 +585,11 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingStateDepB {
+    fn message_type() -> u16 {
+        19
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepB {
@@ -728,13 +714,6 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
         17
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        17
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -751,6 +730,11 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingStateDetailedDep {
+    fn message_type() -> u16 {
+        17
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
@@ -916,13 +900,6 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
         33
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        33
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -939,6 +916,11 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgTrackingStateDetailedDepA {
+    fn message_type() -> u16 {
+        33
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {

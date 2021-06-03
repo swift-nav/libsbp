@@ -509,13 +509,6 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         1505
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1505
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -532,6 +525,11 @@ impl super::SBPMessage for MsgSsrCodeBiases {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrCodeBiases {
+    fn message_type() -> u16 {
+        1505
     }
 }
 impl TryFrom<super::SBP> for MsgSsrCodeBiases {
@@ -603,13 +601,6 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
         1532
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1532
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -626,6 +617,11 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrGriddedCorrection {
+    fn message_type() -> u16 {
+        1532
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrection {
@@ -686,13 +682,6 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
         1530
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1530
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -709,6 +698,11 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrGriddedCorrectionDepA {
+    fn message_type() -> u16 {
+        1530
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionDepA {
@@ -768,13 +762,6 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
         1520
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1520
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -791,6 +778,11 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrGriddedCorrectionNoStdDepA {
+    fn message_type() -> u16 {
+        1520
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionNoStdDepA {
@@ -853,13 +845,6 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
         1525
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1525
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -876,6 +861,11 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrGridDefinitionDepA {
+    fn message_type() -> u16 {
+        1525
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGridDefinitionDepA {
@@ -980,13 +970,6 @@ impl super::SBPMessage for MsgSsrOrbitClock {
         1501
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1501
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1003,6 +986,11 @@ impl super::SBPMessage for MsgSsrOrbitClock {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrOrbitClock {
+    fn message_type() -> u16 {
+        1501
     }
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClock {
@@ -1124,13 +1112,6 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
         1500
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1500
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1147,6 +1128,11 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrOrbitClockDepA {
+    fn message_type() -> u16 {
+        1500
     }
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClockDepA {
@@ -1262,13 +1248,6 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
         1510
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1510
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1285,6 +1264,11 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrPhaseBiases {
+    fn message_type() -> u16 {
+        1510
     }
 }
 impl TryFrom<super::SBP> for MsgSsrPhaseBiases {
@@ -1355,13 +1339,6 @@ impl super::SBPMessage for MsgSsrSatelliteApc {
         1540
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1540
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1378,6 +1355,11 @@ impl super::SBPMessage for MsgSsrSatelliteApc {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrSatelliteApc {
+    fn message_type() -> u16 {
+        1540
     }
 }
 impl TryFrom<super::SBP> for MsgSsrSatelliteApc {
@@ -1444,13 +1426,6 @@ impl super::SBPMessage for MsgSsrStecCorrection {
         1531
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1531
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1467,6 +1442,11 @@ impl super::SBPMessage for MsgSsrStecCorrection {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrStecCorrection {
+    fn message_type() -> u16 {
+        1531
     }
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrection {
@@ -1526,13 +1506,6 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
         1515
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1515
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1549,6 +1522,11 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrStecCorrectionDepA {
+    fn message_type() -> u16 {
+        1515
     }
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrectionDepA {
@@ -1660,13 +1638,6 @@ impl super::SBPMessage for MsgSsrTileDefinition {
         1526
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        1526
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
     }
@@ -1683,6 +1654,11 @@ impl super::SBPMessage for MsgSsrTileDefinition {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::MessageType for MsgSsrTileDefinition {
+    fn message_type() -> u16 {
+        1526
     }
 }
 impl TryFrom<super::SBP> for MsgSsrTileDefinition {

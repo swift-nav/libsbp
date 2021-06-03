@@ -346,10 +346,12 @@ mod swiftnav_rs_conversions {
 
 #[cfg(test)]
 mod tests {
+    use crate::messages::{navigation::MsgAgeCorrections, SBPMessage, SBP};
+
+    use super::*;
+
     #[test]
     fn test_making_frame() {
-        use crate::messages::SBPMessage;
-
         let msg = crate::messages::system::MsgStartup {
             sender_id: Some(250),
             cause: 1,
@@ -366,8 +368,6 @@ mod tests {
 
     #[test]
     fn test_sbp_string() {
-        use crate::SbpString;
-
         let sbp_str = SbpString(b"1234".to_vec());
         let s = sbp_str.to_string();
 
@@ -377,5 +377,17 @@ mod tests {
         let s = sbp_str.to_string();
 
         assert_eq!("1234\u{FFFD}", s);
+    }
+
+    #[test]
+    fn test_object_safe() {
+        let msg = MsgAgeCorrections {
+            sender_id: Some(1),
+            tow: 1,
+            age: 1,
+        };
+
+        // just needs to compile
+        let _: &dyn SBPMessage = &msg;
     }
 }

@@ -30,13 +30,6 @@ impl SBPMessage for Unknown {
         self.msg_id
     }
 
-    fn message_type() -> u16
-    where
-        Self: Sized,
-    {
-        0
-    }
-
     fn get_sender_id(&self) -> Option<u16> {
         Some(self.sender_id)
     }
