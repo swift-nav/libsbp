@@ -47,7 +47,7 @@ pub struct MsgFwd {
     /// protocol identifier
     pub protocol: u8,
     /// variable length wrapped binary message
-    pub fwd_payload: SbpString,
+    pub fwd_payload: Vec<u8>,
 }
 
 impl MsgFwd {
@@ -57,7 +57,7 @@ impl MsgFwd {
             sender_id: None,
             source: _buf.read_u8()?,
             protocol: _buf.read_u8()?,
-            fwd_payload: crate::parser::read_string(_buf)?,
+            fwd_payload: crate::parser::read_u8_array(_buf)?,
         } )
     }
 }

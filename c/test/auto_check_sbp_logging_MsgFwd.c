@@ -131,13 +131,86 @@ START_TEST( test_auto_check_sbp_logging_MsgFwd )
     u8 test_msg_len = 0;
     msg_fwd_t* test_msg = ( msg_fwd_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    {
-      const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      memcpy(test_msg->fwd_payload, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg->fwd_payload) == 0) {
-        test_msg_len += sizeof(assign_string);
-      }
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
     }
+    test_msg->fwd_payload[0] = 86;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[1] = 81;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[2] = 68;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[3] = 47;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[4] = 81;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[5] = 103;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[6] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[7] = 69;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[8] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[9] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[10] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[11] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[12] = 65;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[13] = 69;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[14] = 97;
+    if (sizeof(test_msg->fwd_payload) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->fwd_payload[0]);
+    }
+    test_msg->fwd_payload[15] = 103;
     test_msg->protocol = 0;
     test_msg->source = 0;
     sbp_send_message(&sbp_state, 0x402, 66, test_msg_len, test_msg_storage, &dummy_write);
@@ -188,10 +261,22 @@ START_TEST( test_auto_check_sbp_logging_MsgFwd )
     msg_fwd_t* check_msg = ( msg_fwd_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    {
-      const char check_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      ck_assert_msg(memcmp(check_msg->fwd_payload, check_string, sizeof(check_string)) == 0, "incorrect value for check_msg->fwd_payload, expected string '%s', is '%s'", check_string, check_msg->fwd_payload);
-    }
+    ck_assert_msg(check_msg->fwd_payload[0] == 86, "incorrect value for fwd_payload[0], expected 86, is %d", check_msg->fwd_payload[0]);
+    ck_assert_msg(check_msg->fwd_payload[1] == 81, "incorrect value for fwd_payload[1], expected 81, is %d", check_msg->fwd_payload[1]);
+    ck_assert_msg(check_msg->fwd_payload[2] == 68, "incorrect value for fwd_payload[2], expected 68, is %d", check_msg->fwd_payload[2]);
+    ck_assert_msg(check_msg->fwd_payload[3] == 47, "incorrect value for fwd_payload[3], expected 47, is %d", check_msg->fwd_payload[3]);
+    ck_assert_msg(check_msg->fwd_payload[4] == 81, "incorrect value for fwd_payload[4], expected 81, is %d", check_msg->fwd_payload[4]);
+    ck_assert_msg(check_msg->fwd_payload[5] == 103, "incorrect value for fwd_payload[5], expected 103, is %d", check_msg->fwd_payload[5]);
+    ck_assert_msg(check_msg->fwd_payload[6] == 65, "incorrect value for fwd_payload[6], expected 65, is %d", check_msg->fwd_payload[6]);
+    ck_assert_msg(check_msg->fwd_payload[7] == 69, "incorrect value for fwd_payload[7], expected 69, is %d", check_msg->fwd_payload[7]);
+    ck_assert_msg(check_msg->fwd_payload[8] == 65, "incorrect value for fwd_payload[8], expected 65, is %d", check_msg->fwd_payload[8]);
+    ck_assert_msg(check_msg->fwd_payload[9] == 65, "incorrect value for fwd_payload[9], expected 65, is %d", check_msg->fwd_payload[9]);
+    ck_assert_msg(check_msg->fwd_payload[10] == 65, "incorrect value for fwd_payload[10], expected 65, is %d", check_msg->fwd_payload[10]);
+    ck_assert_msg(check_msg->fwd_payload[11] == 65, "incorrect value for fwd_payload[11], expected 65, is %d", check_msg->fwd_payload[11]);
+    ck_assert_msg(check_msg->fwd_payload[12] == 65, "incorrect value for fwd_payload[12], expected 65, is %d", check_msg->fwd_payload[12]);
+    ck_assert_msg(check_msg->fwd_payload[13] == 69, "incorrect value for fwd_payload[13], expected 69, is %d", check_msg->fwd_payload[13]);
+    ck_assert_msg(check_msg->fwd_payload[14] == 97, "incorrect value for fwd_payload[14], expected 97, is %d", check_msg->fwd_payload[14]);
+    ck_assert_msg(check_msg->fwd_payload[15] == 103, "incorrect value for fwd_payload[15], expected 103, is %d", check_msg->fwd_payload[15]);
     ck_assert_msg(check_msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", check_msg->protocol);
     ck_assert_msg(check_msg->source == 0, "incorrect value for source, expected 0, is %d", check_msg->source);
   }
