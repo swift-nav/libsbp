@@ -15,11 +15,11 @@ use crate::{
 
 use crate::messages::{MessageType, TryFromSBPError, SBP};
 
-pub struct Dispatcher<T> {
-    callbacks: HashMap<u16, Vec<Box<dyn FnMut(T)>>>,
+pub struct Dispatcher {
+    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP)>>>,
 }
 
-impl<T> Dispatcher<T> {
+impl Dispatcher {
     pub fn new() -> Self {
         Self {
             callbacks: HashMap::new(),
@@ -27,8 +27,8 @@ impl<T> Dispatcher<T> {
     }
 }
 
-impl Dispatcher<SBP> {
-    pub fn on<M, F>(&mut self, mut func: F)
+impl Dispatcher {
+    pub fn register_callback<M, F>(&mut self, mut func: F)
     where
         M: MessageType + TryFrom<SBP, Error = TryFromSBPError>,
         F: FnMut(M) + 'static,
@@ -325,13 +325,11 @@ mod tests {
 
     #[test]
     fn test_dispatcher() {
-        let mut d: Dispatcher<SBP> = Dispatcher::new();
+        let mut d = Dispatcher::new();
 
-        d.on(|msg: crate::messages::navigation::MsgAgeCorrections| {
-            println!("got MsgAgeCorrections: {:?}", msg)
-        });
+        d.register_callback(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
 
-        let msg: SBP = crate::messages::navigation::MsgAgeCorrections {
+        let msg: SBP = MsgAgeCorrections {
             sender_id: Some(1),
             tow: 1,
             age: 1,
@@ -340,7 +338,7 @@ mod tests {
         assert!(d.dispatch(&msg));
         assert!(d.dispatch(msg));
 
-        let msg: SBP = crate::messages::navigation::MsgBaselineECEF {
+        let msg: SBP = MsgBaselineECEF {
             sender_id: Some(1),
             tow: 1,
             x: 1,
