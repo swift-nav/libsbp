@@ -15,23 +15,21 @@ use crate::{
 
 use crate::messages::{MessageType, TryFromSBPError, SBP};
 
-pub struct Dispatcher {
-    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP)>>>,
+pub struct Dispatcher<'a> {
+    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP) + 'a>>>,
 }
 
-impl Dispatcher {
+impl<'a> Dispatcher<'a> {
     pub fn new() -> Self {
         Self {
             callbacks: HashMap::new(),
         }
     }
-}
 
-impl Dispatcher {
-    pub fn register_callback<M, F>(&mut self, mut func: F)
+    pub fn add_callback<M, F>(&mut self, mut func: F)
     where
         M: MessageType + TryFrom<SBP, Error = TryFromSBPError>,
-        F: FnMut(M) + 'static,
+        F: FnMut(M) + 'a,
     {
         self.callbacks
             .entry(M::message_type())
@@ -327,7 +325,7 @@ mod tests {
     fn test_dispatcher() {
         let mut d = Dispatcher::new();
 
-        d.register_callback(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
+        d.add_callback(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
 
         let msg: SBP = MsgAgeCorrections {
             sender_id: Some(1),
