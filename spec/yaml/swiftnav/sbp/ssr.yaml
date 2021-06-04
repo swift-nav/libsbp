@@ -466,9 +466,9 @@ definitions:
             type: s16
             units: encoded degrees
             desc: |
-              North-West corner correction point longtitude.
+              North-West corner correction point longitude.
 
-              The relation between the longtitude X in the range [-180, 180]
+              The relation between the longitude X in the range [-180, 180]
               and the coded number N is:
 
               N = floor((X / 180) * 2^15)
@@ -485,9 +485,9 @@ definitions:
             type: u16
             units: 0.01 degrees
             desc: |
-              Spacing of the correction points in the longtitude direction.
+              Spacing of the correction points in the longitude direction.
 
-              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
+              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
         - rows:
             type: u16
             desc: |
@@ -497,9 +497,9 @@ definitions:
         - cols:
             type: u16
             desc: |
-              Number of steps in the longtitude direction.
+              Number of steps in the longitude direction.
 
-              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
         - bitmask:
             type: u64
             desc: |
@@ -731,7 +731,7 @@ definitions:
         desc: North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
     - lon_nw_corner_enc:
         type: u16
-        desc: North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+        desc: North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
     - num_msgs:
         type: u8
         desc: Number of messages in the dataset
