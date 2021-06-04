@@ -130,12 +130,12 @@ impl super::MessageType for (((m.identifier|camel_case))) {
 
 ((*- if m.is_real_message *))
 impl TryFrom<super::SBP> for (((m.identifier|camel_case))) {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::(((m.identifier|camel_case)))(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

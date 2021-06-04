@@ -308,12 +308,12 @@ impl super::MessageType for MsgAcqResult {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqResult {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqResult(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -404,12 +404,12 @@ impl super::MessageType for MsgAcqResultDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqResultDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -499,12 +499,12 @@ impl super::MessageType for MsgAcqResultDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqResultDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -593,12 +593,12 @@ impl super::MessageType for MsgAcqResultDepC {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepC {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqResultDepC(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -679,12 +679,12 @@ impl super::MessageType for MsgAcqSvProfile {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfile {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqSvProfile(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -758,12 +758,12 @@ impl super::MessageType for MsgAcqSvProfileDep {
     }
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAcqSvProfileDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

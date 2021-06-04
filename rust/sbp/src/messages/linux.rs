@@ -101,12 +101,12 @@ impl super::MessageType for MsgLinuxCpuState {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxCpuState {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxCpuState(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -205,12 +205,12 @@ impl super::MessageType for MsgLinuxCpuStateDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxCpuStateDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -311,12 +311,12 @@ impl super::MessageType for MsgLinuxMemState {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxMemState {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxMemState(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -415,12 +415,12 @@ impl super::MessageType for MsgLinuxMemStateDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxMemStateDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -511,12 +511,12 @@ impl super::MessageType for MsgLinuxProcessFdCount {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxProcessFdCount(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -603,12 +603,12 @@ impl super::MessageType for MsgLinuxProcessFdSummary {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxProcessFdSummary(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -703,12 +703,12 @@ impl super::MessageType for MsgLinuxProcessSocketCounts {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxProcessSocketCounts(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -818,12 +818,12 @@ impl super::MessageType for MsgLinuxProcessSocketQueues {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxProcessSocketQueues(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -924,12 +924,12 @@ impl super::MessageType for MsgLinuxSocketUsage {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxSocketUsage(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1030,12 +1030,12 @@ impl super::MessageType for MsgLinuxSysState {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxSysState {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxSysState(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1138,12 +1138,12 @@ impl super::MessageType for MsgLinuxSysStateDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLinuxSysStateDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

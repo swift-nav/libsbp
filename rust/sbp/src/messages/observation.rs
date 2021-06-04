@@ -728,12 +728,12 @@ impl super::MessageType for MsgAlmanacGlo {
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGlo {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAlmanacGlo(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -846,12 +846,12 @@ impl super::MessageType for MsgAlmanacGloDep {
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGloDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAlmanacGloDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -969,12 +969,12 @@ impl super::MessageType for MsgAlmanacGPS {
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGPS {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAlmanacGPS(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1096,12 +1096,12 @@ impl super::MessageType for MsgAlmanacGPSDep {
     }
 }
 impl TryFrom<super::SBP> for MsgAlmanacGPSDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAlmanacGPSDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1204,12 +1204,12 @@ impl super::MessageType for MsgBasePosECEF {
     }
 }
 impl TryFrom<super::SBP> for MsgBasePosECEF {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBasePosECEF(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1297,12 +1297,12 @@ impl super::MessageType for MsgBasePosLLH {
     }
 }
 impl TryFrom<super::SBP> for MsgBasePosLLH {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBasePosLLH(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1458,12 +1458,12 @@ impl super::MessageType for MsgEphemerisBds {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisBds {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisBds(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1662,12 +1662,12 @@ impl super::MessageType for MsgEphemerisDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1873,12 +1873,12 @@ impl super::MessageType for MsgEphemerisDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -2096,12 +2096,12 @@ impl super::MessageType for MsgEphemerisDepC {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepC {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisDepC(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -2323,12 +2323,12 @@ impl super::MessageType for MsgEphemerisDepD {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisDepD {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisDepD(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -2537,12 +2537,12 @@ impl super::MessageType for MsgEphemerisGal {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGal {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGal(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -2738,12 +2738,12 @@ impl super::MessageType for MsgEphemerisGalDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGalDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGalDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -2891,12 +2891,12 @@ impl super::MessageType for MsgEphemerisGlo {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGlo {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGlo(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3005,12 +3005,12 @@ impl super::MessageType for MsgEphemerisGloDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGloDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3113,12 +3113,12 @@ impl super::MessageType for MsgEphemerisGloDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGloDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3227,12 +3227,12 @@ impl super::MessageType for MsgEphemerisGloDepC {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepC {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGloDepC(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3345,12 +3345,12 @@ impl super::MessageType for MsgEphemerisGloDepD {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGloDepD {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGloDepD(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3514,12 +3514,12 @@ impl super::MessageType for MsgEphemerisGPS {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPS {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGPS(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3711,12 +3711,12 @@ impl super::MessageType for MsgEphemerisGPSDepE {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPSDepE {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGPSDepE(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -3905,12 +3905,12 @@ impl super::MessageType for MsgEphemerisGPSDepF {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisGPSDepF {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisGPSDepF(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4100,12 +4100,12 @@ impl super::MessageType for MsgEphemerisQzss {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisQzss {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisQzss(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4234,12 +4234,12 @@ impl super::MessageType for MsgEphemerisSbas {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbas {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisSbas(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4334,12 +4334,12 @@ impl super::MessageType for MsgEphemerisSbasDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbasDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisSbasDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4439,12 +4439,12 @@ impl super::MessageType for MsgEphemerisSbasDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgEphemerisSbasDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgEphemerisSbasDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4543,12 +4543,12 @@ impl super::MessageType for MsgGloBiases {
     }
 }
 impl TryFrom<super::SBP> for MsgGloBiases {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgGloBiases(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4629,12 +4629,12 @@ impl super::MessageType for MsgGnssCapb {
     }
 }
 impl TryFrom<super::SBP> for MsgGnssCapb {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgGnssCapb(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4723,12 +4723,12 @@ impl super::MessageType for MsgGroupDelay {
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelay {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgGroupDelay(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4825,12 +4825,12 @@ impl super::MessageType for MsgGroupDelayDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelayDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgGroupDelayDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -4927,12 +4927,12 @@ impl super::MessageType for MsgGroupDelayDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgGroupDelayDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgGroupDelayDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5034,12 +5034,12 @@ impl super::MessageType for MsgIono {
     }
 }
 impl TryFrom<super::SBP> for MsgIono {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgIono(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5154,12 +5154,12 @@ impl super::MessageType for MsgObs {
     }
 }
 impl TryFrom<super::SBP> for MsgObs {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgObs(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5254,12 +5254,12 @@ impl super::MessageType for MsgObsDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgObsDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5359,12 +5359,12 @@ impl super::MessageType for MsgObsDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgObsDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5465,12 +5465,12 @@ impl super::MessageType for MsgObsDepC {
     }
 }
 impl TryFrom<super::SBP> for MsgObsDepC {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgObsDepC(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5565,12 +5565,12 @@ impl super::MessageType for MsgOsr {
     }
 }
 impl TryFrom<super::SBP> for MsgOsr {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgOsr(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5647,12 +5647,12 @@ impl super::MessageType for MsgSvAzEl {
     }
 }
 impl TryFrom<super::SBP> for MsgSvAzEl {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSvAzEl(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -5729,12 +5729,12 @@ impl super::MessageType for MsgSvConfigurationGPSDep {
     }
 }
 impl TryFrom<super::SBP> for MsgSvConfigurationGPSDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSvConfigurationGPSDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

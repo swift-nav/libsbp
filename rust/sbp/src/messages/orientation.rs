@@ -113,12 +113,12 @@ impl super::MessageType for MsgAngularRate {
     }
 }
 impl TryFrom<super::SBP> for MsgAngularRate {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgAngularRate(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -224,12 +224,12 @@ impl super::MessageType for MsgBaselineHeading {
     }
 }
 impl TryFrom<super::SBP> for MsgBaselineHeading {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBaselineHeading(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -346,12 +346,12 @@ impl super::MessageType for MsgOrientEuler {
     }
 }
 impl TryFrom<super::SBP> for MsgOrientEuler {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgOrientEuler(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -482,12 +482,12 @@ impl super::MessageType for MsgOrientQuat {
     }
 }
 impl TryFrom<super::SBP> for MsgOrientQuat {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgOrientQuat(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

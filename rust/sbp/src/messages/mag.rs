@@ -106,12 +106,12 @@ impl super::MessageType for MsgMagRaw {
     }
 }
 impl TryFrom<super::SBP> for MsgMagRaw {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgMagRaw(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

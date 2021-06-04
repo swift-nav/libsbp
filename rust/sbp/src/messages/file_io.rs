@@ -92,12 +92,12 @@ impl super::MessageType for MsgFileioConfigReq {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioConfigReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioConfigReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -184,12 +184,12 @@ impl super::MessageType for MsgFileioConfigResp {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioConfigResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioConfigResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -284,12 +284,12 @@ impl super::MessageType for MsgFileioReadDirReq {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioReadDirReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -375,12 +375,12 @@ impl super::MessageType for MsgFileioReadDirResp {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioReadDirResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -472,12 +472,12 @@ impl super::MessageType for MsgFileioReadReq {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioReadReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -564,12 +564,12 @@ impl super::MessageType for MsgFileioReadResp {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioReadResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioReadResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -648,12 +648,12 @@ impl super::MessageType for MsgFileioRemove {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioRemove {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioRemove(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -743,12 +743,12 @@ impl super::MessageType for MsgFileioWriteReq {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioWriteReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioWriteReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -832,12 +832,12 @@ impl super::MessageType for MsgFileioWriteResp {
     }
 }
 impl TryFrom<super::SBP> for MsgFileioWriteResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFileioWriteResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

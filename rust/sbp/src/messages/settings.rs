@@ -104,12 +104,12 @@ impl super::MessageType for MsgSettingsReadByIndexDone {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsReadByIndexDone(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -182,12 +182,12 @@ impl super::MessageType for MsgSettingsReadByIndexReq {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsReadByIndexReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -275,12 +275,12 @@ impl super::MessageType for MsgSettingsReadByIndexResp {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsReadByIndexResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -364,12 +364,12 @@ impl super::MessageType for MsgSettingsReadReq {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsReadReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -450,12 +450,12 @@ impl super::MessageType for MsgSettingsReadResp {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsReadResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsReadResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -532,12 +532,12 @@ impl super::MessageType for MsgSettingsRegister {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsRegister {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsRegister(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -619,12 +619,12 @@ impl super::MessageType for MsgSettingsRegisterResp {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsRegisterResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -698,12 +698,12 @@ impl super::MessageType for MsgSettingsSave {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsSave {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsSave(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -780,12 +780,12 @@ impl super::MessageType for MsgSettingsWrite {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsWrite {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsWrite(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -869,12 +869,12 @@ impl super::MessageType for MsgSettingsWriteResp {
     }
 }
 impl TryFrom<super::SBP> for MsgSettingsWriteResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSettingsWriteResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

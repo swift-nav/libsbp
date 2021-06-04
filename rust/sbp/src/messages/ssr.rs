@@ -533,12 +533,12 @@ impl super::MessageType for MsgSsrCodeBiases {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrCodeBiases {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrCodeBiases(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -625,12 +625,12 @@ impl super::MessageType for MsgSsrGriddedCorrection {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrection {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrGriddedCorrection(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -706,12 +706,12 @@ impl super::MessageType for MsgSsrGriddedCorrectionDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrGriddedCorrectionDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -786,12 +786,12 @@ impl super::MessageType for MsgSsrGriddedCorrectionNoStdDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionNoStdDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrGriddedCorrectionNoStdDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -869,12 +869,12 @@ impl super::MessageType for MsgSsrGridDefinitionDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrGridDefinitionDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrGridDefinitionDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -994,12 +994,12 @@ impl super::MessageType for MsgSsrOrbitClock {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClock {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrOrbitClock(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1136,12 +1136,12 @@ impl super::MessageType for MsgSsrOrbitClockDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClockDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrOrbitClockDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1272,12 +1272,12 @@ impl super::MessageType for MsgSsrPhaseBiases {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrPhaseBiases {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrPhaseBiases(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1363,12 +1363,12 @@ impl super::MessageType for MsgSsrSatelliteApc {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrSatelliteApc {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrSatelliteApc(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1450,12 +1450,12 @@ impl super::MessageType for MsgSsrStecCorrection {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrection {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrStecCorrection(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1530,12 +1530,12 @@ impl super::MessageType for MsgSsrStecCorrectionDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrectionDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrStecCorrectionDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -1662,12 +1662,12 @@ impl super::MessageType for MsgSsrTileDefinition {
     }
 }
 impl TryFrom<super::SBP> for MsgSsrTileDefinition {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSsrTileDefinition(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

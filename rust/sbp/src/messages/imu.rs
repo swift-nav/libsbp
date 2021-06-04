@@ -89,12 +89,12 @@ impl super::MessageType for MsgImuAux {
     }
 }
 impl TryFrom<super::SBP> for MsgImuAux {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgImuAux(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -217,12 +217,12 @@ impl super::MessageType for MsgImuRaw {
     }
 }
 impl TryFrom<super::SBP> for MsgImuRaw {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgImuRaw(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

@@ -201,3 +201,14 @@ impl From<Unknown> for SBP {
         SBP::Unknown(msg)
     }
 }
+
+#[derive(Debug)]
+pub struct TryFromSBPError;
+
+impl std::fmt::Display for TryFromSBPError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "invalid message type for conversion")
+    }
+}
+
+impl std::error::Error for TryFromSBPError {}

@@ -227,12 +227,12 @@ impl super::MessageType for MsgSolnMeta {
     }
 }
 impl TryFrom<super::SBP> for MsgSolnMeta {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSolnMeta(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -351,12 +351,12 @@ impl super::MessageType for MsgSolnMetaDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgSolnMetaDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgSolnMetaDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

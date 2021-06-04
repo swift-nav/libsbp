@@ -89,12 +89,12 @@ impl super::MessageType for MsgFlashDone {
     }
 }
 impl TryFrom<super::SBP> for MsgFlashDone {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFlashDone(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -175,12 +175,12 @@ impl super::MessageType for MsgFlashErase {
     }
 }
 impl TryFrom<super::SBP> for MsgFlashErase {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFlashErase(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -270,12 +270,12 @@ impl super::MessageType for MsgFlashProgram {
     }
 }
 impl TryFrom<super::SBP> for MsgFlashProgram {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFlashProgram(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -367,12 +367,12 @@ impl super::MessageType for MsgFlashReadReq {
     }
 }
 impl TryFrom<super::SBP> for MsgFlashReadReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFlashReadReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -462,12 +462,12 @@ impl super::MessageType for MsgFlashReadResp {
     }
 }
 impl TryFrom<super::SBP> for MsgFlashReadResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFlashReadResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -546,12 +546,12 @@ impl super::MessageType for MsgM25FlashWriteStatus {
     }
 }
 impl TryFrom<super::SBP> for MsgM25FlashWriteStatus {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgM25FlashWriteStatus(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -626,12 +626,12 @@ impl super::MessageType for MsgStmFlashLockSector {
     }
 }
 impl TryFrom<super::SBP> for MsgStmFlashLockSector {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgStmFlashLockSector(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -706,12 +706,12 @@ impl super::MessageType for MsgStmFlashUnlockSector {
     }
 }
 impl TryFrom<super::SBP> for MsgStmFlashUnlockSector {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgStmFlashUnlockSector(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -786,12 +786,12 @@ impl super::MessageType for MsgStmUniqueIdReq {
     }
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgStmUniqueIdReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -865,12 +865,12 @@ impl super::MessageType for MsgStmUniqueIdResp {
     }
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgStmUniqueIdResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

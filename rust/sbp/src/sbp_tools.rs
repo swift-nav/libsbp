@@ -1,4 +1,8 @@
-use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
+use std::{
+    borrow::Borrow,
+    collections::HashMap,
+    convert::{TryFrom, TryInto},
+};
 
 #[cfg(feature = "swiftnav-rs")]
 use swiftnav_rs::time::GpsTime;
@@ -9,36 +13,40 @@ use crate::{
     time::{GpsTimeError, MessageTime, RoverTime},
 };
 
-use crate::messages::{MessageType, SBP};
+use crate::messages::{MessageType, TryFromSBPError, SBP};
 
-pub struct Dispatcher {
-    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP)>>>,
+pub struct Dispatcher<T> {
+    callbacks: HashMap<u16, Vec<Box<dyn FnMut(T)>>>,
 }
 
-impl Dispatcher {
+impl<T> Dispatcher<T> {
     pub fn new() -> Self {
         Self {
             callbacks: HashMap::new(),
         }
     }
+}
 
-    pub fn on<F, M>(&mut self, mut func: F)
+impl Dispatcher<SBP> {
+    pub fn on<M, F>(&mut self, mut func: F)
     where
+        M: MessageType + TryFrom<SBP, Error = TryFromSBPError>,
         F: FnMut(M) + 'static,
-        M: MessageType + TryFrom<SBP> + 'static,
-        <M as TryFrom<SBP>>::Error: Debug,
     {
-        let cb = Box::new(move |msg: SBP| {
-            let msg = M::try_from(msg).unwrap();
-            func(msg)
-        });
         self.callbacks
             .entry(M::message_type())
             .or_default()
-            .push(cb);
+            .push(Box::new(move |msg: SBP| {
+                let msg: M = msg.try_into().unwrap();
+                func(msg)
+            }));
     }
 
-    pub fn handle(&mut self, msg: SBP) -> bool {
+    pub fn dispatch<M>(&mut self, msg: M) -> bool
+    where
+        M: Borrow<SBP>,
+    {
+        let msg = msg.borrow();
         match self.callbacks.get_mut(&msg.get_message_type()) {
             Some(cbs) => {
                 for cb in cbs.iter_mut() {
@@ -315,19 +323,24 @@ mod tests {
         assert_eq!(err_count, 1);
     }
 
+    #[test]
     fn test_dispatcher() {
-        let mut d = Dispatcher::new();
+        let mut d: Dispatcher<SBP> = Dispatcher::new();
 
-        d.on(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
+        d.on(|msg: crate::messages::navigation::MsgAgeCorrections| {
+            println!("got MsgAgeCorrections: {:?}", msg)
+        });
 
-        let msg = MsgAgeCorrections {
+        let msg: SBP = crate::messages::navigation::MsgAgeCorrections {
             sender_id: Some(1),
             tow: 1,
             age: 1,
-        };
-        assert!(d.handle(msg.into()));
+        }
+        .into();
+        assert!(d.dispatch(&msg));
+        assert!(d.dispatch(msg));
 
-        let msg = MsgBaselineECEF {
+        let msg: SBP = crate::messages::navigation::MsgBaselineECEF {
             sender_id: Some(1),
             tow: 1,
             x: 1,
@@ -336,7 +349,8 @@ mod tests {
             accuracy: 1,
             n_sats: 1,
             flags: 1,
-        };
-        assert_eq!(d.handle(msg.into()), false);
+        }
+        .into();
+        assert_eq!(d.dispatch(&msg), false);
     }
 }

@@ -108,12 +108,12 @@ impl super::MessageType for MsgOdometry {
     }
 }
 impl TryFrom<super::SBP> for MsgOdometry {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgOdometry(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -230,12 +230,12 @@ impl super::MessageType for MsgWheeltick {
     }
 }
 impl TryFrom<super::SBP> for MsgWheeltick {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgWheeltick(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

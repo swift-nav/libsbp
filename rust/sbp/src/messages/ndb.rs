@@ -111,12 +111,12 @@ impl super::MessageType for MsgNdbEvent {
     }
 }
 impl TryFrom<super::SBP> for MsgNdbEvent {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgNdbEvent(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

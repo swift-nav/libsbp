@@ -83,12 +83,12 @@ impl super::MessageType for MsgUserData {
     }
 }
 impl TryFrom<super::SBP> for MsgUserData {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgUserData(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

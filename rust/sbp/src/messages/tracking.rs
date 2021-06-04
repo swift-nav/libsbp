@@ -85,12 +85,12 @@ impl super::MessageType for MsgMeasurementState {
     }
 }
 impl TryFrom<super::SBP> for MsgMeasurementState {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgMeasurementState(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -171,12 +171,12 @@ impl super::MessageType for MsgTrackingIq {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingIq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -260,12 +260,12 @@ impl super::MessageType for MsgTrackingIqDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingIqDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -350,12 +350,12 @@ impl super::MessageType for MsgTrackingIqDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingIqDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -435,12 +435,12 @@ impl super::MessageType for MsgTrackingState {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingState {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingState(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -514,12 +514,12 @@ impl super::MessageType for MsgTrackingStateDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingStateDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -593,12 +593,12 @@ impl super::MessageType for MsgTrackingStateDepB {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepB {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingStateDepB(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -738,12 +738,12 @@ impl super::MessageType for MsgTrackingStateDetailedDep {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingStateDetailedDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -924,12 +924,12 @@ impl super::MessageType for MsgTrackingStateDetailedDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgTrackingStateDetailedDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

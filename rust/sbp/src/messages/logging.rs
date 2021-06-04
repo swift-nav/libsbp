@@ -94,12 +94,12 @@ impl super::MessageType for MsgFwd {
     }
 }
 impl TryFrom<super::SBP> for MsgFwd {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgFwd(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -182,12 +182,12 @@ impl super::MessageType for MsgLog {
     }
 }
 impl TryFrom<super::SBP> for MsgLog {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgLog(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -263,12 +263,12 @@ impl super::MessageType for MsgPrintDep {
     }
 }
 impl TryFrom<super::SBP> for MsgPrintDep {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgPrintDep(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }

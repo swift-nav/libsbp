@@ -86,12 +86,12 @@ impl super::MessageType for MsgBootloaderHandshakeDepA {
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeDepA {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBootloaderHandshakeDepA(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -164,12 +164,12 @@ impl super::MessageType for MsgBootloaderHandshakeReq {
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBootloaderHandshakeReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -246,12 +246,12 @@ impl super::MessageType for MsgBootloaderHandshakeResp {
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBootloaderHandshakeResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -327,12 +327,12 @@ impl super::MessageType for MsgBootloaderJumpToApp {
     }
 }
 impl TryFrom<super::SBP> for MsgBootloaderJumpToApp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgBootloaderJumpToApp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -408,12 +408,12 @@ impl super::MessageType for MsgNapDeviceDnaReq {
     }
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaReq {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgNapDeviceDnaReq(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
@@ -488,12 +488,12 @@ impl super::MessageType for MsgNapDeviceDnaResp {
     }
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaResp {
-    type Error = ();
+    type Error = super::TryFromSBPError;
 
     fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
         match msg {
             super::SBP::MsgNapDeviceDnaResp(m) => Ok(m),
-            _ => Err(()),
+            _ => Err(super::TryFromSBPError),
         }
     }
 }
