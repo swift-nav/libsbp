@@ -17,6 +17,11 @@ try:
 except ImportError:
     SerialError = None
 
+try:
+    SerialTimeoutException = serial.SerialTimeoutException
+except AttributeError:
+    SerialTimeoutException = serial.writeTimeoutError  # pylint: disable=no-member
+
 
 class PySerialDriver(BaseDriver):
     """
@@ -95,9 +100,8 @@ class PySerialDriver(BaseDriver):
         """
         try:
             return self.handle.write(s)
-        except (OSError, serial.SerialException,
-                serial.writeTimeoutError) as e:
-            if e == serial.writeTimeoutError:
+        except (OSError, serial.SerialException, SerialTimeoutException) as e:
+            if e == SerialTimeoutException:
                 print("sbp pyserial_driver: writeTimeoutError")
                 return 0
             else:
