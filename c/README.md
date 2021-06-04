@@ -12,13 +12,14 @@ On Debian-based systems (including Ubuntu 12.10 or later) you can get
 dependencies with:
 
 ```shell
-sudo apt-get install build-essential pkg-config cmake doxygen check
+sudo apt-get install build-essential pkg-config cmake doxygen check clang-format-6.0
 ```
 
 On Mac:
 
 ```shell
-brew install check cmake pkg-config doxygen
+brew tap swift-nav/swift-devs
+brew install check cmake pkg-config doxygen clang-tools-6.0
 ```
 
 On other systems, you can obtain CMake from your operating system

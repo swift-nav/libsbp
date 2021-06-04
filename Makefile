@@ -97,6 +97,7 @@ else
 endif
 
 verify-prereq-c: verify-prereq-generator
+	@command -v clang-format-6.0 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`clang-format-6.0\` but it's not installed. Aborting.\n\nHave you installed clang-format-6.0? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
@@ -184,6 +185,15 @@ gen-c:
 		       -o $(SWIFTNAV_ROOT)/c/test \
 		       -r $(SBP_VERSION) \
 	               --test-c
+
+	$(call announce-begin,"Formatting C code")
+
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake $(CMAKEFLAGS) ../; \
+	$(MAKE) clang-format-all
+
+	$(call announce-end,"Finished formatting C code")
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
