@@ -21,7 +21,7 @@ definitions:
     short_desc: Raw IMU data
     desc: |
       Raw data from the Inertial Measurement Unit, containing accelerometer and
-      gyroscope readings. The sense of the measurements are to be aligned with 
+      gyroscope readings. The sense of the measurements are to be aligned with
       the indications on the device itself. Measurement units, which are specific to the
       device hardware and settings, are communicated via the MSG_IMU_AUX message.
       If using "time since startup" time tags, the receiving end will expect a
@@ -107,4 +107,3 @@ definitions:
                       - 1: +/- 4g
                       - 2: +/- 8g
                       - 3: +/- 16g
-

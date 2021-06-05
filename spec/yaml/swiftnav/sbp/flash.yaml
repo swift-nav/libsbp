@@ -13,7 +13,7 @@ description: |
   Messages for reading/writing the device's onboard flash memory. Many
   of these messages target specific flash memory peripherals used in
   Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
-  configuration flash from Piksi 2.3.1.  This module does not apply 
+  configuration flash from Piksi 2.3.1.  This module does not apply
   to Piksi Multi.
 stable: False
 public: False
@@ -64,7 +64,7 @@ definitions:
 
  - MSG_FLASH_DONE:
     id: 0x00E0
-    short_desc: Flash response message (host <= device).
+    short_desc: Flash response message (host <= device)
     public: false
     desc: |
       This message defines success or failure codes for a variety of
@@ -90,7 +90,7 @@ definitions:
 
  - MSG_FLASH_READ_REQ:
     id: 0x00E7
-    short_desc: Read STM or M25 flash address request (host => device).
+    short_desc: Read STM or M25 flash address request (host => device)
     public: false
     desc: |
       The flash read message reads a set of addresses of either the
@@ -128,7 +128,7 @@ definitions:
  - MSG_FLASH_READ_RESP:
     id: 0x00E1
     public: false
-    short_desc: Read STM or M25 flash address response (host <= device).
+    short_desc: Read STM or M25 flash address response (host <= device)
     desc: |
       The flash read message reads a set of addresses of either the
       STM or M25 onboard flash. The device replies with a
@@ -165,7 +165,7 @@ definitions:
  - MSG_FLASH_ERASE:
     id: 0x00E2
     public: false
-    short_desc: Erase sector of device flash memory (host => device).
+    short_desc: Erase sector of device flash memory (host => device)
     desc: |
       The flash erase message from the host erases a sector of either
       the STM or M25 onboard flash memory. The device will reply with a

@@ -172,9 +172,9 @@ definitions:
 
  - MSG_FILEIO_CONFIG_REQ:
     id: 0x1001
-    short_desc: Request advice on the optimal configuration for FileIO.
+    short_desc: Request advice on the optimal configuration for FileIO
     desc: |
-      Requests advice on the optimal configuration for a FileIO 
+      Requests advice on the optimal configuration for a FileIO
       transfer.  Newer version of FileIO can support greater
       throughput by supporting a large window of FileIO data
       that can be in-flight during read or write operations.

@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.observation
-description: Satellite observation messages from the device. 
+description: Satellite observation messages from the device.
              The SBP sender ID of 0 indicates remote observations
              from a GNSS base station, correction network, or Skylark,
              Swift's cloud GNSS correction product.
@@ -21,7 +21,7 @@ include:
 definitions:
 
  - ObservationHeader:
-    short_desc: Header for observation message.
+    short_desc: Header for observation message
     desc: Header of a GNSS observation message.
     fields:
         - t:
@@ -34,7 +34,7 @@ definitions:
               of the sequence (n), second nibble is the zero-indexed
               counter (ith packet of n)
  - Doppler:
-     short_desc: GNSS doppler measurement.
+     short_desc: GNSS doppler measurement
      desc: |
        Doppler measurement in Hz represented as a 24-bit
        fixed point number with Q16.8 layout, i.e. 16-bits of whole
@@ -51,7 +51,7 @@ definitions:
              desc: Doppler fractional part
 
  - PackedObsContent:
-    short_desc: GNSS observations for a particular satellite signal.
+    short_desc: GNSS observations for a particular satellite signal
     desc: |
       Pseudorange and carrier phase observation for a satellite being tracked.
       The observations are interoperable with 3rd party receivers and conform with
@@ -126,7 +126,7 @@ definitions:
             desc: GNSS signal identifier (16 bit)
 
  - PackedOsrContent:
-    short_desc: Network correction for a particular satellite signal.
+    short_desc: Network correction for a particular satellite signal
     desc: |
       Pseudorange and carrier phase network corrections for a satellite signal.
 
@@ -265,7 +265,7 @@ definitions:
             desc: ECEF Z coordinate
 
  - EphemerisCommonContent:
-    short_desc: Common fields for every ephemeris message.
+    short_desc: Common fields for every ephemeris message
     fields:
         - sid:
             type: GnssSignal
@@ -293,7 +293,7 @@ definitions:
               GLO: 0 = valid, non-zero = invalid
 
  - EphemerisCommonContentDepB:
-    short_desc: Common fields for every ephemeris message.
+    short_desc: Common fields for every ephemeris message
     replaced_by:
       - EphemerisCommonContent
     fields:
@@ -322,7 +322,7 @@ definitions:
               Others: 0 = valid, non-zero = invalid
 
  - EphemerisCommonContentDepA:
-    short_desc: Common fields for every ephemeris message.
+    short_desc: Common fields for every ephemeris message
     replaced_by:
       - EphemerisCommonContentDepB
     fields:
@@ -1880,7 +1880,7 @@ definitions:
           desc: Reserved field
 
  - ObservationHeaderDep:
-    short_desc: Header for observation message.
+    short_desc: Header for observation message
     desc: Header of a GPS observation message.
     fields:
         - t:
@@ -1894,7 +1894,7 @@ definitions:
               counter (ith packet of n)
 
  - CarrierPhaseDepA:
-    short_desc: GPS carrier phase measurement.
+    short_desc: GPS carrier phase measurement
     desc: |
       Carrier phase measurement in cycles represented as a 40-bit
       fixed point number with Q32.8 layout, i.e. 32-bits of whole
@@ -1937,7 +1937,7 @@ definitions:
             desc: PRN-1 identifier of the satellite signal
 
  - PackedObsContentDepB:
-    short_desc: GPS observations for a particular satellite signal.
+    short_desc: GPS observations for a particular satellite signal
     desc: |
       Pseudorange and carrier phase observation for a satellite being
       tracked.  Pseudoranges are referenced to a nominal pseudorange.
@@ -1964,7 +1964,7 @@ definitions:
             desc: GNSS signal identifier
 
  - PackedObsContentDepC:
-    short_desc: GPS observations for a particular satellite signal.
+    short_desc: GPS observations for a particular satellite signal
     desc: |
       Pseudorange and carrier phase observation for a satellite being
       tracked. The observations are be interoperable with 3rd party
@@ -2261,7 +2261,7 @@ definitions:
           units: s * 2^-35
 
  - AlmanacCommonContent:
-    short_desc: Common fields for every almanac message.
+    short_desc: Common fields for every almanac message
     fields:
         - sid:
             type: GnssSignal
@@ -2299,7 +2299,7 @@ definitions:
                   and suitable for navigation.
 
  - AlmanacCommonContentDep:
-    short_desc: Common fields for every almanac message.
+    short_desc: Common fields for every almanac message
     fields:
         - sid:
             type: GnssSignalDep
@@ -2529,7 +2529,7 @@ definitions:
       The GLONASS L1/L2 Code-Phase biases allows to perform
       GPS+GLONASS integer ambiguity resolution for baselines
       with mixed receiver types (e.g. receiver of different
-      manufacturers)
+      manufacturers).
     fields:
         - mask:
             type: u8
@@ -2553,7 +2553,7 @@ definitions:
             desc: GLONASS L2 P Code-Phase Bias
 
  - SvAzEl:
-    short_desc: Satellite azimuth and elevation.
+    short_desc: Satellite azimuth and elevation
     desc: Satellite azimuth and elevation.
     fields:
         - sid:
@@ -2583,7 +2583,7 @@ definitions:
     id: 0x0640
     short_desc: OSR corrections
     desc: |
-      The OSR message contains network corrections in an observation-like format
+      The OSR message contains network corrections in an observation-like format.
     fields:
         - header:
             type: ObservationHeader

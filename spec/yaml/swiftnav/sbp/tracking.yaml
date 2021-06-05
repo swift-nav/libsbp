@@ -20,7 +20,7 @@ definitions:
 
  - MSG_TRACKING_STATE_DETAILED_DEP_A:
     id: 0x0021
-    short_desc: Detailed signal tracking channel states. DEPRECATED.
+    short_desc: Detailed signal tracking channel states. DEPRECATED
     public: False
     desc: |
       The tracking message returns a set tracking channel parameters for a
@@ -507,7 +507,7 @@ definitions:
       and measured signal power.
       The mesid field for Glonass can either
       carry the FCN as 100 + FCN where FCN is in [-7, +6] or
-      the Slot ID (from 1 to 28)
+      the Slot ID (from 1 to 28).
     fields:
         - mesid:
             type: GnssSignal
@@ -651,7 +651,7 @@ definitions:
           desc: Satellite tracking channel state
 
  - TrackingChannelStateDepB:
-    short_desc: Deprecated.
+    short_desc: Deprecated
     desc: Deprecated.
     replaced_by:
       - TrackingChannelState
@@ -677,7 +677,7 @@ definitions:
 
  - MSG_TRACKING_STATE_DEP_B:
     id: 0x0013
-    short_desc: Deprecated.
+    short_desc: Deprecated
     desc: Deprecated.
     public: False
     replaced_by:

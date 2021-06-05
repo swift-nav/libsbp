@@ -22,7 +22,7 @@ definitions:
 
  - MSG_LINUX_CPU_STATE_DEP_A:
     id: 0x7F00
-    short_desc: List CPU state on the system. DEPRECATED.
+    short_desc: List CPU state on the system. DEPRECATED
     public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
@@ -47,7 +47,7 @@ definitions:
 
  - MSG_LINUX_MEM_STATE_DEP_A:
     id: 0x7F01
-    short_desc: List memory state on the system. DEPRECATED.
+    short_desc: List memory state on the system. DEPRECATED
     public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
@@ -73,7 +73,7 @@ definitions:
  - MSG_LINUX_SYS_STATE_DEP_A:
     id: 0x7F02
     public: false
-    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED.
+    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED
     desc: |
       This presents a summary of CPU and memory utilization.
     fields:
@@ -129,7 +129,7 @@ definitions:
       - cmdline:
           type: string
           desc: the command line of the process in question
- 
+
  - MSG_LINUX_PROCESS_SOCKET_QUEUES:
     id: 0x7F04
     public: false
@@ -165,14 +165,14 @@ definitions:
            and 0x8000 (unknown)
       - address_of_largest:
           type: string
-          size: 64 
+          size: 64
           desc: |
              Address of the largest queue, remote or local depending on the directionality
              of the connection.
       - cmdline:
           type: string
           desc: the command line of the process in question
- 
+
  - MSG_LINUX_SOCKET_USAGE:
     id: 0x7F05
     public: false
@@ -200,7 +200,7 @@ definitions:
           desc: |
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
-            
+
  - MSG_LINUX_PROCESS_FD_COUNT:
     id: 0x7F06
     public: false
@@ -220,7 +220,7 @@ definitions:
       - cmdline:
           type: string
           desc: the command line of the process in question
-          
+
  - MSG_LINUX_PROCESS_FD_SUMMARY:
     id: 0x7F07
     public: false
@@ -318,7 +318,7 @@ definitions:
  - MSG_LINUX_SYS_STATE:
      id: 0x7F0A
      public: false
-     short_desc: CPU, Memory and Process Starts/Stops.
+     short_desc: CPU, Memory and Process Starts/Stops
      desc: |
        This presents a summary of CPU and memory utilization, including a timestamp.
      fields:

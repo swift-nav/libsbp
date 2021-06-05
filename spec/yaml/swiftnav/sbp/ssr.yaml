@@ -17,7 +17,7 @@ include:
   - gnss.yaml
 definitions:
  - CodeBiasesContent:
-     short_desc: SSR code biases corrections for a particular satellite.
+     short_desc: SSR code biases corrections for a particular satellite
      desc: |
       Code biases are to be added to pseudorange.
       The corrections conform with RTCMv3 MT 1059 / 1065.
@@ -33,7 +33,7 @@ definitions:
             desc: Code bias value
 
  - PhaseBiasesContent:
-     short_desc: SSR phase biases corrections for a particular satellite.
+     short_desc: SSR phase biases corrections for a particular satellite
      desc: |
       Phase biases are to be added to carrier phase measurements.
      fields:
@@ -59,7 +59,7 @@ definitions:
             desc: Phase bias for specified signal
 
  - STECHeader:
-    short_desc: Header for the MSG_SSR_STEC_CORRECTION message.
+    short_desc: Header for the MSG_SSR_STEC_CORRECTION message
     desc: |
       A full set of STEC information will likely span multiple SBP
       messages, since SBP message a limited to 255 bytes.  The header
@@ -91,7 +91,7 @@ definitions:
             IOD of the SSR atmospheric correction
 
  - GriddedCorrectionHeader:
-    short_desc: Header for the MSG_SSR_GRIDDED_CORRECTION message.
+    short_desc: Header for the MSG_SSR_GRIDDED_CORRECTION message
     desc: |
       The LPP message contains nested variable length arrays
       which are not suppported in SBP, so each grid point will
@@ -193,7 +193,7 @@ definitions:
  - STECResidual:
     desc: |
       STEC residual (mean and standard deviation) for the given satellite
-      at the grid point,
+      at the grid point.
     fields:
     - sv_id:
         type: SvId
@@ -210,7 +210,7 @@ definitions:
         desc: stddev
 
  - GridElementNoStd:
-    short_desc: Correction data for a single grid point.
+    short_desc: Correction data for a single grid point
     desc: |
       Contains one tropo delay, plus STEC residuals for each satellite at the
       grid point.
@@ -227,7 +227,7 @@ definitions:
         desc: STEC residuals for each satellite
 
  - GridElement:
-    short_desc: Correction data for a single grid point.
+    short_desc: Correction data for a single grid point
     desc: |
       Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
       stddev) for each satellite at the grid point.
@@ -250,7 +250,7 @@ definitions:
       The precise orbit and clock correction message is
       to be applied as a delta correction to broadcast
       ephemeris and is an equivalent to the 1060 /1066
-      RTCM message types
+      RTCM message types.
     fields:
         - time:
             type: GPSTimeSec
@@ -316,7 +316,7 @@ definitions:
       The precise code biases message is to be added
       to the pseudorange of the corresponding signal
       to get corrected pseudorange. It is an
-      equivalent to the 1059 / 1065 RTCM message types
+      equivalent to the 1059 / 1065 RTCM message types.
     fields:
         - time:
             type: GPSTimeSec
@@ -350,7 +350,7 @@ definitions:
       signal to get corrected carrier phase measurement, as
       well as the satellite yaw angle to be applied to compute
       the phase wind-up correction.
-      It is typically an equivalent to the 1265 RTCM message types
+      It is typically an equivalent to the 1265 RTCM message types.
     fields:
         - time:
             type: GPSTimeSec
@@ -395,7 +395,7 @@ definitions:
 
  - MSG_SSR_STEC_CORRECTION:
     id: 0x05FB
-    short_desc: STEC correction polynomial coeffcients.
+    short_desc: STEC correction polynomial coeffcients
     desc: |
       The Slant Total Electron Content per space vehicle, given as polynomial
       approximation for a given tile. This should be combined with the
@@ -414,11 +414,11 @@ definitions:
 
  - MSG_SSR_GRIDDED_CORRECTION:
     id: 0x05FC
-    short_desc: Gridded troposphere and STEC correction residuals.
+    short_desc: Gridded troposphere and STEC correction residuals
     desc: |
       STEC residuals are per space vehicle, troposphere is not.
 
-      It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+      It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
     fields:
         - header:
             type: GriddedCorrectionHeader
@@ -521,7 +521,7 @@ definitions:
               note the definition of the bits is inverted.
 
  - SatelliteAPC:
-     short_desc: Antenna phase center correction.
+     short_desc: Antenna phase center correction
      desc: |
        Contains phase center offset and elevation variation corrections for one
        signal on a satellite.
@@ -710,7 +710,7 @@ definitions:
           specifcation in units of m.
 
  - GridDefinitionHeaderDepA:
-    short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+    short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages
     desc: |
       Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
       Also includes an RLE encoded validity list.

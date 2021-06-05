@@ -1276,7 +1276,7 @@ definitions:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
-                        - 3: Reserved 
+                        - 3: Reserved
 
  - MSG_VEL_ECEF_COV_GNSS:
     id: 0x0235
@@ -1543,7 +1543,7 @@ definitions:
     short_desc: Age of corrections
     desc: |
       This message reports the Age of the corrections used for the current
-      Differential solution
+      Differential solution.
     fields:
           - tow:
               type: u32
@@ -2061,8 +2061,8 @@ definitions:
     id: 0x0217
     short_desc: Computed state and Protection Levels
     desc: |
-      This message reports the protection levels associated to the given 
-      state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+      This message reports the protection levels associated to the given
+      state estimate. The full GPS time is given by the preceding MSG_GPS_TIME
       with the matching time-of-week (tow).
     fields:
           - tow:
@@ -2092,14 +2092,14 @@ definitions:
           - hvpl:
               type: u16
               units: mm/s
-              desc: | 
-                Protection level for the error vector between estimated and 
+              desc: |
+                Protection level for the error vector between estimated and
                 true along/cross track velocity vector
           - vvpl:
               type: u16
               units: mm/s
               desc: |
-                Protection level for the velocity in vehicle upright direction 
+                Protection level for the velocity in vehicle upright direction
                 (different from vertical direction if on a slope)
           - hopl:
               type: u16
@@ -2148,7 +2148,7 @@ definitions:
           - heading:
               type: s32
               units: udeg
-              desc: Heading angle    
+              desc: Heading angle
           - flags:
               type: u32
               desc: Status flags
@@ -2188,11 +2188,11 @@ definitions:
                 - 25:
                     desc: Safe state ATPL
                 - 26:
-                    desc: Safe state CTPL   
+                    desc: Safe state CTPL
                 - 27:
-                    desc: Safe state HVPL   
+                    desc: Safe state HVPL
                 - 28:
-                    desc: Safe state VVPL   
+                    desc: Safe state VVPL
                 - 29:
                     desc: Safe state HOPL
                 - 30:

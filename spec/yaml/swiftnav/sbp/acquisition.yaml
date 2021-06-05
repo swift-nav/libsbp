@@ -122,7 +122,7 @@ definitions:
  - AcqSvProfile:
     short_desc: Acq perfomance measurement and debug
     desc: |
-      Profile for a specific SV for debugging purposes
+      Profile for a specific SV for debugging purposes.
       The message describes SV profile during acquisition time.
       The message is used to debug and measure the performance.
     fields:
@@ -236,7 +236,7 @@ definitions:
 
  - MSG_ACQ_SV_PROFILE_DEP:
     id: 0x001E
-    short_desc: Deprecated.
+    short_desc: Deprecated
     desc: Deprecated.
     public: False
     replaced_by:

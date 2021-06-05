@@ -16,18 +16,18 @@ include:
   - types.yaml
 
 definitions:
-                      
+
  - GnssSignal:
     short_desc: Represents all the relevant information about the signal
     desc: |
-        Signal identifier containing constellation, band, and satellite identifier
+        Signal identifier containing constellation, band, and satellite identifier.
     fields:
         - sat:
             type: u8
             desc: |
-                Constellation-specific satellite identifier. This field for Glonass can  
-                either be (100+FCN) where FCN is in [-7,+6] or 
-                the Slot ID in [1,28]
+                Constellation-specific satellite identifier. This field for Glonass can
+                either be (100+FCN) where FCN is in [-7,+6] or
+                the Slot ID in [1,28].
         - code:
             type: u8
             desc: Signal constellation, band and code
@@ -41,8 +41,8 @@ definitions:
                       - 4: GLO L2CA
                       - 5: GPS L1P
                       - 6: GPS L2P
-                      - 12: BDS2 B1 
-                      - 13: BDS2 B2 
+                      - 12: BDS2 B1
+                      - 13: BDS2 B2
                       - 14: GAL E1B
                       - 20: GAL E7I
                       - 47: BDS3 B2a
@@ -51,7 +51,7 @@ definitions:
     short_desc: Space vehicle identifier
     desc: |
       A (Constellation ID, satellite ID) tuple that uniquely identifies
-      a space vehicle
+      a space vehicle.
     fields:
     - satId:
         type: u8
@@ -145,7 +145,7 @@ definitions:
             desc: GPS week number
 
  - CarrierPhase:
-      short_desc: GNSS carrier phase measurement.
+      short_desc: GNSS carrier phase measurement
       desc: |
         Carrier phase measurement in cycles represented as a 40-bit
         fixed point number with Q32.8 layout, i.e. 32-bits of whole

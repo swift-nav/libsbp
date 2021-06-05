@@ -18,7 +18,7 @@ definitions:
 
  # the actual union-like type of the elements going into the array sol_in in MSG_SOLN_META
  - SolutionInputType:
-     short_desc: Flags for a given solution input type.
+     short_desc: Flags for a given solution input type
      desc: |
        Metadata describing which sensors were involved in the solution.
        The structure is fixed no matter what the actual sensor type is.
@@ -59,9 +59,10 @@ definitions:
  - MSG_SOLN_META_DEP_A:
      id: 0xFF0F
      short_desc: Deprecated
-     desc: Deprecated.
      public: False
      desc: |
+       Deprecated.
+
        This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
        It focuses primarly, but not only, on GNSS metadata.
      fields:
@@ -178,7 +179,7 @@ definitions:
  #############################################
  # for GNSS sensors
  - GNSSInputType:
-     short_desc: Instruments the physical type of GNSS sensor input to the fuzed solution.
+     short_desc: Instruments the physical type of GNSS sensor input to the fuzed solution
      public: true
      embedded_type: true
      desc: |
@@ -200,8 +201,9 @@ definitions:
 
  # for IMU sensors
  - IMUInputType:
-     short_desc: Provides detail about the IMU sensor, its timestamping mode,
-                 and its quality for input to the fuzed solution. 
+     short_desc: >
+       Provides detail about the IMU sensor, its timestamping mode,
+       and its quality for input to the fuzed solution
      public: true
      embedded_type: true
      desc: |
@@ -237,7 +239,7 @@ definitions:
  # for Odometry sensors
  - OdoInputType:
      short_desc: Provides detail about the Odometry sensor, its timestamping mode,
-                 and its quality for input to the fuzed solution.
+                 and its quality for input to the fuzed solution
      public: true
      embedded_type: true
      desc: |

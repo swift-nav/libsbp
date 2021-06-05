@@ -28,4 +28,3 @@ definitions:
             type: array
             fill: u8
             desc: User data payload
-

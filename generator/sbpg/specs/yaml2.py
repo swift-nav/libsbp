@@ -14,15 +14,17 @@ Parsing YAML specifications of SBP.
 """
 
 import glob
+import inspect
 import os
+import string
+import sys
+
+import yaml
+
 import sbpg.specs.yaml_schema as s
 import sbpg.specs.yaml_test_schema as t
 import sbpg.syntax as sbp
 import sbpg.test_structs as sbp_test
-import sys
-import inspect
-
-import yaml
 
 ##############################################################################
 #
@@ -253,11 +255,24 @@ def mk_definition(defn):
   assert len(defn) == 1
   identifier, contents = next(iter(defn.items()))
   fs = [mk_field(f) for f in contents.get('fields', [])]
+  type_id = contents.get('type')
+  desc = contents.get('desc', None)
+  if desc and type_id not in ["collection", "primitive"]:
+    desc = desc.strip()
+    if not desc.upper() == "DEPRECATED":
+      assert desc.endswith("."), f"{identifier}: Append . to: `{desc}`"
+    assert all(x in string.printable for x in desc), f"Unprintable: {desc}"
+    assert all(line.strip() == line for line in desc.splitlines()), f"Extra whitespace: {line}"
+  short_desc = contents.get("short_desc", None)
+  if short_desc:
+    assert not short_desc.endswith("."), f"{identifier}: Remove . from: `{short_desc}`"
+    assert all(x in string.printable for x in short_desc), f"Unprintable: {short_desc}"
+    assert all(line.strip() == line for line in short_desc.splitlines()), f"Extra whitespace: {line}"
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
-                                         short_desc=contents.get('short_desc', None),
-                                         desc=contents.get('desc', None),
-                                         type_id=contents.get('type'),
+                                         short_desc=short_desc,
+                                         desc=desc,
+                                         type_id=type_id,
                                          fields=fs,
                                          public=contents.get('public', True),
                                          embedded_type=contents.get('embedded_type', False),

@@ -218,7 +218,7 @@ definitions:
     short_desc: Inertial Navigation System status message
     desc: |
         The INS status message describes the state of the operation
-        and initialization of the inertial navigation system. 
+        and initialization of the inertial navigation system.
     fields:
         - flags:
             type: u32
@@ -250,7 +250,7 @@ definitions:
                       - 1: Odometry received within last second
                       - 2: Odometry not received within last second
               - 4-7:
-                  desc:  INS Error
+                  desc: INS Error
                   values:
                       - 0: Reserved
                       - 1: IMU Data Error
@@ -363,7 +363,7 @@ definitions:
                   desc: Number of attempted zero velocity updates since last message.
               - 0-3:
                   desc: Number of rejected zero velocity updates since last message.
-                  
+
  - MSG_GNSS_TIME_OFFSET:
     id: 0xFF07
     short_desc: Offset of the local time with respect to GNSS time
