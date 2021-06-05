@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Linux state monitoring. \>
+-- \< Linux state monitoring. \>
 
 module SwiftNav.SBP.Linux
   ( module SwiftNav.SBP.Linux
@@ -40,8 +40,8 @@ msgLinuxCpuStateDepA = 0x7F00
 
 -- | SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
 --
--- This message indicates the process state of the top 10 heaviest consumers of
--- CPU on the system.
+-- This message indicates the process state of the top 10 heaviest consumers
+-- of CPU on the system.
 data MsgLinuxCpuStateDepA = MsgLinuxCpuStateDepA
   { _msgLinuxCpuStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
@@ -80,8 +80,8 @@ msgLinuxMemStateDepA = 0x7F01
 
 -- | SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
 --
--- This message indicates the process state of the top 10 heaviest consumers of
--- memory on the system.
+-- This message indicates the process state of the top 10 heaviest consumers
+-- of memory on the system.
 data MsgLinuxMemStateDepA = MsgLinuxMemStateDepA
   { _msgLinuxMemStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
@@ -172,13 +172,13 @@ data MsgLinuxProcessSocketCounts = MsgLinuxProcessSocketCounts
   , _msgLinuxProcessSocketCounts_socket_count :: !Word16
     -- ^ the number of sockets the process is using
   , _msgLinuxProcessSocketCounts_socket_types :: !Word16
-    -- ^ A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
-    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+    -- ^ A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
   , _msgLinuxProcessSocketCounts_socket_states :: !Word16
-    -- ^ A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
-    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
-    -- (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
-    -- (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+    -- ^ A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    -- wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
+    -- (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
   , _msgLinuxProcessSocketCounts_cmdline     :: !Text
     -- ^ the command line of the process in question
   } deriving ( Show, Read, Eq )
@@ -221,13 +221,13 @@ data MsgLinuxProcessSocketQueues = MsgLinuxProcessSocketQueues
   , _msgLinuxProcessSocketQueues_send_queued      :: !Word16
     -- ^ the total amount of send data queued for this process
   , _msgLinuxProcessSocketQueues_socket_types     :: !Word16
-    -- ^ A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
-    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+    -- ^ A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
   , _msgLinuxProcessSocketQueues_socket_states    :: !Word16
-    -- ^ A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
-    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
-    -- (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
-    -- (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+    -- ^ A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    -- wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
+    -- (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
   , _msgLinuxProcessSocketQueues_address_of_largest :: !Text
     -- ^ Address of the largest queue, remote or local depending on the
     -- directionality of the connection.
@@ -371,8 +371,8 @@ msgLinuxCpuState = 0x7F08
 
 -- | SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
 --
--- This message indicates the process state of the top 10 heaviest consumers of
--- CPU on the system, including a timestamp.
+-- This message indicates the process state of the top 10 heaviest consumers
+-- of CPU on the system, including a timestamp.
 data MsgLinuxCpuState = MsgLinuxCpuState
   { _msgLinuxCpuState_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
@@ -419,8 +419,8 @@ msgLinuxMemState = 0x7F09
 
 -- | SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
 --
--- This message indicates the process state of the top 10 heaviest consumers of
--- memory on the system, including a timestamp.
+-- This message indicates the process state of the top 10 heaviest consumers
+-- of memory on the system, including a timestamp.
 data MsgLinuxMemState = MsgLinuxMemState
   { _msgLinuxMemState_index :: !Word8
     -- ^ sequence of this status message, values from 0-9

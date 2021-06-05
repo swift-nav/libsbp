@@ -25,9 +25,7 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class PhaseBiasesContent extends SBPStruct {
     
-    /** Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467)
- */
+    /** Signal encoded following RTCM specifications (DF380, DF381, DF382 and DF467) */
     public int code;
     
     /** Indicator for integer property */
@@ -36,9 +34,7 @@ public class PhaseBiasesContent extends SBPStruct {
     /** Indicator for two groups of Wide-Lane(s) integer property */
     public int widelane_integer_indicator;
     
-    /** Signal phase discontinuity counter.
-Increased for every discontinuity in phase.
- */
+    /** Signal phase discontinuity counter. Increased for every discontinuity in phase. */
     public int discontinuity_counter;
     
     /** Phase bias for specified signal */

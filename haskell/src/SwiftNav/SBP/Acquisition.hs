@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Satellite acquisition messages from the device.\>
+-- \< Satellite acquisition messages from the device. \>
 
 module SwiftNav.SBP.Acquisition
   ( module SwiftNav.SBP.Acquisition
@@ -184,7 +184,7 @@ $(makeLenses ''MsgAcqResultDepA)
 
 -- | AcqSvProfile.
 --
--- Profile for a specific SV for debugging purposes The message describes SV
+-- Profile for a specific SV for debugging purposes. The message describes SV
 -- profile during acquisition time. The message is used to debug and measure
 -- the performance.
 data AcqSvProfile = AcqSvProfile

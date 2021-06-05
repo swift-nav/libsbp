@@ -14,7 +14,7 @@ syntax = "proto3";
 
 /** Ndb
  *
-  * Messages for logging NDB events.
+ * Messages for logging NDB events.
  */
 
 package swiftnav.sbp.ndb;

@@ -34,15 +34,13 @@ public class SatelliteAPC extends SBPStruct {
     /** Satellite Code, as defined by IGS. Typically the space vehicle number. */
     public int svn;
     
-    /** Mean phase center offset, X Y and Z axises. See IGS ANTEX file
-format description for coordinate system definition.
- */
+    /** Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+      * description for coordinate system definition. */
     public int[] pco;
     
-    /** Elevation dependent phase center variations. First element is 0
-degrees separation from the Z axis, subsequent elements represent
-elevation variations in 1 degree increments.
- */
+    /** Elevation dependent phase center variations. First element is 0 degrees
+      * separation from the Z axis, subsequent elements represent elevation variations
+      * in 1 degree increments. */
     public int[] pcv;
     
 

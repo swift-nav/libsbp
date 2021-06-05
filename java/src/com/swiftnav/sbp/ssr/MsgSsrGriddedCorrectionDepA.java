@@ -31,9 +31,8 @@ public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
     /** Header of a Gridded Correction message */
     public GriddedCorrectionHeaderDepA header;
     
-    /** Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
- */
+    /** Tropo and STEC residuals for the given grid point (mean and standard
+      * deviation) */
     public GridElement element;
     
 

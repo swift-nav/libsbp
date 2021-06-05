@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgObs",
   "title":"MsgObs",
-  "description":"The GPS observations message reports all the raw pseudorange and,\ncarrier phase observations for the satellites being tracked by,\nthe device. Carrier phase observation here is represented as a,\n40-bit fixed point number with Q32.8 layout (i.e. 32-bits of,\nwhole cycles and 8-bits of fractional cycles). The observations,\nare be interoperable with 3rd party receivers and conform,\nwith typical RTCMv3 GNSS observations.\n",
+  "description":"The GPS observations message reports all the raw pseudorange and carrier phase observations for the satellites being tracked by the device. Carrier phase observation here is represented as a 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles). The observations are be interoperable with 3rd party receivers and conform with typical RTCMv3 GNSS observations.\n",
   "type": "object",
   "properties": {
     "header": {"$ref": "ObservationHeader.json"},

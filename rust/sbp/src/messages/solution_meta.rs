@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/solution_meta.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+//! Standardized Metadata messages for Fuzed Solution from Swift Navigation
+//! devices.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -25,7 +26,7 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// Instruments the physical type of GNSS sensor input to the fuzed solution.
+/// Instruments the physical type of GNSS sensor input to the fuzed solution
 ///
 /// Metadata around the GNSS sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
@@ -78,10 +79,11 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
     }
 }
 
-/// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
+/// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution
+
 ///
-/// Metadata around the IMU sensors involved in the fuzed solution.
-/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
+/// Metadata around the IMU sensors involved in the fuzed solution. Accessible
+/// through sol_in[N].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -130,12 +132,15 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 
 /// Solution Sensors Metadata
 ///
-/// This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
-/// It focuses primarly, but not only, on GNSS metadata.
-/// Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating
-/// whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity)
-/// If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
-/// complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
+/// This message contains all metadata about the sensors received and/or used
+/// in computing the sensorfusion solution. It focuses primarly, but not only,
+/// on GNSS metadata. Regarding the age of the last received valid GNSS
+/// solution, the highest two bits are time status, indicating whether age
+/// gnss can or can not be used to retrieve time of measurement (noted TOM,
+/// also known as time of validity) If it can, substract 'age gnss' from 'tow'
+/// in navigation messages to get TOM. Can be used before alignment is
+/// complete in the Fusion Engine, when output solution is the last received
+/// valid GNSS solution and its tow is not a TOM.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -249,8 +254,11 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
 
 /// Deprecated
 ///
-/// This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-/// It focuses primarly, but not only, on GNSS metadata.
+/// Deprecated.
+///
+/// This message contains all metadata about the sensors received and/or used
+/// in computing the Fuzed Solution. It focuses primarly, but not only, on
+/// GNSS metadata.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -360,7 +368,8 @@ impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
     }
 }
 
-/// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
+/// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution
+
 ///
 /// Metadata around the Odometry sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
@@ -410,14 +419,15 @@ impl crate::serialize::SbpSerialize for OdoInputType {
     }
 }
 
-/// Flags for a given solution input type.
+/// Flags for a given solution input type
 ///
-/// Metadata describing which sensors were involved in the solution.
-/// The structure is fixed no matter what the actual sensor type is.
-/// The sensor_type field tells you which sensor we are talking about. It also tells you
-/// whether the sensor data was actually used or not.
-/// The flags field, always a u8, contains the sensor-specific data.
-/// The content of flags, for each sensor type, is described in the relevant structures in this section.
+/// Metadata describing which sensors were involved in the solution. The
+/// structure is fixed no matter what the actual sensor type is. The
+/// sensor_type field tells you which sensor we are talking about. It also
+/// tells you whether the sensor data was actually used or not. The flags
+/// field, always a u8, contains the sensor-specific data. The content of
+/// flags, for each sensor type, is described in the relevant structures in
+/// this section.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

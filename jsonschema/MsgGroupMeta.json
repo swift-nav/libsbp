@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgGroupMeta",
   "title":"MsgGroupMeta",
-  "description":"This leading message lists the time metadata of the Solution Group.,\nIt also lists the atomic contents (i.e. types of messages included) of the Solution Group.\n",
+  "description":"This leading message lists the time metadata of the Solution Group. It also lists the atomic contents (i.e. types of messages included) of the Solution Group.\n",
   "type": "object",
   "properties": {
     "group_id": {"type": "integer"},

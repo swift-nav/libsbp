@@ -28,14 +28,13 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The file write message writes a certain length (up to 255 bytes)
- * of data to a file at a given offset. Returns a copy of the
- * original MSG_FILEIO_WRITE_RESP message to check integrity of
- * the write. The sequence number in the request will be returned
- * in the response. If message is invalid, a followup MSG_PRINT
- * message will print "Invalid fileio write message". A device will
- * only  process this message when it is received from sender ID
- * 0x42. */
+ * The file write message writes a certain length (up to 255 bytes) of data to
+ * a file at a given offset. Returns a copy of the original
+ * MSG_FILEIO_WRITE_RESP message to check integrity of the write. The sequence
+ * number in the request will be returned in the response. If message is
+ * invalid, a followup MSG_PRINT message will print "Invalid fileio write
+ * message". A device will only process this message when it is received from
+ * sender ID 0x42. */
 
 public class MsgFileioWriteReq extends SBPMessage {
     public static final int TYPE = 0x00AD;

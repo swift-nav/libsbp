@@ -34,10 +34,8 @@ public class PackedObsContentDepA extends SBPStruct {
     /** Carrier-to-Noise density */
     public int cn0;
     
-    /** Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
- */
+    /** Lock indicator. This value changes whenever a satellite signal has lost and
+      * regained lock, indicating that the carrier phase ambiguity may have changed. */
     public int lock;
     
     /** PRN-1 identifier of the satellite signal */

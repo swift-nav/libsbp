@@ -30,10 +30,10 @@ import org.json.JSONArray;
  *
  * The setting message writes the device configuration for a particular
  * setting via A NULL-terminated and NULL-delimited string with contents
- * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes 
+ * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
  * the NULL character and where quotation marks are omitted. A device will
- * only process to this message when it is received from sender ID 0x42.
- * An example string that could be sent to a device is
+ * only process to this message when it is received from sender ID 0x42. An
+ * example string that could be sent to a device is
  * "solution\0soln_freq\010\0". */
 
 public class MsgSettingsWrite extends SBPMessage {
@@ -41,8 +41,7 @@ public class MsgSettingsWrite extends SBPMessage {
 
     
     /** A NULL-terminated and NULL-delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE\0"
- */
+      * "SECTION_SETTING\0SETTING\0VALUE\0" */
     public String setting;
     
 

@@ -28,9 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the velocity in Earth Centered Earth Fixed
- * (ECEF) coordinates. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow). */
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+ * the matching time-of-week (tow). */
 
 public class MsgVelECEF extends SBPMessage {
     public static final int TYPE = 0x020D;
@@ -48,8 +48,7 @@ public class MsgVelECEF extends SBPMessage {
     /** Velocity ECEF Z coordinate */
     public int z;
     
-    /** Velocity estimated standard deviation
- */
+    /** Velocity estimated standard deviation */
     public int accuracy;
     
     /** Number of satellites used in solution */

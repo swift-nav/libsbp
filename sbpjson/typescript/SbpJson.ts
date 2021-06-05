@@ -192,27 +192,25 @@
 // match the expected interface, even if the JSON is valid.
 
 /**
- * Metadata around the GNSS sensors involved in the fuzed solution.,
- * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through
+ * sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface GNSSInputType {
     flags: number;
 }
 
 /**
- * Metadata around the IMU sensors involved in the fuzed solution.,
- * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ * Metadata around the IMU sensors involved in the fuzed solution. Accessible through
+ * sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface IMUInputType {
     flags: number;
 }
 
 /**
- * This message describes the results from an attempted GPS signal,
- * acquisition search for a satellite PRN over a code phase/carrier,
- * frequency range. It contains the parameters of the point in the,
- * acquisition search space with the best carrier-to-noise (CN/0),
- * ratio.
+ * This message describes the results from an attempted GPS signal acquisition search for a
+ * satellite PRN over a code phase/carrier frequency range. It contains the parameters of
+ * the point in the acquisition search space with the best carrier-to-noise (CN/0) ratio.
  */
 export interface MsgAcqResult {
     cf:  number;
@@ -222,7 +220,7 @@ export interface MsgAcqResult {
 }
 
 /**
- * Signal identifier containing constellation, band, and satellite identifier
+ * Signal identifier containing constellation, band, and satellite identifier.
  */
 export interface GnssSignal {
     code: number;
@@ -230,17 +228,16 @@ export interface GnssSignal {
 }
 
 /**
- * The message describes all SV profiles during acquisition time.,
- * The message is used to debug and measure the performance.
+ * The message describes all SV profiles during acquisition time. The message is used to
+ * debug and measure the performance.
  */
 export interface MsgAcqSvProfile {
     acq_sv_profile: AcqSvProfile[];
 }
 
 /**
- * Profile for a specific SV for debugging purposes,
- * The message describes SV profile during acquisition time.,
- * The message is used to debug and measure the performance.
+ * Profile for a specific SV for debugging purposes. The message describes SV profile during
+ * acquisition time. The message is used to debug and measure the performance.
  */
 export interface AcqSvProfile {
     bin_width:  number;
@@ -258,8 +255,8 @@ export interface AcqSvProfile {
 }
 
 /**
- * This message reports the Age of the corrections used for the current,
- * Differential solution
+ * This message reports the Age of the corrections used for the current Differential
+ * solution.
  */
 export interface MsgAgeCorrections {
     age: number;
@@ -267,10 +264,10 @@ export interface MsgAgeCorrections {
 }
 
 /**
- * The almanac message returns a set of satellite orbit parameters. Almanac,
- * data is not very precise and is considered valid for up to several months.,
- * Please see the Navstar GPS Space Segment/Navigation user interfaces,
- * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is not very
+ * precise and is considered valid for up to several months. Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data)
+ * for more details.
  */
 export interface MsgAlmanacGPS {
     af0:      number;
@@ -295,9 +292,8 @@ export interface AlmanacCommonContent {
 }
 
 /**
- * A GPS time, defined as the number of,
- * seconds since beginning of the week on the Saturday/Sunday,
- * transition.
+ * A GPS time, defined as the number of seconds since beginning of the week on the
+ * Saturday/Sunday transition.
  */
 export interface GpsTimeSEC {
     tow: number;
@@ -305,10 +301,9 @@ export interface GpsTimeSEC {
 }
 
 /**
- * The almanac message returns a set of satellite orbit parameters. Almanac,
- * data is not very precise and is considered valid for up to several months.,
- * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and,
- * almanac" for details.
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is not very
+ * precise and is considered valid for up to several months. Please see the GLO ICD 5.1
+ * "Chapter 4.5 Non-immediate information and almanac" for details.
  */
 export interface MsgAlmanacGlo {
     common:      AlmanacCommonContent;
@@ -322,14 +317,13 @@ export interface MsgAlmanacGlo {
 }
 
 /**
- * This message reports the orientation rates in the vehicle body frame. ,
- * The values represent the measurements a strapped down gyroscope would ,
- * make and are not equivalent to the time derivative of the Euler angles.,
- * The orientation and origin of the user frame is specified via device settings.,
- * By convention, the vehicle x-axis is expected to be aligned with the forward,
- * direction, while the vehicle y-axis is expected to be aligned with the right,
- * direction, and the vehicle z-axis should be aligned with the down direction.,
- * This message will only be available in future INS versions of Swift Products ,
+ * This message reports the orientation rates in the vehicle body frame. The values
+ * represent the measurements a strapped down gyroscope would make and are not equivalent to
+ * the time derivative of the Euler angles. The orientation and origin of the user frame is
+ * specified via device settings. By convention, the vehicle x-axis is expected to be
+ * aligned with the forward direction, while the vehicle y-axis is expected to be aligned
+ * with the right direction, and the vehicle z-axis should be aligned with the down
+ * direction. This message will only be available in future INS versions of Swift Products
  * and is not produced by Piksi Multi or Duro.
  */
 export interface MsgAngularRate {
@@ -341,12 +335,10 @@ export interface MsgAngularRate {
 }
 
 /**
- * The base station position message is the position reported by,
- * the base station itself in absolute Earth Centered Earth Fixed,
- * coordinates. It is used for pseudo-absolute RTK positioning, and,
- * is required to be a high-accuracy surveyed location of the base,
- * station. Any error here will result in an error in the,
- * pseudo-absolute position output.
+ * The base station position message is the position reported by the base station itself in
+ * absolute Earth Centered Earth Fixed coordinates. It is used for pseudo-absolute RTK
+ * positioning, and is required to be a high-accuracy surveyed location of the base station.
+ * Any error here will result in an error in the pseudo-absolute position output.
  */
 export interface MsgBasePosECEF {
     x: number;
@@ -355,11 +347,10 @@ export interface MsgBasePosECEF {
 }
 
 /**
- * The base station position message is the position reported by,
- * the base station itself. It is used for pseudo-absolute RTK,
- * positioning, and is required to be a high-accuracy surveyed,
- * location of the base station. Any error here will result in an,
- * error in the pseudo-absolute position output.
+ * The base station position message is the position reported by the base station itself. It
+ * is used for pseudo-absolute RTK positioning, and is required to be a high-accuracy
+ * surveyed location of the base station. Any error here will result in an error in the
+ * pseudo-absolute position output.
  */
 export interface MsgBasePosLLH {
     height: number;
@@ -368,10 +359,9 @@ export interface MsgBasePosLLH {
 }
 
 /**
- * This message reports the baseline solution in Earth Centered,
- * Earth Fixed (ECEF) coordinates. This baseline is the relative,
- * vector distance from the base station to the rover receiver. The,
- * full GPS time is given by the preceding MSG_GPS_TIME with the,
+ * This message reports the baseline solution in Earth Centered Earth Fixed (ECEF)
+ * coordinates. This baseline is the relative vector distance from the base station to the
+ * rover receiver. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
 export interface MsgBaselineECEF {
@@ -385,10 +375,10 @@ export interface MsgBaselineECEF {
 }
 
 /**
- * This message reports the baseline heading pointing from the base station,
- * to the rover relative to True North. The full GPS time is given by the,
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended,
- * that time-matched RTK mode is used when the base station is moving.
+ * This message reports the baseline heading pointing from the base station to the rover
+ * relative to True North. The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow). It is intended that time-matched RTK mode is used when the
+ * base station is moving.
  */
 export interface MsgBaselineHeading {
     flags:   number;
@@ -398,12 +388,11 @@ export interface MsgBaselineHeading {
 }
 
 /**
- * This message reports the baseline solution in North East Down,
- * (NED) coordinates. This baseline is the relative vector distance,
- * from the base station to the rover receiver, and NED coordinate,
- * system is defined at the local WGS84 tangent plane centered at the,
- * base station position.  The full GPS time is given by the,
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the baseline solution in North East Down (NED) coordinates. This
+ * baseline is the relative vector distance from the base station to the rover receiver, and
+ * NED coordinate system is defined at the local WGS84 tangent plane centered at the base
+ * station position.  The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
  */
 export interface MsgBaselineNED {
     d:          number;
@@ -417,11 +406,9 @@ export interface MsgBaselineNED {
 }
 
 /**
- * The handshake message response from the device establishes a,
- * handshake between the device bootloader and the host. The,
- * request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The,
- * payload contains the bootloader version number and the SBP,
- * protocol version number.
+ * The handshake message response from the device establishes a handshake between the device
+ * bootloader and the host. The request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
+ * payload contains the bootloader version number and the SBP protocol version number.
  */
 export interface MsgBootloaderHandshakeResp {
     flags:   number;
@@ -436,9 +423,8 @@ export interface MsgBootloaderJumpToApp {
 }
 
 /**
- * If a cell modem is present on a piksi device, this message,
- * will be send periodically to update the host on the status,
- * of the modem and its various parameters.
+ * If a cell modem is present on a piksi device, this message will be send periodically to
+ * update the host on the status of the modem and its various parameters.
  */
 export interface MsgCellModemStatus {
     signal_error_rate: number;
@@ -446,10 +432,9 @@ export interface MsgCellModemStatus {
 }
 
 /**
- * Returns the standard output and standard error of the,
- * command requested by MSG_COMMAND_REQ.,
- * The sequence number can be used to filter for filtering,
- * the correct command.
+ * Returns the standard output and standard error of the command requested by
+ * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the correct
+ * command.
  */
 export interface MsgCommandOutput {
     line:     string;
@@ -457,9 +442,8 @@ export interface MsgCommandOutput {
 }
 
 /**
- * Request the recipient to execute an command.,
- * Output will be sent in MSG_LOG messages, and the exit,
- * code will be returned with MSG_COMMAND_RESP.
+ * Request the recipient to execute an command. Output will be sent in MSG_LOG messages, and
+ * the exit code will be returned with MSG_COMMAND_RESP.
  */
 export interface MsgCommandReq {
     command:  string;
@@ -467,8 +451,8 @@ export interface MsgCommandReq {
 }
 
 /**
- * The response to MSG_COMMAND_REQ with the return code of,
- * the command.  A return code of zero indicates success.
+ * The response to MSG_COMMAND_REQ with the return code of the command.  A return code of
+ * zero indicates success.
  */
 export interface MsgCommandResp {
     code:     number;
@@ -476,9 +460,9 @@ export interface MsgCommandResp {
 }
 
 /**
- * The CSAC telemetry message has an implementation defined telemetry string,
- * from a device. It is not produced or available on general Swift Products.,
- * It is intended to be a low rate message for status purposes.
+ * The CSAC telemetry message has an implementation defined telemetry string from a device.
+ * It is not produced or available on general Swift Products. It is intended to be a low
+ * rate message for status purposes.
  */
 export interface MsgCsacTelemetry {
     id:        number;
@@ -486,9 +470,9 @@ export interface MsgCsacTelemetry {
 }
 
 /**
- * The CSAC telemetry message provides labels for each member of the string,
- * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower,
- * rate than the MSG_CSAC_TELEMETRY.
+ * The CSAC telemetry message provides labels for each member of the string produced by
+ * MSG_CSAC_TELEMETRY. It should be provided by a device at a lower rate than the
+ * MSG_CSAC_TELEMETRY.
  */
 export interface MsgCsacTelemetryLabels {
     id:               number;
@@ -496,9 +480,8 @@ export interface MsgCsacTelemetryLabels {
 }
 
 /**
- * This message contains temperature and voltage level measurements from the,
- * processor's monitoring system and the RF frontend die temperature if,
- * available.
+ * This message contains temperature and voltage level measurements from the processor's
+ * monitoring system and the RF frontend die temperature if available.
  */
 export interface MsgDeviceMonitor {
     cpu_temperature: number;
@@ -509,9 +492,8 @@ export interface MsgDeviceMonitor {
 }
 
 /**
- * This message provides information about the receipt of Differential,
- * corrections.  It is expected to be sent with each receipt of a complete,
- * corrections packet.
+ * This message provides information about the receipt of Differential corrections.  It is
+ * expected to be sent with each receipt of a complete corrections packet.
  */
 export interface MsgDgnssStatus {
     flags:       number;
@@ -521,10 +503,9 @@ export interface MsgDgnssStatus {
 }
 
 /**
- * This dilution of precision (DOP) message describes the effect of,
- * navigation satellite geometry on positional measurement,
- * precision.  The flags field indicated whether the DOP reported,
- * corresponds to differential or SPP solution.
+ * This dilution of precision (DOP) message describes the effect of navigation satellite
+ * geometry on positional measurement precision.  The flags field indicated whether the DOP
+ * reported corresponds to differential or SPP solution.
  */
 export interface MsgDops {
     flags: number;
@@ -537,10 +518,9 @@ export interface MsgDops {
 }
 
 /**
- * The ephemeris message returns a set of satellite orbit,
- * parameters that is used to calculate BDS satellite position,,
- * velocity, and clock offset. Please see the BeiDou Navigation,
- * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is used to
+ * calculate BDS satellite position, velocity, and clock offset. Please see the BeiDou
+ * Navigation Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
  */
 export interface MsgEphemerisBds {
     af0:      number;
@@ -579,11 +559,9 @@ export interface EphemerisCommonContent {
 }
 
 /**
- * The ephemeris message returns a set of satellite orbit,
- * parameters that is used to calculate GPS satellite position,,
- * velocity, and clock offset. Please see the Navstar GPS,
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table,
- * 20-III) for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is used to
+ * calculate GPS satellite position, velocity, and clock offset. Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III) for more details.
  */
 export interface MsgEphemerisGPS {
     af0:      number;
@@ -612,10 +590,9 @@ export interface MsgEphemerisGPS {
 }
 
 /**
- * The ephemeris message returns a set of satellite orbit,
- * parameters that is used to calculate Galileo satellite position,,
- * velocity, and clock offset. Please see the Signal In Space ICD,
- * OS SIS ICD, Issue 1.3, December 2016 for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is used to
+ * calculate Galileo satellite position, velocity, and clock offset. Please see the Signal
+ * In Space ICD OS SIS ICD, Issue 1.3, December 2016 for more details.
  */
 export interface MsgEphemerisGal {
     af0:       number;
@@ -646,11 +623,10 @@ export interface MsgEphemerisGal {
 }
 
 /**
- * The ephemeris message returns a set of satellite orbit,
- * parameters that is used to calculate GLO satellite position,,
- * velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5,
- * Characteristics of words of immediate information (ephemeris parameters)",
- * for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is used to
+ * calculate GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1
+ * "Table 4.5 Characteristics of words of immediate information (ephemeris parameters)" for
+ * more details.
  */
 export interface MsgEphemerisGlo {
     acc:    number[];
@@ -665,9 +641,8 @@ export interface MsgEphemerisGlo {
 }
 
 /**
- * The ephemeris message returns a set of satellite orbit,
- * parameters that is used to calculate QZSS satellite position,,
- * velocity, and clock offset.
+ * The ephemeris message returns a set of satellite orbit parameters that is used to
+ * calculate QZSS satellite position, velocity, and clock offset.
  */
 export interface MsgEphemerisQzss {
     af0:      number;
@@ -705,8 +680,8 @@ export interface MsgEphemerisSbas {
 }
 
 /**
- * Reports detection of an external event, the GPS time it occurred,,
- * which pin it was and whether it was rising or falling.
+ * Reports detection of an external event, the GPS time it occurred, which pin it was and
+ * whether it was rising or falling.
  */
 export interface MsgEXTEvent {
     flags:       number;
@@ -717,20 +692,18 @@ export interface MsgEXTEvent {
 }
 
 /**
- * Requests advice on the optimal configuration for a FileIO ,
- * transfer.  Newer version of FileIO can support greater,
- * throughput by supporting a large window of FileIO data,
- * that can be in-flight during read or write operations.
+ * Requests advice on the optimal configuration for a FileIO transfer.  Newer version of
+ * FileIO can support greater throughput by supporting a large window of FileIO data that
+ * can be in-flight during read or write operations.
  */
 export interface MsgFileioConfigReq {
     sequence: number;
 }
 
 /**
- * The advice on the optimal configuration for a FileIO,
- * transfer.  Newer version of FileIO can support greater,
- * throughput by supporting a large window of FileIO data,
- * that can be in-flight during read or write operations.
+ * The advice on the optimal configuration for a FileIO transfer.  Newer version of FileIO
+ * can support greater throughput by supporting a large window of FileIO data that can be
+ * in-flight during read or write operations.
  */
 export interface MsgFileioConfigResp {
     batch_size:     number;
@@ -740,16 +713,13 @@ export interface MsgFileioConfigResp {
 }
 
 /**
- * The read directory message lists the files in a directory on the,
- * device's onboard flash file system.  The offset parameter can be,
- * used to skip the first n elements of the file list. Returns a,
- * MSG_FILEIO_READ_DIR_RESP message containing the directory,
- * listings as a NULL delimited list. The listing is chunked over,
- * multiple SBP packets. The sequence number in the request will be,
- * returned in the response.  If message is invalid, a followup,
- * MSG_PRINT message will print "Invalid fileio read message".,
- * A device will only respond to this message when it is received,
- * from sender ID 0x42.
+ * The read directory message lists the files in a directory on the device's onboard flash
+ * file system.  The offset parameter can be used to skip the first n elements of the file
+ * list. Returns a MSG_FILEIO_READ_DIR_RESP message containing the directory listings as a
+ * NULL delimited list. The listing is chunked over multiple SBP packets. The sequence
+ * number in the request will be returned in the response.  If message is invalid, a
+ * followup MSG_PRINT message will print "Invalid fileio read message". A device will only
+ * respond to this message when it is received from sender ID 0x42.
  */
 export interface MsgFileioReadDirReq {
     dirname:  string;
@@ -758,12 +728,10 @@ export interface MsgFileioReadDirReq {
 }
 
 /**
- * The read directory message lists the files in a directory on the,
- * device's onboard flash file system. Message contains the directory,
- * listings as a NULL delimited list. The listing is chunked over,
- * multiple SBP packets and the end of the list is identified by an,
- * entry containing just the character 0xFF. The sequence number in,
- * the response is preserved from the request.
+ * The read directory message lists the files in a directory on the device's onboard flash
+ * file system. Message contains the directory listings as a NULL delimited list. The
+ * listing is chunked over multiple SBP packets and the end of the list is identified by an
+ * packet with no entries. The sequence number in the response is preserved from the request.
  */
 export interface MsgFileioReadDirResp {
     contents: number[];
@@ -771,14 +739,12 @@ export interface MsgFileioReadDirResp {
 }
 
 /**
- * The file read message reads a certain length (up to 255 bytes),
- * from a given offset into a file, and returns the data in a,
- * MSG_FILEIO_READ_RESP message where the message length field,
- * indicates how many bytes were succesfully read.The sequence,
- * number in the request will be returned in the response.,
- * If the message is invalid, a followup MSG_PRINT message will,
- * print "Invalid fileio read message". A device will only respond,
- * to this message when it is received from sender ID 0x42.
+ * The file read message reads a certain length (up to 255 bytes) from a given offset into a
+ * file, and returns the data in a MSG_FILEIO_READ_RESP message where the message length
+ * field indicates how many bytes were succesfully read.The sequence number in the request
+ * will be returned in the response. If the message is invalid, a followup MSG_PRINT message
+ * will print "Invalid fileio read message". A device will only respond to this message when
+ * it is received from sender ID 0x42.
  */
 export interface MsgFileioReadReq {
     chunk_size: number;
@@ -788,11 +754,10 @@ export interface MsgFileioReadReq {
 }
 
 /**
- * The file read message reads a certain length (up to 255 bytes),
- * from a given offset into a file, and returns the data in a,
- * message where the message length field indicates how many bytes,
- * were succesfully read. The sequence number in the response is,
- * preserved from the request.
+ * The file read message reads a certain length (up to 255 bytes) from a given offset into a
+ * file, and returns the data in a message where the message length field indicates how many
+ * bytes were succesfully read. The sequence number in the response is preserved from the
+ * request.
  */
 export interface MsgFileioReadResp {
     contents: number[];
@@ -800,9 +765,8 @@ export interface MsgFileioReadResp {
 }
 
 /**
- * The file remove message deletes a file from the file system.,
- * If the message is invalid, a followup MSG_PRINT message will,
- * print "Invalid fileio remove message". A device will only,
+ * The file remove message deletes a file from the file system. If the message is invalid, a
+ * followup MSG_PRINT message will print "Invalid fileio remove message". A device will only
  * process this message when it is received from sender ID 0x42.
  */
 export interface MsgFileioRemove {
@@ -810,14 +774,12 @@ export interface MsgFileioRemove {
 }
 
 /**
- * The file write message writes a certain length (up to 255 bytes),
- * of data to a file at a given offset. Returns a copy of the,
- * original MSG_FILEIO_WRITE_RESP message to check integrity of,
- * the write. The sequence number in the request will be returned,
- * in the response. If message is invalid, a followup MSG_PRINT,
- * message will print "Invalid fileio write message". A device will,
- * only  process this message when it is received from sender ID,
- * 0x42.
+ * The file write message writes a certain length (up to 255 bytes) of data to a file at a
+ * given offset. Returns a copy of the original MSG_FILEIO_WRITE_RESP message to check
+ * integrity of the write. The sequence number in the request will be returned in the
+ * response. If message is invalid, a followup MSG_PRINT message will print "Invalid fileio
+ * write message". A device will only process this message when it is received from sender
+ * ID 0x42.
  */
 export interface MsgFileioWriteReq {
     data:     number[];
@@ -827,20 +789,17 @@ export interface MsgFileioWriteReq {
 }
 
 /**
- * The file write message writes a certain length (up to 255 bytes),
- * of data to a file at a given offset. The message is a copy of the,
- * original MSG_FILEIO_WRITE_REQ message to check integrity of the,
- * write. The sequence number in the response is preserved from the,
- * request.
+ * The file write message writes a certain length (up to 255 bytes) of data to a file at a
+ * given offset. The message is a copy of the original MSG_FILEIO_WRITE_REQ message to check
+ * integrity of the write. The sequence number in the response is preserved from the request.
  */
 export interface MsgFileioWriteResp {
     sequence: number;
 }
 
 /**
- * This message defines success or failure codes for a variety of,
- * flash memory requests from the host to the device. Flash read,
- * and write messages, such as MSG_FLASH_READ_REQ, or,
+ * This message defines success or failure codes for a variety of flash memory requests from
+ * the host to the device. Flash read and write messages, such as MSG_FLASH_READ_REQ, or
  * MSG_FLASH_PROGRAM, may return this message on failure.
  */
 export interface MsgFlashDone {
@@ -848,10 +807,9 @@ export interface MsgFlashDone {
 }
 
 /**
- * The flash erase message from the host erases a sector of either,
- * the STM or M25 onboard flash memory. The device will reply with a,
- * MSG_FLASH_DONE message containing the return code - FLASH_OK (0),
- * on success or FLASH_INVALID_FLASH (1) if the flash specified is,
+ * The flash erase message from the host erases a sector of either the STM or M25 onboard
+ * flash memory. The device will reply with a MSG_FLASH_DONE message containing the return
+ * code - FLASH_OK (0) on success or FLASH_INVALID_FLASH (1) if the flash specified is
  * invalid.
  */
 export interface MsgFlashErase {
@@ -860,12 +818,10 @@ export interface MsgFlashErase {
 }
 
 /**
- * The flash program message programs a set of addresses of either,
- * the STM or M25 flash. The device replies with either a,
- * MSG_FLASH_DONE message containing the return code FLASH_OK (0),
- * on success, or FLASH_INVALID_LEN (2) if the maximum write size,
- * is exceeded. Note that the sector-containing addresses must be,
- * erased before addresses can be programmed.
+ * The flash program message programs a set of addresses of either the STM or M25 flash. The
+ * device replies with either a MSG_FLASH_DONE message containing the return code FLASH_OK
+ * (0) on success, or FLASH_INVALID_LEN (2) if the maximum write size is exceeded. Note that
+ * the sector-containing addresses must be erased before addresses can be programmed.
  */
 export interface MsgFlashProgram {
     addr_len:   number;
@@ -875,13 +831,11 @@ export interface MsgFlashProgram {
 }
 
 /**
- * The flash read message reads a set of addresses of either the,
- * STM or M25 onboard flash. The device replies with a,
- * MSG_FLASH_READ_RESP message containing either the read data on,
- * success or a MSG_FLASH_DONE message containing the return code,
- * FLASH_INVALID_LEN (2) if the maximum read size is exceeded or,
- * FLASH_INVALID_ADDR (3) if the address is outside of the allowed,
- * range.
+ * The flash read message reads a set of addresses of either the STM or M25 onboard flash.
+ * The device replies with a MSG_FLASH_READ_RESP message containing either the read data on
+ * success or a MSG_FLASH_DONE message containing the return code FLASH_INVALID_LEN (2) if
+ * the maximum read size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+ * the allowed range.
  */
 export interface MsgFlashReadReq {
     addr_len:   number;
@@ -890,13 +844,11 @@ export interface MsgFlashReadReq {
 }
 
 /**
- * The flash read message reads a set of addresses of either the,
- * STM or M25 onboard flash. The device replies with a,
- * MSG_FLASH_READ_RESP message containing either the read data on,
- * success or a MSG_FLASH_DONE message containing the return code,
- * FLASH_INVALID_LEN (2) if the maximum read size is exceeded or,
- * FLASH_INVALID_ADDR (3) if the address is outside of the allowed,
- * range.
+ * The flash read message reads a set of addresses of either the STM or M25 onboard flash.
+ * The device replies with a MSG_FLASH_READ_RESP message containing either the read data on
+ * success or a MSG_FLASH_DONE message containing the return code FLASH_INVALID_LEN (2) if
+ * the maximum read size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+ * the allowed range.
  */
 export interface MsgFlashReadResp {
     addr_len:   number;
@@ -905,14 +857,12 @@ export interface MsgFlashReadResp {
 }
 
 /**
- * This message describes the gain of each channel in the receiver frontend. Each ,
- * gain is encoded as a non-dimensional percentage relative to the maximum range  ,
- * possible for the gain stage of the frontend. By convention, each gain array ,
- * has 8 entries and the index of the array corresponding to the index of the rf channel ,
- * in the frontend. A gain of 127 percent encodes that rf channel is not present in the
- * hardware.,
- * A negative value implies an error for the particular gain stage as reported by the
- * frontend.
+ * This message describes the gain of each channel in the receiver frontend. Each gain is
+ * encoded as a non-dimensional percentage relative to the maximum range possible for the
+ * gain stage of the frontend. By convention, each gain array has 8 entries and the index of
+ * the array corresponding to the index of the rf channel in the frontend. A gain of 127
+ * percent encodes that rf channel is not present in the hardware. A negative value implies
+ * an error for the particular gain stage as reported by the frontend.
  */
 export interface MsgFrontEndGain {
     if_gain: number[];
@@ -920,35 +870,31 @@ export interface MsgFrontEndGain {
 }
 
 /**
- * This message provides the ability to forward messages over SBP.  This may take the form,
- * of wrapping up SBP messages received by Piksi for logging purposes or wrapping ,
- * another protocol with SBP.,
+ * This message provides the ability to forward messages over SBP.  This may take the form
+ * of wrapping up SBP messages received by Piksi for logging purposes or wrapping another
+ * protocol with SBP.,
  * ,
- * The source identifier indicates from what interface a forwarded stream derived.,
- * The protocol identifier identifies what the expected protocol the forwarded msg
- * contains.,
+ * The source identifier indicates from what interface a forwarded stream derived. The
+ * protocol identifier identifies what the expected protocol the forwarded msg contains.
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
 export interface MsgFwd {
-    fwd_payload: string;
+    fwd_payload: number[];
     protocol:    number;
     source:      number;
 }
 
 /**
- * This message reports the GPS time, representing the time since,
- * the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
- * counts the weeks and seconds of the week. The weeks begin at the,
- * Saturday/Sunday transition. GPS week 0 began at the beginning of,
- * the GPS time scale.,
+ * This message reports the GPS time, representing the time since the GPS epoch began on
+ * midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
+ * weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
+ * GPS time scale.,
  * ,
- * Within each week number, the GPS time of the week is between,
- * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time,
- * does not accumulate leap seconds, and as of now, has a small,
- * offset from UTC. In a message stream, this message precedes a,
- * set of other navigation messages referenced to the same time,
- * (but lacking the ns field) and indicates a more precise time of,
- * these messages.
+ * Within each week number, the GPS time of the week is between between 0 and 604800 seconds
+ * (=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a
+ * small offset from UTC. In a message stream, this message precedes a set of other
+ * navigation messages referenced to the same time (but lacking the ns field) and indicates
+ * a more precise time of these messages.
  */
 export interface MsgGPSTime {
     flags:       number;
@@ -958,19 +904,16 @@ export interface MsgGPSTime {
 }
 
 /**
- * This message reports the GPS time, representing the time since,
- * the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
- * counts the weeks and seconds of the week. The weeks begin at the,
- * Saturday/Sunday transition. GPS week 0 began at the beginning of,
- * the GPS time scale.,
+ * This message reports the GPS time, representing the time since the GPS epoch began on
+ * midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
+ * weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
+ * GPS time scale.,
  * ,
- * Within each week number, the GPS time of the week is between,
- * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time,
- * does not accumulate leap seconds, and as of now, has a small,
- * offset from UTC. In a message stream, this message precedes a,
- * set of other navigation messages referenced to the same time,
- * (but lacking the ns field) and indicates a more precise time of,
- * these messages.
+ * Within each week number, the GPS time of the week is between between 0 and 604800 seconds
+ * (=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a
+ * small offset from UTC. In a message stream, this message precedes a set of other
+ * navigation messages referenced to the same time (but lacking the ns field) and indicates
+ * a more precise time of these messages.
  */
 export interface MsgGPSTimeGnss {
     flags:       number;
@@ -980,10 +923,9 @@ export interface MsgGPSTimeGnss {
 }
 
 /**
- * The GLONASS L1/L2 Code-Phase biases allows to perform,
- * GPS+GLONASS integer ambiguity resolution for baselines,
- * with mixed receiver types (e.g. receiver of different,
- * manufacturers)
+ * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer ambiguity
+ * resolution for baselines with mixed receiver types (e.g. receiver of different
+ * manufacturers).
  */
 export interface MsgGloBiases {
     l1ca_bias: number;
@@ -1018,10 +960,8 @@ export interface GnssCapb {
 
 /**
  * The GNSS time offset message contains the information that is needed to translate
- * messages,
- * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the
- * sender,
- * producing this message.
+ * messages tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for
+ * the sender producing this message.
  */
 export interface MsgGnssTimeOffset {
     flags:        number;
@@ -1043,8 +983,8 @@ export interface MsgGroupDelay {
 }
 
 /**
- * This leading message lists the time metadata of the Solution Group.,
- * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+ * This leading message lists the time metadata of the Solution Group. It also lists the
+ * atomic contents (i.e. types of messages included) of the Solution Group.
  */
 export interface MsgGroupMeta {
     flags:        number;
@@ -1054,25 +994,21 @@ export interface MsgGroupMeta {
 }
 
 /**
- * The heartbeat message is sent periodically to inform the host,
- * or other attached devices that the system is running. It is,
- * used to monitor system malfunctions. It also contains status,
- * flags that indicate to the host the status of the system and,
- * whether it is operating correctly. Currently, the expected,
- * heartbeat interval is 1 sec.,
+ * The heartbeat message is sent periodically to inform the host or other attached devices
+ * that the system is running. It is used to monitor system malfunctions. It also contains
+ * status flags that indicate to the host the status of the system and whether it is
+ * operating correctly. Currently, the expected heartbeat interval is 1 sec.,
  * ,
- * The system error flag is used to indicate that an error has,
- * occurred in the system. To determine the source of the error,,
- * the remaining error flags should be inspected.
+ * The system error flag is used to indicate that an error has occurred in the system. To
+ * determine the source of the error, the remaining error flags should be inspected.
  */
 export interface MsgHeartbeat {
     flags: number;
 }
 
 /**
- * This message reports the state of the Integer Ambiguity,
- * Resolution (IAR) process, which resolves unknown integer,
- * ambiguities from double-differenced carrier-phase measurements,
+ * This message reports the state of the Integer Ambiguity Resolution (IAR) process, which
+ * resolves unknown integer ambiguities from double-differenced carrier-phase measurements
  * from satellite observations.
  */
 export interface MsgIarState {
@@ -1080,9 +1016,9 @@ export interface MsgIarState {
 }
 
 /**
- * Auxiliary data specific to a particular IMU. The `imu_type` field will,
- * always be consistent but the rest of the payload is device specific and,
- * depends on the value of `imu_type`.
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will always be
+ * consistent but the rest of the payload is device specific and depends on the value of
+ * `imu_type`.
  */
 export interface MsgImuAux {
     imu_conf: number;
@@ -1091,14 +1027,13 @@ export interface MsgImuAux {
 }
 
 /**
- * Raw data from the Inertial Measurement Unit, containing accelerometer and,
- * gyroscope readings. The sense of the measurements are to be aligned with ,
- * the indications on the device itself. Measurement units, which are specific to the,
- * device hardware and settings, are communicated via the MSG_IMU_AUX message.,
- * If using "time since startup" time tags, the receiving end will expect a,
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements,
- * with GNSS. The timestamp must wrap around to zero when reaching one week (604800
- * seconds).,
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope
+ * readings. The sense of the measurements are to be aligned with the indications on the
+ * device itself. Measurement units, which are specific to the device hardware and settings,
+ * are communicated via the MSG_IMU_AUX message. If using "time since startup" time tags,
+ * the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available
+ * to synchronise IMU measurements with GNSS. The timestamp must wrap around to zero when
+ * reaching one week (604800 seconds).,
  * ,
  * The time-tagging mode should not change throughout a run.
  */
@@ -1114,8 +1049,8 @@ export interface MsgImuRaw {
 }
 
 /**
- * The INS status message describes the state of the operation,
- * and initialization of the inertial navigation system.
+ * The INS status message describes the state of the operation and initialization of the
+ * inertial navigation system.
  */
 export interface MsgInsStatus {
     flags: number;
@@ -1123,9 +1058,8 @@ export interface MsgInsStatus {
 
 /**
  * The INS update status message contains informations about executed and rejected INS
- * updates.,
- * This message is expected to be extended in the future as new types of measurements are
- * being added.
+ * updates. This message is expected to be extended in the future as new types of
+ * measurements are being added.
  */
 export interface MsgInsUpdates {
     gnsspos:    number;
@@ -1138,9 +1072,9 @@ export interface MsgInsUpdates {
 }
 
 /**
- * The ionospheric parameters which allow the "L1 only" or "L2 only" user to,
- * utilize the ionospheric model for computation of the ionospheric delay.,
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+ * The ionospheric parameters which allow the "L1 only" or "L2 only" user to utilize the
+ * ionospheric model for computation of the ionospheric delay. Please see ICD-GPS-200
+ * (Chapter 20.3.3.5.1.7) for more details.
  */
 export interface MsgIono {
     a0:     number;
@@ -1155,8 +1089,8 @@ export interface MsgIono {
 }
 
 /**
- * This message indicates the process state of the top 10 heaviest,
- * consumers of CPU on the system, including a timestamp.
+ * This message indicates the process state of the top 10 heaviest consumers of CPU on the
+ * system, including a timestamp.
  */
 export interface MsgLinuxCPUState {
     cmdline: string;
@@ -1169,8 +1103,8 @@ export interface MsgLinuxCPUState {
 }
 
 /**
- * This message indicates the process state of the top 10 heaviest,
- * consumers of memory on the system, including a timestamp.
+ * This message indicates the process state of the top 10 heaviest consumers of memory on
+ * the system, including a timestamp.
  */
 export interface MsgLinuxMemState {
     cmdline: string;
@@ -1251,9 +1185,8 @@ export interface MsgLinuxSysState {
 }
 
 /**
- * This message contains a human-readable payload string from the,
- * device containing errors, warnings and informational messages at,
- * ERROR, WARNING, DEBUG, INFO logging levels.
+ * This message contains a human-readable payload string from the device containing errors,
+ * warnings and informational messages at ERROR, WARNING, DEBUG, INFO logging levels.
  */
 export interface MsgLog {
     level: number;
@@ -1261,8 +1194,8 @@ export interface MsgLog {
 }
 
 /**
- * The flash status message writes to the 8-bit M25 flash status,
- * register. The device replies with a MSG_FLASH_DONE message.
+ * The flash status message writes to the 8-bit M25 flash status register. The device
+ * replies with a MSG_FLASH_DONE message.
  */
 export interface MsgM25FlashWriteStatus {
     status: number[];
@@ -1280,8 +1213,8 @@ export interface MsgMagRaw {
 }
 
 /**
- * This message allows setting a mask to prevent a particular satellite,
- * from being used in various Piksi subsystems.
+ * This message allows setting a mask to prevent a particular satellite from being used in
+ * various Piksi subsystems.
  */
 export interface MsgMaskSatellite {
     mask: number;
@@ -1289,20 +1222,17 @@ export interface MsgMaskSatellite {
 }
 
 /**
- * The tracking message returns a variable-length array of tracking,
- * channel states. It reports status and carrier-to-noise density,
- * measurements for all tracked satellites.
+ * The tracking message returns a variable-length array of tracking channel states. It
+ * reports status and carrier-to-noise density measurements for all tracked satellites.
  */
 export interface MsgMeasurementState {
     states: MeasurementState[];
 }
 
 /**
- * Measurement Engine tracking channel state for a specific satellite signal,
- * and measured signal power.,
- * The mesid field for Glonass can either,
- * carry the FCN as 100 + FCN where FCN is in [-7, +6] or,
- * the Slot ID (from 1 to 28)
+ * Measurement Engine tracking channel state for a specific satellite signal and measured
+ * signal power. The mesid field for Glonass can either carry the FCN as 100 + FCN where FCN
+ * is in [-7, +6] or the Slot ID (from 1 to 28).
  */
 export interface MeasurementState {
     cn0:   number;
@@ -1310,20 +1240,18 @@ export interface MeasurementState {
 }
 
 /**
- * The device message from the host reads a unique device,
- * identifier from the SwiftNAP, an FPGA. The host requests the ID,
- * by sending a MSG_NAP_DEVICE_DNA_REQ message. The device,
- * responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the,
- * device ID in the payload. Note that this ID is tied to the FPGA,,
- * and not related to the Piksi's serial number.
+ * The device message from the host reads a unique device identifier from the SwiftNAP, an
+ * FPGA. The host requests the ID by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
+ * responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+ * that this ID is tied to the FPGA, and not related to the Piksi's serial number.
  */
 export interface MsgNapDeviceDnaResp {
     dna: number[];
 }
 
 /**
- * This message is sent out when an object is stored into NDB. If needed,
- * message could also be sent out when fetching an object from NDB.
+ * This message is sent out when an object is stored into NDB. If needed message could also
+ * be sent out when fetching an object from NDB.
  */
 export interface MsgNdbEvent {
     data_source:     number;
@@ -1344,12 +1272,10 @@ export interface MsgNetworkBandwidthUsage {
 }
 
 /**
- * The bandwidth usage for each interface can be reported,
- * within this struct and utilize multiple fields to fully,
- * specify the type of traffic that is being tracked. As,
- * either the interval of collection or the collection time,
- * may vary, both a timestamp and period field is provided,,
- * though may not necessarily be populated with a value.
+ * The bandwidth usage for each interface can be reported within this struct and utilize
+ * multiple fields to fully specify the type of traffic that is being tracked. As either the
+ * interval of collection or the collection time may vary, both a timestamp and period field
+ * is provided, though may not necessarily be populated with a value.
  */
 export interface NetworkUsage {
     duration:       number;
@@ -1360,9 +1286,8 @@ export interface NetworkUsage {
 }
 
 /**
- * The state of a network interface on the Piksi.,
- * Data is made to reflect output of ifaddrs struct returned by getifaddrs,
- * in c.
+ * The state of a network interface on the Piksi. Data is made to reflect output of ifaddrs
+ * struct returned by getifaddrs in c.
  */
 export interface MsgNetworkStateResp {
     flags:          number;
@@ -1376,13 +1301,11 @@ export interface MsgNetworkStateResp {
 }
 
 /**
- * The GPS observations message reports all the raw pseudorange and,
- * carrier phase observations for the satellites being tracked by,
- * the device. Carrier phase observation here is represented as a,
- * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of,
- * whole cycles and 8-bits of fractional cycles). The observations,
- * are be interoperable with 3rd party receivers and conform,
- * with typical RTCMv3 GNSS observations.
+ * The GPS observations message reports all the raw pseudorange and carrier phase
+ * observations for the satellites being tracked by the device. Carrier phase observation
+ * here is represented as a 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+ * whole cycles and 8-bits of fractional cycles). The observations are be interoperable with
+ * 3rd party receivers and conform with typical RTCMv3 GNSS observations.
  */
 export interface MsgObs {
     header: ObservationHeader;
@@ -1398,10 +1321,9 @@ export interface ObservationHeader {
 }
 
 /**
- * A wire-appropriate receiver clock time, defined as the time,
- * since the beginning of the week on the Saturday/Sunday,
- * transition. In most cases, observations are epoch aligned,
- * so ns field will be 0.
+ * A wire-appropriate receiver clock time, defined as the time since the beginning of the
+ * week on the Saturday/Sunday transition. In most cases, observations are epoch aligned so
+ * ns field will be 0.
  */
 export interface GpsTime {
     ns_residual: number;
@@ -1410,13 +1332,12 @@ export interface GpsTime {
 }
 
 /**
- * Pseudorange and carrier phase observation for a satellite being tracked.,
- * The observations are interoperable with 3rd party receivers and conform with,
- * typical RTCM 3.1 message GPS/GLO observations.,
+ * Pseudorange and carrier phase observation for a satellite being tracked. The observations
+ * are interoperable with 3rd party receivers and conform with typical RTCM 3.1 message
+ * GPS/GLO observations.,
  * ,
- * Carrier phase observations are not guaranteed to be aligned to the RINEX 3,
- * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently,
- * peformed.
+ * Carrier phase observations are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3
+ * MSM reference signal and no 1/4 cycle adjustments are currently peformed.
  */
 export interface PackedObsContent {
     cn0:   number;
@@ -1429,9 +1350,8 @@ export interface PackedObsContent {
 }
 
 /**
- * Doppler measurement in Hz represented as a 24-bit,
- * fixed point number with Q16.8 layout, i.e. 16-bits of whole,
- * doppler and 8-bits of fractional doppler. This doppler is defined,
+ * Doppler measurement in Hz represented as a 24-bit fixed point number with Q16.8 layout,
+ * i.e. 16-bits of whole doppler and 8-bits of fractional doppler. This doppler is defined
  * as positive for approaching satellites.
  */
 export interface Doppler {
@@ -1440,9 +1360,8 @@ export interface Doppler {
 }
 
 /**
- * Carrier phase measurement in cycles represented as a 40-bit,
- * fixed point number with Q32.8 layout, i.e. 32-bits of whole,
- * cycles and 8-bits of fractional cycles. This phase has the,
+ * Carrier phase measurement in cycles represented as a 40-bit fixed point number with Q32.8
+ * layout, i.e. 32-bits of whole cycles and 8-bits of fractional cycles. This phase has the
  * same sign as the pseudorange.
  */
 export interface CarrierPhase {
@@ -1452,18 +1371,13 @@ export interface CarrierPhase {
 
 /**
  * Message representing the x component of vehicle velocity in the user frame at the
- * odometry,
- * reference point(s) specified by the user. The offset for the odometry reference point and
- * ,
- * the definition and origin of the user frame are defined through the device settings
- * interface.,
- * There are 4 possible user-defined sources of this message  which are labeled arbitrarily
- * ,
- * source 0 through 3.,
- * If using "processor time" time tags, the receiving end will expect a,
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
- * measurements,
- * with GNSS. Processor time shall roll over to zero after one week.
+ * odometry reference point(s) specified by the user. The offset for the odometry reference
+ * point and the definition and origin of the user frame are defined through the device
+ * settings interface. There are 4 possible user-defined sources of this message which are
+ * labeled arbitrarily source 0 through 3. If using "processor time" time tags, the
+ * receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+ * synchronise odometry measurements with GNSS. Processor time shall roll over to zero after
+ * one week.
  */
 export interface MsgOdometry {
     flags:    number;
@@ -1472,11 +1386,11 @@ export interface MsgOdometry {
 }
 
 /**
- * This message reports the yaw, pitch, and roll angles of the vehicle body frame.,
- * The rotations should applied intrinsically in the order yaw, pitch, and roll ,
- * in order to rotate the from a frame aligned with the local-level NED frame ,
- * to the vehicle body frame.  This message will only be available in future ,
- * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
+ * This message reports the yaw, pitch, and roll angles of the vehicle body frame. The
+ * rotations should applied intrinsically in the order yaw, pitch, and roll in order to
+ * rotate the from a frame aligned with the local-level NED frame to the vehicle body
+ * frame.  This message will only be available in future INS versions of Swift Products and
+ * is not produced by Piksi Multi or Duro.
  */
 export interface MsgOrientEuler {
     flags:          number;
@@ -1491,14 +1405,10 @@ export interface MsgOrientEuler {
 
 /**
  * This message reports the quaternion vector describing the vehicle body frame's
- * orientation,
- * with respect to a local-level NED frame. The components of the vector should sum to a
- * unit,
- * vector assuming that the LSB of each component as a value of 2^-31. This message will
- * only,
- * be available in future INS versions of Swift Products and is not produced by Piksi Multi
- * ,
- * or Duro.
+ * orientation with respect to a local-level NED frame. The components of the vector should
+ * sum to a unit vector assuming that the LSB of each component as a value of 2^-31. This
+ * message will only be available in future INS versions of Swift Products and is not
+ * produced by Piksi Multi or Duro.
  */
 export interface MsgOrientQuat {
     flags:      number;
@@ -1514,7 +1424,7 @@ export interface MsgOrientQuat {
 }
 
 /**
- * The OSR message contains network corrections in an observation-like format
+ * The OSR message contains network corrections in an observation-like format.
  */
 export interface MsgOsr {
     header: ObservationHeader;
@@ -1536,13 +1446,11 @@ export interface PackedOsrContent {
 }
 
 /**
- * The position solution message reports absolute Earth Centered,
- * Earth Fixed (ECEF) coordinates and the status (single point vs,
- * pseudo-absolute RTK) of the position solution. If the rover,
- * receiver knows the surveyed position of the base station and has,
- * an RTK solution, this reports a pseudo-absolute position,
- * solution using the base station position and the rover's RTK,
- * baseline vector. The full GPS time is given by the preceding,
+ * The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+ * coordinates and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. If the rover receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position solution using the base station
+ * position and the rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgPosECEF {
@@ -1556,14 +1464,12 @@ export interface MsgPosECEF {
 }
 
 /**
- * The position solution message reports absolute Earth Centered,
- * Earth Fixed (ECEF) coordinates and the status (single point vs,
- * pseudo-absolute RTK) of the position solution. The message also,
- * reports the upper triangular portion of the 3x3 covariance matrix.,
- * If the receiver knows the surveyed position of the base station and has,
- * an RTK solution, this reports a pseudo-absolute position,
- * solution using the base station position and the rover's RTK,
- * baseline vector. The full GPS time is given by the preceding,
+ * The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+ * coordinates and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. The message also reports the upper triangular portion of the 3x3 covariance
+ * matrix. If the receiver knows the surveyed position of the base station and has an RTK
+ * solution, this reports a pseudo-absolute position solution using the base station
+ * position and the rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgPosECEFCov {
@@ -1582,14 +1488,12 @@ export interface MsgPosECEFCov {
 }
 
 /**
- * The position solution message reports absolute Earth Centered,
- * Earth Fixed (ECEF) coordinates and the status (single point vs,
- * pseudo-absolute RTK) of the position solution. The message also,
- * reports the upper triangular portion of the 3x3 covariance matrix.,
- * If the receiver knows the surveyed position of the base station and has,
- * an RTK solution, this reports a pseudo-absolute position,
- * solution using the base station position and the rover's RTK,
- * baseline vector. The full GPS time is given by the preceding,
+ * The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+ * coordinates and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. The message also reports the upper triangular portion of the 3x3 covariance
+ * matrix. If the receiver knows the surveyed position of the base station and has an RTK
+ * solution, this reports a pseudo-absolute position solution using the base station
+ * position and the rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgPosECEFCovGnss {
@@ -1608,13 +1512,11 @@ export interface MsgPosECEFCovGnss {
 }
 
 /**
- * The position solution message reports absolute Earth Centered,
- * Earth Fixed (ECEF) coordinates and the status (single point vs,
- * pseudo-absolute RTK) of the position solution. If the rover,
- * receiver knows the surveyed position of the base station and has,
- * an RTK solution, this reports a pseudo-absolute position,
- * solution using the base station position and the rover's RTK,
- * baseline vector. The full GPS time is given by the preceding,
+ * The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+ * coordinates and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. If the rover receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position solution using the base station
+ * position and the rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgPosECEFGnss {
@@ -1628,13 +1530,11 @@ export interface MsgPosECEFGnss {
 }
 
 /**
- * This position solution message reports the absolute geodetic,
- * coordinates and the status (single point vs pseudo-absolute RTK),
- * of the position solution. If the rover receiver knows the,
- * surveyed position of the base station and has an RTK solution,,
- * this reports a pseudo-absolute position solution using the base,
- * station position and the rover's RTK baseline vector. The full,
- * GPS time is given by the preceding MSG_GPS_TIME with the,
+ * This position solution message reports the absolute geodetic coordinates and the status
+ * (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver
+ * knows the surveyed position of the base station and has an RTK solution, this reports a
+ * pseudo-absolute position solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
 export interface MsgPosLLH {
@@ -1649,14 +1549,13 @@ export interface MsgPosLLH {
 }
 
 /**
- * This position solution message reports the absolute geodetic,
- * coordinates and the status (single point vs pseudo-absolute RTK),
- * of the position solution as well as the upper triangle of the 3x3,
- * covariance matrix.  The position information and Fix Mode flags should,
- * follow the MSG_POS_LLH message.  Since the covariance matrix is computed,
- * in the local-level North, East, Down frame, the covariance terms follow,
- * with that convention. Thus, covariances are reported against the "downward",
- * measurement and care should be taken with the sign convention.
+ * This position solution message reports the absolute geodetic coordinates and the status
+ * (single point vs pseudo-absolute RTK) of the position solution as well as the upper
+ * triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
+ * should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the covariance terms follow with that convention.
+ * Thus, covariances are reported against the "downward" measurement and care should be
+ * taken with the sign convention.
  */
 export interface MsgPosLLHCov {
     cov_d_d: number;
@@ -1674,14 +1573,13 @@ export interface MsgPosLLHCov {
 }
 
 /**
- * This position solution message reports the absolute geodetic,
- * coordinates and the status (single point vs pseudo-absolute RTK),
- * of the position solution as well as the upper triangle of the 3x3,
- * covariance matrix.  The position information and Fix Mode flags should,
- * follow the MSG_POS_LLH message.  Since the covariance matrix is computed,
- * in the local-level North, East, Down frame, the covariance terms follow,
- * with that convention. Thus, covariances are reported against the "downward",
- * measurement and care should be taken with the sign convention.
+ * This position solution message reports the absolute geodetic coordinates and the status
+ * (single point vs pseudo-absolute RTK) of the position solution as well as the upper
+ * triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
+ * should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the covariance terms follow with that convention.
+ * Thus, covariances are reported against the "downward" measurement and care should be
+ * taken with the sign convention.
  */
 export interface MsgPosLLHCovGnss {
     cov_d_d: number;
@@ -1699,13 +1597,11 @@ export interface MsgPosLLHCovGnss {
 }
 
 /**
- * This position solution message reports the absolute geodetic,
- * coordinates and the status (single point vs pseudo-absolute RTK),
- * of the position solution. If the rover receiver knows the,
- * surveyed position of the base station and has an RTK solution,,
- * this reports a pseudo-absolute position solution using the base,
- * station position and the rover's RTK baseline vector. The full,
- * GPS time is given by the preceding MSG_GPS_TIME with the,
+ * This position solution message reports the absolute geodetic coordinates and the status
+ * (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver
+ * knows the surveyed position of the base station and has an RTK solution, this reports a
+ * pseudo-absolute position solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
 export interface MsgPosLLHGnss {
@@ -1720,19 +1616,16 @@ export interface MsgPosLLHGnss {
 }
 
 /**
- * The PPS time message contains the value of the sender's local time in,
- * microseconds at the moment a pulse is detected on the PPS input. This,
- * is to be used for syncronisation of sensor data sampled with a local,
- * timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown,
- * to the sender.,
+ * The PPS time message contains the value of the sender's local time in microseconds at the
+ * moment a pulse is detected on the PPS input. This is to be used for syncronisation of
+ * sensor data sampled with a local timestamp (e.g. IMU or wheeltick messages) where GNSS
+ * time is unknown to the sender.,
  * ,
- * The local time used to timestamp the PPS pulse must be generated by the,
- * same clock which is used to timestamp the IMU/wheel sensor data and,
- * should follow the same roll-over rules.  A separate MSG_PPS_TIME,
- * message should be sent for each source of sensor data which uses,
- * PPS-relative timestamping.  The sender ID for each of these,
- * MSG_PPS_TIME messages should match the sender ID of the respective,
- * sensor data.
+ * The local time used to timestamp the PPS pulse must be generated by the same clock which
+ * is used to timestamp the IMU/wheel sensor data and should follow the same roll-over
+ * rules.  A separate MSG_PPS_TIME message should be sent for each source of sensor data
+ * which uses PPS-relative timestamping.  The sender ID for each of these MSG_PPS_TIME
+ * messages should match the sender ID of the respective sensor data.
  */
 export interface MsgPpsTime {
     flags: number;
@@ -1740,9 +1633,8 @@ export interface MsgPpsTime {
 }
 
 /**
- * This message reports the protection levels associated to the given ,
- * state estimate. The full GPS time is given by the preceding MSG_GPS_TIME ,
- * with the matching time-of-week (tow).
+ * This message reports the protection levels associated to the given state estimate. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgProtectionLevel {
     atpl:    number;
@@ -1769,24 +1661,23 @@ export interface MsgProtectionLevel {
 }
 
 /**
- * This message from the host resets the Piksi back into the,
- * bootloader.
+ * This message from the host resets the Piksi back into the bootloader.
  */
 export interface MsgReset {
     flags: number;
 }
 
 /**
- * This message resets either the DGNSS Kalman filters or Integer,
- * Ambiguity Resolution (IAR) process.
+ * This message resets either the DGNSS Kalman filters or Integer Ambiguity Resolution (IAR)
+ * process.
  */
 export interface MsgResetFilters {
     filter: number;
 }
 
 /**
- * This message is sent once per second per SBAS satellite. ME checks the,
- * parity of the data block and sends only blocks that pass the check.
+ * This message is sent once per second per SBAS satellite. ME checks the parity of the data
+ * block and sends only blocks that pass the check.
  */
 export interface MsgSbasRaw {
     data:         number[];
@@ -1796,9 +1687,8 @@ export interface MsgSbasRaw {
 }
 
 /**
- * The settings message for iterating through the settings,
- * values. A device will respond to this message with a ,
- * "MSG_SETTINGS_READ_BY_INDEX_RESP".
+ * The settings message for iterating through the settings values. A device will respond to
+ * this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 export interface MsgSettingsReadByIndexReq {
     index: number;
@@ -1807,14 +1697,13 @@ export interface MsgSettingsReadByIndexReq {
 /**
  * The settings message that reports the value of a setting at an index.,
  * ,
- * In the string field, it reports NULL-terminated and delimited string,
- * with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where,
- * the '\0' escape sequence denotes the NULL character and where quotation,
- * marks are omitted. The FORMAT_TYPE field is optional and denotes,
- * possible string values of the setting as a hint to the user. If,
- * included, the format type portion of the string has the format,
- * "enum:value1,value2,value3". An example string that could be sent from,
- * the device is "simulator\0enabled\0True\0enum:True,False\0"
+ * In the string field, it reports NULL-terminated and delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where the '\0' escape sequence denotes
+ * the NULL character and where quotation marks are omitted. The FORMAT_TYPE field is
+ * optional and denotes possible string values of the setting as a hint to the user. If
+ * included, the format type portion of the string has the format
+ * "enum:value1,value2,value3". An example string that could be sent from the device is
+ * "simulator\0enabled\0True\0enum:True,False\0".
  */
 export interface MsgSettingsReadByIndexResp {
     index:   number;
@@ -1822,46 +1711,41 @@ export interface MsgSettingsReadByIndexResp {
 }
 
 /**
- * The setting message that reads the device configuration. The string,
- * field is a NULL-terminated and NULL-delimited string with contents,
- * "SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the,
- * NULL character and where quotation marks are omitted. An example,
- * string that could be sent to a device is "solution\0soln_freq\0". A,
- * device will only respond to this message when it is received from,
- * sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP,
- * message (msg_id 0x00A5).
+ * The setting message that reads the device configuration. The string field is a
+ * NULL-terminated and NULL-delimited string with contents "SECTION_SETTING\0SETTING\0"
+ * where the '\0' escape sequence denotes the NULL character and where quotation marks are
+ * omitted. An example string that could be sent to a device is "solution\0soln_freq\0". A
+ * device will only respond to this message when it is received from sender ID 0x42. A
+ * device should respond with a MSG_SETTINGS_READ_RESP message (msg_id 0x00A5).
  */
 export interface MsgSettingsReadReq {
     setting: string;
 }
 
 /**
- * The setting message wich which the device responds after a,
- * MSG_SETTING_READ_REQ is sent to device. The string field is a,
- * NULL-terminated and NULL-delimited string with contents,
- * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence,
- * denotes the NULL character and where quotation marks are omitted. An,
- * example string that could be sent from device is,
- * "solution\0soln_freq\010\0".
+ * The setting message wich which the device responds after a MSG_SETTING_READ_REQ is sent
+ * to device. The string field is a NULL-terminated and NULL-delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+ * character and where quotation marks are omitted. An example string that could be sent
+ * from device is "solution\0soln_freq\010\0".
  */
 export interface MsgSettingsReadResp {
     setting: string;
 }
 
 /**
- * This message registers the presence and default value of a setting,
- * with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE,
- * for this setting to set the initial value.
+ * This message registers the presence and default value of a setting with a settings
+ * daemon.  The host should reply with MSG_SETTINGS_WRITE for this setting to set the
+ * initial value.
  */
 export interface MsgSettingsRegister {
     setting: string;
 }
 
 /**
- * This message responds to setting registration with the effective value.,
- * The effective value shall differ from the given default value if setting,
- * was already registered or is available in the permanent setting storage,
- * and had a different value.
+ * This message responds to setting registration with the effective value. The effective
+ * value shall differ from the given default value if setting was already registered or is
+ * available in the permanent setting storage and had a different value.
  */
 export interface MsgSettingsRegisterResp {
     setting: string;
@@ -1869,26 +1753,24 @@ export interface MsgSettingsRegisterResp {
 }
 
 /**
- * The setting message writes the device configuration for a particular,
- * setting via A NULL-terminated and NULL-delimited string with contents,
- * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes ,
- * the NULL character and where quotation marks are omitted. A device will,
- * only process to this message when it is received from sender ID 0x42.,
- * An example string that could be sent to a device is,
- * "solution\0soln_freq\010\0".
+ * The setting message writes the device configuration for a particular setting via A
+ * NULL-terminated and NULL-delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+ * character and where quotation marks are omitted. A device will only process to this
+ * message when it is received from sender ID 0x42. An example string that could be sent to
+ * a device is "solution\0soln_freq\010\0".
  */
 export interface MsgSettingsWrite {
     setting: string;
 }
 
 /**
- * Return the status of a write request with the new value of the,
- * setting.  If the requested value is rejected, the current value,
- * will be returned. The string field is a NULL-terminated and NULL-delimited,
- * string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0',
- * escape sequence denotes the NULL character and where quotation marks,
- * are omitted. An example string that could be sent from device is,
- * "solution\0soln_freq\010\0".
+ * Return the status of a write request with the new value of the setting.  If the requested
+ * value is rejected, the current value will be returned. The string field is a
+ * NULL-terminated and NULL-delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+ * character and where quotation marks are omitted. An example string that could be sent
+ * from device is "solution\0soln_freq\010\0".
  */
 export interface MsgSettingsWriteResp {
     setting: string;
@@ -1897,16 +1779,13 @@ export interface MsgSettingsWriteResp {
 
 /**
  * This message contains all metadata about the sensors received and/or used in computing
- * the sensorfusion solution.,
- * It focuses primarly, but not only, on GNSS metadata.,
- * Regarding the age of the last received valid GNSS solution, the highest two bits are time
- * status, indicating,
- * whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also
- * known as time of validity),
- * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used
- * before alignment is,
- * complete in the Fusion Engine, when output solution is the last received valid GNSS
- * solution and its tow is not a TOM.
+ * the sensorfusion solution. It focuses primarly, but not only, on GNSS metadata. Regarding
+ * the age of the last received valid GNSS solution, the highest two bits are time status,
+ * indicating whether age gnss can or can not be used to retrieve time of measurement (noted
+ * TOM, also known as time of validity) If it can, substract 'age gnss' from 'tow' in
+ * navigation messages to get TOM. Can be used before alignment is complete in the Fusion
+ * Engine, when output solution is the last received valid GNSS solution and its tow is not
+ * a TOM.
  */
 export interface MsgSolnMeta {
     age_corrections: number;
@@ -1919,13 +1798,11 @@ export interface MsgSolnMeta {
 }
 
 /**
- * Metadata describing which sensors were involved in the solution.,
- * The structure is fixed no matter what the actual sensor type is.,
- * The sensor_type field tells you which sensor we are talking about. It also tells you,
- * whether the sensor data was actually used or not.,
- * The flags field, always a u8, contains the sensor-specific data.,
- * The content of flags, for each sensor type, is described in the relevant structures in
- * this section.
+ * Metadata describing which sensors were involved in the solution. The structure is fixed
+ * no matter what the actual sensor type is. The sensor_type field tells you which sensor we
+ * are talking about. It also tells you whether the sensor data was actually used or not.
+ * The flags field, always a u8, contains the sensor-specific data. The content of flags,
+ * for each sensor type, is described in the relevant structures in this section.
  */
 export interface SolutionInputType {
     flags:       number;
@@ -1946,10 +1823,9 @@ export interface MsgSpecan {
 }
 
 /**
- * The precise code biases message is to be added,
- * to the pseudorange of the corresponding signal,
- * to get corrected pseudorange. It is an,
- * equivalent to the 1059 / 1065 RTCM message types
+ * The precise code biases message is to be added to the pseudorange of the corresponding
+ * signal to get corrected pseudorange. It is an equivalent to the 1059 / 1065 RTCM message
+ * types.
  */
 export interface MsgSsrCodeBiases {
     biases:          CodeBiasesContent[];
@@ -1960,8 +1836,8 @@ export interface MsgSsrCodeBiases {
 }
 
 /**
- * Code biases are to be added to pseudorange.,
- * The corrections conform with RTCMv3 MT 1059 / 1065.
+ * Code biases are to be added to pseudorange. The corrections conform with RTCMv3 MT 1059 /
+ * 1065.
  */
 export interface CodeBiasesContent {
     code:  number;
@@ -1993,7 +1869,7 @@ export interface GridDefinitionHeader {
 /**
  * STEC residuals are per space vehicle, troposphere is not.,
  * ,
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
  */
 export interface MsgSsrGriddedCorrection {
     element: GridElement;
@@ -2001,8 +1877,8 @@ export interface MsgSsrGriddedCorrection {
 }
 
 /**
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and,
- * stddev) for each satellite at the grid point.
+ * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
+ * each satellite at the grid point.
  */
 export interface GridElement {
     index:                  number;
@@ -2011,8 +1887,7 @@ export interface GridElement {
 }
 
 /**
- * STEC residual (mean and standard deviation) for the given satellite,
- * at the grid point,
+ * STEC residual (mean and standard deviation) for the given satellite at the grid point.
  */
 export interface STECResidual {
     residual: number;
@@ -2021,8 +1896,7 @@ export interface STECResidual {
 }
 
 /**
- * A (Constellation ID, satellite ID) tuple that uniquely identifies,
- * a space vehicle
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.
  */
 export interface SvID {
     constellation: number;
@@ -2030,8 +1904,7 @@ export interface SvID {
 }
 
 /**
- * Troposphere vertical delays (mean and standard deviation) at the grid,
- * point.
+ * Troposphere vertical delays (mean and standard deviation) at the grid point.
  */
 export interface TroposphericDelayCorrection {
     hydro:  number;
@@ -2040,9 +1913,8 @@ export interface TroposphericDelayCorrection {
 }
 
 /**
- * The LPP message contains nested variable length arrays,
- * which are not suppported in SBP, so each grid point will,
- * be identified by the index.
+ * The LPP message contains nested variable length arrays which are not suppported in SBP,
+ * so each grid point will be identified by the index.
  */
 export interface GriddedCorrectionHeader {
     iod_atmo:                number;
@@ -2065,8 +1937,7 @@ export interface MsgSsrGriddedCorrectionNoStd {
 }
 
 /**
- * Contains one tropo delay, plus STEC residuals for each satellite at the,
- * grid point.
+ * Contains one tropo delay, plus STEC residuals for each satellite at the grid point.
  */
 export interface GridElementNoStd {
     index:                  number;
@@ -2091,10 +1962,8 @@ export interface TroposphericDelayCorrectionNoStd {
 }
 
 /**
- * The precise orbit and clock correction message is,
- * to be applied as a delta correction to broadcast,
- * ephemeris and is an equivalent to the 1060 /1066,
- * RTCM message types
+ * The precise orbit and clock correction message is to be applied as a delta correction to
+ * broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.
  */
 export interface MsgSsrOrbitClock {
     along:           number;
@@ -2114,12 +1983,10 @@ export interface MsgSsrOrbitClock {
 }
 
 /**
- * The precise phase biases message contains the biases,
- * to be added to the carrier phase of the corresponding,
- * signal to get corrected carrier phase measurement, as,
- * well as the satellite yaw angle to be applied to compute,
- * the phase wind-up correction.,
- * It is typically an equivalent to the 1265 RTCM message types
+ * The precise phase biases message contains the biases to be added to the carrier phase of
+ * the corresponding signal to get corrected carrier phase measurement, as well as the
+ * satellite yaw angle to be applied to compute the phase wind-up correction. It is
+ * typically an equivalent to the 1265 RTCM message types.
  */
 export interface MsgSsrPhaseBiases {
     biases:          PhaseBiasesContent[];
@@ -2149,8 +2016,8 @@ export interface MsgSsrSatelliteApc {
 }
 
 /**
- * Contains phase center offset and elevation variation corrections for one,
- * signal on a satellite.
+ * Contains phase center offset and elevation variation corrections for one signal on a
+ * satellite.
  */
 export interface SatelliteAPC {
     pco:      number[];
@@ -2161,10 +2028,9 @@ export interface SatelliteAPC {
 }
 
 /**
- * The Slant Total Electron Content per space vehicle, given as polynomial,
- * approximation for a given tile. This should be combined with the,
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation,
- * of the atmospheric delay.,
+ * The Slant Total Electron Content per space vehicle, given as polynomial approximation for
+ * a given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get
+ * the state space representation of the atmospheric delay.,
  * ,
  * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
@@ -2174,9 +2040,8 @@ export interface MsgSsrStecCorrection {
 }
 
 /**
- * A full set of STEC information will likely span multiple SBP,
- * messages, since SBP message a limited to 255 bytes.  The header,
- * is used to tie multiple SBP messages into a sequence.
+ * A full set of STEC information will likely span multiple SBP messages, since SBP message
+ * a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
  */
 export interface STECHeader {
     iod_atmo:        number;
@@ -2198,13 +2063,12 @@ export interface STECSatElement {
 }
 
 /**
- * Provides the correction point coordinates for the atmospheric correction,
- * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION,
- * messages.,
+ * Provides the correction point coordinates for the atmospheric correction values in the
+ * MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.,
  * ,
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information,
- * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of,
- * correction points, not lists of points.
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
+ * GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not
+ * lists of points.
  */
 export interface MsgSsrTileDefinition {
     bitmask:       number;
@@ -2219,10 +2083,9 @@ export interface MsgSsrTileDefinition {
 }
 
 /**
- * The system start-up message is sent once on system,
- * start-up. It notifies the host or other attached devices that,
- * the system has started and is now ready to respond to commands,
- * or configuration requests.
+ * The system start-up message is sent once on system start-up. It notifies the host or
+ * other attached devices that the system has started and is now ready to respond to
+ * commands or configuration requests.
  */
 export interface MsgStartup {
     cause:        number;
@@ -2230,15 +2093,14 @@ export interface MsgStartup {
 }
 
 /**
- * The status report is sent periodically to inform the host,
- * or other attached devices that the system is running. It is,
- * used to monitor system malfunctions. It contains status,
- * reports that indicate to the host the status of each sub-system and,
- * whether it is operating correctly.,
+ * The status report is sent periodically to inform the host or other attached devices that
+ * the system is running. It is used to monitor system malfunctions. It contains status
+ * reports that indicate to the host the status of each sub-system and whether it is
+ * operating correctly.,
  * ,
- * Interpretation of the subsystem specific status code is product,
- * dependent, but if the generic status code is initializing, it should,
- * be ignored.  Refer to product documentation for details.
+ * Interpretation of the subsystem specific status code is product dependent, but if the
+ * generic status code is initializing, it should be ignored.  Refer to product
+ * documentation for details.
  */
 export interface MsgStatusReport {
     reporting_system: number;
@@ -2249,8 +2111,8 @@ export interface MsgStatusReport {
 }
 
 /**
- * Report the general and specific state of a sub-system.  If the generic,
- * state is reported as initializing, the specific state should be ignored.
+ * Report the general and specific state of a sub-system.  If the generic state is reported
+ * as initializing, the specific state should be ignored.
  */
 export interface SubSystemReport {
     component: number;
@@ -2259,34 +2121,33 @@ export interface SubSystemReport {
 }
 
 /**
- * The flash lock message locks a sector of the STM flash,
- * memory. The device replies with a MSG_FLASH_DONE message.
+ * The flash lock message locks a sector of the STM flash memory. The device replies with a
+ * MSG_FLASH_DONE message.
  */
 export interface MsgStmFlashLockSector {
     sector: number;
 }
 
 /**
- * The flash unlock message unlocks a sector of the STM flash,
- * memory. The device replies with a MSG_FLASH_DONE message.
+ * The flash unlock message unlocks a sector of the STM flash memory. The device replies
+ * with a MSG_FLASH_DONE message.
  */
 export interface MsgStmFlashUnlockSector {
     sector: number;
 }
 
 /**
- * This message reads the device's hardcoded unique ID. The host,
- * requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device,
- * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique,
- * ID in the payload..
+ * This message reads the device's hardcoded unique ID. The host requests the ID by sending
+ * a MSG_STM_UNIQUE_ID_REQ. The device responds with a MSG_STM_UNIQUE_ID_RESP with the
+ * 12-byte unique ID in the payload.
  */
 export interface MsgStmUniqueIDResp {
     stm_id: number[];
 }
 
 /**
- * Azimuth and elevation angles of all the visible satellites,
- * that the device does have ephemeris or almanac for.
+ * Azimuth and elevation angles of all the visible satellites that the device does have
+ * ephemeris or almanac for.
  */
 export interface MsgSvAzEl {
     azel: SvAzEl[];
@@ -2302,9 +2163,8 @@ export interface SvAzEl {
 }
 
 /**
- * The thread usage message from the device reports real-time,
- * operating system (RTOS) thread usage statistics for the named,
- * thread. The reported percentage values must be normalized.
+ * The thread usage message from the device reports real-time operating system (RTOS) thread
+ * usage statistics for the named thread. The reported percentage values must be normalized.
  */
 export interface MsgThreadState {
     cpu:        number;
@@ -2313,8 +2173,7 @@ export interface MsgThreadState {
 }
 
 /**
- * When enabled, a tracking channel can output the correlations at each,
- * update interval.
+ * When enabled, a tracking channel can output the correlations at each update interval.
  */
 export interface MsgTrackingIq {
     channel: number;
@@ -2331,17 +2190,15 @@ export interface TrackingChannelCorrelation {
 }
 
 /**
- * The tracking message returns a variable-length array of tracking,
- * channel states. It reports status and carrier-to-noise density,
- * measurements for all tracked satellites.
+ * The tracking message returns a variable-length array of tracking channel states. It
+ * reports status and carrier-to-noise density measurements for all tracked satellites.
  */
 export interface MsgTrackingState {
     states: TrackingChannelState[];
 }
 
 /**
- * Tracking channel state for a specific satellite signal and,
- * measured signal power.
+ * Tracking channel state for a specific satellite signal and measured signal power.
  */
 export interface TrackingChannelState {
     cn0: number;
@@ -2350,15 +2207,13 @@ export interface TrackingChannelState {
 }
 
 /**
- * The UART message reports data latency and throughput of the UART,
- * channels providing SBP I/O. On the default Piksi configuration,,
- * UARTs A and B are used for telemetry radios, but can also be,
- * host access ports for embedded hosts, or other interfaces in,
- * future. The reported percentage values must be normalized.,
- * Observations latency and period can be used to assess the,
- * health of the differential corrections link. Latency provides,
- * the timeliness of received base observations while the,
- * period indicates their likelihood of transmission.
+ * The UART message reports data latency and throughput of the UART channels providing SBP
+ * I/O. On the default Piksi configuration, UARTs A and B are used for telemetry radios, but
+ * can also be host access ports for embedded hosts, or other interfaces in future. The
+ * reported percentage values must be normalized. Observations latency and period can be
+ * used to assess the health of the differential corrections link. Latency provides the
+ * timeliness of received base observations while the period indicates their likelihood of
+ * transmission.
  */
 export interface MsgUARTState {
     latency:    Latency;
@@ -2369,11 +2224,10 @@ export interface MsgUARTState {
 }
 
 /**
- * Statistics on the latency of observations received from the base,
- * station. As observation packets are received their GPS time is,
- * compared to the current GPS time calculated locally by the,
- * receiver to give a precise measurement of the end-to-end,
- * communication latency in the system.
+ * Statistics on the latency of observations received from the base station. As observation
+ * packets are received their GPS time is compared to the current GPS time calculated
+ * locally by the receiver to give a precise measurement of the end-to-end communication
+ * latency in the system.
  */
 export interface Latency {
     avg:     number;
@@ -2383,12 +2237,11 @@ export interface Latency {
 }
 
 /**
- * Statistics on the period of observations received from the base,
- * station. As complete observation sets are received, their time,
- * of reception is compared with the prior set''s time of reception.,
- * This measurement provides a proxy for link quality as incomplete,
- * or missing sets will increase the period.  Long periods,
- * can cause momentary RTK solution outages.
+ * Statistics on the period of observations received from the base station. As complete
+ * observation sets are received, their time of reception is compared with the prior set''s
+ * time of reception. This measurement provides a proxy for link quality as incomplete or
+ * missing sets will increase the period.  Long periods can cause momentary RTK solution
+ * outages.
  */
 export interface Period {
     avg:     number;
@@ -2398,9 +2251,8 @@ export interface Period {
 }
 
 /**
- * Throughput, utilization, and error counts on the RX/TX buffers,
- * of this UART channel. The reported percentage values must,
- * be normalized.
+ * Throughput, utilization, and error counts on the RX/TX buffers of this UART channel. The
+ * reported percentage values must be normalized.
  */
 export interface UARTChannel {
     crc_error_count: number;
@@ -2412,16 +2264,16 @@ export interface UARTChannel {
 }
 
 /**
- * This message can contain any application specific user data up to a,
- * maximum length of 255 bytes per message.
+ * This message can contain any application specific user data up to a maximum length of 255
+ * bytes per message.
  */
 export interface MsgUserData {
     contents: number[];
 }
 
 /**
- * This message reports the Universal Coordinated Time (UTC).  Note the flags,
- * which indicate the source of the UTC offset value and source of the time fix.
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
+ * the source of the UTC offset value and source of the time fix.
  */
 export interface MsgUTCTime {
     day:     number;
@@ -2436,8 +2288,8 @@ export interface MsgUTCTime {
 }
 
 /**
- * This message reports the Universal Coordinated Time (UTC).  Note the flags,
- * which indicate the source of the UTC offset value and source of the time fix.
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
+ * the source of the UTC offset value and source of the time fix.
  */
 export interface MsgUTCTimeGnss {
     day:     number;
@@ -2452,15 +2304,14 @@ export interface MsgUTCTimeGnss {
 }
 
 /**
- * This message reports the velocity in the Vehicle Body Frame. By convention,,
- * the x-axis should point out the nose of the vehicle and represent the forward,
- * direction, while as the y-axis should point out the right hand side of the vehicle.,
- * Since this is a right handed system, z should point out the bottom of the vehicle.,
- * The orientation and origin of the Vehicle Body Frame are specified via the device
- * settings.,
- * The full GPS time is given by the preceding MSG_GPS_TIME with the,
- * matching time-of-week (tow). This message is only produced by inertial versions of Swift,
- * products and is not available from Piksi Multi or Duro.
+ * This message reports the velocity in the Vehicle Body Frame. By convention, the x-axis
+ * should point out the nose of the vehicle and represent the forward direction, while as
+ * the y-axis should point out the right hand side of the vehicle. Since this is a right
+ * handed system, z should point out the bottom of the vehicle. The orientation and origin
+ * of the Vehicle Body Frame are specified via the device settings. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
+ * only produced by inertial versions of Swift products and is not available from Piksi
+ * Multi or Duro.
  */
 export interface MsgVelBody {
     cov_x_x: number;
@@ -2478,9 +2329,8 @@ export interface MsgVelBody {
 }
 
 /**
- * This message reports the velocity in Earth Centered Earth Fixed,
- * (ECEF) coordinates. The full GPS time is given by the preceding,
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgVelECEF {
     accuracy: number;
@@ -2493,9 +2343,8 @@ export interface MsgVelECEF {
 }
 
 /**
- * This message reports the velocity in Earth Centered Earth Fixed,
- * (ECEF) coordinates. The full GPS time is given by the preceding,
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgVelECEFCov {
     cov_x_x: number;
@@ -2513,9 +2362,8 @@ export interface MsgVelECEFCov {
 }
 
 /**
- * This message reports the velocity in Earth Centered Earth Fixed,
- * (ECEF) coordinates. The full GPS time is given by the preceding,
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgVelECEFCovGnss {
     cov_x_x: number;
@@ -2533,9 +2381,8 @@ export interface MsgVelECEFCovGnss {
 }
 
 /**
- * This message reports the velocity in Earth Centered Earth Fixed,
- * (ECEF) coordinates. The full GPS time is given by the preceding,
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 export interface MsgVelECEFGnss {
     accuracy: number;
@@ -2548,10 +2395,10 @@ export interface MsgVelECEFGnss {
 }
 
 /**
- * This message reports the velocity in local North East Down (NED),
- * coordinates. The NED coordinate system is defined as the local WGS84,
- * tangent plane centered at the current position. The full GPS time is,
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in local North East Down (NED) coordinates. The NED
+ * coordinate system is defined as the local WGS84 tangent plane centered at the current
+ * position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+ * time-of-week (tow).
  */
 export interface MsgVelNED {
     d:          number;
@@ -2565,12 +2412,11 @@ export interface MsgVelNED {
 }
 
 /**
- * This message reports the velocity in local North East Down (NED),
- * coordinates. The NED coordinate system is defined as the local WGS84,
- * tangent plane centered at the current position. The full GPS time is,
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,
- * This message is similar to the MSG_VEL_NED, but it includes the upper triangular,
- * portion of the 3x3 covariance matrix.
+ * This message reports the velocity in local North East Down (NED) coordinates. The NED
+ * coordinate system is defined as the local WGS84 tangent plane centered at the current
+ * position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+ * time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper
+ * triangular portion of the 3x3 covariance matrix.
  */
 export interface MsgVelNEDCov {
     cov_d_d: number;
@@ -2588,12 +2434,11 @@ export interface MsgVelNEDCov {
 }
 
 /**
- * This message reports the velocity in local North East Down (NED),
- * coordinates. The NED coordinate system is defined as the local WGS84,
- * tangent plane centered at the current position. The full GPS time is,
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,
- * This message is similar to the MSG_VEL_NED, but it includes the upper triangular,
- * portion of the 3x3 covariance matrix.
+ * This message reports the velocity in local North East Down (NED) coordinates. The NED
+ * coordinate system is defined as the local WGS84 tangent plane centered at the current
+ * position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+ * time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper
+ * triangular portion of the 3x3 covariance matrix.
  */
 export interface MsgVelNEDCovGnss {
     cov_d_d: number;
@@ -2611,10 +2456,10 @@ export interface MsgVelNEDCovGnss {
 }
 
 /**
- * This message reports the velocity in local North East Down (NED),
- * coordinates. The NED coordinate system is defined as the local WGS84,
- * tangent plane centered at the current position. The full GPS time is,
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in local North East Down (NED) coordinates. The NED
+ * coordinate system is defined as the local WGS84 tangent plane centered at the current
+ * position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+ * time-of-week (tow).
  */
 export interface MsgVelNEDGnss {
     d:          number;
@@ -2628,21 +2473,16 @@ export interface MsgVelNEDGnss {
 }
 
 /**
- * Message containing the accumulated distance travelled by a wheel located at an odometry,
- * reference point defined by the user. The offset for the odometry reference point and the,
+ * Message containing the accumulated distance travelled by a wheel located at an odometry
+ * reference point defined by the user. The offset for the odometry reference point and the
  * definition and origin of the user frame are defined through the device settings
- * interface.,
- * The source of this message is identified by the source field, which is an integer
- * ranging,
- * from 0 to 255.,
- * The timestamp associated with this message should represent the time when the
- * accumulated,
- * tick count reached the value given by the contents of this message as accurately as
- * possible.,
- * If using "local CPU time" time tags, the receiving end will expect a,
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
- * measurements,
- * with GNSS. Local CPU time shall roll over to zero after one week.
+ * interface. The source of this message is identified by the source field, which is an
+ * integer ranging from 0 to 255. The timestamp associated with this message should
+ * represent the time when the accumulated tick count reached the value given by the
+ * contents of this message as accurately as possible. If using "local CPU time" time tags,
+ * the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available
+ * to synchronise wheeltick measurements with GNSS. Local CPU time shall roll over to zero
+ * after one week.
  */
 export interface MsgWheeltick {
     flags:  number;
@@ -2652,8 +2492,8 @@ export interface MsgWheeltick {
 }
 
 /**
- * Metadata around the Odometry sensors involved in the fuzed solution.,
- * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through
+ * sol_in[N].flags in a MSG_SOLN_META.
  */
 export interface OdoInputType {
     flags: number;
@@ -4647,7 +4487,7 @@ const typeMap: any = {
         { json: "rf_gain", js: "rf_gain", typ: a(0) },
     ], "any"),
     "MsgFwd": o([
-        { json: "fwd_payload", js: "fwd_payload", typ: "" },
+        { json: "fwd_payload", js: "fwd_payload", typ: a(0) },
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),

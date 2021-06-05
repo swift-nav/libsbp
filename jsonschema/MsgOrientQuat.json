@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgOrientQuat",
   "title":"MsgOrientQuat",
-  "description":"This message reports the quaternion vector describing the vehicle body frame's orientation,\nwith respect to a local-level NED frame. The components of the vector should sum to a unit,\nvector assuming that the LSB of each component as a value of 2^-31. This message will only,\nbe available in future INS versions of Swift Products and is not produced by Piksi Multi ,\nor Duro.\n",
+  "description":"This message reports the quaternion vector describing the vehicle body frame's orientation with respect to a local-level NED frame. The components of the vector should sum to a unit vector assuming that the LSB of each component as a value of 2^-31. This message will only be available in future INS versions of Swift Products and is not produced by Piksi Multi or Duro.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

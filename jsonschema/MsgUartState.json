@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgUartState",
   "title":"MsgUartState",
-  "description":"The UART message reports data latency and throughput of the UART,\nchannels providing SBP I/O. On the default Piksi configuration,,\nUARTs A and B are used for telemetry radios, but can also be,\nhost access ports for embedded hosts, or other interfaces in,\nfuture. The reported percentage values must be normalized.,\nObservations latency and period can be used to assess the,\nhealth of the differential corrections link. Latency provides,\nthe timeliness of received base observations while the,\nperiod indicates their likelihood of transmission.\n",
+  "description":"The UART message reports data latency and throughput of the UART channels providing SBP I/O. On the default Piksi configuration, UARTs A and B are used for telemetry radios, but can also be host access ports for embedded hosts, or other interfaces in future. The reported percentage values must be normalized. Observations latency and period can be used to assess the health of the differential corrections link. Latency provides the timeliness of received base observations while the period indicates their likelihood of transmission.\n",
   "type": "object",
   "properties": {
     "uart_a": {"$ref": "UARTChannel.json"},

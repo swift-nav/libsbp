@@ -27,9 +27,7 @@ public class GPSTime extends SBPStruct {
     /** Milliseconds since start of GPS week */
     public long tow;
     
-    /** Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
- */
+    /** Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) */
     public int ns_residual;
     
     /** GPS week number */

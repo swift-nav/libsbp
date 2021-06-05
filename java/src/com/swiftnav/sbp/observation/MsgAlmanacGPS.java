@@ -31,8 +31,8 @@ import org.json.JSONArray;
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces
- * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details. */
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+ * GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details. */
 
 public class MsgAlmanacGPS extends SBPMessage {
     public static final int TYPE = 0x0072;

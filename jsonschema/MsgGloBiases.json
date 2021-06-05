@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgGloBiases",
   "title":"MsgGloBiases",
-  "description":"The GLONASS L1/L2 Code-Phase biases allows to perform,\nGPS+GLONASS integer ambiguity resolution for baselines,\nwith mixed receiver types (e.g. receiver of different,\nmanufacturers)\n",
+  "description":"The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer ambiguity resolution for baselines with mixed receiver types (e.g. receiver of different manufacturers).\n",
   "type": "object",
   "properties": {
     "mask": {"type": "integer"},

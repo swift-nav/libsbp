@@ -28,11 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline solution in Earth Centered
- * Earth Fixed (ECEF) coordinates. This baseline is the relative
- * vector distance from the base station to the rover receiver. The
- * full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). */
+ * This message reports the baseline solution in Earth Centered Earth Fixed
+ * (ECEF) coordinates. This baseline is the relative vector distance from the
+ * base station to the rover receiver. The full GPS time is given by the
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow). */
 
 public class MsgBaselineECEF extends SBPMessage {
     public static final int TYPE = 0x020B;

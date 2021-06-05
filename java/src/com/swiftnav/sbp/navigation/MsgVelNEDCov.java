@@ -30,9 +30,9 @@ import org.json.JSONArray;
  *
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
- * tangent plane centered at the current position. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
- * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * tangent plane centered at the current position. The full GPS time is given
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
+ * message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix. */
 
 public class MsgVelNEDCov extends SBPMessage {

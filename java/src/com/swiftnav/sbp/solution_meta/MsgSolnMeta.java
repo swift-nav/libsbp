@@ -28,12 +28,15 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
- * It focuses primarly, but not only, on GNSS metadata.
- * Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating
- * whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity)
- * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
- * complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM. */
+ * This message contains all metadata about the sensors received and/or used
+ * in computing the sensorfusion solution. It focuses primarly, but not only,
+ * on GNSS metadata. Regarding the age of the last received valid GNSS
+ * solution, the highest two bits are time status, indicating whether age gnss
+ * can or can not be used to retrieve time of measurement (noted TOM, also
+ * known as time of validity) If it can, substract 'age gnss' from 'tow' in
+ * navigation messages to get TOM. Can be used before alignment is complete in
+ * the Fusion Engine, when output solution is the last received valid GNSS
+ * solution and its tow is not a TOM. */
 
 public class MsgSolnMeta extends SBPMessage {
     public static final int TYPE = 0xFF0E;
@@ -42,22 +45,30 @@ public class MsgSolnMeta extends SBPMessage {
     /** GPS time of week rounded to the nearest millisecond */
     public long tow;
     
-    /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Position Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int pdop;
     
-    /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Horizontal Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int hdop;
     
-    /** Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Vertical Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int vdop;
     
-    /** Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) */
+    /** Age of corrections as per last available AGE_CORRECTIONS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int age_corrections;
     
     /** Age and Time Status of the last received valid GNSS solution. */
     public long age_gnss;
     
-    /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+    /** Array of Metadata describing the sensors potentially involved in the
+      * solution. Each element in the array represents a single sensor type
+      * and consists of flags containing (meta)data pertaining to that
+      * specific single sensor. Refer to each (XX)InputType descriptor in the
+      * present doc. */
     public SolutionInputType[] sol_in;
     
 

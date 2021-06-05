@@ -11,8 +11,8 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Standardized Metadata messages for Fuzed Solution from Swift Navigation
--- devices.\>
+-- \< Standardized Metadata messages for Fuzed Solution from Swift Navigation
+-- devices. \>
 
 module SwiftNav.SBP.SolutionMeta
   ( module SwiftNav.SBP.SolutionMeta
@@ -39,11 +39,12 @@ import SwiftNav.SBP.Types
 -- | SolutionInputType.
 --
 -- Metadata describing which sensors were involved in the solution. The
--- structure is fixed no matter what the actual sensor type is. The sensor_type
--- field tells you which sensor we are talking about. It also tells you whether
--- the sensor data was actually used or not. The flags field, always a u8,
--- contains the sensor-specific data. The content of flags, for each sensor
--- type, is described in the relevant structures in this section.
+-- structure is fixed no matter what the actual sensor type is. The
+-- sensor_type field tells you which sensor we are talking about. It also
+-- tells you whether the sensor data was actually used or not. The flags
+-- field, always a u8, contains the sensor-specific data. The content of
+-- flags, for each sensor type, is described in the relevant structures in
+-- this section.
 data SolutionInputType = SolutionInputType
   { _solutionInputType_sensor_type :: !Word8
     -- ^ The type of sensor
@@ -69,8 +70,10 @@ msgSolnMetaDepA = 0xFF0F
 
 -- | SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
 --
--- This message contains all metadata about the sensors received and/or used in
--- computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
+-- Deprecated.
+--
+-- This message contains all metadata about the sensors received and/or used
+-- in computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
 -- metadata.
 data MsgSolnMetaDepA = MsgSolnMetaDepA
   { _msgSolnMetaDepA_pdop                 :: !Word16
@@ -85,8 +88,8 @@ data MsgSolnMetaDepA = MsgSolnMetaDepA
   , _msgSolnMetaDepA_n_sats               :: !Word8
     -- ^ Number of satellites as per last available solution from PVT engine
   , _msgSolnMetaDepA_age_corrections      :: !Word16
-    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT engine
-    -- (0xFFFF indicates invalid)
+    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMetaDepA_alignment_status     :: !Word8
     -- ^ State of alignment and the status and receipt of the alignment inputs
   , _msgSolnMetaDepA_last_used_gnss_pos_tow :: !Word32
@@ -134,15 +137,15 @@ msgSolnMeta = 0xFF0E
 
 -- | SBP class for message MSG_SOLN_META (0xFF0E).
 --
--- This message contains all metadata about the sensors received and/or used in
--- computing the sensorfusion solution. It focuses primarly, but not only, on
--- GNSS metadata. Regarding the age of the last received valid GNSS solution,
--- the highest two bits are time status, indicating whether age gnss can or can
--- not be used to retrieve time of measurement (noted TOM, also known as time
--- of validity) If it can, substract 'age gnss' from 'tow' in navigation
--- messages to get TOM. Can be used before alignment is complete in the Fusion
--- Engine, when output solution is the last received valid GNSS solution and
--- its tow is not a TOM.
+-- This message contains all metadata about the sensors received and/or used
+-- in computing the sensorfusion solution. It focuses primarly, but not only,
+-- on GNSS metadata. Regarding the age of the last received valid GNSS
+-- solution, the highest two bits are time status, indicating whether age gnss
+-- can or can not be used to retrieve time of measurement (noted TOM, also
+-- known as time of validity) If it can, substract 'age gnss' from 'tow' in
+-- navigation messages to get TOM. Can be used before alignment is complete in
+-- the Fusion Engine, when output solution is the last received valid GNSS
+-- solution and its tow is not a TOM.
 data MsgSolnMeta = MsgSolnMeta
   { _msgSolnMeta_tow           :: !Word32
     -- ^ GPS time of week rounded to the nearest millisecond
@@ -156,8 +159,8 @@ data MsgSolnMeta = MsgSolnMeta
     -- ^ Vertical Dilution of Precision as per last available DOPS from PVT
     -- engine (0xFFFF indicates invalid)
   , _msgSolnMeta_age_corrections :: !Word16
-    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT engine
-    -- (0xFFFF indicates invalid)
+    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMeta_age_gnss      :: !Word32
     -- ^ Age and Time Status of the last received valid GNSS solution.
   , _msgSolnMeta_sol_in        :: ![SolutionInputType]

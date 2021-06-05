@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Reports detection of an external event, the GPS time it occurred,
- * which pin it was and whether it was rising or falling. */
+ * Reports detection of an external event, the GPS time it occurred, which pin
+ * it was and whether it was rising or falling. */
 
 public class MsgExtEvent extends SBPMessage {
     public static final int TYPE = 0x0101;
@@ -41,9 +41,8 @@ public class MsgExtEvent extends SBPMessage {
     /** GPS time of week rounded to the nearest millisecond */
     public long tow;
     
-    /** Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
- */
+    /** Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+      * 500000) */
     public int ns_residual;
     
     /** Flags */

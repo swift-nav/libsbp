@@ -29,15 +29,14 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The UART message reports data latency and throughput of the UART
- * channels providing SBP I/O. On the default Piksi configuration,
- * UARTs A and B are used for telemetry radios, but can also be
- * host access ports for embedded hosts, or other interfaces in
- * future. The reported percentage values must be normalized.
- * Observations latency and period can be used to assess the
- * health of the differential corrections link. Latency provides
- * the timeliness of received base observations while the
- * period indicates their likelihood of transmission. */
+ * The UART message reports data latency and throughput of the UART channels
+ * providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+ * used for telemetry radios, but can also be host access ports for embedded
+ * hosts, or other interfaces in future. The reported percentage values must
+ * be normalized. Observations latency and period can be used to assess the
+ * health of the differential corrections link. Latency provides the
+ * timeliness of received base observations while the period indicates their
+ * likelihood of transmission. */
 
 public class MsgUartState extends SBPMessage {
     public static final int TYPE = 0x001D;

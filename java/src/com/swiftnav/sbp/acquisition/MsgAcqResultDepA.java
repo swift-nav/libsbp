@@ -29,15 +29,14 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Deprecated. */
+ * Deprecated. */
 
 public class MsgAcqResultDepA extends SBPMessage {
     public static final int TYPE = 0x0015;
 
     
-    /** SNR of best point. Currently dimensonless, but will have
-units of dB Hz in the revision of this message.
- */
+    /** SNR of best point. Currently dimensonless, but will have units of dB
+      * Hz in the revision of this message. */
     public float snr;
     
     /** Code phase of best point */
@@ -46,9 +45,8 @@ units of dB Hz in the revision of this message.
     /** Carrier frequency of best point */
     public float cf;
     
-    /** PRN-1 identifier of the satellite signal for which
-acquisition was attempted
- */
+    /** PRN-1 identifier of the satellite signal for which acquisition was
+      * attempted */
     public int prn;
     
 

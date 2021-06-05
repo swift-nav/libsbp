@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrCodeBiases",
   "title":"MsgSsrCodeBiases",
-  "description":"The precise code biases message is to be added,\nto the pseudorange of the corresponding signal,\nto get corrected pseudorange. It is an,\nequivalent to the 1059 / 1065 RTCM message types\n",
+  "description":"The precise code biases message is to be added to the pseudorange of the corresponding signal to get corrected pseudorange. It is an equivalent to the 1059 / 1065 RTCM message types.\n",
   "type": "object",
   "properties": {
     "time": {"$ref": "GpsTimeSec.json"},

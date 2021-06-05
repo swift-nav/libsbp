@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgEphemerisGlo",
   "title":"MsgEphemerisGlo",
-  "description":"The ephemeris message returns a set of satellite orbit,\nparameters that is used to calculate GLO satellite position,,\nvelocity, and clock offset. Please see the GLO ICD 5.1 \"Table 4.5,\nCharacteristics of words of immediate information (ephemeris parameters)\",\nfor more details.\n",
+  "description":"The ephemeris message returns a set of satellite orbit parameters that is used to calculate GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1 \"Table 4.5 Characteristics of words of immediate information (ephemeris parameters)\" for more details.\n",
   "type": "object",
   "properties": {
     "common": {"$ref": "EphemerisCommonContent.json"},

@@ -29,9 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This is an unused legacy message for result reporting from the
- * CW interference channel on the SwiftNAP. This message will be
- * removed in a future release. */
+ * This is an unused legacy message for result reporting from the CW
+ * interference channel on the SwiftNAP. This message will be removed in a
+ * future release. */
 
 public class MsgCwResults extends SBPMessage {
     public static final int TYPE = 0x00C0;

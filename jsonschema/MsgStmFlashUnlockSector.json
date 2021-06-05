@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgStmFlashUnlockSector",
   "title":"MsgStmFlashUnlockSector",
-  "description":"The flash unlock message unlocks a sector of the STM flash,\nmemory. The device replies with a MSG_FLASH_DONE message.\n",
+  "description":"The flash unlock message unlocks a sector of the STM flash memory. The device replies with a MSG_FLASH_DONE message.\n",
   "type": "object",
   "properties": {
     "sector": {"type": "integer"}

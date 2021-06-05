@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgBootloaderHandshakeReq",
   "title":"MsgBootloaderHandshakeReq",
-  "description":"The handshake message request from the host establishes a,\nhandshake between the device bootloader and the host. The,\nresponse from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.\n",
+  "description":"The handshake message request from the host establishes a handshake between the device bootloader and the host. The response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.\n",
   "type": "object",
   "properties": {
   },

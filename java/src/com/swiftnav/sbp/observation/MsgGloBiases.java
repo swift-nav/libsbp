@@ -29,10 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform
- * GPS+GLONASS integer ambiguity resolution for baselines
- * with mixed receiver types (e.g. receiver of different
- * manufacturers) */
+ * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
+ * ambiguity resolution for baselines with mixed receiver types (e.g. receiver
+ * of different manufacturers). */
 
 public class MsgGloBiases extends SBPMessage {
     public static final int TYPE = 0x0075;

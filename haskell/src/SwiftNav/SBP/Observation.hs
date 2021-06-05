@@ -11,9 +11,9 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Satellite observation messages from the device. The SBP sender ID of 0
+-- \< Satellite observation messages from the device. The SBP sender ID of 0
 -- indicates remote observations from a GNSS base station, correction network,
--- or Skylark, Swift's cloud GNSS correction product.\>
+-- or Skylark, Swift's cloud GNSS correction product. \>
 
 module SwiftNav.SBP.Observation
   ( module SwiftNav.SBP.Observation
@@ -89,11 +89,13 @@ $(makeLenses ''Doppler)
 
 -- | PackedObsContent.
 --
--- Pseudorange and carrier phase observation for a satellite being tracked. The
--- observations are interoperable with 3rd party receivers and conform with
--- typical RTCM 3.1 message GPS/GLO observations.  Carrier phase observations
--- are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference
--- signal and no 1/4 cycle adjustments are currently peformed.
+-- Pseudorange and carrier phase observation for a satellite being tracked.
+-- The observations are interoperable with 3rd party receivers and conform
+-- with typical RTCM 3.1 message GPS/GLO observations.
+--
+-- Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+-- or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+-- peformed.
 data PackedObsContent = PackedObsContent
   { _packedObsContent_P   :: !Word32
     -- ^ Pseudorange observation
@@ -112,8 +114,8 @@ data PackedObsContent = PackedObsContent
     -- future use.
   , _packedObsContent_flags :: !Word8
     -- ^ Measurement status flags. A bit field of flags providing the status of
-    -- this observation.  If this field is 0 it means only the Cn0 estimate for
-    -- the signal is valid.
+    -- this observation.  If this field is 0 it means only the Cn0 estimate
+    -- for the signal is valid.
   , _packedObsContent_sid :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   } deriving ( Show, Read, Eq )
@@ -201,14 +203,15 @@ msgObs = 0x004A
 -- The GPS observations message reports all the raw pseudorange and carrier
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
--- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
--- The observations are be interoperable with 3rd party receivers and conform
--- with typical RTCMv3 GNSS observations.
+-- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+-- cycles). The observations are be interoperable with 3rd party receivers and
+-- conform with typical RTCMv3 GNSS observations.
 data MsgObs = MsgObs
   { _msgObs_header :: !ObservationHeader
     -- ^ Header of a GPS observation message
   , _msgObs_obs  :: ![PackedObsContent]
-    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+    -- ^ Pseudorange and carrier phase observation for a satellite being
+    -- tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObs where
@@ -306,8 +309,10 @@ data EphemerisCommonContent = EphemerisCommonContent
   , _ephemerisCommonContent_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
   , _ephemerisCommonContent_health_bits :: !Word8
-    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    -- ^ Satellite health status.
+    -- GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    -- SBAS: 0 = valid, non-zero = invalid
+    -- GLO: 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
 
 instance Binary EphemerisCommonContent where
@@ -343,8 +348,9 @@ data EphemerisCommonContentDepB = EphemerisCommonContentDepB
   , _ephemerisCommonContentDepB_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
   , _ephemerisCommonContentDepB_health_bits :: !Word8
-    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
-    -- 0 = valid, non-zero = invalid
+    -- ^ Satellite health status.
+    -- GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    -- Others: 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
 
 instance Binary EphemerisCommonContentDepB where
@@ -380,8 +386,10 @@ data EphemerisCommonContentDepA = EphemerisCommonContentDepA
   , _ephemerisCommonContentDepA_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
   , _ephemerisCommonContentDepA_health_bits :: !Word8
-    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    -- ^ Satellite health status.
+    -- GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    -- SBAS: 0 = valid, non-zero = invalid
+    -- GLO: 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
 
 instance Binary EphemerisCommonContentDepA where
@@ -411,9 +419,9 @@ msgEphemerisGpsDepE = 0x0081
 -- | SBP class for message MSG_EPHEMERIS_GPS_DEP_E (0x0081).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset. Please
--- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
--- Table 20-III) for more details.
+-- used to calculate GPS satellite position, velocity, and clock offset.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Table 20-III) for more details.
 data MsgEphemerisGpsDepE = MsgEphemerisGpsDepE
   { _msgEphemerisGpsDepE_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
@@ -645,9 +653,9 @@ msgEphemerisGps = 0x008A
 -- | SBP class for message MSG_EPHEMERIS_GPS (0x008A).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset. Please
--- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
--- Table 20-III) for more details.
+-- used to calculate GPS satellite position, velocity, and clock offset.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Table 20-III) for more details.
 data MsgEphemerisGps = MsgEphemerisGps
   { _msgEphemerisGps_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
@@ -879,9 +887,9 @@ msgEphemerisBds = 0x0089
 -- | SBP class for message MSG_EPHEMERIS_BDS (0x0089).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate BDS satellite position, velocity, and clock offset. Please
--- see the BeiDou Navigation Satellite System SIS-ICD Version 2.1, Table 5-9
--- for more details.
+-- used to calculate BDS satellite position, velocity, and clock offset.
+-- Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
+-- Table 5-9 for more details.
 data MsgEphemerisBds = MsgEphemerisBds
   { _msgEphemerisBds_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
@@ -932,11 +940,13 @@ data MsgEphemerisBds = MsgEphemerisBds
   , _msgEphemerisBds_toc    :: !GpsTimeSec
     -- ^ Clock reference
   , _msgEphemerisBds_iode   :: !Word8
-    -- ^ Issue of ephemeris data  Calculated from the navigation data parameter
-    -- t_oe per RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
+    -- ^ Issue of ephemeris data
+    -- Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    -- recommendation: IODE = mod (t_oe / 720, 240)
   , _msgEphemerisBds_iodc   :: !Word16
-    -- ^ Issue of clock data  Calculated from the navigation data parameter t_oe
-    -- per RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
+    -- ^ Issue of clock data
+    -- Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    -- recommendation: IODE = mod (t_oc / 720, 240)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisBds where
@@ -1289,8 +1299,8 @@ msgEphemerisGloDepA = 0x0083
 -- | SBP class for message MSG_EPHEMERIS_GLO_DEP_A (0x0083).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset. Please
--- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- used to calculate GLO satellite position, velocity, and clock offset.
+-- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
 -- information (ephemeris parameters)" for more details.
 data MsgEphemerisGloDepA = MsgEphemerisGloDepA
   { _msgEphemerisGloDepA_common :: !EphemerisCommonContentDepA
@@ -1419,8 +1429,8 @@ msgEphemerisGloDepB = 0x0085
 -- | SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset. Please
--- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- used to calculate GLO satellite position, velocity, and clock offset.
+-- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
 -- information (ephemeris parameters)" for more details.
 data MsgEphemerisGloDepB = MsgEphemerisGloDepB
   { _msgEphemerisGloDepB_common :: !EphemerisCommonContentDepB
@@ -1465,8 +1475,8 @@ msgEphemerisGloDepC = 0x0087
 -- | SBP class for message MSG_EPHEMERIS_GLO_DEP_C (0x0087).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset. Please
--- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- used to calculate GLO satellite position, velocity, and clock offset.
+-- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
 -- information (ephemeris parameters)" for more details.
 data MsgEphemerisGloDepC = MsgEphemerisGloDepC
   { _msgEphemerisGloDepC_common :: !EphemerisCommonContentDepB
@@ -1575,8 +1585,8 @@ msgEphemerisGlo = 0x008B
 -- | SBP class for message MSG_EPHEMERIS_GLO (0x008B).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset. Please
--- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- used to calculate GLO satellite position, velocity, and clock offset.
+-- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
 -- information (ephemeris parameters)" for more details.
 data MsgEphemerisGlo = MsgEphemerisGlo
   { _msgEphemerisGlo_common :: !EphemerisCommonContent
@@ -1633,9 +1643,9 @@ msgEphemerisDepD = 0x0080
 -- | SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset. Please
--- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
--- Table 20-III) for more details.
+-- used to calculate GPS satellite position, velocity, and clock offset.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Table 20-III) for more details.
 data MsgEphemerisDepD = MsgEphemerisDepD
   { _msgEphemerisDepD_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
@@ -2033,9 +2043,9 @@ msgEphemerisDepC = 0x0047
 -- | SBP class for message MSG_EPHEMERIS_DEP_C (0x0047).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset. Please
--- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
--- Table 20-III) for more details.
+-- used to calculate GPS satellite position, velocity, and clock offset.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Table 20-III) for more details.
 data MsgEphemerisDepC = MsgEphemerisDepC
   { _msgEphemerisDepC_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
@@ -2296,9 +2306,9 @@ $(makeLenses ''PackedObsContentDepB)
 
 -- | PackedObsContentDepC.
 --
--- Pseudorange and carrier phase observation for a satellite being tracked. The
--- observations are be interoperable with 3rd party receivers and conform with
--- typical RTCMv3 GNSS observations.
+-- Pseudorange and carrier phase observation for a satellite being tracked.
+-- The observations are be interoperable with 3rd party receivers and conform
+-- with typical RTCMv3 GNSS observations.
 data PackedObsContentDepC = PackedObsContentDepC
   { _packedObsContentDepC_P  :: !Word32
     -- ^ Pseudorange observation
@@ -2343,7 +2353,8 @@ data MsgObsDepA = MsgObsDepA
   { _msgObsDepA_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
   , _msgObsDepA_obs  :: ![PackedObsContentDepA]
-    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+    -- ^ Pseudorange and carrier phase observation for a satellite being
+    -- tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObsDepA where
@@ -2373,7 +2384,8 @@ data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
   , _msgObsDepB_obs  :: ![PackedObsContentDepB]
-    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+    -- ^ Pseudorange and carrier phase observation for a satellite being
+    -- tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObsDepB where
@@ -2398,14 +2410,15 @@ msgObsDepC = 0x0049
 -- The GPS observations message reports all the raw pseudorange and carrier
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
--- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
--- The observations are interoperable with 3rd party receivers and conform with
--- typical RTCMv3 GNSS observations.
+-- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+-- cycles). The observations are interoperable with 3rd party receivers and
+-- conform with typical RTCMv3 GNSS observations.
 data MsgObsDepC = MsgObsDepC
   { _msgObsDepC_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
   , _msgObsDepC_obs  :: ![PackedObsContentDepC]
-    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+    -- ^ Pseudorange and carrier phase observation for a satellite being
+    -- tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObsDepC where
@@ -2608,8 +2621,8 @@ data MsgGroupDelayDepA = MsgGroupDelayDepA
   , _msgGroupDelayDepA_prn    :: !Word8
     -- ^ Satellite number
   , _msgGroupDelayDepA_valid  :: !Word8
-    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    -- etc. 1 = value is valid, 0 = value is not valid.
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd
+    -- validity etc. 1 = value is valid, 0 = value is not valid.
   , _msgGroupDelayDepA_tgd    :: !Int16
   , _msgGroupDelayDepA_isc_l1ca :: !Int16
   , _msgGroupDelayDepA_isc_l2c :: !Int16
@@ -2649,8 +2662,8 @@ data MsgGroupDelayDepB = MsgGroupDelayDepB
   , _msgGroupDelayDepB_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
   , _msgGroupDelayDepB_valid  :: !Word8
-    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    -- etc. 1 = value is valid, 0 = value is not valid.
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd
+    -- validity etc. 1 = value is valid, 0 = value is not valid.
   , _msgGroupDelayDepB_tgd    :: !Int16
   , _msgGroupDelayDepB_isc_l1ca :: !Int16
   , _msgGroupDelayDepB_isc_l2c :: !Int16
@@ -2690,8 +2703,8 @@ data MsgGroupDelay = MsgGroupDelay
   , _msgGroupDelay_sid    :: !GnssSignal
     -- ^ GNSS signal identifier
   , _msgGroupDelay_valid  :: !Word8
-    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    -- etc. 1 = value is valid, 0 = value is not valid.
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd
+    -- validity etc. 1 = value is valid, 0 = value is not valid.
   , _msgGroupDelay_tgd    :: !Int16
   , _msgGroupDelay_isc_l1ca :: !Int16
   , _msgGroupDelay_isc_l2c :: !Int16
@@ -2731,16 +2744,21 @@ data AlmanacCommonContent = AlmanacCommonContent
   , _almanacCommonContent_valid      :: !Word8
     -- ^ Status of almanac, 1 = valid, 0 = invalid
   , _almanacCommonContent_health_bits :: !Word8
-    -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    -- Health of SV Signal     Components. Satellite health status for GLO:
-    -- See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    -- that is transmitted within     non-immediate data and indicates overall
-    -- constellation status     at the moment of almanac uploading.     '0'
-    -- indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    -- is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    -- operational     and suitable for navigation.
+    -- ^ Satellite health status for GPS:
+    --   - bits 5-7: NAV data health status. See IS-GPS-200H
+    --     Table 20-VII: NAV Data Health Indications.
+    --   - bits 0-4: Signal health status. See IS-GPS-200H
+    --     Table 20-VIII. Codes for Health of SV Signal
+    --     Components.
+    -- Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+    -- details):
+    --   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    --     non-immediate data and indicates overall constellation status
+    --     at the moment of almanac uploading.
+    --     '0' indicates malfunction of n-satellite.
+    --     '1' indicates that n-satellite is operational.
+    --   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    --     and suitable for navigation.
   } deriving ( Show, Read, Eq )
 
 instance Binary AlmanacCommonContent where
@@ -2776,16 +2794,21 @@ data AlmanacCommonContentDep = AlmanacCommonContentDep
   , _almanacCommonContentDep_valid      :: !Word8
     -- ^ Status of almanac, 1 = valid, 0 = invalid
   , _almanacCommonContentDep_health_bits :: !Word8
-    -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    -- Health of SV Signal     Components. Satellite health status for GLO:
-    -- See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    -- that is transmitted within     non-immediate data and indicates overall
-    -- constellation status     at the moment of almanac uploading.     '0'
-    -- indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    -- is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    -- operational     and suitable for navigation.
+    -- ^ Satellite health status for GPS:
+    --   - bits 5-7: NAV data health status. See IS-GPS-200H
+    --     Table 20-VII: NAV Data Health Indications.
+    --   - bits 0-4: Signal health status. See IS-GPS-200H
+    --     Table 20-VIII. Codes for Health of SV Signal
+    --     Components.
+    -- Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+    -- details):
+    --   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    --     non-immediate data and indicates overall constellation status
+    --     at the moment of almanac uploading.
+    --     '0' indicates malfunction of n-satellite.
+    --     '1' indicates that n-satellite is operational.
+    --   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    --     and suitable for navigation.
   } deriving ( Show, Read, Eq )
 
 instance Binary AlmanacCommonContentDep where
@@ -3050,7 +3073,7 @@ msgGloBiases = 0x0075
 --
 -- The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
 -- ambiguity resolution for baselines with mixed receiver types (e.g. receiver
--- of different manufacturers)
+-- of different manufacturers).
 data MsgGloBiases = MsgGloBiases
   { _msgGloBiases_mask    :: !Word8
     -- ^ GLONASS FDMA signals mask
@@ -3140,7 +3163,7 @@ msgOsr = 0x0640
 
 -- | SBP class for message MSG_OSR (0x0640).
 --
--- The OSR message contains network corrections in an observation-like format
+-- The OSR message contains network corrections in an observation-like format.
 data MsgOsr = MsgOsr
   { _msgOsr_header :: !ObservationHeader
     -- ^ Header of a GPS observation message

@@ -12,7 +12,6 @@
 
 """
 Logging and debugging messages from the device.
-
 """
 
 import json
@@ -35,10 +34,9 @@ class MsgLog(SBP):
   of its fields.
 
   
-  This message contains a human-readable payload string from the
-device containing errors, warnings and informational messages at
-ERROR, WARNING, DEBUG, INFO logging levels.
-
+  This message contains a human-readable payload string from the device
+  containing errors, warnings and informational messages at ERROR, WARNING,
+  DEBUG, INFO logging levels.
 
   Parameters
   ----------
@@ -132,14 +130,14 @@ class MsgFwd(SBP):
   of its fields.
 
   
-  This message provides the ability to forward messages over SBP.  This may take the form
-of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
-another protocol with SBP.
+  This message provides the ability to forward messages over SBP.  This may
+  take the form of wrapping up SBP messages received by Piksi for logging
+  purposes or wrapping another protocol with SBP.
 
-The source identifier indicates from what interface a forwarded stream derived.
-The protocol identifier identifies what the expected protocol the forwarded msg contains.
-Protocol 0 represents SBP and the remaining values are implementation defined.
-
+  The source identifier indicates from what interface a forwarded stream
+  derived. The protocol identifier identifies what the expected protocol the
+  forwarded msg contains. Protocol 0 represents SBP and the remaining values
+  are implementation defined.
 
   Parameters
   ----------

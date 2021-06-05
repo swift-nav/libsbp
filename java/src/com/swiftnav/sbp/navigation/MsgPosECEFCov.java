@@ -28,14 +28,13 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The position solution message reports absolute Earth Centered
- * Earth Fixed (ECEF) coordinates and the status (single point vs
- * pseudo-absolute RTK) of the position solution. The message also
- * reports the upper triangular portion of the 3x3 covariance matrix.
- * If the receiver knows the surveyed position of the base station and has
- * an RTK solution, this reports a pseudo-absolute position
- * solution using the base station position and the rover's RTK
- * baseline vector. The full GPS time is given by the preceding
+ * The position solution message reports absolute Earth Centered Earth Fixed
+ * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+ * the position solution. The message also reports the upper triangular
+ * portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+ * position of the base station and has an RTK solution, this reports a
+ * pseudo-absolute position solution using the base station position and the
+ * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow). */
 
 public class MsgPosECEFCov extends SBPMessage {

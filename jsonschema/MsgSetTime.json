@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSetTime",
   "title":"MsgSetTime",
-  "description":"This message sets up timing functionality using a coarse GPS,\ntime estimate sent by the host.\n",
+  "description":"This message sets up timing functionality using a coarse GPS time estimate sent by the host.\n",
   "type": "object",
   "properties": {
   },

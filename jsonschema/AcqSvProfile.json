@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#AcqSvProfile",
   "title":"AcqSvProfile",
-  "description":"Profile for a specific SV for debugging purposes,\nThe message describes SV profile during acquisition time.,\nThe message is used to debug and measure the performance.\n",
+  "description":"Profile for a specific SV for debugging purposes. The message describes SV profile during acquisition time. The message is used to debug and measure the performance.\n",
   "type": "object",
   "properties": {
     "job_type": {"type": "integer"},

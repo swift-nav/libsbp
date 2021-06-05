@@ -13,7 +13,6 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Logging and debugging messages from the device.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -28,13 +27,14 @@ use crate::SbpString;
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
-/// This message provides the ability to forward messages over SBP.  This may take the form
-/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
-/// another protocol with SBP.
+/// This message provides the ability to forward messages over SBP.  This may
+/// take the form of wrapping up SBP messages received by Piksi for logging
+/// purposes or wrapping another protocol with SBP.
 ///
-/// The source identifier indicates from what interface a forwarded stream derived.
-/// The protocol identifier identifies what the expected protocol the forwarded msg contains.
-/// Protocol 0 represents SBP and the remaining values are implementation defined.
+/// The source identifier indicates from what interface a forwarded stream
+/// derived. The protocol identifier identifies what the expected protocol the
+/// forwarded msg contains. Protocol 0 represents SBP and the remaining values
+/// are implementation defined.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -108,9 +108,9 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 
 /// Plaintext logging messages with levels
 ///
-/// This message contains a human-readable payload string from the
-/// device containing errors, warnings and informational messages at
-/// ERROR, WARNING, DEBUG, INFO logging levels.
+/// This message contains a human-readable payload string from the device
+/// containing errors, warnings and informational messages at ERROR, WARNING,
+/// DEBUG, INFO logging levels.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

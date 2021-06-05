@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgResetFilters",
   "title":"MsgResetFilters",
-  "description":"This message resets either the DGNSS Kalman filters or Integer,\nAmbiguity Resolution (IAR) process.\n",
+  "description":"This message resets either the DGNSS Kalman filters or Integer Ambiguity Resolution (IAR) process.\n",
   "type": "object",
   "properties": {
     "filter": {"type": "integer"}

@@ -11,10 +11,9 @@
 
 
 """
-System health, configuration, and diagnostic messages specific to
-the Piksi L1 receiver, including a variety of legacy messages that
-may no longer be used.
-
+System health, configuration, and diagnostic messages specific to the Piksi
+L1 receiver, including a variety of legacy messages that may no longer be
+used.
 """
 
 import json
@@ -32,10 +31,8 @@ from sbp.gnss import CarrierPhase, GnssSignal, GnssSignalDep, GPSTime, GPSTime, 
 class UARTChannel(object):
   """UARTChannel.
   
-  Throughput, utilization, and error counts on the RX/TX buffers
-of this UART channel. The reported percentage values must
-be normalized.
-
+  Throughput, utilization, and error counts on the RX/TX buffers of this UART
+  channel. The reported percentage values must be normalized.
   
   Parameters
   ----------
@@ -48,13 +45,9 @@ be normalized.
   io_error_count : int
     UART IO error count
   tx_buffer_level : int
-    UART transmit buffer percentage utilization (ranges from
-0 to 255)
-
+    UART transmit buffer percentage utilization (ranges from 0 to 255)
   rx_buffer_level : int
-    UART receive buffer percentage utilization (ranges from
-0 to 255)
-
+    UART receive buffer percentage utilization (ranges from 0 to 255)
 
   """
   _parser = construct.Struct(
@@ -95,13 +88,11 @@ be normalized.
 class Period(object):
   """Period.
   
-  Statistics on the period of observations received from the base
-station. As complete observation sets are received, their time
-of reception is compared with the prior set''s time of reception.
-This measurement provides a proxy for link quality as incomplete
-or missing sets will increase the period.  Long periods
-can cause momentary RTK solution outages.
-
+  Statistics on the period of observations received from the base station. As
+  complete observation sets are received, their time of reception is compared
+  with the prior set''s time of reception. This measurement provides a proxy
+  for link quality as incomplete or missing sets will increase the period.
+  Long periods can cause momentary RTK solution outages.
   
   Parameters
   ----------
@@ -147,12 +138,10 @@ can cause momentary RTK solution outages.
 class Latency(object):
   """Latency.
   
-  Statistics on the latency of observations received from the base
-station. As observation packets are received their GPS time is
-compared to the current GPS time calculated locally by the
-receiver to give a precise measurement of the end-to-end
-communication latency in the system.
-
+  Statistics on the latency of observations received from the base station. As
+  observation packets are received their GPS time is compared to the current
+  GPS time calculated locally by the receiver to give a precise measurement of
+  the end-to-end communication latency in the system.
   
   Parameters
   ----------
@@ -198,13 +187,11 @@ communication latency in the system.
 class NetworkUsage(object):
   """NetworkUsage.
   
-  The bandwidth usage for each interface can be reported
-within this struct and utilize multiple fields to fully
-specify the type of traffic that is being tracked. As
-either the interval of collection or the collection time
-may vary, both a timestamp and period field is provided,
-though may not necessarily be populated with a value. 
-
+  The bandwidth usage for each interface can be reported within this struct
+  and utilize multiple fields to fully specify the type of traffic that is
+  being tracked. As either the interval of collection or the collection time
+  may vary, both a timestamp and period field is provided, though may not
+  necessarily be populated with a value.
   
   Parameters
   ----------
@@ -261,9 +248,8 @@ class MsgAlmanac(SBP):
   of its fields.
 
   
-  This is a legacy message for sending and loading a satellite
-alamanac onto the Piksi's flash memory from the host.
-
+  This is a legacy message for sending and loading a satellite alamanac onto
+  the Piksi's flash memory from the host.
 
   """
   __slots__ = []
@@ -307,9 +293,8 @@ class MsgSetTime(SBP):
   of its fields.
 
   
-  This message sets up timing functionality using a coarse GPS
-time estimate sent by the host.
-
+  This message sets up timing functionality using a coarse GPS time estimate
+  sent by the host.
 
   """
   __slots__ = []
@@ -353,9 +338,7 @@ class MsgReset(SBP):
   of its fields.
 
   
-  This message from the host resets the Piksi back into the
-bootloader.
-
+  This message from the host resets the Piksi back into the bootloader.
 
   Parameters
   ----------
@@ -444,9 +427,7 @@ class MsgResetDep(SBP):
   of its fields.
 
   
-  This message from the host resets the Piksi back into the
-bootloader.
-
+  This message from the host resets the Piksi back into the bootloader.
 
   """
   __slots__ = []
@@ -490,10 +471,9 @@ class MsgCwResults(SBP):
   of its fields.
 
   
-  This is an unused legacy message for result reporting from the
-CW interference channel on the SwiftNAP. This message will be
-removed in a future release.
-
+  This is an unused legacy message for result reporting from the CW
+  interference channel on the SwiftNAP. This message will be removed in a
+  future release.
 
   """
   __slots__ = []
@@ -537,10 +517,9 @@ class MsgCwStart(SBP):
   of its fields.
 
   
-  This is an unused legacy message from the host for starting
-the CW interference channel on the SwiftNAP. This message will
-be removed in a future release.
-
+  This is an unused legacy message from the host for starting the CW
+  interference channel on the SwiftNAP. This message will be removed in a
+  future release.
 
   """
   __slots__ = []
@@ -584,9 +563,8 @@ class MsgResetFilters(SBP):
   of its fields.
 
   
-  This message resets either the DGNSS Kalman filters or Integer
-Ambiguity Resolution (IAR) process.
-
+  This message resets either the DGNSS Kalman filters or Integer Ambiguity
+  Resolution (IAR) process.
 
   Parameters
   ----------
@@ -719,10 +697,9 @@ class MsgThreadState(SBP):
   of its fields.
 
   
-  The thread usage message from the device reports real-time
-operating system (RTOS) thread usage statistics for the named
-thread. The reported percentage values must be normalized.
-
+  The thread usage message from the device reports real-time operating system
+  (RTOS) thread usage statistics for the named thread. The reported percentage
+  values must be normalized.
 
   Parameters
   ----------
@@ -731,9 +708,8 @@ thread. The reported percentage values must be normalized.
   name : string
     Thread name (NULL terminated)
   cpu : int
-    Percentage cpu use for this thread. Values range from 0
-- 1000 and needs to be renormalized to 100
-
+    Percentage cpu use for this thread. Values range from 0 - 1000 and needs
+    to be renormalized to 100
   stack_free : int
     Free stack space for this thread
   sender : int
@@ -823,16 +799,14 @@ class MsgUartState(SBP):
   of its fields.
 
   
-  The UART message reports data latency and throughput of the UART
-channels providing SBP I/O. On the default Piksi configuration,
-UARTs A and B are used for telemetry radios, but can also be
-host access ports for embedded hosts, or other interfaces in
-future. The reported percentage values must be normalized.
-Observations latency and period can be used to assess the
-health of the differential corrections link. Latency provides
-the timeliness of received base observations while the
-period indicates their likelihood of transmission.
-
+  The UART message reports data latency and throughput of the UART channels
+  providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+  used for telemetry radios, but can also be host access ports for embedded
+  hosts, or other interfaces in future. The reported percentage values must be
+  normalized. Observations latency and period can be used to assess the health
+  of the differential corrections link. Latency provides the timeliness of
+  received base observations while the period indicates their likelihood of
+  transmission.
 
   Parameters
   ----------
@@ -1045,11 +1019,9 @@ class MsgIarState(SBP):
   of its fields.
 
   
-  This message reports the state of the Integer Ambiguity
-Resolution (IAR) process, which resolves unknown integer
-ambiguities from double-differenced carrier-phase measurements
-from satellite observations.
-
+  This message reports the state of the Integer Ambiguity Resolution (IAR)
+  process, which resolves unknown integer ambiguities from double-differenced
+  carrier-phase measurements from satellite observations.
 
   Parameters
   ----------
@@ -1138,9 +1110,8 @@ class MsgMaskSatellite(SBP):
   of its fields.
 
   
-  This message allows setting a mask to prevent a particular satellite
-from being used in various Piksi subsystems.
-
+  This message allows setting a mask to prevent a particular satellite from
+  being used in various Piksi subsystems.
 
   Parameters
   ----------
@@ -1329,9 +1300,8 @@ class MsgDeviceMonitor(SBP):
 
   
   This message contains temperature and voltage level measurements from the
-processor's monitoring system and the RF frontend die temperature if
-available.
-
+  processor's monitoring system and the RF frontend die temperature if
+  available.
 
   Parameters
   ----------
@@ -1440,10 +1410,8 @@ class MsgCommandReq(SBP):
   of its fields.
 
   
-  Request the recipient to execute an command.
-Output will be sent in MSG_LOG messages, and the exit
-code will be returned with MSG_COMMAND_RESP.
-
+  Request the recipient to execute an command. Output will be sent in MSG_LOG
+  messages, and the exit code will be returned with MSG_COMMAND_RESP.
 
   Parameters
   ----------
@@ -1537,9 +1505,8 @@ class MsgCommandResp(SBP):
   of its fields.
 
   
-  The response to MSG_COMMAND_REQ with the return code of
-the command.  A return code of zero indicates success.
-
+  The response to MSG_COMMAND_REQ with the return code of the command.  A
+  return code of zero indicates success.
 
   Parameters
   ----------
@@ -1633,11 +1600,9 @@ class MsgCommandOutput(SBP):
   of its fields.
 
   
-  Returns the standard output and standard error of the
-command requested by MSG_COMMAND_REQ.
-The sequence number can be used to filter for filtering
-the correct command.
-
+  Returns the standard output and standard error of the command requested by
+  MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
+  correct command.
 
   Parameters
   ----------
@@ -1731,9 +1696,8 @@ class MsgNetworkStateReq(SBP):
   of its fields.
 
   
-  Request state of Piksi network interfaces.
-Output will be sent in MSG_NETWORK_STATE_RESP messages
-
+  Request state of Piksi network interfaces. Output will be sent in
+  MSG_NETWORK_STATE_RESP messages.
 
   """
   __slots__ = []
@@ -1777,10 +1741,8 @@ class MsgNetworkStateResp(SBP):
   of its fields.
 
   
-  The state of a network interface on the Piksi.
-Data is made to reflect output of ifaddrs struct returned by getifaddrs
-in c.
-
+  The state of a network interface on the Piksi. Data is made to reflect
+  output of ifaddrs struct returned by getifaddrs in c.
 
   Parameters
   ----------
@@ -1904,8 +1866,7 @@ class MsgNetworkBandwidthUsage(SBP):
   of its fields.
 
   
-  The bandwidth usage, a list of usage by interface. 
-
+  The bandwidth usage, a list of usage by interface.
 
   Parameters
   ----------
@@ -1994,10 +1955,9 @@ class MsgCellModemStatus(SBP):
   of its fields.
 
   
-  If a cell modem is present on a piksi device, this message
-will be send periodically to update the host on the status
-of the modem and its various parameters.
-
+  If a cell modem is present on a piksi device, this message will be send
+  periodically to update the host on the status of the modem and its various
+  parameters.
 
   Parameters
   ----------
@@ -2108,19 +2068,14 @@ class MsgSpecanDep(SBP):
     Receiver time of this observation
   freq_ref : float
     Reference frequency of this packet
-
   freq_step : float
     Frequency step of points in this packet
-
   amplitude_ref : float
     Reference amplitude of this packet
-
   amplitude_unit : float
     Amplitude unit value of points in this packet
-
   amplitude_value : array
     Amplitude values (in the above units) of points in this packet
-
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2222,7 +2177,6 @@ class MsgSpecan(SBP):
   
   Spectrum analyzer packet.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -2233,19 +2187,14 @@ class MsgSpecan(SBP):
     Receiver time of this observation
   freq_ref : float
     Reference frequency of this packet
-
   freq_step : float
     Frequency step of points in this packet
-
   amplitude_ref : float
     Reference amplitude of this packet
-
   amplitude_unit : float
     Amplitude unit value of points in this packet
-
   amplitude_value : array
     Amplitude values (in the above units) of points in this packet
-
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2345,13 +2294,13 @@ class MsgFrontEndGain(SBP):
   of its fields.
 
   
-  This message describes the gain of each channel in the receiver frontend. Each 
-gain is encoded as a non-dimensional percentage relative to the maximum range  
-possible for the gain stage of the frontend. By convention, each gain array 
-has 8 entries and the index of the array corresponding to the index of the rf channel 
-in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
-A negative value implies an error for the particular gain stage as reported by the frontend.
-
+  This message describes the gain of each channel in the receiver frontend.
+  Each gain is encoded as a non-dimensional percentage relative to the maximum
+  range possible for the gain stage of the frontend. By convention, each gain
+  array has 8 entries and the index of the array corresponding to the index of
+  the rf channel in the frontend. A gain of 127 percent encodes that rf
+  channel is not present in the hardware. A negative value implies an error
+  for the particular gain stage as reported by the frontend.
 
   Parameters
   ----------

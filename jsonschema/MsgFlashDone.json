@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFlashDone",
   "title":"MsgFlashDone",
-  "description":"This message defines success or failure codes for a variety of,\nflash memory requests from the host to the device. Flash read,\nand write messages, such as MSG_FLASH_READ_REQ, or,\nMSG_FLASH_PROGRAM, may return this message on failure.\n",
+  "description":"This message defines success or failure codes for a variety of flash memory requests from the host to the device. Flash read and write messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on failure.\n",
   "type": "object",
   "properties": {
     "response": {"type": "integer"}

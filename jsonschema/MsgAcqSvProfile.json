@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgAcqSvProfile",
   "title":"MsgAcqSvProfile",
-  "description":"The message describes all SV profiles during acquisition time.,\nThe message is used to debug and measure the performance.\n",
+  "description":"The message describes all SV profiles during acquisition time. The message is used to debug and measure the performance.\n",
   "type": "object",
   "properties": {
     "acq_sv_profile": {"type": "array", "items": {"$ref": "AcqSvProfile.json"}}

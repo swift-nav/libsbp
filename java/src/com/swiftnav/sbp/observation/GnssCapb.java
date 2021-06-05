@@ -44,13 +44,11 @@ public class GnssCapb extends SBPStruct {
     public long glo_l3;
     
     /** SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
- */
+      * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf) */
     public BigInteger sbas_active;
     
     /** SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
- */
+      * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf) */
     public BigInteger sbas_l5;
     
     /** BDS active mask */

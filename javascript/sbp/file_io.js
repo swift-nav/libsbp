@@ -214,7 +214,7 @@ MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string', null]);
  * file at a given offset. Returns a copy of the original MSG_FILEIO_WRITE_RESP
  * message to check integrity of the write. The sequence number in the request will
  * be returned in the response. If message is invalid, a followup MSG_PRINT message
- * will print "Invalid fileio write message". A device will only  process this
+ * will print "Invalid fileio write message". A device will only process this
  * message when it is received from sender ID 0x42.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -281,7 +281,7 @@ MsgFileioWriteResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
  *
- * Requests advice on the optimal configuration for a FileIO  transfer.  Newer
+ * Requests advice on the optimal configuration for a FileIO transfer.  Newer
  * version of FileIO can support greater throughput by supporting a large window of
  * FileIO data that can be in-flight during read or write operations.
  *

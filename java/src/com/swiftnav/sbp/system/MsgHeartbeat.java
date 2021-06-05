@@ -28,16 +28,15 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The heartbeat message is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It also contains status
- * flags that indicate to the host the status of the system and
- * whether it is operating correctly. Currently, the expected
- * heartbeat interval is 1 sec.
- * 
- * The system error flag is used to indicate that an error has
- * occurred in the system. To determine the source of the error,
- * the remaining error flags should be inspected. */
+ * The heartbeat message is sent periodically to inform the host or other
+ * attached devices that the system is running. It is used to monitor system
+ * malfunctions. It also contains status flags that indicate to the host the
+ * status of the system and whether it is operating correctly. Currently, the
+ * expected heartbeat interval is 1 sec.
+ *
+ * The system error flag is used to indicate that an error has occurred in the
+ * system. To determine the source of the error, the remaining error flags
+ * should be inspected. */
 
 public class MsgHeartbeat extends SBPMessage {
     public static final int TYPE = 0xFFFF;

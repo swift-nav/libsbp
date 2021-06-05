@@ -28,13 +28,11 @@ public class STECSatElement extends SBPStruct {
     /** Unique space vehicle identifier */
     public SvId sv_id;
     
-    /** Quality of the STEC data. Encoded following RTCM DF389 specification
-but in units of TECU instead of m.
- */
+    /** Quality of the STEC data. Encoded following RTCM DF389 specification but in
+      * units of TECU instead of m. */
     public int stec_quality_indicator;
     
-    /** Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
- */
+    /** Coefficents of the STEC polynomial in the order of C00, C01, C10, C11 */
     public int[] stec_coeff;
     
 

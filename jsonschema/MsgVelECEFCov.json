@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgVelECEFCov",
   "title":"MsgVelECEFCov",
-  "description":"This message reports the velocity in Earth Centered Earth Fixed,\n(ECEF) coordinates. The full GPS time is given by the preceding,\nMSG_GPS_TIME with the matching time-of-week (tow).\n",
+  "description":"This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

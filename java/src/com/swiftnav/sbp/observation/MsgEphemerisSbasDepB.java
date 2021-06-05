@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This observation message has been deprecated in favor of
- * ephemeris message using floats for size reduction. */
+ * This observation message has been deprecated in favor of ephemeris message
+ * using floats for size reduction. */
 
 public class MsgEphemerisSbasDepB extends SBPMessage {
     public static final int TYPE = 0x0084;

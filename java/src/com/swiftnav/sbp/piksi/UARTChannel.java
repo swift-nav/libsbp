@@ -37,14 +37,10 @@ public class UARTChannel extends SBPStruct {
     /** UART IO error count */
     public int io_error_count;
     
-    /** UART transmit buffer percentage utilization (ranges from
-0 to 255)
- */
+    /** UART transmit buffer percentage utilization (ranges from 0 to 255) */
     public int tx_buffer_level;
     
-    /** UART receive buffer percentage utilization (ranges from
-0 to 255)
- */
+    /** UART receive buffer percentage utilization (ranges from 0 to 255) */
     public int rx_buffer_level;
     
 

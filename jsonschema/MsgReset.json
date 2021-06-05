@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgReset",
   "title":"MsgReset",
-  "description":"This message from the host resets the Piksi back into the,\nbootloader.\n",
+  "description":"This message from the host resets the Piksi back into the bootloader.\n",
   "type": "object",
   "properties": {
     "flags": {"type": "integer"}

@@ -15,9 +15,8 @@
 //! Messages for the bootloading configuration of a Piksi 2.3.1.  This message
 //! group does not apply to Piksi Multi.
 //!
-//! Note that some of these messages share the same message type ID for both the
-//! host request and the device response.
-//!
+//! Note that some of these messages share the same message type ID for both
+//! the host request and the device response.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -96,9 +95,9 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
 
 /// Bootloading handshake request (host => device)
 ///
-/// The handshake message request from the host establishes a
-/// handshake between the device bootloader and the host. The
-/// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
+/// The handshake message request from the host establishes a handshake
+/// between the device bootloader and the host. The response from the device
+/// is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -155,11 +154,10 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 
 /// Bootloading handshake response (host <= device)
 ///
-/// The handshake message response from the device establishes a
-/// handshake between the device bootloader and the host. The
-/// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
-/// payload contains the bootloader version number and the SBP
-/// protocol version number.
+/// The handshake message response from the device establishes a handshake
+/// between the device bootloader and the host. The request from the host is
+/// MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
+/// number and the SBP protocol version number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -292,12 +290,12 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
 
 /// Read FPGA device ID over UART request (host => device)
 ///
-/// The device message from the host reads a unique device
-/// identifier from the SwiftNAP, an FPGA. The host requests the ID
-/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-/// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
-/// device ID in the payload. Note that this ID is tied to the FPGA,
-/// and not related to the Piksi's serial number.
+/// The device message from the host reads a unique device identifier from the
+/// SwiftNAP, an FPGA. The host requests the ID by sending a
+/// MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+/// MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+/// that this ID is tied to the FPGA, and not related to the Piksi's serial
+/// number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -354,12 +352,12 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 
 /// Read FPGA device ID over UART response (host <= device)
 ///
-/// The device message from the host reads a unique device
-/// identifier from the SwiftNAP, an FPGA. The host requests the ID
-/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-/// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
-/// device ID in the payload. Note that this ID is tied to the FPGA,
-/// and not related to the Piksi's serial number.
+/// The device message from the host reads a unique device identifier from the
+/// SwiftNAP, an FPGA. The host requests the ID by sending a
+/// MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+/// MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+/// that this ID is tied to the FPGA, and not related to the Piksi's serial
+/// number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

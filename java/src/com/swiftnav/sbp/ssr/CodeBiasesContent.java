@@ -25,9 +25,7 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class CodeBiasesContent extends SBPStruct {
     
-    /** Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467).
- */
+    /** Signal encoded following RTCM specifications (DF380, DF381, DF382 and DF467). */
     public int code;
     
     /** Code bias value */

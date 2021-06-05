@@ -12,7 +12,6 @@
 
 """
 Messages reserved for use by the user.
-
 """
 
 import json
@@ -35,9 +34,8 @@ class MsgUserData(SBP):
   of its fields.
 
   
-  This message can contain any application specific user data up to a
-maximum length of 255 bytes per message.
-
+  This message can contain any application specific user data up to a maximum
+  length of 255 bytes per message.
 
   Parameters
   ----------

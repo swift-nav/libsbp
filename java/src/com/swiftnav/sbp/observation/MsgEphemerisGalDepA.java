@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This observation message has been deprecated in favor of
- * an ephemeris message with explicit source of NAV data. */
+ * This observation message has been deprecated in favor of an ephemeris
+ * message with explicit source of NAV data. */
 
 public class MsgEphemerisGalDepA extends SBPMessage {
     public static final int TYPE = 0x0095;
@@ -51,16 +51,20 @@ public class MsgEphemerisGalDepA extends SBPMessage {
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public float c_rc;
     
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public float c_uc;
     
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public float c_us;
     
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public float c_ic;
     
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public float c_is;
     
     /** Mean motion difference */

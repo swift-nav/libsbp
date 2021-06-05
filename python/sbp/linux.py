@@ -12,7 +12,6 @@
 
 """
 Linux state monitoring.
-
 """
 
 import json
@@ -35,9 +34,8 @@ class MsgLinuxCpuStateDepA(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest
-consumers of CPU on the system.
-
+  This message indicates the process state of the top 10 heaviest consumers of
+  CPU on the system.
 
   Parameters
   ----------
@@ -146,9 +144,8 @@ class MsgLinuxMemStateDepA(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest
-consumers of memory on the system.
-
+  This message indicates the process state of the top 10 heaviest consumers of
+  memory on the system.
 
   Parameters
   ----------
@@ -258,7 +255,6 @@ class MsgLinuxSysStateDepA(SBP):
 
   
   This presents a summary of CPU and memory utilization.
-
 
   Parameters
   ----------
@@ -374,7 +370,6 @@ class MsgLinuxProcessSocketCounts(SBP):
   
   Top 10 list of processes with high socket counts.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -386,17 +381,13 @@ class MsgLinuxProcessSocketCounts(SBP):
   socket_count : int
     the number of sockets the process is using
   socket_types : int
-    A bitfield indicating the socket types used:
-  0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
-  and 0x8000 (unknown)
-
+    A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
   socket_states : int
-    A bitfield indicating the socket states:
-  0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
-  0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
-  0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
-  and 0x8000 (unknown)
-
+    A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200 (listen),
+    0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
   cmdline : string
     the command line of the process in question
   sender : int
@@ -497,7 +488,6 @@ class MsgLinuxProcessSocketQueues(SBP):
   
   Top 10 list of sockets with deep queues.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -511,21 +501,16 @@ class MsgLinuxProcessSocketQueues(SBP):
   send_queued : int
     the total amount of send data queued for this process
   socket_types : int
-    A bitfield indicating the socket types used:
-  0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
-  and 0x8000 (unknown)
-
+    A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
   socket_states : int
-    A bitfield indicating the socket states:
-  0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
-  0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
-  0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
-  and 0x8000 (unknown)
-
+    A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200 (listen),
+    0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
   address_of_largest : string
-    Address of the largest queue, remote or local depending on the directionality
-of the connection.
-
+    Address of the largest queue, remote or local depending on the
+    directionality of the connection.
   cmdline : string
     the command line of the process in question
   sender : int
@@ -632,7 +617,6 @@ class MsgLinuxSocketUsage(SBP):
   
   Summaries the socket usage across the system.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -642,13 +626,13 @@ class MsgLinuxSocketUsage(SBP):
   max_queue_depth : int
     the max queue depth seen within the reporting period
   socket_state_counts : array
-    A count for each socket type reported in the `socket_types_reported` field,
-the first entry corresponds to the first enabled bit in `types_reported`.
-
+    A count for each socket type reported in the `socket_types_reported`
+    field, the first entry corresponds to the first enabled bit in
+    `types_reported`.
   socket_type_counts : array
-    A count for each socket type reported in the `socket_types_reported` field,
-the first entry corresponds to the first enabled bit in `types_reported`.
-
+    A count for each socket type reported in the `socket_types_reported`
+    field, the first entry corresponds to the first enabled bit in
+    `types_reported`.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -740,7 +724,6 @@ class MsgLinuxProcessFdCount(SBP):
 
   
   Top 10 list of processes with a large number of open file descriptors.
-
 
   Parameters
   ----------
@@ -837,7 +820,7 @@ class MsgLinuxProcessFdCount(SBP):
     
 SBP_MSG_LINUX_PROCESS_FD_SUMMARY = 0x7F07
 class MsgLinuxProcessFdSummary(SBP):
-  """SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
+  r"""SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
 
   You can have MSG_LINUX_PROCESS_FD_SUMMARY inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -846,7 +829,6 @@ class MsgLinuxProcessFdSummary(SBP):
   
   Summary of open file descriptors on the system.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -854,12 +836,11 @@ class MsgLinuxProcessFdSummary(SBP):
   sys_fd_count : int
     count of total FDs open on the system
   most_opened : string
-    A null delimited list of strings which alternates between
-a string representation of the process count and the file
-name whose count it being reported.  That is, in C string
-syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
-of the list being 2 NULL terminators in a row.
-
+    A null delimited list of strings which alternates between a string
+    representation of the process count and the file name whose count it being
+    reported.  That is, in C string syntax
+    "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
+    NULL terminators in a row.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -944,9 +925,8 @@ class MsgLinuxCpuState(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest
-consumers of CPU on the system, including a timestamp.
-
+  This message indicates the process state of the top 10 heaviest consumers of
+  CPU on the system, including a timestamp.
 
   Parameters
   ----------
@@ -1065,9 +1045,8 @@ class MsgLinuxMemState(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest
-consumers of memory on the system, including a timestamp.
-
+  This message indicates the process state of the top 10 heaviest consumers of
+  memory on the system, including a timestamp.
 
   Parameters
   ----------
@@ -1186,8 +1165,8 @@ class MsgLinuxSysState(SBP):
   of its fields.
 
   
-  This presents a summary of CPU and memory utilization, including a timestamp.
-
+  This presents a summary of CPU and memory utilization, including a
+  timestamp.
 
   Parameters
   ----------

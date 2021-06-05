@@ -28,12 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The flash program message programs a set of addresses of either
- * the STM or M25 flash. The device replies with either a
- * MSG_FLASH_DONE message containing the return code FLASH_OK (0)
- * on success, or FLASH_INVALID_LEN (2) if the maximum write size
- * is exceeded. Note that the sector-containing addresses must be
- * erased before addresses can be programmed. */
+ * The flash program message programs a set of addresses of either the STM or
+ * M25 flash. The device replies with either a MSG_FLASH_DONE message
+ * containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN
+ * (2) if the maximum write size is exceeded. Note that the sector-containing
+ * addresses must be erased before addresses can be programmed. */
 
 public class MsgFlashProgram extends SBPMessage {
     public static final int TYPE = 0x00E6;
@@ -45,9 +44,8 @@ public class MsgFlashProgram extends SBPMessage {
     /** Starting address offset to program */
     public int[] addr_start;
     
-    /** Length of set of addresses to program, counting up from
-starting address
- */
+    /** Length of set of addresses to program, counting up from starting
+      * address */
     public int addr_len;
     
     /** Data to program addresses with, with length N=addr_len */

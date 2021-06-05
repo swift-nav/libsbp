@@ -28,9 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the protection levels associated to the given 
- * state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
- * with the matching time-of-week (tow). */
+ * This message reports the protection levels associated to the given state
+ * estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow). */
 
 public class MsgProtectionLevel extends SBPMessage {
     public static final int TYPE = 0x0217;
@@ -54,14 +54,12 @@ public class MsgProtectionLevel extends SBPMessage {
     /** Cross-track position error protection level */
     public int ctpl;
     
-    /** Protection level for the error vector between estimated and 
-true along/cross track velocity vector
- */
+    /** Protection level for the error vector between estimated and true
+      * along/cross track velocity vector */
     public int hvpl;
     
-    /** Protection level for the velocity in vehicle upright direction 
-(different from vertical direction if on a slope)
- */
+    /** Protection level for the velocity in vehicle upright direction
+      * (different from vertical direction if on a slope) */
     public int vvpl;
     
     /** Heading orientation protection level */

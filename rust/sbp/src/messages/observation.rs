@@ -12,7 +12,9 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
+//! Satellite observation messages from the device. The SBP sender ID of 0
+//! indicates remote observations from a GNSS base station, correction
+//! network, or Skylark, Swift's cloud GNSS correction product.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -40,16 +42,20 @@ pub struct AlmanacCommonContent {
     pub fit_interval: u32,
     /// Status of almanac, 1 = valid, 0 = invalid
     pub valid: u8,
-    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    /// Health of SV Signal     Components. Satellite health status for GLO:
-    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    /// that is transmitted within     non-immediate data and indicates overall
-    /// constellation status     at the moment of almanac uploading.     '0'
-    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    /// operational     and suitable for navigation.
+    /// Satellite health status for GPS:
+    ///   - bits 5-7: NAV data health status. See IS-GPS-200H
+    ///     Table 20-VII: NAV Data Health Indications.
+    ///   - bits 0-4: Signal health status. See IS-GPS-200H
+    ///     Table 20-VIII. Codes for Health of SV Signal
+    ///     Components.
+    /// Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+    ///   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    ///     non-immediate data and indicates overall constellation status
+    ///     at the moment of almanac uploading.
+    ///     '0' indicates malfunction of n-satellite.
+    ///     '1' indicates that n-satellite is operational.
+    ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    ///     and suitable for navigation.
     pub health_bits: u8,
 }
 
@@ -122,16 +128,20 @@ pub struct AlmanacCommonContentDep {
     pub fit_interval: u32,
     /// Status of almanac, 1 = valid, 0 = invalid
     pub valid: u8,
-    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    /// Health of SV Signal     Components. Satellite health status for GLO:
-    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    /// that is transmitted within     non-immediate data and indicates overall
-    /// constellation status     at the moment of almanac uploading.     '0'
-    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    /// operational     and suitable for navigation.
+    /// Satellite health status for GPS:
+    ///   - bits 5-7: NAV data health status. See IS-GPS-200H
+    ///     Table 20-VII: NAV Data Health Indications.
+    ///   - bits 0-4: Signal health status. See IS-GPS-200H
+    ///     Table 20-VIII. Codes for Health of SV Signal
+    ///     Components.
+    /// Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+    ///   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    ///     non-immediate data and indicates overall constellation status
+    ///     at the moment of almanac uploading.
+    ///     '0' indicates malfunction of n-satellite.
+    ///     '1' indicates that n-satellite is operational.
+    ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    ///     and suitable for navigation.
     pub health_bits: u8,
 }
 
@@ -190,13 +200,12 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
     }
 }
 
-/// GPS carrier phase measurement.
+/// GPS carrier phase measurement
 ///
-/// Carrier phase measurement in cycles represented as a 40-bit
-/// fixed point number with Q32.8 layout, i.e. 32-bits of whole
-/// cycles and 8-bits of fractional cycles. This has the opposite
-/// sign convention than a typical GPS receiver and the phase has
-/// the opposite sign as the pseudorange.
+/// Carrier phase measurement in cycles represented as a 40-bit fixed point
+/// number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+/// fractional cycles. This has the opposite sign convention than a typical
+/// GPS receiver and the phase has the opposite sign as the pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -251,12 +260,11 @@ impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
     }
 }
 
-/// GNSS doppler measurement.
+/// GNSS doppler measurement
 ///
-/// Doppler measurement in Hz represented as a 24-bit
-/// fixed point number with Q16.8 layout, i.e. 16-bits of whole
-/// doppler and 8-bits of fractional doppler. This doppler is defined
-/// as positive for approaching satellites.
+/// Doppler measurement in Hz represented as a 24-bit fixed point number with
+/// Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
+/// doppler. This doppler is defined as positive for approaching satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -322,8 +330,10 @@ pub struct EphemerisCommonContent {
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// SBAS: 0 = valid, non-zero = invalid
+    /// GLO: 0 = valid, non-zero = invalid
     pub health_bits: u8,
 }
 
@@ -396,8 +406,10 @@ pub struct EphemerisCommonContentDepA {
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// SBAS: 0 = valid, non-zero = invalid
+    /// GLO: 0 = valid, non-zero = invalid
     pub health_bits: u8,
 }
 
@@ -470,8 +482,9 @@ pub struct EphemerisCommonContentDepB {
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
-    /// 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// Others: 0 = valid, non-zero = invalid
     pub health_bits: u8,
 }
 
@@ -857,8 +870,8 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
 /// data is not very precise and is considered valid for up to several months.
-/// Please see the Navstar GPS Space Segment/Navigation user interfaces
-/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -969,8 +982,8 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
 /// data is not very precise and is considered valid for up to several months.
-/// Please see the Navstar GPS Space Segment/Navigation user interfaces
-/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1079,12 +1092,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
 
 /// Base station position in ECEF
 ///
-/// The base station position message is the position reported by
-/// the base station itself in absolute Earth Centered Earth Fixed
-/// coordinates. It is used for pseudo-absolute RTK positioning, and
-/// is required to be a high-accuracy surveyed location of the base
-/// station. Any error here will result in an error in the
-/// pseudo-absolute position output.
+/// The base station position message is the position reported by the base
+/// station itself in absolute Earth Centered Earth Fixed coordinates. It is
+/// used for pseudo-absolute RTK positioning, and is required to be a high-
+/// accuracy surveyed location of the base station. Any error here will result
+/// in an error in the pseudo-absolute position output.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1158,11 +1170,10 @@ impl crate::serialize::SbpSerialize for MsgBasePosECEF {
 
 /// Base station position
 ///
-/// The base station position message is the position reported by
-/// the base station itself. It is used for pseudo-absolute RTK
-/// positioning, and is required to be a high-accuracy surveyed
-/// location of the base station. Any error here will result in an
-/// error in the pseudo-absolute position output.
+/// The base station position message is the position reported by the base
+/// station itself. It is used for pseudo-absolute RTK positioning, and is
+/// required to be a high-accuracy surveyed location of the base station. Any
+/// error here will result in an error in the pseudo-absolute position output.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1236,10 +1247,10 @@ impl crate::serialize::SbpSerialize for MsgBasePosLLH {
 
 /// Satellite broadcast ephemeris for BDS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate BDS satellite position,
-/// velocity, and clock offset. Please see the BeiDou Navigation
-/// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate BDS satellite position, velocity, and clock offset.
+/// Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
+/// Table 5-9 for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1295,11 +1306,13 @@ pub struct MsgEphemerisBds {
     pub af2: f32,
     /// Clock reference
     pub toc: GPSTimeSec,
-    /// Issue of ephemeris data  Calculated from the navigation data parameter
-    /// t_oe per RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
+    /// Issue of ephemeris data
+    /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    /// recommendation: IODE = mod (t_oe / 720, 240)
     pub iode: u8,
-    /// Issue of clock data  Calculated from the navigation data parameter t_oe
-    /// per RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
+    /// Issue of clock data
+    /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    /// recommendation: IODE = mod (t_oc / 720, 240)
     pub iodc: u16,
 }
 
@@ -1815,11 +1828,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
 
 /// Satellite broadcast ephemeris
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2027,11 +2039,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
 
 /// Satellite broadcast ephemeris
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2239,10 +2250,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
 
 /// Satellite broadcast ephemeris for Galileo
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate Galileo satellite position,
-/// velocity, and clock offset. Please see the Signal In Space ICD
-/// OS SIS ICD, Issue 1.3, December 2016 for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate Galileo satellite position, velocity, and clock offset.
+/// Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016
+/// for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2430,8 +2441,8 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGal {
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// an ephemeris message with explicit source of NAV data.
+/// This observation message has been deprecated in favor of an ephemeris
+/// message with explicit source of NAV data.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2614,11 +2625,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2722,11 +2732,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2815,11 +2824,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2908,11 +2916,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3011,8 +3018,8 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3116,11 +3123,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
 
 /// Satellite broadcast ephemeris for GPS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3298,11 +3304,10 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
 
 /// Satellite broadcast ephemeris for GPS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3480,8 +3485,8 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3659,9 +3664,8 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
 
 /// Satellite broadcast ephemeris for QZSS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate QZSS satellite position,
-/// velocity, and clock offset.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate QZSS satellite position, velocity, and clock offset.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4009,8 +4013,8 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4099,10 +4103,9 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
 
 /// GLONASS L1/L2 Code-Phase biases
 ///
-/// The GLONASS L1/L2 Code-Phase biases allows to perform
-/// GPS+GLONASS integer ambiguity resolution for baselines
-/// with mixed receiver types (e.g. receiver of different
-/// manufacturers)
+/// The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
+/// ambiguity resolution for baselines with mixed receiver types (e.g.
+/// receiver of different manufacturers).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4610,13 +4613,12 @@ impl crate::serialize::SbpSerialize for MsgIono {
 
 /// GPS satellite observations
 ///
-/// The GPS observations message reports all the raw pseudorange and
-/// carrier phase observations for the satellites being tracked by
-/// the device. Carrier phase observation here is represented as a
-/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-/// whole cycles and 8-bits of fractional cycles). The observations
-/// are be interoperable with 3rd party receivers and conform
-/// with typical RTCMv3 GNSS observations.
+/// The GPS observations message reports all the raw pseudorange and carrier
+/// phase observations for the satellites being tracked by the device. Carrier
+/// phase observation here is represented as a 40-bit fixed point number with
+/// Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+/// cycles). The observations are be interoperable with 3rd party receivers
+/// and conform with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4786,12 +4788,10 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// observations that are more interoperable. This message
-/// should be used for observations referenced to
-/// a nominal pseudorange which are not interoperable with
-/// most 3rd party GNSS receievers or typical RTCMv3
-/// observations.
+/// This observation message has been deprecated in favor of observations that
+/// are more interoperable. This message should be used for observations
+/// referenced to a nominal pseudorange which are not interoperable with most
+/// 3rd party GNSS receievers or typical RTCMv3 observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4876,13 +4876,12 @@ impl crate::serialize::SbpSerialize for MsgObsDepB {
 
 /// Deprecated
 ///
-/// The GPS observations message reports all the raw pseudorange and
-/// carrier phase observations for the satellites being tracked by
-/// the device. Carrier phase observation here is represented as a
-/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-/// whole cycles and 8-bits of fractional cycles). The observations
-/// are interoperable with 3rd party receivers and conform
-/// with typical RTCMv3 GNSS observations.
+/// The GPS observations message reports all the raw pseudorange and carrier
+/// phase observations for the satellites being tracked by the device. Carrier
+/// phase observation here is represented as a 40-bit fixed point number with
+/// Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+/// cycles). The observations are interoperable with 3rd party receivers and
+/// conform with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4967,7 +4966,8 @@ impl crate::serialize::SbpSerialize for MsgObsDepC {
 
 /// OSR corrections
 ///
-/// The OSR message contains network corrections in an observation-like format
+/// The OSR message contains network corrections in an observation-like
+/// format.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5052,8 +5052,8 @@ impl crate::serialize::SbpSerialize for MsgOsr {
 
 /// Satellite azimuths and elevations
 ///
-/// Azimuth and elevation angles of all the visible satellites
-/// that the device does have ephemeris or almanac for.
+/// Azimuth and elevation angles of all the visible satellites that the device
+/// does have ephemeris or almanac for.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5184,7 +5184,7 @@ impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
     }
 }
 
-/// Header for observation message.
+/// Header for observation message
 ///
 /// Header of a GNSS observation message.
 ///
@@ -5242,7 +5242,7 @@ impl crate::serialize::SbpSerialize for ObservationHeader {
     }
 }
 
-/// Header for observation message.
+/// Header for observation message
 ///
 /// Header of a GPS observation message.
 ///
@@ -5300,15 +5300,15 @@ impl crate::serialize::SbpSerialize for ObservationHeaderDep {
     }
 }
 
-/// GNSS observations for a particular satellite signal.
+/// GNSS observations for a particular satellite signal
 ///
 /// Pseudorange and carrier phase observation for a satellite being tracked.
-/// The observations are interoperable with 3rd party receivers and conform with
-/// typical RTCM 3.1 message GPS/GLO observations.
+/// The observations are interoperable with 3rd party receivers and conform
+/// with typical RTCM 3.1 message GPS/GLO observations.
 ///
 /// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
-/// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-/// peformed.
+/// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
+/// currently peformed.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5469,10 +5469,10 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepA {
     }
 }
 
-/// GPS observations for a particular satellite signal.
+/// GPS observations for a particular satellite signal
 ///
-/// Pseudorange and carrier phase observation for a satellite being
-/// tracked.  Pseudoranges are referenced to a nominal pseudorange.
+/// Pseudorange and carrier phase observation for a satellite being tracked.
+/// Pseudoranges are referenced to a nominal pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5544,11 +5544,11 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepB {
     }
 }
 
-/// GPS observations for a particular satellite signal.
+/// GPS observations for a particular satellite signal
 ///
-/// Pseudorange and carrier phase observation for a satellite being
-/// tracked. The observations are be interoperable with 3rd party
-/// receivers and conform with typical RTCMv3 GNSS observations.
+/// Pseudorange and carrier phase observation for a satellite being tracked.
+/// The observations are be interoperable with 3rd party receivers and conform
+/// with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5620,7 +5620,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepC {
     }
 }
 
-/// Network correction for a particular satellite signal.
+/// Network correction for a particular satellite signal
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
 ///
@@ -5712,7 +5712,7 @@ impl crate::serialize::SbpSerialize for PackedOsrContent {
     }
 }
 
-/// Satellite azimuth and elevation.
+/// Satellite azimuth and elevation
 ///
 /// Satellite azimuth and elevation.
 ///

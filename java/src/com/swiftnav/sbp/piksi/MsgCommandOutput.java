@@ -29,9 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Returns the standard output and standard error of the
- * command requested by MSG_COMMAND_REQ.
- * The sequence number can be used to filter for filtering
+ * Returns the standard output and standard error of the command requested by
+ * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
  * the correct command. */
 
 public class MsgCommandOutput extends SBPMessage {

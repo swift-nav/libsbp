@@ -30,8 +30,8 @@ import org.json.JSONArray;
  * fields.
  *
  * STEC residuals are per space vehicle, troposphere is not.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
+ *
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages. */
 
 public class MsgSsrGriddedCorrection extends SBPMessage {
     public static final int TYPE = 0x05FC;
@@ -40,8 +40,7 @@ public class MsgSsrGriddedCorrection extends SBPMessage {
     /** Header of a gridded correction message */
     public GriddedCorrectionHeader header;
     
-    /** Tropo and STEC residuals for the given grid point.
- */
+    /** Tropo and STEC residuals for the given grid point. */
     public GridElement element;
     
 

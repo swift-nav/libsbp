@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The flash status message writes to the 8-bit M25 flash status
- * register. The device replies with a MSG_FLASH_DONE message. */
+ * The flash status message writes to the 8-bit M25 flash status register. The
+ * device replies with a MSG_FLASH_DONE message. */
 
 public class MsgM25FlashWriteStatus extends SBPMessage {
     public static final int TYPE = 0x00F3;

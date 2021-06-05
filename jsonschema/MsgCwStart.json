@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgCwStart",
   "title":"MsgCwStart",
-  "description":"This is an unused legacy message from the host for starting,\nthe CW interference channel on the SwiftNAP. This message will,\nbe removed in a future release.\n",
+  "description":"This is an unused legacy message from the host for starting the CW interference channel on the SwiftNAP. This message will be removed in a future release.\n",
   "type": "object",
   "properties": {
   },

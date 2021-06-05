@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Deprecated. */
+ * Deprecated. */
 
 public class MsgSpecanDep extends SBPMessage {
     public static final int TYPE = 0x0050;
@@ -41,24 +41,19 @@ public class MsgSpecanDep extends SBPMessage {
     /** Receiver time of this observation */
     public GPSTimeDep t;
     
-    /** Reference frequency of this packet
- */
+    /** Reference frequency of this packet */
     public float freq_ref;
     
-    /** Frequency step of points in this packet
- */
+    /** Frequency step of points in this packet */
     public float freq_step;
     
-    /** Reference amplitude of this packet
- */
+    /** Reference amplitude of this packet */
     public float amplitude_ref;
     
-    /** Amplitude unit value of points in this packet
- */
+    /** Amplitude unit value of points in this packet */
     public float amplitude_unit;
     
-    /** Amplitude values (in the above units) of points in this packet
- */
+    /** Amplitude values (in the above units) of points in this packet */
     public int[] amplitude_value;
     
 

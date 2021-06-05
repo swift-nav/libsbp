@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Satellite code and carrier-phase tracking messages from the device. \>
+-- \< Satellite code and carrier-phase tracking messages from the device. \>
 
 module SwiftNav.SBP.Tracking
   ( module SwiftNav.SBP.Tracking
@@ -70,8 +70,8 @@ data MsgTrackingStateDetailedDepA = MsgTrackingStateDetailedDepA
   , _msgTrackingStateDetailedDepA_doppler_std :: !Word16
     -- ^ Carrier Doppler frequency standard deviation.
   , _msgTrackingStateDetailedDepA_uptime     :: !Word32
-    -- ^ Number of seconds of continuous tracking. Specifies how much time signal
-    -- is in continuous track.
+    -- ^ Number of seconds of continuous tracking. Specifies how much time
+    -- signal is in continuous track.
   , _msgTrackingStateDetailedDepA_clock_offset :: !Int16
     -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
   , _msgTrackingStateDetailedDepA_clock_drift :: !Int16
@@ -179,8 +179,8 @@ data MsgTrackingStateDetailedDep = MsgTrackingStateDetailedDep
   , _msgTrackingStateDetailedDep_doppler_std :: !Word16
     -- ^ Carrier Doppler frequency standard deviation.
   , _msgTrackingStateDetailedDep_uptime     :: !Word32
-    -- ^ Number of seconds of continuous tracking. Specifies how much time signal
-    -- is in continuous track.
+    -- ^ Number of seconds of continuous tracking. Specifies how much time
+    -- signal is in continuous track.
   , _msgTrackingStateDetailedDep_clock_offset :: !Int16
     -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
   , _msgTrackingStateDetailedDep_clock_drift :: !Int16
@@ -312,11 +312,11 @@ $(makeLenses ''MsgTrackingState)
 --
 -- Measurement Engine tracking channel state for a specific satellite signal
 -- and measured signal power. The mesid field for Glonass can either carry the
--- FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28)
+-- FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
 data MeasurementState = MeasurementState
   { _measurementState_mesid :: !GnssSignal
-    -- ^ Measurement Engine GNSS signal being tracked (carries either Glonass FCN
-    -- or SLOT)
+    -- ^ Measurement Engine GNSS signal being tracked (carries either Glonass
+    -- FCN or SLOT)
   , _measurementState_cn0 :: !Word8
     -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
   } deriving ( Show, Read, Eq )

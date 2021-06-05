@@ -29,10 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The precise code biases message is to be added
- * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is an
- * equivalent to the 1059 / 1065 RTCM message types */
+ * The precise code biases message is to be added to the pseudorange of the
+ * corresponding signal to get corrected pseudorange. It is an equivalent to
+ * the 1059 / 1065 RTCM message types. */
 
 public class MsgSsrCodeBiases extends SBPMessage {
     public static final int TYPE = 0x05E1;
@@ -44,15 +43,12 @@ public class MsgSsrCodeBiases extends SBPMessage {
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
     
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
     
-    /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
- */
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
     
     /** Code biases for the different satellite signals */

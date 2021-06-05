@@ -11,7 +11,9 @@
 
 
 """
-Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
+Satellite observation messages from the device. The SBP sender ID of 0
+indicates remote observations from a GNSS base station, correction network,
+or Skylark, Swift's cloud GNSS correction product.
 """
 
 import json
@@ -36,10 +38,8 @@ class ObservationHeader(object):
   t : GPSTime
     GNSS time of this observation
   n_obs : int
-    Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
-
+    Total number of observations. First nibble is the size of the sequence
+    (n), second nibble is the zero-indexed counter (ith packet of n)
 
   """
   _parser = construct.Struct(
@@ -68,11 +68,9 @@ counter (ith packet of n)
 class Doppler(object):
   """Doppler.
   
-  Doppler measurement in Hz represented as a 24-bit
-fixed point number with Q16.8 layout, i.e. 16-bits of whole
-doppler and 8-bits of fractional doppler. This doppler is defined
-as positive for approaching satellites.
-
+  Doppler measurement in Hz represented as a 24-bit fixed point number with
+  Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
+  doppler. This doppler is defined as positive for approaching satellites.
   
   Parameters
   ----------
@@ -108,14 +106,13 @@ as positive for approaching satellites.
 class PackedObsContent(object):
   """PackedObsContent.
   
-  Pseudorange and carrier phase observation for a satellite being tracked.
-The observations are interoperable with 3rd party receivers and conform with
-typical RTCM 3.1 message GPS/GLO observations.
+  Pseudorange and carrier phase observation for a satellite being tracked. The
+  observations are interoperable with 3rd party receivers and conform with
+  typical RTCM 3.1 message GPS/GLO observations.
 
-Carrier phase observations are not guaranteed to be aligned to the RINEX 3
-or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-peformed.
-
+  Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+  or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+  peformed.
   
   Parameters
   ----------
@@ -128,18 +125,15 @@ peformed.
   cn0 : int
     Carrier-to-Noise density.  Zero implies invalid cn0.
   lock : int
-    Lock timer. This value gives an indication of the time
-for which a signal has maintained continuous phase lock.
-Whenever a signal has lost and regained lock, this
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Valid values range
-from 0 to 15 and the most significant nibble is reserved for future use.
-
+    Lock timer. This value gives an indication of the time for which a signal
+    has maintained continuous phase lock. Whenever a signal has lost and
+    regained lock, this value is reset to zero. It is encoded according to
+    DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values range
+    from 0 to 15 and the most significant nibble is reserved for future use.
   flags : int
-    Measurement status flags. A bit field of flags providing the
-status of this observation.  If this field is 0 it means only the Cn0
-estimate for the signal is valid.
-
+    Measurement status flags. A bit field of flags providing the status of
+    this observation.  If this field is 0 it means only the Cn0 estimate for
+    the signal is valid.
   sid : GnssSignal
     GNSS signal identifier (16 bit)
 
@@ -186,7 +180,6 @@ class PackedOsrContent(object):
   """PackedOsrContent.
   
   Pseudorange and carrier phase network corrections for a satellite signal.
-
   
   Parameters
   ----------
@@ -195,16 +188,13 @@ class PackedOsrContent(object):
   L : CarrierPhase
     Carrier phase observation with typical sign convention.
   lock : int
-    Lock timer. This value gives an indication of the time
-for which a signal has maintained continuous phase lock.
-Whenever a signal has lost and regained lock, this
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Valid values range
-from 0 to 15 and the most significant nibble is reserved for future use.
-
+    Lock timer. This value gives an indication of the time for which a signal
+    has maintained continuous phase lock. Whenever a signal has lost and
+    regained lock, this value is reset to zero. It is encoded according to
+    DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values range
+    from 0 to 15 and the most significant nibble is reserved for future use.
   flags : int
     Correction flags.
-
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   iono_std : int
@@ -274,10 +264,9 @@ class EphemerisCommonContent(object):
     Status of ephemeris, 1 = valid, 0 = invalid
   health_bits : int
     Satellite health status.
-GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-SBAS: 0 = valid, non-zero = invalid
-GLO: 0 = valid, non-zero = invalid
-
+    GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    SBAS: 0 = valid, non-zero = invalid
+    GLO: 0 = valid, non-zero = invalid
 
   """
   _parser = construct.Struct(
@@ -333,9 +322,8 @@ class EphemerisCommonContentDepB(object):
     Status of ephemeris, 1 = valid, 0 = invalid
   health_bits : int
     Satellite health status.
-GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-Others: 0 = valid, non-zero = invalid
-
+    GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    Others: 0 = valid, non-zero = invalid
 
   """
   _parser = construct.Struct(
@@ -391,10 +379,9 @@ class EphemerisCommonContentDepA(object):
     Status of ephemeris, 1 = valid, 0 = invalid
   health_bits : int
     Satellite health status.
-GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-SBAS: 0 = valid, non-zero = invalid
-GLO: 0 = valid, non-zero = invalid
-
+    GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    SBAS: 0 = valid, non-zero = invalid
+    GLO: 0 = valid, non-zero = invalid
 
   """
   _parser = construct.Struct(
@@ -442,10 +429,8 @@ class ObservationHeaderDep(object):
   t : GPSTimeDep
     GPS time of this observation
   n_obs : int
-    Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
-
+    Total number of observations. First nibble is the size of the sequence
+    (n), second nibble is the zero-indexed counter (ith packet of n)
 
   """
   _parser = construct.Struct(
@@ -474,12 +459,10 @@ counter (ith packet of n)
 class CarrierPhaseDepA(object):
   """CarrierPhaseDepA.
   
-  Carrier phase measurement in cycles represented as a 40-bit
-fixed point number with Q32.8 layout, i.e. 32-bits of whole
-cycles and 8-bits of fractional cycles. This has the opposite
-sign convention than a typical GPS receiver and the phase has
-the opposite sign as the pseudorange.
-
+  Carrier phase measurement in cycles represented as a 40-bit fixed point
+  number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+  fractional cycles. This has the opposite sign convention than a typical GPS
+  receiver and the phase has the opposite sign as the pseudorange.
   
   Parameters
   ----------
@@ -526,10 +509,9 @@ class PackedObsContentDepA(object):
   cn0 : int
     Carrier-to-Noise density
   lock : int
-    Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
-
+    Lock indicator. This value changes whenever a satellite signal has lost
+    and regained lock, indicating that the carrier phase ambiguity may have
+    changed.
   prn : int
     PRN-1 identifier of the satellite signal
 
@@ -569,9 +551,8 @@ carrier phase ambiguity may have changed.
 class PackedObsContentDepB(object):
   """PackedObsContentDepB.
   
-  Pseudorange and carrier phase observation for a satellite being
-tracked.  Pseudoranges are referenced to a nominal pseudorange.
-
+  Pseudorange and carrier phase observation for a satellite being tracked.
+  Pseudoranges are referenced to a nominal pseudorange.
   
   Parameters
   ----------
@@ -582,10 +563,9 @@ tracked.  Pseudoranges are referenced to a nominal pseudorange.
   cn0 : int
     Carrier-to-Noise density
   lock : int
-    Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
-
+    Lock indicator. This value changes whenever a satellite signal has lost
+    and regained lock, indicating that the carrier phase ambiguity may have
+    changed.
   sid : GnssSignalDep
     GNSS signal identifier
 
@@ -625,10 +605,9 @@ carrier phase ambiguity may have changed.
 class PackedObsContentDepC(object):
   """PackedObsContentDepC.
   
-  Pseudorange and carrier phase observation for a satellite being
-tracked. The observations are be interoperable with 3rd party
-receivers and conform with typical RTCMv3 GNSS observations.
-
+  Pseudorange and carrier phase observation for a satellite being tracked. The
+  observations are be interoperable with 3rd party receivers and conform with
+  typical RTCMv3 GNSS observations.
   
   Parameters
   ----------
@@ -639,10 +618,9 @@ receivers and conform with typical RTCMv3 GNSS observations.
   cn0 : int
     Carrier-to-Noise density
   lock : int
-    Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
-
+    Lock indicator. This value changes whenever a satellite signal has lost
+    and regained lock, indicating that the carrier phase ambiguity may have
+    changed.
   sid : GnssSignalDep
     GNSS signal identifier
 
@@ -699,12 +677,10 @@ class GnssCapb(object):
     GLO L3 active mask
   sbas_active : int
     SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
-
+    https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
   sbas_l5 : int
     SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
-
+    https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
   bds_active : int
     BDS active mask
   bds_d2nav : int
@@ -801,21 +777,19 @@ class AlmanacCommonContent(object):
     Status of almanac, 1 = valid, 0 = invalid
   health_bits : int
     Satellite health status for GPS:
-  - bits 5-7: NAV data health status. See IS-GPS-200H
-    Table 20-VII: NAV Data Health Indications.
-  - bits 0-4: Signal health status. See IS-GPS-200H
-    Table 20-VIII. Codes for Health of SV Signal
-    Components.
-Satellite health status for GLO:
-  See GLO ICD 5.1 table 5.1 for details
-  - bit 0: C(n), "unhealthy" flag that is transmitted within
-    non-immediate data and indicates overall constellation status
-    at the moment of almanac uploading.
-    '0' indicates malfunction of n-satellite.
-    '1' indicates that n-satellite is operational.
-  - bit 1: Bn(ln), '0' indicates the satellite is operational
-    and suitable for navigation.
-
+      - bits 5-7: NAV data health status. See IS-GPS-200H
+        Table 20-VII: NAV Data Health Indications.
+      - bits 0-4: Signal health status. See IS-GPS-200H
+        Table 20-VIII. Codes for Health of SV Signal
+        Components.
+    Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+      - bit 0: C(n), "unhealthy" flag that is transmitted within
+        non-immediate data and indicates overall constellation status
+        at the moment of almanac uploading.
+        '0' indicates malfunction of n-satellite.
+        '1' indicates that n-satellite is operational.
+      - bit 1: Bn(ln), '0' indicates the satellite is operational
+        and suitable for navigation.
 
   """
   _parser = construct.Struct(
@@ -871,21 +845,19 @@ class AlmanacCommonContentDep(object):
     Status of almanac, 1 = valid, 0 = invalid
   health_bits : int
     Satellite health status for GPS:
-  - bits 5-7: NAV data health status. See IS-GPS-200H
-    Table 20-VII: NAV Data Health Indications.
-  - bits 0-4: Signal health status. See IS-GPS-200H
-    Table 20-VIII. Codes for Health of SV Signal
-    Components.
-Satellite health status for GLO:
-  See GLO ICD 5.1 table 5.1 for details
-  - bit 0: C(n), "unhealthy" flag that is transmitted within
-    non-immediate data and indicates overall constellation status
-    at the moment of almanac uploading.
-    '0' indicates malfunction of n-satellite.
-    '1' indicates that n-satellite is operational.
-  - bit 1: Bn(ln), '0' indicates the satellite is operational
-    and suitable for navigation.
-
+      - bits 5-7: NAV data health status. See IS-GPS-200H
+        Table 20-VII: NAV Data Health Indications.
+      - bits 0-4: Signal health status. See IS-GPS-200H
+        Table 20-VIII. Codes for Health of SV Signal
+        Components.
+    Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+      - bit 0: C(n), "unhealthy" flag that is transmitted within
+        non-immediate data and indicates overall constellation status
+        at the moment of almanac uploading.
+        '0' indicates malfunction of n-satellite.
+        '1' indicates that n-satellite is operational.
+      - bit 1: Bn(ln), '0' indicates the satellite is operational
+        and suitable for navigation.
 
   """
   _parser = construct.Struct(
@@ -973,14 +945,12 @@ class MsgObs(SBP):
   of its fields.
 
   
-  The GPS observations message reports all the raw pseudorange and
-carrier phase observations for the satellites being tracked by
-the device. Carrier phase observation here is represented as a
-40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-whole cycles and 8-bits of fractional cycles). The observations
-are be interoperable with 3rd party receivers and conform
-with typical RTCMv3 GNSS observations.
-
+  The GPS observations message reports all the raw pseudorange and carrier
+  phase observations for the satellites being tracked by the device. Carrier
+  phase observation here is represented as a 40-bit fixed point number with
+  Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
+  The observations are be interoperable with 3rd party receivers and conform
+  with typical RTCMv3 GNSS observations.
 
   Parameters
   ----------
@@ -989,9 +959,7 @@ with typical RTCMv3 GNSS observations.
   header : ObservationHeader
     Header of a GPS observation message
   obs : array
-    Pseudorange and carrier phase observation for a
-satellite being tracked.
-
+    Pseudorange and carrier phase observation for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1076,12 +1044,10 @@ class MsgBasePosLLH(SBP):
   of its fields.
 
   
-  The base station position message is the position reported by
-the base station itself. It is used for pseudo-absolute RTK
-positioning, and is required to be a high-accuracy surveyed
-location of the base station. Any error here will result in an
-error in the pseudo-absolute position output.
-
+  The base station position message is the position reported by the base
+  station itself. It is used for pseudo-absolute RTK positioning, and is
+  required to be a high-accuracy surveyed location of the base station. Any
+  error here will result in an error in the pseudo-absolute position output.
 
   Parameters
   ----------
@@ -1180,13 +1146,11 @@ class MsgBasePosECEF(SBP):
   of its fields.
 
   
-  The base station position message is the position reported by
-the base station itself in absolute Earth Centered Earth Fixed
-coordinates. It is used for pseudo-absolute RTK positioning, and
-is required to be a high-accuracy surveyed location of the base
-station. Any error here will result in an error in the
-pseudo-absolute position output.
-
+  The base station position message is the position reported by the base
+  station itself in absolute Earth Centered Earth Fixed coordinates. It is
+  used for pseudo-absolute RTK positioning, and is required to be a high-
+  accuracy surveyed location of the base station. Any error here will result
+  in an error in the pseudo-absolute position output.
 
   Parameters
   ----------
@@ -1285,12 +1249,10 @@ class MsgEphemerisGPSDepE(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GPS satellite position,
-velocity, and clock offset. Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GPS satellite position, velocity, and clock offset. Please
+  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+  Table 20-III) for more details.
 
   Parameters
   ----------
@@ -1305,11 +1267,13 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -1489,9 +1453,8 @@ class MsgEphemerisGPSDepF(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of
-ephemeris message using floats for size reduction.
-
+  This observation message has been deprecated in favor of ephemeris message
+  using floats for size reduction.
 
   Parameters
   ----------
@@ -1506,11 +1469,13 @@ ephemeris message using floats for size reduction.
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -1690,12 +1655,10 @@ class MsgEphemerisGPS(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GPS satellite position,
-velocity, and clock offset. Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GPS satellite position, velocity, and clock offset. Please
+  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+  Table 20-III) for more details.
 
   Parameters
   ----------
@@ -1710,11 +1673,13 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   c_rc : float
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : float
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : float
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : float
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -1894,10 +1859,8 @@ class MsgEphemerisQzss(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate QZSS satellite position,
-velocity, and clock offset.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate QZSS satellite position, velocity, and clock offset.
 
   Parameters
   ----------
@@ -1912,11 +1875,13 @@ velocity, and clock offset.
   c_rc : float
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : float
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : float
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : float
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -2096,11 +2061,10 @@ class MsgEphemerisBds(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate BDS satellite position,
-velocity, and clock offset. Please see the BeiDou Navigation
-Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate BDS satellite position, velocity, and clock offset. Please
+  see the BeiDou Navigation Satellite System SIS-ICD Version 2.1, Table 5-9
+  for more details.
 
   Parameters
   ----------
@@ -2117,11 +2081,13 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
   c_rc : float
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : float
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : float
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : float
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -2152,16 +2118,12 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     Clock reference
   iode : int
     Issue of ephemeris data
-
-Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
-IODE = mod (t_oe / 720, 240)
-
+    Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    recommendation: IODE = mod (t_oe / 720, 240)
   iodc : int
     Issue of clock data
-
-Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
-IODE = mod (t_oc / 720, 240)
-
+    Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    recommendation: IODE = mod (t_oc / 720, 240)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2312,9 +2274,8 @@ class MsgEphemerisGalDepA(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of
-an ephemeris message with explicit source of NAV data.
-
+  This observation message has been deprecated in favor of an ephemeris
+  message with explicit source of NAV data.
 
   Parameters
   ----------
@@ -2331,11 +2292,13 @@ an ephemeris message with explicit source of NAV data.
   c_rc : float
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : float
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : float
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : float
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -2518,11 +2481,10 @@ class MsgEphemerisGal(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate Galileo satellite position,
-velocity, and clock offset. Please see the Signal In Space ICD
-OS SIS ICD, Issue 1.3, December 2016 for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate Galileo satellite position, velocity, and clock offset.
+  Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for
+  more details.
 
   Parameters
   ----------
@@ -2539,11 +2501,13 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
   c_rc : float
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : float
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : float
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : float
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -2844,12 +2808,10 @@ class MsgEphemerisGloDepA(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GLO satellite position,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-Characteristics of words of immediate information (ephemeris parameters)"
-for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GLO satellite position, velocity, and clock offset. Please
+  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+  information (ephemeris parameters)" for more details.
 
   Parameters
   ----------
@@ -2963,9 +2925,8 @@ class MsgEphemerisSbasDepB(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of
-ephemeris message using floats for size reduction.
-
+  This observation message has been deprecated in favor of ephemeris message
+  using floats for size reduction.
 
   Parameters
   ----------
@@ -3192,12 +3153,10 @@ class MsgEphemerisGloDepB(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GLO satellite position,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-Characteristics of words of immediate information (ephemeris parameters)"
-for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GLO satellite position, velocity, and clock offset. Please
+  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+  information (ephemeris parameters)" for more details.
 
   Parameters
   ----------
@@ -3311,12 +3270,10 @@ class MsgEphemerisGloDepC(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GLO satellite position,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-Characteristics of words of immediate information (ephemeris parameters)"
-for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GLO satellite position, velocity, and clock offset. Please
+  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+  information (ephemeris parameters)" for more details.
 
   Parameters
   ----------
@@ -3440,9 +3397,8 @@ class MsgEphemerisGloDepD(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of
-ephemeris message using floats for size reduction.
-
+  This observation message has been deprecated in favor of ephemeris message
+  using floats for size reduction.
 
   Parameters
   ----------
@@ -3571,12 +3527,10 @@ class MsgEphemerisGlo(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GLO satellite position,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-Characteristics of words of immediate information (ephemeris parameters)"
-for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GLO satellite position, velocity, and clock offset. Please
+  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+  information (ephemeris parameters)" for more details.
 
   Parameters
   ----------
@@ -3705,12 +3659,10 @@ class MsgEphemerisDepD(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GPS satellite position,
-velocity, and clock offset. Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GPS satellite position, velocity, and clock offset. Please
+  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+  Table 20-III) for more details.
 
   Parameters
   ----------
@@ -3723,11 +3675,13 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -3952,11 +3906,13 @@ class MsgEphemerisDepA(SBP):
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -4166,11 +4122,13 @@ class MsgEphemerisDepB(SBP):
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -4372,12 +4330,10 @@ class MsgEphemerisDepC(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GPS satellite position,
-velocity, and clock offset. Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.
-
+  The ephemeris message returns a set of satellite orbit parameters that is
+  used to calculate GPS satellite position, velocity, and clock offset. Please
+  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+  Table 20-III) for more details.
 
   Parameters
   ----------
@@ -4390,11 +4346,13 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
   c_uc : double
-    Amplitude of the cosine harmonic correction term to the argument of latitude
+    Amplitude of the cosine harmonic correction term to the argument of
+    latitude
   c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
   c_ic : double
-    Amplitude of the cosine harmonic correction term to the angle of inclination
+    Amplitude of the cosine harmonic correction term to the angle of
+    inclination
   c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
@@ -4615,9 +4573,7 @@ class MsgObsDepA(SBP):
   header : ObservationHeaderDep
     Header of a GPS observation message
   obs : array
-    Pseudorange and carrier phase observation for a
-satellite being tracked.
-
+    Pseudorange and carrier phase observation for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -4702,13 +4658,10 @@ class MsgObsDepB(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of
-observations that are more interoperable. This message
-should be used for observations referenced to
-a nominal pseudorange which are not interoperable with
-most 3rd party GNSS receievers or typical RTCMv3
-observations.
-
+  This observation message has been deprecated in favor of observations that
+  are more interoperable. This message should be used for observations
+  referenced to a nominal pseudorange which are not interoperable with most
+  3rd party GNSS receievers or typical RTCMv3 observations.
 
   Parameters
   ----------
@@ -4717,9 +4670,7 @@ observations.
   header : ObservationHeaderDep
     Header of a GPS observation message
   obs : array
-    Pseudorange and carrier phase observation for a
-satellite being tracked.
-
+    Pseudorange and carrier phase observation for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -4804,14 +4755,12 @@ class MsgObsDepC(SBP):
   of its fields.
 
   
-  The GPS observations message reports all the raw pseudorange and
-carrier phase observations for the satellites being tracked by
-the device. Carrier phase observation here is represented as a
-40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-whole cycles and 8-bits of fractional cycles). The observations
-are interoperable with 3rd party receivers and conform
-with typical RTCMv3 GNSS observations.
-
+  The GPS observations message reports all the raw pseudorange and carrier
+  phase observations for the satellites being tracked by the device. Carrier
+  phase observation here is represented as a 40-bit fixed point number with
+  Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
+  The observations are interoperable with 3rd party receivers and conform with
+  typical RTCMv3 GNSS observations.
 
   Parameters
   ----------
@@ -4820,9 +4769,7 @@ with typical RTCMv3 GNSS observations.
   header : ObservationHeaderDep
     Header of a GPS observation message
   obs : array
-    Pseudorange and carrier phase observation for a
-satellite being tracked.
-
+    Pseudorange and carrier phase observation for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -4908,9 +4855,8 @@ class MsgIono(SBP):
 
   
   The ionospheric parameters which allow the "L1 only" or "L2 only" user to
-utilize the ionospheric model for computation of the ionospheric delay.
-Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
-
+  utilize the ionospheric model for computation of the ionospheric delay.
+  Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 
   Parameters
   ----------
@@ -5032,7 +4978,6 @@ class MsgSvConfigurationGPSDep(SBP):
 
   
   Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
-
 
   Parameters
   ----------
@@ -5230,10 +5175,8 @@ class MsgGroupDelayDepA(SBP):
   prn : int
     Satellite number
   valid : int
-    bit-field indicating validity of the values,
-LSB indicating tgd validity etc.
-1 = value is valid, 0 = value is not valid.
-
+    bit-field indicating validity of the values, LSB indicating tgd validity
+    etc. 1 = value is valid, 0 = value is not valid.
   tgd : int
   isc_l1ca : int
   isc_l2c : int
@@ -5344,10 +5287,8 @@ class MsgGroupDelayDepB(SBP):
   sid : GnssSignalDep
     GNSS signal identifier
   valid : int
-    bit-field indicating validity of the values,
-LSB indicating tgd validity etc.
-1 = value is valid, 0 = value is not valid.
-
+    bit-field indicating validity of the values, LSB indicating tgd validity
+    etc. 1 = value is valid, 0 = value is not valid.
   tgd : int
   isc_l1ca : int
   isc_l2c : int
@@ -5458,10 +5399,8 @@ class MsgGroupDelay(SBP):
   sid : GnssSignal
     GNSS signal identifier
   valid : int
-    bit-field indicating validity of the values,
-LSB indicating tgd validity etc.
-1 = value is valid, 0 = value is not valid.
-
+    bit-field indicating validity of the values, LSB indicating tgd validity
+    etc. 1 = value is valid, 0 = value is not valid.
   tgd : int
   isc_l1ca : int
   isc_l2c : int
@@ -5562,10 +5501,9 @@ class MsgAlmanacGPSDep(SBP):
 
   
   The almanac message returns a set of satellite orbit parameters. Almanac
-data is not very precise and is considered valid for up to several months.
-Please see the Navstar GPS Space Segment/Navigation user interfaces
-(ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-
+  data is not very precise and is considered valid for up to several months.
+  Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+  GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 
   Parameters
   ----------
@@ -5700,10 +5638,9 @@ class MsgAlmanacGPS(SBP):
 
   
   The almanac message returns a set of satellite orbit parameters. Almanac
-data is not very precise and is considered valid for up to several months.
-Please see the Navstar GPS Space Segment/Navigation user interfaces
-(ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-
+  data is not very precise and is considered valid for up to several months.
+  Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+  GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 
   Parameters
   ----------
@@ -5838,10 +5775,9 @@ class MsgAlmanacGloDep(SBP):
 
   
   The almanac message returns a set of satellite orbit parameters. Almanac
-data is not very precise and is considered valid for up to several months.
-Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-almanac" for details.
-
+  data is not very precise and is considered valid for up to several months.
+  Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+  almanac" for details.
 
   Parameters
   ----------
@@ -5850,9 +5786,8 @@ almanac" for details.
   common : AlmanacCommonContentDep
     Values common for all almanac types
   lambda_na : double
-    Longitude of the first ascending node of the orbit in PZ-90.02
-coordinate system
-
+    Longitude of the first ascending node of the orbit in PZ-90.02 coordinate
+    system
   t_lambda_na : double
     Time of the first ascending node passage
   i : double
@@ -5968,10 +5903,9 @@ class MsgAlmanacGlo(SBP):
 
   
   The almanac message returns a set of satellite orbit parameters. Almanac
-data is not very precise and is considered valid for up to several months.
-Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-almanac" for details.
-
+  data is not very precise and is considered valid for up to several months.
+  Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+  almanac" for details.
 
   Parameters
   ----------
@@ -5980,9 +5914,8 @@ almanac" for details.
   common : AlmanacCommonContent
     Values common for all almanac types
   lambda_na : double
-    Longitude of the first ascending node of the orbit in PZ-90.02
-coordinate system
-
+    Longitude of the first ascending node of the orbit in PZ-90.02 coordinate
+    system
   t_lambda_na : double
     Time of the first ascending node passage
   i : double
@@ -6097,11 +6030,9 @@ class MsgGloBiases(SBP):
   of its fields.
 
   
-  The GLONASS L1/L2 Code-Phase biases allows to perform
-GPS+GLONASS integer ambiguity resolution for baselines
-with mixed receiver types (e.g. receiver of different
-manufacturers)
-
+  The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
+  ambiguity resolution for baselines with mixed receiver types (e.g. receiver
+  of different manufacturers).
 
   Parameters
   ----------
@@ -6210,9 +6141,8 @@ class MsgSvAzEl(SBP):
   of its fields.
 
   
-  Azimuth and elevation angles of all the visible satellites
-that the device does have ephemeris or almanac for.
-
+  Azimuth and elevation angles of all the visible satellites that the device
+  does have ephemeris or almanac for.
 
   Parameters
   ----------
@@ -6301,8 +6231,7 @@ class MsgOsr(SBP):
   of its fields.
 
   
-  The OSR message contains network corrections in an observation-like format
-
+  The OSR message contains network corrections in an observation-like format.
 
   Parameters
   ----------
@@ -6311,9 +6240,7 @@ class MsgOsr(SBP):
   header : ObservationHeader
     Header of a GPS observation message
   obs : array
-    Network correction for a
-satellite signal.
-
+    Network correction for a satellite signal.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

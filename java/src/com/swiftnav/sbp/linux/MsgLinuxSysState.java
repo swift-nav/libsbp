@@ -28,7 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This presents a summary of CPU and memory utilization, including a timestamp. */
+ * This presents a summary of CPU and memory utilization, including a
+ * timestamp. */
 
 public class MsgLinuxSysState extends SBPMessage {
     public static final int TYPE = 0x7F0A;

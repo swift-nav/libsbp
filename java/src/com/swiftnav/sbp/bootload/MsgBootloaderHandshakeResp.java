@@ -28,11 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The handshake message response from the device establishes a
- * handshake between the device bootloader and the host. The
- * request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
- * payload contains the bootloader version number and the SBP
- * protocol version number. */
+ * The handshake message response from the device establishes a handshake
+ * between the device bootloader and the host. The request from the host is
+ * MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
+ * number and the SBP protocol version number. */
 
 public class MsgBootloaderHandshakeResp extends SBPMessage {
     public static final int TYPE = 0x00B4;

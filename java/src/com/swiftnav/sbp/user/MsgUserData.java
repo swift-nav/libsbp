@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message can contain any application specific user data up to a
- * maximum length of 255 bytes per message. */
+ * This message can contain any application specific user data up to a maximum
+ * length of 255 bytes per message. */
 
 public class MsgUserData extends SBPMessage {
     public static final int TYPE = 0x0800;

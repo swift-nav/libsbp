@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrGriddedCorrection",
   "title":"MsgSsrGriddedCorrection",
-  "description":"STEC residuals are per space vehicle, troposphere is not.,\n,\nIt is typically equivalent to the QZSS CLAS Sub Type 9 messages\n",
+  "description":"STEC residuals are per space vehicle, troposphere is not.,\n,\nIt is typically equivalent to the QZSS CLAS Sub Type 9 messages.\n",
   "type": "object",
   "properties": {
     "header": {"$ref": "GriddedCorrectionHeader.json"},

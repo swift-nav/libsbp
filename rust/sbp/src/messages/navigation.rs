@@ -12,31 +12,30 @@
 // Automatically generated from yaml/swiftnav/sbp/navigation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Geodetic navigation messages reporting GPS time, position, velocity,
-//! and baseline position solutions. For position solutions, these
-//! messages define several different position solutions: single-point
-//! (SPP), RTK, and pseudo-absolute position solutions.
+//! Geodetic navigation messages reporting GPS time, position, velocity, and
+//! baseline position solutions. For position solutions, these messages define
+//! several different position solutions: single-point (SPP), RTK, and pseudo-
+//! absolute position solutions.
 //!
-//! The SPP is the standalone, absolute GPS position solution using only
-//! a single receiver. The RTK solution is the differential GPS
-//! solution, which can use either a fixed/integer or floating carrier
-//! phase ambiguity. The pseudo-absolute position solution uses a
-//! user-provided, well-surveyed base station position (if available)
-//! and the RTK solution in tandem.
+//! The SPP is the standalone, absolute GPS position solution using only a
+//! single receiver. The RTK solution is the differential GPS solution, which
+//! can use either a fixed/integer or floating carrier phase ambiguity. The
+//! pseudo-absolute position solution uses a user-provided, well-surveyed base
+//! station position (if available) and the RTK solution in tandem.
 //!
-//! When the inertial navigation mode indicates that the IMU is used,
-//! all messages are reported in the vehicle body frame as defined by
-//! device settings.  By default, the vehicle body frame is configured to be
+//! When the inertial navigation mode indicates that the IMU is used, all
+//! messages are reported in the vehicle body frame as defined by device
+//! settings.  By default, the vehicle body frame is configured to be
 //! coincident with the antenna phase center.  When there is no inertial
-//! navigation, the solution will be reported at the phase center of the antenna.
-//! There is no inertial navigation capability on Piksi Multi or Duro.
+//! navigation, the solution will be reported at the phase center of the
+//! antenna. There is no inertial navigation capability on Piksi Multi or
+//! Duro.
 //!
-//! The tow field, when valid, is most often the Time of Measurement. When this
-//! is the case, the 5th bit of flags is set to the default value of 0.
+//! The tow field, when valid, is most often the Time of Measurement. When
+//! this is the case, the 5th bit of flags is set to the default value of 0.
 //! When this is not the case, the tow may be a time of arrival or a local
 //! system timestamp, irrespective of the time reference (GPS Week or else),
 //! but not a Time of Measurement.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -52,7 +51,7 @@ use crate::SbpString;
 /// Age of corrections
 ///
 /// This message reports the Age of the corrections used for the current
-/// Differential solution
+/// Differential solution.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -133,11 +132,10 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
 
 /// Baseline Position in ECEF
 ///
-/// This message reports the baseline solution in Earth Centered
-/// Earth Fixed (ECEF) coordinates. This baseline is the relative
-/// vector distance from the base station to the rover receiver. The
-/// full GPS time is given by the preceding MSG_GPS_TIME with the
-/// matching time-of-week (tow).
+/// This message reports the baseline solution in Earth Centered Earth Fixed
+/// (ECEF) coordinates. This baseline is the relative vector distance from the
+/// base station to the rover receiver. The full GPS time is given by the
+/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -243,11 +241,10 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
 
 /// Baseline Position in ECEF
 ///
-/// This message reports the baseline solution in Earth Centered
-/// Earth Fixed (ECEF) coordinates. This baseline is the relative
-/// vector distance from the base station to the rover receiver. The
-/// full GPS time is given by the preceding MSG_GPS_TIME with the
-/// matching time-of-week (tow).
+/// This message reports the baseline solution in Earth Centered Earth Fixed
+/// (ECEF) coordinates. This baseline is the relative vector distance from the
+/// base station to the rover receiver. The full GPS time is given by the
+/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -446,12 +443,12 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
 
 /// Baseline in NED
 ///
-/// This message reports the baseline solution in North East Down
-/// (NED) coordinates. This baseline is the relative vector distance
-/// from the base station to the rover receiver, and NED coordinate
-/// system is defined at the local WGS84 tangent plane centered at the
-/// base station position.  The full GPS time is given by the
-/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the baseline solution in North East Down (NED)
+/// coordinates. This baseline is the relative vector distance from the base
+/// station to the rover receiver, and NED coordinate system is defined at the
+/// local WGS84 tangent plane centered at the base station position.  The full
+/// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
+/// week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -562,12 +559,12 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
 
 /// Baseline in NED
 ///
-/// This message reports the baseline solution in North East Down
-/// (NED) coordinates. This baseline is the relative vector distance
-/// from the base station to the rover receiver, and NED coordinate
-/// system is defined at the local WGS84 tangent plane centered at the
-/// base station position.  The full GPS time is given by the
-/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the baseline solution in North East Down (NED)
+/// coordinates. This baseline is the relative vector distance from the base
+/// station to the rover receiver, and NED coordinate system is defined at the
+/// local WGS84 tangent plane centered at the base station position.  The full
+/// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
+/// week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -679,9 +676,9 @@ impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
-/// navigation satellite geometry on positional measurement
-/// precision.  The flags field indicated whether the DOP reported
-/// corresponds to differential or SPP solution.
+/// navigation satellite geometry on positional measurement precision.  The
+/// flags field indicated whether the DOP reported corresponds to differential
+/// or SPP solution.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -788,8 +785,7 @@ impl crate::serialize::SbpSerialize for MsgDops {
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
-/// navigation satellite geometry on positional measurement
-/// precision.
+/// navigation satellite geometry on positional measurement precision.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -890,18 +886,16 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 
 /// GPS Time
 ///
-/// This message reports the GPS time, representing the time since
-/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
-/// counts the weeks and seconds of the week. The weeks begin at the
-/// Saturday/Sunday transition. GPS week 0 began at the beginning of
-/// the GPS time scale.
+/// This message reports the GPS time, representing the time since the GPS
+/// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+/// seconds of the week. The weeks begin at the Saturday/Sunday transition.
+/// GPS week 0 began at the beginning of the GPS time scale.
 ///
-/// Within each week number, the GPS time of the week is between
-/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
-/// does not accumulate leap seconds, and as of now, has a small
-/// offset from UTC. In a message stream, this message precedes a
-/// set of other navigation messages referenced to the same time
-/// (but lacking the ns field) and indicates a more precise time of
+/// Within each week number, the GPS time of the week is between between 0 and
+/// 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+/// seconds, and as of now, has a small offset from UTC. In a message stream,
+/// this message precedes a set of other navigation messages referenced to the
+/// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -998,18 +992,16 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 
 /// GPS Time (v1.0)
 ///
-/// This message reports the GPS time, representing the time since
-/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
-/// counts the weeks and seconds of the week. The weeks begin at the
-/// Saturday/Sunday transition. GPS week 0 began at the beginning of
-/// the GPS time scale.
+/// This message reports the GPS time, representing the time since the GPS
+/// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+/// seconds of the week. The weeks begin at the Saturday/Sunday transition.
+/// GPS week 0 began at the beginning of the GPS time scale.
 ///
-/// Within each week number, the GPS time of the week is between
-/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
-/// does not accumulate leap seconds, and as of now, has a small
-/// offset from UTC. In a message stream, this message precedes a
-/// set of other navigation messages referenced to the same time
-/// (but lacking the ns field) and indicates a more precise time of
+/// Within each week number, the GPS time of the week is between between 0 and
+/// 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+/// seconds, and as of now, has a small offset from UTC. In a message stream,
+/// this message precedes a set of other navigation messages referenced to the
+/// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1106,18 +1098,16 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
 
 /// GPS Time
 ///
-/// This message reports the GPS time, representing the time since
-/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
-/// counts the weeks and seconds of the week. The weeks begin at the
-/// Saturday/Sunday transition. GPS week 0 began at the beginning of
-/// the GPS time scale.
+/// This message reports the GPS time, representing the time since the GPS
+/// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+/// seconds of the week. The weeks begin at the Saturday/Sunday transition.
+/// GPS week 0 began at the beginning of the GPS time scale.
 ///
-/// Within each week number, the GPS time of the week is between
-/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
-/// does not accumulate leap seconds, and as of now, has a small
-/// offset from UTC. In a message stream, this message precedes a
-/// set of other navigation messages referenced to the same time
-/// (but lacking the ns field) and indicates a more precise time of
+/// Within each week number, the GPS time of the week is between between 0 and
+/// 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+/// seconds, and as of now, has a small offset from UTC. In a message stream,
+/// this message precedes a set of other navigation messages referenced to the
+/// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1214,13 +1204,12 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
 
 /// Single-point position in ECEF
 ///
-/// The position solution message reports absolute Earth Centered
-/// Earth Fixed (ECEF) coordinates and the status (single point vs
-/// pseudo-absolute RTK) of the position solution. If the rover
-/// receiver knows the surveyed position of the base station and has
-/// an RTK solution, this reports a pseudo-absolute position
-/// solution using the base station position and the rover's RTK
-/// baseline vector. The full GPS time is given by the preceding
+/// The position solution message reports absolute Earth Centered Earth Fixed
+/// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+/// the position solution. If the rover receiver knows the surveyed position
+/// of the base station and has an RTK solution, this reports a pseudo-
+/// absolute position solution using the base station position and the rover's
+/// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1327,14 +1316,13 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
 
 /// Single-point position in ECEF
 ///
-/// The position solution message reports absolute Earth Centered
-/// Earth Fixed (ECEF) coordinates and the status (single point vs
-/// pseudo-absolute RTK) of the position solution. The message also
-/// reports the upper triangular portion of the 3x3 covariance matrix.
-/// If the receiver knows the surveyed position of the base station and has
-/// an RTK solution, this reports a pseudo-absolute position
-/// solution using the base station position and the rover's RTK
-/// baseline vector. The full GPS time is given by the preceding
+/// The position solution message reports absolute Earth Centered Earth Fixed
+/// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+/// the position solution. The message also reports the upper triangular
+/// portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+/// position of the base station and has an RTK solution, this reports a
+/// pseudo-absolute position solution using the base station position and the
+/// rover's RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1466,14 +1454,13 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 
 /// GNSS-only Position in ECEF
 ///
-/// The position solution message reports absolute Earth Centered
-/// Earth Fixed (ECEF) coordinates and the status (single point vs
-/// pseudo-absolute RTK) of the position solution. The message also
-/// reports the upper triangular portion of the 3x3 covariance matrix.
-/// If the receiver knows the surveyed position of the base station and has
-/// an RTK solution, this reports a pseudo-absolute position
-/// solution using the base station position and the rover's RTK
-/// baseline vector. The full GPS time is given by the preceding
+/// The position solution message reports absolute Earth Centered Earth Fixed
+/// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+/// the position solution. The message also reports the upper triangular
+/// portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+/// position of the base station and has an RTK solution, this reports a
+/// pseudo-absolute position solution using the base station position and the
+/// rover's RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1605,13 +1592,12 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
 
 /// Single-point position in ECEF
 ///
-/// The position solution message reports absolute Earth Centered
-/// Earth Fixed (ECEF) coordinates and the status (single point vs
-/// pseudo-absolute RTK) of the position solution. If the rover
-/// receiver knows the surveyed position of the base station and has
-/// an RTK solution, this reports a pseudo-absolute position
-/// solution using the base station position and the rover's RTK
-/// baseline vector. The full GPS time is given by the preceding
+/// The position solution message reports absolute Earth Centered Earth Fixed
+/// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+/// the position solution. If the rover receiver knows the surveyed position
+/// of the base station and has an RTK solution, this reports a pseudo-
+/// absolute position solution using the base station position and the rover's
+/// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1718,13 +1704,12 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
 
 /// GNSS-only Position in ECEF
 ///
-/// The position solution message reports absolute Earth Centered
-/// Earth Fixed (ECEF) coordinates and the status (single point vs
-/// pseudo-absolute RTK) of the position solution. If the rover
-/// receiver knows the surveyed position of the base station and has
-/// an RTK solution, this reports a pseudo-absolute position
-/// solution using the base station position and the rover's RTK
-/// baseline vector. The full GPS time is given by the preceding
+/// The position solution message reports absolute Earth Centered Earth Fixed
+/// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+/// the position solution. If the rover receiver knows the surveyed position
+/// of the base station and has an RTK solution, this reports a pseudo-
+/// absolute position solution using the base station position and the rover's
+/// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1831,13 +1816,12 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
 
 /// Geodetic Position
 ///
-/// This position solution message reports the absolute geodetic
-/// coordinates and the status (single point vs pseudo-absolute RTK)
-/// of the position solution. If the rover receiver knows the
-/// surveyed position of the base station and has an RTK solution,
-/// this reports a pseudo-absolute position solution using the base
-/// station position and the rover's RTK baseline vector. The full
-/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution. If the rover receiver knows the surveyed position of the base
+/// station and has an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK baseline
+/// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -1949,14 +1933,14 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 
 /// Geodetic Position
 ///
-/// This position solution message reports the absolute geodetic
-/// coordinates and the status (single point vs pseudo-absolute RTK)
-/// of the position solution as well as the upper triangle of the 3x3
-/// covariance matrix.  The position information and Fix Mode flags should
-/// follow the MSG_POS_LLH message.  Since the covariance matrix is computed
-/// in the local-level North, East, Down frame, the covariance terms follow
-/// with that convention. Thus, covariances are reported against the "downward"
-/// measurement and care should be taken with the sign convention.
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution as well as the upper triangle of the 3x3 covariance matrix.  The
+/// position information and Fix Mode flags should follow the MSG_POS_LLH
+/// message.  Since the covariance matrix is computed in the local-level
+/// North, East, Down frame, the covariance terms follow with that convention.
+/// Thus, covariances are reported against the "downward" measurement and care
+/// should be taken with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2087,14 +2071,14 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
 
 /// GNSS-only Geodetic Position
 ///
-/// This position solution message reports the absolute geodetic
-/// coordinates and the status (single point vs pseudo-absolute RTK)
-/// of the position solution as well as the upper triangle of the 3x3
-/// covariance matrix.  The position information and Fix Mode flags should
-/// follow the MSG_POS_LLH message.  Since the covariance matrix is computed
-/// in the local-level North, East, Down frame, the covariance terms follow
-/// with that convention. Thus, covariances are reported against the "downward"
-/// measurement and care should be taken with the sign convention.
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution as well as the upper triangle of the 3x3 covariance matrix.  The
+/// position information and Fix Mode flags should follow the MSG_POS_LLH
+/// message.  Since the covariance matrix is computed in the local-level
+/// North, East, Down frame, the covariance terms follow with that convention.
+/// Thus, covariances are reported against the "downward" measurement and care
+/// should be taken with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2225,13 +2209,12 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
 
 /// Geodetic Position
 ///
-/// This position solution message reports the absolute geodetic
-/// coordinates and the status (single point vs pseudo-absolute RTK)
-/// of the position solution. If the rover receiver knows the
-/// surveyed position of the base station and has an RTK solution,
-/// this reports a pseudo-absolute position solution using the base
-/// station position and the rover's RTK baseline vector. The full
-/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution. If the rover receiver knows the surveyed position of the base
+/// station and has an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK baseline
+/// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -2343,13 +2326,12 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
 
 /// GNSS-only Geodetic Position
 ///
-/// This position solution message reports the absolute geodetic
-/// coordinates and the status (single point vs pseudo-absolute RTK)
-/// of the position solution. If the rover receiver knows the
-/// surveyed position of the base station and has an RTK solution,
-/// this reports a pseudo-absolute position solution using the base
-/// station position and the rover's RTK baseline vector. The full
-/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution. If the rover receiver knows the surveyed position of the base
+/// station and has an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK baseline
+/// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -2461,9 +2443,9 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 
 /// Computed state and Protection Levels
 ///
-/// This message reports the protection levels associated to the given
-/// state estimate. The full GPS time is given by the preceding MSG_GPS_TIME
-/// with the matching time-of-week (tow).
+/// This message reports the protection levels associated to the given state
+/// estimate. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2483,7 +2465,7 @@ pub struct MsgProtectionLevel {
     pub atpl: u16,
     /// Cross-track position error protection level
     pub ctpl: u16,
-    /// Protection level for the error vector between estimated and  true
+    /// Protection level for the error vector between estimated and true
     /// along/cross track velocity vector
     pub hvpl: u16,
     /// Protection level for the velocity in vehicle upright direction
@@ -2754,7 +2736,8 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
-/// which indicate the source of the UTC offset value and source of the time fix.
+/// which indicate the source of the UTC offset value and source of the time
+/// fix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2871,7 +2854,8 @@ impl crate::serialize::SbpSerialize for MsgUtcTime {
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
-/// which indicate the source of the UTC offset value and source of the time fix.
+/// which indicate the source of the UTC offset value and source of the time
+/// fix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2987,13 +2971,14 @@ impl crate::serialize::SbpSerialize for MsgUtcTimeGnss {
 
 /// Velocity in User Frame
 ///
-/// This message reports the velocity in the Vehicle Body Frame. By convention,
-/// the x-axis should point out the nose of the vehicle and represent the forward
-/// direction, while as the y-axis should point out the right hand side of the vehicle.
-/// Since this is a right handed system, z should point out the bottom of the vehicle.
-/// The orientation and origin of the Vehicle Body Frame are specified via the device settings.
-/// The full GPS time is given by the preceding MSG_GPS_TIME with the
-/// matching time-of-week (tow). This message is only produced by inertial versions of Swift
+/// This message reports the velocity in the Vehicle Body Frame. By
+/// convention, the x-axis should point out the nose of the vehicle and
+/// represent the forward direction, while as the y-axis should point out the
+/// right hand side of the vehicle. Since this is a right handed system, z
+/// should point out the bottom of the vehicle. The orientation and origin of
+/// the Vehicle Body Frame are specified via the device settings. The full GPS
+/// time is given by the preceding MSG_GPS_TIME with the matching time-of-week
+/// (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -3125,9 +3110,9 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 
 /// Velocity in ECEF
 ///
-/// This message reports the velocity in Earth Centered Earth Fixed
-/// (ECEF) coordinates. The full GPS time is given by the preceding
-/// MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+/// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3233,9 +3218,9 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
 
 /// Velocity in ECEF
 ///
-/// This message reports the velocity in Earth Centered Earth Fixed
-/// (ECEF) coordinates. The full GPS time is given by the preceding
-/// MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+/// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3366,9 +3351,9 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
 
 /// GNSS-only Velocity in ECEF
 ///
-/// This message reports the velocity in Earth Centered Earth Fixed
-/// (ECEF) coordinates. The full GPS time is given by the preceding
-/// MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+/// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3499,9 +3484,9 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
 
 /// Velocity in ECEF
 ///
-/// This message reports the velocity in Earth Centered Earth Fixed
-/// (ECEF) coordinates. The full GPS time is given by the preceding
-/// MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+/// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3607,9 +3592,9 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
 
 /// GNSS-only Velocity in ECEF
 ///
-/// This message reports the velocity in Earth Centered Earth Fixed
-/// (ECEF) coordinates. The full GPS time is given by the preceding
-/// MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+/// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3717,8 +3702,8 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
-/// tangent plane centered at the current position. The full GPS time is
-/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// tangent plane centered at the current position. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3831,10 +3816,10 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
-/// tangent plane centered at the current position. The full GPS time is
-/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
-/// portion of the 3x3 covariance matrix.
+/// tangent plane centered at the current position. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
+/// message is similar to the MSG_VEL_NED, but it includes the upper
+/// triangular portion of the 3x3 covariance matrix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3967,10 +3952,10 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
-/// tangent plane centered at the current position. The full GPS time is
-/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
-/// portion of the 3x3 covariance matrix.
+/// tangent plane centered at the current position. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
+/// message is similar to the MSG_VEL_NED, but it includes the upper
+/// triangular portion of the 3x3 covariance matrix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4103,8 +4088,8 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
-/// tangent plane centered at the current position. The full GPS time is
-/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// tangent plane centered at the current position. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -4217,8 +4202,8 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
-/// tangent plane centered at the current position. The full GPS time is
-/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// tangent plane centered at the current position. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

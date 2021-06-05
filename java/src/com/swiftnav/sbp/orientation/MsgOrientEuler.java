@@ -28,11 +28,12 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
- * The rotations should applied intrinsically in the order yaw, pitch, and roll 
- * in order to rotate the from a frame aligned with the local-level NED frame 
- * to the vehicle body frame.  This message will only be available in future 
- * INS versions of Swift Products and is not produced by Piksi Multi or Duro. */
+ * This message reports the yaw, pitch, and roll angles of the vehicle body
+ * frame. The rotations should applied intrinsically in the order yaw, pitch,
+ * and roll in order to rotate the from a frame aligned with the local-level
+ * NED frame to the vehicle body frame.  This message will only be available
+ * in future INS versions of Swift Products and is not produced by Piksi Multi
+ * or Duro. */
 
 public class MsgOrientEuler extends SBPMessage {
     public static final int TYPE = 0x0221;

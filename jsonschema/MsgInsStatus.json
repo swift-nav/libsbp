@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgInsStatus",
   "title":"MsgInsStatus",
-  "description":"The INS status message describes the state of the operation,\nand initialization of the inertial navigation system.\n",
+  "description":"The INS status message describes the state of the operation and initialization of the inertial navigation system.\n",
   "type": "object",
   "properties": {
     "flags": {"type": "integer"}

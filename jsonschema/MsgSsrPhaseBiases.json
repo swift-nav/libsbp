@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrPhaseBiases",
   "title":"MsgSsrPhaseBiases",
-  "description":"The precise phase biases message contains the biases,\nto be added to the carrier phase of the corresponding,\nsignal to get corrected carrier phase measurement, as,\nwell as the satellite yaw angle to be applied to compute,\nthe phase wind-up correction.,\nIt is typically an equivalent to the 1265 RTCM message types\n",
+  "description":"The precise phase biases message contains the biases to be added to the carrier phase of the corresponding signal to get corrected carrier phase measurement, as well as the satellite yaw angle to be applied to compute the phase wind-up correction. It is typically an equivalent to the 1265 RTCM message types.\n",
   "type": "object",
   "properties": {
     "time": {"$ref": "GpsTimeSec.json"},

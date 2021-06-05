@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Precise State Space Representation (SSR) corrections format\>
+-- \< Precise State Space Representation (SSR) corrections format \>
 
 module SwiftNav.SBP.Ssr
   ( module SwiftNav.SBP.Ssr
@@ -73,8 +73,8 @@ data PhaseBiasesContent = PhaseBiasesContent
   , _phaseBiasesContent_widelane_integer_indicator :: !Word8
     -- ^ Indicator for two groups of Wide-Lane(s) integer property
   , _phaseBiasesContent_discontinuity_counter    :: !Word8
-    -- ^ Signal phase discontinuity counter. Increased for every discontinuity in
-    -- phase.
+    -- ^ Signal phase discontinuity counter. Increased for every discontinuity
+    -- in phase.
   , _phaseBiasesContent_bias                     :: !Int32
     -- ^ Phase bias for specified signal
   } deriving ( Show, Read, Eq )
@@ -100,9 +100,9 @@ $(makeLenses ''PhaseBiasesContent)
 
 -- | STECHeader.
 --
--- A full set of STEC information will likely span multiple SBP messages, since
--- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
--- messages into a sequence.
+-- A full set of STEC information will likely span multiple SBP messages,
+-- since SBP message a limited to 255 bytes.  The header is used to tie
+-- multiple SBP messages into a sequence.
 data STECHeader = STECHeader
   { _sTECHeader_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
@@ -201,8 +201,8 @@ data STECSatElement = STECSatElement
   { _sTECSatElement_sv_id                :: !SvId
     -- ^ Unique space vehicle identifier
   , _sTECSatElement_stec_quality_indicator :: !Word8
-    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification but
-    -- in units of TECU instead of m.
+    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification
+    -- but in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
     -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
   } deriving ( Show, Read, Eq )
@@ -247,7 +247,8 @@ $(makeLenses ''TroposphericDelayCorrectionNoStd)
 
 -- | TroposphericDelayCorrection.
 --
--- Troposphere vertical delays (mean and standard deviation) at the grid point.
+-- Troposphere vertical delays (mean and standard deviation) at the grid
+-- point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
@@ -298,7 +299,7 @@ $(makeLenses ''STECResidualNoStd)
 -- | STECResidual.
 --
 -- STEC residual (mean and standard deviation) for the given satellite at the
--- grid point,
+-- grid point.
 data STECResidual = STECResidual
   { _sTECResidual_sv_id  :: !SvId
     -- ^ space vehicle identifier
@@ -325,8 +326,8 @@ $(makeLenses ''STECResidual)
 
 -- | GridElementNoStd.
 --
--- Contains one tropo delay, plus STEC residuals for each satellite at the grid
--- point.
+-- Contains one tropo delay, plus STEC residuals for each satellite at the
+-- grid point.
 data GridElementNoStd = GridElementNoStd
   { _gridElementNoStd_index                :: !Word16
     -- ^ Index of the grid point
@@ -386,7 +387,7 @@ msgSsrOrbitClock = 0x05DD
 --
 -- The precise orbit and clock correction message is to be applied as a delta
 -- correction to broadcast ephemeris and is an equivalent to the 1060 /1066
--- RTCM message types
+-- RTCM message types.
 data MsgSsrOrbitClock = MsgSsrOrbitClock
   { _msgSsrOrbitClock_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -465,7 +466,7 @@ msgSsrCodeBiases = 0x05E1
 --
 -- The precise code biases message is to be added to the pseudorange of the
 -- corresponding signal to get corrected pseudorange. It is an equivalent to
--- the 1059 / 1065 RTCM message types
+-- the 1059 / 1065 RTCM message types.
 data MsgSsrCodeBiases = MsgSsrCodeBiases
   { _msgSsrCodeBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -508,9 +509,9 @@ msgSsrPhaseBiases = 0x05E6
 --
 -- The precise phase biases message contains the biases to be added to the
 -- carrier phase of the corresponding signal to get corrected carrier phase
--- measurement, as well as the satellite yaw angle to be applied to compute the
--- phase wind-up correction. It is typically an equivalent to the 1265 RTCM
--- message types
+-- measurement, as well as the satellite yaw angle to be applied to compute
+-- the phase wind-up correction. It is typically an equivalent to the 1265
+-- RTCM message types.
 data MsgSsrPhaseBiases = MsgSsrPhaseBiases
   { _msgSsrPhaseBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -570,8 +571,9 @@ msgSsrStecCorrection = 0x05FB
 -- The Slant Total Electron Content per space vehicle, given as polynomial
 -- approximation for a given tile. This should be combined with the
 -- MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
--- the atmospheric delay.  It is typically equivalent to the QZSS CLAS Sub Type
--- 8 messages.
+-- the atmospheric delay.
+--
+-- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 data MsgSsrStecCorrection = MsgSsrStecCorrection
   { _msgSsrStecCorrection_header      :: !STECHeader
     -- ^ Header of a STEC polynomial coeffcient message.
@@ -598,8 +600,9 @@ msgSsrGriddedCorrection = 0x05FC
 
 -- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
 --
--- STEC residuals are per space vehicle, troposphere is not.  It is typically
--- equivalent to the QZSS CLAS Sub Type 9 messages
+-- STEC residuals are per space vehicle, troposphere is not.
+--
+-- It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
   { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
     -- ^ Header of a gridded correction message
@@ -628,48 +631,67 @@ msgSsrTileDefinition = 0x05F6
 --
 -- Provides the correction point coordinates for the atmospheric correction
 -- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
--- messages.  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol)
--- information element GNSS-SSR-CorrectionPoints. SBP only supports gridded
--- arrays of correction points, not lists of points.
+-- messages.
+--
+-- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+-- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+-- correction points, not lists of points.
 data MsgSsrTileDefinition = MsgSsrTileDefinition
   { _msgSsrTileDefinition_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
   , _msgSsrTileDefinition_tile_id     :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field correctionPointSetID.
+    -- ^ Unique identifier of this tile in the tile set.
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
   , _msgSsrTileDefinition_corner_nw_lat :: !Int16
-    -- ^ North-West corner correction point latitude.  The relation between the
-    -- latitude X in the range [-90, 90] and the coded number N is:  N =
-    -- floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    -- referencePointLatitude.
+    -- ^ North-West corner correction point latitude.
+    --
+    -- The relation between the latitude X in the range [-90, 90] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 90) * 2^14)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
   , _msgSsrTileDefinition_corner_nw_lon :: !Int16
-    -- ^ North-West corner correction point longtitude.  The relation between the
-    -- longtitude X in the range [-180, 180] and the coded number N is:  N =
-    -- floor((X / 180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    -- referencePointLongitude.
+    -- ^ North-West corner correction point longitude.
+    --
+    -- The relation between the longitude X in the range [-180, 180] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 180) * 2^15)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
   , _msgSsrTileDefinition_spacing_lat :: !Word16
-    -- ^ Spacing of the correction points in the latitude direction.  See GNSS-
-    -- SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+    -- ^ Spacing of the correction points in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
   , _msgSsrTileDefinition_spacing_lon :: !Word16
-    -- ^ Spacing of the correction points in the longtitude direction.  See GNSS-
-    -- SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
+    -- ^ Spacing of the correction points in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
   , _msgSsrTileDefinition_rows        :: !Word16
-    -- ^ Number of steps in the latitude direction.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field numberOfStepsLatitude.
+    -- ^ Number of steps in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
   , _msgSsrTileDefinition_cols        :: !Word16
-    -- ^ Number of steps in the longtitude direction.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+    -- ^ Number of steps in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
   , _msgSsrTileDefinition_bitmask     :: !Word64
     -- ^ Specifies the availability of correction data at the correction points
-    -- in the array.  If a specific bit is enabled (set to 1), the correction
-    -- is not available. Only the first rows * cols bits are used, the
-    -- remainder are set to 0. If there are more then 64 correction points the
-    -- remaining corrections are always available.  Starting with the northwest
-    -- corner of the array (top left on a north oriented map) the correction
-    -- points are enumerated with row precedence - first row west to east,
-    -- second row west to east, until last row west to east - ending with the
-    -- southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
-    -- field bitmaskOfGrids but note the definition of the bits is inverted.
+    -- in the array.
+    --
+    -- If a specific bit is enabled (set to 1), the correction is not
+    -- available. Only the first rows * cols bits are used, the remainder are
+    -- set to 0. If there are more then 64 correction points the remaining
+    -- corrections are always available.
+    --
+    -- Starting with the northwest corner of the array (top left on a north
+    -- oriented map) the correction points are enumerated with row precedence
+    -- - first row west to east, second row west to east, until last row west
+    -- to east - ending with the southeast corner of the array.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    -- definition of the bits is inverted.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrTileDefinition where
@@ -835,9 +857,9 @@ $(makeLenses ''MsgSsrOrbitClockDepA)
 
 -- | STECHeaderDepA.
 --
--- A full set of STEC information will likely span multiple SBP messages, since
--- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
--- messages into a sequence.
+-- A full set of STEC information will likely span multiple SBP messages,
+-- since SBP message a limited to 255 bytes.  The header is used to tie
+-- multiple SBP messages into a sequence.
 data STECHeaderDepA = STECHeaderDepA
   { _sTECHeaderDepA_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -926,7 +948,7 @@ data GridDefinitionHeaderDepA = GridDefinitionHeaderDepA
   , _gridDefinitionHeaderDepA_lat_nw_corner_enc :: !Word16
     -- ^ North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
   , _gridDefinitionHeaderDepA_lon_nw_corner_enc :: !Word16
-    -- ^ North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    -- ^ North-West corner longitude (deg) = region_size * lon_nw_corner_enc -
     -- 180
   , _gridDefinitionHeaderDepA_num_msgs          :: !Word8
     -- ^ Number of messages in the dataset

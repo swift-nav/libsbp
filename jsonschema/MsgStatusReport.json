@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgStatusReport",
   "title":"MsgStatusReport",
-  "description":"The status report is sent periodically to inform the host,\nor other attached devices that the system is running. It is,\nused to monitor system malfunctions. It contains status,\nreports that indicate to the host the status of each sub-system and,\nwhether it is operating correctly.,\n,\nInterpretation of the subsystem specific status code is product,\ndependent, but if the generic status code is initializing, it should,\nbe ignored.  Refer to product documentation for details.\n",
+  "description":"The status report is sent periodically to inform the host or other attached devices that the system is running. It is used to monitor system malfunctions. It contains status reports that indicate to the host the status of each sub-system and whether it is operating correctly.,\n,\nInterpretation of the subsystem specific status code is product dependent, but if the generic status code is initializing, it should be ignored.  Refer to product documentation for details.\n",
   "type": "object",
   "properties": {
     "reporting_system": {"type": "integer"},

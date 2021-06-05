@@ -1373,7 +1373,7 @@ MsgVelBody.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_AGE_CORRECTIONS (0x0210).
  *
  * This message reports the Age of the corrections used for the current
- * Differential solution
+ * Differential solution.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1876,8 +1876,8 @@ MsgProtectionLevelDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_PROTECTION_LEVEL (0x0217).
  *
- * This message reports the protection levels associated to the given  state
- * estimate. The full GPS time is given by the preceding MSG_GPS_TIME  with the
+ * This message reports the protection levels associated to the given state
+ * estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -1887,9 +1887,9 @@ MsgProtectionLevelDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field vpl number (unsigned 16-bit int, 2 bytes) Vertical protection level
  * @field atpl number (unsigned 16-bit int, 2 bytes) Along-track position error protection level
  * @field ctpl number (unsigned 16-bit int, 2 bytes) Cross-track position error protection level
- * @field hvpl number (unsigned 16-bit int, 2 bytes) Protection level for the error vector between estimated and  true along/cross
+ * @field hvpl number (unsigned 16-bit int, 2 bytes) Protection level for the error vector between estimated and true along/cross
  *   track velocity vector
- * @field vvpl number (unsigned 16-bit int, 2 bytes) Protection level for the velocity in vehicle upright direction  (different from
+ * @field vvpl number (unsigned 16-bit int, 2 bytes) Protection level for the velocity in vehicle upright direction (different from
  *   vertical direction if on a slope)
  * @field hopl number (unsigned 16-bit int, 2 bytes) Heading orientation protection level
  * @field popl number (unsigned 16-bit int, 2 bytes) Pitch orientation protection level

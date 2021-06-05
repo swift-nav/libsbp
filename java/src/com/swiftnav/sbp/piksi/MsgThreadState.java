@@ -29,9 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The thread usage message from the device reports real-time
- * operating system (RTOS) thread usage statistics for the named
- * thread. The reported percentage values must be normalized. */
+ * The thread usage message from the device reports real-time operating system
+ * (RTOS) thread usage statistics for the named thread. The reported
+ * percentage values must be normalized. */
 
 public class MsgThreadState extends SBPMessage {
     public static final int TYPE = 0x0017;
@@ -40,9 +40,8 @@ public class MsgThreadState extends SBPMessage {
     /** Thread name (NULL terminated) */
     public String name;
     
-    /** Percentage cpu use for this thread. Values range from 0
-- 1000 and needs to be renormalized to 100
- */
+    /** Percentage cpu use for this thread. Values range from 0 - 1000 and
+      * needs to be renormalized to 100 */
     public int cpu;
     
     /** Free stack space for this thread */

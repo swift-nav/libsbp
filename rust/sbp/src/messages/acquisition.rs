@@ -28,9 +28,9 @@ use crate::SbpString;
 
 /// Acq perfomance measurement and debug
 ///
-/// Profile for a specific SV for debugging purposes
-/// The message describes SV profile during acquisition time.
-/// The message is used to debug and measure the performance.
+/// Profile for a specific SV for debugging purposes. The message describes SV
+/// profile during acquisition time. The message is used to debug and measure
+/// the performance.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -242,10 +242,9 @@ impl crate::serialize::SbpSerialize for AcqSvProfileDep {
 /// Satellite acquisition result
 ///
 /// This message describes the results from an attempted GPS signal
-/// acquisition search for a satellite PRN over a code phase/carrier
-/// frequency range. It contains the parameters of the point in the
-/// acquisition search space with the best carrier-to-noise (CN/0)
-/// ratio.
+/// acquisition search for a satellite PRN over a code phase/carrier frequency
+/// range. It contains the parameters of the point in the acquisition search
+/// space with the best carrier-to-noise (CN/0) ratio.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -564,8 +563,8 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
 
 /// Acquisition perfomance measurement and debug
 ///
-/// The message describes all SV profiles during acquisition time.
-/// The message is used to debug and measure the performance.
+/// The message describes all SV profiles during acquisition time. The message
+/// is used to debug and measure the performance.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -627,7 +626,7 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
     }
 }
 
-/// Deprecated.
+/// Deprecated
 ///
 /// Deprecated.
 ///

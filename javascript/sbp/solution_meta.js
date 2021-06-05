@@ -60,9 +60,9 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
  *
- * This message contains all metadata about the sensors received and/or used in
- * computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
- * metadata.
+ * Deprecated.  This message contains all metadata about the sensors received
+ * and/or used in computing the Fuzed Solution. It focuses primarly, but not only,
+ * on GNSS metadata.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision as per last available DOPS from PVT engine

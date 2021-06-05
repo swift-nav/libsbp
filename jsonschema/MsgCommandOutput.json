@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgCommandOutput",
   "title":"MsgCommandOutput",
-  "description":"Returns the standard output and standard error of the,\ncommand requested by MSG_COMMAND_REQ.,\nThe sequence number can be used to filter for filtering,\nthe correct command.\n",
+  "description":"Returns the standard output and standard error of the command requested by MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the correct command.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

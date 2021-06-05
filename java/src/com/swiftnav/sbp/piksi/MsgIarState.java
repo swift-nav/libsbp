@@ -29,10 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the state of the Integer Ambiguity
- * Resolution (IAR) process, which resolves unknown integer
- * ambiguities from double-differenced carrier-phase measurements
- * from satellite observations. */
+ * This message reports the state of the Integer Ambiguity Resolution (IAR)
+ * process, which resolves unknown integer ambiguities from double-differenced
+ * carrier-phase measurements from satellite observations. */
 
 public class MsgIarState extends SBPMessage {
     public static final int TYPE = 0x0019;

@@ -36,18 +36,15 @@ class MsgMagRaw(SBP):
   
   Raw data from the magnetometer.
 
-
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   tow : int
-    Milliseconds since start of GPS week. If the high bit is set, the
-time is unknown or invalid.
-
+    Milliseconds since start of GPS week. If the high bit is set, the time is
+    unknown or invalid.
   tow_f : int
     Milliseconds since start of GPS week, fractional part
-
   mag_x : int
     Magnetic field in the body frame X axis
   mag_y : int

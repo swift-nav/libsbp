@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgThreadState",
   "title":"MsgThreadState",
-  "description":"The thread usage message from the device reports real-time,\noperating system (RTOS) thread usage statistics for the named,\nthread. The reported percentage values must be normalized.\n",
+  "description":"The thread usage message from the device reports real-time operating system (RTOS) thread usage statistics for the named thread. The reported percentage values must be normalized.\n",
   "type": "object",
   "properties": {
     "name": {"type": "string"},

@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#GridElementNoStd",
   "title":"GridElementNoStd",
-  "description":"Contains one tropo delay, plus STEC residuals for each satellite at the,\ngrid point.\n",
+  "description":"Contains one tropo delay, plus STEC residuals for each satellite at the grid point.\n",
   "type": "object",
   "properties": {
     "index": {"type": "integer"},

@@ -29,7 +29,8 @@ import org.json.JSONArray;
  * fields.
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
- * which indicate the source of the UTC offset value and source of the time fix. */
+ * which indicate the source of the UTC offset value and source of the time
+ * fix. */
 
 public class MsgUtcTime extends SBPMessage {
     public static final int TYPE = 0x0103;

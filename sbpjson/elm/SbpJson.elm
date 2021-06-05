@@ -779,25 +779,23 @@ type alias MsgSettingsSave = Dict String Jdec.Value
 
 type alias MsgStmUniqueIDReq = Dict String Jdec.Value
 
-{-| Metadata around the GNSS sensors involved in the fuzed solution.,
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
+{-| Metadata around the GNSS sensors involved in the fuzed solution. Accessible through
+sol_in[N].flags in a MSG_SOLN_META.
 -}
 type alias GNSSInputType =
     { flags : Int
     }
 
-{-| Metadata around the IMU sensors involved in the fuzed solution.,
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
+{-| Metadata around the IMU sensors involved in the fuzed solution. Accessible through
+sol_in[N].flags in a MSG_SOLN_META.
 -}
 type alias IMUInputType =
     { flags : Int
     }
 
-{-| This message describes the results from an attempted GPS signal,
-acquisition search for a satellite PRN over a code phase/carrier,
-frequency range. It contains the parameters of the point in the,
-acquisition search space with the best carrier-to-noise (CN/0),
-ratio.
+{-| This message describes the results from an attempted GPS signal acquisition search for a
+satellite PRN over a code phase/carrier frequency range. It contains the parameters of
+the point in the acquisition search space with the best carrier-to-noise (CN/0) ratio.
 -}
 type alias MsgAcqResult =
     { cf : Float
@@ -806,22 +804,21 @@ type alias MsgAcqResult =
     , sid : GnssSignal
     }
 
-{-| Signal identifier containing constellation, band, and satellite identifier -}
+{-| Signal identifier containing constellation, band, and satellite identifier. -}
 type alias GnssSignal =
     { code : Int
     , sat : Int
     }
 
-{-| The message describes all SV profiles during acquisition time.,
-The message is used to debug and measure the performance.
+{-| The message describes all SV profiles during acquisition time. The message is used to
+debug and measure the performance.
 -}
 type alias MsgAcqSvProfile =
     { acqSvProfile : Array AcqSvProfile
     }
 
-{-| Profile for a specific SV for debugging purposes,
-The message describes SV profile during acquisition time.,
-The message is used to debug and measure the performance.
+{-| Profile for a specific SV for debugging purposes. The message describes SV profile during
+acquisition time. The message is used to debug and measure the performance.
 -}
 type alias AcqSvProfile =
     { binWidth : Int
@@ -838,18 +835,18 @@ type alias AcqSvProfile =
     , timestamp : Int
     }
 
-{-| This message reports the Age of the corrections used for the current,
-Differential solution
+{-| This message reports the Age of the corrections used for the current Differential
+solution.
 -}
 type alias MsgAgeCorrections =
     { age : Int
     , tow : Int
     }
 
-{-| The almanac message returns a set of satellite orbit parameters. Almanac,
-data is not very precise and is considered valid for up to several months.,
-Please see the Navstar GPS Space Segment/Navigation user interfaces,
-(ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+{-| The almanac message returns a set of satellite orbit parameters. Almanac data is not very
+precise and is considered valid for up to several months. Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data)
+for more details.
 -}
 type alias MsgAlmanacGPS =
     { af0 : Float
@@ -873,19 +870,17 @@ type alias AlmanacCommonContent =
     , valid : Int
     }
 
-{-| A GPS time, defined as the number of,
-seconds since beginning of the week on the Saturday/Sunday,
-transition.
+{-| A GPS time, defined as the number of seconds since beginning of the week on the
+Saturday/Sunday transition.
 -}
 type alias GpsTimeSEC =
     { tow : Int
     , wn : Int
     }
 
-{-| The almanac message returns a set of satellite orbit parameters. Almanac,
-data is not very precise and is considered valid for up to several months.,
-Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and,
-almanac" for details.
+{-| The almanac message returns a set of satellite orbit parameters. Almanac data is not very
+precise and is considered valid for up to several months. Please see the GLO ICD 5.1
+"Chapter 4.5 Non-immediate information and almanac" for details.
 -}
 type alias MsgAlmanacGlo =
     { common : AlmanacCommonContent
@@ -898,14 +893,13 @@ type alias MsgAlmanacGlo =
     , tLambdaNa : Float
     }
 
-{-| This message reports the orientation rates in the vehicle body frame. ,
-The values represent the measurements a strapped down gyroscope would ,
-make and are not equivalent to the time derivative of the Euler angles.,
-The orientation and origin of the user frame is specified via device settings.,
-By convention, the vehicle x-axis is expected to be aligned with the forward,
-direction, while the vehicle y-axis is expected to be aligned with the right,
-direction, and the vehicle z-axis should be aligned with the down direction.,
-This message will only be available in future INS versions of Swift Products ,
+{-| This message reports the orientation rates in the vehicle body frame. The values
+represent the measurements a strapped down gyroscope would make and are not equivalent to
+the time derivative of the Euler angles. The orientation and origin of the user frame is
+specified via device settings. By convention, the vehicle x-axis is expected to be
+aligned with the forward direction, while the vehicle y-axis is expected to be aligned
+with the right direction, and the vehicle z-axis should be aligned with the down
+direction. This message will only be available in future INS versions of Swift Products
 and is not produced by Piksi Multi or Duro.
 -}
 type alias MsgAngularRate =
@@ -916,12 +910,10 @@ type alias MsgAngularRate =
     , z : Int
     }
 
-{-| The base station position message is the position reported by,
-the base station itself in absolute Earth Centered Earth Fixed,
-coordinates. It is used for pseudo-absolute RTK positioning, and,
-is required to be a high-accuracy surveyed location of the base,
-station. Any error here will result in an error in the,
-pseudo-absolute position output.
+{-| The base station position message is the position reported by the base station itself in
+absolute Earth Centered Earth Fixed coordinates. It is used for pseudo-absolute RTK
+positioning, and is required to be a high-accuracy surveyed location of the base station.
+Any error here will result in an error in the pseudo-absolute position output.
 -}
 type alias MsgBasePosECEF =
     { x : Float
@@ -929,11 +921,10 @@ type alias MsgBasePosECEF =
     , z : Float
     }
 
-{-| The base station position message is the position reported by,
-the base station itself. It is used for pseudo-absolute RTK,
-positioning, and is required to be a high-accuracy surveyed,
-location of the base station. Any error here will result in an,
-error in the pseudo-absolute position output.
+{-| The base station position message is the position reported by the base station itself. It
+is used for pseudo-absolute RTK positioning, and is required to be a high-accuracy
+surveyed location of the base station. Any error here will result in an error in the
+pseudo-absolute position output.
 -}
 type alias MsgBasePosLLH =
     { height : Float
@@ -941,10 +932,9 @@ type alias MsgBasePosLLH =
     , lon : Float
     }
 
-{-| This message reports the baseline solution in Earth Centered,
-Earth Fixed (ECEF) coordinates. This baseline is the relative,
-vector distance from the base station to the rover receiver. The,
-full GPS time is given by the preceding MSG_GPS_TIME with the,
+{-| This message reports the baseline solution in Earth Centered Earth Fixed (ECEF)
+coordinates. This baseline is the relative vector distance from the base station to the
+rover receiver. The full GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).
 -}
 type alias MsgBaselineECEF =
@@ -957,10 +947,10 @@ type alias MsgBaselineECEF =
     , z : Int
     }
 
-{-| This message reports the baseline heading pointing from the base station,
-to the rover relative to True North. The full GPS time is given by the,
-preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended,
-that time-matched RTK mode is used when the base station is moving.
+{-| This message reports the baseline heading pointing from the base station to the rover
+relative to True North. The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow). It is intended that time-matched RTK mode is used when the
+base station is moving.
 -}
 type alias MsgBaselineHeading =
     { flags : Int
@@ -969,12 +959,11 @@ type alias MsgBaselineHeading =
     , tow : Int
     }
 
-{-| This message reports the baseline solution in North East Down,
-(NED) coordinates. This baseline is the relative vector distance,
-from the base station to the rover receiver, and NED coordinate,
-system is defined at the local WGS84 tangent plane centered at the,
-base station position.  The full GPS time is given by the,
-preceding MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the baseline solution in North East Down (NED) coordinates. This
+baseline is the relative vector distance from the base station to the rover receiver, and
+NED coordinate system is defined at the local WGS84 tangent plane centered at the base
+station position.  The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
 -}
 type alias MsgBaselineNED =
     { d : Int
@@ -987,11 +976,9 @@ type alias MsgBaselineNED =
     , vAccuracy : Int
     }
 
-{-| The handshake message response from the device establishes a,
-handshake between the device bootloader and the host. The,
-request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The,
-payload contains the bootloader version number and the SBP,
-protocol version number.
+{-| The handshake message response from the device establishes a handshake between the device
+bootloader and the host. The request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
+payload contains the bootloader version number and the SBP protocol version number.
 -}
 type alias MsgBootloaderHandshakeResp =
     { flags : Int
@@ -1003,63 +990,59 @@ type alias MsgBootloaderJumpToApp =
     { jump : Int
     }
 
-{-| If a cell modem is present on a piksi device, this message,
-will be send periodically to update the host on the status,
-of the modem and its various parameters.
+{-| If a cell modem is present on a piksi device, this message will be send periodically to
+update the host on the status of the modem and its various parameters.
 -}
 type alias MsgCellModemStatus =
     { signalErrorRate : Float
     , signalStrength : Int
     }
 
-{-| Returns the standard output and standard error of the,
-command requested by MSG_COMMAND_REQ.,
-The sequence number can be used to filter for filtering,
-the correct command.
+{-| Returns the standard output and standard error of the command requested by
+MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the correct
+command.
 -}
 type alias MsgCommandOutput =
     { line : String
     , sequence : Int
     }
 
-{-| Request the recipient to execute an command.,
-Output will be sent in MSG_LOG messages, and the exit,
-code will be returned with MSG_COMMAND_RESP.
+{-| Request the recipient to execute an command. Output will be sent in MSG_LOG messages, and
+the exit code will be returned with MSG_COMMAND_RESP.
 -}
 type alias MsgCommandReq =
     { command : String
     , sequence : Int
     }
 
-{-| The response to MSG_COMMAND_REQ with the return code of,
-the command.  A return code of zero indicates success.
+{-| The response to MSG_COMMAND_REQ with the return code of the command.  A return code of
+zero indicates success.
 -}
 type alias MsgCommandResp =
     { code : Int
     , sequence : Int
     }
 
-{-| The CSAC telemetry message has an implementation defined telemetry string,
-from a device. It is not produced or available on general Swift Products.,
-It is intended to be a low rate message for status purposes.
+{-| The CSAC telemetry message has an implementation defined telemetry string from a device.
+It is not produced or available on general Swift Products. It is intended to be a low
+rate message for status purposes.
 -}
 type alias MsgCsacTelemetry =
     { id : Int
     , telemetry : String
     }
 
-{-| The CSAC telemetry message provides labels for each member of the string,
-produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower,
-rate than the MSG_CSAC_TELEMETRY.
+{-| The CSAC telemetry message provides labels for each member of the string produced by
+MSG_CSAC_TELEMETRY. It should be provided by a device at a lower rate than the
+MSG_CSAC_TELEMETRY.
 -}
 type alias MsgCsacTelemetryLabels =
     { id : Int
     , telemetryLabels : String
     }
 
-{-| This message contains temperature and voltage level measurements from the,
-processor's monitoring system and the RF frontend die temperature if,
-available.
+{-| This message contains temperature and voltage level measurements from the processor's
+monitoring system and the RF frontend die temperature if available.
 -}
 type alias MsgDeviceMonitor =
     { cpuTemperature : Int
@@ -1069,9 +1052,8 @@ type alias MsgDeviceMonitor =
     , feTemperature : Int
     }
 
-{-| This message provides information about the receipt of Differential,
-corrections.  It is expected to be sent with each receipt of a complete,
-corrections packet.
+{-| This message provides information about the receipt of Differential corrections.  It is
+expected to be sent with each receipt of a complete corrections packet.
 -}
 type alias MsgDgnssStatus =
     { flags : Int
@@ -1080,10 +1062,9 @@ type alias MsgDgnssStatus =
     , source : String
     }
 
-{-| This dilution of precision (DOP) message describes the effect of,
-navigation satellite geometry on positional measurement,
-precision.  The flags field indicated whether the DOP reported,
-corresponds to differential or SPP solution.
+{-| This dilution of precision (DOP) message describes the effect of navigation satellite
+geometry on positional measurement precision.  The flags field indicated whether the DOP
+reported corresponds to differential or SPP solution.
 -}
 type alias MsgDops =
     { flags : Int
@@ -1095,10 +1076,9 @@ type alias MsgDops =
     , vdop : Int
     }
 
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate BDS satellite position,,
-velocity, and clock offset. Please see the BeiDou Navigation,
-Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+{-| The ephemeris message returns a set of satellite orbit parameters that is used to
+calculate BDS satellite position, velocity, and clock offset. Please see the BeiDou
+Navigation Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
 -}
 type alias MsgEphemerisBds =
     { af0 : Float
@@ -1136,11 +1116,9 @@ type alias EphemerisCommonContent =
     , valid : Int
     }
 
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate GPS satellite position,,
-velocity, and clock offset. Please see the Navstar GPS,
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table,
-20-III) for more details.
+{-| The ephemeris message returns a set of satellite orbit parameters that is used to
+calculate GPS satellite position, velocity, and clock offset. Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III) for more details.
 -}
 type alias MsgEphemerisGPS =
     { af0 : Float
@@ -1168,10 +1146,9 @@ type alias MsgEphemerisGPS =
     , w : Float
     }
 
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate Galileo satellite position,,
-velocity, and clock offset. Please see the Signal In Space ICD,
-OS SIS ICD, Issue 1.3, December 2016 for more details.
+{-| The ephemeris message returns a set of satellite orbit parameters that is used to
+calculate Galileo satellite position, velocity, and clock offset. Please see the Signal
+In Space ICD OS SIS ICD, Issue 1.3, December 2016 for more details.
 -}
 type alias MsgEphemerisGal =
     { af0 : Float
@@ -1201,11 +1178,10 @@ type alias MsgEphemerisGal =
     , w : Float
     }
 
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate GLO satellite position,,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5,
-Characteristics of words of immediate information (ephemeris parameters)",
-for more details.
+{-| The ephemeris message returns a set of satellite orbit parameters that is used to
+calculate GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1
+"Table 4.5 Characteristics of words of immediate information (ephemeris parameters)" for
+more details.
 -}
 type alias MsgEphemerisGlo =
     { acc : Array Float
@@ -1219,9 +1195,8 @@ type alias MsgEphemerisGlo =
     , vel : Array Float
     }
 
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate QZSS satellite position,,
-velocity, and clock offset.
+{-| The ephemeris message returns a set of satellite orbit parameters that is used to
+calculate QZSS satellite position, velocity, and clock offset.
 -}
 type alias MsgEphemerisQzss =
     { af0 : Float
@@ -1258,8 +1233,8 @@ type alias MsgEphemerisSbas =
     , vel : Array Float
     }
 
-{-| Reports detection of an external event, the GPS time it occurred,,
-which pin it was and whether it was rising or falling.
+{-| Reports detection of an external event, the GPS time it occurred, which pin it was and
+whether it was rising or falling.
 -}
 type alias MsgEXTEvent =
     { flags : Int
@@ -1269,19 +1244,17 @@ type alias MsgEXTEvent =
     , wn : Int
     }
 
-{-| Requests advice on the optimal configuration for a FileIO ,
-transfer.  Newer version of FileIO can support greater,
-throughput by supporting a large window of FileIO data,
-that can be in-flight during read or write operations.
+{-| Requests advice on the optimal configuration for a FileIO transfer.  Newer version of
+FileIO can support greater throughput by supporting a large window of FileIO data that
+can be in-flight during read or write operations.
 -}
 type alias MsgFileioConfigReq =
     { sequence : Int
     }
 
-{-| The advice on the optimal configuration for a FileIO,
-transfer.  Newer version of FileIO can support greater,
-throughput by supporting a large window of FileIO data,
-that can be in-flight during read or write operations.
+{-| The advice on the optimal configuration for a FileIO transfer.  Newer version of FileIO
+can support greater throughput by supporting a large window of FileIO data that can be
+in-flight during read or write operations.
 -}
 type alias MsgFileioConfigResp =
     { batchSize : Int
@@ -1290,16 +1263,13 @@ type alias MsgFileioConfigResp =
     , windowSize : Int
     }
 
-{-| The read directory message lists the files in a directory on the,
-device's onboard flash file system.  The offset parameter can be,
-used to skip the first n elements of the file list. Returns a,
-MSG_FILEIO_READ_DIR_RESP message containing the directory,
-listings as a NULL delimited list. The listing is chunked over,
-multiple SBP packets. The sequence number in the request will be,
-returned in the response.  If message is invalid, a followup,
-MSG_PRINT message will print "Invalid fileio read message".,
-A device will only respond to this message when it is received,
-from sender ID 0x42.
+{-| The read directory message lists the files in a directory on the device's onboard flash
+file system.  The offset parameter can be used to skip the first n elements of the file
+list. Returns a MSG_FILEIO_READ_DIR_RESP message containing the directory listings as a
+NULL delimited list. The listing is chunked over multiple SBP packets. The sequence
+number in the request will be returned in the response.  If message is invalid, a
+followup MSG_PRINT message will print "Invalid fileio read message". A device will only
+respond to this message when it is received from sender ID 0x42.
 -}
 type alias MsgFileioReadDirReq =
     { dirname : String
@@ -1307,26 +1277,22 @@ type alias MsgFileioReadDirReq =
     , sequence : Int
     }
 
-{-| The read directory message lists the files in a directory on the,
-device's onboard flash file system. Message contains the directory,
-listings as a NULL delimited list. The listing is chunked over,
-multiple SBP packets and the end of the list is identified by an,
-entry containing just the character 0xFF. The sequence number in,
-the response is preserved from the request.
+{-| The read directory message lists the files in a directory on the device's onboard flash
+file system. Message contains the directory listings as a NULL delimited list. The
+listing is chunked over multiple SBP packets and the end of the list is identified by an
+packet with no entries. The sequence number in the response is preserved from the request.
 -}
 type alias MsgFileioReadDirResp =
     { contents : Array Int
     , sequence : Int
     }
 
-{-| The file read message reads a certain length (up to 255 bytes),
-from a given offset into a file, and returns the data in a,
-MSG_FILEIO_READ_RESP message where the message length field,
-indicates how many bytes were succesfully read.The sequence,
-number in the request will be returned in the response.,
-If the message is invalid, a followup MSG_PRINT message will,
-print "Invalid fileio read message". A device will only respond,
-to this message when it is received from sender ID 0x42.
+{-| The file read message reads a certain length (up to 255 bytes) from a given offset into a
+file, and returns the data in a MSG_FILEIO_READ_RESP message where the message length
+field indicates how many bytes were succesfully read.The sequence number in the request
+will be returned in the response. If the message is invalid, a followup MSG_PRINT message
+will print "Invalid fileio read message". A device will only respond to this message when
+it is received from sender ID 0x42.
 -}
 type alias MsgFileioReadReq =
     { chunkSize : Int
@@ -1335,34 +1301,30 @@ type alias MsgFileioReadReq =
     , sequence : Int
     }
 
-{-| The file read message reads a certain length (up to 255 bytes),
-from a given offset into a file, and returns the data in a,
-message where the message length field indicates how many bytes,
-were succesfully read. The sequence number in the response is,
-preserved from the request.
+{-| The file read message reads a certain length (up to 255 bytes) from a given offset into a
+file, and returns the data in a message where the message length field indicates how many
+bytes were succesfully read. The sequence number in the response is preserved from the
+request.
 -}
 type alias MsgFileioReadResp =
     { contents : Array Int
     , sequence : Int
     }
 
-{-| The file remove message deletes a file from the file system.,
-If the message is invalid, a followup MSG_PRINT message will,
-print "Invalid fileio remove message". A device will only,
+{-| The file remove message deletes a file from the file system. If the message is invalid, a
+followup MSG_PRINT message will print "Invalid fileio remove message". A device will only
 process this message when it is received from sender ID 0x42.
 -}
 type alias MsgFileioRemove =
     { filename : String
     }
 
-{-| The file write message writes a certain length (up to 255 bytes),
-of data to a file at a given offset. Returns a copy of the,
-original MSG_FILEIO_WRITE_RESP message to check integrity of,
-the write. The sequence number in the request will be returned,
-in the response. If message is invalid, a followup MSG_PRINT,
-message will print "Invalid fileio write message". A device will,
-only  process this message when it is received from sender ID,
-0x42.
+{-| The file write message writes a certain length (up to 255 bytes) of data to a file at a
+given offset. Returns a copy of the original MSG_FILEIO_WRITE_RESP message to check
+integrity of the write. The sequence number in the request will be returned in the
+response. If message is invalid, a followup MSG_PRINT message will print "Invalid fileio
+write message". A device will only process this message when it is received from sender
+ID 0x42.
 -}
 type alias MsgFileioWriteReq =
     { data : Array Int
@@ -1371,29 +1333,25 @@ type alias MsgFileioWriteReq =
     , sequence : Int
     }
 
-{-| The file write message writes a certain length (up to 255 bytes),
-of data to a file at a given offset. The message is a copy of the,
-original MSG_FILEIO_WRITE_REQ message to check integrity of the,
-write. The sequence number in the response is preserved from the,
-request.
+{-| The file write message writes a certain length (up to 255 bytes) of data to a file at a
+given offset. The message is a copy of the original MSG_FILEIO_WRITE_REQ message to check
+integrity of the write. The sequence number in the response is preserved from the request.
 -}
 type alias MsgFileioWriteResp =
     { sequence : Int
     }
 
-{-| This message defines success or failure codes for a variety of,
-flash memory requests from the host to the device. Flash read,
-and write messages, such as MSG_FLASH_READ_REQ, or,
+{-| This message defines success or failure codes for a variety of flash memory requests from
+the host to the device. Flash read and write messages, such as MSG_FLASH_READ_REQ, or
 MSG_FLASH_PROGRAM, may return this message on failure.
 -}
 type alias MsgFlashDone =
     { response : Int
     }
 
-{-| The flash erase message from the host erases a sector of either,
-the STM or M25 onboard flash memory. The device will reply with a,
-MSG_FLASH_DONE message containing the return code - FLASH_OK (0),
-on success or FLASH_INVALID_FLASH (1) if the flash specified is,
+{-| The flash erase message from the host erases a sector of either the STM or M25 onboard
+flash memory. The device will reply with a MSG_FLASH_DONE message containing the return
+code - FLASH_OK (0) on success or FLASH_INVALID_FLASH (1) if the flash specified is
 invalid.
 -}
 type alias MsgFlashErase =
@@ -1401,12 +1359,10 @@ type alias MsgFlashErase =
     , target : Int
     }
 
-{-| The flash program message programs a set of addresses of either,
-the STM or M25 flash. The device replies with either a,
-MSG_FLASH_DONE message containing the return code FLASH_OK (0),
-on success, or FLASH_INVALID_LEN (2) if the maximum write size,
-is exceeded. Note that the sector-containing addresses must be,
-erased before addresses can be programmed.
+{-| The flash program message programs a set of addresses of either the STM or M25 flash. The
+device replies with either a MSG_FLASH_DONE message containing the return code FLASH_OK
+(0) on success, or FLASH_INVALID_LEN (2) if the maximum write size is exceeded. Note that
+the sector-containing addresses must be erased before addresses can be programmed.
 -}
 type alias MsgFlashProgram =
     { addrLen : Int
@@ -1415,13 +1371,11 @@ type alias MsgFlashProgram =
     , target : Int
     }
 
-{-| The flash read message reads a set of addresses of either the,
-STM or M25 onboard flash. The device replies with a,
-MSG_FLASH_READ_RESP message containing either the read data on,
-success or a MSG_FLASH_DONE message containing the return code,
-FLASH_INVALID_LEN (2) if the maximum read size is exceeded or,
-FLASH_INVALID_ADDR (3) if the address is outside of the allowed,
-range.
+{-| The flash read message reads a set of addresses of either the STM or M25 onboard flash.
+The device replies with a MSG_FLASH_READ_RESP message containing either the read data on
+success or a MSG_FLASH_DONE message containing the return code FLASH_INVALID_LEN (2) if
+the maximum read size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+the allowed range.
 -}
 type alias MsgFlashReadReq =
     { addrLen : Int
@@ -1429,13 +1383,11 @@ type alias MsgFlashReadReq =
     , target : Int
     }
 
-{-| The flash read message reads a set of addresses of either the,
-STM or M25 onboard flash. The device replies with a,
-MSG_FLASH_READ_RESP message containing either the read data on,
-success or a MSG_FLASH_DONE message containing the return code,
-FLASH_INVALID_LEN (2) if the maximum read size is exceeded or,
-FLASH_INVALID_ADDR (3) if the address is outside of the allowed,
-range.
+{-| The flash read message reads a set of addresses of either the STM or M25 onboard flash.
+The device replies with a MSG_FLASH_READ_RESP message containing either the read data on
+success or a MSG_FLASH_DONE message containing the return code FLASH_INVALID_LEN (2) if
+the maximum read size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+the allowed range.
 -}
 type alias MsgFlashReadResp =
     { addrLen : Int
@@ -1443,48 +1395,42 @@ type alias MsgFlashReadResp =
     , target : Int
     }
 
-{-| This message describes the gain of each channel in the receiver frontend. Each ,
-gain is encoded as a non-dimensional percentage relative to the maximum range  ,
-possible for the gain stage of the frontend. By convention, each gain array ,
-has 8 entries and the index of the array corresponding to the index of the rf channel ,
-in the frontend. A gain of 127 percent encodes that rf channel is not present in the
-hardware.,
-A negative value implies an error for the particular gain stage as reported by the
-frontend.
+{-| This message describes the gain of each channel in the receiver frontend. Each gain is
+encoded as a non-dimensional percentage relative to the maximum range possible for the
+gain stage of the frontend. By convention, each gain array has 8 entries and the index of
+the array corresponding to the index of the rf channel in the frontend. A gain of 127
+percent encodes that rf channel is not present in the hardware. A negative value implies
+an error for the particular gain stage as reported by the frontend.
 -}
 type alias MsgFrontEndGain =
     { ifGain : Array Int
     , rfGain : Array Int
     }
 
-{-| This message provides the ability to forward messages over SBP.  This may take the form,
-of wrapping up SBP messages received by Piksi for logging purposes or wrapping ,
-another protocol with SBP.,
+{-| This message provides the ability to forward messages over SBP.  This may take the form
+of wrapping up SBP messages received by Piksi for logging purposes or wrapping another
+protocol with SBP.,
 ,
-The source identifier indicates from what interface a forwarded stream derived.,
-The protocol identifier identifies what the expected protocol the forwarded msg
-contains.,
+The source identifier indicates from what interface a forwarded stream derived. The
+protocol identifier identifies what the expected protocol the forwarded msg contains.
 Protocol 0 represents SBP and the remaining values are implementation defined.
 -}
 type alias MsgFwd =
-    { fwdPayload : String
+    { fwdPayload : Array Int
     , protocol : Int
     , source : Int
     }
 
-{-| This message reports the GPS time, representing the time since,
-the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
-counts the weeks and seconds of the week. The weeks begin at the,
-Saturday/Sunday transition. GPS week 0 began at the beginning of,
-the GPS time scale.,
+{-| This message reports the GPS time, representing the time since the GPS epoch began on
+midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
+weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
+GPS time scale.,
 ,
-Within each week number, the GPS time of the week is between,
-between 0 and 604800 seconds (=60*60*24*7). Note that GPS time,
-does not accumulate leap seconds, and as of now, has a small,
-offset from UTC. In a message stream, this message precedes a,
-set of other navigation messages referenced to the same time,
-(but lacking the ns field) and indicates a more precise time of,
-these messages.
+Within each week number, the GPS time of the week is between between 0 and 604800 seconds
+(=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a
+small offset from UTC. In a message stream, this message precedes a set of other
+navigation messages referenced to the same time (but lacking the ns field) and indicates
+a more precise time of these messages.
 -}
 type alias MsgGPSTime =
     { flags : Int
@@ -1493,19 +1439,16 @@ type alias MsgGPSTime =
     , wn : Int
     }
 
-{-| This message reports the GPS time, representing the time since,
-the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
-counts the weeks and seconds of the week. The weeks begin at the,
-Saturday/Sunday transition. GPS week 0 began at the beginning of,
-the GPS time scale.,
+{-| This message reports the GPS time, representing the time since the GPS epoch began on
+midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
+weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
+GPS time scale.,
 ,
-Within each week number, the GPS time of the week is between,
-between 0 and 604800 seconds (=60*60*24*7). Note that GPS time,
-does not accumulate leap seconds, and as of now, has a small,
-offset from UTC. In a message stream, this message precedes a,
-set of other navigation messages referenced to the same time,
-(but lacking the ns field) and indicates a more precise time of,
-these messages.
+Within each week number, the GPS time of the week is between between 0 and 604800 seconds
+(=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a
+small offset from UTC. In a message stream, this message precedes a set of other
+navigation messages referenced to the same time (but lacking the ns field) and indicates
+a more precise time of these messages.
 -}
 type alias MsgGPSTimeGnss =
     { flags : Int
@@ -1514,10 +1457,9 @@ type alias MsgGPSTimeGnss =
     , wn : Int
     }
 
-{-| The GLONASS L1/L2 Code-Phase biases allows to perform,
-GPS+GLONASS integer ambiguity resolution for baselines,
-with mixed receiver types (e.g. receiver of different,
-manufacturers)
+{-| The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer ambiguity
+resolution for baselines with mixed receiver types (e.g. receiver of different
+manufacturers).
 -}
 type alias MsgGloBiases =
     { l1CABias : Int
@@ -1551,10 +1493,8 @@ type alias GnssCapb =
     }
 
 {-| The GNSS time offset message contains the information that is needed to translate
-messages,
-tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the
-sender,
-producing this message.
+messages tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for
+the sender producing this message.
 -}
 type alias MsgGnssTimeOffset =
     { flags : Int
@@ -1573,8 +1513,8 @@ type alias MsgGroupDelay =
     , valid : Int
     }
 
-{-| This leading message lists the time metadata of the Solution Group.,
-It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+{-| This leading message lists the time metadata of the Solution Group. It also lists the
+atomic contents (i.e. types of messages included) of the Solution Group.
 -}
 type alias MsgGroupMeta =
     { flags : Int
@@ -1583,33 +1523,29 @@ type alias MsgGroupMeta =
     , nGroupMsgs : Int
     }
 
-{-| The heartbeat message is sent periodically to inform the host,
-or other attached devices that the system is running. It is,
-used to monitor system malfunctions. It also contains status,
-flags that indicate to the host the status of the system and,
-whether it is operating correctly. Currently, the expected,
-heartbeat interval is 1 sec.,
+{-| The heartbeat message is sent periodically to inform the host or other attached devices
+that the system is running. It is used to monitor system malfunctions. It also contains
+status flags that indicate to the host the status of the system and whether it is
+operating correctly. Currently, the expected heartbeat interval is 1 sec.,
 ,
-The system error flag is used to indicate that an error has,
-occurred in the system. To determine the source of the error,,
-the remaining error flags should be inspected.
+The system error flag is used to indicate that an error has occurred in the system. To
+determine the source of the error, the remaining error flags should be inspected.
 -}
 type alias MsgHeartbeat =
     { flags : Int
     }
 
-{-| This message reports the state of the Integer Ambiguity,
-Resolution (IAR) process, which resolves unknown integer,
-ambiguities from double-differenced carrier-phase measurements,
+{-| This message reports the state of the Integer Ambiguity Resolution (IAR) process, which
+resolves unknown integer ambiguities from double-differenced carrier-phase measurements
 from satellite observations.
 -}
 type alias MsgIarState =
     { numHyps : Int
     }
 
-{-| Auxiliary data specific to a particular IMU. The `imu_type` field will,
-always be consistent but the rest of the payload is device specific and,
-depends on the value of `imu_type`.
+{-| Auxiliary data specific to a particular IMU. The `imu_type` field will always be
+consistent but the rest of the payload is device specific and depends on the value of
+`imu_type`.
 -}
 type alias MsgImuAux =
     { imuConf : Int
@@ -1617,14 +1553,13 @@ type alias MsgImuAux =
     , temp : Int
     }
 
-{-| Raw data from the Inertial Measurement Unit, containing accelerometer and,
-gyroscope readings. The sense of the measurements are to be aligned with ,
-the indications on the device itself. Measurement units, which are specific to the,
-device hardware and settings, are communicated via the MSG_IMU_AUX message.,
-If using "time since startup" time tags, the receiving end will expect a,
-`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements,
-with GNSS. The timestamp must wrap around to zero when reaching one week (604800
-seconds).,
+{-| Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope
+readings. The sense of the measurements are to be aligned with the indications on the
+device itself. Measurement units, which are specific to the device hardware and settings,
+are communicated via the MSG_IMU_AUX message. If using "time since startup" time tags,
+the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available
+to synchronise IMU measurements with GNSS. The timestamp must wrap around to zero when
+reaching one week (604800 seconds).,
 ,
 The time-tagging mode should not change throughout a run.
 -}
@@ -1639,17 +1574,16 @@ type alias MsgImuRaw =
     , towF : Int
     }
 
-{-| The INS status message describes the state of the operation,
-and initialization of the inertial navigation system.
+{-| The INS status message describes the state of the operation and initialization of the
+inertial navigation system.
 -}
 type alias MsgInsStatus =
     { flags : Int
     }
 
 {-| The INS update status message contains informations about executed and rejected INS
-updates.,
-This message is expected to be extended in the future as new types of measurements are
-being added.
+updates. This message is expected to be extended in the future as new types of
+measurements are being added.
 -}
 type alias MsgInsUpdates =
     { gnsspos : Int
@@ -1661,9 +1595,9 @@ type alias MsgInsUpdates =
     , zerovel : Int
     }
 
-{-| The ionospheric parameters which allow the "L1 only" or "L2 only" user to,
-utilize the ionospheric model for computation of the ionospheric delay.,
-Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+{-| The ionospheric parameters which allow the "L1 only" or "L2 only" user to utilize the
+ionospheric model for computation of the ionospheric delay. Please see ICD-GPS-200
+(Chapter 20.3.3.5.1.7) for more details.
 -}
 type alias MsgIono =
     { a0 : Float
@@ -1677,8 +1611,8 @@ type alias MsgIono =
     , tNmct : GpsTimeSEC
     }
 
-{-| This message indicates the process state of the top 10 heaviest,
-consumers of CPU on the system, including a timestamp.
+{-| This message indicates the process state of the top 10 heaviest consumers of CPU on the
+system, including a timestamp.
 -}
 type alias MsgLinuxCPUState =
     { cmdline : String
@@ -1690,8 +1624,8 @@ type alias MsgLinuxCPUState =
     , tname : String
     }
 
-{-| This message indicates the process state of the top 10 heaviest,
-consumers of memory on the system, including a timestamp.
+{-| This message indicates the process state of the top 10 heaviest consumers of memory on
+the system, including a timestamp.
 -}
 type alias MsgLinuxMemState =
     { cmdline : String
@@ -1759,17 +1693,16 @@ type alias MsgLinuxSysState =
     , time : Int
     }
 
-{-| This message contains a human-readable payload string from the,
-device containing errors, warnings and informational messages at,
-ERROR, WARNING, DEBUG, INFO logging levels.
+{-| This message contains a human-readable payload string from the device containing errors,
+warnings and informational messages at ERROR, WARNING, DEBUG, INFO logging levels.
 -}
 type alias MsgLog =
     { level : Int
     , text : String
     }
 
-{-| The flash status message writes to the 8-bit M25 flash status,
-register. The device replies with a MSG_FLASH_DONE message.
+{-| The flash status message writes to the 8-bit M25 flash status register. The device
+replies with a MSG_FLASH_DONE message.
 -}
 type alias MsgM25FlashWriteStatus =
     { status : Array Int
@@ -1784,46 +1717,41 @@ type alias MsgMagRaw =
     , towF : Int
     }
 
-{-| This message allows setting a mask to prevent a particular satellite,
-from being used in various Piksi subsystems.
+{-| This message allows setting a mask to prevent a particular satellite from being used in
+various Piksi subsystems.
 -}
 type alias MsgMaskSatellite =
     { mask : Int
     , sid : GnssSignal
     }
 
-{-| The tracking message returns a variable-length array of tracking,
-channel states. It reports status and carrier-to-noise density,
-measurements for all tracked satellites.
+{-| The tracking message returns a variable-length array of tracking channel states. It
+reports status and carrier-to-noise density measurements for all tracked satellites.
 -}
 type alias MsgMeasurementState =
     { states : Array MeasurementState
     }
 
-{-| Measurement Engine tracking channel state for a specific satellite signal,
-and measured signal power.,
-The mesid field for Glonass can either,
-carry the FCN as 100 + FCN where FCN is in [-7, +6] or,
-the Slot ID (from 1 to 28)
+{-| Measurement Engine tracking channel state for a specific satellite signal and measured
+signal power. The mesid field for Glonass can either carry the FCN as 100 + FCN where FCN
+is in [-7, +6] or the Slot ID (from 1 to 28).
 -}
 type alias MeasurementState =
     { cn0 : Int
     , mesid : GnssSignal
     }
 
-{-| The device message from the host reads a unique device,
-identifier from the SwiftNAP, an FPGA. The host requests the ID,
-by sending a MSG_NAP_DEVICE_DNA_REQ message. The device,
-responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the,
-device ID in the payload. Note that this ID is tied to the FPGA,,
-and not related to the Piksi's serial number.
+{-| The device message from the host reads a unique device identifier from the SwiftNAP, an
+FPGA. The host requests the ID by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
+responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+that this ID is tied to the FPGA, and not related to the Piksi's serial number.
 -}
 type alias MsgNapDeviceDnaResp =
     { dna : Array Int
     }
 
-{-| This message is sent out when an object is stored into NDB. If needed,
-message could also be sent out when fetching an object from NDB.
+{-| This message is sent out when an object is stored into NDB. If needed message could also
+be sent out when fetching an object from NDB.
 -}
 type alias MsgNdbEvent =
     { dataSource : Int
@@ -1841,12 +1769,10 @@ type alias MsgNetworkBandwidthUsage =
     { interfaces : Array NetworkUsage
     }
 
-{-| The bandwidth usage for each interface can be reported,
-within this struct and utilize multiple fields to fully,
-specify the type of traffic that is being tracked. As,
-either the interval of collection or the collection time,
-may vary, both a timestamp and period field is provided,,
-though may not necessarily be populated with a value.
+{-| The bandwidth usage for each interface can be reported within this struct and utilize
+multiple fields to fully specify the type of traffic that is being tracked. As either the
+interval of collection or the collection time may vary, both a timestamp and period field
+is provided, though may not necessarily be populated with a value.
 -}
 type alias NetworkUsage =
     { duration : Int
@@ -1856,9 +1782,8 @@ type alias NetworkUsage =
     , txBytes : Int
     }
 
-{-| The state of a network interface on the Piksi.,
-Data is made to reflect output of ifaddrs struct returned by getifaddrs,
-in c.
+{-| The state of a network interface on the Piksi. Data is made to reflect output of ifaddrs
+struct returned by getifaddrs in c.
 -}
 type alias MsgNetworkStateResp =
     { flags : Int
@@ -1871,13 +1796,11 @@ type alias MsgNetworkStateResp =
     , txBytes : Int
     }
 
-{-| The GPS observations message reports all the raw pseudorange and,
-carrier phase observations for the satellites being tracked by,
-the device. Carrier phase observation here is represented as a,
-40-bit fixed point number with Q32.8 layout (i.e. 32-bits of,
-whole cycles and 8-bits of fractional cycles). The observations,
-are be interoperable with 3rd party receivers and conform,
-with typical RTCMv3 GNSS observations.
+{-| The GPS observations message reports all the raw pseudorange and carrier phase
+observations for the satellites being tracked by the device. Carrier phase observation
+here is represented as a 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+whole cycles and 8-bits of fractional cycles). The observations are be interoperable with
+3rd party receivers and conform with typical RTCMv3 GNSS observations.
 -}
 type alias MsgObs =
     { header : ObservationHeader
@@ -1890,10 +1813,9 @@ type alias ObservationHeader =
     , t : GpsTime
     }
 
-{-| A wire-appropriate receiver clock time, defined as the time,
-since the beginning of the week on the Saturday/Sunday,
-transition. In most cases, observations are epoch aligned,
-so ns field will be 0.
+{-| A wire-appropriate receiver clock time, defined as the time since the beginning of the
+week on the Saturday/Sunday transition. In most cases, observations are epoch aligned so
+ns field will be 0.
 -}
 type alias GpsTime =
     { nsResidual : Int
@@ -1901,13 +1823,12 @@ type alias GpsTime =
     , wn : Int
     }
 
-{-| Pseudorange and carrier phase observation for a satellite being tracked.,
-The observations are interoperable with 3rd party receivers and conform with,
-typical RTCM 3.1 message GPS/GLO observations.,
+{-| Pseudorange and carrier phase observation for a satellite being tracked. The observations
+are interoperable with 3rd party receivers and conform with typical RTCM 3.1 message
+GPS/GLO observations.,
 ,
-Carrier phase observations are not guaranteed to be aligned to the RINEX 3,
-or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently,
-peformed.
+Carrier phase observations are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3
+MSM reference signal and no 1/4 cycle adjustments are currently peformed.
 -}
 type alias PackedObsContent =
     { cn0 : Int
@@ -1919,9 +1840,8 @@ type alias PackedObsContent =
     , sid : GnssSignal
     }
 
-{-| Doppler measurement in Hz represented as a 24-bit,
-fixed point number with Q16.8 layout, i.e. 16-bits of whole,
-doppler and 8-bits of fractional doppler. This doppler is defined,
+{-| Doppler measurement in Hz represented as a 24-bit fixed point number with Q16.8 layout,
+i.e. 16-bits of whole doppler and 8-bits of fractional doppler. This doppler is defined
 as positive for approaching satellites.
 -}
 type alias Doppler =
@@ -1929,9 +1849,8 @@ type alias Doppler =
     , i : Int
     }
 
-{-| Carrier phase measurement in cycles represented as a 40-bit,
-fixed point number with Q32.8 layout, i.e. 32-bits of whole,
-cycles and 8-bits of fractional cycles. This phase has the,
+{-| Carrier phase measurement in cycles represented as a 40-bit fixed point number with Q32.8
+layout, i.e. 32-bits of whole cycles and 8-bits of fractional cycles. This phase has the
 same sign as the pseudorange.
 -}
 type alias CarrierPhase =
@@ -1940,18 +1859,13 @@ type alias CarrierPhase =
     }
 
 {-| Message representing the x component of vehicle velocity in the user frame at the
-odometry,
-reference point(s) specified by the user. The offset for the odometry reference point and
-,
-the definition and origin of the user frame are defined through the device settings
-interface.,
-There are 4 possible user-defined sources of this message  which are labeled arbitrarily
-,
-source 0 through 3.,
-If using "processor time" time tags, the receiving end will expect a,
-`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
-measurements,
-with GNSS. Processor time shall roll over to zero after one week.
+odometry reference point(s) specified by the user. The offset for the odometry reference
+point and the definition and origin of the user frame are defined through the device
+settings interface. There are 4 possible user-defined sources of this message which are
+labeled arbitrarily source 0 through 3. If using "processor time" time tags, the
+receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+synchronise odometry measurements with GNSS. Processor time shall roll over to zero after
+one week.
 -}
 type alias MsgOdometry =
     { flags : Int
@@ -1959,11 +1873,11 @@ type alias MsgOdometry =
     , velocity : Int
     }
 
-{-| This message reports the yaw, pitch, and roll angles of the vehicle body frame.,
-The rotations should applied intrinsically in the order yaw, pitch, and roll ,
-in order to rotate the from a frame aligned with the local-level NED frame ,
-to the vehicle body frame.  This message will only be available in future ,
-INS versions of Swift Products and is not produced by Piksi Multi or Duro.
+{-| This message reports the yaw, pitch, and roll angles of the vehicle body frame. The
+rotations should applied intrinsically in the order yaw, pitch, and roll in order to
+rotate the from a frame aligned with the local-level NED frame to the vehicle body
+frame.  This message will only be available in future INS versions of Swift Products and
+is not produced by Piksi Multi or Duro.
 -}
 type alias MsgOrientEuler =
     { flags : Int
@@ -1977,14 +1891,10 @@ type alias MsgOrientEuler =
     }
 
 {-| This message reports the quaternion vector describing the vehicle body frame's
-orientation,
-with respect to a local-level NED frame. The components of the vector should sum to a
-unit,
-vector assuming that the LSB of each component as a value of 2^-31. This message will
-only,
-be available in future INS versions of Swift Products and is not produced by Piksi Multi
-,
-or Duro.
+orientation with respect to a local-level NED frame. The components of the vector should
+sum to a unit vector assuming that the LSB of each component as a value of 2^-31. This
+message will only be available in future INS versions of Swift Products and is not
+produced by Piksi Multi or Duro.
 -}
 type alias MsgOrientQuat =
     { flags : Int
@@ -1999,7 +1909,7 @@ type alias MsgOrientQuat =
     , zAccuracy : Float
     }
 
-{-| The OSR message contains network corrections in an observation-like format -}
+{-| The OSR message contains network corrections in an observation-like format. -}
 type alias MsgOsr =
     { header : ObservationHeader
     , obs : Array PackedOsrContent
@@ -2017,13 +1927,11 @@ type alias PackedOsrContent =
     , tropoStd : Int
     }
 
-{-| The position solution message reports absolute Earth Centered,
-Earth Fixed (ECEF) coordinates and the status (single point vs,
-pseudo-absolute RTK) of the position solution. If the rover,
-receiver knows the surveyed position of the base station and has,
-an RTK solution, this reports a pseudo-absolute position,
-solution using the base station position and the rover's RTK,
-baseline vector. The full GPS time is given by the preceding,
+{-| The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+coordinates and the status (single point vs pseudo-absolute RTK) of the position
+solution. If the rover receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgPosECEF =
@@ -2036,14 +1944,12 @@ type alias MsgPosECEF =
     , z : Float
     }
 
-{-| The position solution message reports absolute Earth Centered,
-Earth Fixed (ECEF) coordinates and the status (single point vs,
-pseudo-absolute RTK) of the position solution. The message also,
-reports the upper triangular portion of the 3x3 covariance matrix.,
-If the receiver knows the surveyed position of the base station and has,
-an RTK solution, this reports a pseudo-absolute position,
-solution using the base station position and the rover's RTK,
-baseline vector. The full GPS time is given by the preceding,
+{-| The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+coordinates and the status (single point vs pseudo-absolute RTK) of the position
+solution. The message also reports the upper triangular portion of the 3x3 covariance
+matrix. If the receiver knows the surveyed position of the base station and has an RTK
+solution, this reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgPosECEFCov =
@@ -2061,14 +1967,12 @@ type alias MsgPosECEFCov =
     , z : Float
     }
 
-{-| The position solution message reports absolute Earth Centered,
-Earth Fixed (ECEF) coordinates and the status (single point vs,
-pseudo-absolute RTK) of the position solution. The message also,
-reports the upper triangular portion of the 3x3 covariance matrix.,
-If the receiver knows the surveyed position of the base station and has,
-an RTK solution, this reports a pseudo-absolute position,
-solution using the base station position and the rover's RTK,
-baseline vector. The full GPS time is given by the preceding,
+{-| The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+coordinates and the status (single point vs pseudo-absolute RTK) of the position
+solution. The message also reports the upper triangular portion of the 3x3 covariance
+matrix. If the receiver knows the surveyed position of the base station and has an RTK
+solution, this reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgPosECEFCovGnss =
@@ -2086,13 +1990,11 @@ type alias MsgPosECEFCovGnss =
     , z : Float
     }
 
-{-| The position solution message reports absolute Earth Centered,
-Earth Fixed (ECEF) coordinates and the status (single point vs,
-pseudo-absolute RTK) of the position solution. If the rover,
-receiver knows the surveyed position of the base station and has,
-an RTK solution, this reports a pseudo-absolute position,
-solution using the base station position and the rover's RTK,
-baseline vector. The full GPS time is given by the preceding,
+{-| The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+coordinates and the status (single point vs pseudo-absolute RTK) of the position
+solution. If the rover receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgPosECEFGnss =
@@ -2105,13 +2007,11 @@ type alias MsgPosECEFGnss =
     , z : Float
     }
 
-{-| This position solution message reports the absolute geodetic,
-coordinates and the status (single point vs pseudo-absolute RTK),
-of the position solution. If the rover receiver knows the,
-surveyed position of the base station and has an RTK solution,,
-this reports a pseudo-absolute position solution using the base,
-station position and the rover's RTK baseline vector. The full,
-GPS time is given by the preceding MSG_GPS_TIME with the,
+{-| This position solution message reports the absolute geodetic coordinates and the status
+(single point vs pseudo-absolute RTK) of the position solution. If the rover receiver
+knows the surveyed position of the base station and has an RTK solution, this reports a
+pseudo-absolute position solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).
 -}
 type alias MsgPosLLH =
@@ -2125,14 +2025,13 @@ type alias MsgPosLLH =
     , vAccuracy : Int
     }
 
-{-| This position solution message reports the absolute geodetic,
-coordinates and the status (single point vs pseudo-absolute RTK),
-of the position solution as well as the upper triangle of the 3x3,
-covariance matrix.  The position information and Fix Mode flags should,
-follow the MSG_POS_LLH message.  Since the covariance matrix is computed,
-in the local-level North, East, Down frame, the covariance terms follow,
-with that convention. Thus, covariances are reported against the "downward",
-measurement and care should be taken with the sign convention.
+{-| This position solution message reports the absolute geodetic coordinates and the status
+(single point vs pseudo-absolute RTK) of the position solution as well as the upper
+triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
+should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+local-level North, East, Down frame, the covariance terms follow with that convention.
+Thus, covariances are reported against the "downward" measurement and care should be
+taken with the sign convention.
 -}
 type alias MsgPosLLHCov =
     { covDD : Float
@@ -2149,14 +2048,13 @@ type alias MsgPosLLHCov =
     , tow : Int
     }
 
-{-| This position solution message reports the absolute geodetic,
-coordinates and the status (single point vs pseudo-absolute RTK),
-of the position solution as well as the upper triangle of the 3x3,
-covariance matrix.  The position information and Fix Mode flags should,
-follow the MSG_POS_LLH message.  Since the covariance matrix is computed,
-in the local-level North, East, Down frame, the covariance terms follow,
-with that convention. Thus, covariances are reported against the "downward",
-measurement and care should be taken with the sign convention.
+{-| This position solution message reports the absolute geodetic coordinates and the status
+(single point vs pseudo-absolute RTK) of the position solution as well as the upper
+triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
+should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+local-level North, East, Down frame, the covariance terms follow with that convention.
+Thus, covariances are reported against the "downward" measurement and care should be
+taken with the sign convention.
 -}
 type alias MsgPosLLHCovGnss =
     { covDD : Float
@@ -2173,13 +2071,11 @@ type alias MsgPosLLHCovGnss =
     , tow : Int
     }
 
-{-| This position solution message reports the absolute geodetic,
-coordinates and the status (single point vs pseudo-absolute RTK),
-of the position solution. If the rover receiver knows the,
-surveyed position of the base station and has an RTK solution,,
-this reports a pseudo-absolute position solution using the base,
-station position and the rover's RTK baseline vector. The full,
-GPS time is given by the preceding MSG_GPS_TIME with the,
+{-| This position solution message reports the absolute geodetic coordinates and the status
+(single point vs pseudo-absolute RTK) of the position solution. If the rover receiver
+knows the surveyed position of the base station and has an RTK solution, this reports a
+pseudo-absolute position solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).
 -}
 type alias MsgPosLLHGnss =
@@ -2193,28 +2089,24 @@ type alias MsgPosLLHGnss =
     , vAccuracy : Int
     }
 
-{-| The PPS time message contains the value of the sender's local time in,
-microseconds at the moment a pulse is detected on the PPS input. This,
-is to be used for syncronisation of sensor data sampled with a local,
-timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown,
-to the sender.,
+{-| The PPS time message contains the value of the sender's local time in microseconds at the
+moment a pulse is detected on the PPS input. This is to be used for syncronisation of
+sensor data sampled with a local timestamp (e.g. IMU or wheeltick messages) where GNSS
+time is unknown to the sender.,
 ,
-The local time used to timestamp the PPS pulse must be generated by the,
-same clock which is used to timestamp the IMU/wheel sensor data and,
-should follow the same roll-over rules.  A separate MSG_PPS_TIME,
-message should be sent for each source of sensor data which uses,
-PPS-relative timestamping.  The sender ID for each of these,
-MSG_PPS_TIME messages should match the sender ID of the respective,
-sensor data.
+The local time used to timestamp the PPS pulse must be generated by the same clock which
+is used to timestamp the IMU/wheel sensor data and should follow the same roll-over
+rules.  A separate MSG_PPS_TIME message should be sent for each source of sensor data
+which uses PPS-relative timestamping.  The sender ID for each of these MSG_PPS_TIME
+messages should match the sender ID of the respective sensor data.
 -}
 type alias MsgPpsTime =
     { flags : Int
     , time : Int
     }
 
-{-| This message reports the protection levels associated to the given ,
-state estimate. The full GPS time is given by the preceding MSG_GPS_TIME ,
-with the matching time-of-week (tow).
+{-| This message reports the protection levels associated to the given state estimate. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgProtectionLevel =
     { atpl : Int
@@ -2240,22 +2132,20 @@ type alias MsgProtectionLevel =
     , wn : Int
     }
 
-{-| This message from the host resets the Piksi back into the,
-bootloader.
--}
+{-| This message from the host resets the Piksi back into the bootloader. -}
 type alias MsgReset =
     { flags : Int
     }
 
-{-| This message resets either the DGNSS Kalman filters or Integer,
-Ambiguity Resolution (IAR) process.
+{-| This message resets either the DGNSS Kalman filters or Integer Ambiguity Resolution (IAR)
+process.
 -}
 type alias MsgResetFilters =
     { filter : Int
     }
 
-{-| This message is sent once per second per SBAS satellite. ME checks the,
-parity of the data block and sends only blocks that pass the check.
+{-| This message is sent once per second per SBAS satellite. ME checks the parity of the data
+block and sends only blocks that pass the check.
 -}
 type alias MsgSbasRaw =
     { data : Array Int
@@ -2264,9 +2154,8 @@ type alias MsgSbasRaw =
     , tow : Int
     }
 
-{-| The settings message for iterating through the settings,
-values. A device will respond to this message with a ,
-"MSG_SETTINGS_READ_BY_INDEX_RESP".
+{-| The settings message for iterating through the settings values. A device will respond to
+this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
 -}
 type alias MsgSettingsReadByIndexReq =
     { index : Int
@@ -2274,82 +2163,74 @@ type alias MsgSettingsReadByIndexReq =
 
 {-| The settings message that reports the value of a setting at an index.,
 ,
-In the string field, it reports NULL-terminated and delimited string,
-with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where,
-the '\0' escape sequence denotes the NULL character and where quotation,
-marks are omitted. The FORMAT_TYPE field is optional and denotes,
-possible string values of the setting as a hint to the user. If,
-included, the format type portion of the string has the format,
-"enum:value1,value2,value3". An example string that could be sent from,
-the device is "simulator\0enabled\0True\0enum:True,False\0"
+In the string field, it reports NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where the '\0' escape sequence denotes
+the NULL character and where quotation marks are omitted. The FORMAT_TYPE field is
+optional and denotes possible string values of the setting as a hint to the user. If
+included, the format type portion of the string has the format
+"enum:value1,value2,value3". An example string that could be sent from the device is
+"simulator\0enabled\0True\0enum:True,False\0".
 -}
 type alias MsgSettingsReadByIndexResp =
     { index : Int
     , setting : String
     }
 
-{-| The setting message that reads the device configuration. The string,
-field is a NULL-terminated and NULL-delimited string with contents,
-"SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the,
-NULL character and where quotation marks are omitted. An example,
-string that could be sent to a device is "solution\0soln_freq\0". A,
-device will only respond to this message when it is received from,
-sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP,
-message (msg_id 0x00A5).
+{-| The setting message that reads the device configuration. The string field is a
+NULL-terminated and NULL-delimited string with contents "SECTION_SETTING\0SETTING\0"
+where the '\0' escape sequence denotes the NULL character and where quotation marks are
+omitted. An example string that could be sent to a device is "solution\0soln_freq\0". A
+device will only respond to this message when it is received from sender ID 0x42. A
+device should respond with a MSG_SETTINGS_READ_RESP message (msg_id 0x00A5).
 -}
 type alias MsgSettingsReadReq =
     { setting : String
     }
 
-{-| The setting message wich which the device responds after a,
-MSG_SETTING_READ_REQ is sent to device. The string field is a,
-NULL-terminated and NULL-delimited string with contents,
-"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence,
-denotes the NULL character and where quotation marks are omitted. An,
-example string that could be sent from device is,
-"solution\0soln_freq\010\0".
+{-| The setting message wich which the device responds after a MSG_SETTING_READ_REQ is sent
+to device. The string field is a NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+character and where quotation marks are omitted. An example string that could be sent
+from device is "solution\0soln_freq\010\0".
 -}
 type alias MsgSettingsReadResp =
     { setting : String
     }
 
-{-| This message registers the presence and default value of a setting,
-with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE,
-for this setting to set the initial value.
+{-| This message registers the presence and default value of a setting with a settings
+daemon.  The host should reply with MSG_SETTINGS_WRITE for this setting to set the
+initial value.
 -}
 type alias MsgSettingsRegister =
     { setting : String
     }
 
-{-| This message responds to setting registration with the effective value.,
-The effective value shall differ from the given default value if setting,
-was already registered or is available in the permanent setting storage,
-and had a different value.
+{-| This message responds to setting registration with the effective value. The effective
+value shall differ from the given default value if setting was already registered or is
+available in the permanent setting storage and had a different value.
 -}
 type alias MsgSettingsRegisterResp =
     { setting : String
     , status : Int
     }
 
-{-| The setting message writes the device configuration for a particular,
-setting via A NULL-terminated and NULL-delimited string with contents,
-"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes ,
-the NULL character and where quotation marks are omitted. A device will,
-only process to this message when it is received from sender ID 0x42.,
-An example string that could be sent to a device is,
-"solution\0soln_freq\010\0".
+{-| The setting message writes the device configuration for a particular setting via A
+NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+character and where quotation marks are omitted. A device will only process to this
+message when it is received from sender ID 0x42. An example string that could be sent to
+a device is "solution\0soln_freq\010\0".
 -}
 type alias MsgSettingsWrite =
     { setting : String
     }
 
-{-| Return the status of a write request with the new value of the,
-setting.  If the requested value is rejected, the current value,
-will be returned. The string field is a NULL-terminated and NULL-delimited,
-string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0',
-escape sequence denotes the NULL character and where quotation marks,
-are omitted. An example string that could be sent from device is,
-"solution\0soln_freq\010\0".
+{-| Return the status of a write request with the new value of the setting.  If the requested
+value is rejected, the current value will be returned. The string field is a
+NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
+character and where quotation marks are omitted. An example string that could be sent
+from device is "solution\0soln_freq\010\0".
 -}
 type alias MsgSettingsWriteResp =
     { setting : String
@@ -2357,16 +2238,13 @@ type alias MsgSettingsWriteResp =
     }
 
 {-| This message contains all metadata about the sensors received and/or used in computing
-the sensorfusion solution.,
-It focuses primarly, but not only, on GNSS metadata.,
-Regarding the age of the last received valid GNSS solution, the highest two bits are time
-status, indicating,
-whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also
-known as time of validity),
-If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used
-before alignment is,
-complete in the Fusion Engine, when output solution is the last received valid GNSS
-solution and its tow is not a TOM.
+the sensorfusion solution. It focuses primarly, but not only, on GNSS metadata. Regarding
+the age of the last received valid GNSS solution, the highest two bits are time status,
+indicating whether age gnss can or can not be used to retrieve time of measurement (noted
+TOM, also known as time of validity) If it can, substract 'age gnss' from 'tow' in
+navigation messages to get TOM. Can be used before alignment is complete in the Fusion
+Engine, when output solution is the last received valid GNSS solution and its tow is not
+a TOM.
 -}
 type alias MsgSolnMeta =
     { ageCorrections : Int
@@ -2378,13 +2256,11 @@ type alias MsgSolnMeta =
     , vdop : Int
     }
 
-{-| Metadata describing which sensors were involved in the solution.,
-The structure is fixed no matter what the actual sensor type is.,
-The sensor_type field tells you which sensor we are talking about. It also tells you,
-whether the sensor data was actually used or not.,
-The flags field, always a u8, contains the sensor-specific data.,
-The content of flags, for each sensor type, is described in the relevant structures in
-this section.
+{-| Metadata describing which sensors were involved in the solution. The structure is fixed
+no matter what the actual sensor type is. The sensor_type field tells you which sensor we
+are talking about. It also tells you whether the sensor data was actually used or not.
+The flags field, always a u8, contains the sensor-specific data. The content of flags,
+for each sensor type, is described in the relevant structures in this section.
 -}
 type alias SolutionInputType =
     { flags : Int
@@ -2402,10 +2278,9 @@ type alias MsgSpecan =
     , t : GpsTime
     }
 
-{-| The precise code biases message is to be added,
-to the pseudorange of the corresponding signal,
-to get corrected pseudorange. It is an,
-equivalent to the 1059 / 1065 RTCM message types
+{-| The precise code biases message is to be added to the pseudorange of the corresponding
+signal to get corrected pseudorange. It is an equivalent to the 1059 / 1065 RTCM message
+types.
 -}
 type alias MsgSsrCodeBiases =
     { biases : Array CodeBiasesContent
@@ -2415,8 +2290,8 @@ type alias MsgSsrCodeBiases =
     , updateInterval : Int
     }
 
-{-| Code biases are to be added to pseudorange.,
-The corrections conform with RTCMv3 MT 1059 / 1065.
+{-| Code biases are to be added to pseudorange. The corrections conform with RTCMv3 MT 1059 /
+1065.
 -}
 type alias CodeBiasesContent =
     { code : Int
@@ -2445,15 +2320,15 @@ type alias GridDefinitionHeader =
 
 {-| STEC residuals are per space vehicle, troposphere is not.,
 ,
-It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 -}
 type alias MsgSsrGriddedCorrection =
     { element : GridElement
     , header : GriddedCorrectionHeader
     }
 
-{-| Contains one tropo delay (mean and stddev), plus STEC residuals (mean and,
-stddev) for each satellite at the grid point.
+{-| Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
+each satellite at the grid point.
 -}
 type alias GridElement =
     { index : Int
@@ -2461,35 +2336,28 @@ type alias GridElement =
     , tropoDelayCorrection : TroposphericDelayCorrection
     }
 
-{-| STEC residual (mean and standard deviation) for the given satellite,
-at the grid point,
--}
+{-| STEC residual (mean and standard deviation) for the given satellite at the grid point. -}
 type alias STECResidual =
     { residual : Int
     , stddev : Int
     , svID : SvID
     }
 
-{-| A (Constellation ID, satellite ID) tuple that uniquely identifies,
-a space vehicle
--}
+{-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
 type alias SvID =
     { constellation : Int
     , satID : Int
     }
 
-{-| Troposphere vertical delays (mean and standard deviation) at the grid,
-point.
--}
+{-| Troposphere vertical delays (mean and standard deviation) at the grid point. -}
 type alias TroposphericDelayCorrection =
     { hydro : Int
     , stddev : Int
     , wet : Int
     }
 
-{-| The LPP message contains nested variable length arrays,
-which are not suppported in SBP, so each grid point will,
-be identified by the index.
+{-| The LPP message contains nested variable length arrays which are not suppported in SBP,
+so each grid point will be identified by the index.
 -}
 type alias GriddedCorrectionHeader =
     { iodAtmo : Int
@@ -2510,9 +2378,7 @@ type alias MsgSsrGriddedCorrectionNoStd =
     , header : GriddedCorrectionHeader
     }
 
-{-| Contains one tropo delay, plus STEC residuals for each satellite at the,
-grid point.
--}
+{-| Contains one tropo delay, plus STEC residuals for each satellite at the grid point. -}
 type alias GridElementNoStd =
     { index : Int
     , stecResiduals : Array STECResidualNoStd
@@ -2531,10 +2397,8 @@ type alias TroposphericDelayCorrectionNoStd =
     , wet : Int
     }
 
-{-| The precise orbit and clock correction message is,
-to be applied as a delta correction to broadcast,
-ephemeris and is an equivalent to the 1060 /1066,
-RTCM message types
+{-| The precise orbit and clock correction message is to be applied as a delta correction to
+broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.
 -}
 type alias MsgSsrOrbitClock =
     { along : Int
@@ -2553,12 +2417,10 @@ type alias MsgSsrOrbitClock =
     , updateInterval : Int
     }
 
-{-| The precise phase biases message contains the biases,
-to be added to the carrier phase of the corresponding,
-signal to get corrected carrier phase measurement, as,
-well as the satellite yaw angle to be applied to compute,
-the phase wind-up correction.,
-It is typically an equivalent to the 1265 RTCM message types
+{-| The precise phase biases message contains the biases to be added to the carrier phase of
+the corresponding signal to get corrected carrier phase measurement, as well as the
+satellite yaw angle to be applied to compute the phase wind-up correction. It is
+typically an equivalent to the 1265 RTCM message types.
 -}
 type alias MsgSsrPhaseBiases =
     { biases : Array PhaseBiasesContent
@@ -2585,8 +2447,8 @@ type alias MsgSsrSatelliteApc =
     { apc : Array SatelliteAPC
     }
 
-{-| Contains phase center offset and elevation variation corrections for one,
-signal on a satellite.
+{-| Contains phase center offset and elevation variation corrections for one signal on a
+satellite.
 -}
 type alias SatelliteAPC =
     { pco : Array Int
@@ -2596,10 +2458,9 @@ type alias SatelliteAPC =
     , svn : Int
     }
 
-{-| The Slant Total Electron Content per space vehicle, given as polynomial,
-approximation for a given tile. This should be combined with the,
-MSG_SSR_GRIDDED_CORRECTION message to get the state space representation,
-of the atmospheric delay.,
+{-| The Slant Total Electron Content per space vehicle, given as polynomial approximation for
+a given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get
+the state space representation of the atmospheric delay.,
 ,
 It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 -}
@@ -2608,9 +2469,8 @@ type alias MsgSsrStecCorrection =
     , stecSatList : Array STECSatElement
     }
 
-{-| A full set of STEC information will likely span multiple SBP,
-messages, since SBP message a limited to 255 bytes.  The header,
-is used to tie multiple SBP messages into a sequence.
+{-| A full set of STEC information will likely span multiple SBP messages, since SBP message
+a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
 -}
 type alias STECHeader =
     { iodAtmo : Int
@@ -2629,13 +2489,12 @@ type alias STECSatElement =
     , svID : SvID
     }
 
-{-| Provides the correction point coordinates for the atmospheric correction,
-values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION,
-messages.,
+{-| Provides the correction point coordinates for the atmospheric correction values in the
+MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.,
 ,
-Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information,
-element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of,
-correction points, not lists of points.
+Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
+GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not
+lists of points.
 -}
 type alias MsgSsrTileDefinition =
     { bitmask : Int
@@ -2649,25 +2508,23 @@ type alias MsgSsrTileDefinition =
     , tileSetID : Int
     }
 
-{-| The system start-up message is sent once on system,
-start-up. It notifies the host or other attached devices that,
-the system has started and is now ready to respond to commands,
-or configuration requests.
+{-| The system start-up message is sent once on system start-up. It notifies the host or
+other attached devices that the system has started and is now ready to respond to
+commands or configuration requests.
 -}
 type alias MsgStartup =
     { cause : Int
     , startupType : Int
     }
 
-{-| The status report is sent periodically to inform the host,
-or other attached devices that the system is running. It is,
-used to monitor system malfunctions. It contains status,
-reports that indicate to the host the status of each sub-system and,
-whether it is operating correctly.,
+{-| The status report is sent periodically to inform the host or other attached devices that
+the system is running. It is used to monitor system malfunctions. It contains status
+reports that indicate to the host the status of each sub-system and whether it is
+operating correctly.,
 ,
-Interpretation of the subsystem specific status code is product,
-dependent, but if the generic status code is initializing, it should,
-be ignored.  Refer to product documentation for details.
+Interpretation of the subsystem specific status code is product dependent, but if the
+generic status code is initializing, it should be ignored.  Refer to product
+documentation for details.
 -}
 type alias MsgStatusReport =
     { reportingSystem : Int
@@ -2677,8 +2534,8 @@ type alias MsgStatusReport =
     , uptime : Int
     }
 
-{-| Report the general and specific state of a sub-system.  If the generic,
-state is reported as initializing, the specific state should be ignored.
+{-| Report the general and specific state of a sub-system.  If the generic state is reported
+as initializing, the specific state should be ignored.
 -}
 type alias SubSystemReport =
     { component : Int
@@ -2686,31 +2543,30 @@ type alias SubSystemReport =
     , specific : Int
     }
 
-{-| The flash lock message locks a sector of the STM flash,
-memory. The device replies with a MSG_FLASH_DONE message.
+{-| The flash lock message locks a sector of the STM flash memory. The device replies with a
+MSG_FLASH_DONE message.
 -}
 type alias MsgStmFlashLockSector =
     { sector : Int
     }
 
-{-| The flash unlock message unlocks a sector of the STM flash,
-memory. The device replies with a MSG_FLASH_DONE message.
+{-| The flash unlock message unlocks a sector of the STM flash memory. The device replies
+with a MSG_FLASH_DONE message.
 -}
 type alias MsgStmFlashUnlockSector =
     { sector : Int
     }
 
-{-| This message reads the device's hardcoded unique ID. The host,
-requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device,
-responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique,
-ID in the payload..
+{-| This message reads the device's hardcoded unique ID. The host requests the ID by sending
+a MSG_STM_UNIQUE_ID_REQ. The device responds with a MSG_STM_UNIQUE_ID_RESP with the
+12-byte unique ID in the payload.
 -}
 type alias MsgStmUniqueIDResp =
     { stmID : Array Int
     }
 
-{-| Azimuth and elevation angles of all the visible satellites,
-that the device does have ephemeris or almanac for.
+{-| Azimuth and elevation angles of all the visible satellites that the device does have
+ephemeris or almanac for.
 -}
 type alias MsgSvAzEl =
     { azel : Array SvAzEl
@@ -2723,9 +2579,8 @@ type alias SvAzEl =
     , sid : GnssSignal
     }
 
-{-| The thread usage message from the device reports real-time,
-operating system (RTOS) thread usage statistics for the named,
-thread. The reported percentage values must be normalized.
+{-| The thread usage message from the device reports real-time operating system (RTOS) thread
+usage statistics for the named thread. The reported percentage values must be normalized.
 -}
 type alias MsgThreadState =
     { cpu : Int
@@ -2733,9 +2588,7 @@ type alias MsgThreadState =
     , stackFree : Int
     }
 
-{-| When enabled, a tracking channel can output the correlations at each,
-update interval.
--}
+{-| When enabled, a tracking channel can output the correlations at each update interval. -}
 type alias MsgTrackingIq =
     { channel : Int
     , corrs : Array TrackingChannelCorrelation
@@ -2748,32 +2601,27 @@ type alias TrackingChannelCorrelation =
     , q : Int
     }
 
-{-| The tracking message returns a variable-length array of tracking,
-channel states. It reports status and carrier-to-noise density,
-measurements for all tracked satellites.
+{-| The tracking message returns a variable-length array of tracking channel states. It
+reports status and carrier-to-noise density measurements for all tracked satellites.
 -}
 type alias MsgTrackingState =
     { states : Array TrackingChannelState
     }
 
-{-| Tracking channel state for a specific satellite signal and,
-measured signal power.
--}
+{-| Tracking channel state for a specific satellite signal and measured signal power. -}
 type alias TrackingChannelState =
     { cn0 : Int
     , fcn : Int
     , sid : GnssSignal
     }
 
-{-| The UART message reports data latency and throughput of the UART,
-channels providing SBP I/O. On the default Piksi configuration,,
-UARTs A and B are used for telemetry radios, but can also be,
-host access ports for embedded hosts, or other interfaces in,
-future. The reported percentage values must be normalized.,
-Observations latency and period can be used to assess the,
-health of the differential corrections link. Latency provides,
-the timeliness of received base observations while the,
-period indicates their likelihood of transmission.
+{-| The UART message reports data latency and throughput of the UART channels providing SBP
+I/O. On the default Piksi configuration, UARTs A and B are used for telemetry radios, but
+can also be host access ports for embedded hosts, or other interfaces in future. The
+reported percentage values must be normalized. Observations latency and period can be
+used to assess the health of the differential corrections link. Latency provides the
+timeliness of received base observations while the period indicates their likelihood of
+transmission.
 -}
 type alias MsgUARTState =
     { latency : Latency
@@ -2783,11 +2631,10 @@ type alias MsgUARTState =
     , uartFtdi : UARTChannel
     }
 
-{-| Statistics on the latency of observations received from the base,
-station. As observation packets are received their GPS time is,
-compared to the current GPS time calculated locally by the,
-receiver to give a precise measurement of the end-to-end,
-communication latency in the system.
+{-| Statistics on the latency of observations received from the base station. As observation
+packets are received their GPS time is compared to the current GPS time calculated
+locally by the receiver to give a precise measurement of the end-to-end communication
+latency in the system.
 -}
 type alias Latency =
     { avg : Int
@@ -2796,12 +2643,11 @@ type alias Latency =
     , lmin : Int
     }
 
-{-| Statistics on the period of observations received from the base,
-station. As complete observation sets are received, their time,
-of reception is compared with the prior set''s time of reception.,
-This measurement provides a proxy for link quality as incomplete,
-or missing sets will increase the period.  Long periods,
-can cause momentary RTK solution outages.
+{-| Statistics on the period of observations received from the base station. As complete
+observation sets are received, their time of reception is compared with the prior set''s
+time of reception. This measurement provides a proxy for link quality as incomplete or
+missing sets will increase the period.  Long periods can cause momentary RTK solution
+outages.
 -}
 type alias Period =
     { avg : Int
@@ -2810,9 +2656,8 @@ type alias Period =
     , pmin : Int
     }
 
-{-| Throughput, utilization, and error counts on the RX/TX buffers,
-of this UART channel. The reported percentage values must,
-be normalized.
+{-| Throughput, utilization, and error counts on the RX/TX buffers of this UART channel. The
+reported percentage values must be normalized.
 -}
 type alias UARTChannel =
     { crcErrorCount : Int
@@ -2823,15 +2668,15 @@ type alias UARTChannel =
     , txThroughput : Float
     }
 
-{-| This message can contain any application specific user data up to a,
-maximum length of 255 bytes per message.
+{-| This message can contain any application specific user data up to a maximum length of 255
+bytes per message.
 -}
 type alias MsgUserData =
     { contents : Array Int
     }
 
-{-| This message reports the Universal Coordinated Time (UTC).  Note the flags,
-which indicate the source of the UTC offset value and source of the time fix.
+{-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
+the source of the UTC offset value and source of the time fix.
 -}
 type alias MsgUTCTime =
     { day : Int
@@ -2845,8 +2690,8 @@ type alias MsgUTCTime =
     , year : Int
     }
 
-{-| This message reports the Universal Coordinated Time (UTC).  Note the flags,
-which indicate the source of the UTC offset value and source of the time fix.
+{-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
+the source of the UTC offset value and source of the time fix.
 -}
 type alias MsgUTCTimeGnss =
     { day : Int
@@ -2860,15 +2705,14 @@ type alias MsgUTCTimeGnss =
     , year : Int
     }
 
-{-| This message reports the velocity in the Vehicle Body Frame. By convention,,
-the x-axis should point out the nose of the vehicle and represent the forward,
-direction, while as the y-axis should point out the right hand side of the vehicle.,
-Since this is a right handed system, z should point out the bottom of the vehicle.,
-The orientation and origin of the Vehicle Body Frame are specified via the device
-settings.,
-The full GPS time is given by the preceding MSG_GPS_TIME with the,
-matching time-of-week (tow). This message is only produced by inertial versions of Swift,
-products and is not available from Piksi Multi or Duro.
+{-| This message reports the velocity in the Vehicle Body Frame. By convention, the x-axis
+should point out the nose of the vehicle and represent the forward direction, while as
+the y-axis should point out the right hand side of the vehicle. Since this is a right
+handed system, z should point out the bottom of the vehicle. The orientation and origin
+of the Vehicle Body Frame are specified via the device settings. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
+only produced by inertial versions of Swift products and is not available from Piksi
+Multi or Duro.
 -}
 type alias MsgVelBody =
     { covXX : Float
@@ -2885,9 +2729,8 @@ type alias MsgVelBody =
     , z : Int
     }
 
-{-| This message reports the velocity in Earth Centered Earth Fixed,
-(ECEF) coordinates. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgVelECEF =
     { accuracy : Int
@@ -2899,9 +2742,8 @@ type alias MsgVelECEF =
     , z : Int
     }
 
-{-| This message reports the velocity in Earth Centered Earth Fixed,
-(ECEF) coordinates. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgVelECEFCov =
     { covXX : Float
@@ -2918,9 +2760,8 @@ type alias MsgVelECEFCov =
     , z : Int
     }
 
-{-| This message reports the velocity in Earth Centered Earth Fixed,
-(ECEF) coordinates. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgVelECEFCovGnss =
     { covXX : Float
@@ -2937,9 +2778,8 @@ type alias MsgVelECEFCovGnss =
     , z : Int
     }
 
-{-| This message reports the velocity in Earth Centered Earth Fixed,
-(ECEF) coordinates. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
 type alias MsgVelECEFGnss =
     { accuracy : Int
@@ -2951,10 +2791,10 @@ type alias MsgVelECEFGnss =
     , z : Int
     }
 
-{-| This message reports the velocity in local North East Down (NED),
-coordinates. The NED coordinate system is defined as the local WGS84,
-tangent plane centered at the current position. The full GPS time is,
-given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in local North East Down (NED) coordinates. The NED
+coordinate system is defined as the local WGS84 tangent plane centered at the current
+position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+time-of-week (tow).
 -}
 type alias MsgVelNED =
     { d : Int
@@ -2967,12 +2807,11 @@ type alias MsgVelNED =
     , vAccuracy : Int
     }
 
-{-| This message reports the velocity in local North East Down (NED),
-coordinates. The NED coordinate system is defined as the local WGS84,
-tangent plane centered at the current position. The full GPS time is,
-given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,
-This message is similar to the MSG_VEL_NED, but it includes the upper triangular,
-portion of the 3x3 covariance matrix.
+{-| This message reports the velocity in local North East Down (NED) coordinates. The NED
+coordinate system is defined as the local WGS84 tangent plane centered at the current
+position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper
+triangular portion of the 3x3 covariance matrix.
 -}
 type alias MsgVelNEDCov =
     { covDD : Float
@@ -2989,12 +2828,11 @@ type alias MsgVelNEDCov =
     , tow : Int
     }
 
-{-| This message reports the velocity in local North East Down (NED),
-coordinates. The NED coordinate system is defined as the local WGS84,
-tangent plane centered at the current position. The full GPS time is,
-given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,
-This message is similar to the MSG_VEL_NED, but it includes the upper triangular,
-portion of the 3x3 covariance matrix.
+{-| This message reports the velocity in local North East Down (NED) coordinates. The NED
+coordinate system is defined as the local WGS84 tangent plane centered at the current
+position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper
+triangular portion of the 3x3 covariance matrix.
 -}
 type alias MsgVelNEDCovGnss =
     { covDD : Float
@@ -3011,10 +2849,10 @@ type alias MsgVelNEDCovGnss =
     , tow : Int
     }
 
-{-| This message reports the velocity in local North East Down (NED),
-coordinates. The NED coordinate system is defined as the local WGS84,
-tangent plane centered at the current position. The full GPS time is,
-given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in local North East Down (NED) coordinates. The NED
+coordinate system is defined as the local WGS84 tangent plane centered at the current
+position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+time-of-week (tow).
 -}
 type alias MsgVelNEDGnss =
     { d : Int
@@ -3027,21 +2865,16 @@ type alias MsgVelNEDGnss =
     , vAccuracy : Int
     }
 
-{-| Message containing the accumulated distance travelled by a wheel located at an odometry,
-reference point defined by the user. The offset for the odometry reference point and the,
+{-| Message containing the accumulated distance travelled by a wheel located at an odometry
+reference point defined by the user. The offset for the odometry reference point and the
 definition and origin of the user frame are defined through the device settings
-interface.,
-The source of this message is identified by the source field, which is an integer
-ranging,
-from 0 to 255.,
-The timestamp associated with this message should represent the time when the
-accumulated,
-tick count reached the value given by the contents of this message as accurately as
-possible.,
-If using "local CPU time" time tags, the receiving end will expect a,
-`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
-measurements,
-with GNSS. Local CPU time shall roll over to zero after one week.
+interface. The source of this message is identified by the source field, which is an
+integer ranging from 0 to 255. The timestamp associated with this message should
+represent the time when the accumulated tick count reached the value given by the
+contents of this message as accurately as possible. If using "local CPU time" time tags,
+the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available
+to synchronise wheeltick measurements with GNSS. Local CPU time shall roll over to zero
+after one week.
 -}
 type alias MsgWheeltick =
     { flags : Int
@@ -3050,8 +2883,8 @@ type alias MsgWheeltick =
     , time : Int
     }
 
-{-| Metadata around the Odometry sensors involved in the fuzed solution.,
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
+{-| Metadata around the Odometry sensors involved in the fuzed solution. Accessible through
+sol_in[N].flags in a MSG_SOLN_META.
 -}
 type alias OdoInputType =
     { flags : Int
@@ -4642,14 +4475,14 @@ encodeMsgFrontEndGain x =
 msgFwd : Jdec.Decoder MsgFwd
 msgFwd =
     Jpipe.decode MsgFwd
-        |> Jpipe.required "fwd_payload" Jdec.string
+        |> Jpipe.required "fwd_payload" (Jdec.array Jdec.int)
         |> Jpipe.required "protocol" Jdec.int
         |> Jpipe.required "source" Jdec.int
 
 encodeMsgFwd : MsgFwd -> Jenc.Value
 encodeMsgFwd x =
     Jenc.object
-        [ ("fwd_payload", Jenc.string x.fwdPayload)
+        [ ("fwd_payload", makeArrayEncoder Jenc.int x.fwdPayload)
         , ("protocol", Jenc.int x.protocol)
         , ("source", Jenc.int x.source)
         ]

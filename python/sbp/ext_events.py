@@ -11,9 +11,8 @@
 
 
 """
-Messages reporting accurately-timestamped external events,
-e.g. camera shutter time.
-
+Messages reporting accurately-timestamped external events, e.g. camera
+shutter time.
 """
 
 import json
@@ -36,9 +35,8 @@ class MsgExtEvent(SBP):
   of its fields.
 
   
-  Reports detection of an external event, the GPS time it occurred,
-which pin it was and whether it was rising or falling.
-
+  Reports detection of an external event, the GPS time it occurred, which pin
+  it was and whether it was rising or falling.
 
   Parameters
   ----------
@@ -49,9 +47,8 @@ which pin it was and whether it was rising or falling.
   tow : int
     GPS time of week rounded to the nearest millisecond
   ns_residual : int
-    Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
-
+    Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    500000)
   flags : int
     Flags
   pin : int

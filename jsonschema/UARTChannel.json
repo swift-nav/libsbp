@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#UARTChannel",
   "title":"UARTChannel",
-  "description":"Throughput, utilization, and error counts on the RX/TX buffers,\nof this UART channel. The reported percentage values must,\nbe normalized.\n",
+  "description":"Throughput, utilization, and error counts on the RX/TX buffers of this UART channel. The reported percentage values must be normalized.\n",
   "type": "object",
   "properties": {
     "tx_throughput": {"type": "number"},

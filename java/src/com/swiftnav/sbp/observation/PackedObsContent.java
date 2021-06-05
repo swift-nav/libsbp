@@ -37,19 +37,16 @@ public class PackedObsContent extends SBPStruct {
     /** Carrier-to-Noise density.  Zero implies invalid cn0. */
     public int cn0;
     
-    /** Lock timer. This value gives an indication of the time
-for which a signal has maintained continuous phase lock.
-Whenever a signal has lost and regained lock, this
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Valid values range
-from 0 to 15 and the most significant nibble is reserved for future use.
- */
+    /** Lock timer. This value gives an indication of the time for which a signal has
+      * maintained continuous phase lock. Whenever a signal has lost and regained lock,
+      * this value is reset to zero. It is encoded according to DF402 from the RTCM
+      * 10403.2 Amendment 2 specification.  Valid values range from 0 to 15 and the
+      * most significant nibble is reserved for future use. */
     public int lock;
     
-    /** Measurement status flags. A bit field of flags providing the
-status of this observation.  If this field is 0 it means only the Cn0
-estimate for the signal is valid.
- */
+    /** Measurement status flags. A bit field of flags providing the status of this
+      * observation.  If this field is 0 it means only the Cn0 estimate for the signal
+      * is valid. */
     public int flags;
     
     /** GNSS signal identifier (16 bit) */

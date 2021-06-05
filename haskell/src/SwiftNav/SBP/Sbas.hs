@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<SBAS data\>
+-- \< SBAS data \>
 
 module SwiftNav.SBP.Sbas
   ( module SwiftNav.SBP.Sbas

@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * When enabled, a tracking channel can output the correlations at each
- * update interval. */
+ * When enabled, a tracking channel can output the correlations at each update
+ * interval. */
 
 public class MsgTrackingIqDepB extends SBPMessage {
     public static final int TYPE = 0x002C;

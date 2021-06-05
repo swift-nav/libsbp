@@ -43,18 +43,14 @@ public class MsgLinuxProcessSocketCounts extends SBPMessage {
     /** the number of sockets the process is using */
     public int socket_count;
     
-    /** A bitfield indicating the socket types used:
-  0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
-  and 0x8000 (unknown)
- */
+    /** A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+      * (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown) */
     public int socket_types;
     
-    /** A bitfield indicating the socket states:
-  0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
-  0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
-  0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
-  and 0x8000 (unknown)
- */
+    /** A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+      * sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20
+      * (time-wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
+      * (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown) */
     public int socket_states;
     
     /** the command line of the process in question */

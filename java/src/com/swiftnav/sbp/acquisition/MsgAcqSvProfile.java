@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The message describes all SV profiles during acquisition time.
- * The message is used to debug and measure the performance. */
+ * The message describes all SV profiles during acquisition time. The message
+ * is used to debug and measure the performance. */
 
 public class MsgAcqSvProfile extends SBPMessage {
     public static final int TYPE = 0x002E;

@@ -28,15 +28,14 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The status report is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It contains status
- * reports that indicate to the host the status of each sub-system and
- * whether it is operating correctly.
- * 
- * Interpretation of the subsystem specific status code is product
- * dependent, but if the generic status code is initializing, it should
- * be ignored.  Refer to product documentation for details. */
+ * The status report is sent periodically to inform the host or other attached
+ * devices that the system is running. It is used to monitor system
+ * malfunctions. It contains status reports that indicate to the host the
+ * status of each sub-system and whether it is operating correctly.
+ *
+ * Interpretation of the subsystem specific status code is product dependent,
+ * but if the generic status code is initializing, it should be ignored.
+ * Refer to product documentation for details. */
 
 public class MsgStatusReport extends SBPMessage {
     public static final int TYPE = 0xFFFE;

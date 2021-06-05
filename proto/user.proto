@@ -14,7 +14,7 @@ syntax = "proto3";
 
 /** User
  *
-  * Messages reserved for use by the user.
+ * Messages reserved for use by the user.
  */
 
 package swiftnav.sbp.user;
@@ -22,8 +22,8 @@ package swiftnav.sbp.user;
 
 /** User data
  *
- * This message can contain any application specific user data up to a
- * maximum length of 255 bytes per message.
+ * This message can contain any application specific user data up to a maximum
+ * length of 255 bytes per message.
  */
 message MsgUserData {
     repeated uint32 contents = 1;

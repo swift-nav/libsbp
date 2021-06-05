@@ -32,7 +32,7 @@ import org.json.JSONArray;
  * Provides the correction point coordinates for the atmospheric correction
  * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
  * messages.
- * 
+ *
  * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
  * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
  * correction points, not lists of points. */
@@ -45,74 +45,64 @@ public class MsgSsrTileDefinition extends SBPMessage {
     public int tile_set_id;
     
     /** Unique identifier of this tile in the tile set.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
- */
+      * See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID. */
     public int tile_id;
     
     /** North-West corner correction point latitude.
-
-The relation between the latitude X in the range [-90, 90] and
-the coded number N is:
-
-N = floor((X / 90) * 2^14)
-
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
- */
+      *
+      * The relation between the latitude X in the range [-90, 90] and the
+      * coded number N is:
+      *
+      * N = floor((X / 90) * 2^14)
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude. */
     public int corner_nw_lat;
     
-    /** North-West corner correction point longtitude.
-
-The relation between the longtitude X in the range [-180, 180]
-and the coded number N is:
-
-N = floor((X / 180) * 2^15)
-
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
- */
+    /** North-West corner correction point longitude.
+      *
+      * The relation between the longitude X in the range [-180, 180] and the
+      * coded number N is:
+      *
+      * N = floor((X / 180) * 2^15)
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude. */
     public int corner_nw_lon;
     
     /** Spacing of the correction points in the latitude direction.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
- */
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude. */
     public int spacing_lat;
     
-    /** Spacing of the correction points in the longtitude direction.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
- */
+    /** Spacing of the correction points in the longitude direction.
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude. */
     public int spacing_lon;
     
     /** Number of steps in the latitude direction.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
- */
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude. */
     public int rows;
     
-    /** Number of steps in the longtitude direction.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongtitude.
- */
+    /** Number of steps in the longitude direction.
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude. */
     public int cols;
     
-    /** Specifies the availability of correction data at the
-correction points in the array.
-
-If a specific bit is enabled (set to 1), the correction is not
-available. Only the first rows * cols bits are used, the remainder
-are set to 0. If there are more then 64 correction points the
-remaining corrections are always available.
-
-Starting with the northwest corner of the array (top left on a
-north oriented map) the correction points are enumerated with row
-precedence - first row west to east, second row west to east,
-until last row west to east - ending with the southeast corner of
-the array.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
-note the definition of the bits is inverted.
- */
+    /** Specifies the availability of correction data at the correction points
+      * in the array.
+      *
+      * If a specific bit is enabled (set to 1), the correction is not
+      * available. Only the first rows * cols bits are used, the remainder are
+      * set to 0. If there are more then 64 correction points the remaining
+      * corrections are always available.
+      *
+      * Starting with the northwest corner of the array (top left on a north
+      * oriented map) the correction points are enumerated with row precedence
+      * - first row west to east, second row west to east, until last row west
+      * to east - ending with the southeast corner of the array.
+      *
+      * See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+      * definition of the bits is inverted. */
     public BigInteger bitmask;
     
 

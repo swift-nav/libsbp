@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgBasePosLLH",
   "title":"MsgBasePosLLH",
-  "description":"The base station position message is the position reported by,\nthe base station itself. It is used for pseudo-absolute RTK,\npositioning, and is required to be a high-accuracy surveyed,\nlocation of the base station. Any error here will result in an,\nerror in the pseudo-absolute position output.\n",
+  "description":"The base station position message is the position reported by the base station itself. It is used for pseudo-absolute RTK positioning, and is required to be a high-accuracy surveyed location of the base station. Any error here will result in an error in the pseudo-absolute position output.\n",
   "type": "object",
   "properties": {
     "lat": {"type": "number"},

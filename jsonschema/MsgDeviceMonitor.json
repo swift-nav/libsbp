@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgDeviceMonitor",
   "title":"MsgDeviceMonitor",
-  "description":"This message contains temperature and voltage level measurements from the,\nprocessor's monitoring system and the RF frontend die temperature if,\navailable.\n",
+  "description":"This message contains temperature and voltage level measurements from the processor's monitoring system and the RF frontend die temperature if available.\n",
   "type": "object",
   "properties": {
     "dev_vin": {"type": "integer"},

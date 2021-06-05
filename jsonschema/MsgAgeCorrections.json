@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgAgeCorrections",
   "title":"MsgAgeCorrections",
-  "description":"This message reports the Age of the corrections used for the current,\nDifferential solution\n",
+  "description":"This message reports the Age of the corrections used for the current Differential solution.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

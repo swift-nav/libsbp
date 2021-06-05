@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
+ * This message reports the baseline heading pointing from the base station to
+ * the rover relative to True North. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
  * that time-matched RTK mode is used when the base station is moving. */
 

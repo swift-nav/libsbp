@@ -40,13 +40,11 @@ public class STECHeader extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
+    /** Update interval between consecutive corrections. Encoded following RTCM DF391
+      * specification. */
     public int update_interval;
     
-    /** IOD of the SSR atmospheric correction
- */
+    /** IOD of the SSR atmospheric correction */
     public int iod_atmo;
     
 

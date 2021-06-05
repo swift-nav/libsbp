@@ -28,10 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message defines success or failure codes for a variety of
- * flash memory requests from the host to the device. Flash read
- * and write messages, such as MSG_FLASH_READ_REQ, or
- * MSG_FLASH_PROGRAM, may return this message on failure. */
+ * This message defines success or failure codes for a variety of flash memory
+ * requests from the host to the device. Flash read and write messages, such
+ * as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
+ * failure. */
 
 public class MsgFlashDone extends SBPMessage {
     public static final int TYPE = 0x00E0;

@@ -28,10 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Requests advice on the optimal configuration for a FileIO 
- * transfer.  Newer version of FileIO can support greater
- * throughput by supporting a large window of FileIO data
- * that can be in-flight during read or write operations. */
+ * Requests advice on the optimal configuration for a FileIO transfer.  Newer
+ * version of FileIO can support greater throughput by supporting a large
+ * window of FileIO data that can be in-flight during read or write
+ * operations. */
 
 public class MsgFileioConfigReq extends SBPMessage {
     public static final int TYPE = 0x1001;

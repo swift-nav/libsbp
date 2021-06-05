@@ -183,7 +183,7 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment AcqSvProfile
  *
- * Profile for a specific SV for debugging purposes The message describes SV
+ * Profile for a specific SV for debugging purposes. The message describes SV
  * profile during acquisition time. The message is used to debug and measure the
  * performance.
  *

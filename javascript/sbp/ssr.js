@@ -323,7 +323,7 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  * SBP class for message fragment STECResidual
  *
  * STEC residual (mean and standard deviation) for the given satellite at the grid
- * point,
+ * point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
@@ -423,7 +423,7 @@ GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.pr
  *
  * The precise orbit and clock correction message is to be applied as a delta
  * correction to broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM
- * message types
+ * message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -493,7 +493,7 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  *
  * The precise code biases message is to be added to the pseudorange of the
  * corresponding signal to get corrected pseudorange. It is an equivalent to the
- * 1059 / 1065 RTCM message types
+ * 1059 / 1065 RTCM message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -537,7 +537,7 @@ MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.
  * The precise phase biases message contains the biases to be added to the carrier
  * phase of the corresponding signal to get corrected carrier phase measurement, as
  * well as the satellite yaw angle to be applied to compute the phase wind-up
- * correction. It is typically an equivalent to the 1265 RTCM message types
+ * correction. It is typically an equivalent to the 1265 RTCM message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -625,7 +625,7 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSat
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
  *
  * STEC residuals are per space vehicle, troposphere is not.  It is typically
- * equivalent to the QZSS CLAS Sub Type 9 messages
+ * equivalent to the QZSS CLAS Sub Type 9 messages.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeader Header of a gridded correction message
@@ -663,23 +663,23 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.  See GNSS-SSR-
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
  * @field corner_nw_lat number (signed 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
  *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
  *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
- * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longtitude.  The relation between the
- *   longtitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
+ * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longitude.  The relation between the
+ *   longitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
  *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
  *   referencePointLongitude.
  * @field spacing_lat number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the latitude direction.  See GNSS-SSR-
  *   ArrayOfCorrectionPoints field stepOfLatitude.
- * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longtitude direction.  See GNSS-SSR-
- *   ArrayOfCorrectionPoints field stepOfLongtitude.
+ * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLongitude.
  * @field rows number (unsigned 16-bit int, 2 bytes) Number of steps in the latitude direction.  See GNSS-SSR-ArrayOfCorrectionPoints
  *   field numberOfStepsLatitude.
- * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longtitude direction.  See GNSS-SSR-
- *   ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+ * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field numberOfStepsLongitude.
  * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the availability of correction data at the correction points in the
  *   array.  If a specific bit is enabled (set to 1), the correction is not
  *   available. Only the first rows * cols bits are used, the remainder are set to 0.
@@ -956,7 +956,7 @@ GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['tropo_quality_indicator',
  * @field area_width number (unsigned 16-bit int, 2 bytes) grid height (deg) = grid width (deg) = area_width / region_size 0 is an invalid
  *   value.
  * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
- * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+ * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
  *

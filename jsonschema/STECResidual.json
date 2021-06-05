@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#STECResidual",
   "title":"STECResidual",
-  "description":"STEC residual (mean and standard deviation) for the given satellite,\nat the grid point,\n",
+  "description":"STEC residual (mean and standard deviation) for the given satellite at the grid point.\n",
   "type": "object",
   "properties": {
     "sv_id": {"$ref": "SvId.json"},

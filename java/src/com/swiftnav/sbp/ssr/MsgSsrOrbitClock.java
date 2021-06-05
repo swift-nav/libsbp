@@ -29,10 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The precise orbit and clock correction message is
- * to be applied as a delta correction to broadcast
- * ephemeris and is an equivalent to the 1060 /1066
- * RTCM message types */
+ * The precise orbit and clock correction message is to be applied as a delta
+ * correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+ * RTCM message types. */
 
 public class MsgSsrOrbitClock extends SBPMessage {
     public static final int TYPE = 0x05DD;
@@ -44,15 +43,12 @@ public class MsgSsrOrbitClock extends SBPMessage {
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
     
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
     
-    /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
- */
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
     
     /** Issue of broadcast ephemeris data or IODCRC (Beidou) */

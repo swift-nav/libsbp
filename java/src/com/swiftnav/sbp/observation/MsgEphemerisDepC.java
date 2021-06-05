@@ -29,11 +29,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details. */
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate GPS satellite position, velocity, and clock offset.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+ * GPS-200, Table 20-III) for more details. */
 
 public class MsgEphemerisDepC extends SBPMessage {
     public static final int TYPE = 0x0047;
@@ -48,16 +47,20 @@ public class MsgEphemerisDepC extends SBPMessage {
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public double c_rc;
     
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public double c_uc;
     
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public double c_us;
     
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public double c_ic;
     
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public double c_is;
     
     /** Mean motion difference */

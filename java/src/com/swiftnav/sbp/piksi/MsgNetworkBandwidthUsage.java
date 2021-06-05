@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The bandwidth usage, a list of usage by interface.  */
+ * The bandwidth usage, a list of usage by interface. */
 
 public class MsgNetworkBandwidthUsage extends SBPMessage {
     public static final int TYPE = 0x00BD;

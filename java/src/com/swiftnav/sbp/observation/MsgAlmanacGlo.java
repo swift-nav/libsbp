@@ -42,8 +42,7 @@ public class MsgAlmanacGlo extends SBPMessage {
     public AlmanacCommonContent common;
     
     /** Longitude of the first ascending node of the orbit in PZ-90.02
-coordinate system
- */
+      * coordinate system */
     public double lambda_na;
     
     /** Time of the first ascending node passage */

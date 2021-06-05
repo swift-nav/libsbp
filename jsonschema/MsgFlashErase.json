@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFlashErase",
   "title":"MsgFlashErase",
-  "description":"The flash erase message from the host erases a sector of either,\nthe STM or M25 onboard flash memory. The device will reply with a,\nMSG_FLASH_DONE message containing the return code - FLASH_OK (0),\non success or FLASH_INVALID_FLASH (1) if the flash specified is,\ninvalid.\n",
+  "description":"The flash erase message from the host erases a sector of either the STM or M25 onboard flash memory. The device will reply with a MSG_FLASH_DONE message containing the return code - FLASH_OK (0) on success or FLASH_INVALID_FLASH (1) if the flash specified is invalid.\n",
   "type": "object",
   "properties": {
     "target": {"type": "integer"},

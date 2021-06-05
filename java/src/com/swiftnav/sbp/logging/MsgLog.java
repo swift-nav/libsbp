@@ -28,9 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message contains a human-readable payload string from the
- * device containing errors, warnings and informational messages at
- * ERROR, WARNING, DEBUG, INFO logging levels. */
+ * This message contains a human-readable payload string from the device
+ * containing errors, warnings and informational messages at ERROR, WARNING,
+ * DEBUG, INFO logging levels. */
 
 public class MsgLog extends SBPMessage {
     public static final int TYPE = 0x0401;

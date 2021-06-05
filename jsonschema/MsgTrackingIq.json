@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgTrackingIq",
   "title":"MsgTrackingIq",
-  "description":"When enabled, a tracking channel can output the correlations at each,\nupdate interval.\n",
+  "description":"When enabled, a tracking channel can output the correlations at each update interval.\n",
   "type": "object",
   "properties": {
     "channel": {"type": "integer"},

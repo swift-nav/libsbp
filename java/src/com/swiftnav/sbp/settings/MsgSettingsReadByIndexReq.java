@@ -28,17 +28,15 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The settings message for iterating through the settings
- * values. A device will respond to this message with a 
- * "MSG_SETTINGS_READ_BY_INDEX_RESP". */
+ * The settings message for iterating through the settings values. A device
+ * will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP". */
 
 public class MsgSettingsReadByIndexReq extends SBPMessage {
     public static final int TYPE = 0x00A2;
 
     
-    /** An index into the device settings, with values ranging from
-0 to length(settings)
- */
+    /** An index into the device settings, with values ranging from 0 to
+      * length(settings). */
     public int index;
     
 

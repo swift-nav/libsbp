@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSvAzEl",
   "title":"MsgSvAzEl",
-  "description":"Azimuth and elevation angles of all the visible satellites,\nthat the device does have ephemeris or almanac for.\n",
+  "description":"Azimuth and elevation angles of all the visible satellites that the device does have ephemeris or almanac for.\n",
   "type": "object",
   "properties": {
     "azel": {"type": "array", "items": {"$ref": "SvAzEl.json"}}

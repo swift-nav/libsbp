@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrOrbitClock",
   "title":"MsgSsrOrbitClock",
-  "description":"The precise orbit and clock correction message is,\nto be applied as a delta correction to broadcast,\nephemeris and is an equivalent to the 1060 /1066,\nRTCM message types\n",
+  "description":"The precise orbit and clock correction message is to be applied as a delta correction to broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.\n",
   "type": "object",
   "properties": {
     "time": {"$ref": "GpsTimeSec.json"},

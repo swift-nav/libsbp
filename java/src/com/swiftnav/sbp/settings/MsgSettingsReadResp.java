@@ -29,21 +29,18 @@ import org.json.JSONArray;
  * fields.
  *
  * The setting message wich which the device responds after a
- * MSG_SETTING_READ_REQ is sent to device. The string field is a
- * NULL-terminated and NULL-delimited string with contents
- * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence
- * denotes the NULL character and where quotation marks are omitted. An
- * example string that could be sent from device is
- * "solution\0soln_freq\010\0". */
+ * MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
+ * terminated and NULL-delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
+ * the NULL character and where quotation marks are omitted. An example string
+ * that could be sent from device is "solution\0soln_freq\010\0". */
 
 public class MsgSettingsReadResp extends SBPMessage {
     public static final int TYPE = 0x00A5;
 
     
     /** A NULL-terminated and NULL-delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE\0"
- 
- */
+      * "SECTION_SETTING\0SETTING\0VALUE\0" */
     public String setting;
     
 

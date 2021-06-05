@@ -29,10 +29,9 @@ from sbp.gnss import CarrierPhase, GnssSignal, GnssSignalDep, GPSTime, GPSTime, 
 class AcqSvProfile(object):
   """AcqSvProfile.
   
-  Profile for a specific SV for debugging purposes
-The message describes SV profile during acquisition time.
-The message is used to debug and measure the performance.
-
+  Profile for a specific SV for debugging purposes. The message describes SV
+  profile during acquisition time. The message is used to debug and measure
+  the performance.
   
   Parameters
   ----------
@@ -210,12 +209,10 @@ class MsgAcqResult(SBP):
   of its fields.
 
   
-  This message describes the results from an attempted GPS signal
-acquisition search for a satellite PRN over a code phase/carrier
-frequency range. It contains the parameters of the point in the
-acquisition search space with the best carrier-to-noise (CN/0)
-ratio.
-
+  This message describes the results from an attempted GPS signal acquisition
+  search for a satellite PRN over a code phase/carrier frequency range. It
+  contains the parameters of the point in the acquisition search space with
+  the best carrier-to-noise (CN/0) ratio.
 
   Parameters
   ----------
@@ -430,9 +427,8 @@ class MsgAcqResultDepB(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently in arbitrary SNR points, but will
-be in units of dB Hz in a later revision of this message.
-
+    SNR of best point. Currently in arbitrary SNR points, but will be in units
+    of dB Hz in a later revision of this message.
   cp : float
     Code phase of best point
   cf : float
@@ -536,17 +532,15 @@ class MsgAcqResultDepA(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently dimensonless, but will have
-units of dB Hz in the revision of this message.
-
+    SNR of best point. Currently dimensonless, but will have units of dB Hz in
+    the revision of this message.
   cp : float
     Code phase of best point
   cf : float
     Carrier frequency of best point
   prn : int
-    PRN-1 identifier of the satellite signal for which
-acquisition was attempted
-
+    PRN-1 identifier of the satellite signal for which acquisition was
+    attempted
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -637,9 +631,8 @@ class MsgAcqSvProfile(SBP):
   of its fields.
 
   
-  The message describes all SV profiles during acquisition time.
-The message is used to debug and measure the performance.
-
+  The message describes all SV profiles during acquisition time. The message
+  is used to debug and measure the performance.
 
   Parameters
   ----------

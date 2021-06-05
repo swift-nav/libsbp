@@ -25,12 +25,11 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// GNSS carrier phase measurement.
+/// GNSS carrier phase measurement
 ///
-/// Carrier phase measurement in cycles represented as a 40-bit
-/// fixed point number with Q32.8 layout, i.e. 32-bits of whole
-/// cycles and 8-bits of fractional cycles. This phase has the
-/// same sign as the pseudorange.
+/// Carrier phase measurement in cycles represented as a 40-bit fixed point
+/// number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+/// fractional cycles. This phase has the same sign as the pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -84,10 +83,9 @@ impl crate::serialize::SbpSerialize for CarrierPhase {
 
 /// Nanosecond-accurate receiver clock time
 ///
-/// A wire-appropriate receiver clock time, defined as the time
-/// since the beginning of the week on the Saturday/Sunday
-/// transition. In most cases, observations are epoch aligned
-/// so ns field will be 0.
+/// A wire-appropriate receiver clock time, defined as the time since the
+/// beginning of the week on the Saturday/Sunday transition. In most cases,
+/// observations are epoch aligned so ns field will be 0.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -147,9 +145,8 @@ impl crate::serialize::SbpSerialize for GPSTime {
 
 /// Millisecond-accurate GPS time
 ///
-/// A wire-appropriate GPS time, defined as the number of
-/// milliseconds since beginning of the week on the Saturday/Sunday
-/// transition.
+/// A wire-appropriate GPS time, defined as the number of milliseconds since
+/// beginning of the week on the Saturday/Sunday transition.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -203,9 +200,8 @@ impl crate::serialize::SbpSerialize for GPSTimeDep {
 
 /// Whole second accurate GPS time
 ///
-/// A GPS time, defined as the number of
-/// seconds since beginning of the week on the Saturday/Sunday
-/// transition.
+/// A GPS time, defined as the number of seconds since beginning of the week
+/// on the Saturday/Sunday transition.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -259,14 +255,15 @@ impl crate::serialize::SbpSerialize for GPSTimeSec {
 
 /// Represents all the relevant information about the signal
 ///
-/// Signal identifier containing constellation, band, and satellite identifier
+/// Signal identifier containing constellation, band, and satellite
+/// identifier.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssSignal {
     /// Constellation-specific satellite identifier. This field for Glonass can
-    /// either be (100+FCN) where FCN is in [-7,+6] or  the Slot ID in [1,28]
+    /// either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
     pub sat: u8,
     /// Signal constellation, band and code
     pub code: u8,
@@ -320,9 +317,10 @@ impl crate::serialize::SbpSerialize for GnssSignal {
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssSignalDep {
-    /// Constellation-specific satellite identifier.  Note: unlike GnssSignal,
-    /// GPS satellites are encoded as (PRN - 1). Other constellations do not
-    /// have this offset.
+    /// Constellation-specific satellite identifier.
+    ///
+    /// Note: unlike GnssSignal, GPS satellites are encoded as (PRN - 1). Other
+    /// constellations do not have this offset.
     pub sat: u16,
     /// Signal constellation, band and code
     pub code: u8,
@@ -378,8 +376,8 @@ impl crate::serialize::SbpSerialize for GnssSignalDep {
 
 /// Space vehicle identifier
 ///
-/// A (Constellation ID, satellite ID) tuple that uniquely identifies
-/// a space vehicle
+/// A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+/// vehicle.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

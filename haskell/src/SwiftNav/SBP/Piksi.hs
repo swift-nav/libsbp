@@ -11,9 +11,9 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<System health, configuration, and diagnostic messages specific to the
--- Piksi L1 receiver, including a variety of legacy messages that may no longer
--- be used. \>
+-- \< System health, configuration, and diagnostic messages specific to the Piksi
+-- L1 receiver, including a variety of legacy messages that may no longer be
+-- used. \>
 
 module SwiftNav.SBP.Piksi
   ( module SwiftNav.SBP.Piksi
@@ -211,14 +211,14 @@ msgThreadState = 0x0017
 -- | SBP class for message MSG_THREAD_STATE (0x0017).
 --
 -- The thread usage message from the device reports real-time operating system
--- (RTOS) thread usage statistics for the named thread. The reported percentage
--- values must be normalized.
+-- (RTOS) thread usage statistics for the named thread. The reported
+-- percentage values must be normalized.
 data MsgThreadState = MsgThreadState
   { _msgThreadState_name     :: !Text
     -- ^ Thread name (NULL terminated)
   , _msgThreadState_cpu      :: !Word16
-    -- ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
-    -- to be renormalized to 100
+    -- ^ Percentage cpu use for this thread. Values range from 0 - 1000 and
+    -- needs to be renormalized to 100
   , _msgThreadState_stack_free :: !Word32
     -- ^ Free stack space for this thread
   } deriving ( Show, Read, Eq )
@@ -316,10 +316,10 @@ $(makeLenses ''Period)
 
 -- | Latency.
 --
--- Statistics on the latency of observations received from the base station. As
--- observation packets are received their GPS time is compared to the current
--- GPS time calculated locally by the receiver to give a precise measurement of
--- the end-to-end communication latency in the system.
+-- Statistics on the latency of observations received from the base station.
+-- As observation packets are received their GPS time is compared to the
+-- current GPS time calculated locally by the receiver to give a precise
+-- measurement of the end-to-end communication latency in the system.
 data Latency = Latency
   { _latency_avg   :: !Int32
     -- ^ Average latency
@@ -356,11 +356,11 @@ msgUartState = 0x001D
 -- The UART message reports data latency and throughput of the UART channels
 -- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
 -- used for telemetry radios, but can also be host access ports for embedded
--- hosts, or other interfaces in future. The reported percentage values must be
--- normalized. Observations latency and period can be used to assess the health
--- of the differential corrections link. Latency provides the timeliness of
--- received base observations while the period indicates their likelihood of
--- transmission.
+-- hosts, or other interfaces in future. The reported percentage values must
+-- be normalized. Observations latency and period can be used to assess the
+-- health of the differential corrections link. Latency provides the
+-- timeliness of received base observations while the period indicates their
+-- likelihood of transmission.
 data MsgUartState = MsgUartState
   { _msgUartState_uart_a   :: !UARTChannel
     -- ^ State of UART A
@@ -612,8 +612,8 @@ msgCommandOutput = 0x00BC
 -- | SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
 --
 -- Returns the standard output and standard error of the command requested by
--- MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
--- correct command.
+-- MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
+-- the correct command.
 data MsgCommandOutput = MsgCommandOutput
   { _msgCommandOutput_sequence :: !Word32
     -- ^ Sequence number
@@ -641,7 +641,7 @@ msgNetworkStateReq = 0x00BA
 -- | SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
 --
 -- Request state of Piksi network interfaces. Output will be sent in
--- MSG_NETWORK_STATE_RESP messages
+-- MSG_NETWORK_STATE_RESP messages.
 data MsgNetworkStateReq = MsgNetworkStateReq
   deriving ( Show, Read, Eq )
 
@@ -902,10 +902,10 @@ msgFrontEndGain = 0x00BF
 -- | SBP class for message MSG_FRONT_END_GAIN (0x00BF).
 --
 -- This message describes the gain of each channel in the receiver frontend.
--- Each  gain is encoded as a non-dimensional percentage relative to the
--- maximum range   possible for the gain stage of the frontend. By convention,
--- each gain array  has 8 entries and the index of the array corresponding to
--- the index of the rf channel  in the frontend. A gain of 127 percent encodes
+-- Each gain is encoded as a non-dimensional percentage relative to the
+-- maximum range possible for the gain stage of the frontend. By convention,
+-- each gain array has 8 entries and the index of the array corresponding to
+-- the index of the rf channel in the frontend. A gain of 127 percent encodes
 -- that rf channel is not present in the hardware. A negative value implies an
 -- error for the particular gain stage as reported by the frontend.
 data MsgFrontEndGain = MsgFrontEndGain

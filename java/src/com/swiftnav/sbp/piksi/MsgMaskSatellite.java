@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message allows setting a mask to prevent a particular satellite
- * from being used in various Piksi subsystems. */
+ * This message allows setting a mask to prevent a particular satellite from
+ * being used in various Piksi subsystems. */
 
 public class MsgMaskSatellite extends SBPMessage {
     public static final int TYPE = 0x002B;

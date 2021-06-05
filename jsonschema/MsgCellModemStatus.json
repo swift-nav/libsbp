@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgCellModemStatus",
   "title":"MsgCellModemStatus",
-  "description":"If a cell modem is present on a piksi device, this message,\nwill be send periodically to update the host on the status,\nof the modem and its various parameters.\n",
+  "description":"If a cell modem is present on a piksi device, this message will be send periodically to update the host on the status of the modem and its various parameters.\n",
   "type": "object",
   "properties": {
     "signal_strength": {"type": "integer"},

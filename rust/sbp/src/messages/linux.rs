@@ -13,7 +13,6 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Linux state monitoring.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -28,8 +27,8 @@ use crate::SbpString;
 
 /// List CPU state on the system
 ///
-/// This message indicates the process state of the top 10 heaviest
-/// consumers of CPU on the system, including a timestamp.
+/// This message indicates the process state of the top 10 heaviest consumers
+/// of CPU on the system, including a timestamp.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -121,10 +120,10 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
     }
 }
 
-/// List CPU state on the system. DEPRECATED.
+/// List CPU state on the system. DEPRECATED
 ///
-/// This message indicates the process state of the top 10 heaviest
-/// consumers of CPU on the system.
+/// This message indicates the process state of the top 10 heaviest consumers
+/// of CPU on the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -208,8 +207,8 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuStateDepA {
 
 /// List memory state on the system
 ///
-/// This message indicates the process state of the top 10 heaviest
-/// consumers of memory on the system, including a timestamp.
+/// This message indicates the process state of the top 10 heaviest consumers
+/// of memory on the system, including a timestamp.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -301,10 +300,10 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
     }
 }
 
-/// List memory state on the system. DEPRECATED.
+/// List memory state on the system. DEPRECATED
 ///
-/// This message indicates the process state of the top 10 heaviest
-/// consumers of memory on the system.
+/// This message indicates the process state of the top 10 heaviest consumers
+/// of memory on the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -554,13 +553,13 @@ pub struct MsgLinuxProcessSocketCounts {
     pub pid: u16,
     /// the number of sockets the process is using
     pub socket_count: u16,
-    /// A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
-    /// (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+    /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
     pub socket_types: u16,
-    /// A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
-    /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
-    /// (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
-    /// (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+    /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
+    /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
     pub socket_states: u16,
     /// the command line of the process in question
     pub cmdline: SbpString,
@@ -649,13 +648,13 @@ pub struct MsgLinuxProcessSocketQueues {
     pub recv_queued: u16,
     /// the total amount of send data queued for this process
     pub send_queued: u16,
-    /// A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
-    /// (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+    /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
+    /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
     pub socket_types: u16,
-    /// A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
-    /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
-    /// (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
-    /// (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+    /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
+    /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
+    /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
+    /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
     pub socket_states: u16,
     /// Address of the largest queue, remote or local depending on the
     /// directionality of the connection.
@@ -818,9 +817,10 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
     }
 }
 
-/// CPU, Memory and Process Starts/Stops.
+/// CPU, Memory and Process Starts/Stops
 ///
-/// This presents a summary of CPU and memory utilization, including a timestamp.
+/// This presents a summary of CPU and memory utilization, including a
+/// timestamp.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -917,7 +917,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxSysState {
     }
 }
 
-/// CPU, Memory and Process Starts/Stops. DEPRECATED.
+/// CPU, Memory and Process Starts/Stops. DEPRECATED
 ///
 /// This presents a summary of CPU and memory utilization.
 ///

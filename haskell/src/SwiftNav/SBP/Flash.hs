@@ -11,10 +11,10 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages for reading/writing the device's onboard flash memory. Many of
+-- \< Messages for reading/writing the device's onboard flash memory. Many of
 -- these messages target specific flash memory peripherals used in Swift
 -- Navigation devices: the STM32 flash and the M25Pxx FPGA configuration flash
--- from Piksi 2.3.1.  This module does not apply  to Piksi Multi. \>
+-- from Piksi 2.3.1.  This module does not apply to Piksi Multi. \>
 
 module SwiftNav.SBP.Flash
   ( module SwiftNav.SBP.Flash
@@ -45,8 +45,8 @@ msgFlashProgram = 0x00E6
 --
 -- The flash program message programs a set of addresses of either the STM or
 -- M25 flash. The device replies with either a MSG_FLASH_DONE message
--- containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN (2)
--- if the maximum write size is exceeded. Note that the sector-containing
+-- containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN
+-- (2) if the maximum write size is exceeded. Note that the sector-containing
 -- addresses must be erased before addresses can be programmed.
 data MsgFlashProgram = MsgFlashProgram
   { _msgFlashProgram_target   :: !Word8
@@ -54,7 +54,8 @@ data MsgFlashProgram = MsgFlashProgram
   , _msgFlashProgram_addr_start :: ![Word8]
     -- ^ Starting address offset to program
   , _msgFlashProgram_addr_len :: !Word8
-    -- ^ Length of set of addresses to program, counting up from starting address
+    -- ^ Length of set of addresses to program, counting up from starting
+    -- address
   , _msgFlashProgram_data     :: ![Word8]
     -- ^ Data to program addresses with, with length N=addr_len
   } deriving ( Show, Read, Eq )
@@ -83,8 +84,8 @@ msgFlashDone = 0x00E0
 -- | SBP class for message MSG_FLASH_DONE (0x00E0).
 --
 -- This message defines success or failure codes for a variety of flash memory
--- requests from the host to the device. Flash read and write messages, such as
--- MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
+-- requests from the host to the device. Flash read and write messages, such
+-- as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
 -- failure.
 data MsgFlashDone = MsgFlashDone
   { _msgFlashDone_response :: !Word8
@@ -111,9 +112,9 @@ msgFlashReadReq = 0x00E7
 -- The flash read message reads a set of addresses of either the STM or M25
 -- onboard flash. The device replies with a MSG_FLASH_READ_RESP message
 -- containing either the read data on success or a MSG_FLASH_DONE message
--- containing the return code FLASH_INVALID_LEN (2) if the maximum read size is
--- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
--- range.
+-- containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+-- is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+-- allowed range.
 data MsgFlashReadReq = MsgFlashReadReq
   { _msgFlashReadReq_target   :: !Word8
     -- ^ Target flags
@@ -147,9 +148,9 @@ msgFlashReadResp = 0x00E1
 -- The flash read message reads a set of addresses of either the STM or M25
 -- onboard flash. The device replies with a MSG_FLASH_READ_RESP message
 -- containing either the read data on success or a MSG_FLASH_DONE message
--- containing the return code FLASH_INVALID_LEN (2) if the maximum read size is
--- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
--- range.
+-- containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+-- is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+-- allowed range.
 data MsgFlashReadResp = MsgFlashReadResp
   { _msgFlashReadResp_target   :: !Word8
     -- ^ Target flags
@@ -281,7 +282,7 @@ msgStmUniqueIdResp = 0x00E5
 --
 -- This message reads the device's hardcoded unique ID. The host requests the
 -- ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
--- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload..
+-- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 data MsgStmUniqueIdResp = MsgStmUniqueIdResp
   { _msgStmUniqueIdResp_stm_id :: ![Word8]
     -- ^ Device unique ID

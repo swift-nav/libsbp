@@ -28,12 +28,12 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline solution in North East Down
- * (NED) coordinates. This baseline is the relative vector distance
- * from the base station to the rover receiver, and NED coordinate
- * system is defined at the local WGS84 tangent plane centered at the
- * base station position.  The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). */
+ * This message reports the baseline solution in North East Down (NED)
+ * coordinates. This baseline is the relative vector distance from the base
+ * station to the rover receiver, and NED coordinate system is defined at the
+ * local WGS84 tangent plane centered at the base station position.  The full
+ * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
+ * week (tow). */
 
 public class MsgBaselineNED extends SBPMessage {
     public static final int TYPE = 0x020C;

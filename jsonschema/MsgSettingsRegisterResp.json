@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSettingsRegisterResp",
   "title":"MsgSettingsRegisterResp",
-  "description":"This message responds to setting registration with the effective value.,\nThe effective value shall differ from the given default value if setting,\nwas already registered or is available in the permanent setting storage,\nand had a different value.\n",
+  "description":"This message responds to setting registration with the effective value. The effective value shall differ from the given default value if setting was already registered or is available in the permanent setting storage and had a different value.\n",
   "type": "object",
   "properties": {
     "status": {"type": "integer"},

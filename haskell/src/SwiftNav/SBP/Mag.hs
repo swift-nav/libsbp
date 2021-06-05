@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Magnetometer (mag) messages.\>
+-- \< Magnetometer (mag) messages. \>
 
 module SwiftNav.SBP.Mag
   ( module SwiftNav.SBP.Mag

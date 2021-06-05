@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#GpsTimeSec",
   "title":"GpsTimeSec",
-  "description":"A GPS time, defined as the number of,\nseconds since beginning of the week on the Saturday/Sunday,\ntransition.\n",
+  "description":"A GPS time, defined as the number of seconds since beginning of the week on the Saturday/Sunday transition.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

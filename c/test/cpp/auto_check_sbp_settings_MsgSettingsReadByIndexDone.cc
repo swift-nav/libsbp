@@ -10,9 +10,11 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/settings/test_MsgSettingsReadByIndexDone.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/settings/test_MsgSettingsReadByIndexDone.yaml by
+// generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_traits.h>
+#include <libsbp/cpp/state.h>

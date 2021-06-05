@@ -29,13 +29,12 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The GPS observations message reports all the raw pseudorange and
- * carrier phase observations for the satellites being tracked by
- * the device. Carrier phase observation here is represented as a
- * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles). The observations
- * are be interoperable with 3rd party receivers and conform
- * with typical RTCMv3 GNSS observations. */
+ * The GPS observations message reports all the raw pseudorange and carrier
+ * phase observations for the satellites being tracked by the device. Carrier
+ * phase observation here is represented as a 40-bit fixed point number with
+ * Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+ * cycles). The observations are be interoperable with 3rd party receivers and
+ * conform with typical RTCMv3 GNSS observations. */
 
 public class MsgObs extends SBPMessage {
     public static final int TYPE = 0x004A;
@@ -44,9 +43,8 @@ public class MsgObs extends SBPMessage {
     /** Header of a GPS observation message */
     public ObservationHeader header;
     
-    /** Pseudorange and carrier phase observation for a
-satellite being tracked.
- */
+    /** Pseudorange and carrier phase observation for a satellite being
+      * tracked. */
     public PackedObsContent[] obs;
     
 

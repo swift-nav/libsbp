@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#NetworkUsage",
   "title":"NetworkUsage",
-  "description":"The bandwidth usage for each interface can be reported,\nwithin this struct and utilize multiple fields to fully,\nspecify the type of traffic that is being tracked. As,\neither the interval of collection or the collection time,\nmay vary, both a timestamp and period field is provided,,\nthough may not necessarily be populated with a value.\n",
+  "description":"The bandwidth usage for each interface can be reported within this struct and utilize multiple fields to fully specify the type of traffic that is being tracked. As either the interval of collection or the collection time may vary, both a timestamp and period field is provided, though may not necessarily be populated with a value.\n",
   "type": "object",
   "properties": {
     "duration": {"type": "integer"},

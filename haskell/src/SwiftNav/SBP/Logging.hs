@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Logging and debugging messages from the device. \>
+-- \< Logging and debugging messages from the device. \>
 
 module SwiftNav.SBP.Logging
   ( module SwiftNav.SBP.Logging
@@ -71,11 +71,12 @@ msgFwd = 0x0402
 --
 -- This message provides the ability to forward messages over SBP.  This may
 -- take the form of wrapping up SBP messages received by Piksi for logging
--- purposes or wrapping  another protocol with SBP.  The source identifier
--- indicates from what interface a forwarded stream derived. The protocol
--- identifier identifies what the expected protocol the forwarded msg contains.
--- Protocol 0 represents SBP and the remaining values are implementation
--- defined.
+-- purposes or wrapping another protocol with SBP.
+--
+-- The source identifier indicates from what interface a forwarded stream
+-- derived. The protocol identifier identifies what the expected protocol the
+-- forwarded msg contains. Protocol 0 represents SBP and the remaining values
+-- are implementation defined.
 data MsgFwd = MsgFwd
   { _msgFwd_source    :: !Word8
     -- ^ source identifier

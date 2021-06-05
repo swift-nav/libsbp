@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgPosLLHCov",
   "title":"MsgPosLLHCov",
-  "description":"This position solution message reports the absolute geodetic,\ncoordinates and the status (single point vs pseudo-absolute RTK),\nof the position solution as well as the upper triangle of the 3x3,\ncovariance matrix.  The position information and Fix Mode flags should,\nfollow the MSG_POS_LLH message.  Since the covariance matrix is computed,\nin the local-level North, East, Down frame, the covariance terms follow,\nwith that convention. Thus, covariances are reported against the \"downward\",\nmeasurement and care should be taken with the sign convention.\n",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the upper triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the local-level North, East, Down frame, the covariance terms follow with that convention. Thus, covariances are reported against the \"downward\" measurement and care should be taken with the sign convention.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

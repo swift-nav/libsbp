@@ -28,26 +28,33 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
- * It focuses primarly, but not only, on GNSS metadata. */
+ * Deprecated.
+ *
+ * This message contains all metadata about the sensors received and/or used
+ * in computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
+ * metadata. */
 
 public class MsgSolnMetaDepA extends SBPMessage {
     public static final int TYPE = 0xFF0F;
 
     
-    /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Position Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int pdop;
     
-    /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Horizontal Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int hdop;
     
-    /** Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
+    /** Vertical Dilution of Precision as per last available DOPS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int vdop;
     
     /** Number of satellites as per last available solution from PVT engine */
     public int n_sats;
     
-    /** Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) */
+    /** Age of corrections as per last available AGE_CORRECTIONS from PVT
+      * engine (0xFFFF indicates invalid) */
     public int age_corrections;
     
     /** State of alignment and the status and receipt of the alignment inputs */
@@ -59,7 +66,11 @@ public class MsgSolnMetaDepA extends SBPMessage {
     /** Tow of last-used GNSS velocity measurement */
     public long last_used_gnss_vel_tow;
     
-    /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+    /** Array of Metadata describing the sensors potentially involved in the
+      * solution. Each element in the array represents a single sensor type
+      * and consists of flags containing (meta)data pertaining to that
+      * specific single sensor. Refer to each (XX)InputType descriptor in the
+      * present doc. */
     public SolutionInputType[] sol_in;
     
 

@@ -40,14 +40,14 @@ public class MsgLinuxSocketUsage extends SBPMessage {
     /** the max queue depth seen within the reporting period */
     public long max_queue_depth;
     
-    /** A count for each socket type reported in the `socket_types_reported` field,
-the first entry corresponds to the first enabled bit in `types_reported`.
- */
+    /** A count for each socket type reported in the `socket_types_reported`
+      * field, the first entry corresponds to the first enabled bit in
+      * `types_reported`. */
     public int[] socket_state_counts;
     
-    /** A count for each socket type reported in the `socket_types_reported` field,
-the first entry corresponds to the first enabled bit in `types_reported`.
- */
+    /** A count for each socket type reported in the `socket_types_reported`
+      * field, the first entry corresponds to the first enabled bit in
+      * `types_reported`. */
     public int[] socket_type_counts;
     
 

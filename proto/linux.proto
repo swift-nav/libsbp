@@ -14,7 +14,7 @@ syntax = "proto3";
 
 /** Linux
  *
-  * Linux state monitoring.
+ * Linux state monitoring.
  */
 
 package swiftnav.sbp.linux;
@@ -81,8 +81,8 @@ message MsgLinuxProcessFdSummary {
 
 /** List CPU state on the system
  *
- * This message indicates the process state of the top 10 heaviest
- * consumers of CPU on the system, including a timestamp.
+ * This message indicates the process state of the top 10 heaviest consumers
+ * of CPU on the system, including a timestamp.
  */
 message MsgLinuxCpuState {
     uint32 index = 1;
@@ -96,8 +96,8 @@ message MsgLinuxCpuState {
 
 /** List memory state on the system
  *
- * This message indicates the process state of the top 10 heaviest
- * consumers of memory on the system, including a timestamp.
+ * This message indicates the process state of the top 10 heaviest consumers
+ * of memory on the system, including a timestamp.
  */
 message MsgLinuxMemState {
     uint32 index = 1;
@@ -109,9 +109,10 @@ message MsgLinuxMemState {
     string cmdline = 7;
 }
 
-/** CPU, Memory and Process Starts/Stops.
+/** CPU, Memory and Process Starts/Stops
  *
- * This presents a summary of CPU and memory utilization, including a timestamp.
+ * This presents a summary of CPU and memory utilization, including a
+ * timestamp.
  */
 message MsgLinuxSysState {
     uint32 mem_total = 1;

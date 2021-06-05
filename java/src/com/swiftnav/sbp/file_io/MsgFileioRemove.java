@@ -28,10 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The file remove message deletes a file from the file system.
- * If the message is invalid, a followup MSG_PRINT message will
- * print "Invalid fileio remove message". A device will only
- * process this message when it is received from sender ID 0x42. */
+ * The file remove message deletes a file from the file system. If the message
+ * is invalid, a followup MSG_PRINT message will print "Invalid fileio remove
+ * message". A device will only process this message when it is received from
+ * sender ID 0x42. */
 
 public class MsgFileioRemove extends SBPMessage {
     public static final int TYPE = 0x00AC;

@@ -26,10 +26,10 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// SSR code biases corrections for a particular satellite.
+/// SSR code biases corrections for a particular satellite
 ///
-/// Code biases are to be added to pseudorange.
-/// The corrections conform with RTCMv3 MT 1059 / 1065.
+/// Code biases are to be added to pseudorange. The corrections conform with
+/// RTCMv3 MT 1059 / 1065.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -85,10 +85,10 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
     }
 }
 
-/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages
 ///
-/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
-/// Also includes an RLE encoded validity list.
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
+/// RLE encoded validity list.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -101,7 +101,7 @@ pub struct GridDefinitionHeaderDepA {
     pub area_width: u16,
     /// North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
     pub lat_nw_corner_enc: u16,
-    /// North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    /// North-West corner longitude (deg) = region_size * lon_nw_corner_enc -
     /// 180
     pub lon_nw_corner_enc: u16,
     /// Number of messages in the dataset
@@ -165,7 +165,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
     }
 }
 
-/// Correction data for a single grid point.
+/// Correction data for a single grid point
 ///
 /// Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
 /// stddev) for each satellite at the grid point.
@@ -225,7 +225,7 @@ impl crate::serialize::SbpSerialize for GridElement {
     }
 }
 
-/// Correction data for a single grid point.
+/// Correction data for a single grid point
 ///
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
@@ -288,11 +288,10 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
     }
 }
 
-/// Header for the MSG_SSR_GRIDDED_CORRECTION message.
+/// Header for the MSG_SSR_GRIDDED_CORRECTION message
 ///
-/// The LPP message contains nested variable length arrays
-/// which are not suppported in SBP, so each grid point will
-/// be identified by the index.
+/// The LPP message contains nested variable length arrays which are not
+/// suppported in SBP, so each grid point will be identified by the index.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -381,9 +380,8 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 
 /// Header for MSG_SSR_GRIDDED_CORRECTION_DEP
 ///
-/// The 3GPP message contains nested variable length arrays
-/// which are not suppported in SBP, so each grid point will
-/// be identified by the index.
+/// The 3GPP message contains nested variable length arrays which are not
+/// suppported in SBP, so each grid point will be identified by the index.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -462,10 +460,9 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
 
 /// Precise code biases correction
 ///
-/// The precise code biases message is to be added
-/// to the pseudorange of the corresponding signal
-/// to get corrected pseudorange. It is an
-/// equivalent to the 1059 / 1065 RTCM message types
+/// The precise code biases message is to be added to the pseudorange of the
+/// corresponding signal to get corrected pseudorange. It is an equivalent to
+/// the 1059 / 1065 RTCM message types.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -549,11 +546,11 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
     }
 }
 
-/// Gridded troposphere and STEC correction residuals.
+/// Gridded troposphere and STEC correction residuals
 ///
 /// STEC residuals are per space vehicle, troposphere is not.
 ///
-/// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+/// It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -821,10 +818,9 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
 
 /// Precise orbit and clock correction
 ///
-/// The precise orbit and clock correction message is
-/// to be applied as a delta correction to broadcast
-/// ephemeris and is an equivalent to the 1060 /1066
-/// RTCM message types
+/// The precise orbit and clock correction message is to be applied as a delta
+/// correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+/// RTCM message types.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1082,12 +1078,11 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 
 /// Precise phase biases correction
 ///
-/// The precise phase biases message contains the biases
-/// to be added to the carrier phase of the corresponding
-/// signal to get corrected carrier phase measurement, as
-/// well as the satellite yaw angle to be applied to compute
-/// the phase wind-up correction.
-/// It is typically an equivalent to the 1265 RTCM message types
+/// The precise phase biases message contains the biases to be added to the
+/// carrier phase of the corresponding signal to get corrected carrier phase
+/// measurement, as well as the satellite yaw angle to be applied to compute
+/// the phase wind-up correction. It is typically an equivalent to the 1265
+/// RTCM message types.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1251,7 +1246,7 @@ impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
     }
 }
 
-/// STEC correction polynomial coeffcients.
+/// STEC correction polynomial coeffcients
 ///
 /// The Slant Total Electron Content per space vehicle, given as polynomial
 /// approximation for a given tile. This should be combined with the
@@ -1409,41 +1404,58 @@ pub struct MsgSsrTileDefinition {
     pub sender_id: Option<u16>,
     /// Unique identifier of the tile set this tile belongs to.
     pub tile_set_id: u16,
-    /// Unique identifier of this tile in the tile set.  See GNSS-SSR-
-    /// ArrayOfCorrectionPoints field correctionPointSetID.
+    /// Unique identifier of this tile in the tile set.
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
     pub tile_id: u16,
-    /// North-West corner correction point latitude.  The relation between the
-    /// latitude X in the range [-90, 90] and the coded number N is:  N =
-    /// floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    /// referencePointLatitude.
+    /// North-West corner correction point latitude.
+    ///
+    /// The relation between the latitude X in the range [-90, 90] and the coded
+    /// number N is:
+    ///
+    /// N = floor((X / 90) * 2^14)
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
     pub corner_nw_lat: i16,
-    /// North-West corner correction point longtitude.  The relation between the
-    /// longtitude X in the range [-180, 180] and the coded number N is:  N =
-    /// floor((X / 180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    /// referencePointLongitude.
+    /// North-West corner correction point longitude.
+    ///
+    /// The relation between the longitude X in the range [-180, 180] and the
+    /// coded number N is:
+    ///
+    /// N = floor((X / 180) * 2^15)
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
     pub corner_nw_lon: i16,
-    /// Spacing of the correction points in the latitude direction.  See GNSS-
-    /// SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+    /// Spacing of the correction points in the latitude direction.
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
     pub spacing_lat: u16,
-    /// Spacing of the correction points in the longtitude direction.  See GNSS-
-    /// SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
+    /// Spacing of the correction points in the longitude direction.
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
     pub spacing_lon: u16,
-    /// Number of steps in the latitude direction.  See GNSS-SSR-
-    /// ArrayOfCorrectionPoints field numberOfStepsLatitude.
+    /// Number of steps in the latitude direction.
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
     pub rows: u16,
-    /// Number of steps in the longtitude direction.  See GNSS-SSR-
-    /// ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+    /// Number of steps in the longitude direction.
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
     pub cols: u16,
     /// Specifies the availability of correction data at the correction points
-    /// in the array.  If a specific bit is enabled (set to 1), the correction
-    /// is not available. Only the first rows * cols bits are used, the
-    /// remainder are set to 0. If there are more then 64 correction points the
-    /// remaining corrections are always available.  Starting with the northwest
-    /// corner of the array (top left on a north oriented map) the correction
-    /// points are enumerated with row precedence - first row west to east,
-    /// second row west to east, until last row west to east - ending with the
-    /// southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
-    /// field bitmaskOfGrids but note the definition of the bits is inverted.
+    /// in the array.
+    ///
+    /// If a specific bit is enabled (set to 1), the correction is not
+    /// available. Only the first rows * cols bits are used, the remainder are
+    /// set to 0. If there are more then 64 correction points the remaining
+    /// corrections are always available.
+    ///
+    /// Starting with the northwest corner of the array (top left on a north
+    /// oriented map) the correction points are enumerated with row precedence -
+    /// first row west to east, second row west to east, until last row west to
+    /// east - ending with the southeast corner of the array.
+    ///
+    /// See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    /// definition of the bits is inverted.
     pub bitmask: u64,
 }
 
@@ -1521,7 +1533,7 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
     }
 }
 
-/// SSR phase biases corrections for a particular satellite.
+/// SSR phase biases corrections for a particular satellite
 ///
 /// Phase biases are to be added to carrier phase measurements.
 ///
@@ -1595,11 +1607,11 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
     }
 }
 
-/// Header for the MSG_SSR_STEC_CORRECTION message.
+/// Header for the MSG_SSR_STEC_CORRECTION message
 ///
-/// A full set of STEC information will likely span multiple SBP
-/// messages, since SBP message a limited to 255 bytes.  The header
-/// is used to tie multiple SBP messages into a sequence.
+/// A full set of STEC information will likely span multiple SBP messages,
+/// since SBP message a limited to 255 bytes.  The header is used to tie
+/// multiple SBP messages into a sequence.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1679,9 +1691,9 @@ impl crate::serialize::SbpSerialize for STECHeader {
 
 /// Header for MSG_SSR_STEC_CORRECTION_DEP message
 ///
-/// A full set of STEC information will likely span multiple SBP
-/// messages, since SBP message a limited to 255 bytes.  The header
-/// is used to tie multiple SBP messages into a sequence.
+/// A full set of STEC information will likely span multiple SBP messages,
+/// since SBP message a limited to 255 bytes.  The header is used to tie
+/// multiple SBP messages into a sequence.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1754,8 +1766,8 @@ impl crate::serialize::SbpSerialize for STECHeaderDepA {
 
 /// None
 ///
-/// STEC residual (mean and standard deviation) for the given satellite
-/// at the grid point,
+/// STEC residual (mean and standard deviation) for the given satellite at the
+/// grid point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1932,7 +1944,7 @@ impl crate::serialize::SbpSerialize for STECSatElement {
     }
 }
 
-/// Antenna phase center correction.
+/// Antenna phase center correction
 ///
 /// Contains phase center offset and elevation variation corrections for one
 /// signal on a satellite.

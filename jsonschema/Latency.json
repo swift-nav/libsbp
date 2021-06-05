@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#Latency",
   "title":"Latency",
-  "description":"Statistics on the latency of observations received from the base,\nstation. As observation packets are received their GPS time is,\ncompared to the current GPS time calculated locally by the,\nreceiver to give a precise measurement of the end-to-end,\ncommunication latency in the system.\n",
+  "description":"Statistics on the latency of observations received from the base station. As observation packets are received their GPS time is compared to the current GPS time calculated locally by the receiver to give a precise measurement of the end-to-end communication latency in the system.\n",
   "type": "object",
   "properties": {
     "avg": {"type": "integer"},

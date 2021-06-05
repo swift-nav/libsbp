@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgExtEvent",
   "title":"MsgExtEvent",
-  "description":"Reports detection of an external event, the GPS time it occurred,,\nwhich pin it was and whether it was rising or falling.\n",
+  "description":"Reports detection of an external event, the GPS time it occurred, which pin it was and whether it was rising or falling.\n",
   "type": "object",
   "properties": {
     "wn": {"type": "integer"},

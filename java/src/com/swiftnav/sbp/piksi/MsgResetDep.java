@@ -29,8 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message from the host resets the Piksi back into the
- * bootloader. */
+ * This message from the host resets the Piksi back into the bootloader. */
 
 public class MsgResetDep extends SBPMessage {
     public static final int TYPE = 0x00B2;

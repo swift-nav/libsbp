@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgCommandReq",
   "title":"MsgCommandReq",
-  "description":"Request the recipient to execute an command.,\nOutput will be sent in MSG_LOG messages, and the exit,\ncode will be returned with MSG_COMMAND_RESP.\n",
+  "description":"Request the recipient to execute an command. Output will be sent in MSG_LOG messages, and the exit code will be returned with MSG_COMMAND_RESP.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

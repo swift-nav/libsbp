@@ -29,11 +29,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message describes the results from an attempted GPS signal
- * acquisition search for a satellite PRN over a code phase/carrier
- * frequency range. It contains the parameters of the point in the
- * acquisition search space with the best carrier-to-noise (CN/0)
- * ratio. */
+ * This message describes the results from an attempted GPS signal acquisition
+ * search for a satellite PRN over a code phase/carrier frequency range. It
+ * contains the parameters of the point in the acquisition search space with
+ * the best carrier-to-noise (CN/0) ratio. */
 
 public class MsgAcqResult extends SBPMessage {
     public static final int TYPE = 0x002F;

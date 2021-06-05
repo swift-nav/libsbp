@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioConfigReq",
   "title":"MsgFileioConfigReq",
-  "description":"Requests advice on the optimal configuration for a FileIO ,\ntransfer.  Newer version of FileIO can support greater,\nthroughput by supporting a large window of FileIO data,\nthat can be in-flight during read or write operations.\n",
+  "description":"Requests advice on the optimal configuration for a FileIO transfer.  Newer version of FileIO can support greater throughput by supporting a large window of FileIO data that can be in-flight during read or write operations.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"}

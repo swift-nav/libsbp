@@ -28,12 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The read directory message lists the files in a directory on the
- * device's onboard flash file system. Message contains the directory
- * listings as a NULL delimited list. The listing is chunked over
- * multiple SBP packets and the end of the list is identified by an
- * packet with no entries. The sequence number in the response is
- * preserved from the request. */
+ * The read directory message lists the files in a directory on the device's
+ * onboard flash file system. Message contains the directory listings as a
+ * NULL delimited list. The listing is chunked over multiple SBP packets and
+ * the end of the list is identified by an packet with no entries. The
+ * sequence number in the response is preserved from the request. */
 
 public class MsgFileioReadDirResp extends SBPMessage {
     public static final int TYPE = 0x00AA;

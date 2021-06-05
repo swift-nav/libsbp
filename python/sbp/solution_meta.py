@@ -11,7 +11,8 @@
 
 
 """
-Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+Standardized Metadata messages for Fuzed Solution from Swift Navigation
+devices.
 """
 
 import json
@@ -28,13 +29,12 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SolutionInputType(object):
   """SolutionInputType.
   
-  Metadata describing which sensors were involved in the solution.
-The structure is fixed no matter what the actual sensor type is.
-The sensor_type field tells you which sensor we are talking about. It also tells you
-whether the sensor data was actually used or not.
-The flags field, always a u8, contains the sensor-specific data.
-The content of flags, for each sensor type, is described in the relevant structures in this section.
-
+  Metadata describing which sensors were involved in the solution. The
+  structure is fixed no matter what the actual sensor type is. The sensor_type
+  field tells you which sensor we are talking about. It also tells you whether
+  the sensor data was actually used or not. The flags field, always a u8,
+  contains the sensor-specific data. The content of flags, for each sensor
+  type, is described in the relevant structures in this section.
   
   Parameters
   ----------
@@ -70,9 +70,8 @@ The content of flags, for each sensor type, is described in the relevant structu
 class GNSSInputType(object):
   """GNSSInputType.
   
-  Metadata around the GNSS sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Metadata around the GNSS sensors involved in the fuzed solution. Accessible
+  through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -103,9 +102,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
 class IMUInputType(object):
   """IMUInputType.
   
-  Metadata around the IMU sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Metadata around the IMU sensors involved in the fuzed solution. Accessible
+  through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -137,8 +135,7 @@ class OdoInputType(object):
   """OdoInputType.
   
   Metadata around the Odometry sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Accessible through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -175,24 +172,30 @@ class MsgSolnMetaDepA(SBP):
   of its fields.
 
   
-  This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-It focuses primarly, but not only, on GNSS metadata.
+  Deprecated.
 
+  This message contains all metadata about the sensors received and/or used in
+  computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
+  metadata.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   pdop : int
-    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Position Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Horizontal Dilution of Precision as per last available DOPS from PVT
+    engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Vertical Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   n_sats : int
     Number of satellites as per last available solution from PVT engine
   age_corrections : int
-    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    (0xFFFF indicates invalid)
   alignment_status : int
     State of alignment and the status and receipt of the alignment inputs
   last_used_gnss_pos_tow : int
@@ -200,7 +203,10 @@ It focuses primarly, but not only, on GNSS metadata.
   last_used_gnss_vel_tow : int
     Tow of last-used GNSS velocity measurement
   sol_in : array
-    Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+    Array of Metadata describing the sensors potentially involved in the
+    solution. Each element in the array represents a single sensor type and
+    consists of flags containing (meta)data pertaining to that specific single
+    sensor. Refer to each (XX)InputType descriptor in the present doc.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -306,13 +312,15 @@ class MsgSolnMeta(SBP):
   of its fields.
 
   
-  This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
-It focuses primarly, but not only, on GNSS metadata.
-Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating
-whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity)
-If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
-complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
-
+  This message contains all metadata about the sensors received and/or used in
+  computing the sensorfusion solution. It focuses primarly, but not only, on
+  GNSS metadata. Regarding the age of the last received valid GNSS solution,
+  the highest two bits are time status, indicating whether age gnss can or can
+  not be used to retrieve time of measurement (noted TOM, also known as time
+  of validity) If it can, substract 'age gnss' from 'tow' in navigation
+  messages to get TOM. Can be used before alignment is complete in the Fusion
+  Engine, when output solution is the last received valid GNSS solution and
+  its tow is not a TOM.
 
   Parameters
   ----------
@@ -321,17 +329,24 @@ complete in the Fusion Engine, when output solution is the last received valid G
   tow : int
     GPS time of week rounded to the nearest millisecond
   pdop : int
-    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Position Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Horizontal Dilution of Precision as per last available DOPS from PVT
+    engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Vertical Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   age_corrections : int
-    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    (0xFFFF indicates invalid)
   age_gnss : int
     Age and Time Status of the last received valid GNSS solution.
   sol_in : array
-    Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+    Array of Metadata describing the sensors potentially involved in the
+    solution. Each element in the array represents a single sensor type and
+    consists of flags containing (meta)data pertaining to that specific single
+    sensor. Refer to each (XX)InputType descriptor in the present doc.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

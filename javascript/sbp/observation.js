@@ -841,9 +841,9 @@ MsgEphemerisQzss.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
- * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data  Calculated from the navigation data parameter t_oe per
+ * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data Calculated from the navigation data parameter t_oe per
  *   RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
- * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data  Calculated from the navigation data parameter t_oe per
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data Calculated from the navigation data parameter t_oe per
  *   RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -2519,8 +2519,8 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
- *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
+ *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
  *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
@@ -2567,8 +2567,8 @@ AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
- *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
+ *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
  *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
@@ -2821,7 +2821,7 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
  *
  * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
  * ambiguity resolution for baselines with mixed receiver types (e.g. receiver of
- * different manufacturers)
+ * different manufacturers).
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mask number (unsigned 8-bit int, 1 byte) GLONASS FDMA signals mask
@@ -2920,7 +2920,7 @@ MsgSvAzEl.prototype.fieldSpec.push(['azel', 'array', SvAzEl.prototype.fieldSpec,
 /**
  * SBP class for message MSG_OSR (0x0640).
  *
- * The OSR message contains network corrections in an observation-like format
+ * The OSR message contains network corrections in an observation-like format.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeader Header of a GPS observation message

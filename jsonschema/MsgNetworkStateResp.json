@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgNetworkStateResp",
   "title":"MsgNetworkStateResp",
-  "description":"The state of a network interface on the Piksi.,\nData is made to reflect output of ifaddrs struct returned by getifaddrs,\nin c.\n",
+  "description":"The state of a network interface on the Piksi. Data is made to reflect output of ifaddrs struct returned by getifaddrs in c.\n",
   "type": "object",
   "properties": {
     "ipv4_address": {"type": "array", "items": {"type": "integer"}},

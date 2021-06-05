@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgEphemerisQzss",
   "title":"MsgEphemerisQzss",
-  "description":"The ephemeris message returns a set of satellite orbit,\nparameters that is used to calculate QZSS satellite position,,\nvelocity, and clock offset.\n",
+  "description":"The ephemeris message returns a set of satellite orbit parameters that is used to calculate QZSS satellite position, velocity, and clock offset.\n",
   "type": "object",
   "properties": {
     "common": {"$ref": "EphemerisCommonContent.json"},

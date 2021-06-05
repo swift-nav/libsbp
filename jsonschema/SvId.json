@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#SvId",
   "title":"SvId",
-  "description":"A (Constellation ID, satellite ID) tuple that uniquely identifies,\na space vehicle\n",
+  "description":"A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.\n",
   "type": "object",
   "properties": {
     "satId": {"type": "integer"},

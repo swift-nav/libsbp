@@ -28,10 +28,8 @@ public class ObservationHeaderDep extends SBPStruct {
     /** GPS time of this observation */
     public GPSTimeDep t;
     
-    /** Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
- */
+    /** Total number of observations. First nibble is the size of the sequence (n),
+      * second nibble is the zero-indexed counter (ith packet of n) */
     public int n_obs;
     
 

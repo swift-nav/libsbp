@@ -34,18 +34,15 @@ public class GriddedCorrectionHeaderDepA extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
+    /** Update interval between consecutive corrections. Encoded following RTCM DF391
+      * specification. */
     public int update_interval;
     
-    /** IOD of the SSR atmospheric correction
- */
+    /** IOD of the SSR atmospheric correction */
     public int iod_atmo;
     
-    /** Quality of the troposphere data. Encoded following RTCM DF389
-specifcation in units of m.
- */
+    /** Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+      * units of m. */
     public int tropo_quality_indicator;
     
 

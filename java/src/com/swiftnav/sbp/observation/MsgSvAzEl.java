@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Azimuth and elevation angles of all the visible satellites
- * that the device does have ephemeris or almanac for. */
+ * Azimuth and elevation angles of all the visible satellites that the device
+ * does have ephemeris or almanac for. */
 
 public class MsgSvAzEl extends SBPMessage {
     public static final int TYPE = 0x0097;

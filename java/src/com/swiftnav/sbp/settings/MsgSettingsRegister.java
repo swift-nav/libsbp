@@ -28,17 +28,16 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message registers the presence and default value of a setting
- * with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
- * for this setting to set the initial value. */
+ * This message registers the presence and default value of a setting with a
+ * settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
+ * setting to set the initial value. */
 
 public class MsgSettingsRegister extends SBPMessage {
     public static final int TYPE = 0x00AE;
 
     
     /** A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE".
- */
+      * "SECTION_SETTING\0SETTING\0VALUE". */
     public String setting;
     
 

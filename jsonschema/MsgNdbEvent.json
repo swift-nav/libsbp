@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgNdbEvent",
   "title":"MsgNdbEvent",
-  "description":"This message is sent out when an object is stored into NDB. If needed,\nmessage could also be sent out when fetching an object from NDB.\n",
+  "description":"This message is sent out when an object is stored into NDB. If needed message could also be sent out when fetching an object from NDB.\n",
   "type": "object",
   "properties": {
     "recv_time": {"type": "integer"},

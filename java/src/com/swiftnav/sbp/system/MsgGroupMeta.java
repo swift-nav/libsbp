@@ -28,8 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This leading message lists the time metadata of the Solution Group.
- * It also lists the atomic contents (i.e. types of messages included) of the Solution Group. */
+ * This leading message lists the time metadata of the Solution Group. It also
+ * lists the atomic contents (i.e. types of messages included) of the Solution
+ * Group. */
 
 public class MsgGroupMeta extends SBPMessage {
     public static final int TYPE = 0xFF0A;
@@ -45,8 +46,7 @@ public class MsgGroupMeta extends SBPMessage {
     public int n_group_msgs;
     
     /** An inorder list of message types included in the Solution Group,
-including GROUP_META itself
- */
+      * including GROUP_META itself */
     public int[] group_msgs;
     
 

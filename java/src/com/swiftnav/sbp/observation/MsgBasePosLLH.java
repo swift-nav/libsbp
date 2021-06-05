@@ -29,11 +29,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The base station position message is the position reported by
- * the base station itself. It is used for pseudo-absolute RTK
- * positioning, and is required to be a high-accuracy surveyed
- * location of the base station. Any error here will result in an
- * error in the pseudo-absolute position output. */
+ * The base station position message is the position reported by the base
+ * station itself. It is used for pseudo-absolute RTK positioning, and is
+ * required to be a high-accuracy surveyed location of the base station. Any
+ * error here will result in an error in the pseudo-absolute position output. */
 
 public class MsgBasePosLLH extends SBPMessage {
     public static final int TYPE = 0x0044;

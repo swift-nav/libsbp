@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgIono",
   "title":"MsgIono",
-  "description":"The ionospheric parameters which allow the \"L1 only\" or \"L2 only\" user to,\nutilize the ionospheric model for computation of the ionospheric delay.,\nPlease see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.\n",
+  "description":"The ionospheric parameters which allow the \"L1 only\" or \"L2 only\" user to utilize the ionospheric model for computation of the ionospheric delay. Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.\n",
   "type": "object",
   "properties": {
     "t_nmct": {"$ref": "GpsTimeSec.json"},

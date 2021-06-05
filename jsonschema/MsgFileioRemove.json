@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioRemove",
   "title":"MsgFileioRemove",
-  "description":"The file remove message deletes a file from the file system.,\nIf the message is invalid, a followup MSG_PRINT message will,\nprint \"Invalid fileio remove message\". A device will only,\nprocess this message when it is received from sender ID 0x42.\n",
+  "description":"The file remove message deletes a file from the file system. If the message is invalid, a followup MSG_PRINT message will print \"Invalid fileio remove message\". A device will only process this message when it is received from sender ID 0x42.\n",
   "type": "object",
   "properties": {
     "filename": {"type": "string"}

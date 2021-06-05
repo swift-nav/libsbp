@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The OSR message contains network corrections in an observation-like format */
+ * The OSR message contains network corrections in an observation-like format. */
 
 public class MsgOsr extends SBPMessage {
     public static final int TYPE = 0x0640;
@@ -38,9 +38,7 @@ public class MsgOsr extends SBPMessage {
     /** Header of a GPS observation message */
     public ObservationHeader header;
     
-    /** Network correction for a
-satellite signal.
- */
+    /** Network correction for a satellite signal. */
     public PackedOsrContent[] obs;
     
 

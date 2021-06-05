@@ -29,13 +29,14 @@ import org.json.JSONArray;
  * fields.
  *
  * This message reports the velocity in the Vehicle Body Frame. By convention,
- * the x-axis should point out the nose of the vehicle and represent the forward
- * direction, while as the y-axis should point out the right hand side of the vehicle.
- * Since this is a right handed system, z should point out the bottom of the vehicle.
- * The orientation and origin of the Vehicle Body Frame are specified via the device settings.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). This message is only produced by inertial versions of Swift
- * products and is not available from Piksi Multi or Duro. */
+ * the x-axis should point out the nose of the vehicle and represent the
+ * forward direction, while as the y-axis should point out the right hand side
+ * of the vehicle. Since this is a right handed system, z should point out the
+ * bottom of the vehicle. The orientation and origin of the Vehicle Body Frame
+ * are specified via the device settings. The full GPS time is given by the
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow). This message
+ * is only produced by inertial versions of Swift products and is not
+ * available from Piksi Multi or Duro. */
 
 public class MsgVelBody extends SBPMessage {
     public static final int TYPE = 0x0213;

@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This is a legacy message for sending and loading a satellite
- * alamanac onto the Piksi's flash memory from the host. */
+ * This is a legacy message for sending and loading a satellite alamanac onto
+ * the Piksi's flash memory from the host. */
 
 public class MsgAlmanac extends SBPMessage {
     public static final int TYPE = 0x0069;

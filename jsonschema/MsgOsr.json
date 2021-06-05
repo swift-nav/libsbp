@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgOsr",
   "title":"MsgOsr",
-  "description":"The OSR message contains network corrections in an observation-like format\n",
+  "description":"The OSR message contains network corrections in an observation-like format.\n",
   "type": "object",
   "properties": {
     "header": {"$ref": "ObservationHeader.json"},

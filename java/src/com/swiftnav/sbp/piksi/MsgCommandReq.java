@@ -29,9 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Request the recipient to execute an command.
- * Output will be sent in MSG_LOG messages, and the exit
- * code will be returned with MSG_COMMAND_RESP. */
+ * Request the recipient to execute an command. Output will be sent in MSG_LOG
+ * messages, and the exit code will be returned with MSG_COMMAND_RESP. */
 
 public class MsgCommandReq extends SBPMessage {
     public static final int TYPE = 0x00B8;

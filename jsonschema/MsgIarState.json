@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgIarState",
   "title":"MsgIarState",
-  "description":"This message reports the state of the Integer Ambiguity,\nResolution (IAR) process, which resolves unknown integer,\nambiguities from double-differenced carrier-phase measurements,\nfrom satellite observations.\n",
+  "description":"This message reports the state of the Integer Ambiguity Resolution (IAR) process, which resolves unknown integer ambiguities from double-differenced carrier-phase measurements from satellite observations.\n",
   "type": "object",
   "properties": {
     "num_hyps": {"type": "integer"}

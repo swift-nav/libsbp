@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgEphemerisGPS",
   "title":"MsgEphemerisGPS",
-  "description":"The ephemeris message returns a set of satellite orbit,\nparameters that is used to calculate GPS satellite position,,\nvelocity, and clock offset. Please see the Navstar GPS,\nSpace Segment/Navigation user interfaces (ICD-GPS-200, Table,\n20-III) for more details.\n",
+  "description":"The ephemeris message returns a set of satellite orbit parameters that is used to calculate GPS satellite position, velocity, and clock offset. Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III) for more details.\n",
   "type": "object",
   "properties": {
     "common": {"$ref": "EphemerisCommonContent.json"},

@@ -12,9 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Messages reporting accurately-timestamped external events,
-//! e.g. camera shutter time.
-//!
+//! Messages reporting accurately-timestamped external events, e.g. camera
+//! shutter time.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -29,8 +28,8 @@ use crate::SbpString;
 
 /// Reports timestamped external pin event
 ///
-/// Reports detection of an external event, the GPS time it occurred,
-/// which pin it was and whether it was rising or falling.
+/// Reports detection of an external event, the GPS time it occurred, which
+/// pin it was and whether it was rising or falling.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message resets either the DGNSS Kalman filters or Integer
- * Ambiguity Resolution (IAR) process. */
+ * This message resets either the DGNSS Kalman filters or Integer Ambiguity
+ * Resolution (IAR) process. */
 
 public class MsgResetFilters extends SBPMessage {
     public static final int TYPE = 0x0022;

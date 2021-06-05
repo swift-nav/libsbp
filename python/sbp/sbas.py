@@ -36,8 +36,7 @@ class MsgSbasRaw(SBP):
 
   
   This message is sent once per second per SBAS satellite. ME checks the
-parity of the data block and sends only blocks that pass the check.
-
+  parity of the data block and sends only blocks that pass the check.
 
   Parameters
   ----------

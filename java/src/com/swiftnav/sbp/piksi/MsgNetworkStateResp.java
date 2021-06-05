@@ -29,9 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The state of a network interface on the Piksi.
- * Data is made to reflect output of ifaddrs struct returned by getifaddrs
- * in c. */
+ * The state of a network interface on the Piksi. Data is made to reflect
+ * output of ifaddrs struct returned by getifaddrs in c. */
 
 public class MsgNetworkStateResp extends SBPMessage {
     public static final int TYPE = 0x00BB;

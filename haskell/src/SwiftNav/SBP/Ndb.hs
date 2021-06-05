@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages for logging NDB events. \>
+-- \< Messages for logging NDB events. \>
 
 module SwiftNav.SBP.Ndb
   ( module SwiftNav.SBP.Ndb

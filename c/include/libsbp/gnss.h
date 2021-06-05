@@ -17,7 +17,7 @@
 
 /** \defgroup gnss Gnss
  *
- * * Various structs shared between modules
+ * Various structs shared between modules
  * \{ */
 
 #ifndef LIBSBP_GNSS_MESSAGES_H
@@ -27,105 +27,91 @@
 
 SBP_PACK_START
 
-
 /** Represents all the relevant information about the signal
  *
- * Signal identifier containing constellation, band, and satellite identifier
+ * Signal identifier containing constellation, band, and satellite identifier.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 sat;     /**< Constellation-specific satellite identifier. This field for Glonass can  
-either be (100+FCN) where FCN is in [-7,+6] or 
-the Slot ID in [1,28]
- */
-  u8 code;    /**< Signal constellation, band and code */
+  u8 sat;  /**< Constellation-specific satellite identifier. This field for
+                Glonass can either be (100+FCN) where FCN is in [-7,+6] or
+                the Slot ID in [1,28]. */
+  u8 code; /**< Signal constellation, band and code */
 } sbp_gnss_signal_t;
-
 
 /** Space vehicle identifier
  *
- * A (Constellation ID, satellite ID) tuple that uniquely identifies
- * a space vehicle
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+ * vehicle.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 satId;            /**< ID of the space vehicle within its constellation */
-  u8 constellation;    /**< Constellation ID to which the SV belongs */
+  u8 satId;         /**< ID of the space vehicle within its constellation */
+  u8 constellation; /**< Constellation ID to which the SV belongs */
 } sv_id_t;
-
 
 /** Deprecated
  *
-* Deprecated.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 sat;         /**< Constellation-specific satellite identifier.
+  u16 sat;     /**< Constellation-specific satellite identifier.
 
-Note: unlike GnssSignal, GPS satellites are encoded as
-(PRN - 1). Other constellations do not have this offset.
- */
-  u8 code;        /**< Signal constellation, band and code */
-  u8 reserved;    /**< Reserved */
+                    Note: unlike GnssSignal, GPS satellites are encoded as
+                    (PRN - 1). Other constellations do not have this
+                    offset. */
+  u8 code;     /**< Signal constellation, band and code */
+  u8 reserved; /**< Reserved */
 } gnss_signal_dep_t;
-
 
 /** Millisecond-accurate GPS time
  *
- * A wire-appropriate GPS time, defined as the number of
- * milliseconds since beginning of the week on the Saturday/Sunday
- * transition.
+ * A wire-appropriate GPS time, defined as the number of milliseconds since
+ * beginning of the week on the Saturday/Sunday transition.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
-  u16 wn;     /**< GPS week number [week] */
+  u32 tow; /**< Milliseconds since start of GPS week [ms] */
+  u16 wn;  /**< GPS week number [week] */
 } gps_time_dep_t;
-
 
 /** Whole second accurate GPS time
  *
- * A GPS time, defined as the number of
- * seconds since beginning of the week on the Saturday/Sunday
- * transition.
+ * A GPS time, defined as the number of seconds since beginning of the week on
+ * the Saturday/Sunday transition.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;    /**< Seconds since start of GPS week [s] */
-  u16 wn;     /**< GPS week number [week] */
+  u32 tow; /**< Seconds since start of GPS week [s] */
+  u16 wn;  /**< GPS week number [week] */
 } gps_time_sec_t;
-
 
 /** Nanosecond-accurate receiver clock time
  *
- * A wire-appropriate receiver clock time, defined as the time
- * since the beginning of the week on the Saturday/Sunday
- * transition. In most cases, observations are epoch aligned
- * so ns field will be 0.
+ * A wire-appropriate receiver clock time, defined as the time since the
+ * beginning of the week on the Saturday/Sunday transition. In most cases,
+ * observations are epoch aligned so ns field will be 0.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;            /**< Milliseconds since start of GPS week [ms] */
-  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
- [ns] */
-  u16 wn;             /**< GPS week number [week] */
+  u32 tow;         /**< Milliseconds since start of GPS week [ms] */
+  s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW
+                        (ranges from -500000 to 500000) [ns] */
+  u16 wn;          /**< GPS week number [week] */
 } sbp_gps_time_t;
 
-
-/** GNSS carrier phase measurement.
+/** GNSS carrier phase measurement
  *
- * Carrier phase measurement in cycles represented as a 40-bit
- * fixed point number with Q32.8 layout, i.e. 32-bits of whole
- * cycles and 8-bits of fractional cycles. This phase has the
- * same sign as the pseudorange.
+ * Carrier phase measurement in cycles represented as a 40-bit fixed point
+ * number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+ * fractional cycles. This phase has the same sign as the pseudorange.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  s32 i;    /**< Carrier phase whole cycles [cycles] */
-  u8 f;    /**< Carrier phase fractional part [cycles / 256] */
+  s32 i; /**< Carrier phase whole cycles [cycles] */
+  u8 f;  /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_t;
-
 
 /** \} */
 

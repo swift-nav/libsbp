@@ -12,15 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/file_io.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Messages for using device's onboard flash filesystem
-//! functionality. This allows data to be stored persistently in the
-//! device's program flash with wear-levelling using a simple filesystem
-//! interface. The file system interface (CFS) defines an abstract API
-//! for reading directories and for reading and writing files.
+//! Messages for using device's onboard flash filesystem functionality. This
+//! allows data to be stored persistently in the device's program flash with
+//! wear-levelling using a simple filesystem interface. The file system
+//! interface (CFS) defines an abstract API for reading directories and for
+//! reading and writing files.
 //!
-//! Note that some of these messages share the same message type ID for both the
-//! host request and the device response.
-//!
+//! Note that some of these messages share the same message type ID for both
+//! the host request and the device response.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -33,12 +32,12 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// Request advice on the optimal configuration for FileIO.
+/// Request advice on the optimal configuration for FileIO
 ///
-/// Requests advice on the optimal configuration for a FileIO
-/// transfer.  Newer version of FileIO can support greater
-/// throughput by supporting a large window of FileIO data
-/// that can be in-flight during read or write operations.
+/// Requests advice on the optimal configuration for a FileIO transfer.  Newer
+/// version of FileIO can support greater throughput by supporting a large
+/// window of FileIO data that can be in-flight during read or write
+/// operations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -103,10 +102,10 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 /// Response with advice on the optimal configuration for FileIO.
 
 ///
-/// The advice on the optimal configuration for a FileIO
-/// transfer.  Newer version of FileIO can support greater
-/// throughput by supporting a large window of FileIO data
-/// that can be in-flight during read or write operations.
+/// The advice on the optimal configuration for a FileIO transfer.  Newer
+/// version of FileIO can support greater throughput by supporting a large
+/// window of FileIO data that can be in-flight during read or write
+/// operations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -185,16 +184,15 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 
 /// List files in a directory (host => device)
 ///
-/// The read directory message lists the files in a directory on the
-/// device's onboard flash file system.  The offset parameter can be
-/// used to skip the first n elements of the file list. Returns a
-/// MSG_FILEIO_READ_DIR_RESP message containing the directory
-/// listings as a NULL delimited list. The listing is chunked over
-/// multiple SBP packets. The sequence number in the request will be
-/// returned in the response.  If message is invalid, a followup
-/// MSG_PRINT message will print "Invalid fileio read message".
-/// A device will only respond to this message when it is received
-/// from sender ID 0x42.
+/// The read directory message lists the files in a directory on the device's
+/// onboard flash file system.  The offset parameter can be used to skip the
+/// first n elements of the file list. Returns a MSG_FILEIO_READ_DIR_RESP
+/// message containing the directory listings as a NULL delimited list. The
+/// listing is chunked over multiple SBP packets. The sequence number in the
+/// request will be returned in the response.  If message is invalid, a
+/// followup MSG_PRINT message will print "Invalid fileio read message". A
+/// device will only respond to this message when it is received from sender
+/// ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -268,12 +266,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 
 /// Files listed in a directory (host <= device)
 ///
-/// The read directory message lists the files in a directory on the
-/// device's onboard flash file system. Message contains the directory
-/// listings as a NULL delimited list. The listing is chunked over
-/// multiple SBP packets and the end of the list is identified by an
-/// packet with no entries. The sequence number in the response is
-/// preserved from the request.
+/// The read directory message lists the files in a directory on the device's
+/// onboard flash file system. Message contains the directory listings as a
+/// NULL delimited list. The listing is chunked over multiple SBP packets and
+/// the end of the list is identified by an packet with no entries. The
+/// sequence number in the response is preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -342,14 +339,13 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 
 /// Read file from the file system (host => device)
 ///
-/// The file read message reads a certain length (up to 255 bytes)
-/// from a given offset into a file, and returns the data in a
-/// MSG_FILEIO_READ_RESP message where the message length field
-/// indicates how many bytes were succesfully read.The sequence
-/// number in the request will be returned in the response.
-/// If the message is invalid, a followup MSG_PRINT message will
-/// print "Invalid fileio read message". A device will only respond
-/// to this message when it is received from sender ID 0x42.
+/// The file read message reads a certain length (up to 255 bytes) from a
+/// given offset into a file, and returns the data in a MSG_FILEIO_READ_RESP
+/// message where the message length field indicates how many bytes were
+/// succesfully read.The sequence number in the request will be returned in
+/// the response. If the message is invalid, a followup MSG_PRINT message will
+/// print "Invalid fileio read message". A device will only respond to this
+/// message when it is received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -428,11 +424,10 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 
 /// File read from the file system (host <= device)
 ///
-/// The file read message reads a certain length (up to 255 bytes)
-/// from a given offset into a file, and returns the data in a
-/// message where the message length field indicates how many bytes
-/// were succesfully read. The sequence number in the response is
-/// preserved from the request.
+/// The file read message reads a certain length (up to 255 bytes) from a
+/// given offset into a file, and returns the data in a message where the
+/// message length field indicates how many bytes were succesfully read. The
+/// sequence number in the response is preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -501,10 +496,10 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 
 /// Delete a file from the file system (host => device)
 ///
-/// The file remove message deletes a file from the file system.
-/// If the message is invalid, a followup MSG_PRINT message will
-/// print "Invalid fileio remove message". A device will only
-/// process this message when it is received from sender ID 0x42.
+/// The file remove message deletes a file from the file system. If the
+/// message is invalid, a followup MSG_PRINT message will print "Invalid
+/// fileio remove message". A device will only process this message when it is
+/// received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -568,14 +563,13 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 
 /// Write to file (host => device)
 ///
-/// The file write message writes a certain length (up to 255 bytes)
-/// of data to a file at a given offset. Returns a copy of the
-/// original MSG_FILEIO_WRITE_RESP message to check integrity of
-/// the write. The sequence number in the request will be returned
-/// in the response. If message is invalid, a followup MSG_PRINT
-/// message will print "Invalid fileio write message". A device will
-/// only  process this message when it is received from sender ID
-/// 0x42.
+/// The file write message writes a certain length (up to 255 bytes) of data
+/// to a file at a given offset. Returns a copy of the original
+/// MSG_FILEIO_WRITE_RESP message to check integrity of the write. The
+/// sequence number in the request will be returned in the response. If
+/// message is invalid, a followup MSG_PRINT message will print "Invalid
+/// fileio write message". A device will only process this message when it is
+/// received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -654,11 +648,10 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 
 /// File written to (host <= device)
 ///
-/// The file write message writes a certain length (up to 255 bytes)
-/// of data to a file at a given offset. The message is a copy of the
-/// original MSG_FILEIO_WRITE_REQ message to check integrity of the
-/// write. The sequence number in the response is preserved from the
-/// request.
+/// The file write message writes a certain length (up to 255 bytes) of data
+/// to a file at a given offset. The message is a copy of the original
+/// MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
+/// number in the response is preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

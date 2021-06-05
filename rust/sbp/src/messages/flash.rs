@@ -12,12 +12,10 @@
 // Automatically generated from yaml/swiftnav/sbp/flash.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Messages for reading/writing the device's onboard flash memory. Many
-//! of these messages target specific flash memory peripherals used in
-//! Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
-//! configuration flash from Piksi 2.3.1.  This module does not apply
-//! to Piksi Multi.
-//!
+//! Messages for reading/writing the device's onboard flash memory. Many of
+//! these messages target specific flash memory peripherals used in Swift
+//! Navigation devices: the STM32 flash and the M25Pxx FPGA configuration
+//! flash from Piksi 2.3.1.  This module does not apply to Piksi Multi.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -30,12 +28,12 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// Flash response message (host <= device).
+/// Flash response message (host <= device)
 ///
-/// This message defines success or failure codes for a variety of
-/// flash memory requests from the host to the device. Flash read
-/// and write messages, such as MSG_FLASH_READ_REQ, or
-/// MSG_FLASH_PROGRAM, may return this message on failure.
+/// This message defines success or failure codes for a variety of flash
+/// memory requests from the host to the device. Flash read and write
+/// messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return
+/// this message on failure.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -97,13 +95,12 @@ impl crate::serialize::SbpSerialize for MsgFlashDone {
     }
 }
 
-/// Erase sector of device flash memory (host => device).
+/// Erase sector of device flash memory (host => device)
 ///
-/// The flash erase message from the host erases a sector of either
-/// the STM or M25 onboard flash memory. The device will reply with a
-/// MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
-/// on success or FLASH_INVALID_FLASH (1) if the flash specified is
-/// invalid.
+/// The flash erase message from the host erases a sector of either the STM or
+/// M25 onboard flash memory. The device will reply with a MSG_FLASH_DONE
+/// message containing the return code - FLASH_OK (0) on success or
+/// FLASH_INVALID_FLASH (1) if the flash specified is invalid.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -172,12 +169,11 @@ impl crate::serialize::SbpSerialize for MsgFlashErase {
 
 /// Program flash addresses
 ///
-/// The flash program message programs a set of addresses of either
-/// the STM or M25 flash. The device replies with either a
-/// MSG_FLASH_DONE message containing the return code FLASH_OK (0)
-/// on success, or FLASH_INVALID_LEN (2) if the maximum write size
-/// is exceeded. Note that the sector-containing addresses must be
-/// erased before addresses can be programmed.
+/// The flash program message programs a set of addresses of either the STM or
+/// M25 flash. The device replies with either a MSG_FLASH_DONE message
+/// containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN
+/// (2) if the maximum write size is exceeded. Note that the sector-containing
+/// addresses must be erased before addresses can be programmed.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -254,15 +250,14 @@ impl crate::serialize::SbpSerialize for MsgFlashProgram {
     }
 }
 
-/// Read STM or M25 flash address request (host => device).
+/// Read STM or M25 flash address request (host => device)
 ///
-/// The flash read message reads a set of addresses of either the
-/// STM or M25 onboard flash. The device replies with a
-/// MSG_FLASH_READ_RESP message containing either the read data on
-/// success or a MSG_FLASH_DONE message containing the return code
-/// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
-/// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
-/// range.
+/// The flash read message reads a set of addresses of either the STM or M25
+/// onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+/// containing either the read data on success or a MSG_FLASH_DONE message
+/// containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+/// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+/// allowed range.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -334,15 +329,14 @@ impl crate::serialize::SbpSerialize for MsgFlashReadReq {
     }
 }
 
-/// Read STM or M25 flash address response (host <= device).
+/// Read STM or M25 flash address response (host <= device)
 ///
-/// The flash read message reads a set of addresses of either the
-/// STM or M25 onboard flash. The device replies with a
-/// MSG_FLASH_READ_RESP message containing either the read data on
-/// success or a MSG_FLASH_DONE message containing the return code
-/// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
-/// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
-/// range.
+/// The flash read message reads a set of addresses of either the STM or M25
+/// onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+/// containing either the read data on success or a MSG_FLASH_DONE message
+/// containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+/// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+/// allowed range.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -416,8 +410,8 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
 
 /// Write M25 flash status register (host => device)
 ///
-/// The flash status message writes to the 8-bit M25 flash status
-/// register. The device replies with a MSG_FLASH_DONE message.
+/// The flash status message writes to the 8-bit M25 flash status register.
+/// The device replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -481,8 +475,8 @@ impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
 
 /// Lock sector of STM flash memory (host => device)
 ///
-/// The flash lock message locks a sector of the STM flash
-/// memory. The device replies with a MSG_FLASH_DONE message.
+/// The flash lock message locks a sector of the STM flash memory. The device
+/// replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -546,8 +540,8 @@ impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
 
 /// Unlock sector of STM flash memory (host => device)
 ///
-/// The flash unlock message unlocks a sector of the STM flash
-/// memory. The device replies with a MSG_FLASH_DONE message.
+/// The flash unlock message unlocks a sector of the STM flash memory. The
+/// device replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -612,10 +606,9 @@ impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
 /// Read device's hardcoded unique ID request (host => device)
 
 ///
-/// This message reads the device's hardcoded unique ID. The host
-/// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-/// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-/// ID in the payload.
+/// This message reads the device's hardcoded unique ID. The host requests the
+/// ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+/// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -673,10 +666,9 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 /// Read device's hardcoded unique ID response (host <= device)
 
 ///
-/// This message reads the device's hardcoded unique ID. The host
-/// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-/// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-/// ID in the payload..
+/// This message reads the device's hardcoded unique ID. The host requests the
+/// ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+/// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

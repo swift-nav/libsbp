@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#CodeBiasesContent",
   "title":"CodeBiasesContent",
-  "description":"Code biases are to be added to pseudorange.,\nThe corrections conform with RTCMv3 MT 1059 / 1065.\n",
+  "description":"Code biases are to be added to pseudorange. The corrections conform with RTCMv3 MT 1059 / 1065.\n",
   "type": "object",
   "properties": {
     "code": {"type": "integer"},

@@ -14,40 +14,41 @@ syntax = "proto3";
 
 /** Observation
  *
- * Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
+ * Satellite observation messages from the device. The SBP sender ID of 0
+ * indicates remote observations from a GNSS base station, correction network,
+ * or Skylark, Swift's cloud GNSS correction product.
  */
 
 package swiftnav.sbp.observation;
 
 import "gnss.proto";
 
-/** Header for observation message.
+/** Header for observation message
  *
-* Header of a GNSS observation message.
+ * Header of a GNSS observation message.
  */
 message ObservationHeader {
     gnss.GpsTime t = 1;
     uint32 n_obs = 2;
 }
 
-/** GNSS doppler measurement.
+/** GNSS doppler measurement
  *
- * Doppler measurement in Hz represented as a 24-bit
- * fixed point number with Q16.8 layout, i.e. 16-bits of whole
- * doppler and 8-bits of fractional doppler. This doppler is defined
- * as positive for approaching satellites.
+ * Doppler measurement in Hz represented as a 24-bit fixed point number with
+ * Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
+ * doppler. This doppler is defined as positive for approaching satellites.
  */
 message Doppler {
     sint32 i = 1;
     uint32 f = 2;
 }
 
-/** GNSS observations for a particular satellite signal.
+/** GNSS observations for a particular satellite signal
  *
  * Pseudorange and carrier phase observation for a satellite being tracked.
- * The observations are interoperable with 3rd party receivers and conform with
- * typical RTCM 3.1 message GPS/GLO observations.
- * 
+ * The observations are interoperable with 3rd party receivers and conform
+ * with typical RTCM 3.1 message GPS/GLO observations.
+ *
  * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
  * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
  * peformed.
@@ -62,7 +63,7 @@ message PackedObsContent {
     gnss.GnssSignal sid = 7;
 }
 
-/** Network correction for a particular satellite signal.
+/** Network correction for a particular satellite signal
  *
  * Pseudorange and carrier phase network corrections for a satellite signal.
  */
@@ -79,13 +80,12 @@ message PackedOsrContent {
 
 /** GPS satellite observations
  *
- * The GPS observations message reports all the raw pseudorange and
- * carrier phase observations for the satellites being tracked by
- * the device. Carrier phase observation here is represented as a
- * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles). The observations
- * are be interoperable with 3rd party receivers and conform
- * with typical RTCMv3 GNSS observations.
+ * The GPS observations message reports all the raw pseudorange and carrier
+ * phase observations for the satellites being tracked by the device. Carrier
+ * phase observation here is represented as a 40-bit fixed point number with
+ * Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+ * cycles). The observations are be interoperable with 3rd party receivers and
+ * conform with typical RTCMv3 GNSS observations.
  */
 message MsgObs {
     ObservationHeader header = 1;
@@ -94,11 +94,10 @@ message MsgObs {
 
 /** Base station position
  *
- * The base station position message is the position reported by
- * the base station itself. It is used for pseudo-absolute RTK
- * positioning, and is required to be a high-accuracy surveyed
- * location of the base station. Any error here will result in an
- * error in the pseudo-absolute position output.
+ * The base station position message is the position reported by the base
+ * station itself. It is used for pseudo-absolute RTK positioning, and is
+ * required to be a high-accuracy surveyed location of the base station. Any
+ * error here will result in an error in the pseudo-absolute position output.
  */
 message MsgBasePosLlh {
     double lat = 1;
@@ -108,12 +107,11 @@ message MsgBasePosLlh {
 
 /** Base station position in ECEF
  *
- * The base station position message is the position reported by
- * the base station itself in absolute Earth Centered Earth Fixed
- * coordinates. It is used for pseudo-absolute RTK positioning, and
- * is required to be a high-accuracy surveyed location of the base
- * station. Any error here will result in an error in the
- * pseudo-absolute position output.
+ * The base station position message is the position reported by the base
+ * station itself in absolute Earth Centered Earth Fixed coordinates. It is
+ * used for pseudo-absolute RTK positioning, and is required to be a high-
+ * accuracy surveyed location of the base station. Any error here will result
+ * in an error in the pseudo-absolute position output.
  */
 message MsgBasePosEcef {
     double x = 1;
@@ -121,7 +119,7 @@ message MsgBasePosEcef {
     double z = 3;
 }
 
-/** Common fields for every ephemeris message.
+/** Common fields for every ephemeris message
  *
 None
  */
@@ -136,11 +134,10 @@ message EphemerisCommonContent {
 
 /** Satellite broadcast ephemeris for GPS
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate GPS satellite position, velocity, and clock offset.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+ * GPS-200, Table 20-III) for more details.
  */
 message MsgEphemerisGps {
     EphemerisCommonContent common = 1;
@@ -170,9 +167,8 @@ message MsgEphemerisGps {
 
 /** Satellite broadcast ephemeris for QZSS
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate QZSS satellite position,
- * velocity, and clock offset.
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate QZSS satellite position, velocity, and clock offset.
  */
 message MsgEphemerisQzss {
     EphemerisCommonContent common = 1;
@@ -202,10 +198,10 @@ message MsgEphemerisQzss {
 
 /** Satellite broadcast ephemeris for BDS
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate BDS satellite position,
- * velocity, and clock offset. Please see the BeiDou Navigation
- * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate BDS satellite position, velocity, and clock offset.
+ * Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
+ * Table 5-9 for more details.
  */
 message MsgEphemerisBds {
     EphemerisCommonContent common = 1;
@@ -236,10 +232,10 @@ message MsgEphemerisBds {
 
 /** Satellite broadcast ephemeris for Galileo
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate Galileo satellite position,
- * velocity, and clock offset. Please see the Signal In Space ICD
- * OS SIS ICD, Issue 1.3, December 2016 for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate Galileo satellite position, velocity, and clock offset.
+ * Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for
+ * more details.
  */
 message MsgEphemerisGal {
     EphemerisCommonContent common = 1;
@@ -284,11 +280,10 @@ message MsgEphemerisSbas {
 
 /** Satellite broadcast ephemeris for GLO
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GLO satellite position,
- * velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
- * Characteristics of words of immediate information (ephemeris parameters)"
- * for more details.
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate GLO satellite position, velocity, and clock offset.
+ * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+ * information (ephemeris parameters)" for more details.
  */
 message MsgEphemerisGlo {
     EphemerisCommonContent common = 1;
@@ -353,7 +348,7 @@ message MsgGnssCapb {
 
 /** Group Delay
  *
-* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 message MsgGroupDelay {
     gnss.GpsTimeSec t_op = 1;
@@ -364,7 +359,7 @@ message MsgGroupDelay {
     sint32 isc_l2c = 6;
 }
 
-/** Common fields for every almanac message.
+/** Common fields for every almanac message
  *
 None
  */
@@ -381,8 +376,8 @@ message AlmanacCommonContent {
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces
- * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+ * GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
 message MsgAlmanacGps {
     AlmanacCommonContent common = 1;
@@ -417,10 +412,9 @@ message MsgAlmanacGlo {
 
 /** GLONASS L1/L2 Code-Phase biases
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform
- * GPS+GLONASS integer ambiguity resolution for baselines
- * with mixed receiver types (e.g. receiver of different
- * manufacturers)
+ * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
+ * ambiguity resolution for baselines with mixed receiver types (e.g. receiver
+ * of different manufacturers).
  */
 message MsgGloBiases {
     uint32 mask = 1;
@@ -430,9 +424,9 @@ message MsgGloBiases {
     sint32 l2p_bias = 5;
 }
 
-/** Satellite azimuth and elevation.
+/** Satellite azimuth and elevation
  *
-* Satellite azimuth and elevation.
+ * Satellite azimuth and elevation.
  */
 message SvAzEl {
     gnss.GnssSignal sid = 1;
@@ -442,8 +436,8 @@ message SvAzEl {
 
 /** Satellite azimuths and elevations
  *
- * Azimuth and elevation angles of all the visible satellites
- * that the device does have ephemeris or almanac for.
+ * Azimuth and elevation angles of all the visible satellites that the device
+ * does have ephemeris or almanac for.
  */
 message MsgSvAzEl {
     repeated SvAzEl azel = 1;
@@ -451,7 +445,7 @@ message MsgSvAzEl {
 
 /** OSR corrections
  *
- * The OSR message contains network corrections in an observation-like format
+ * The OSR message contains network corrections in an observation-like format.
  */
 message MsgOsr {
     ObservationHeader header = 1;

@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages reporting accurately-timestamped external events, e.g. camera
+-- \< Messages reporting accurately-timestamped external events, e.g. camera
 -- shutter time. \>
 
 module SwiftNav.SBP.ExtEvents

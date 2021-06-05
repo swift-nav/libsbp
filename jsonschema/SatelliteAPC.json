@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#SatelliteAPC",
   "title":"SatelliteAPC",
-  "description":"Contains phase center offset and elevation variation corrections for one,\nsignal on a satellite.\n",
+  "description":"Contains phase center offset and elevation variation corrections for one signal on a satellite.\n",
   "type": "object",
   "properties": {
     "sid": {"$ref": "GnssSignal.json"},

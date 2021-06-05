@@ -29,9 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and carrier-to-noise density
- * measurements for all tracked satellites. */
+ * The tracking message returns a variable-length array of tracking channel
+ * states. It reports status and carrier-to-noise density measurements for all
+ * tracked satellites. */
 
 public class MsgTrackingState extends SBPMessage {
     public static final int TYPE = 0x0041;

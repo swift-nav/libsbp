@@ -13,7 +13,6 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages for logging NDB events.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;

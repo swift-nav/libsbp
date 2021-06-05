@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Deprecated. */
+ * Deprecated. */
 
 public class MsgEphemerisDepA extends SBPMessage {
     public static final int TYPE = 0x001A;
@@ -44,16 +44,20 @@ public class MsgEphemerisDepA extends SBPMessage {
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public double c_rc;
     
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public double c_uc;
     
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public double c_us;
     
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public double c_ic;
     
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public double c_is;
     
     /** Mean motion difference */

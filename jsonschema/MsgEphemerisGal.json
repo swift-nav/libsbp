@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgEphemerisGal",
   "title":"MsgEphemerisGal",
-  "description":"The ephemeris message returns a set of satellite orbit,\nparameters that is used to calculate Galileo satellite position,,\nvelocity, and clock offset. Please see the Signal In Space ICD,\nOS SIS ICD, Issue 1.3, December 2016 for more details.\n",
+  "description":"The ephemeris message returns a set of satellite orbit parameters that is used to calculate Galileo satellite position, velocity, and clock offset. Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for more details.\n",
   "type": "object",
   "properties": {
     "common": {"$ref": "EphemerisCommonContent.json"},

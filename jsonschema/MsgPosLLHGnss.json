@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgPosLLHGnss",
   "title":"MsgPosLLHGnss",
-  "description":"This position solution message reports the absolute geodetic,\ncoordinates and the status (single point vs pseudo-absolute RTK),\nof the position solution. If the rover receiver knows the,\nsurveyed position of the base station and has an RTK solution,,\nthis reports a pseudo-absolute position solution using the base,\nstation position and the rover's RTK baseline vector. The full,\nGPS time is given by the preceding MSG_GPS_TIME with the,\nmatching time-of-week (tow).\n",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

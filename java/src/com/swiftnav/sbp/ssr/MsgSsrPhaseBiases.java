@@ -29,12 +29,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The precise phase biases message contains the biases
- * to be added to the carrier phase of the corresponding
- * signal to get corrected carrier phase measurement, as
- * well as the satellite yaw angle to be applied to compute
- * the phase wind-up correction.
- * It is typically an equivalent to the 1265 RTCM message types */
+ * The precise phase biases message contains the biases to be added to the
+ * carrier phase of the corresponding signal to get corrected carrier phase
+ * measurement, as well as the satellite yaw angle to be applied to compute
+ * the phase wind-up correction. It is typically an equivalent to the 1265
+ * RTCM message types. */
 
 public class MsgSsrPhaseBiases extends SBPMessage {
     public static final int TYPE = 0x05E6;
@@ -46,23 +45,18 @@ public class MsgSsrPhaseBiases extends SBPMessage {
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
     
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
     
-    /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
- */
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
     
-    /** Indicator for the dispersive phase biases property.
- */
+    /** Indicator for the dispersive phase biases property. */
     public int dispersive_bias;
     
-    /** Consistency indicator for Melbourne-Wubbena linear combinations
- */
+    /** Consistency indicator for Melbourne-Wubbena linear combinations */
     public int mw_consistency;
     
     /** Satellite yaw angle */
@@ -71,9 +65,7 @@ generating configuration
     /** Satellite yaw angle rate */
     public int yaw_rate;
     
-    /** Phase biases corrections for a
-satellite being tracked.
- */
+    /** Phase biases corrections for a satellite being tracked. */
     public PhaseBiasesContent[] biases;
     
 

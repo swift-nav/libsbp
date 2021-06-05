@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#TrackingChannelState",
   "title":"TrackingChannelState",
-  "description":"Tracking channel state for a specific satellite signal and,\nmeasured signal power.\n",
+  "description":"Tracking channel state for a specific satellite signal and measured signal power.\n",
   "type": "object",
   "properties": {
     "sid": {"$ref": "GnssSignal.json"},

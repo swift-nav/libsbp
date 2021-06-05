@@ -28,11 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The flash erase message from the host erases a sector of either
- * the STM or M25 onboard flash memory. The device will reply with a
- * MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
- * on success or FLASH_INVALID_FLASH (1) if the flash specified is
- * invalid. */
+ * The flash erase message from the host erases a sector of either the STM or
+ * M25 onboard flash memory. The device will reply with a MSG_FLASH_DONE
+ * message containing the return code - FLASH_OK (0) on success or
+ * FLASH_INVALID_FLASH (1) if the flash specified is invalid. */
 
 public class MsgFlashErase extends SBPMessage {
     public static final int TYPE = 0x00E2;
@@ -41,9 +40,7 @@ public class MsgFlashErase extends SBPMessage {
     /** Target flags */
     public int target;
     
-    /** Flash sector number to erase (0-11 for the STM, 0-15 for
-the M25)
- */
+    /** Flash sector number to erase (0-11 for the STM, 0-15 for the M25) */
     public long sector_num;
     
 

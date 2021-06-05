@@ -16,7 +16,6 @@ group does not apply to Piksi Multi.
 
 Note that some of these messages share the same message type ID for both the
 host request and the device response.
-
 """
 
 import json
@@ -39,10 +38,9 @@ class MsgBootloaderHandshakeReq(SBP):
   of its fields.
 
   
-  The handshake message request from the host establishes a
-handshake between the device bootloader and the host. The
-response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
-
+  The handshake message request from the host establishes a handshake between
+  the device bootloader and the host. The response from the device is
+  MSG_BOOTLOADER_HANDSHAKE_RESP.
 
   """
   __slots__ = []
@@ -86,12 +84,10 @@ class MsgBootloaderHandshakeResp(SBP):
   of its fields.
 
   
-  The handshake message response from the device establishes a
-handshake between the device bootloader and the host. The
-request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
-payload contains the bootloader version number and the SBP
-protocol version number.
-
+  The handshake message response from the device establishes a handshake
+  between the device bootloader and the host. The request from the host is
+  MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
+  number and the SBP protocol version number.
 
   Parameters
   ----------
@@ -187,7 +183,6 @@ class MsgBootloaderJumpToApp(SBP):
   
   The host initiates the bootloader to jump to the application.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -275,13 +270,11 @@ class MsgNapDeviceDnaReq(SBP):
   of its fields.
 
   
-  The device message from the host reads a unique device
-identifier from the SwiftNAP, an FPGA. The host requests the ID
-by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-responds with a MSG_NAP_DEVICE_DNA_RESP message with the
-device ID in the payload. Note that this ID is tied to the FPGA,
-and not related to the Piksi's serial number.
-
+  The device message from the host reads a unique device identifier from the
+  SwiftNAP, an FPGA. The host requests the ID by sending a
+  MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+  MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note that
+  this ID is tied to the FPGA, and not related to the Piksi's serial number.
 
   """
   __slots__ = []
@@ -325,22 +318,19 @@ class MsgNapDeviceDnaResp(SBP):
   of its fields.
 
   
-  The device message from the host reads a unique device
-identifier from the SwiftNAP, an FPGA. The host requests the ID
-by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
-device ID in the payload. Note that this ID is tied to the FPGA,
-and not related to the Piksi's serial number.
-
+  The device message from the host reads a unique device identifier from the
+  SwiftNAP, an FPGA. The host requests the ID by sending a
+  MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+  MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+  that this ID is tied to the FPGA, and not related to the Piksi's serial
+  number.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   dna : array
-    57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
-on the right.
-
+    57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

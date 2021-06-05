@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * fields.
  *
  * This message reports the Age of the corrections used for the current
- * Differential solution */
+ * Differential solution. */
 
 public class MsgAgeCorrections extends SBPMessage {
     public static final int TYPE = 0x0210;

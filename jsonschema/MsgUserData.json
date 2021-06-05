@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgUserData",
   "title":"MsgUserData",
-  "description":"This message can contain any application specific user data up to a,\nmaximum length of 255 bytes per message.\n",
+  "description":"This message can contain any application specific user data up to a maximum length of 255 bytes per message.\n",
   "type": "object",
   "properties": {
     "contents": {"type": "array", "items": {"type": "integer"}}

@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The response to MSG_COMMAND_REQ with the return code of
- * the command.  A return code of zero indicates success. */
+ * The response to MSG_COMMAND_REQ with the return code of the command.  A
+ * return code of zero indicates success. */
 
 public class MsgCommandResp extends SBPMessage {
     public static final int TYPE = 0x00B9;

@@ -12,7 +12,6 @@
 
 """
 Satellite code and carrier-phase tracking messages from the device.
-
 """
 
 import json
@@ -30,9 +29,8 @@ from sbp.gnss import CarrierPhase, GnssSignal, GnssSignalDep, GPSTime, GPSTime, 
 class TrackingChannelState(object):
   """TrackingChannelState.
   
-  Tracking channel state for a specific satellite signal and
-measured signal power.
-
+  Tracking channel state for a specific satellite signal and measured signal
+  power.
   
   Parameters
   ----------
@@ -74,16 +72,14 @@ class MeasurementState(object):
   """MeasurementState.
   
   Measurement Engine tracking channel state for a specific satellite signal
-and measured signal power.
-The mesid field for Glonass can either
-carry the FCN as 100 + FCN where FCN is in [-7, +6] or
-the Slot ID (from 1 to 28)
-
+  and measured signal power. The mesid field for Glonass can either carry the
+  FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
   
   Parameters
   ----------
   mesid : GnssSignal
-    Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)
+    Measurement Engine GNSS signal being tracked (carries either Glonass FCN
+    or SLOT)
   cn0 : int
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
@@ -115,7 +111,6 @@ class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
   
   Structure containing in-phase and quadrature correlation components.
-
   
   Parameters
   ----------
@@ -152,7 +147,6 @@ class TrackingChannelCorrelationDep(object):
   """TrackingChannelCorrelationDep.
   
   Structure containing in-phase and quadrature correlation components.
-
   
   Parameters
   ----------
@@ -276,9 +270,8 @@ class MsgTrackingStateDetailedDepA(SBP):
   of its fields.
 
   
-  The tracking message returns a set tracking channel parameters for a
-single tracking channel useful for debugging issues.
-
+  The tracking message returns a set tracking channel parameters for a single
+  tracking channel useful for debugging issues.
 
   Parameters
   ----------
@@ -287,28 +280,22 @@ single tracking channel useful for debugging issues.
   recv_time : int
     Receiver clock time.
   tot : GPSTime
-    Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
-
+    Time of transmission of signal from satellite. TOW only valid when TOW
+    status is decoded or propagated. WN only valid when week number valid flag
+    is set.
   P : int
-    Pseudorange observation. Valid only when pseudorange valid flag is
-set.
-
+    Pseudorange observation. Valid only when pseudorange valid flag is set.
   P_std : int
-    Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
-
+    Pseudorange observation standard deviation. Valid only when pseudorange
+    valid flag is set.
   L : CarrierPhase
-    Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
-
+    Carrier phase observation with typical sign convention. Valid only when
+    PLL pessimistic lock is achieved.
   cn0 : int
     Carrier-to-Noise density
   lock : int
     Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
-
+    Amendment 2 specification. Valid values range from 0 to 15.
   sid : GnssSignal
     GNSS signal identifier.
   doppler : int
@@ -316,15 +303,12 @@ Amendment 2 specification. Valid values range from 0 to 15.
   doppler_std : int
     Carrier Doppler frequency standard deviation.
   uptime : int
-    Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
-
+    Number of seconds of continuous tracking. Specifies how much time signal
+    is in continuous track.
   clock_offset : int
     TCXO clock offset. Valid only when valid clock valid flag is set.
-
   clock_drift : int
     TCXO clock drift. Valid only when valid clock valid flag is set.
-
   corr_spacing : int
     Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
   acceleration : int
@@ -491,28 +475,22 @@ class MsgTrackingStateDetailedDep(SBP):
   recv_time : int
     Receiver clock time.
   tot : GPSTimeDep
-    Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
-
+    Time of transmission of signal from satellite. TOW only valid when TOW
+    status is decoded or propagated. WN only valid when week number valid flag
+    is set.
   P : int
-    Pseudorange observation. Valid only when pseudorange valid flag is
-set.
-
+    Pseudorange observation. Valid only when pseudorange valid flag is set.
   P_std : int
-    Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
-
+    Pseudorange observation standard deviation. Valid only when pseudorange
+    valid flag is set.
   L : CarrierPhase
-    Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
-
+    Carrier phase observation with typical sign convention. Valid only when
+    PLL pessimistic lock is achieved.
   cn0 : int
     Carrier-to-Noise density
   lock : int
     Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
-
+    Amendment 2 specification. Valid values range from 0 to 15.
   sid : GnssSignalDep
     GNSS signal identifier.
   doppler : int
@@ -520,15 +498,12 @@ Amendment 2 specification. Valid values range from 0 to 15.
   doppler_std : int
     Carrier Doppler frequency standard deviation.
   uptime : int
-    Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
-
+    Number of seconds of continuous tracking. Specifies how much time signal
+    is in continuous track.
   clock_offset : int
     TCXO clock offset. Valid only when valid clock valid flag is set.
-
   clock_drift : int
     TCXO clock drift. Valid only when valid clock valid flag is set.
-
   corr_spacing : int
     Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
   acceleration : int
@@ -686,10 +661,9 @@ class MsgTrackingState(SBP):
   of its fields.
 
   
-  The tracking message returns a variable-length array of tracking
-channel states. It reports status and carrier-to-noise density
-measurements for all tracked satellites.
-
+  The tracking message returns a variable-length array of tracking channel
+  states. It reports status and carrier-to-noise density measurements for all
+  tracked satellites.
 
   Parameters
   ----------
@@ -778,10 +752,9 @@ class MsgMeasurementState(SBP):
   of its fields.
 
   
-  The tracking message returns a variable-length array of tracking
-channel states. It reports status and carrier-to-noise density
-measurements for all tracked satellites.
-
+  The tracking message returns a variable-length array of tracking channel
+  states. It reports status and carrier-to-noise density measurements for all
+  tracked satellites.
 
   Parameters
   ----------
@@ -870,9 +843,8 @@ class MsgTrackingIq(SBP):
   of its fields.
 
   
-  When enabled, a tracking channel can output the correlations at each
-update interval.
-
+  When enabled, a tracking channel can output the correlations at each update
+  interval.
 
   Parameters
   ----------
@@ -971,9 +943,8 @@ class MsgTrackingIqDepB(SBP):
   of its fields.
 
   
-  When enabled, a tracking channel can output the correlations at each
-update interval.
-
+  When enabled, a tracking channel can output the correlations at each update
+  interval.
 
   Parameters
   ----------

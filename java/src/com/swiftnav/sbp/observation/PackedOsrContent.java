@@ -31,17 +31,14 @@ public class PackedOsrContent extends SBPStruct {
     /** Carrier phase observation with typical sign convention. */
     public CarrierPhase L;
     
-    /** Lock timer. This value gives an indication of the time
-for which a signal has maintained continuous phase lock.
-Whenever a signal has lost and regained lock, this
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Valid values range
-from 0 to 15 and the most significant nibble is reserved for future use.
- */
+    /** Lock timer. This value gives an indication of the time for which a signal has
+      * maintained continuous phase lock. Whenever a signal has lost and regained lock,
+      * this value is reset to zero. It is encoded according to DF402 from the RTCM
+      * 10403.2 Amendment 2 specification.  Valid values range from 0 to 15 and the
+      * most significant nibble is reserved for future use. */
     public int lock;
     
-    /** Correction flags.
- */
+    /** Correction flags. */
     public int flags;
     
     /** GNSS signal identifier (16 bit) */

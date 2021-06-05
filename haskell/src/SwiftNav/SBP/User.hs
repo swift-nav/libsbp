@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages reserved for use by the user. \>
+-- \< Messages reserved for use by the user. \>
 
 module SwiftNav.SBP.User
   ( module SwiftNav.SBP.User

@@ -28,9 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This dilution of precision (DOP) message describes the effect of
- * navigation satellite geometry on positional measurement
- * precision. */
+ * This dilution of precision (DOP) message describes the effect of navigation
+ * satellite geometry on positional measurement precision. */
 
 public class MsgDopsDepA extends SBPMessage {
     public static final int TYPE = 0x0206;

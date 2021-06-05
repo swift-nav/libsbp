@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system.  */
+ * The INS status message describes the state of the operation and
+ * initialization of the inertial navigation system. */
 
 public class MsgInsStatus extends SBPMessage {
     public static final int TYPE = 0xFF03;

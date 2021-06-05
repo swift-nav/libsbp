@@ -28,9 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The GNSS time offset message contains the information that is needed to translate messages
- * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
- * producing this message. */
+ * The GNSS time offset message contains the information that is needed to
+ * translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+ * messages) to GNSS time for the sender producing this message. */
 
 public class MsgGnssTimeOffset extends SBPMessage {
     public static final int TYPE = 0xFF07;

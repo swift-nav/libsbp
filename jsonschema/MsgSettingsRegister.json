@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSettingsRegister",
   "title":"MsgSettingsRegister",
-  "description":"This message registers the presence and default value of a setting,\nwith a settings daemon.  The host should reply with MSG_SETTINGS_WRITE,\nfor this setting to set the initial value.\n",
+  "description":"This message registers the presence and default value of a setting with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this setting to set the initial value.\n",
   "type": "object",
   "properties": {
     "setting": {"type": "string"}

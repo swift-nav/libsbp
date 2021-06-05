@@ -28,13 +28,12 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This position solution message reports the absolute geodetic
- * coordinates and the status (single point vs pseudo-absolute RTK)
- * of the position solution. If the rover receiver knows the
- * surveyed position of the base station and has an RTK solution,
- * this reports a pseudo-absolute position solution using the base
- * station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the
+ * This position solution message reports the absolute geodetic coordinates
+ * and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. If the rover receiver knows the surveyed position of the base
+ * station and has an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK baseline
+ * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow). */
 
 public class MsgPosLLHDepA extends SBPMessage {
@@ -53,14 +52,11 @@ public class MsgPosLLHDepA extends SBPMessage {
     /** Height */
     public double height;
     
-    /** Horizontal position accuracy estimate (not
-implemented). Defaults to 0.
- */
+    /** Horizontal position accuracy estimate (not implemented). Defaults to
+      * 0. */
     public int h_accuracy;
     
-    /** Vertical position accuracy estimate (not
-implemented). Defaults to 0.
- */
+    /** Vertical position accuracy estimate (not implemented). Defaults to 0. */
     public int v_accuracy;
     
     /** Number of satellites used in solution. */

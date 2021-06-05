@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Request state of Piksi network interfaces.
- * Output will be sent in MSG_NETWORK_STATE_RESP messages */
+ * Request state of Piksi network interfaces. Output will be sent in
+ * MSG_NETWORK_STATE_RESP messages. */
 
 public class MsgNetworkStateReq extends SBPMessage {
     public static final int TYPE = 0x00BA;

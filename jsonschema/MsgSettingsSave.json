@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSettingsSave",
   "title":"MsgSettingsSave",
-  "description":"The save settings message persists the device's current settings,\nconfiguration to its onboard flash memory file system.\n",
+  "description":"The save settings message persists the device's current settings configuration to its onboard flash memory file system.\n",
   "type": "object",
   "properties": {
   },

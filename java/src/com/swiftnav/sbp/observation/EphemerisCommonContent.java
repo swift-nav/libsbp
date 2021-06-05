@@ -41,10 +41,9 @@ public class EphemerisCommonContent extends SBPStruct {
     public int valid;
     
     /** Satellite health status.
-GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-SBAS: 0 = valid, non-zero = invalid
-GLO: 0 = valid, non-zero = invalid
- */
+      * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+      * SBAS: 0 = valid, non-zero = invalid
+      * GLO: 0 = valid, non-zero = invalid */
     public int health_bits;
     
 

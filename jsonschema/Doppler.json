@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#Doppler",
   "title":"Doppler",
-  "description":"Doppler measurement in Hz represented as a 24-bit,\nfixed point number with Q16.8 layout, i.e. 16-bits of whole,\ndoppler and 8-bits of fractional doppler. This doppler is defined,\nas positive for approaching satellites.\n",
+  "description":"Doppler measurement in Hz represented as a 24-bit fixed point number with Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional doppler. This doppler is defined as positive for approaching satellites.\n",
   "type": "object",
   "properties": {
     "i": {"type": "integer"},

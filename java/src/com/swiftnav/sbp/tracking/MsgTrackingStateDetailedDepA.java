@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The tracking message returns a set tracking channel parameters for a
- * single tracking channel useful for debugging issues. */
+ * The tracking message returns a set tracking channel parameters for a single
+ * tracking channel useful for debugging issues. */
 
 public class MsgTrackingStateDetailedDepA extends SBPMessage {
     public static final int TYPE = 0x0021;
@@ -39,33 +39,28 @@ public class MsgTrackingStateDetailedDepA extends SBPMessage {
     /** Receiver clock time. */
     public BigInteger recv_time;
     
-    /** Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
- */
+    /** Time of transmission of signal from satellite. TOW only valid when TOW
+      * status is decoded or propagated. WN only valid when week number valid
+      * flag is set. */
     public GPSTime tot;
     
     /** Pseudorange observation. Valid only when pseudorange valid flag is
-set.
- */
+      * set. */
     public long P;
     
     /** Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
- */
+      * pseudorange valid flag is set. */
     public int P_std;
     
     /** Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
- */
+      * when PLL pessimistic lock is achieved. */
     public CarrierPhase L;
     
     /** Carrier-to-Noise density */
     public int cn0;
     
     /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
- */
+      * Amendment 2 specification. Valid values range from 0 to 15. */
     public int lock;
     
     /** GNSS signal identifier. */
@@ -78,16 +73,13 @@ Amendment 2 specification. Valid values range from 0 to 15.
     public int doppler_std;
     
     /** Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
- */
+      * signal is in continuous track. */
     public long uptime;
     
-    /** TCXO clock offset. Valid only when valid clock valid flag is set.
- */
+    /** TCXO clock offset. Valid only when valid clock valid flag is set. */
     public int clock_offset;
     
-    /** TCXO clock drift. Valid only when valid clock valid flag is set.
- */
+    /** TCXO clock drift. Valid only when valid clock valid flag is set. */
     public int clock_drift;
     
     /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. */

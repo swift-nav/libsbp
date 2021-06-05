@@ -25,16 +25,13 @@ from sbp.utils import fmt_repr
 class GnssSignal(object):
   """GnssSignal.
   
-  Signal identifier containing constellation, band, and satellite identifier
-
+  Signal identifier containing constellation, band, and satellite identifier.
   
   Parameters
   ----------
   sat : int
-    Constellation-specific satellite identifier. This field for Glonass can  
-either be (100+FCN) where FCN is in [-7,+6] or 
-the Slot ID in [1,28]
-
+    Constellation-specific satellite identifier. This field for Glonass can
+    either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
   code : int
     Signal constellation, band and code
 
@@ -65,9 +62,8 @@ the Slot ID in [1,28]
 class SvId(object):
   """SvId.
   
-  A (Constellation ID, satellite ID) tuple that uniquely identifies
-a space vehicle
-
+  A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+  vehicle.
   
   Parameters
   ----------
@@ -110,9 +106,8 @@ class GnssSignalDep(object):
   sat : int
     Constellation-specific satellite identifier.
 
-Note: unlike GnssSignal, GPS satellites are encoded as
-(PRN - 1). Other constellations do not have this offset.
-
+    Note: unlike GnssSignal, GPS satellites are encoded as (PRN - 1). Other
+    constellations do not have this offset.
   code : int
     Signal constellation, band and code
   reserved : int
@@ -148,10 +143,8 @@ Note: unlike GnssSignal, GPS satellites are encoded as
 class GPSTimeDep(object):
   """GPSTimeDep.
   
-  A wire-appropriate GPS time, defined as the number of
-milliseconds since beginning of the week on the Saturday/Sunday
-transition.
-
+  A wire-appropriate GPS time, defined as the number of milliseconds since
+  beginning of the week on the Saturday/Sunday transition.
   
   Parameters
   ----------
@@ -187,10 +180,8 @@ transition.
 class GPSTimeSec(object):
   """GPSTimeSec.
   
-  A GPS time, defined as the number of
-seconds since beginning of the week on the Saturday/Sunday
-transition.
-
+  A GPS time, defined as the number of seconds since beginning of the week on
+  the Saturday/Sunday transition.
   
   Parameters
   ----------
@@ -226,20 +217,17 @@ transition.
 class GPSTime(object):
   """GPSTime.
   
-  A wire-appropriate receiver clock time, defined as the time
-since the beginning of the week on the Saturday/Sunday
-transition. In most cases, observations are epoch aligned
-so ns field will be 0.
-
+  A wire-appropriate receiver clock time, defined as the time since the
+  beginning of the week on the Saturday/Sunday transition. In most cases,
+  observations are epoch aligned so ns field will be 0.
   
   Parameters
   ----------
   tow : int
     Milliseconds since start of GPS week
   ns_residual : int
-    Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
-
+    Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    500000)
   wn : int
     GPS week number
 
@@ -273,11 +261,9 @@ from -500000 to 500000)
 class CarrierPhase(object):
   """CarrierPhase.
   
-  Carrier phase measurement in cycles represented as a 40-bit
-fixed point number with Q32.8 layout, i.e. 32-bits of whole
-cycles and 8-bits of fractional cycles. This phase has the
-same sign as the pseudorange.
-
+  Carrier phase measurement in cycles represented as a 40-bit fixed point
+  number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+  fractional cycles. This phase has the same sign as the pseudorange.
   
   Parameters
   ----------

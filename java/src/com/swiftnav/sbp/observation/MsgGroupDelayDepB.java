@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. */
+ * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. */
 
 public class MsgGroupDelayDepB extends SBPMessage {
     public static final int TYPE = 0x0093;
@@ -41,10 +41,8 @@ public class MsgGroupDelayDepB extends SBPMessage {
     /** GNSS signal identifier */
     public GnssSignalDep sid;
     
-    /** bit-field indicating validity of the values,
-LSB indicating tgd validity etc.
-1 = value is valid, 0 = value is not valid.
- */
+    /** bit-field indicating validity of the values, LSB indicating tgd
+      * validity etc. 1 = value is valid, 0 = value is not valid. */
     public int valid;
     
     public int tgd;

@@ -28,10 +28,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This dilution of precision (DOP) message describes the effect of
- * navigation satellite geometry on positional measurement
- * precision.  The flags field indicated whether the DOP reported
- * corresponds to differential or SPP solution. */
+ * This dilution of precision (DOP) message describes the effect of navigation
+ * satellite geometry on positional measurement precision.  The flags field
+ * indicated whether the DOP reported corresponds to differential or SPP
+ * solution. */
 
 public class MsgDops extends SBPMessage {
     public static final int TYPE = 0x0208;
@@ -55,7 +55,8 @@ public class MsgDops extends SBPMessage {
     /** Vertical Dilution of Precision */
     public int vdop;
     
-    /** Indicates the position solution with which the DOPS message corresponds */
+    /** Indicates the position solution with which the DOPS message
+      * corresponds */
     public int flags;
     
 

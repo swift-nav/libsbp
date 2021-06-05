@@ -29,9 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * If a cell modem is present on a piksi device, this message
- * will be send periodically to update the host on the status
- * of the modem and its various parameters. */
+ * If a cell modem is present on a piksi device, this message will be send
+ * periodically to update the host on the status of the modem and its various
+ * parameters. */
 
 public class MsgCellModemStatus extends SBPMessage {
     public static final int TYPE = 0x00BE;

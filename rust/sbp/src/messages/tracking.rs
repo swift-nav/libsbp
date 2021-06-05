@@ -13,7 +13,6 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Satellite code and carrier-phase tracking messages from the device.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -29,9 +28,9 @@ use crate::SbpString;
 
 /// Measurement Engine signal tracking channel states
 ///
-/// The tracking message returns a variable-length array of tracking
-/// channel states. It reports status and carrier-to-noise density
-/// measurements for all tracked satellites.
+/// The tracking message returns a variable-length array of tracking channel
+/// states. It reports status and carrier-to-noise density measurements for
+/// all tracked satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -319,9 +318,9 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
 
 /// Signal tracking channel states
 ///
-/// The tracking message returns a variable-length array of tracking
-/// channel states. It reports status and carrier-to-noise density
-/// measurements for all tracked satellites.
+/// The tracking message returns a variable-length array of tracking channel
+/// states. It reports status and carrier-to-noise density measurements for
+/// all tracked satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -447,7 +446,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
     }
 }
 
-/// Deprecated.
+/// Deprecated
 ///
 /// Deprecated.
 ///
@@ -681,7 +680,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDep {
     }
 }
 
-/// Detailed signal tracking channel states. DEPRECATED.
+/// Detailed signal tracking channel states. DEPRECATED
 ///
 /// The tracking message returns a set tracking channel parameters for a
 /// single tracking channel useful for debugging issues.
@@ -855,10 +854,9 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDepA {
 /// Measurement Engine signal tracking channel state
 ///
 /// Measurement Engine tracking channel state for a specific satellite signal
-/// and measured signal power.
-/// The mesid field for Glonass can either
-/// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
-/// the Slot ID (from 1 to 28)
+/// and measured signal power. The mesid field for Glonass can either carry
+/// the FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to
+/// 28).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1032,8 +1030,8 @@ impl crate::serialize::SbpSerialize for TrackingChannelCorrelationDep {
 
 /// Signal tracking channel state
 ///
-/// Tracking channel state for a specific satellite signal and
-/// measured signal power.
+/// Tracking channel state for a specific satellite signal and measured signal
+/// power.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1155,7 +1153,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelStateDepA {
     }
 }
 
-/// Deprecated.
+/// Deprecated
 ///
 /// Deprecated.
 ///

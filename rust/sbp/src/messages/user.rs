@@ -13,7 +13,6 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages reserved for use by the user.
-//!
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;

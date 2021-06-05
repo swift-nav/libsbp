@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSbasRaw",
   "title":"MsgSbasRaw",
-  "description":"This message is sent once per second per SBAS satellite. ME checks the,\nparity of the data block and sends only blocks that pass the check.\n",
+  "description":"This message is sent once per second per SBAS satellite. ME checks the parity of the data block and sends only blocks that pass the check.\n",
   "type": "object",
   "properties": {
     "sid": {"$ref": "GnssSignal.json"},

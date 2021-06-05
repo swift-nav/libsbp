@@ -31,9 +31,9 @@ import org.json.JSONArray;
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
- * of the atmospheric delay.
- * 
+ * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
+ * the atmospheric delay.
+ *
  * It is typically equivalent to the QZSS CLAS Sub Type 8 messages. */
 
 public class MsgSsrStecCorrection extends SBPMessage {

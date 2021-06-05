@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgStartup",
   "title":"MsgStartup",
-  "description":"The system start-up message is sent once on system,\nstart-up. It notifies the host or other attached devices that,\nthe system has started and is now ready to respond to commands,\nor configuration requests.\n",
+  "description":"The system start-up message is sent once on system start-up. It notifies the host or other attached devices that the system has started and is now ready to respond to commands or configuration requests.\n",
   "type": "object",
   "properties": {
     "cause": {"type": "integer"},

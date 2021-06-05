@@ -28,9 +28,8 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SubSystemReport(object):
   """SubSystemReport.
   
-  Report the general and specific state of a sub-system.  If the generic
-state is reported as initializing, the specific state should be ignored.
-
+  Report the general and specific state of a sub-system.  If the generic state
+  is reported as initializing, the specific state should be ignored.
   
   Parameters
   ----------
@@ -77,11 +76,9 @@ class MsgStartup(SBP):
   of its fields.
 
   
-  The system start-up message is sent once on system
-start-up. It notifies the host or other attached devices that
-the system has started and is now ready to respond to commands
-or configuration requests.
-
+  The system start-up message is sent once on system start-up. It notifies the
+  host or other attached devices that the system has started and is now ready
+  to respond to commands or configuration requests.
 
   Parameters
   ----------
@@ -181,9 +178,8 @@ class MsgDgnssStatus(SBP):
 
   
   This message provides information about the receipt of Differential
-corrections.  It is expected to be sent with each receipt of a complete
-corrections packet.
-
+  corrections.  It is expected to be sent with each receipt of a complete
+  corrections packet.
 
   Parameters
   ----------
@@ -287,17 +283,15 @@ class MsgHeartbeat(SBP):
   of its fields.
 
   
-  The heartbeat message is sent periodically to inform the host
-or other attached devices that the system is running. It is
-used to monitor system malfunctions. It also contains status
-flags that indicate to the host the status of the system and
-whether it is operating correctly. Currently, the expected
-heartbeat interval is 1 sec.
+  The heartbeat message is sent periodically to inform the host or other
+  attached devices that the system is running. It is used to monitor system
+  malfunctions. It also contains status flags that indicate to the host the
+  status of the system and whether it is operating correctly. Currently, the
+  expected heartbeat interval is 1 sec.
 
-The system error flag is used to indicate that an error has
-occurred in the system. To determine the source of the error,
-the remaining error flags should be inspected.
-
+  The system error flag is used to indicate that an error has occurred in the
+  system. To determine the source of the error, the remaining error flags
+  should be inspected.
 
   Parameters
   ----------
@@ -386,16 +380,14 @@ class MsgStatusReport(SBP):
   of its fields.
 
   
-  The status report is sent periodically to inform the host
-or other attached devices that the system is running. It is
-used to monitor system malfunctions. It contains status
-reports that indicate to the host the status of each sub-system and
-whether it is operating correctly.
+  The status report is sent periodically to inform the host or other attached
+  devices that the system is running. It is used to monitor system
+  malfunctions. It contains status reports that indicate to the host the
+  status of each sub-system and whether it is operating correctly.
 
-Interpretation of the subsystem specific status code is product
-dependent, but if the generic status code is initializing, it should
-be ignored.  Refer to product documentation for details.
-
+  Interpretation of the subsystem specific status code is product dependent,
+  but if the generic status code is initializing, it should be ignored.  Refer
+  to product documentation for details.
 
   Parameters
   ----------
@@ -504,9 +496,8 @@ class MsgInsStatus(SBP):
   of its fields.
 
   
-  The INS status message describes the state of the operation
-and initialization of the inertial navigation system. 
-
+  The INS status message describes the state of the operation and
+  initialization of the inertial navigation system.
 
   Parameters
   ----------
@@ -596,16 +587,16 @@ class MsgCsacTelemetry(SBP):
 
   
   The CSAC telemetry message has an implementation defined telemetry string
-from a device. It is not produced or available on general Swift Products.
-It is intended to be a low rate message for status purposes.
-
+  from a device. It is not produced or available on general Swift Products. It
+  is intended to be a low rate message for status purposes.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention defined.
+    Index representing the type of telemetry in use.  It is implemention
+    defined.
   telemetry : string
     Comma separated list of values as defined by the index
   sender : int
@@ -693,16 +684,16 @@ class MsgCsacTelemetryLabels(SBP):
 
   
   The CSAC telemetry message provides labels for each member of the string
-produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
-rate than the MSG_CSAC_TELEMETRY.
-
+  produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+  rate than the MSG_CSAC_TELEMETRY.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention defined.
+    Index representing the type of telemetry in use.  It is implemention
+    defined.
   telemetry_labels : string
     Comma separated list of telemetry field values
   sender : int
@@ -789,9 +780,9 @@ class MsgInsUpdates(SBP):
   of its fields.
 
   
-  The INS update status message contains informations about executed and rejected INS updates.
-This message is expected to be extended in the future as new types of measurements are being added.
-
+  The INS update status message contains informations about executed and
+  rejected INS updates. This message is expected to be extended in the future
+  as new types of measurements are being added.
 
   Parameters
   ----------
@@ -910,10 +901,9 @@ class MsgGnssTimeOffset(SBP):
   of its fields.
 
   
-  The GNSS time offset message contains the information that is needed to translate messages
-tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
-producing this message.
-
+  The GNSS time offset message contains the information that is needed to
+  translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+  messages) to GNSS time for the sender producing this message.
 
   Parameters
   ----------
@@ -1018,19 +1008,16 @@ class MsgPpsTime(SBP):
 
   
   The PPS time message contains the value of the sender's local time in
-microseconds at the moment a pulse is detected on the PPS input. This
-is to be used for syncronisation of sensor data sampled with a local
-timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
-to the sender.
+  microseconds at the moment a pulse is detected on the PPS input. This is to
+  be used for syncronisation of sensor data sampled with a local timestamp
+  (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
 
-The local time used to timestamp the PPS pulse must be generated by the
-same clock which is used to timestamp the IMU/wheel sensor data and
-should follow the same roll-over rules.  A separate MSG_PPS_TIME
-message should be sent for each source of sensor data which uses
-PPS-relative timestamping.  The sender ID for each of these
-MSG_PPS_TIME messages should match the sender ID of the respective
-sensor data.
-
+  The local time used to timestamp the PPS pulse must be generated by the same
+  clock which is used to timestamp the IMU/wheel sensor data and should follow
+  the same roll-over rules.  A separate MSG_PPS_TIME message should be sent
+  for each source of sensor data which uses PPS-relative timestamping.  The
+  sender ID for each of these MSG_PPS_TIME messages should match the sender ID
+  of the respective sensor data.
 
   Parameters
   ----------
@@ -1124,9 +1111,9 @@ class MsgGroupMeta(SBP):
   of its fields.
 
   
-  This leading message lists the time metadata of the Solution Group.
-It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
-
+  This leading message lists the time metadata of the Solution Group. It also
+  lists the atomic contents (i.e. types of messages included) of the Solution
+  Group.
 
   Parameters
   ----------
@@ -1139,9 +1126,8 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   n_group_msgs : int
     Size of list group_msgs
   group_msgs : array
-    An inorder list of message types included in the Solution Group,
-including GROUP_META itself
-
+    An inorder list of message types included in the Solution Group, including
+    GROUP_META itself
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

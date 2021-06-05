@@ -28,8 +28,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message indicates the process state of the top 10 heaviest
- * consumers of CPU on the system. */
+ * This message indicates the process state of the top 10 heaviest consumers
+ * of CPU on the system. */
 
 public class MsgLinuxCpuStateDepA extends SBPMessage {
     public static final int TYPE = 0x7F00;

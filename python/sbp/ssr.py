@@ -29,16 +29,14 @@ from sbp.gnss import CarrierPhase, GnssSignal, GnssSignalDep, GPSTime, GPSTime, 
 class CodeBiasesContent(object):
   """CodeBiasesContent.
   
-  Code biases are to be added to pseudorange.
-The corrections conform with RTCMv3 MT 1059 / 1065.
-
+  Code biases are to be added to pseudorange. The corrections conform with
+  RTCMv3 MT 1059 / 1065.
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467).
-
+    Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    DF467).
   value : int
     Code bias value
 
@@ -70,22 +68,19 @@ class PhaseBiasesContent(object):
   """PhaseBiasesContent.
   
   Phase biases are to be added to carrier phase measurements.
-
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467)
-
+    Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    DF467)
   integer_indicator : int
     Indicator for integer property
   widelane_integer_indicator : int
     Indicator for two groups of Wide-Lane(s) integer property
   discontinuity_counter : int
-    Signal phase discontinuity counter.
-Increased for every discontinuity in phase.
-
+    Signal phase discontinuity counter. Increased for every discontinuity in
+    phase.
   bias : int
     Phase bias for specified signal
 
@@ -125,10 +120,9 @@ Increased for every discontinuity in phase.
 class STECHeader(object):
   """STECHeader.
   
-  A full set of STEC information will likely span multiple SBP
-messages, since SBP message a limited to 255 bytes.  The header
-is used to tie multiple SBP messages into a sequence.
-
+  A full set of STEC information will likely span multiple SBP messages, since
+  SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
+  messages into a sequence.
   
   Parameters
   ----------
@@ -143,12 +137,10 @@ is used to tie multiple SBP messages into a sequence.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
 
   """
   _parser = construct.Struct(
@@ -192,10 +184,8 @@ following RTCM DF391 specification.
 class GriddedCorrectionHeader(object):
   """GriddedCorrectionHeader.
   
-  The LPP message contains nested variable length arrays
-which are not suppported in SBP, so each grid point will
-be identified by the index.
-
+  The LPP message contains nested variable length arrays which are not
+  suppported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -210,16 +200,13 @@ be identified by the index.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
   tropo_quality_indicator : int
     Quality of the troposphere data. Encoded following RTCM DF389
-specification in units of m.
-
+    specification in units of m.
 
   """
   _parser = construct.Struct(
@@ -273,12 +260,10 @@ class STECSatElement(object):
   sv_id : SvId
     Unique space vehicle identifier
   stec_quality_indicator : int
-    Quality of the STEC data. Encoded following RTCM DF389 specification
-but in units of TECU instead of m.
-
+    Quality of the STEC data. Encoded following RTCM DF389 specification but
+    in units of TECU instead of m.
   stec_coeff : array
     Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
-
 
   """
   _parser = construct.Struct(
@@ -311,7 +296,6 @@ class TroposphericDelayCorrectionNoStd(object):
   """TroposphericDelayCorrectionNoStd.
   
   Troposphere vertical delays at the grid point.
-
   
   Parameters
   ----------
@@ -347,9 +331,7 @@ class TroposphericDelayCorrectionNoStd(object):
 class TroposphericDelayCorrection(object):
   """TroposphericDelayCorrection.
   
-  Troposphere vertical delays (mean and standard deviation) at the grid
-point.
-
+  Troposphere vertical delays (mean and standard deviation) at the grid point.
   
   Parameters
   ----------
@@ -426,9 +408,8 @@ class STECResidualNoStd(object):
 class STECResidual(object):
   """STECResidual.
   
-  STEC residual (mean and standard deviation) for the given satellite
-at the grid point,
-
+  STEC residual (mean and standard deviation) for the given satellite at the
+  grid point.
   
   Parameters
   ----------
@@ -469,9 +450,8 @@ at the grid point,
 class GridElementNoStd(object):
   """GridElementNoStd.
   
-  Contains one tropo delay, plus STEC residuals for each satellite at the
-grid point.
-
+  Contains one tropo delay, plus STEC residuals for each satellite at the grid
+  point.
   
   Parameters
   ----------
@@ -513,8 +493,7 @@ class GridElement(object):
   """GridElement.
   
   Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-stddev) for each satellite at the grid point.
-
+  stddev) for each satellite at the grid point.
   
   Parameters
   ----------
@@ -556,8 +535,7 @@ class SatelliteAPC(object):
   """SatelliteAPC.
   
   Contains phase center offset and elevation variation corrections for one
-signal on a satellite.
-
+  signal on a satellite.
   
   Parameters
   ----------
@@ -568,14 +546,12 @@ signal on a satellite.
   svn : int
     Satellite Code, as defined by IGS. Typically the space vehicle number.
   pco : array
-    Mean phase center offset, X Y and Z axises. See IGS ANTEX file
-format description for coordinate system definition.
-
+    Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    description for coordinate system definition.
   pcv : array
-    Elevation dependent phase center variations. First element is 0
-degrees separation from the Z axis, subsequent elements represent
-elevation variations in 1 degree increments.
-
+    Elevation dependent phase center variations. First element is 0 degrees
+    separation from the Z axis, subsequent elements represent elevation
+    variations in 1 degree increments.
 
   """
   _parser = construct.Struct(
@@ -613,10 +589,9 @@ elevation variations in 1 degree increments.
 class STECHeaderDepA(object):
   """STECHeaderDepA.
   
-  A full set of STEC information will likely span multiple SBP
-messages, since SBP message a limited to 255 bytes.  The header
-is used to tie multiple SBP messages into a sequence.
-
+  A full set of STEC information will likely span multiple SBP messages, since
+  SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
+  messages into a sequence.
   
   Parameters
   ----------
@@ -627,12 +602,10 @@ is used to tie multiple SBP messages into a sequence.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
 
   """
   _parser = construct.Struct(
@@ -670,10 +643,8 @@ following RTCM DF391 specification.
 class GriddedCorrectionHeaderDepA(object):
   """GriddedCorrectionHeaderDepA.
   
-  The 3GPP message contains nested variable length arrays
-which are not suppported in SBP, so each grid point will
-be identified by the index.
-
+  The 3GPP message contains nested variable length arrays which are not
+  suppported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -684,16 +655,13 @@ be identified by the index.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
   tropo_quality_indicator : int
-    Quality of the troposphere data. Encoded following RTCM DF389
-specifcation in units of m.
-
+    Quality of the troposphere data. Encoded following RTCM DF389 specifcation
+    in units of m.
 
   """
   _parser = construct.Struct(
@@ -734,24 +702,20 @@ specifcation in units of m.
 class GridDefinitionHeaderDepA(object):
   """GridDefinitionHeaderDepA.
   
-  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
-Also includes an RLE encoded validity list.
-
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
+  RLE encoded validity list.
   
   Parameters
   ----------
   region_size_inverse : int
-    region_size (deg) = 10 / region_size_inverse
-0 is an invalid value.
-
+    region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
   area_width : int
-    grid height (deg) = grid width (deg) = area_width / region_size
-0 is an invalid value.
-
+    grid height (deg) = grid width (deg) = area_width / region_size 0 is an
+    invalid value.
   lat_nw_corner_enc : int
     North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
   lon_nw_corner_enc : int
-    North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+    North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
@@ -802,11 +766,9 @@ class MsgSsrOrbitClock(SBP):
   of its fields.
 
   
-  The precise orbit and clock correction message is
-to be applied as a delta correction to broadcast
-ephemeris and is an equivalent to the 1060 /1066
-RTCM message types
-
+  The precise orbit and clock correction message is to be applied as a delta
+  correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+  RTCM message types.
 
   Parameters
   ----------
@@ -817,14 +779,11 @@ RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   iod : int
     Issue of broadcast ephemeris data or IODCRC (Beidou)
   radial : int
@@ -965,11 +924,9 @@ class MsgSsrCodeBiases(SBP):
   of its fields.
 
   
-  The precise code biases message is to be added
-to the pseudorange of the corresponding signal
-to get corrected pseudorange. It is an
-equivalent to the 1059 / 1065 RTCM message types
-
+  The precise code biases message is to be added to the pseudorange of the
+  corresponding signal to get corrected pseudorange. It is an equivalent to
+  the 1059 / 1065 RTCM message types.
 
   Parameters
   ----------
@@ -980,14 +937,11 @@ equivalent to the 1059 / 1065 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   biases : array
     Code biases for the different satellite signals
   sender : int
@@ -1083,13 +1037,11 @@ class MsgSsrPhaseBiases(SBP):
   of its fields.
 
   
-  The precise phase biases message contains the biases
-to be added to the carrier phase of the corresponding
-signal to get corrected carrier phase measurement, as
-well as the satellite yaw angle to be applied to compute
-the phase wind-up correction.
-It is typically an equivalent to the 1265 RTCM message types
-
+  The precise phase biases message contains the biases to be added to the
+  carrier phase of the corresponding signal to get corrected carrier phase
+  measurement, as well as the satellite yaw angle to be applied to compute the
+  phase wind-up correction. It is typically an equivalent to the 1265 RTCM
+  message types.
 
   Parameters
   ----------
@@ -1100,28 +1052,21 @@ It is typically an equivalent to the 1265 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   dispersive_bias : int
     Indicator for the dispersive phase biases property.
-
   mw_consistency : int
     Consistency indicator for Melbourne-Wubbena linear combinations
-
   yaw : int
     Satellite yaw angle
   yaw_rate : int
     Satellite yaw angle rate
   biases : array
-    Phase biases corrections for a
-satellite being tracked.
-
+    Phase biases corrections for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1228,12 +1173,11 @@ class MsgSsrStecCorrection(SBP):
 
   
   The Slant Total Electron Content per space vehicle, given as polynomial
-approximation for a given tile. This should be combined with the
-MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-of the atmospheric delay.
+  approximation for a given tile. This should be combined with the
+  MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
+  the atmospheric delay.
 
-It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-
+  It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 
   Parameters
   ----------
@@ -1329,8 +1273,7 @@ class MsgSsrGriddedCorrection(SBP):
   
   STEC residuals are per space vehicle, troposphere is not.
 
-It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-
+  It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 
   Parameters
   ----------
@@ -1340,7 +1283,6 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     Header of a gridded correction message
   element : GridElement
     Tropo and STEC residuals for the given grid point.
-
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1426,13 +1368,12 @@ class MsgSsrTileDefinition(SBP):
 
   
   Provides the correction point coordinates for the atmospheric correction
-values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-messages.
+  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  messages.
 
-Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-correction points, not lists of points.
-
+  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+  correction points, not lists of points.
 
   Parameters
   ----------
@@ -1442,67 +1383,57 @@ correction points, not lists of points.
     Unique identifier of the tile set this tile belongs to.
   tile_id : int
     Unique identifier of this tile in the tile set.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
   corner_nw_lat : int
     North-West corner correction point latitude.
 
-The relation between the latitude X in the range [-90, 90] and
-the coded number N is:
+    The relation between the latitude X in the range [-90, 90] and the coded
+    number N is:
 
-N = floor((X / 90) * 2^14)
+    N = floor((X / 90) * 2^14)
 
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
   corner_nw_lon : int
-    North-West corner correction point longtitude.
+    North-West corner correction point longitude.
 
-The relation between the longtitude X in the range [-180, 180]
-and the coded number N is:
+    The relation between the longitude X in the range [-180, 180] and the
+    coded number N is:
 
-N = floor((X / 180) * 2^15)
+    N = floor((X / 180) * 2^15)
 
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
   spacing_lat : int
     Spacing of the correction points in the latitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
   spacing_lon : int
-    Spacing of the correction points in the longtitude direction.
+    Spacing of the correction points in the longitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
   rows : int
     Number of steps in the latitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
   cols : int
-    Number of steps in the longtitude direction.
+    Number of steps in the longitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongtitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
   bitmask : int
-    Specifies the availability of correction data at the
-correction points in the array.
+    Specifies the availability of correction data at the correction points in
+    the array.
 
-If a specific bit is enabled (set to 1), the correction is not
-available. Only the first rows * cols bits are used, the remainder
-are set to 0. If there are more then 64 correction points the
-remaining corrections are always available.
+    If a specific bit is enabled (set to 1), the correction is not available.
+    Only the first rows * cols bits are used, the remainder are set to 0. If
+    there are more then 64 correction points the remaining corrections are
+    always available.
 
-Starting with the northwest corner of the array (top left on a
-north oriented map) the correction points are enumerated with row
-precedence - first row west to east, second row west to east,
-until last row west to east - ending with the southeast corner of
-the array.
+    Starting with the northwest corner of the array (top left on a north
+    oriented map) the correction points are enumerated with row precedence -
+    first row west to east, second row west to east, until last row west to
+    east - ending with the southeast corner of the array.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
-note the definition of the bits is inverted.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    definition of the bits is inverted.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1706,14 +1637,11 @@ class MsgSsrOrbitClockDepA(SBP):
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   iod : int
     Issue of broadcast ephemeris data
   radial : int
@@ -2048,9 +1976,8 @@ class MsgSsrGriddedCorrectionDepA(SBP):
   header : GriddedCorrectionHeaderDepA
     Header of a Gridded Correction message
   element : GridElement
-    Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
-
+    Tropo and STEC residuals for the given grid point (mean and standard
+    deviation)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2143,11 +2070,10 @@ class MsgSsrGridDefinitionDepA(SBP):
   header : GridDefinitionHeaderDepA
     Header of a Gridded Correction message
   rle_list : array
-    Run Length Encode list of quadrants that contain valid data.
-The spec describes the encoding scheme in detail, but
-essentially the index of the quadrants that contain transitions between
-valid and invalid (and vice versa) are encoded as u8 integers.
-
+    Run Length Encode list of quadrants that contain valid data. The spec
+    describes the encoding scheme in detail, but essentially the index of the
+    quadrants that contain transitions between valid and invalid (and vice
+    versa) are encoded as u8 integers.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

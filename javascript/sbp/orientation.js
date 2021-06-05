@@ -69,7 +69,7 @@ MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * orientation with respect to a local-level NED frame. The components of the
  * vector should sum to a unit vector assuming that the LSB of each component as a
  * value of 2^-31. This message will only be available in future INS versions of
- * Swift Products and is not produced by Piksi Multi  or Duro.
+ * Swift Products and is not produced by Piksi Multi or Duro.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -124,9 +124,9 @@ MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_ORIENT_EULER (0x0221).
  *
  * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
- * The rotations should applied intrinsically in the order yaw, pitch, and roll  in
- * order to rotate the from a frame aligned with the local-level NED frame  to the
- * vehicle body frame.  This message will only be available in future  INS versions
+ * The rotations should applied intrinsically in the order yaw, pitch, and roll in
+ * order to rotate the from a frame aligned with the local-level NED frame to the
+ * vehicle body frame.  This message will only be available in future INS versions
  * of Swift Products and is not produced by Piksi Multi or Duro.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -175,14 +175,14 @@ MsgOrientEuler.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_ANGULAR_RATE (0x0222).
  *
- * This message reports the orientation rates in the vehicle body frame.  The
- * values represent the measurements a strapped down gyroscope would  make and are
- * not equivalent to the time derivative of the Euler angles. The orientation and
+ * This message reports the orientation rates in the vehicle body frame. The values
+ * represent the measurements a strapped down gyroscope would make and are not
+ * equivalent to the time derivative of the Euler angles. The orientation and
  * origin of the user frame is specified via device settings. By convention, the
  * vehicle x-axis is expected to be aligned with the forward direction, while the
  * vehicle y-axis is expected to be aligned with the right direction, and the
  * vehicle z-axis should be aligned with the down direction. This message will only
- * be available in future INS versions of Swift Products  and is not produced by
+ * be available in future INS versions of Swift Products and is not produced by
  * Piksi Multi or Duro.
  *
  * Fields in the SBP payload (`sbp.payload`):

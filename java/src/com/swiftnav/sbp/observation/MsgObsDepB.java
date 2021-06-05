@@ -29,12 +29,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This observation message has been deprecated in favor of
- * observations that are more interoperable. This message
- * should be used for observations referenced to
- * a nominal pseudorange which are not interoperable with
- * most 3rd party GNSS receievers or typical RTCMv3
- * observations. */
+ * This observation message has been deprecated in favor of observations that
+ * are more interoperable. This message should be used for observations
+ * referenced to a nominal pseudorange which are not interoperable with most
+ * 3rd party GNSS receievers or typical RTCMv3 observations. */
 
 public class MsgObsDepB extends SBPMessage {
     public static final int TYPE = 0x0043;
@@ -43,9 +41,8 @@ public class MsgObsDepB extends SBPMessage {
     /** Header of a GPS observation message */
     public ObservationHeaderDep header;
     
-    /** Pseudorange and carrier phase observation for a
-satellite being tracked.
- */
+    /** Pseudorange and carrier phase observation for a satellite being
+      * tracked. */
     public PackedObsContentDepB[] obs;
     
 

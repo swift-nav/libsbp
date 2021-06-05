@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgNetworkStateReq",
   "title":"MsgNetworkStateReq",
-  "description":"Request state of Piksi network interfaces.,\nOutput will be sent in MSG_NETWORK_STATE_RESP messages\n",
+  "description":"Request state of Piksi network interfaces. Output will be sent in MSG_NETWORK_STATE_RESP messages.\n",
   "type": "object",
   "properties": {
   },

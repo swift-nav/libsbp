@@ -28,10 +28,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The system start-up message is sent once on system
- * start-up. It notifies the host or other attached devices that
- * the system has started and is now ready to respond to commands
- * or configuration requests. */
+ * The system start-up message is sent once on system start-up. It notifies
+ * the host or other attached devices that the system has started and is now
+ * ready to respond to commands or configuration requests. */
 
 public class MsgStartup extends SBPMessage {
     public static final int TYPE = 0xFF00;

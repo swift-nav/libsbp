@@ -29,25 +29,24 @@ import org.json.JSONArray;
  * fields.
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings. The sense of the measurements are to be aligned with 
- * the indications on the device itself. Measurement units, which are specific to the
- * device hardware and settings, are communicated via the MSG_IMU_AUX message.
- * If using "time since startup" time tags, the receiving end will expect a
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
- * with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
- * 
+ * gyroscope readings. The sense of the measurements are to be aligned with
+ * the indications on the device itself. Measurement units, which are specific
+ * to the device hardware and settings, are communicated via the MSG_IMU_AUX
+ * message. If using "time since startup" time tags, the receiving end will
+ * expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+ * synchronise IMU measurements with GNSS. The timestamp must wrap around to
+ * zero when reaching one week (604800 seconds).
+ *
  * The time-tagging mode should not change throughout a run. */
 
 public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;
 
     
-    /** Milliseconds since reference epoch and time status.
- */
+    /** Milliseconds since reference epoch and time status. */
     public long tow;
     
-    /** Milliseconds since reference epoch, fractional part
- */
+    /** Milliseconds since reference epoch, fractional part */
     public int tow_f;
     
     /** Acceleration in the IMU frame X axis */

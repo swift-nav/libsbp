@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgGnssTimeOffset",
   "title":"MsgGnssTimeOffset",
-  "description":"The GNSS time offset message contains the information that is needed to translate messages,\ntagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender,\nproducing this message.\n",
+  "description":"The GNSS time offset message contains the information that is needed to translate messages tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender producing this message.\n",
   "type": "object",
   "properties": {
     "weeks": {"type": "integer"},

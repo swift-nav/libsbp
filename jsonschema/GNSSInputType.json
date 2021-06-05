@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#GNSSInputType",
   "title":"GNSSInputType",
-  "description":"Metadata around the GNSS sensors involved in the fuzed solution.,\nAccessible through sol_in[N].flags in a MSG_SOLN_META.\n",
+  "description":"Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags in a MSG_SOLN_META.\n",
   "type": "object",
   "properties": {
     "flags": {"type": "integer"}

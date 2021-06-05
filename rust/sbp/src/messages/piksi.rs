@@ -12,10 +12,9 @@
 // Automatically generated from yaml/swiftnav/sbp/piksi.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! System health, configuration, and diagnostic messages specific to
-//! the Piksi L1 receiver, including a variety of legacy messages that
-//! may no longer be used.
-//!
+//! System health, configuration, and diagnostic messages specific to the
+//! Piksi L1 receiver, including a variety of legacy messages that may no
+//! longer be used.
 
 #[allow(unused_imports)]
 use std::convert::TryFrom;
@@ -31,11 +30,10 @@ use crate::SbpString;
 
 /// Receiver-to-base station latency
 ///
-/// Statistics on the latency of observations received from the base
-/// station. As observation packets are received their GPS time is
-/// compared to the current GPS time calculated locally by the
-/// receiver to give a precise measurement of the end-to-end
-/// communication latency in the system.
+/// Statistics on the latency of observations received from the base station.
+/// As observation packets are received their GPS time is compared to the
+/// current GPS time calculated locally by the receiver to give a precise
+/// measurement of the end-to-end communication latency in the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -99,8 +97,8 @@ impl crate::serialize::SbpSerialize for Latency {
 
 /// Legacy message to load satellite almanac (host => Piksi)
 ///
-/// This is a legacy message for sending and loading a satellite
-/// alamanac onto the Piksi's flash memory from the host.
+/// This is a legacy message for sending and loading a satellite alamanac onto
+/// the Piksi's flash memory from the host.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -157,9 +155,9 @@ impl crate::serialize::SbpSerialize for MsgAlmanac {
 
 /// Cell modem information update message
 ///
-/// If a cell modem is present on a piksi device, this message
-/// will be send periodically to update the host on the status
-/// of the modem and its various parameters.
+/// If a cell modem is present on a piksi device, this message will be send
+/// periodically to update the host on the status of the modem and its various
+/// parameters.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -233,9 +231,8 @@ impl crate::serialize::SbpSerialize for MsgCellModemStatus {
 
 /// Command output
 ///
-/// Returns the standard output and standard error of the
-/// command requested by MSG_COMMAND_REQ.
-/// The sequence number can be used to filter for filtering
+/// Returns the standard output and standard error of the command requested by
+/// MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
 /// the correct command.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
@@ -305,9 +302,9 @@ impl crate::serialize::SbpSerialize for MsgCommandOutput {
 
 /// Execute a command (host => device)
 ///
-/// Request the recipient to execute an command.
-/// Output will be sent in MSG_LOG messages, and the exit
-/// code will be returned with MSG_COMMAND_RESP.
+/// Request the recipient to execute an command. Output will be sent in
+/// MSG_LOG messages, and the exit code will be returned with
+/// MSG_COMMAND_RESP.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -376,8 +373,8 @@ impl crate::serialize::SbpSerialize for MsgCommandReq {
 
 /// Exit code from executed command (device => host)
 ///
-/// The response to MSG_COMMAND_REQ with the return code of
-/// the command.  A return code of zero indicates success.
+/// The response to MSG_COMMAND_REQ with the return code of the command.  A
+/// return code of zero indicates success.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -446,9 +443,9 @@ impl crate::serialize::SbpSerialize for MsgCommandResp {
 
 /// Legacy message for CW interference channel (Piksi => host)
 ///
-/// This is an unused legacy message for result reporting from the
-/// CW interference channel on the SwiftNAP. This message will be
-/// removed in a future release.
+/// This is an unused legacy message for result reporting from the CW
+/// interference channel on the SwiftNAP. This message will be removed in a
+/// future release.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -505,9 +502,9 @@ impl crate::serialize::SbpSerialize for MsgCwResults {
 
 /// Legacy message for CW interference channel (host => Piksi)
 ///
-/// This is an unused legacy message from the host for starting
-/// the CW interference channel on the SwiftNAP. This message will
-/// be removed in a future release.
+/// This is an unused legacy message from the host for starting the CW
+/// interference channel on the SwiftNAP. This message will be removed in a
+/// future release.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -650,12 +647,13 @@ impl crate::serialize::SbpSerialize for MsgDeviceMonitor {
 
 /// RF AGC status
 ///
-/// This message describes the gain of each channel in the receiver frontend. Each
-/// gain is encoded as a non-dimensional percentage relative to the maximum range  
-/// possible for the gain stage of the frontend. By convention, each gain array
-/// has 8 entries and the index of the array corresponding to the index of the rf channel
-/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
-/// A negative value implies an error for the particular gain stage as reported by the frontend.
+/// This message describes the gain of each channel in the receiver frontend.
+/// Each gain is encoded as a non-dimensional percentage relative to the
+/// maximum range possible for the gain stage of the frontend. By convention,
+/// each gain array has 8 entries and the index of the array corresponding to
+/// the index of the rf channel in the frontend. A gain of 127 percent encodes
+/// that rf channel is not present in the hardware. A negative value implies
+/// an error for the particular gain stage as reported by the frontend.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -724,10 +722,9 @@ impl crate::serialize::SbpSerialize for MsgFrontEndGain {
 
 /// State of the Integer Ambiguity Resolution (IAR) process
 ///
-/// This message reports the state of the Integer Ambiguity
-/// Resolution (IAR) process, which resolves unknown integer
-/// ambiguities from double-differenced carrier-phase measurements
-/// from satellite observations.
+/// This message reports the state of the Integer Ambiguity Resolution (IAR)
+/// process, which resolves unknown integer ambiguities from double-
+/// differenced carrier-phase measurements from satellite observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -848,8 +845,8 @@ impl crate::serialize::SbpSerialize for MsgInitBaseDep {
 
 /// Mask a satellite from use in Piksi subsystems
 ///
-/// This message allows setting a mask to prevent a particular satellite
-/// from being used in various Piksi subsystems.
+/// This message allows setting a mask to prevent a particular satellite from
+/// being used in various Piksi subsystems.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1051,8 +1048,8 @@ impl crate::serialize::SbpSerialize for MsgNetworkBandwidthUsage {
 
 /// Request state of Piksi network interfaces
 ///
-/// Request state of Piksi network interfaces.
-/// Output will be sent in MSG_NETWORK_STATE_RESP messages
+/// Request state of Piksi network interfaces. Output will be sent in
+/// MSG_NETWORK_STATE_RESP messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1109,9 +1106,8 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateReq {
 
 /// State of network interface
 ///
-/// The state of a network interface on the Piksi.
-/// Data is made to reflect output of ifaddrs struct returned by getifaddrs
-/// in c.
+/// The state of a network interface on the Piksi. Data is made to reflect
+/// output of ifaddrs struct returned by getifaddrs in c.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1210,8 +1206,7 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateResp {
 
 /// Reset the device (host => Piksi)
 ///
-/// This message from the host resets the Piksi back into the
-/// bootloader.
+/// This message from the host resets the Piksi back into the bootloader.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1275,8 +1270,7 @@ impl crate::serialize::SbpSerialize for MsgReset {
 
 /// Reset the device (host => Piksi)
 ///
-/// This message from the host resets the Piksi back into the
-/// bootloader.
+/// This message from the host resets the Piksi back into the bootloader.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1333,8 +1327,8 @@ impl crate::serialize::SbpSerialize for MsgResetDep {
 
 /// Reset IAR filters (host => Piksi)
 ///
-/// This message resets either the DGNSS Kalman filters or Integer
-/// Ambiguity Resolution (IAR) process.
+/// This message resets either the DGNSS Kalman filters or Integer Ambiguity
+/// Resolution (IAR) process.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1398,8 +1392,8 @@ impl crate::serialize::SbpSerialize for MsgResetFilters {
 
 /// Send GPS time from host (host => Piksi)
 ///
-/// This message sets up timing functionality using a coarse GPS
-/// time estimate sent by the host.
+/// This message sets up timing functionality using a coarse GPS time estimate
+/// sent by the host.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1644,9 +1638,9 @@ impl crate::serialize::SbpSerialize for MsgSpecanDep {
 
 /// State of an RTOS thread
 ///
-/// The thread usage message from the device reports real-time
-/// operating system (RTOS) thread usage statistics for the named
-/// thread. The reported percentage values must be normalized.
+/// The thread usage message from the device reports real-time operating
+/// system (RTOS) thread usage statistics for the named thread. The reported
+/// percentage values must be normalized.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1721,15 +1715,14 @@ impl crate::serialize::SbpSerialize for MsgThreadState {
 
 /// State of the UART channels
 ///
-/// The UART message reports data latency and throughput of the UART
-/// channels providing SBP I/O. On the default Piksi configuration,
-/// UARTs A and B are used for telemetry radios, but can also be
-/// host access ports for embedded hosts, or other interfaces in
-/// future. The reported percentage values must be normalized.
-/// Observations latency and period can be used to assess the
-/// health of the differential corrections link. Latency provides
-/// the timeliness of received base observations while the
-/// period indicates their likelihood of transmission.
+/// The UART message reports data latency and throughput of the UART channels
+/// providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+/// used for telemetry radios, but can also be host access ports for embedded
+/// hosts, or other interfaces in future. The reported percentage values must
+/// be normalized. Observations latency and period can be used to assess the
+/// health of the differential corrections link. Latency provides the
+/// timeliness of received base observations while the period indicates their
+/// likelihood of transmission.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1890,14 +1883,13 @@ impl crate::serialize::SbpSerialize for MsgUartStateDepa {
     }
 }
 
-/// Bandwidth usage measurement for a single interface.
+/// Bandwidth usage measurement for a single interface
 ///
-/// The bandwidth usage for each interface can be reported
-/// within this struct and utilize multiple fields to fully
-/// specify the type of traffic that is being tracked. As
-/// either the interval of collection or the collection time
-/// may vary, both a timestamp and period field is provided,
-/// though may not necessarily be populated with a value.
+/// The bandwidth usage for each interface can be reported within this struct
+/// and utilize multiple fields to fully specify the type of traffic that is
+/// being tracked. As either the interval of collection or the collection time
+/// may vary, both a timestamp and period field is provided, though may not
+/// necessarily be populated with a value.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1966,12 +1958,12 @@ impl crate::serialize::SbpSerialize for NetworkUsage {
 
 /// base station observation message receipt period
 ///
-/// Statistics on the period of observations received from the base
-/// station. As complete observation sets are received, their time
-/// of reception is compared with the prior set''s time of reception.
-/// This measurement provides a proxy for link quality as incomplete
-/// or missing sets will increase the period.  Long periods
-/// can cause momentary RTK solution outages.
+/// Statistics on the period of observations received from the base station.
+/// As complete observation sets are received, their time of reception is
+/// compared with the prior set''s time of reception. This measurement
+/// provides a proxy for link quality as incomplete or missing sets will
+/// increase the period.  Long periods can cause momentary RTK solution
+/// outages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2035,9 +2027,8 @@ impl crate::serialize::SbpSerialize for Period {
 
 /// State of the UART channel
 ///
-/// Throughput, utilization, and error counts on the RX/TX buffers
-/// of this UART channel. The reported percentage values must
-/// be normalized.
+/// Throughput, utilization, and error counts on the RX/TX buffers of this
+/// UART channel. The reported percentage values must be normalized.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Deprecated. */
+ * Deprecated. */
 
 public class MsgObsDepA extends SBPMessage {
     public static final int TYPE = 0x0045;
@@ -38,9 +38,8 @@ public class MsgObsDepA extends SBPMessage {
     /** Header of a GPS observation message */
     public ObservationHeaderDep header;
     
-    /** Pseudorange and carrier phase observation for a
-satellite being tracked.
- */
+    /** Pseudorange and carrier phase observation for a satellite being
+      * tracked. */
     public PackedObsContentDepA[] obs;
     
 

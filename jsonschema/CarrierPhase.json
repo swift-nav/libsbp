@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#CarrierPhase",
   "title":"CarrierPhase",
-  "description":"Carrier phase measurement in cycles represented as a 40-bit,\nfixed point number with Q32.8 layout, i.e. 32-bits of whole,\ncycles and 8-bits of fractional cycles. This phase has the,\nsame sign as the pseudorange.\n",
+  "description":"Carrier phase measurement in cycles represented as a 40-bit fixed point number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of fractional cycles. This phase has the same sign as the pseudorange.\n",
   "type": "object",
   "properties": {
     "i": {"type": "integer"},

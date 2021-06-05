@@ -29,10 +29,10 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate Galileo satellite position,
- * velocity, and clock offset. Please see the Signal In Space ICD
- * OS SIS ICD, Issue 1.3, December 2016 for more details. */
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate Galileo satellite position, velocity, and clock offset.
+ * Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for
+ * more details. */
 
 public class MsgEphemerisGal extends SBPMessage {
     public static final int TYPE = 0x008D;
@@ -53,16 +53,20 @@ public class MsgEphemerisGal extends SBPMessage {
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public float c_rc;
     
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public float c_uc;
     
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public float c_us;
     
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public float c_ic;
     
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public float c_is;
     
     /** Mean motion difference */

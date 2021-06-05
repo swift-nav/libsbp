@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgMeasurementState",
   "title":"MsgMeasurementState",
-  "description":"The tracking message returns a variable-length array of tracking,\nchannel states. It reports status and carrier-to-noise density,\nmeasurements for all tracked satellites.\n",
+  "description":"The tracking message returns a variable-length array of tracking channel states. It reports status and carrier-to-noise density measurements for all tracked satellites.\n",
   "type": "object",
   "properties": {
     "states": {"type": "array", "items": {"$ref": "MeasurementState.json"}}

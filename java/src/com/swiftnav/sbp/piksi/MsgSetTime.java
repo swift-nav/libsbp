@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message sets up timing functionality using a coarse GPS
- * time estimate sent by the host. */
+ * This message sets up timing functionality using a coarse GPS time estimate
+ * sent by the host. */
 
 public class MsgSetTime extends SBPMessage {
     public static final int TYPE = 0x0068;

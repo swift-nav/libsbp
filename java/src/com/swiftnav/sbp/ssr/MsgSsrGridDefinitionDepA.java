@@ -31,11 +31,10 @@ public class MsgSsrGridDefinitionDepA extends SBPMessage {
     /** Header of a Gridded Correction message */
     public GridDefinitionHeaderDepA header;
     
-    /** Run Length Encode list of quadrants that contain valid data.
-The spec describes the encoding scheme in detail, but
-essentially the index of the quadrants that contain transitions between
-valid and invalid (and vice versa) are encoded as u8 integers.
- */
+    /** Run Length Encode list of quadrants that contain valid data. The spec
+      * describes the encoding scheme in detail, but essentially the index of
+      * the quadrants that contain transitions between valid and invalid (and
+      * vice versa) are encoded as u8 integers. */
     public int[] rle_list;
     
 
