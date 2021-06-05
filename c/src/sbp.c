@@ -10,8 +10,8 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#include "libsbp/edc.h"
-#include "libsbp/sbp.h"
+#include <libsbp/edc.h>
+#include <libsbp/sbp.h>
 
 #define SBP_PREAMBLE 0x55
 
@@ -112,7 +112,7 @@
  * Sending
  * -------
  *
- * To send an SBP message simply call the sbp_send_message() function,
+ * To send an SBP message simply call the sbp_send_payload() function,
  * providing a `write` function that writes data to your output.
  *
  * Often the data to be sent will simply be a struct cast to a `u8` buffer. As
@@ -122,7 +122,7 @@
  * ~~~
  * // Convenience macro for sending an SBP message.
  * #define SBP_MSG(sbp_state, msg_type, item) \
- *   sbp_send_message(&sbp_state, msg_type, MY_SENDER_ID, \
+ *   sbp_send_payload(&sbp_state, msg_type, MY_SENDER_ID, \
  *       sizeof(item), (u8 *)&(item), &my_write)
  *
  * typedef struct {
@@ -147,7 +147,7 @@
  *
  *   my_awesome_struct payload = { 0x22, 0x33 };
  *
- *   sbp_send_message(&s, SBP_MY_MSG_TYPE, MY_SENDER_ID,
+ *   sbp_send_payload(&s, SBP_MY_MSG_TYPE, MY_SENDER_ID,
  *                    sizeof(payload), (u8*)&payload, &my_write);
  *
  *   // or
@@ -295,7 +295,7 @@ s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
 
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+s8 sbp_register_all_payload_callback(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context,
                                  sbp_msg_callbacks_node_t *node) {
   return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
@@ -317,7 +317,7 @@ s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
  *         `SBP_CALLBACK_ERROR` if the callback was already
  *         registered for that message type.
  */
-s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
+s8 sbp_register_payload_callback(sbp_state_t *s, u16 msg_type, sbp_payload_callback_t cb, void *context,
                          sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.msg = cb;
@@ -357,7 +357,7 @@ void sbp_state_init(sbp_state_t *s)
 /** Set a context to pass to all function pointer calls made by sbp functions
  * This helper function sets a void* context pointer in sbp_state.
  * Whenever `sbp_process` calls the `read` function pointer, it passes this context.
- * Whenever `sbp_send_message` calls the `write` function pointer, it passes this context.
+ * Whenever `sbp_send_payload` calls the `write` function pointer, it passes this context.
  * This allows C++ code to get a pointer to an object inside these functions.
  */
 void sbp_state_set_io_context(sbp_state_t *s, void *context)
@@ -648,10 +648,10 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * which to read the data to be written, and `context` is the arbitrary pointer
  * set by `sbp_state_set_io_context`. The function should return the number
  * of bytes successfully written which may be between 0 and `n`. Currently, if
- * the number of bytes written is different from `n` then `sbp_send_message`
+ * the number of bytes written is different from `n` then `sbp_send_payload`
  * will immediately return with an error.
  *
- * Note that `sbp_send_message` makes multiple calls to write and therefore if
+ * Note that `sbp_send_payload` makes multiple calls to write and therefore if
  * a `write` call fails then this may result in a partial message being written
  * to the output. This should be caught by the CRC check on the receiving end
  * but will result in lost messages.
@@ -662,7 +662,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+s8 sbp_send_payload(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     s32 (*write)(u8 *buff, u32 n, void *context))
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */

@@ -14,8 +14,8 @@
 // spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepC.yaml by
 // generate.py. Do not modify by hand!
 
-#include <acquisition.h>
 #include <check.h>
+#include <libsbp/legacy/acquisition.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -140,7 +140,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 10;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -226,8 +226,8 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -250,7 +250,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 6;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -336,8 +336,8 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -360,7 +360,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 13;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -446,8 +446,8 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -470,7 +470,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 1;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -556,8 +556,8 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -580,7 +580,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 27;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

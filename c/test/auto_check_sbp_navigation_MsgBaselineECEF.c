@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20b, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x20b, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x20b, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -140,7 +140,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
     test_msg->x = -1154410;
     test_msg->y = 1327294;
     test_msg->z = 631798;
-    sbp_send_message(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -229,8 +229,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20b, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x20b, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x20b, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -253,7 +253,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
     test_msg->x = -1154232;
     test_msg->y = 1327551;
     test_msg->z = 631434;
-    sbp_send_message(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -342,8 +342,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20b, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x20b, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x20b, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -366,7 +366,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
     test_msg->x = -1154263;
     test_msg->y = 1327541;
     test_msg->z = 631188;
-    sbp_send_message(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -455,8 +455,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20b, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x20b, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x20b, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -479,7 +479,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
     test_msg->x = -1154628;
     test_msg->y = 1327185;
     test_msg->z = 630849;
-    sbp_send_message(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -568,8 +568,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20b, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x20b, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x20b, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -592,7 +592,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEF) {
     test_msg->x = -1154883;
     test_msg->y = 1326941;
     test_msg->z = 630626;
-    sbp_send_message(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x20b, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

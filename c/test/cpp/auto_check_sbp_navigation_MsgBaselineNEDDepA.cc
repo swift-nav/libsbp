@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -133,14 +133,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -243,14 +243,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -353,14 +353,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -463,14 +463,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -573,14 +573,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA5
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -683,14 +683,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA6
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -793,14 +793,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA7
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -903,14 +903,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA8
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -1013,14 +1013,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA9
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),
@@ -1123,14 +1123,14 @@ class Test_auto_check_sbp_navigation_MsgBaselineNEDDepA10
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgBaselineNEDDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ned_dep_a_t *>(last_msg_storage_)),

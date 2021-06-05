@@ -2,8 +2,8 @@
 #include <fstream>
 
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/frame_handler.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/frame_handler.h>
 
 void usage(char *prog_name) {
   fprintf(stderr, "usage: %s [filename]\n", prog_name);
@@ -34,9 +34,9 @@ class SbpFileReader : public sbp::IReader {
   std::ifstream file_stream_;
 };
 
-class ECEFHandler : private sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t> {
+class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> {
   public:
-    ECEFHandler(sbp::State *state) : sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+    ECEFHandler(sbp::State *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
     }
 
     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_gps_time_t& msg) {

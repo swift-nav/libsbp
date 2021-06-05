@@ -15,22 +15,22 @@
 // by generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
   Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -198,14 +198,14 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
   Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -373,14 +373,14 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
   Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -548,14 +548,14 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
   Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -723,14 +723,14 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
   Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),

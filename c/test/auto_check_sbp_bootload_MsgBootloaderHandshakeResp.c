@@ -14,8 +14,8 @@
 // spec/tests/yaml/swiftnav/sbp/bootload/test_MsgBootloaderHandshakeResp.yaml by
 // generate.py. Do not modify by hand!
 
-#include <bootload.h>
 #include <check.h>
+#include <libsbp/legacy/bootload.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb4, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0xb4, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0xb4, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -142,7 +142,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0xb4, 0, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0xb4, 0, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -222,8 +222,8 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb0, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0xb0, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0xb0, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -259,7 +259,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
     test_msg->handshake[3] = 50;
-    sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

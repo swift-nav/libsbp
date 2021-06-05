@@ -15,7 +15,7 @@
 // not modify by hand!
 
 #include <check.h>
-#include <piksi.h>
+#include <libsbp/legacy/piksi.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -133,7 +133,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 1;
-    sbp_send_message(&sbp_state, 0x19, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -203,8 +203,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -220,7 +220,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 0;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -290,8 +290,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -307,7 +307,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 1;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -377,8 +377,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -394,7 +394,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 729;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -464,8 +464,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -481,7 +481,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 728;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -551,8 +551,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -568,7 +568,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 727;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -638,8 +638,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x19, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x19, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -655,7 +655,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     msg_iar_state_t* test_msg = (msg_iar_state_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->num_hyps = 723;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

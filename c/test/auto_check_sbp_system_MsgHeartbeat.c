@@ -15,10 +15,10 @@
 // not modify by hand!
 
 #include <check.h>
+#include <libsbp/legacy/system.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
-#include <system.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_system_MsgHeartbeat) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xffff, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0xffff, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0xffff, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -133,7 +133,7 @@ START_TEST(test_auto_check_sbp_system_MsgHeartbeat) {
     msg_heartbeat_t* test_msg = (msg_heartbeat_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 12800;
-    sbp_send_message(&sbp_state, 0xffff, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0xffff, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -203,8 +203,8 @@ START_TEST(test_auto_check_sbp_system_MsgHeartbeat) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xffff, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0xffff, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0xffff, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -220,7 +220,7 @@ START_TEST(test_auto_check_sbp_system_MsgHeartbeat) {
     msg_heartbeat_t* test_msg = (msg_heartbeat_t*)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    sbp_send_message(&sbp_state, 0xffff, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0xffff, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

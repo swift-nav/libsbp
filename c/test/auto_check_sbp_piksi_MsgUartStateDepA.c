@@ -15,7 +15,7 @@
 // Do not modify by hand!
 
 #include <check.h>
-#include <piksi.h>
+#include <libsbp/legacy/piksi.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -158,7 +158,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 15;
     test_msg->uart_ftdi.tx_throughput = 11.600000381469727;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -311,8 +311,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -353,7 +353,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 0;
     test_msg->uart_ftdi.tx_throughput = 0.06599999964237213;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -506,8 +506,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -548,7 +548,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 10;
     test_msg->uart_ftdi.tx_throughput = 0.13899999856948853;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -701,8 +701,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -743,7 +743,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 0;
     test_msg->uart_ftdi.tx_throughput = 0.06599999964237213;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -896,8 +896,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -938,7 +938,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 38;
     test_msg->uart_ftdi.tx_throughput = 0.49399998784065247;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1093,8 +1093,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -1135,7 +1135,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     test_msg->uart_ftdi.rx_throughput = 0.0;
     test_msg->uart_ftdi.tx_buffer_level = 50;
     test_msg->uart_ftdi.tx_throughput = 1.315000057220459;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

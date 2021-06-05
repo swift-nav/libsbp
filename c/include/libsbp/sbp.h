@@ -13,11 +13,12 @@
 #ifndef LIBSBP_SBP_H
 #define LIBSBP_SBP_H
 
+#include <libsbp/common.h>
+#include <libsbp/legacy/api.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "common.h"
 
 /** \addtogroup sbp
  * \{ */
@@ -72,13 +73,8 @@ extern "C" {
 /** SBP_MSG_ID to use to register frame callback for ALL messages. */
 #define SBP_MSG_ALL 0
 
-/** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
-typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
-                                     u8 payload_len, u8 payload[],
-                                     u16 frame_len, u8 frame[], void *context);
 typedef union {
-  sbp_msg_callback_t msg;
+  sbp_payload_callback_t msg;
   sbp_frame_callback_t frame;
 } sbp_callback_t;
 
@@ -113,7 +109,7 @@ typedef struct sbp_msg_callbacks_node {
 } sbp_msg_callbacks_node_t;
 
 /** State structure for processing SBP messages. */
-typedef struct {
+typedef struct sbp_state {
   enum {
     WAITING = 0,
     GET_TYPE,
@@ -136,24 +132,13 @@ typedef struct {
 
 /** \} */
 
-s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
-                         sbp_msg_callbacks_node_t *node);
-s8 sbp_register_frame_callback(sbp_state_t* s, u16 msg_type,
-                               sbp_frame_callback_t cb, void* context,
-                               sbp_msg_callbacks_node_t *node);
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context, sbp_msg_callbacks_node_t *node);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
 void sbp_state_init(sbp_state_t *s);
 void sbp_state_set_io_context(sbp_state_t *s, void* context);
 s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void* context));
-s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
-    u8 payload[]);
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    s32 (*write)(u8 *buff, u32 n, void* context));
 
 #ifdef __cplusplus
 }

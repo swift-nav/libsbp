@@ -6,7 +6,7 @@
 #include <libserialport.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/system.h>
+#include <libsbp/legacy/system.h>
 
 char *serial_port_name = NULL;
 struct sp_port *piksi_port = NULL;
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 
   sbp_state_init(&s);
 
-  sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
+  sbp_register_payload_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
                         &heartbeat_callback_node);
 
   while(1) {

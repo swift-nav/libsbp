@@ -152,8 +152,8 @@ def main():
               ver_file.write(release.full_version)
           js.render_source(output_dir, parsed)
         elif args.c:
-          import sbpg.targets.c as c
-          c.render_source(output_dir, parsed)
+          import sbpg.targets.legacy_c as legacy_c
+          legacy_c.render_source(output_dir, parsed)
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
@@ -180,9 +180,9 @@ def main():
           jsonschema.render_source(output_dir, parsed)
       all_specs = sorted(all_specs)
       if args.c:
-        c.render_version(output_dir, release)
+        legacy_c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-        c.render_traits(output_dir, parsed)
+        legacy_c.render_traits(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

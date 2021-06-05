@@ -11,10 +11,10 @@
  */
 
 #include <check.h>
-#include <imu.h>
-#include <navigation.h>
+#include <libsbp/legacy/imu.h>
+#include <libsbp/legacy/navigation.h>
+#include <libsbp/legacy/system.h>
 #include <stdio.h>
-#include <system.h>
 
 START_TEST(test_nav_bitfields) {
   msg_gps_time_t gps_t = {.wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};

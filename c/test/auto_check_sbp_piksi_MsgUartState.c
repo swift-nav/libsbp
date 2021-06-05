@@ -15,7 +15,7 @@
 // not modify by hand!
 
 #include <check.h>
-#include <piksi.h>
+#include <libsbp/legacy/piksi.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -158,7 +158,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartState) {
     test_msg->uart_ftdi.rx_throughput = 0.035211268812417984;
     test_msg->uart_ftdi.tx_buffer_level = 81;
     test_msg->uart_ftdi.tx_throughput = 5.063380241394043;
-    sbp_send_message(&sbp_state, 0x18, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -314,8 +314,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartState) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x18, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x18, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -356,7 +356,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartState) {
     test_msg->uart_ftdi.rx_throughput = 0.35211268067359924;
     test_msg->uart_ftdi.tx_buffer_level = 85;
     test_msg->uart_ftdi.tx_throughput = 6.7901411056518555;
-    sbp_send_message(&sbp_state, 0x18, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x18, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

@@ -15,7 +15,7 @@
 // modify by hand!
 
 #include <check.h>
-#include <sbas.h>
+#include <libsbp/legacy/sbas.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_sbas_MsgSbasRaw) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x7777, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x7777, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x7777, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -273,7 +273,7 @@ START_TEST(test_auto_check_sbp_sbas_MsgSbasRaw) {
     test_msg->sid.code = 2;
     test_msg->sid.sat = 131;
     test_msg->tow = 501867721;
-    sbp_send_message(&sbp_state, 0x7777, 51228, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x7777, 51228, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

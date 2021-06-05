@@ -15,7 +15,7 @@
 // not modify by hand!
 
 #include <check.h>
-#include <observation.h>
+#include <libsbp/legacy/observation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x4a, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x4a, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x4a, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -350,7 +350,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
     test_msg->obs[13].lock = 10;
     test_msg->obs[13].sid.code = 3;
     test_msg->obs[13].sid.sat = 18;
-    sbp_send_message(&sbp_state, 0x4a, 61569, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x4a, 61569, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -849,8 +849,8 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x4a, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x4a, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x4a, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -870,7 +870,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
     test_msg->header.t.ns_residual = 0;
     test_msg->header.t.tow = 434293400;
     test_msg->header.t.wn = 2154;
-    sbp_send_message(&sbp_state, 0x4a, 61569, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x4a, 61569, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

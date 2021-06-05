@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x104, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x104, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x104, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -137,7 +137,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
     test_msg->ns_residual = 166900;
     test_msg->tow = 326825000;
     test_msg->wn = 1920;
-    sbp_send_message(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -217,8 +217,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x104, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x104, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x104, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -238,7 +238,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
     test_msg->ns_residual = 256638;
     test_msg->tow = 326825500;
     test_msg->wn = 1920;
-    sbp_send_message(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -318,8 +318,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x104, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x104, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x104, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -339,7 +339,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
     test_msg->ns_residual = 265345;
     test_msg->tow = 326826000;
     test_msg->wn = 1920;
-    sbp_send_message(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -419,8 +419,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x104, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x104, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x104, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -440,7 +440,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
     test_msg->ns_residual = 314505;
     test_msg->tow = 326826500;
     test_msg->wn = 1920;
-    sbp_send_message(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -520,8 +520,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x104, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x104, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x104, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -541,7 +541,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
     test_msg->ns_residual = 362933;
     test_msg->tow = 326827000;
     test_msg->wn = 1920;
-    sbp_send_message(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x104, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

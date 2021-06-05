@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgVelNED0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_t> {
+      sbp::PayloadHandler<msg_vel_ned_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelNED0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -131,14 +131,14 @@ class Test_auto_check_sbp_navigation_MsgVelNED1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_t> {
+      sbp::PayloadHandler<msg_vel_ned_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelNED1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -239,14 +239,14 @@ class Test_auto_check_sbp_navigation_MsgVelNED2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_t> {
+      sbp::PayloadHandler<msg_vel_ned_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelNED2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -347,14 +347,14 @@ class Test_auto_check_sbp_navigation_MsgVelNED3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_t> {
+      sbp::PayloadHandler<msg_vel_ned_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelNED3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -455,14 +455,14 @@ class Test_auto_check_sbp_navigation_MsgVelNED4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_t> {
+      sbp::PayloadHandler<msg_vel_ned_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelNED4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_t *>(last_msg_storage_)),
         last_msg_len_(),

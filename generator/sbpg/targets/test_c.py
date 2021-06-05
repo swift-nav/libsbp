@@ -14,13 +14,13 @@ Generator for c tests target.
 """
 
 from sbpg.targets.templating import *
-from sbpg.targets.c import *
+from sbpg.targets.legacy_c import *
 from sbpg.targets.common import *
 
-TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
-CPP_TEST_TEMPLATE_NAME = "sbp_cpp_test.cc.j2"
-CHECK_SUITES_TEMPLATE_NAME = "sbp_c_suites.h.j2"
-CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
+TEST_TEMPLATE_NAME = "c/test/sbp_c_test.c.j2"
+CPP_TEST_TEMPLATE_NAME = "c/test/sbp_cpp_test.cc.j2"
+CHECK_SUITES_TEMPLATE_NAME = "c/test/sbp_c_suites.h.j2"
+CHECK_MAIN_TEMPLATE_NAME = "c/test/sbp_c_main.c.j2"
 
 def str_escape(value):
     return ",".join(["(char)" + str(ord(ch)) for ch in value])

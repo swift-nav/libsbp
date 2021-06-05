@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHCov) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x211, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x211, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x211, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -147,7 +147,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHCov) {
     test_msg->lon = 7.0;
     test_msg->n_sats = 5;
     test_msg->tow = 7;
-    sbp_send_message(&sbp_state, 0x211, 66, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x211, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

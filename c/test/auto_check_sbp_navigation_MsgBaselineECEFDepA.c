@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -141,7 +141,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -53227;
     test_msg->y = -35532;
     test_msg->z = -76840;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -230,8 +230,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -255,7 +255,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -52934;
     test_msg->y = -35791;
     test_msg->z = -76922;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -344,8 +344,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -369,7 +369,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -52639;
     test_msg->y = -36049;
     test_msg->z = -77004;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -458,8 +458,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -483,7 +483,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -52344;
     test_msg->y = -36307;
     test_msg->z = -77084;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -572,8 +572,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -597,7 +597,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -52048;
     test_msg->y = -36564;
     test_msg->z = -77163;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -686,8 +686,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -711,7 +711,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -6231;
     test_msg->y = -12186;
     test_msg->z = 7419;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -798,8 +798,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -823,7 +823,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -6231;
     test_msg->y = -12185;
     test_msg->z = 7420;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -910,8 +910,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -935,7 +935,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -8162;
     test_msg->y = -18496;
     test_msg->z = 13807;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1022,8 +1022,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -1047,7 +1047,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -8164;
     test_msg->y = -18497;
     test_msg->z = 13810;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1134,8 +1134,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -1159,7 +1159,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -7400;
     test_msg->y = -15591;
     test_msg->z = 15257;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1246,8 +1246,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x202, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -1271,7 +1271,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineECEFDepA) {
     test_msg->x = -7401;
     test_msg->y = -15591;
     test_msg->z = 15257;
-    sbp_send_message(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x202, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

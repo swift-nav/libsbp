@@ -15,7 +15,7 @@
 // Do not modify by hand!
 
 #include <check.h>
-#include <ext_events.h>
+#include <libsbp/legacy/ext_events.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,8 +116,8 @@ START_TEST(test_auto_check_sbp_ext_events_MsgExtEvent) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x101, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_payload_callback(&sbp_state, 0x101, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x101, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
@@ -138,7 +138,7 @@ START_TEST(test_auto_check_sbp_ext_events_MsgExtEvent) {
     test_msg->pin = 0;
     test_msg->tow = 254924999;
     test_msg->wn = 1840;
-    sbp_send_message(&sbp_state, 0x101, 1781, test_msg_len, test_msg_storage,
+    sbp_send_payload(&sbp_state, 0x101, 1781, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

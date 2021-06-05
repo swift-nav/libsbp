@@ -40,7 +40,7 @@
 #endif /* SHOW_PLOT */
 
 #include <libsbp/sbp.h>
-#include <libsbp/navigation.h>
+#include <libsbp/legacy/navigation.h>
 
 // width and height of the plot window in pixels
 #define SIZE_PIXELS 300
@@ -248,7 +248,7 @@ int main(int argc, char* const argv[]) {
 
     sbp_state_init(&sbp_state);
     sbp_state_set_io_context(&sbp_state, (void*)&fd);
-    sbp_register_callback(&sbp_state, SBP_MSG_POS_LLH_COV, &pos_llh_cov_callback, NULL, &callback_node[0]);
+    sbp_register_payload_callback(&sbp_state, SBP_MSG_POS_LLH_COV, &pos_llh_cov_callback, NULL, &callback_node[0]);
 
     while(1) {
         switch(sbp_process(&sbp_state, &socket_read)) {
