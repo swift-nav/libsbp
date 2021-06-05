@@ -19,9 +19,9 @@ definitions:
     short_desc: Vehicle forward (x-axis) velocity
     desc: |
       Message representing the x component of vehicle velocity in the user frame at the odometry
-      reference point(s) specified by the user. The offset for the odometry reference point and 
+      reference point(s) specified by the user. The offset for the odometry reference point and
       the definition and origin of the user frame are defined through the device settings interface.
-      There are 4 possible user-defined sources of this message  which are labeled arbitrarily 
+      There are 4 possible user-defined sources of this message which are labeled arbitrarily
       source 0 through 3.
       If using "processor time" time tags, the receiving end will expect a
       `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
@@ -49,7 +49,7 @@ definitions:
                       desc: Vehicle Metadata
                       values:
                           - 0: Unavailable
-                          - 1: Forward 
+                          - 1: Forward
                           - 2: Reverse
                           - 3: Park
                   - 3-4:
@@ -99,7 +99,7 @@ definitions:
                       desc: Vehicle Metadata
                       values:
                           - 0: Unavailable
-                          - 1: Forward 
+                          - 1: Forward
                           - 2: Reverse
                           - 3: Park
                   - 0-1:
