@@ -1,12 +1,19 @@
+FILE(GLOB generated_c_sources new/*.c)
+
 set(libsbp_SRCS
   edc.c
   sbp.c
+  new/string/unterminated.c
+  new/string/null_terminated.c
+  new/string/multipart.c
+  new/string/double_null_terminated.c
+  ${generated_c_sources}
   )
 
 add_library(sbp ${libsbp_SRCS})
 add_library(swiftnav::sbp ALIAS sbp)
 
-target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
 target_code_coverage(sbp AUTO ALL)

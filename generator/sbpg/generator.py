@@ -45,6 +45,9 @@ def get_args():
   parser.add_argument('--test-c',
                       action="store_true",
                       help='Target language: C tests.')
+  parser.add_argument('--c-sources',
+                      action="store_true",
+                      help='Target language: C sources.')
   parser.add_argument('--haskell',
                       action="store_true",
                       help='Target language: Haskell.')
@@ -102,7 +105,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.test_java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.c_sources or args.haskell or args.latex or args.protobuf or args.java or args.test_java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -180,9 +183,16 @@ def main():
           jsonschema.render_source(output_dir, parsed)
       all_specs = sorted(all_specs)
       if args.c:
-        legacy_c.render_version(output_dir, release)
+        import sbpg.targets.c as c
+        c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         legacy_c.render_traits(output_dir, parsed)
+        c.render_traits(output_dir, parsed)
+        c.render_headers(output_dir, parsed)
+      elif args.c_sources:
+        import sbpg.targets.c as c
+        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        c.render_sources(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

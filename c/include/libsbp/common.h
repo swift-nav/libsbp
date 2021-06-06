@@ -57,8 +57,9 @@ typedef uint64_t u64;
 #define SBP_PACK_END /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
 #define DO_PRAGMA(x) _Pragma(#x)
-#define SWIFT_MESSAGE(msg) DO_PRAGMA(message, (#msg))
-#define SWIFT_DEPRECATED __attribute__((deprecated))
+#define SWIFT_MESSAGE(msg) /*DO_PRAGMA(message, (#msg))*/
+#define SWIFT_DEPRECATED /*__attribute__((deprecated))*/
+#define SBP_ATTR_FORMAT(fmt,args) __attribute__((format(printf,fmt,args)))
 
 #elif defined(_MSC_VER)
 
@@ -67,6 +68,7 @@ typedef uint64_t u64;
 #define SBP_ATTR_PACKED /* Intentionally empty */
 #define SWIFT_MESSAGE(msg) /* Intentionally empty */
 #define SWIFT_DEPRECATED __declspec(deprecated())
+#define SBP_ATTR_FORMAT(fmt,args)
 
 #elif defined(__ghs__)
 
@@ -75,6 +77,7 @@ typedef uint64_t u64;
 #define SBP_ATTR_PACKED __attribute__((packed))
 #define SWIFT_MESSAGE(msg) /* Intentionally empty */
 #define SWIFT_DEPRECATED /* Intentionally empty */
+#define SBP_ATTR_FORMAT(fmt,args)
 
 #else
 

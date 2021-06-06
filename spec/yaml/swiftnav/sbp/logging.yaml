@@ -44,6 +44,7 @@ definitions:
                         - 7: DEBUG
       - text:
           type: string
+          encoding: unterminated
           desc: Human-readable string
 
  - MSG_FWD:
@@ -80,4 +81,5 @@ definitions:
     fields:
       - text:
           type: string
+          encoding: unterminated
           desc: Human-readable string
