@@ -13,10 +13,10 @@ extern "C" {
 
 bool sbp_double_null_terminated_string_pack(const sbp_double_null_terminated_string_t *s,
                               const sbp_double_null_terminated_string_params_t *params,
-                              sbp_pack_ctx_t *ctx);
+                              sbp_encode_ctx_t *ctx);
 bool sbp_double_null_terminated_string_unpack(sbp_double_null_terminated_string_t *s,
                                 const sbp_double_null_terminated_string_params_t *params,
-                                sbp_unpack_ctx_t *ctx);
+                                sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus
 }

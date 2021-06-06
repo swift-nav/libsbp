@@ -14,30 +14,30 @@
 #define SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
 
 #include <libsbp/sbp.h>
-#include <libsbp/unpacked/sbp_msg.h>
-#include <libsbp/unpacked/acquisition.h>
-#include <libsbp/unpacked/bootload.h>
-#include <libsbp/unpacked/ext_events.h>
-#include <libsbp/unpacked/file_io.h>
-#include <libsbp/unpacked/flash.h>
-#include <libsbp/unpacked/gnss.h>
-#include <libsbp/unpacked/imu.h>
-#include <libsbp/unpacked/linux.h>
-#include <libsbp/unpacked/logging.h>
-#include <libsbp/unpacked/mag.h>
-#include <libsbp/unpacked/navigation.h>
-#include <libsbp/unpacked/ndb.h>
-#include <libsbp/unpacked/observation.h>
-#include <libsbp/unpacked/orientation.h>
-#include <libsbp/unpacked/piksi.h>
-#include <libsbp/unpacked/sbas.h>
-#include <libsbp/unpacked/settings.h>
-#include <libsbp/unpacked/solution_meta.h>
-#include <libsbp/unpacked/ssr.h>
-#include <libsbp/unpacked/system.h>
-#include <libsbp/unpacked/tracking.h>
-#include <libsbp/unpacked/user.h>
-#include <libsbp/unpacked/vehicle.h>
+#include <libsbp/new/sbp_msg.h>
+#include <libsbp/new/acquisition.h>
+#include <libsbp/new/bootload.h>
+#include <libsbp/new/ext_events.h>
+#include <libsbp/new/file_io.h>
+#include <libsbp/new/flash.h>
+#include <libsbp/new/gnss.h>
+#include <libsbp/new/imu.h>
+#include <libsbp/new/linux.h>
+#include <libsbp/new/logging.h>
+#include <libsbp/new/mag.h>
+#include <libsbp/new/navigation.h>
+#include <libsbp/new/ndb.h>
+#include <libsbp/new/observation.h>
+#include <libsbp/new/orientation.h>
+#include <libsbp/new/piksi.h>
+#include <libsbp/new/sbas.h>
+#include <libsbp/new/settings.h>
+#include <libsbp/new/solution_meta.h>
+#include <libsbp/new/ssr.h>
+#include <libsbp/new/system.h>
+#include <libsbp/new/tracking.h>
+#include <libsbp/new/user.h>
+#include <libsbp/new/vehicle.h>
 
 namespace sbp {
 

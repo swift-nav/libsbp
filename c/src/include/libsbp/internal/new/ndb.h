@@ -11,8 +11,8 @@
   extern "C" {
 #endif
 
-bool pack_sbp_msg_ndb_event_t(sbp_pack_ctx_t *ctx, const sbp_msg_ndb_event_t *msg);
-bool unpack_sbp_msg_ndb_event_t(sbp_unpack_ctx_t *ctx, sbp_msg_ndb_event_t *msg);
+bool encode_sbp_msg_ndb_event_t(sbp_encode_ctx_t *ctx, const sbp_msg_ndb_event_t *msg);
+bool decode_sbp_msg_ndb_event_t(sbp_decode_ctx_t *ctx, sbp_msg_ndb_event_t *msg);
 
 #ifdef __cplusplus
   }

@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <string.h>
 #include <stddef.h>
 #include <libsbp/common.h>
 
@@ -18,13 +17,13 @@ typedef struct {
   const uint8_t *buf;
   size_t buf_len;
   size_t offset;
-} sbp_unpack_ctx_t;
+} sbp_decode_ctx_t;
 
 typedef struct {
   uint8_t *buf;
   size_t buf_len;
   size_t offset;
-} sbp_pack_ctx_t;
+} sbp_encode_ctx_t;
 
 static inline size_t sbp_packed_size_u8(const uint8_t *v) {
   (void)v;
@@ -46,20 +45,20 @@ static inline size_t sbp_packed_size_u64(const uint64_t *v) {
   return 8;
 }
 
-static inline bool pack_u8(sbp_pack_ctx_t *ctx, const u8 *v) {
+static inline bool encode_u8(sbp_encode_ctx_t *ctx, const u8 *v) {
   if (!SBP_CAN_PACK(ctx, u8)) { return false; }
   ctx->buf[ctx->offset++] = *v;
   return true;
 }
 
-static inline bool pack_u16(sbp_pack_ctx_t *ctx, const u16 *v) {
+static inline bool encode_u16(sbp_encode_ctx_t *ctx, const u16 *v) {
   if (!SBP_CAN_PACK(ctx, u16)) { return false; }
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0x00ff) >> 0);
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0xff00) >> 8);
   return true;
 }
 
-static inline size_t pack_u32(sbp_pack_ctx_t *ctx, const u32 *v) {
+static inline size_t encode_u32(sbp_encode_ctx_t *ctx, const u32 *v) {
   if (!SBP_CAN_PACK(ctx, u32)) { return false; }
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0x000000ff) >> 0);
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0x0000ff00) >> 8);
@@ -68,7 +67,7 @@ static inline size_t pack_u32(sbp_pack_ctx_t *ctx, const u32 *v) {
   return true;
 }
 
-static inline size_t pack_u64(sbp_pack_ctx_t *ctx, const u64 *v) {
+static inline size_t encode_u64(sbp_encode_ctx_t *ctx, const u64 *v) {
   if (!SBP_CAN_PACK(ctx, u64)) { return false; }
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0x00000000000000ff) >> 0);
   ctx->buf[ctx->offset++] = (uint8_t)((*v & 0x000000000000ff00) >> 8);
@@ -81,13 +80,13 @@ static inline size_t pack_u64(sbp_pack_ctx_t *ctx, const u64 *v) {
   return true;
 }
 
-static inline size_t unpack_u8(sbp_unpack_ctx_t *ctx, u8 *v) {
+static inline size_t decode_u8(sbp_decode_ctx_t *ctx, u8 *v) {
   if (!SBP_CAN_UNPACK(ctx, u8)) { return false; }
   *v = ctx->buf[ctx->offset++];
   return true;
 }
 
-static inline size_t unpack_u16(sbp_unpack_ctx_t *ctx, u16 *v) {
+static inline size_t decode_u16(sbp_decode_ctx_t *ctx, u16 *v) {
   if (!SBP_CAN_UNPACK(ctx, u16)) { return false; }
   *v = 0;
   *v = (uint16_t)(*v | ((uint16_t)ctx->buf[ctx->offset++] << 0U));
@@ -95,7 +94,7 @@ static inline size_t unpack_u16(sbp_unpack_ctx_t *ctx, u16 *v) {
   return true;
 }
 
-static inline size_t unpack_u32(sbp_unpack_ctx_t *ctx, u32 *v) {
+static inline size_t decode_u32(sbp_decode_ctx_t *ctx, u32 *v) {
   if (!SBP_CAN_UNPACK(ctx, u32)) { return false; }
   *v = 0;
   *v |= (uint32_t)((uint32_t)ctx->buf[ctx->offset++] << 0);
@@ -105,7 +104,7 @@ static inline size_t unpack_u32(sbp_unpack_ctx_t *ctx, u32 *v) {
   return true;
 }
 
-static inline size_t unpack_u64(sbp_unpack_ctx_t *ctx, u64 *v) {
+static inline size_t decode_u64(sbp_decode_ctx_t *ctx, u64 *v) {
   if (!SBP_CAN_UNPACK(ctx, u64)) { return false; }
   *v = 0;
   *v |= (uint64_t)((uint64_t)ctx->buf[ctx->offset++] << 0);
@@ -124,12 +123,12 @@ static inline size_t sbp_packed_size_s8(const s8 *v) {
   return 1;
 }
 
-static inline size_t pack_s8(sbp_pack_ctx_t *ctx, const s8 *v) {
-  return pack_u8(ctx, (const u8 *)v);
+static inline size_t encode_s8(sbp_encode_ctx_t *ctx, const s8 *v) {
+  return encode_u8(ctx, (const u8 *)v);
 }
 
-static inline size_t unpack_s8(sbp_unpack_ctx_t *ctx, s8 *v) {
-  return unpack_u8(ctx, (u8 *)v);
+static inline size_t decode_s8(sbp_decode_ctx_t *ctx, s8 *v) {
+  return decode_u8(ctx, (u8 *)v);
 }
 
 static inline size_t sbp_packed_size_s16(const s16 *v) {
@@ -137,12 +136,12 @@ static inline size_t sbp_packed_size_s16(const s16 *v) {
   return 2;
 }
 
-static inline size_t pack_s16(sbp_pack_ctx_t *ctx, const s16 *v) {
-  return pack_u16(ctx, (const u16 *)v);
+static inline size_t encode_s16(sbp_encode_ctx_t *ctx, const s16 *v) {
+  return encode_u16(ctx, (const u16 *)v);
 }
 
-static inline size_t unpack_s16(sbp_unpack_ctx_t *ctx, s16 *v) {
-  return unpack_u16(ctx, (u16 *)v);
+static inline size_t decode_s16(sbp_decode_ctx_t *ctx, s16 *v) {
+  return decode_u16(ctx, (u16 *)v);
 }
 
 static inline size_t sbp_packed_size_s32(const s32 *v) {
@@ -150,12 +149,12 @@ static inline size_t sbp_packed_size_s32(const s32 *v) {
   return 4;
 }
 
-static inline size_t pack_s32(sbp_pack_ctx_t *ctx, const s32 *v) {
-  return pack_u32(ctx, (const u32 *)v);
+static inline size_t encode_s32(sbp_encode_ctx_t *ctx, const s32 *v) {
+  return encode_u32(ctx, (const u32 *)v);
 }
 
-static inline size_t unpack_s32(sbp_unpack_ctx_t *ctx, s32 *v) {
-  return unpack_u32(ctx, (u32 *)v);
+static inline size_t decode_s32(sbp_decode_ctx_t *ctx, s32 *v) {
+  return decode_u32(ctx, (u32 *)v);
 }
 
 static inline size_t sbp_packed_size_s64(const s64 *v) {
@@ -163,12 +162,12 @@ static inline size_t sbp_packed_size_s64(const s64 *v) {
   return 8;
 }
 
-static inline size_t pack_s64(sbp_pack_ctx_t *ctx, const s64 *v) {
-  return pack_u64(ctx, (const u64 *)v);
+static inline size_t encode_s64(sbp_encode_ctx_t *ctx, const s64 *v) {
+  return encode_u64(ctx, (const u64 *)v);
 }
 
-static inline size_t unpack_s64(sbp_unpack_ctx_t *ctx, s64 *v) {
-  return unpack_u64(ctx, (u64 *)v);
+static inline size_t decode_s64(sbp_decode_ctx_t *ctx, s64 *v) {
+  return decode_u64(ctx, (u64 *)v);
 }
 
 static inline size_t sbp_packed_size_char(const char *v) {
@@ -176,12 +175,12 @@ static inline size_t sbp_packed_size_char(const char *v) {
   return 1;
 }
 
-static inline size_t pack_char(sbp_pack_ctx_t *ctx, const char *v) {
-  return pack_u8(ctx, (const uint8_t *)v);
+static inline size_t encode_char(sbp_encode_ctx_t *ctx, const char *v) {
+  return encode_u8(ctx, (const uint8_t *)v);
 }
 
-static inline size_t unpack_char(sbp_unpack_ctx_t *ctx, char *v) {
-  return unpack_u8(ctx, (uint8_t *)v);
+static inline size_t decode_char(sbp_decode_ctx_t *ctx, char *v) {
+  return decode_u8(ctx, (uint8_t *)v);
 }
 
 static inline size_t sbp_packed_size_float(const float *v) {
@@ -189,14 +188,14 @@ static inline size_t sbp_packed_size_float(const float *v) {
   return 4;
 }
 
-static inline size_t pack_float(sbp_pack_ctx_t *ctx, const float *v) {
+static inline size_t encode_float(sbp_encode_ctx_t *ctx, const float *v) {
   if (!SBP_CAN_PACK(ctx, float)) { return false; }
   memcpy(&ctx->buf[ctx->offset], v, 4);
   ctx->offset += 4;
   return true;
 }
 
-static inline size_t unpack_float(sbp_unpack_ctx_t *ctx,
+static inline size_t decode_float(sbp_decode_ctx_t *ctx,
                                       float *v) {
   if (!SBP_CAN_UNPACK(ctx, float)) { return false; }
   memcpy(v, &ctx->buf[ctx->offset], 4);
@@ -209,7 +208,7 @@ static inline size_t sbp_packed_size_double(const double *v) {
   return 8;
 }
 
-static inline size_t pack_double(sbp_pack_ctx_t *ctx,
+static inline size_t encode_double(sbp_encode_ctx_t *ctx,
                                      const double *v) {
   if (!SBP_CAN_PACK(ctx, double)) { return false; }
   memcpy(&ctx->buf[ctx->offset], v, 8);
@@ -217,7 +216,7 @@ static inline size_t pack_double(sbp_pack_ctx_t *ctx,
   return true;
 }
 
-static inline size_t unpack_double(sbp_unpack_ctx_t *ctx,
+static inline size_t decode_double(sbp_decode_ctx_t *ctx,
                                        double *v) {
   if (!SBP_CAN_UNPACK(ctx, double)) { return false; }
   memcpy(v, &ctx->buf[ctx->offset], 8);

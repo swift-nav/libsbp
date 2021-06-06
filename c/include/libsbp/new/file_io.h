@@ -43,8 +43,8 @@ typedef struct {
   const char *sbp_msg_fileio_read_req_t_filename_get(const sbp_null_terminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg);
-s8 sbp_pack_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_req_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_req_t *msg);
+s8 sbp_encode_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_req_t *msg);
+s8 sbp_decode_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_req_t *msg);
 s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_read_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a, const sbp_msg_fileio_read_req_t *b);
@@ -62,8 +62,8 @@ typedef struct {
 } sbp_msg_fileio_read_resp_t;
 
 size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_resp_t *msg);
+s8 sbp_encode_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_resp_t *msg);
+s8 sbp_decode_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_resp_t *msg);
 s8 sbp_send_sbp_msg_fileio_read_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_read_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a, const sbp_msg_fileio_read_resp_t *b);
@@ -92,8 +92,8 @@ typedef struct {
   const char *sbp_msg_fileio_read_dir_req_t_dirname_get(const sbp_null_terminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *msg);
-s8 sbp_pack_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_req_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_read_dir_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_req_t *msg);
+s8 sbp_encode_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_req_t *msg);
+s8 sbp_decode_sbp_msg_fileio_read_dir_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_req_t *msg);
 s8 sbp_send_sbp_msg_fileio_read_dir_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_read_dir_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *a, const sbp_msg_fileio_read_dir_req_t *b);
@@ -124,8 +124,8 @@ typedef struct {
   uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(const sbp_multipart_string_t *s, uint8_t section);
 
 size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_resp_t *msg);
+s8 sbp_encode_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_resp_t *msg);
+s8 sbp_decode_sbp_msg_fileio_read_dir_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_resp_t *msg);
 s8 sbp_send_sbp_msg_fileio_read_dir_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_read_dir_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *a, const sbp_msg_fileio_read_dir_resp_t *b);
@@ -152,8 +152,8 @@ typedef struct {
   const char *sbp_msg_fileio_remove_t_filename_get(const sbp_null_terminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *msg);
-s8 sbp_pack_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_remove_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_remove_t *msg);
+s8 sbp_encode_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_remove_t *msg);
+s8 sbp_decode_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_remove_t *msg);
 s8 sbp_send_sbp_msg_fileio_remove_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_remove_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a, const sbp_msg_fileio_remove_t *b);
@@ -184,8 +184,8 @@ typedef struct {
   const char *sbp_msg_fileio_write_req_t_filename_get(const sbp_null_terminated_string_t *s);
 
 size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *msg);
-s8 sbp_pack_sbp_msg_fileio_write_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_req_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_req_t *msg);
+s8 sbp_encode_sbp_msg_fileio_write_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_req_t *msg);
+s8 sbp_decode_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_req_t *msg);
 s8 sbp_send_sbp_msg_fileio_write_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_write_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a, const sbp_msg_fileio_write_req_t *b);
@@ -201,8 +201,8 @@ typedef struct {
 } sbp_msg_fileio_write_resp_t;
 
 size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg);
+s8 sbp_encode_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg);
+s8 sbp_decode_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg);
 s8 sbp_send_sbp_msg_fileio_write_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_write_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a, const sbp_msg_fileio_write_resp_t *b);
@@ -218,8 +218,8 @@ typedef struct {
 } sbp_msg_fileio_config_req_t;
 
 size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg);
-s8 sbp_pack_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg);
+s8 sbp_encode_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg);
+s8 sbp_decode_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg);
 s8 sbp_send_sbp_msg_fileio_config_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_config_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a, const sbp_msg_fileio_config_req_t *b);
@@ -239,8 +239,8 @@ typedef struct {
 } sbp_msg_fileio_config_resp_t;
 
 size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg);
-s8 sbp_pack_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg);
-s8 sbp_unpack_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg);
+s8 sbp_encode_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg);
+s8 sbp_decode_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg);
 s8 sbp_send_sbp_msg_fileio_config_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_fileio_config_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *a, const sbp_msg_fileio_config_resp_t *b);

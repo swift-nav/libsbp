@@ -158,7 +158,7 @@ const char *sbp_multipart_string_get_section(const sbp_multipart_string_t *s,
   return s->data + s->offsets[section];
 }
 
-bool sbp_multipart_string_pack(const sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params, sbp_pack_ctx_t *ctx)
+bool sbp_multipart_string_pack(const sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params, sbp_encode_ctx_t *ctx)
 {
   if (!sbp_multipart_string_valid(s, params)) return false;
   if (sbp_multipart_string_packed_len(s, params) == 0) return true;
@@ -168,7 +168,7 @@ bool sbp_multipart_string_pack(const sbp_multipart_string_t *s, const sbp_multip
   return true;
 }
 
-bool sbp_multipart_string_unpack(sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params, sbp_unpack_ctx_t *ctx)
+bool sbp_multipart_string_unpack(sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params, sbp_decode_ctx_t *ctx)
 {
   size_t copy_len = ctx->buf_len - ctx->offset;
   // Take the entire incoming buffer of nothing at all, multipart strings can only occur at the end of a message

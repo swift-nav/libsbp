@@ -45,8 +45,8 @@ typedef struct {
 } sbp_msg_flash_program_t;
 
 size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *msg);
-s8 sbp_pack_sbp_msg_flash_program_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_program_t *msg);
-s8 sbp_unpack_sbp_msg_flash_program_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_program_t *msg);
+s8 sbp_encode_sbp_msg_flash_program_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_program_t *msg);
+s8 sbp_decode_sbp_msg_flash_program_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_program_t *msg);
 s8 sbp_send_sbp_msg_flash_program_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_flash_program_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_msg_flash_program_t *b);
@@ -79,8 +79,8 @@ typedef struct {
 } sbp_msg_flash_done_t;
 
 size_t sbp_packed_size_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *msg);
-s8 sbp_pack_sbp_msg_flash_done_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_done_t *msg);
-s8 sbp_unpack_sbp_msg_flash_done_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_done_t *msg);
+s8 sbp_encode_sbp_msg_flash_done_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_done_t *msg);
+s8 sbp_decode_sbp_msg_flash_done_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_done_t *msg);
 s8 sbp_send_sbp_msg_flash_done_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_flash_done_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_flash_done_t *b);
@@ -111,8 +111,8 @@ typedef struct {
 } sbp_msg_flash_read_req_t;
 
 size_t sbp_packed_size_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *msg);
-s8 sbp_pack_sbp_msg_flash_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_read_req_t *msg);
-s8 sbp_unpack_sbp_msg_flash_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_read_req_t *msg);
+s8 sbp_encode_sbp_msg_flash_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_read_req_t *msg);
+s8 sbp_decode_sbp_msg_flash_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_read_req_t *msg);
 s8 sbp_send_sbp_msg_flash_read_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_flash_read_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sbp_msg_flash_read_req_t *b);
@@ -143,8 +143,8 @@ typedef struct {
 } sbp_msg_flash_read_resp_t;
 
 size_t sbp_packed_size_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *msg);
-s8 sbp_pack_sbp_msg_flash_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_read_resp_t *msg);
-s8 sbp_unpack_sbp_msg_flash_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_read_resp_t *msg);
+s8 sbp_encode_sbp_msg_flash_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_read_resp_t *msg);
+s8 sbp_decode_sbp_msg_flash_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_read_resp_t *msg);
 s8 sbp_send_sbp_msg_flash_read_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_flash_read_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const sbp_msg_flash_read_resp_t *b);
@@ -174,8 +174,8 @@ typedef struct {
 } sbp_msg_flash_erase_t;
 
 size_t sbp_packed_size_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *msg);
-s8 sbp_pack_sbp_msg_flash_erase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_erase_t *msg);
-s8 sbp_unpack_sbp_msg_flash_erase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_erase_t *msg);
+s8 sbp_encode_sbp_msg_flash_erase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_flash_erase_t *msg);
+s8 sbp_decode_sbp_msg_flash_erase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_flash_erase_t *msg);
 s8 sbp_send_sbp_msg_flash_erase_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_flash_erase_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a, const sbp_msg_flash_erase_t *b);
@@ -191,8 +191,8 @@ typedef struct {
 } sbp_msg_stm_flash_lock_sector_t;
 
 size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *msg);
-s8 sbp_pack_sbp_msg_stm_flash_lock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_lock_sector_t *msg);
-s8 sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_lock_sector_t *msg);
+s8 sbp_encode_sbp_msg_stm_flash_lock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_lock_sector_t *msg);
+s8 sbp_decode_sbp_msg_stm_flash_lock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_lock_sector_t *msg);
 s8 sbp_send_sbp_msg_stm_flash_lock_sector_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_stm_flash_lock_sector_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *a, const sbp_msg_stm_flash_lock_sector_t *b);
@@ -208,8 +208,8 @@ typedef struct {
 } sbp_msg_stm_flash_unlock_sector_t;
 
 size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *msg);
-s8 sbp_pack_sbp_msg_stm_flash_unlock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_unlock_sector_t *msg);
-s8 sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_unlock_sector_t *msg);
+s8 sbp_encode_sbp_msg_stm_flash_unlock_sector_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_flash_unlock_sector_t *msg);
+s8 sbp_decode_sbp_msg_stm_flash_unlock_sector_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_flash_unlock_sector_t *msg);
 s8 sbp_send_sbp_msg_stm_flash_unlock_sector_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_stm_flash_unlock_sector_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *a, const sbp_msg_stm_flash_unlock_sector_t *b);
@@ -226,8 +226,8 @@ typedef struct {
 } sbp_msg_stm_unique_id_req_t;
 
 size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *msg);
-s8 sbp_pack_sbp_msg_stm_unique_id_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_req_t *msg);
-s8 sbp_unpack_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_req_t *msg);
+s8 sbp_encode_sbp_msg_stm_unique_id_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_req_t *msg);
+s8 sbp_decode_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_req_t *msg);
 s8 sbp_send_sbp_msg_stm_unique_id_req_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_stm_unique_id_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, const sbp_msg_stm_unique_id_req_t *b);
@@ -244,8 +244,8 @@ typedef struct {
 } sbp_msg_stm_unique_id_resp_t;
 
 size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *msg);
-s8 sbp_pack_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_resp_t *msg);
-s8 sbp_unpack_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_resp_t *msg);
+s8 sbp_encode_sbp_msg_stm_unique_id_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_stm_unique_id_resp_t *msg);
+s8 sbp_decode_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_stm_unique_id_resp_t *msg);
 s8 sbp_send_sbp_msg_stm_unique_id_resp_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_stm_unique_id_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, const sbp_msg_stm_unique_id_resp_t *b);
@@ -261,8 +261,8 @@ typedef struct {
 } sbp_msg_m25_flash_write_status_t;
 
 size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *msg);
-s8 sbp_pack_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_m25_flash_write_status_t *msg);
-s8 sbp_unpack_sbp_msg_m25_flash_write_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_m25_flash_write_status_t *msg);
+s8 sbp_encode_sbp_msg_m25_flash_write_status_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_m25_flash_write_status_t *msg);
+s8 sbp_decode_sbp_msg_m25_flash_write_status_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_m25_flash_write_status_t *msg);
 s8 sbp_send_sbp_msg_m25_flash_write_status_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_m25_flash_write_status_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *a, const sbp_msg_m25_flash_write_status_t *b);

@@ -52,8 +52,8 @@ typedef struct {
 } sbp_sbp_gnss_signal_t;
 
 size_t sbp_packed_size_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *msg);
-s8 sbp_pack_sbp_sbp_gnss_signal_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gnss_signal_t *msg);
-s8 sbp_unpack_sbp_sbp_gnss_signal_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gnss_signal_t *msg);
+s8 sbp_encode_sbp_sbp_gnss_signal_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gnss_signal_t *msg);
+s8 sbp_decode_sbp_sbp_gnss_signal_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gnss_signal_t *msg);
 
 int sbp_cmp_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *a, const sbp_sbp_gnss_signal_t *b);
 
@@ -68,8 +68,8 @@ typedef struct {
 } sbp_sv_id_t;
 
 size_t sbp_packed_size_sbp_sv_id_t(const sbp_sv_id_t *msg);
-s8 sbp_pack_sbp_sv_id_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sv_id_t *msg);
-s8 sbp_unpack_sbp_sv_id_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_id_t *msg);
+s8 sbp_encode_sbp_sv_id_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sv_id_t *msg);
+s8 sbp_decode_sbp_sv_id_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_id_t *msg);
 
 int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b);
 
@@ -103,8 +103,8 @@ typedef struct {
 } sbp_gnss_signal_dep_t;
 
 size_t sbp_packed_size_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *msg);
-s8 sbp_pack_sbp_gnss_signal_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gnss_signal_dep_t *msg);
-s8 sbp_unpack_sbp_gnss_signal_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gnss_signal_dep_t *msg);
+s8 sbp_encode_sbp_gnss_signal_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gnss_signal_dep_t *msg);
+s8 sbp_decode_sbp_gnss_signal_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gnss_signal_dep_t *msg);
 
 int sbp_cmp_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *a, const sbp_gnss_signal_dep_t *b);
 
@@ -119,8 +119,8 @@ typedef struct {
 } sbp_gps_time_dep_t;
 
 size_t sbp_packed_size_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *msg);
-s8 sbp_pack_sbp_gps_time_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_dep_t *msg);
-s8 sbp_unpack_sbp_gps_time_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_dep_t *msg);
+s8 sbp_encode_sbp_gps_time_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_dep_t *msg);
+s8 sbp_decode_sbp_gps_time_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_dep_t *msg);
 
 int sbp_cmp_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *a, const sbp_gps_time_dep_t *b);
 
@@ -135,8 +135,8 @@ typedef struct {
 } sbp_gps_time_sec_t;
 
 size_t sbp_packed_size_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *msg);
-s8 sbp_pack_sbp_gps_time_sec_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_sec_t *msg);
-s8 sbp_unpack_sbp_gps_time_sec_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_sec_t *msg);
+s8 sbp_encode_sbp_gps_time_sec_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gps_time_sec_t *msg);
+s8 sbp_decode_sbp_gps_time_sec_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gps_time_sec_t *msg);
 
 int sbp_cmp_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *a, const sbp_gps_time_sec_t *b);
 
@@ -152,8 +152,8 @@ typedef struct {
 } sbp_sbp_gps_time_t;
 
 size_t sbp_packed_size_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *msg);
-s8 sbp_pack_sbp_sbp_gps_time_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gps_time_t *msg);
-s8 sbp_unpack_sbp_sbp_gps_time_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gps_time_t *msg);
+s8 sbp_encode_sbp_sbp_gps_time_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sbp_gps_time_t *msg);
+s8 sbp_decode_sbp_sbp_gps_time_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sbp_gps_time_t *msg);
 
 int sbp_cmp_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *a, const sbp_sbp_gps_time_t *b);
 
@@ -168,8 +168,8 @@ typedef struct {
 } sbp_carrier_phase_t;
 
 size_t sbp_packed_size_sbp_carrier_phase_t(const sbp_carrier_phase_t *msg);
-s8 sbp_pack_sbp_carrier_phase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_t *msg);
-s8 sbp_unpack_sbp_carrier_phase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_t *msg);
+s8 sbp_encode_sbp_carrier_phase_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_t *msg);
+s8 sbp_decode_sbp_carrier_phase_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_t *msg);
 
 int sbp_cmp_sbp_carrier_phase_t(const sbp_carrier_phase_t *a, const sbp_carrier_phase_t *b);
 

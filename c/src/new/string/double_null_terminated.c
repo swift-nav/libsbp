@@ -208,7 +208,7 @@ const char *sbp_double_null_terminated_string_get_section(const sbp_double_null_
   return s->data + s->offsets[section];
 }
 
-bool sbp_double_null_terminated_string_pack(const sbp_double_null_terminated_string_t *s, const sbp_double_null_terminated_string_params_t *params, sbp_pack_ctx_t *ctx)
+bool sbp_double_null_terminated_string_pack(const sbp_double_null_terminated_string_t *s, const sbp_double_null_terminated_string_params_t *params, sbp_encode_ctx_t *ctx)
 {
   if (!sbp_double_null_terminated_string_valid(s, params)) return false;
   if (s->packed_len > (ctx->buf_len - ctx->offset)) return false;
@@ -217,7 +217,7 @@ bool sbp_double_null_terminated_string_pack(const sbp_double_null_terminated_str
   return true;
 }
 
-bool sbp_double_null_terminated_string_unpack(sbp_double_null_terminated_string_t *s, const sbp_double_null_terminated_string_params_t *params, sbp_unpack_ctx_t *ctx)
+bool sbp_double_null_terminated_string_unpack(sbp_double_null_terminated_string_t *s, const sbp_double_null_terminated_string_params_t *params, sbp_decode_ctx_t *ctx)
 {
   size_t copy_len = ctx->buf_len - ctx->offset;
   // Take the entire incoming buffer of nothing at all, double_null_terminated strings can only occur at the end of a message
