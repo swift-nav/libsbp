@@ -527,10 +527,8 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrCodeBiases {
-    fn message_type() -> u16 {
-        1505
-    }
+impl super::RealMessage for MsgSsrCodeBiases {
+    const MESSAGE_TYPE: u16 = 1505;
 }
 impl TryFrom<super::SBP> for MsgSsrCodeBiases {
     type Error = super::TryFromSBPError;
@@ -619,10 +617,8 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrGriddedCorrection {
-    fn message_type() -> u16 {
-        1532
-    }
+impl super::RealMessage for MsgSsrGriddedCorrection {
+    const MESSAGE_TYPE: u16 = 1532;
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrection {
     type Error = super::TryFromSBPError;
@@ -700,10 +696,8 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrGriddedCorrectionDepA {
-    fn message_type() -> u16 {
-        1530
-    }
+impl super::RealMessage for MsgSsrGriddedCorrectionDepA {
+    const MESSAGE_TYPE: u16 = 1530;
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionDepA {
     type Error = super::TryFromSBPError;
@@ -780,10 +774,8 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrGriddedCorrectionNoStdDepA {
-    fn message_type() -> u16 {
-        1520
-    }
+impl super::RealMessage for MsgSsrGriddedCorrectionNoStdDepA {
+    const MESSAGE_TYPE: u16 = 1520;
 }
 impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionNoStdDepA {
     type Error = super::TryFromSBPError;
@@ -863,10 +855,8 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrGridDefinitionDepA {
-    fn message_type() -> u16 {
-        1525
-    }
+impl super::RealMessage for MsgSsrGridDefinitionDepA {
+    const MESSAGE_TYPE: u16 = 1525;
 }
 impl TryFrom<super::SBP> for MsgSsrGridDefinitionDepA {
     type Error = super::TryFromSBPError;
@@ -988,10 +978,8 @@ impl super::SBPMessage for MsgSsrOrbitClock {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrOrbitClock {
-    fn message_type() -> u16 {
-        1501
-    }
+impl super::RealMessage for MsgSsrOrbitClock {
+    const MESSAGE_TYPE: u16 = 1501;
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClock {
     type Error = super::TryFromSBPError;
@@ -1130,10 +1118,8 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrOrbitClockDepA {
-    fn message_type() -> u16 {
-        1500
-    }
+impl super::RealMessage for MsgSsrOrbitClockDepA {
+    const MESSAGE_TYPE: u16 = 1500;
 }
 impl TryFrom<super::SBP> for MsgSsrOrbitClockDepA {
     type Error = super::TryFromSBPError;
@@ -1266,10 +1252,8 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrPhaseBiases {
-    fn message_type() -> u16 {
-        1510
-    }
+impl super::RealMessage for MsgSsrPhaseBiases {
+    const MESSAGE_TYPE: u16 = 1510;
 }
 impl TryFrom<super::SBP> for MsgSsrPhaseBiases {
     type Error = super::TryFromSBPError;
@@ -1357,10 +1341,8 @@ impl super::SBPMessage for MsgSsrSatelliteApc {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrSatelliteApc {
-    fn message_type() -> u16 {
-        1540
-    }
+impl super::RealMessage for MsgSsrSatelliteApc {
+    const MESSAGE_TYPE: u16 = 1540;
 }
 impl TryFrom<super::SBP> for MsgSsrSatelliteApc {
     type Error = super::TryFromSBPError;
@@ -1444,10 +1426,8 @@ impl super::SBPMessage for MsgSsrStecCorrection {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrStecCorrection {
-    fn message_type() -> u16 {
-        1531
-    }
+impl super::RealMessage for MsgSsrStecCorrection {
+    const MESSAGE_TYPE: u16 = 1531;
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrection {
     type Error = super::TryFromSBPError;
@@ -1524,10 +1504,8 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrStecCorrectionDepA {
-    fn message_type() -> u16 {
-        1515
-    }
+impl super::RealMessage for MsgSsrStecCorrectionDepA {
+    const MESSAGE_TYPE: u16 = 1515;
 }
 impl TryFrom<super::SBP> for MsgSsrStecCorrectionDepA {
     type Error = super::TryFromSBPError;
@@ -1656,10 +1634,8 @@ impl super::SBPMessage for MsgSsrTileDefinition {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSsrTileDefinition {
-    fn message_type() -> u16 {
-        1526
-    }
+impl super::RealMessage for MsgSsrTileDefinition {
+    const MESSAGE_TYPE: u16 = 1526;
 }
 impl TryFrom<super::SBP> for MsgSsrTileDefinition {
     type Error = super::TryFromSBPError;

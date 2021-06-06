@@ -100,10 +100,8 @@ impl super::SBPMessage for MsgMagRaw {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgMagRaw {
-    fn message_type() -> u16 {
-        2306
-    }
+impl super::RealMessage for MsgMagRaw {
+    const MESSAGE_TYPE: u16 = 2306;
 }
 impl TryFrom<super::SBP> for MsgMagRaw {
     type Error = super::TryFromSBPError;

@@ -251,9 +251,22 @@ pub trait SBPMessage: SbpSerialize {
     }
 }
 
-pub trait MessageType: Sized {
-    fn message_type() -> u16;
+pub trait RealMessage:
+    SBPMessage + std::convert::TryFrom<SBP, Error = TryFromSBPError> + Clone + Sized
+{
+    const MESSAGE_TYPE: u16;
 }
+
+#[derive(Debug)]
+pub struct TryFromSBPError;
+
+impl std::fmt::Display for TryFromSBPError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "invalid message type for conversion")
+    }
+}
+
+impl std::error::Error for TryFromSBPError {}
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
@@ -4359,14 +4372,3 @@ impl From<Unknown> for SBP {
         SBP::Unknown(msg)
     }
 }
-
-#[derive(Debug)]
-pub struct TryFromSBPError;
-
-impl std::fmt::Display for TryFromSBPError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "invalid message type for conversion")
-    }
-}
-
-impl std::error::Error for TryFromSBPError {}

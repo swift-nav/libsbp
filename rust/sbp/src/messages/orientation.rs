@@ -107,10 +107,8 @@ impl super::SBPMessage for MsgAngularRate {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgAngularRate {
-    fn message_type() -> u16 {
-        546
-    }
+impl super::RealMessage for MsgAngularRate {
+    const MESSAGE_TYPE: u16 = 546;
 }
 impl TryFrom<super::SBP> for MsgAngularRate {
     type Error = super::TryFromSBPError;
@@ -218,10 +216,8 @@ impl super::SBPMessage for MsgBaselineHeading {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgBaselineHeading {
-    fn message_type() -> u16 {
-        527
-    }
+impl super::RealMessage for MsgBaselineHeading {
+    const MESSAGE_TYPE: u16 = 527;
 }
 impl TryFrom<super::SBP> for MsgBaselineHeading {
     type Error = super::TryFromSBPError;
@@ -340,10 +336,8 @@ impl super::SBPMessage for MsgOrientEuler {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgOrientEuler {
-    fn message_type() -> u16 {
-        545
-    }
+impl super::RealMessage for MsgOrientEuler {
+    const MESSAGE_TYPE: u16 = 545;
 }
 impl TryFrom<super::SBP> for MsgOrientEuler {
     type Error = super::TryFromSBPError;
@@ -476,10 +470,8 @@ impl super::SBPMessage for MsgOrientQuat {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgOrientQuat {
-    fn message_type() -> u16 {
-        544
-    }
+impl super::RealMessage for MsgOrientQuat {
+    const MESSAGE_TYPE: u16 = 544;
 }
 impl TryFrom<super::SBP> for MsgOrientQuat {
     type Error = super::TryFromSBPError;

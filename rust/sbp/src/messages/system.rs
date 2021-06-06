@@ -81,10 +81,8 @@ impl super::SBPMessage for MsgCsacTelemetry {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCsacTelemetry {
-    fn message_type() -> u16 {
-        65284
-    }
+impl super::RealMessage for MsgCsacTelemetry {
+    const MESSAGE_TYPE: u16 = 65284;
 }
 impl TryFrom<super::SBP> for MsgCsacTelemetry {
     type Error = super::TryFromSBPError;
@@ -168,10 +166,8 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCsacTelemetryLabels {
-    fn message_type() -> u16 {
-        65285
-    }
+impl super::RealMessage for MsgCsacTelemetryLabels {
+    const MESSAGE_TYPE: u16 = 65285;
 }
 impl TryFrom<super::SBP> for MsgCsacTelemetryLabels {
     type Error = super::TryFromSBPError;
@@ -260,10 +256,8 @@ impl super::SBPMessage for MsgDgnssStatus {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgDgnssStatus {
-    fn message_type() -> u16 {
-        65282
-    }
+impl super::RealMessage for MsgDgnssStatus {
+    const MESSAGE_TYPE: u16 = 65282;
 }
 impl TryFrom<super::SBP> for MsgDgnssStatus {
     type Error = super::TryFromSBPError;
@@ -356,10 +350,8 @@ impl super::SBPMessage for MsgGnssTimeOffset {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgGnssTimeOffset {
-    fn message_type() -> u16 {
-        65287
-    }
+impl super::RealMessage for MsgGnssTimeOffset {
+    const MESSAGE_TYPE: u16 = 65287;
 }
 impl TryFrom<super::SBP> for MsgGnssTimeOffset {
     type Error = super::TryFromSBPError;
@@ -452,10 +444,8 @@ impl super::SBPMessage for MsgGroupMeta {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgGroupMeta {
-    fn message_type() -> u16 {
-        65290
-    }
+impl super::RealMessage for MsgGroupMeta {
+    const MESSAGE_TYPE: u16 = 65290;
 }
 impl TryFrom<super::SBP> for MsgGroupMeta {
     type Error = super::TryFromSBPError;
@@ -546,10 +536,8 @@ impl super::SBPMessage for MsgHeartbeat {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgHeartbeat {
-    fn message_type() -> u16 {
-        65535
-    }
+impl super::RealMessage for MsgHeartbeat {
+    const MESSAGE_TYPE: u16 = 65535;
 }
 impl TryFrom<super::SBP> for MsgHeartbeat {
     type Error = super::TryFromSBPError;
@@ -626,10 +614,8 @@ impl super::SBPMessage for MsgInsStatus {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgInsStatus {
-    fn message_type() -> u16 {
-        65283
-    }
+impl super::RealMessage for MsgInsStatus {
+    const MESSAGE_TYPE: u16 = 65283;
 }
 impl TryFrom<super::SBP> for MsgInsStatus {
     type Error = super::TryFromSBPError;
@@ -736,10 +722,8 @@ impl super::SBPMessage for MsgInsUpdates {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgInsUpdates {
-    fn message_type() -> u16 {
-        65286
-    }
+impl super::RealMessage for MsgInsUpdates {
+    const MESSAGE_TYPE: u16 = 65286;
 }
 impl TryFrom<super::SBP> for MsgInsUpdates {
     type Error = super::TryFromSBPError;
@@ -842,10 +826,8 @@ impl super::SBPMessage for MsgPpsTime {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgPpsTime {
-    fn message_type() -> u16 {
-        65288
-    }
+impl super::RealMessage for MsgPpsTime {
+    const MESSAGE_TYPE: u16 = 65288;
 }
 impl TryFrom<super::SBP> for MsgPpsTime {
     type Error = super::TryFromSBPError;
@@ -932,10 +914,8 @@ impl super::SBPMessage for MsgStartup {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStartup {
-    fn message_type() -> u16 {
-        65280
-    }
+impl super::RealMessage for MsgStartup {
+    const MESSAGE_TYPE: u16 = 65280;
 }
 impl TryFrom<super::SBP> for MsgStartup {
     type Error = super::TryFromSBPError;
@@ -1035,10 +1015,8 @@ impl super::SBPMessage for MsgStatusReport {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStatusReport {
-    fn message_type() -> u16 {
-        65534
-    }
+impl super::RealMessage for MsgStatusReport {
+    const MESSAGE_TYPE: u16 = 65534;
 }
 impl TryFrom<super::SBP> for MsgStatusReport {
     type Error = super::TryFromSBPError;

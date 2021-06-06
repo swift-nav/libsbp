@@ -80,10 +80,8 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgBootloaderHandshakeDepA {
-    fn message_type() -> u16 {
-        176
-    }
+impl super::RealMessage for MsgBootloaderHandshakeDepA {
+    const MESSAGE_TYPE: u16 = 176;
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeDepA {
     type Error = super::TryFromSBPError;
@@ -158,10 +156,8 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgBootloaderHandshakeReq {
-    fn message_type() -> u16 {
-        179
-    }
+impl super::RealMessage for MsgBootloaderHandshakeReq {
+    const MESSAGE_TYPE: u16 = 179;
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeReq {
     type Error = super::TryFromSBPError;
@@ -240,10 +236,8 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgBootloaderHandshakeResp {
-    fn message_type() -> u16 {
-        180
-    }
+impl super::RealMessage for MsgBootloaderHandshakeResp {
+    const MESSAGE_TYPE: u16 = 180;
 }
 impl TryFrom<super::SBP> for MsgBootloaderHandshakeResp {
     type Error = super::TryFromSBPError;
@@ -321,10 +315,8 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgBootloaderJumpToApp {
-    fn message_type() -> u16 {
-        177
-    }
+impl super::RealMessage for MsgBootloaderJumpToApp {
+    const MESSAGE_TYPE: u16 = 177;
 }
 impl TryFrom<super::SBP> for MsgBootloaderJumpToApp {
     type Error = super::TryFromSBPError;
@@ -402,10 +394,8 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNapDeviceDnaReq {
-    fn message_type() -> u16 {
-        222
-    }
+impl super::RealMessage for MsgNapDeviceDnaReq {
+    const MESSAGE_TYPE: u16 = 222;
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaReq {
     type Error = super::TryFromSBPError;
@@ -482,10 +472,8 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNapDeviceDnaResp {
-    fn message_type() -> u16 {
-        221
-    }
+impl super::RealMessage for MsgNapDeviceDnaResp {
+    const MESSAGE_TYPE: u16 = 221;
 }
 impl TryFrom<super::SBP> for MsgNapDeviceDnaResp {
     type Error = super::TryFromSBPError;

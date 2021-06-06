@@ -145,10 +145,8 @@ impl super::SBPMessage for MsgAlmanac {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAlmanac {
-    fn message_type() -> u16 {
-        105
-    }
+impl super::RealMessage for MsgAlmanac {
+    const MESSAGE_TYPE: u16 = 105;
 }
 impl TryFrom<super::SBP> for MsgAlmanac {
     type Error = super::TryFromSBPError;
@@ -228,10 +226,8 @@ impl super::SBPMessage for MsgCellModemStatus {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCellModemStatus {
-    fn message_type() -> u16 {
-        190
-    }
+impl super::RealMessage for MsgCellModemStatus {
+    const MESSAGE_TYPE: u16 = 190;
 }
 impl TryFrom<super::SBP> for MsgCellModemStatus {
     type Error = super::TryFromSBPError;
@@ -317,10 +313,8 @@ impl super::SBPMessage for MsgCommandOutput {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCommandOutput {
-    fn message_type() -> u16 {
-        188
-    }
+impl super::RealMessage for MsgCommandOutput {
+    const MESSAGE_TYPE: u16 = 188;
 }
 impl TryFrom<super::SBP> for MsgCommandOutput {
     type Error = super::TryFromSBPError;
@@ -403,10 +397,8 @@ impl super::SBPMessage for MsgCommandReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCommandReq {
-    fn message_type() -> u16 {
-        184
-    }
+impl super::RealMessage for MsgCommandReq {
+    const MESSAGE_TYPE: u16 = 184;
 }
 impl TryFrom<super::SBP> for MsgCommandReq {
     type Error = super::TryFromSBPError;
@@ -488,10 +480,8 @@ impl super::SBPMessage for MsgCommandResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCommandResp {
-    fn message_type() -> u16 {
-        185
-    }
+impl super::RealMessage for MsgCommandResp {
+    const MESSAGE_TYPE: u16 = 185;
 }
 impl TryFrom<super::SBP> for MsgCommandResp {
     type Error = super::TryFromSBPError;
@@ -568,10 +558,8 @@ impl super::SBPMessage for MsgCwResults {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCwResults {
-    fn message_type() -> u16 {
-        192
-    }
+impl super::RealMessage for MsgCwResults {
+    const MESSAGE_TYPE: u16 = 192;
 }
 impl TryFrom<super::SBP> for MsgCwResults {
     type Error = super::TryFromSBPError;
@@ -642,10 +630,8 @@ impl super::SBPMessage for MsgCwStart {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgCwStart {
-    fn message_type() -> u16 {
-        193
-    }
+impl super::RealMessage for MsgCwStart {
+    const MESSAGE_TYPE: u16 = 193;
 }
 impl TryFrom<super::SBP> for MsgCwStart {
     type Error = super::TryFromSBPError;
@@ -731,10 +717,8 @@ impl super::SBPMessage for MsgDeviceMonitor {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgDeviceMonitor {
-    fn message_type() -> u16 {
-        181
-    }
+impl super::RealMessage for MsgDeviceMonitor {
+    const MESSAGE_TYPE: u16 = 181;
 }
 impl TryFrom<super::SBP> for MsgDeviceMonitor {
     type Error = super::TryFromSBPError;
@@ -826,10 +810,8 @@ impl super::SBPMessage for MsgFrontEndGain {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFrontEndGain {
-    fn message_type() -> u16 {
-        191
-    }
+impl super::RealMessage for MsgFrontEndGain {
+    const MESSAGE_TYPE: u16 = 191;
 }
 impl TryFrom<super::SBP> for MsgFrontEndGain {
     type Error = super::TryFromSBPError;
@@ -910,10 +892,8 @@ impl super::SBPMessage for MsgIarState {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgIarState {
-    fn message_type() -> u16 {
-        25
-    }
+impl super::RealMessage for MsgIarState {
+    const MESSAGE_TYPE: u16 = 25;
 }
 impl TryFrom<super::SBP> for MsgIarState {
     type Error = super::TryFromSBPError;
@@ -986,10 +966,8 @@ impl super::SBPMessage for MsgInitBaseDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgInitBaseDep {
-    fn message_type() -> u16 {
-        35
-    }
+impl super::RealMessage for MsgInitBaseDep {
+    const MESSAGE_TYPE: u16 = 35;
 }
 impl TryFrom<super::SBP> for MsgInitBaseDep {
     type Error = super::TryFromSBPError;
@@ -1065,10 +1043,8 @@ impl super::SBPMessage for MsgMaskSatellite {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgMaskSatellite {
-    fn message_type() -> u16 {
-        43
-    }
+impl super::RealMessage for MsgMaskSatellite {
+    const MESSAGE_TYPE: u16 = 43;
 }
 impl TryFrom<super::SBP> for MsgMaskSatellite {
     type Error = super::TryFromSBPError;
@@ -1149,10 +1125,8 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgMaskSatelliteDep {
-    fn message_type() -> u16 {
-        27
-    }
+impl super::RealMessage for MsgMaskSatelliteDep {
+    const MESSAGE_TYPE: u16 = 27;
 }
 impl TryFrom<super::SBP> for MsgMaskSatelliteDep {
     type Error = super::TryFromSBPError;
@@ -1230,10 +1204,8 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNetworkBandwidthUsage {
-    fn message_type() -> u16 {
-        189
-    }
+impl super::RealMessage for MsgNetworkBandwidthUsage {
+    const MESSAGE_TYPE: u16 = 189;
 }
 impl TryFrom<super::SBP> for MsgNetworkBandwidthUsage {
     type Error = super::TryFromSBPError;
@@ -1307,10 +1279,8 @@ impl super::SBPMessage for MsgNetworkStateReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNetworkStateReq {
-    fn message_type() -> u16 {
-        186
-    }
+impl super::RealMessage for MsgNetworkStateReq {
+    const MESSAGE_TYPE: u16 = 186;
 }
 impl TryFrom<super::SBP> for MsgNetworkStateReq {
     type Error = super::TryFromSBPError;
@@ -1405,10 +1375,8 @@ impl super::SBPMessage for MsgNetworkStateResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNetworkStateResp {
-    fn message_type() -> u16 {
-        187
-    }
+impl super::RealMessage for MsgNetworkStateResp {
+    const MESSAGE_TYPE: u16 = 187;
 }
 impl TryFrom<super::SBP> for MsgNetworkStateResp {
     type Error = super::TryFromSBPError;
@@ -1499,10 +1467,8 @@ impl super::SBPMessage for MsgReset {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgReset {
-    fn message_type() -> u16 {
-        182
-    }
+impl super::RealMessage for MsgReset {
+    const MESSAGE_TYPE: u16 = 182;
 }
 impl TryFrom<super::SBP> for MsgReset {
     type Error = super::TryFromSBPError;
@@ -1576,10 +1542,8 @@ impl super::SBPMessage for MsgResetDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgResetDep {
-    fn message_type() -> u16 {
-        178
-    }
+impl super::RealMessage for MsgResetDep {
+    const MESSAGE_TYPE: u16 = 178;
 }
 impl TryFrom<super::SBP> for MsgResetDep {
     type Error = super::TryFromSBPError;
@@ -1652,10 +1616,8 @@ impl super::SBPMessage for MsgResetFilters {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgResetFilters {
-    fn message_type() -> u16 {
-        34
-    }
+impl super::RealMessage for MsgResetFilters {
+    const MESSAGE_TYPE: u16 = 34;
 }
 impl TryFrom<super::SBP> for MsgResetFilters {
     type Error = super::TryFromSBPError;
@@ -1729,10 +1691,8 @@ impl super::SBPMessage for MsgSetTime {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSetTime {
-    fn message_type() -> u16 {
-        104
-    }
+impl super::RealMessage for MsgSetTime {
+    const MESSAGE_TYPE: u16 = 104;
 }
 impl TryFrom<super::SBP> for MsgSetTime {
     type Error = super::TryFromSBPError;
@@ -1822,10 +1782,8 @@ impl super::SBPMessage for MsgSpecan {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSpecan {
-    fn message_type() -> u16 {
-        81
-    }
+impl super::RealMessage for MsgSpecan {
+    const MESSAGE_TYPE: u16 = 81;
 }
 impl TryFrom<super::SBP> for MsgSpecan {
     type Error = super::TryFromSBPError;
@@ -1931,10 +1889,8 @@ impl super::SBPMessage for MsgSpecanDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSpecanDep {
-    fn message_type() -> u16 {
-        80
-    }
+impl super::RealMessage for MsgSpecanDep {
+    const MESSAGE_TYPE: u16 = 80;
 }
 impl TryFrom<super::SBP> for MsgSpecanDep {
     type Error = super::TryFromSBPError;
@@ -2031,10 +1987,8 @@ impl super::SBPMessage for MsgThreadState {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgThreadState {
-    fn message_type() -> u16 {
-        23
-    }
+impl super::RealMessage for MsgThreadState {
+    const MESSAGE_TYPE: u16 = 23;
 }
 impl TryFrom<super::SBP> for MsgThreadState {
     type Error = super::TryFromSBPError;
@@ -2134,10 +2088,8 @@ impl super::SBPMessage for MsgUartState {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgUartState {
-    fn message_type() -> u16 {
-        29
-    }
+impl super::RealMessage for MsgUartState {
+    const MESSAGE_TYPE: u16 = 29;
 }
 impl TryFrom<super::SBP> for MsgUartState {
     type Error = super::TryFromSBPError;
@@ -2230,10 +2182,8 @@ impl super::SBPMessage for MsgUartStateDepa {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgUartStateDepa {
-    fn message_type() -> u16 {
-        24
-    }
+impl super::RealMessage for MsgUartStateDepa {
+    const MESSAGE_TYPE: u16 = 24;
 }
 impl TryFrom<super::SBP> for MsgUartStateDepa {
     type Error = super::TryFromSBPError;

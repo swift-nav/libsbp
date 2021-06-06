@@ -77,10 +77,8 @@ impl super::SBPMessage for MsgUserData {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgUserData {
-    fn message_type() -> u16 {
-        2048
-    }
+impl super::RealMessage for MsgUserData {
+    const MESSAGE_TYPE: u16 = 2048;
 }
 impl TryFrom<super::SBP> for MsgUserData {
     type Error = super::TryFromSBPError;

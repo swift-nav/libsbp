@@ -221,10 +221,8 @@ impl super::SBPMessage for MsgSolnMeta {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgSolnMeta {
-    fn message_type() -> u16 {
-        65294
-    }
+impl super::RealMessage for MsgSolnMeta {
+    const MESSAGE_TYPE: u16 = 65294;
 }
 impl TryFrom<super::SBP> for MsgSolnMeta {
     type Error = super::TryFromSBPError;
@@ -345,10 +343,8 @@ impl super::SBPMessage for MsgSolnMetaDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSolnMetaDepA {
-    fn message_type() -> u16 {
-        65295
-    }
+impl super::RealMessage for MsgSolnMetaDepA {
+    const MESSAGE_TYPE: u16 = 65295;
 }
 impl TryFrom<super::SBP> for MsgSolnMetaDepA {
     type Error = super::TryFromSBPError;

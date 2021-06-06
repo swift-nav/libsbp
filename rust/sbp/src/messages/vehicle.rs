@@ -102,10 +102,8 @@ impl super::SBPMessage for MsgOdometry {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgOdometry {
-    fn message_type() -> u16 {
-        2307
-    }
+impl super::RealMessage for MsgOdometry {
+    const MESSAGE_TYPE: u16 = 2307;
 }
 impl TryFrom<super::SBP> for MsgOdometry {
     type Error = super::TryFromSBPError;
@@ -224,10 +222,8 @@ impl super::SBPMessage for MsgWheeltick {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgWheeltick {
-    fn message_type() -> u16 {
-        2308
-    }
+impl super::RealMessage for MsgWheeltick {
+    const MESSAGE_TYPE: u16 = 2308;
 }
 impl TryFrom<super::SBP> for MsgWheeltick {
     type Error = super::TryFromSBPError;

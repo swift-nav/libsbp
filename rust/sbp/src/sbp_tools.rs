@@ -1,9 +1,3 @@
-use std::{
-    borrow::Borrow,
-    collections::HashMap,
-    convert::{TryFrom, TryInto},
-};
-
 #[cfg(feature = "swiftnav-rs")]
 use swiftnav_rs::time::GpsTime;
 
@@ -13,49 +7,7 @@ use crate::{
     time::{GpsTimeError, MessageTime, RoverTime},
 };
 
-use crate::messages::{MessageType, TryFromSBPError, SBP};
-
-pub struct Dispatcher<'a> {
-    callbacks: HashMap<u16, Vec<Box<dyn FnMut(SBP) + 'a>>>,
-}
-
-impl<'a> Dispatcher<'a> {
-    pub fn new() -> Self {
-        Self {
-            callbacks: HashMap::new(),
-        }
-    }
-
-    pub fn add_callback<M, F>(&mut self, mut func: F)
-    where
-        M: MessageType + TryFrom<SBP, Error = TryFromSBPError>,
-        F: FnMut(M) + 'a,
-    {
-        self.callbacks
-            .entry(M::message_type())
-            .or_default()
-            .push(Box::new(move |msg: SBP| {
-                let msg: M = msg.try_into().unwrap();
-                func(msg)
-            }));
-    }
-
-    pub fn dispatch<M>(&mut self, msg: M) -> bool
-    where
-        M: Borrow<SBP>,
-    {
-        let msg = msg.borrow();
-        match self.callbacks.get_mut(&msg.get_message_type()) {
-            Some(cbs) => {
-                for cb in cbs.iter_mut() {
-                    cb(msg.clone());
-                }
-                true
-            }
-            None => false,
-        }
-    }
-}
+use crate::messages::SBP;
 
 pub trait SBPTools: Iterator {
     fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
@@ -222,10 +174,7 @@ where
 mod tests {
     use std::io::Cursor;
 
-    use crate::{
-        iter_messages,
-        messages::navigation::{MsgAgeCorrections, MsgBaselineECEF},
-    };
+    use crate::iter_messages;
 
     use super::*;
 
@@ -319,34 +268,5 @@ mod tests {
 
         assert_eq!(messages.count(), 0);
         assert_eq!(err_count, 1);
-    }
-
-    #[test]
-    fn test_dispatcher() {
-        let mut d = Dispatcher::new();
-
-        d.add_callback(|msg: MsgAgeCorrections| println!("got MsgAgeCorrections: {:?}", msg));
-
-        let msg: SBP = MsgAgeCorrections {
-            sender_id: Some(1),
-            tow: 1,
-            age: 1,
-        }
-        .into();
-        assert!(d.dispatch(&msg));
-        assert!(d.dispatch(msg));
-
-        let msg: SBP = MsgBaselineECEF {
-            sender_id: Some(1),
-            tow: 1,
-            x: 1,
-            y: 1,
-            z: 1,
-            accuracy: 1,
-            n_sats: 1,
-            flags: 1,
-        }
-        .into();
-        assert_eq!(d.dispatch(&msg), false);
     }
 }

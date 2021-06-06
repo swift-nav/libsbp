@@ -88,10 +88,8 @@ impl super::SBPMessage for MsgFwd {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFwd {
-    fn message_type() -> u16 {
-        1026
-    }
+impl super::RealMessage for MsgFwd {
+    const MESSAGE_TYPE: u16 = 1026;
 }
 impl TryFrom<super::SBP> for MsgFwd {
     type Error = super::TryFromSBPError;
@@ -176,10 +174,8 @@ impl super::SBPMessage for MsgLog {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgLog {
-    fn message_type() -> u16 {
-        1025
-    }
+impl super::RealMessage for MsgLog {
+    const MESSAGE_TYPE: u16 = 1025;
 }
 impl TryFrom<super::SBP> for MsgLog {
     type Error = super::TryFromSBPError;
@@ -257,10 +253,8 @@ impl super::SBPMessage for MsgPrintDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgPrintDep {
-    fn message_type() -> u16 {
-        16
-    }
+impl super::RealMessage for MsgPrintDep {
+    const MESSAGE_TYPE: u16 = 16;
 }
 impl TryFrom<super::SBP> for MsgPrintDep {
     type Error = super::TryFromSBPError;

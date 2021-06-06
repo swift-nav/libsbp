@@ -83,10 +83,8 @@ impl super::SBPMessage for MsgFlashDone {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFlashDone {
-    fn message_type() -> u16 {
-        224
-    }
+impl super::RealMessage for MsgFlashDone {
+    const MESSAGE_TYPE: u16 = 224;
 }
 impl TryFrom<super::SBP> for MsgFlashDone {
     type Error = super::TryFromSBPError;
@@ -169,10 +167,8 @@ impl super::SBPMessage for MsgFlashErase {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFlashErase {
-    fn message_type() -> u16 {
-        226
-    }
+impl super::RealMessage for MsgFlashErase {
+    const MESSAGE_TYPE: u16 = 226;
 }
 impl TryFrom<super::SBP> for MsgFlashErase {
     type Error = super::TryFromSBPError;
@@ -264,10 +260,8 @@ impl super::SBPMessage for MsgFlashProgram {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFlashProgram {
-    fn message_type() -> u16 {
-        230
-    }
+impl super::RealMessage for MsgFlashProgram {
+    const MESSAGE_TYPE: u16 = 230;
 }
 impl TryFrom<super::SBP> for MsgFlashProgram {
     type Error = super::TryFromSBPError;
@@ -361,10 +355,8 @@ impl super::SBPMessage for MsgFlashReadReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFlashReadReq {
-    fn message_type() -> u16 {
-        231
-    }
+impl super::RealMessage for MsgFlashReadReq {
+    const MESSAGE_TYPE: u16 = 231;
 }
 impl TryFrom<super::SBP> for MsgFlashReadReq {
     type Error = super::TryFromSBPError;
@@ -456,10 +448,8 @@ impl super::SBPMessage for MsgFlashReadResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFlashReadResp {
-    fn message_type() -> u16 {
-        225
-    }
+impl super::RealMessage for MsgFlashReadResp {
+    const MESSAGE_TYPE: u16 = 225;
 }
 impl TryFrom<super::SBP> for MsgFlashReadResp {
     type Error = super::TryFromSBPError;
@@ -540,10 +530,8 @@ impl super::SBPMessage for MsgM25FlashWriteStatus {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgM25FlashWriteStatus {
-    fn message_type() -> u16 {
-        243
-    }
+impl super::RealMessage for MsgM25FlashWriteStatus {
+    const MESSAGE_TYPE: u16 = 243;
 }
 impl TryFrom<super::SBP> for MsgM25FlashWriteStatus {
     type Error = super::TryFromSBPError;
@@ -620,10 +608,8 @@ impl super::SBPMessage for MsgStmFlashLockSector {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStmFlashLockSector {
-    fn message_type() -> u16 {
-        227
-    }
+impl super::RealMessage for MsgStmFlashLockSector {
+    const MESSAGE_TYPE: u16 = 227;
 }
 impl TryFrom<super::SBP> for MsgStmFlashLockSector {
     type Error = super::TryFromSBPError;
@@ -700,10 +686,8 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStmFlashUnlockSector {
-    fn message_type() -> u16 {
-        228
-    }
+impl super::RealMessage for MsgStmFlashUnlockSector {
+    const MESSAGE_TYPE: u16 = 228;
 }
 impl TryFrom<super::SBP> for MsgStmFlashUnlockSector {
     type Error = super::TryFromSBPError;
@@ -780,10 +764,8 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStmUniqueIdReq {
-    fn message_type() -> u16 {
-        232
-    }
+impl super::RealMessage for MsgStmUniqueIdReq {
+    const MESSAGE_TYPE: u16 = 232;
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdReq {
     type Error = super::TryFromSBPError;
@@ -859,10 +841,8 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgStmUniqueIdResp {
-    fn message_type() -> u16 {
-        229
-    }
+impl super::RealMessage for MsgStmUniqueIdResp {
+    const MESSAGE_TYPE: u16 = 229;
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdResp {
     type Error = super::TryFromSBPError;

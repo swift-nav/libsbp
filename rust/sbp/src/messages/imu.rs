@@ -83,10 +83,8 @@ impl super::SBPMessage for MsgImuAux {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgImuAux {
-    fn message_type() -> u16 {
-        2305
-    }
+impl super::RealMessage for MsgImuAux {
+    const MESSAGE_TYPE: u16 = 2305;
 }
 impl TryFrom<super::SBP> for MsgImuAux {
     type Error = super::TryFromSBPError;
@@ -211,10 +209,8 @@ impl super::SBPMessage for MsgImuRaw {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgImuRaw {
-    fn message_type() -> u16 {
-        2304
-    }
+impl super::RealMessage for MsgImuRaw {
+    const MESSAGE_TYPE: u16 = 2304;
 }
 impl TryFrom<super::SBP> for MsgImuRaw {
     type Error = super::TryFromSBPError;

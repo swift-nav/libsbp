@@ -105,10 +105,8 @@ impl super::SBPMessage for MsgNdbEvent {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgNdbEvent {
-    fn message_type() -> u16 {
-        1024
-    }
+impl super::RealMessage for MsgNdbEvent {
+    const MESSAGE_TYPE: u16 = 1024;
 }
 impl TryFrom<super::SBP> for MsgNdbEvent {
     type Error = super::TryFromSBPError;

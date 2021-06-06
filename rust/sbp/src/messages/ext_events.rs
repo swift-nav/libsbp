@@ -107,10 +107,8 @@ impl super::SBPMessage for MsgExtEvent {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::MessageType for MsgExtEvent {
-    fn message_type() -> u16 {
-        257
-    }
+impl super::RealMessage for MsgExtEvent {
+    const MESSAGE_TYPE: u16 = 257;
 }
 impl TryFrom<super::SBP> for MsgExtEvent {
     type Error = super::TryFromSBPError;

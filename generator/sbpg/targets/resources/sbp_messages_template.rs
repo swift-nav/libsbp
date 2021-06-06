@@ -121,10 +121,8 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
 ((*- endif *))
 
 ((*- if m.is_real_message *))
-impl super::MessageType for (((m.identifier|camel_case))) {
-    fn message_type() -> u16 {
-        (((m.sbp_id)))
-    }
+impl super::RealMessage for (((m.identifier|camel_case))) {
+    const MESSAGE_TYPE: u16 = (((m.sbp_id)));
 }
 ((*- endif *))
 

@@ -86,10 +86,8 @@ impl super::SBPMessage for MsgFileioConfigReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioConfigReq {
-    fn message_type() -> u16 {
-        4097
-    }
+impl super::RealMessage for MsgFileioConfigReq {
+    const MESSAGE_TYPE: u16 = 4097;
 }
 impl TryFrom<super::SBP> for MsgFileioConfigReq {
     type Error = super::TryFromSBPError;
@@ -178,10 +176,8 @@ impl super::SBPMessage for MsgFileioConfigResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioConfigResp {
-    fn message_type() -> u16 {
-        4098
-    }
+impl super::RealMessage for MsgFileioConfigResp {
+    const MESSAGE_TYPE: u16 = 4098;
 }
 impl TryFrom<super::SBP> for MsgFileioConfigResp {
     type Error = super::TryFromSBPError;
@@ -278,10 +274,8 @@ impl super::SBPMessage for MsgFileioReadDirReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioReadDirReq {
-    fn message_type() -> u16 {
-        169
-    }
+impl super::RealMessage for MsgFileioReadDirReq {
+    const MESSAGE_TYPE: u16 = 169;
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirReq {
     type Error = super::TryFromSBPError;
@@ -369,10 +363,8 @@ impl super::SBPMessage for MsgFileioReadDirResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioReadDirResp {
-    fn message_type() -> u16 {
-        170
-    }
+impl super::RealMessage for MsgFileioReadDirResp {
+    const MESSAGE_TYPE: u16 = 170;
 }
 impl TryFrom<super::SBP> for MsgFileioReadDirResp {
     type Error = super::TryFromSBPError;
@@ -466,10 +458,8 @@ impl super::SBPMessage for MsgFileioReadReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioReadReq {
-    fn message_type() -> u16 {
-        168
-    }
+impl super::RealMessage for MsgFileioReadReq {
+    const MESSAGE_TYPE: u16 = 168;
 }
 impl TryFrom<super::SBP> for MsgFileioReadReq {
     type Error = super::TryFromSBPError;
@@ -558,10 +548,8 @@ impl super::SBPMessage for MsgFileioReadResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioReadResp {
-    fn message_type() -> u16 {
-        163
-    }
+impl super::RealMessage for MsgFileioReadResp {
+    const MESSAGE_TYPE: u16 = 163;
 }
 impl TryFrom<super::SBP> for MsgFileioReadResp {
     type Error = super::TryFromSBPError;
@@ -642,10 +630,8 @@ impl super::SBPMessage for MsgFileioRemove {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioRemove {
-    fn message_type() -> u16 {
-        172
-    }
+impl super::RealMessage for MsgFileioRemove {
+    const MESSAGE_TYPE: u16 = 172;
 }
 impl TryFrom<super::SBP> for MsgFileioRemove {
     type Error = super::TryFromSBPError;
@@ -737,10 +723,8 @@ impl super::SBPMessage for MsgFileioWriteReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioWriteReq {
-    fn message_type() -> u16 {
-        173
-    }
+impl super::RealMessage for MsgFileioWriteReq {
+    const MESSAGE_TYPE: u16 = 173;
 }
 impl TryFrom<super::SBP> for MsgFileioWriteReq {
     type Error = super::TryFromSBPError;
@@ -826,10 +810,8 @@ impl super::SBPMessage for MsgFileioWriteResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgFileioWriteResp {
-    fn message_type() -> u16 {
-        171
-    }
+impl super::RealMessage for MsgFileioWriteResp {
+    const MESSAGE_TYPE: u16 = 171;
 }
 impl TryFrom<super::SBP> for MsgFileioWriteResp {
     type Error = super::TryFromSBPError;

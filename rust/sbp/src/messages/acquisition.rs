@@ -302,10 +302,8 @@ impl super::SBPMessage for MsgAcqResult {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqResult {
-    fn message_type() -> u16 {
-        47
-    }
+impl super::RealMessage for MsgAcqResult {
+    const MESSAGE_TYPE: u16 = 47;
 }
 impl TryFrom<super::SBP> for MsgAcqResult {
     type Error = super::TryFromSBPError;
@@ -398,10 +396,8 @@ impl super::SBPMessage for MsgAcqResultDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqResultDepA {
-    fn message_type() -> u16 {
-        21
-    }
+impl super::RealMessage for MsgAcqResultDepA {
+    const MESSAGE_TYPE: u16 = 21;
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepA {
     type Error = super::TryFromSBPError;
@@ -493,10 +489,8 @@ impl super::SBPMessage for MsgAcqResultDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqResultDepB {
-    fn message_type() -> u16 {
-        20
-    }
+impl super::RealMessage for MsgAcqResultDepB {
+    const MESSAGE_TYPE: u16 = 20;
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepB {
     type Error = super::TryFromSBPError;
@@ -587,10 +581,8 @@ impl super::SBPMessage for MsgAcqResultDepC {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqResultDepC {
-    fn message_type() -> u16 {
-        31
-    }
+impl super::RealMessage for MsgAcqResultDepC {
+    const MESSAGE_TYPE: u16 = 31;
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepC {
     type Error = super::TryFromSBPError;
@@ -673,10 +665,8 @@ impl super::SBPMessage for MsgAcqSvProfile {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqSvProfile {
-    fn message_type() -> u16 {
-        46
-    }
+impl super::RealMessage for MsgAcqSvProfile {
+    const MESSAGE_TYPE: u16 = 46;
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfile {
     type Error = super::TryFromSBPError;
@@ -752,10 +742,8 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgAcqSvProfileDep {
-    fn message_type() -> u16 {
-        30
-    }
+impl super::RealMessage for MsgAcqSvProfileDep {
+    const MESSAGE_TYPE: u16 = 30;
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
     type Error = super::TryFromSBPError;

@@ -79,10 +79,8 @@ impl super::SBPMessage for MsgMeasurementState {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgMeasurementState {
-    fn message_type() -> u16 {
-        97
-    }
+impl super::RealMessage for MsgMeasurementState {
+    const MESSAGE_TYPE: u16 = 97;
 }
 impl TryFrom<super::SBP> for MsgMeasurementState {
     type Error = super::TryFromSBPError;
@@ -165,10 +163,8 @@ impl super::SBPMessage for MsgTrackingIq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingIq {
-    fn message_type() -> u16 {
-        45
-    }
+impl super::RealMessage for MsgTrackingIq {
+    const MESSAGE_TYPE: u16 = 45;
 }
 impl TryFrom<super::SBP> for MsgTrackingIq {
     type Error = super::TryFromSBPError;
@@ -254,10 +250,8 @@ impl super::SBPMessage for MsgTrackingIqDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingIqDepA {
-    fn message_type() -> u16 {
-        28
-    }
+impl super::RealMessage for MsgTrackingIqDepA {
+    const MESSAGE_TYPE: u16 = 28;
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepA {
     type Error = super::TryFromSBPError;
@@ -344,10 +338,8 @@ impl super::SBPMessage for MsgTrackingIqDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingIqDepB {
-    fn message_type() -> u16 {
-        44
-    }
+impl super::RealMessage for MsgTrackingIqDepB {
+    const MESSAGE_TYPE: u16 = 44;
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepB {
     type Error = super::TryFromSBPError;
@@ -429,10 +421,8 @@ impl super::SBPMessage for MsgTrackingState {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingState {
-    fn message_type() -> u16 {
-        65
-    }
+impl super::RealMessage for MsgTrackingState {
+    const MESSAGE_TYPE: u16 = 65;
 }
 impl TryFrom<super::SBP> for MsgTrackingState {
     type Error = super::TryFromSBPError;
@@ -508,10 +498,8 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingStateDepA {
-    fn message_type() -> u16 {
-        22
-    }
+impl super::RealMessage for MsgTrackingStateDepA {
+    const MESSAGE_TYPE: u16 = 22;
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepA {
     type Error = super::TryFromSBPError;
@@ -587,10 +575,8 @@ impl super::SBPMessage for MsgTrackingStateDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingStateDepB {
-    fn message_type() -> u16 {
-        19
-    }
+impl super::RealMessage for MsgTrackingStateDepB {
+    const MESSAGE_TYPE: u16 = 19;
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepB {
     type Error = super::TryFromSBPError;
@@ -732,10 +718,8 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingStateDetailedDep {
-    fn message_type() -> u16 {
-        17
-    }
+impl super::RealMessage for MsgTrackingStateDetailedDep {
+    const MESSAGE_TYPE: u16 = 17;
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
     type Error = super::TryFromSBPError;
@@ -918,10 +902,8 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgTrackingStateDetailedDepA {
-    fn message_type() -> u16 {
-        33
-    }
+impl super::RealMessage for MsgTrackingStateDetailedDepA {
+    const MESSAGE_TYPE: u16 = 33;
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
     type Error = super::TryFromSBPError;

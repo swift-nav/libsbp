@@ -98,10 +98,8 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsReadByIndexDone {
-    fn message_type() -> u16 {
-        166
-    }
+impl super::RealMessage for MsgSettingsReadByIndexDone {
+    const MESSAGE_TYPE: u16 = 166;
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
     type Error = super::TryFromSBPError;
@@ -176,10 +174,8 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsReadByIndexReq {
-    fn message_type() -> u16 {
-        162
-    }
+impl super::RealMessage for MsgSettingsReadByIndexReq {
+    const MESSAGE_TYPE: u16 = 162;
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
     type Error = super::TryFromSBPError;
@@ -269,10 +265,8 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsReadByIndexResp {
-    fn message_type() -> u16 {
-        167
-    }
+impl super::RealMessage for MsgSettingsReadByIndexResp {
+    const MESSAGE_TYPE: u16 = 167;
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
     type Error = super::TryFromSBPError;
@@ -358,10 +352,8 @@ impl super::SBPMessage for MsgSettingsReadReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsReadReq {
-    fn message_type() -> u16 {
-        164
-    }
+impl super::RealMessage for MsgSettingsReadReq {
+    const MESSAGE_TYPE: u16 = 164;
 }
 impl TryFrom<super::SBP> for MsgSettingsReadReq {
     type Error = super::TryFromSBPError;
@@ -444,10 +436,8 @@ impl super::SBPMessage for MsgSettingsReadResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsReadResp {
-    fn message_type() -> u16 {
-        165
-    }
+impl super::RealMessage for MsgSettingsReadResp {
+    const MESSAGE_TYPE: u16 = 165;
 }
 impl TryFrom<super::SBP> for MsgSettingsReadResp {
     type Error = super::TryFromSBPError;
@@ -526,10 +516,8 @@ impl super::SBPMessage for MsgSettingsRegister {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsRegister {
-    fn message_type() -> u16 {
-        174
-    }
+impl super::RealMessage for MsgSettingsRegister {
+    const MESSAGE_TYPE: u16 = 174;
 }
 impl TryFrom<super::SBP> for MsgSettingsRegister {
     type Error = super::TryFromSBPError;
@@ -613,10 +601,8 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsRegisterResp {
-    fn message_type() -> u16 {
-        431
-    }
+impl super::RealMessage for MsgSettingsRegisterResp {
+    const MESSAGE_TYPE: u16 = 431;
 }
 impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
     type Error = super::TryFromSBPError;
@@ -692,10 +678,8 @@ impl super::SBPMessage for MsgSettingsSave {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsSave {
-    fn message_type() -> u16 {
-        161
-    }
+impl super::RealMessage for MsgSettingsSave {
+    const MESSAGE_TYPE: u16 = 161;
 }
 impl TryFrom<super::SBP> for MsgSettingsSave {
     type Error = super::TryFromSBPError;
@@ -774,10 +758,8 @@ impl super::SBPMessage for MsgSettingsWrite {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsWrite {
-    fn message_type() -> u16 {
-        160
-    }
+impl super::RealMessage for MsgSettingsWrite {
+    const MESSAGE_TYPE: u16 = 160;
 }
 impl TryFrom<super::SBP> for MsgSettingsWrite {
     type Error = super::TryFromSBPError;
@@ -863,10 +845,8 @@ impl super::SBPMessage for MsgSettingsWriteResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::MessageType for MsgSettingsWriteResp {
-    fn message_type() -> u16 {
-        175
-    }
+impl super::RealMessage for MsgSettingsWriteResp {
+    const MESSAGE_TYPE: u16 = 175;
 }
 impl TryFrom<super::SBP> for MsgSettingsWriteResp {
     type Error = super::TryFromSBPError;
