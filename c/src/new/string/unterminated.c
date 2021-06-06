@@ -162,7 +162,7 @@ const char *sbp_unterminated_string_get(const sbp_unterminated_string_t *s,
 
 bool sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
                                      const sbp_unterminated_string_params_t *params,
-                                     sbp_pack_ctx_t *ctx)
+                                     sbp_encode_ctx_t *ctx)
 {
   if ((ctx->buf_len - ctx->offset) < sbp_unterminated_string_packed_len(s, params))
     return false;
@@ -177,7 +177,7 @@ bool sbp_unterminated_string_pack(const sbp_unterminated_string_t *s,
 
 bool sbp_unterminated_string_unpack(sbp_unterminated_string_t *s,
                                        const sbp_unterminated_string_params_t *params,
-                                       sbp_unpack_ctx_t *ctx)
+                                       sbp_decode_ctx_t *ctx)
 {
   // Unterminated string simply take all the available input data, so long as it fits in the string object
   uint8_t max_copy = params->max_packed_len;

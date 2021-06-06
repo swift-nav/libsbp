@@ -166,7 +166,7 @@ size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.name|convert_unp
   ((*- endif *))
 }
 
-bool pack_(((m.name|convert_unpacked)))(sbp_pack_ctx_t *ctx, const (((m.name|convert_unpacked))) *msg)
+bool encode_(((m.name|convert_unpacked)))(sbp_encode_ctx_t *ctx, const (((m.name|convert_unpacked))) *msg)
 {
   ((*- if not m.fields *))
   (void)ctx;
@@ -177,11 +177,11 @@ bool pack_(((m.name|convert_unpacked)))(sbp_pack_ctx_t *ctx, const (((m.name|con
   ((*- if f.packing == "packed-string" *))
   if (!sbp_(((f.encoding)))_string_pack(&msg->(((f.name))), &(((m.name|convert_unpacked)))(((f.name)))_params, ctx)) { return false; }
   ((*- elif f.packing == "single" *))
-  if (!pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
+  if (!encode_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
   ((*- else *))
   for (uint8_t i = 0; i < ((* if f.packing == "fixed-array" *))(((f.max_items)))((* else *))msg->(((f.size_fn)))((*- endif *)); i++)
   {
-    if (!pack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!encode_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- endif *))
   ((*- endfor *))
@@ -189,12 +189,12 @@ bool pack_(((m.name|convert_unpacked)))(sbp_pack_ctx_t *ctx, const (((m.name|con
   ((*- endif *))
 }
 
-s8 sbp_pack_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.name|convert_unpacked))) *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.name|convert_unpacked))) *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_(((m.name|convert_unpacked)))(&ctx, msg)) {
+  if (!encode_(((m.name|convert_unpacked)))(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -203,7 +203,7 @@ s8 sbp_pack_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_
   return SBP_OK;
 }
 
-bool unpack_(((m.name|convert_unpacked)))(sbp_unpack_ctx_t *ctx, (((m.name|convert_unpacked))) *msg)
+bool decode_(((m.name|convert_unpacked)))(sbp_decode_ctx_t *ctx, (((m.name|convert_unpacked))) *msg)
 {
   ((*- if not m.fields *))
     (void)ctx;
@@ -215,15 +215,15 @@ bool unpack_(((m.name|convert_unpacked)))(sbp_unpack_ctx_t *ctx, (((m.name|conve
   ((*- if f.packing == "packed-string" *))
   if (!sbp_(((f.encoding)))_string_unpack(&msg->(((f.name))), &(((m.name|convert_unpacked)))(((f.name)))_params, ctx)) { return false; }
   ((*- elif f.packing == "single" *))
-  if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
+  if (!decode_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name))))) { return false; }
   ((*- elif f.packing == "fixed-array" *))
   for (uint8_t i = 0; i < (((f.max_items))); i++) {
-    if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!decode_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- elif f.packing == "variable-array" *))
     msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_(((f.basetype|convert_unpacked)))(&msg->(((f.name)))[0]));
   for (uint8_t i = 0; i < msg->(((f.size_fn))); i++) {
-    if (!unpack_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
+    if (!decode_(((f.basetype|convert_unpacked)))(ctx, &msg->(((f.name)))[i])) { return false; }
   }
   ((*- endif *))
   ((*- endfor *))
@@ -231,12 +231,12 @@ bool unpack_(((m.name|convert_unpacked)))(sbp_unpack_ctx_t *ctx, (((m.name|conve
   ((*- endif *))
 }
 
-s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.name|convert_unpacked))) *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.name|convert_unpacked))) *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_(((m.name|convert_unpacked)))(&ctx, msg)) {
+  if (!decode_(((m.name|convert_unpacked)))(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -250,7 +250,7 @@ s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state *s, u16 sender_id, co
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_(((m.name|convert_unpacked)))(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_(((m.name|convert_unpacked)))(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_(((m.name))), sender_id, payload_len, payload, write);
 }

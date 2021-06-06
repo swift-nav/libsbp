@@ -16,19 +16,19 @@ size_t sbp_packed_size_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootload
   return 0;
 }
 
-bool pack_sbp_msg_bootloader_handshake_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg)
+bool encode_sbp_msg_bootloader_handshake_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg)
 {
   (void)ctx;
   (void)msg;
   return true;
 }
 
-s8 sbp_pack_sbp_msg_bootloader_handshake_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_bootloader_handshake_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_bootloader_handshake_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_bootloader_handshake_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -37,19 +37,19 @@ s8 sbp_pack_sbp_msg_bootloader_handshake_req_t(uint8_t *buf, uint8_t len, uint8_
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_bootloader_handshake_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_bootloader_handshake_req_t *msg)
+bool decode_sbp_msg_bootloader_handshake_req_t(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_req_t *msg)
 {
     (void)ctx;
   (void)msg;
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_bootloader_handshake_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_bootloader_handshake_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_bootloader_handshake_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_bootloader_handshake_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -61,7 +61,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_req_t(struct sbp_state *s, u16 sender_i
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_bootloader_handshake_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_bootloader_handshake_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ, sender_id, payload_len, payload, write);
 }
@@ -146,19 +146,19 @@ size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloa
   return packed_size;
 }
 
-bool pack_sbp_msg_bootloader_handshake_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg)
+bool encode_sbp_msg_bootloader_handshake_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg)
 {
-  if (!pack_u32(ctx, &msg->flags)) { return false; }
+  if (!encode_u32(ctx, &msg->flags)) { return false; }
   if (!sbp_unterminated_string_pack(&msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_bootloader_handshake_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_bootloader_handshake_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_bootloader_handshake_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_bootloader_handshake_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -167,19 +167,19 @@ s8 sbp_pack_sbp_msg_bootloader_handshake_resp_t(uint8_t *buf, uint8_t len, uint8
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_bootloader_handshake_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_bootloader_handshake_resp_t *msg)
+bool decode_sbp_msg_bootloader_handshake_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_resp_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->flags)) { return false; }
+  if (!decode_u32(ctx, &msg->flags)) { return false; }
   if (!sbp_unterminated_string_unpack(&msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_bootloader_handshake_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_bootloader_handshake_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_bootloader_handshake_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -191,7 +191,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_resp_t(struct sbp_state *s, u16 sender_
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_bootloader_handshake_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_bootloader_handshake_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, sender_id, payload_len, payload, write);
 }
@@ -213,18 +213,18 @@ size_t sbp_packed_size_sbp_msg_bootloader_jump_to_app_t(const sbp_msg_bootloader
   return packed_size;
 }
 
-bool pack_sbp_msg_bootloader_jump_to_app_t(sbp_pack_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg)
+bool encode_sbp_msg_bootloader_jump_to_app_t(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg)
 {
-  if (!pack_u8(ctx, &msg->jump)) { return false; }
+  if (!encode_u8(ctx, &msg->jump)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_bootloader_jump_to_app_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_jump_to_app_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_bootloader_jump_to_app_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_jump_to_app_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_bootloader_jump_to_app_t(&ctx, msg)) {
+  if (!encode_sbp_msg_bootloader_jump_to_app_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -233,18 +233,18 @@ s8 sbp_pack_sbp_msg_bootloader_jump_to_app_t(uint8_t *buf, uint8_t len, uint8_t 
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_bootloader_jump_to_app_t(sbp_unpack_ctx_t *ctx, sbp_msg_bootloader_jump_to_app_t *msg)
+bool decode_sbp_msg_bootloader_jump_to_app_t(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_jump_to_app_t *msg)
 {
-  if (!unpack_u8(ctx, &msg->jump)) { return false; }
+  if (!decode_u8(ctx, &msg->jump)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_bootloader_jump_to_app_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_jump_to_app_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_bootloader_jump_to_app_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_jump_to_app_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_bootloader_jump_to_app_t(&ctx, msg)) {
+  if (!decode_sbp_msg_bootloader_jump_to_app_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -256,7 +256,7 @@ s8 sbp_send_sbp_msg_bootloader_jump_to_app_t(struct sbp_state *s, u16 sender_id,
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_bootloader_jump_to_app_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_bootloader_jump_to_app_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP, sender_id, payload_len, payload, write);
 }
@@ -274,19 +274,19 @@ size_t sbp_packed_size_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna
   return 0;
 }
 
-bool pack_sbp_msg_nap_device_dna_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg)
+bool encode_sbp_msg_nap_device_dna_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg)
 {
   (void)ctx;
   (void)msg;
   return true;
 }
 
-s8 sbp_pack_sbp_msg_nap_device_dna_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_nap_device_dna_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_nap_device_dna_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_nap_device_dna_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_nap_device_dna_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_nap_device_dna_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -295,19 +295,19 @@ s8 sbp_pack_sbp_msg_nap_device_dna_req_t(uint8_t *buf, uint8_t len, uint8_t *n_w
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_nap_device_dna_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_nap_device_dna_req_t *msg)
+bool decode_sbp_msg_nap_device_dna_req_t(sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_req_t *msg)
 {
     (void)ctx;
   (void)msg;
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_nap_device_dna_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_nap_device_dna_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_nap_device_dna_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_nap_device_dna_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_nap_device_dna_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_nap_device_dna_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -319,7 +319,7 @@ s8 sbp_send_sbp_msg_nap_device_dna_req_t(struct sbp_state *s, u16 sender_id, con
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_nap_device_dna_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_nap_device_dna_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id, payload_len, payload, write);
 }
@@ -337,21 +337,21 @@ size_t sbp_packed_size_sbp_msg_nap_device_dna_resp_t(const sbp_msg_nap_device_dn
   return packed_size;
 }
 
-bool pack_sbp_msg_nap_device_dna_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg)
+bool encode_sbp_msg_nap_device_dna_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg)
 {
   for (uint8_t i = 0; i < 8; i++)
   {
-    if (!pack_u8(ctx, &msg->dna[i])) { return false; }
+    if (!encode_u8(ctx, &msg->dna[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_nap_device_dna_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_nap_device_dna_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_nap_device_dna_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_nap_device_dna_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_nap_device_dna_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_nap_device_dna_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -360,20 +360,20 @@ s8 sbp_pack_sbp_msg_nap_device_dna_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_nap_device_dna_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_nap_device_dna_resp_t *msg)
+bool decode_sbp_msg_nap_device_dna_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_resp_t *msg)
 {
   for (uint8_t i = 0; i < 8; i++) {
-    if (!unpack_u8(ctx, &msg->dna[i])) { return false; }
+    if (!decode_u8(ctx, &msg->dna[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_nap_device_dna_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_nap_device_dna_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_nap_device_dna_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_nap_device_dna_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_nap_device_dna_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_nap_device_dna_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -385,7 +385,7 @@ s8 sbp_send_sbp_msg_nap_device_dna_resp_t(struct sbp_state *s, u16 sender_id, co
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_nap_device_dna_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_nap_device_dna_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id, payload_len, payload, write);
 }
@@ -473,18 +473,18 @@ size_t sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootlo
   return packed_size;
 }
 
-bool pack_sbp_msg_bootloader_handshake_dep_a_t(sbp_pack_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg)
+bool encode_sbp_msg_bootloader_handshake_dep_a_t(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg)
 {
   if (!sbp_unterminated_string_pack(&msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_bootloader_handshake_dep_a_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_bootloader_handshake_dep_a_t(&ctx, msg)) {
+  if (!encode_sbp_msg_bootloader_handshake_dep_a_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -493,18 +493,18 @@ s8 sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(uint8_t *buf, uint8_t len, uint
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_bootloader_handshake_dep_a_t(sbp_unpack_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg)
+bool decode_sbp_msg_bootloader_handshake_dep_a_t(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg)
 {
   if (!sbp_unterminated_string_unpack(&msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_bootloader_handshake_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_bootloader_handshake_dep_a_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_bootloader_handshake_dep_a_t(&ctx, msg)) {
+  if (!decode_sbp_msg_bootloader_handshake_dep_a_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -516,7 +516,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(struct sbp_state *s, u16 sender
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, sender_id, payload_len, payload, write);
 }

@@ -30,8 +30,8 @@ typedef struct {
 } sbp_code_biases_content_t;
 
 size_t sbp_packed_size_sbp_code_biases_content_t(const sbp_code_biases_content_t *msg);
-s8 sbp_pack_sbp_code_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_code_biases_content_t *msg);
-s8 sbp_unpack_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_code_biases_content_t *msg);
+s8 sbp_encode_sbp_code_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_code_biases_content_t *msg);
+s8 sbp_decode_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_code_biases_content_t *msg);
 
 int sbp_cmp_sbp_code_biases_content_t(const sbp_code_biases_content_t *a, const sbp_code_biases_content_t *b);
 
@@ -49,8 +49,8 @@ typedef struct {
 } sbp_phase_biases_content_t;
 
 size_t sbp_packed_size_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *msg);
-s8 sbp_pack_sbp_phase_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_phase_biases_content_t *msg);
-s8 sbp_unpack_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_phase_biases_content_t *msg);
+s8 sbp_encode_sbp_phase_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_phase_biases_content_t *msg);
+s8 sbp_decode_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_phase_biases_content_t *msg);
 
 int sbp_cmp_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *a, const sbp_phase_biases_content_t *b);
 
@@ -70,8 +70,8 @@ typedef struct {
 } sbp_stec_header_t;
 
 size_t sbp_packed_size_sbp_stec_header_t(const sbp_stec_header_t *msg);
-s8 sbp_pack_sbp_stec_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_t *msg);
-s8 sbp_unpack_sbp_stec_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_t *msg);
+s8 sbp_encode_sbp_stec_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_t *msg);
+s8 sbp_decode_sbp_stec_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_t *msg);
 
 int sbp_cmp_sbp_stec_header_t(const sbp_stec_header_t *a, const sbp_stec_header_t *b);
 
@@ -92,8 +92,8 @@ typedef struct {
 } sbp_gridded_correction_header_t;
 
 size_t sbp_packed_size_sbp_gridded_correction_header_t(const sbp_gridded_correction_header_t *msg);
-s8 sbp_pack_sbp_gridded_correction_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_t *msg);
-s8 sbp_unpack_sbp_gridded_correction_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_t *msg);
+s8 sbp_encode_sbp_gridded_correction_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_t *msg);
+s8 sbp_decode_sbp_gridded_correction_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_t *msg);
 
 int sbp_cmp_sbp_gridded_correction_header_t(const sbp_gridded_correction_header_t *a, const sbp_gridded_correction_header_t *b);
 
@@ -109,8 +109,8 @@ typedef struct {
 } sbp_stec_sat_element_t;
 
 size_t sbp_packed_size_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *msg);
-s8 sbp_pack_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_sat_element_t *msg);
-s8 sbp_unpack_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_sat_element_t *msg);
+s8 sbp_encode_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_sat_element_t *msg);
+s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_sat_element_t *msg);
 
 int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a, const sbp_stec_sat_element_t *b);
 
@@ -125,8 +125,8 @@ typedef struct {
 } sbp_tropospheric_delay_correction_no_std_t;
 
 size_t sbp_packed_size_sbp_tropospheric_delay_correction_no_std_t(const sbp_tropospheric_delay_correction_no_std_t *msg);
-s8 sbp_pack_sbp_tropospheric_delay_correction_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_no_std_t *msg);
-s8 sbp_unpack_sbp_tropospheric_delay_correction_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_no_std_t *msg);
+s8 sbp_encode_sbp_tropospheric_delay_correction_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_no_std_t *msg);
+s8 sbp_decode_sbp_tropospheric_delay_correction_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_no_std_t *msg);
 
 int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(const sbp_tropospheric_delay_correction_no_std_t *a, const sbp_tropospheric_delay_correction_no_std_t *b);
 
@@ -142,8 +142,8 @@ typedef struct {
 } sbp_tropospheric_delay_correction_t;
 
 size_t sbp_packed_size_sbp_tropospheric_delay_correction_t(const sbp_tropospheric_delay_correction_t *msg);
-s8 sbp_pack_sbp_tropospheric_delay_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_t *msg);
-s8 sbp_unpack_sbp_tropospheric_delay_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_t *msg);
+s8 sbp_encode_sbp_tropospheric_delay_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_t *msg);
+s8 sbp_decode_sbp_tropospheric_delay_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_t *msg);
 
 int sbp_cmp_sbp_tropospheric_delay_correction_t(const sbp_tropospheric_delay_correction_t *a, const sbp_tropospheric_delay_correction_t *b);
 
@@ -158,8 +158,8 @@ typedef struct {
 } sbp_stec_residual_no_std_t;
 
 size_t sbp_packed_size_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *msg);
-s8 sbp_pack_sbp_stec_residual_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_no_std_t *msg);
-s8 sbp_unpack_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_no_std_t *msg);
+s8 sbp_encode_sbp_stec_residual_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_no_std_t *msg);
+s8 sbp_decode_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_no_std_t *msg);
 
 int sbp_cmp_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *a, const sbp_stec_residual_no_std_t *b);
 
@@ -175,8 +175,8 @@ typedef struct {
 } sbp_stec_residual_t;
 
 size_t sbp_packed_size_sbp_stec_residual_t(const sbp_stec_residual_t *msg);
-s8 sbp_pack_sbp_stec_residual_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_t *msg);
-s8 sbp_unpack_sbp_stec_residual_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_t *msg);
+s8 sbp_encode_sbp_stec_residual_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_t *msg);
+s8 sbp_decode_sbp_stec_residual_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_t *msg);
 
 int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a, const sbp_stec_residual_t *b);
 
@@ -204,8 +204,8 @@ typedef struct {
 } sbp_msg_ssr_orbit_clock_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *msg);
-s8 sbp_pack_sbp_msg_ssr_orbit_clock_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_t *msg);
+s8 sbp_encode_sbp_msg_ssr_orbit_clock_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_t *msg);
+s8 sbp_decode_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_t *msg);
 s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_orbit_clock_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a, const sbp_msg_ssr_orbit_clock_t *b);
@@ -226,8 +226,8 @@ typedef struct {
 } sbp_msg_ssr_code_biases_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *msg);
-s8 sbp_pack_sbp_msg_ssr_code_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_code_biases_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_code_biases_t *msg);
+s8 sbp_encode_sbp_msg_ssr_code_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_code_biases_t *msg);
+s8 sbp_decode_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_code_biases_t *msg);
 s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_code_biases_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a, const sbp_msg_ssr_code_biases_t *b);
@@ -252,8 +252,8 @@ typedef struct {
 } sbp_msg_ssr_phase_biases_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *msg);
-s8 sbp_pack_sbp_msg_ssr_phase_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_phase_biases_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_phase_biases_t *msg);
+s8 sbp_encode_sbp_msg_ssr_phase_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_phase_biases_t *msg);
+s8 sbp_decode_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_phase_biases_t *msg);
 s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_phase_biases_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a, const sbp_msg_ssr_phase_biases_t *b);
@@ -271,8 +271,8 @@ typedef struct {
 } sbp_msg_ssr_stec_correction_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *msg);
-s8 sbp_pack_sbp_msg_ssr_stec_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_stec_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_t *msg);
+s8 sbp_encode_sbp_msg_ssr_stec_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_t *msg);
+s8 sbp_decode_sbp_msg_ssr_stec_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_t *msg);
 s8 sbp_send_sbp_msg_ssr_stec_correction_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_stec_correction_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *a, const sbp_msg_ssr_stec_correction_t *b);
@@ -292,8 +292,8 @@ typedef struct {
 } sbp_msg_ssr_gridded_correction_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *msg);
-s8 sbp_pack_sbp_msg_ssr_gridded_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_gridded_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_t *msg);
 s8 sbp_send_sbp_msg_ssr_gridded_correction_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *a, const sbp_msg_ssr_gridded_correction_t *b);
@@ -318,8 +318,8 @@ typedef struct {
 } sbp_msg_ssr_tile_definition_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *msg);
-s8 sbp_pack_sbp_msg_ssr_tile_definition_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_tile_definition_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_tile_definition_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_tile_definition_t *msg);
+s8 sbp_encode_sbp_msg_ssr_tile_definition_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_tile_definition_t *msg);
+s8 sbp_decode_sbp_msg_ssr_tile_definition_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_tile_definition_t *msg);
 s8 sbp_send_sbp_msg_ssr_tile_definition_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_tile_definition_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a, const sbp_msg_ssr_tile_definition_t *b);
@@ -369,8 +369,8 @@ typedef struct {
 } sbp_satellite_apc_t;
 
 size_t sbp_packed_size_sbp_satellite_apc_t(const sbp_satellite_apc_t *msg);
-s8 sbp_pack_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_satellite_apc_t *msg);
-s8 sbp_unpack_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_satellite_apc_t *msg);
+s8 sbp_encode_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_satellite_apc_t *msg);
+s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_satellite_apc_t *msg);
 
 int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a, const sbp_satellite_apc_t *b);
 
@@ -382,8 +382,8 @@ typedef struct {
 } sbp_msg_ssr_satellite_apc_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *msg);
-s8 sbp_pack_sbp_msg_ssr_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_satellite_apc_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_satellite_apc_t *msg);
+s8 sbp_encode_sbp_msg_ssr_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_satellite_apc_t *msg);
+s8 sbp_decode_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_satellite_apc_t *msg);
 s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_satellite_apc_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a, const sbp_msg_ssr_satellite_apc_t *b);
@@ -408,8 +408,8 @@ typedef struct {
 } sbp_msg_ssr_orbit_clock_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_orbit_clock_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_orbit_clock_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ssr_orbit_clock_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_orbit_clock_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *a, const sbp_msg_ssr_orbit_clock_dep_a_t *b);
@@ -428,8 +428,8 @@ typedef struct {
 } sbp_stec_header_dep_a_t;
 
 size_t sbp_packed_size_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *msg);
-s8 sbp_pack_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_dep_a_t *msg);
+s8 sbp_encode_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_dep_a_t *msg);
+s8 sbp_decode_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_dep_a_t *msg);
 
 int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a, const sbp_stec_header_dep_a_t *b);
 
@@ -448,8 +448,8 @@ typedef struct {
 } sbp_gridded_correction_header_dep_a_t;
 
 size_t sbp_packed_size_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_pack_sbp_gridded_correction_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_gridded_correction_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_encode_sbp_gridded_correction_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_decode_sbp_gridded_correction_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_dep_a_t *msg);
 
 int sbp_cmp_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *a, const sbp_gridded_correction_header_dep_a_t *b);
 
@@ -468,8 +468,8 @@ typedef struct {
 } sbp_grid_definition_header_dep_a_t;
 
 size_t sbp_packed_size_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_pack_sbp_grid_definition_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_unpack_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_encode_sbp_grid_definition_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_decode_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_grid_definition_header_dep_a_t *msg);
 
 int sbp_cmp_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *a, const sbp_grid_definition_header_dep_a_t *b);
 
@@ -482,8 +482,8 @@ typedef struct {
 } sbp_msg_ssr_stec_correction_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_stec_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_stec_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_stec_correction_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b);
@@ -499,8 +499,8 @@ typedef struct {
 } sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
@@ -516,8 +516,8 @@ typedef struct {
 } sbp_msg_ssr_gridded_correction_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b);
@@ -531,8 +531,8 @@ typedef struct {
 } sbp_msg_ssr_grid_definition_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_grid_definition_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_grid_definition_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_grid_definition_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ssr_grid_definition_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_grid_definition_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *a, const sbp_msg_ssr_grid_definition_dep_a_t *b);

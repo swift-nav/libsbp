@@ -92,8 +92,8 @@ typedef struct {
 ((*- endfor *))
 
 size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *msg);
-s8 sbp_pack_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.name|convert_unpacked))) *msg);
-s8 sbp_unpack_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.name|convert_unpacked))) *msg);
+s8 sbp_encode_(((m.name|convert_unpacked)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.name|convert_unpacked))) *msg);
+s8 sbp_decode_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.name|convert_unpacked))) *msg);
 ((*- if m.is_real_message *))
 s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state  *s, u16 sender_id, const (((m.name|convert_unpacked))) *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 ((*- endif *))

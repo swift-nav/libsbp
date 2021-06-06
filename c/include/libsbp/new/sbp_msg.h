@@ -238,820 +238,820 @@ typedef union {
   sbp_msg_mag_raw_t mag_raw;
 } sbp_msg_t;
 
-static inline s8 sbp_pack_msg(uint8_t *buf, uint8_t len, uint8_t *n_written, uint16_t msg_type, const sbp_msg_t *msg) {
+static inline s8 sbp_encode_msg(uint8_t *buf, uint8_t len, uint8_t *n_written, uint16_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
     case SBP_MSG_TRACKING_STATE_DETAILED_DEP_A:
-      return sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(buf, len, n_written, &msg->tracking_state_detailed_dep_a);
+      return sbp_encode_sbp_msg_tracking_state_detailed_dep_a_t(buf, len, n_written, &msg->tracking_state_detailed_dep_a);
     case SBP_MSG_TRACKING_STATE_DETAILED_DEP:
-      return sbp_pack_sbp_msg_tracking_state_detailed_dep_t(buf, len, n_written, &msg->tracking_state_detailed_dep);
+      return sbp_encode_sbp_msg_tracking_state_detailed_dep_t(buf, len, n_written, &msg->tracking_state_detailed_dep);
     case SBP_MSG_TRACKING_STATE:
-      return sbp_pack_sbp_msg_tracking_state_t(buf, len, n_written, &msg->tracking_state);
+      return sbp_encode_sbp_msg_tracking_state_t(buf, len, n_written, &msg->tracking_state);
     case SBP_MSG_MEASUREMENT_STATE:
-      return sbp_pack_sbp_msg_measurement_state_t(buf, len, n_written, &msg->measurement_state);
+      return sbp_encode_sbp_msg_measurement_state_t(buf, len, n_written, &msg->measurement_state);
     case SBP_MSG_TRACKING_IQ:
-      return sbp_pack_sbp_msg_tracking_iq_t(buf, len, n_written, &msg->tracking_iq);
+      return sbp_encode_sbp_msg_tracking_iq_t(buf, len, n_written, &msg->tracking_iq);
     case SBP_MSG_TRACKING_IQ_DEP_B:
-      return sbp_pack_sbp_msg_tracking_iq_dep_b_t(buf, len, n_written, &msg->tracking_iq_dep_b);
+      return sbp_encode_sbp_msg_tracking_iq_dep_b_t(buf, len, n_written, &msg->tracking_iq_dep_b);
     case SBP_MSG_TRACKING_IQ_DEP_A:
-      return sbp_pack_sbp_msg_tracking_iq_dep_a_t(buf, len, n_written, &msg->tracking_iq_dep_a);
+      return sbp_encode_sbp_msg_tracking_iq_dep_a_t(buf, len, n_written, &msg->tracking_iq_dep_a);
     case SBP_MSG_TRACKING_STATE_DEP_A:
-      return sbp_pack_sbp_msg_tracking_state_dep_a_t(buf, len, n_written, &msg->tracking_state_dep_a);
+      return sbp_encode_sbp_msg_tracking_state_dep_a_t(buf, len, n_written, &msg->tracking_state_dep_a);
     case SBP_MSG_TRACKING_STATE_DEP_B:
-      return sbp_pack_sbp_msg_tracking_state_dep_b_t(buf, len, n_written, &msg->tracking_state_dep_b);
+      return sbp_encode_sbp_msg_tracking_state_dep_b_t(buf, len, n_written, &msg->tracking_state_dep_b);
     case SBP_MSG_SETTINGS_SAVE:
-      return sbp_pack_sbp_msg_settings_save_t(buf, len, n_written, &msg->settings_save);
+      return sbp_encode_sbp_msg_settings_save_t(buf, len, n_written, &msg->settings_save);
     case SBP_MSG_SETTINGS_WRITE:
-      return sbp_pack_sbp_msg_settings_write_t(buf, len, n_written, &msg->settings_write);
+      return sbp_encode_sbp_msg_settings_write_t(buf, len, n_written, &msg->settings_write);
     case SBP_MSG_SETTINGS_WRITE_RESP:
-      return sbp_pack_sbp_msg_settings_write_resp_t(buf, len, n_written, &msg->settings_write_resp);
+      return sbp_encode_sbp_msg_settings_write_resp_t(buf, len, n_written, &msg->settings_write_resp);
     case SBP_MSG_SETTINGS_READ_REQ:
-      return sbp_pack_sbp_msg_settings_read_req_t(buf, len, n_written, &msg->settings_read_req);
+      return sbp_encode_sbp_msg_settings_read_req_t(buf, len, n_written, &msg->settings_read_req);
     case SBP_MSG_SETTINGS_READ_RESP:
-      return sbp_pack_sbp_msg_settings_read_resp_t(buf, len, n_written, &msg->settings_read_resp);
+      return sbp_encode_sbp_msg_settings_read_resp_t(buf, len, n_written, &msg->settings_read_resp);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_REQ:
-      return sbp_pack_sbp_msg_settings_read_by_index_req_t(buf, len, n_written, &msg->settings_read_by_index_req);
+      return sbp_encode_sbp_msg_settings_read_by_index_req_t(buf, len, n_written, &msg->settings_read_by_index_req);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_RESP:
-      return sbp_pack_sbp_msg_settings_read_by_index_resp_t(buf, len, n_written, &msg->settings_read_by_index_resp);
+      return sbp_encode_sbp_msg_settings_read_by_index_resp_t(buf, len, n_written, &msg->settings_read_by_index_resp);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_DONE:
-      return sbp_pack_sbp_msg_settings_read_by_index_done_t(buf, len, n_written, &msg->settings_read_by_index_done);
+      return sbp_encode_sbp_msg_settings_read_by_index_done_t(buf, len, n_written, &msg->settings_read_by_index_done);
     case SBP_MSG_SETTINGS_REGISTER:
-      return sbp_pack_sbp_msg_settings_register_t(buf, len, n_written, &msg->settings_register);
+      return sbp_encode_sbp_msg_settings_register_t(buf, len, n_written, &msg->settings_register);
     case SBP_MSG_SETTINGS_REGISTER_RESP:
-      return sbp_pack_sbp_msg_settings_register_resp_t(buf, len, n_written, &msg->settings_register_resp);
+      return sbp_encode_sbp_msg_settings_register_resp_t(buf, len, n_written, &msg->settings_register_resp);
     case SBP_MSG_SSR_ORBIT_CLOCK:
-      return sbp_pack_sbp_msg_ssr_orbit_clock_t(buf, len, n_written, &msg->ssr_orbit_clock);
+      return sbp_encode_sbp_msg_ssr_orbit_clock_t(buf, len, n_written, &msg->ssr_orbit_clock);
     case SBP_MSG_SSR_CODE_BIASES:
-      return sbp_pack_sbp_msg_ssr_code_biases_t(buf, len, n_written, &msg->ssr_code_biases);
+      return sbp_encode_sbp_msg_ssr_code_biases_t(buf, len, n_written, &msg->ssr_code_biases);
     case SBP_MSG_SSR_PHASE_BIASES:
-      return sbp_pack_sbp_msg_ssr_phase_biases_t(buf, len, n_written, &msg->ssr_phase_biases);
+      return sbp_encode_sbp_msg_ssr_phase_biases_t(buf, len, n_written, &msg->ssr_phase_biases);
     case SBP_MSG_SSR_STEC_CORRECTION:
-      return sbp_pack_sbp_msg_ssr_stec_correction_t(buf, len, n_written, &msg->ssr_stec_correction);
+      return sbp_encode_sbp_msg_ssr_stec_correction_t(buf, len, n_written, &msg->ssr_stec_correction);
     case SBP_MSG_SSR_GRIDDED_CORRECTION:
-      return sbp_pack_sbp_msg_ssr_gridded_correction_t(buf, len, n_written, &msg->ssr_gridded_correction);
+      return sbp_encode_sbp_msg_ssr_gridded_correction_t(buf, len, n_written, &msg->ssr_gridded_correction);
     case SBP_MSG_SSR_TILE_DEFINITION:
-      return sbp_pack_sbp_msg_ssr_tile_definition_t(buf, len, n_written, &msg->ssr_tile_definition);
+      return sbp_encode_sbp_msg_ssr_tile_definition_t(buf, len, n_written, &msg->ssr_tile_definition);
     case SBP_MSG_SSR_SATELLITE_APC:
-      return sbp_pack_sbp_msg_ssr_satellite_apc_t(buf, len, n_written, &msg->ssr_satellite_apc);
+      return sbp_encode_sbp_msg_ssr_satellite_apc_t(buf, len, n_written, &msg->ssr_satellite_apc);
     case SBP_MSG_SSR_ORBIT_CLOCK_DEP_A:
-      return sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(buf, len, n_written, &msg->ssr_orbit_clock_dep_a);
+      return sbp_encode_sbp_msg_ssr_orbit_clock_dep_a_t(buf, len, n_written, &msg->ssr_orbit_clock_dep_a);
     case SBP_MSG_SSR_STEC_CORRECTION_DEP_A:
-      return sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(buf, len, n_written, &msg->ssr_stec_correction_dep_a);
+      return sbp_encode_sbp_msg_ssr_stec_correction_dep_a_t(buf, len, n_written, &msg->ssr_stec_correction_dep_a);
     case SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A:
-      return sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(buf, len, n_written, &msg->ssr_gridded_correction_no_std_dep_a);
+      return sbp_encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(buf, len, n_written, &msg->ssr_gridded_correction_no_std_dep_a);
     case SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A:
-      return sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(buf, len, n_written, &msg->ssr_gridded_correction_dep_a);
+      return sbp_encode_sbp_msg_ssr_gridded_correction_dep_a_t(buf, len, n_written, &msg->ssr_gridded_correction_dep_a);
     case SBP_MSG_SSR_GRID_DEFINITION_DEP_A:
-      return sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(buf, len, n_written, &msg->ssr_grid_definition_dep_a);
+      return sbp_encode_sbp_msg_ssr_grid_definition_dep_a_t(buf, len, n_written, &msg->ssr_grid_definition_dep_a);
     case SBP_MSG_EXT_EVENT:
-      return sbp_pack_sbp_msg_ext_event_t(buf, len, n_written, &msg->ext_event);
+      return sbp_encode_sbp_msg_ext_event_t(buf, len, n_written, &msg->ext_event);
     case SBP_MSG_ODOMETRY:
-      return sbp_pack_sbp_msg_odometry_t(buf, len, n_written, &msg->odometry);
+      return sbp_encode_sbp_msg_odometry_t(buf, len, n_written, &msg->odometry);
     case SBP_MSG_WHEELTICK:
-      return sbp_pack_sbp_msg_wheeltick_t(buf, len, n_written, &msg->wheeltick);
+      return sbp_encode_sbp_msg_wheeltick_t(buf, len, n_written, &msg->wheeltick);
     case SBP_MSG_USER_DATA:
-      return sbp_pack_sbp_msg_user_data_t(buf, len, n_written, &msg->user_data);
+      return sbp_encode_sbp_msg_user_data_t(buf, len, n_written, &msg->user_data);
     case SBP_MSG_LINUX_CPU_STATE_DEP_A:
-      return sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(buf, len, n_written, &msg->linux_cpu_state_dep_a);
+      return sbp_encode_sbp_msg_linux_cpu_state_dep_a_t(buf, len, n_written, &msg->linux_cpu_state_dep_a);
     case SBP_MSG_LINUX_MEM_STATE_DEP_A:
-      return sbp_pack_sbp_msg_linux_mem_state_dep_a_t(buf, len, n_written, &msg->linux_mem_state_dep_a);
+      return sbp_encode_sbp_msg_linux_mem_state_dep_a_t(buf, len, n_written, &msg->linux_mem_state_dep_a);
     case SBP_MSG_LINUX_SYS_STATE_DEP_A:
-      return sbp_pack_sbp_msg_linux_sys_state_dep_a_t(buf, len, n_written, &msg->linux_sys_state_dep_a);
+      return sbp_encode_sbp_msg_linux_sys_state_dep_a_t(buf, len, n_written, &msg->linux_sys_state_dep_a);
     case SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS:
-      return sbp_pack_sbp_msg_linux_process_socket_counts_t(buf, len, n_written, &msg->linux_process_socket_counts);
+      return sbp_encode_sbp_msg_linux_process_socket_counts_t(buf, len, n_written, &msg->linux_process_socket_counts);
     case SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES:
-      return sbp_pack_sbp_msg_linux_process_socket_queues_t(buf, len, n_written, &msg->linux_process_socket_queues);
+      return sbp_encode_sbp_msg_linux_process_socket_queues_t(buf, len, n_written, &msg->linux_process_socket_queues);
     case SBP_MSG_LINUX_SOCKET_USAGE:
-      return sbp_pack_sbp_msg_linux_socket_usage_t(buf, len, n_written, &msg->linux_socket_usage);
+      return sbp_encode_sbp_msg_linux_socket_usage_t(buf, len, n_written, &msg->linux_socket_usage);
     case SBP_MSG_LINUX_PROCESS_FD_COUNT:
-      return sbp_pack_sbp_msg_linux_process_fd_count_t(buf, len, n_written, &msg->linux_process_fd_count);
+      return sbp_encode_sbp_msg_linux_process_fd_count_t(buf, len, n_written, &msg->linux_process_fd_count);
     case SBP_MSG_LINUX_PROCESS_FD_SUMMARY:
-      return sbp_pack_sbp_msg_linux_process_fd_summary_t(buf, len, n_written, &msg->linux_process_fd_summary);
+      return sbp_encode_sbp_msg_linux_process_fd_summary_t(buf, len, n_written, &msg->linux_process_fd_summary);
     case SBP_MSG_LINUX_CPU_STATE:
-      return sbp_pack_sbp_msg_linux_cpu_state_t(buf, len, n_written, &msg->linux_cpu_state);
+      return sbp_encode_sbp_msg_linux_cpu_state_t(buf, len, n_written, &msg->linux_cpu_state);
     case SBP_MSG_LINUX_MEM_STATE:
-      return sbp_pack_sbp_msg_linux_mem_state_t(buf, len, n_written, &msg->linux_mem_state);
+      return sbp_encode_sbp_msg_linux_mem_state_t(buf, len, n_written, &msg->linux_mem_state);
     case SBP_MSG_LINUX_SYS_STATE:
-      return sbp_pack_sbp_msg_linux_sys_state_t(buf, len, n_written, &msg->linux_sys_state);
+      return sbp_encode_sbp_msg_linux_sys_state_t(buf, len, n_written, &msg->linux_sys_state);
     case SBP_MSG_GPS_TIME:
-      return sbp_pack_sbp_msg_gps_time_t(buf, len, n_written, &msg->gps_time);
+      return sbp_encode_sbp_msg_gps_time_t(buf, len, n_written, &msg->gps_time);
     case SBP_MSG_GPS_TIME_GNSS:
-      return sbp_pack_sbp_msg_gps_time_gnss_t(buf, len, n_written, &msg->gps_time_gnss);
+      return sbp_encode_sbp_msg_gps_time_gnss_t(buf, len, n_written, &msg->gps_time_gnss);
     case SBP_MSG_UTC_TIME:
-      return sbp_pack_sbp_msg_utc_time_t(buf, len, n_written, &msg->utc_time);
+      return sbp_encode_sbp_msg_utc_time_t(buf, len, n_written, &msg->utc_time);
     case SBP_MSG_UTC_TIME_GNSS:
-      return sbp_pack_sbp_msg_utc_time_gnss_t(buf, len, n_written, &msg->utc_time_gnss);
+      return sbp_encode_sbp_msg_utc_time_gnss_t(buf, len, n_written, &msg->utc_time_gnss);
     case SBP_MSG_DOPS:
-      return sbp_pack_sbp_msg_dops_t(buf, len, n_written, &msg->dops);
+      return sbp_encode_sbp_msg_dops_t(buf, len, n_written, &msg->dops);
     case SBP_MSG_POS_ECEF:
-      return sbp_pack_sbp_msg_pos_ecef_t(buf, len, n_written, &msg->pos_ecef);
+      return sbp_encode_sbp_msg_pos_ecef_t(buf, len, n_written, &msg->pos_ecef);
     case SBP_MSG_POS_ECEF_COV:
-      return sbp_pack_sbp_msg_pos_ecef_cov_t(buf, len, n_written, &msg->pos_ecef_cov);
+      return sbp_encode_sbp_msg_pos_ecef_cov_t(buf, len, n_written, &msg->pos_ecef_cov);
     case SBP_MSG_POS_LLH:
-      return sbp_pack_sbp_msg_pos_llh_t(buf, len, n_written, &msg->pos_llh);
+      return sbp_encode_sbp_msg_pos_llh_t(buf, len, n_written, &msg->pos_llh);
     case SBP_MSG_POS_LLH_COV:
-      return sbp_pack_sbp_msg_pos_llh_cov_t(buf, len, n_written, &msg->pos_llh_cov);
+      return sbp_encode_sbp_msg_pos_llh_cov_t(buf, len, n_written, &msg->pos_llh_cov);
     case SBP_MSG_BASELINE_ECEF:
-      return sbp_pack_sbp_msg_baseline_ecef_t(buf, len, n_written, &msg->baseline_ecef);
+      return sbp_encode_sbp_msg_baseline_ecef_t(buf, len, n_written, &msg->baseline_ecef);
     case SBP_MSG_BASELINE_NED:
-      return sbp_pack_sbp_msg_baseline_ned_t(buf, len, n_written, &msg->baseline_ned);
+      return sbp_encode_sbp_msg_baseline_ned_t(buf, len, n_written, &msg->baseline_ned);
     case SBP_MSG_VEL_ECEF:
-      return sbp_pack_sbp_msg_vel_ecef_t(buf, len, n_written, &msg->vel_ecef);
+      return sbp_encode_sbp_msg_vel_ecef_t(buf, len, n_written, &msg->vel_ecef);
     case SBP_MSG_VEL_ECEF_COV:
-      return sbp_pack_sbp_msg_vel_ecef_cov_t(buf, len, n_written, &msg->vel_ecef_cov);
+      return sbp_encode_sbp_msg_vel_ecef_cov_t(buf, len, n_written, &msg->vel_ecef_cov);
     case SBP_MSG_VEL_NED:
-      return sbp_pack_sbp_msg_vel_ned_t(buf, len, n_written, &msg->vel_ned);
+      return sbp_encode_sbp_msg_vel_ned_t(buf, len, n_written, &msg->vel_ned);
     case SBP_MSG_VEL_NED_COV:
-      return sbp_pack_sbp_msg_vel_ned_cov_t(buf, len, n_written, &msg->vel_ned_cov);
+      return sbp_encode_sbp_msg_vel_ned_cov_t(buf, len, n_written, &msg->vel_ned_cov);
     case SBP_MSG_POS_ECEF_GNSS:
-      return sbp_pack_sbp_msg_pos_ecef_gnss_t(buf, len, n_written, &msg->pos_ecef_gnss);
+      return sbp_encode_sbp_msg_pos_ecef_gnss_t(buf, len, n_written, &msg->pos_ecef_gnss);
     case SBP_MSG_POS_ECEF_COV_GNSS:
-      return sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(buf, len, n_written, &msg->pos_ecef_cov_gnss);
+      return sbp_encode_sbp_msg_pos_ecef_cov_gnss_t(buf, len, n_written, &msg->pos_ecef_cov_gnss);
     case SBP_MSG_POS_LLH_GNSS:
-      return sbp_pack_sbp_msg_pos_llh_gnss_t(buf, len, n_written, &msg->pos_llh_gnss);
+      return sbp_encode_sbp_msg_pos_llh_gnss_t(buf, len, n_written, &msg->pos_llh_gnss);
     case SBP_MSG_POS_LLH_COV_GNSS:
-      return sbp_pack_sbp_msg_pos_llh_cov_gnss_t(buf, len, n_written, &msg->pos_llh_cov_gnss);
+      return sbp_encode_sbp_msg_pos_llh_cov_gnss_t(buf, len, n_written, &msg->pos_llh_cov_gnss);
     case SBP_MSG_VEL_ECEF_GNSS:
-      return sbp_pack_sbp_msg_vel_ecef_gnss_t(buf, len, n_written, &msg->vel_ecef_gnss);
+      return sbp_encode_sbp_msg_vel_ecef_gnss_t(buf, len, n_written, &msg->vel_ecef_gnss);
     case SBP_MSG_VEL_ECEF_COV_GNSS:
-      return sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(buf, len, n_written, &msg->vel_ecef_cov_gnss);
+      return sbp_encode_sbp_msg_vel_ecef_cov_gnss_t(buf, len, n_written, &msg->vel_ecef_cov_gnss);
     case SBP_MSG_VEL_NED_GNSS:
-      return sbp_pack_sbp_msg_vel_ned_gnss_t(buf, len, n_written, &msg->vel_ned_gnss);
+      return sbp_encode_sbp_msg_vel_ned_gnss_t(buf, len, n_written, &msg->vel_ned_gnss);
     case SBP_MSG_VEL_NED_COV_GNSS:
-      return sbp_pack_sbp_msg_vel_ned_cov_gnss_t(buf, len, n_written, &msg->vel_ned_cov_gnss);
+      return sbp_encode_sbp_msg_vel_ned_cov_gnss_t(buf, len, n_written, &msg->vel_ned_cov_gnss);
     case SBP_MSG_VEL_BODY:
-      return sbp_pack_sbp_msg_vel_body_t(buf, len, n_written, &msg->vel_body);
+      return sbp_encode_sbp_msg_vel_body_t(buf, len, n_written, &msg->vel_body);
     case SBP_MSG_AGE_CORRECTIONS:
-      return sbp_pack_sbp_msg_age_corrections_t(buf, len, n_written, &msg->age_corrections);
+      return sbp_encode_sbp_msg_age_corrections_t(buf, len, n_written, &msg->age_corrections);
     case SBP_MSG_GPS_TIME_DEP_A:
-      return sbp_pack_sbp_msg_gps_time_dep_a_t(buf, len, n_written, &msg->gps_time_dep_a);
+      return sbp_encode_sbp_msg_gps_time_dep_a_t(buf, len, n_written, &msg->gps_time_dep_a);
     case SBP_MSG_DOPS_DEP_A:
-      return sbp_pack_sbp_msg_dops_dep_a_t(buf, len, n_written, &msg->dops_dep_a);
+      return sbp_encode_sbp_msg_dops_dep_a_t(buf, len, n_written, &msg->dops_dep_a);
     case SBP_MSG_POS_ECEF_DEP_A:
-      return sbp_pack_sbp_msg_pos_ecef_dep_a_t(buf, len, n_written, &msg->pos_ecef_dep_a);
+      return sbp_encode_sbp_msg_pos_ecef_dep_a_t(buf, len, n_written, &msg->pos_ecef_dep_a);
     case SBP_MSG_POS_LLH_DEP_A:
-      return sbp_pack_sbp_msg_pos_llh_dep_a_t(buf, len, n_written, &msg->pos_llh_dep_a);
+      return sbp_encode_sbp_msg_pos_llh_dep_a_t(buf, len, n_written, &msg->pos_llh_dep_a);
     case SBP_MSG_BASELINE_ECEF_DEP_A:
-      return sbp_pack_sbp_msg_baseline_ecef_dep_a_t(buf, len, n_written, &msg->baseline_ecef_dep_a);
+      return sbp_encode_sbp_msg_baseline_ecef_dep_a_t(buf, len, n_written, &msg->baseline_ecef_dep_a);
     case SBP_MSG_BASELINE_NED_DEP_A:
-      return sbp_pack_sbp_msg_baseline_ned_dep_a_t(buf, len, n_written, &msg->baseline_ned_dep_a);
+      return sbp_encode_sbp_msg_baseline_ned_dep_a_t(buf, len, n_written, &msg->baseline_ned_dep_a);
     case SBP_MSG_VEL_ECEF_DEP_A:
-      return sbp_pack_sbp_msg_vel_ecef_dep_a_t(buf, len, n_written, &msg->vel_ecef_dep_a);
+      return sbp_encode_sbp_msg_vel_ecef_dep_a_t(buf, len, n_written, &msg->vel_ecef_dep_a);
     case SBP_MSG_VEL_NED_DEP_A:
-      return sbp_pack_sbp_msg_vel_ned_dep_a_t(buf, len, n_written, &msg->vel_ned_dep_a);
+      return sbp_encode_sbp_msg_vel_ned_dep_a_t(buf, len, n_written, &msg->vel_ned_dep_a);
     case SBP_MSG_BASELINE_HEADING_DEP_A:
-      return sbp_pack_sbp_msg_baseline_heading_dep_a_t(buf, len, n_written, &msg->baseline_heading_dep_a);
+      return sbp_encode_sbp_msg_baseline_heading_dep_a_t(buf, len, n_written, &msg->baseline_heading_dep_a);
     case SBP_MSG_PROTECTION_LEVEL_DEP_A:
-      return sbp_pack_sbp_msg_protection_level_dep_a_t(buf, len, n_written, &msg->protection_level_dep_a);
+      return sbp_encode_sbp_msg_protection_level_dep_a_t(buf, len, n_written, &msg->protection_level_dep_a);
     case SBP_MSG_PROTECTION_LEVEL:
-      return sbp_pack_sbp_msg_protection_level_t(buf, len, n_written, &msg->protection_level);
+      return sbp_encode_sbp_msg_protection_level_t(buf, len, n_written, &msg->protection_level);
     case SBP_MSG_FILEIO_READ_REQ:
-      return sbp_pack_sbp_msg_fileio_read_req_t(buf, len, n_written, &msg->fileio_read_req);
+      return sbp_encode_sbp_msg_fileio_read_req_t(buf, len, n_written, &msg->fileio_read_req);
     case SBP_MSG_FILEIO_READ_RESP:
-      return sbp_pack_sbp_msg_fileio_read_resp_t(buf, len, n_written, &msg->fileio_read_resp);
+      return sbp_encode_sbp_msg_fileio_read_resp_t(buf, len, n_written, &msg->fileio_read_resp);
     case SBP_MSG_FILEIO_READ_DIR_REQ:
-      return sbp_pack_sbp_msg_fileio_read_dir_req_t(buf, len, n_written, &msg->fileio_read_dir_req);
+      return sbp_encode_sbp_msg_fileio_read_dir_req_t(buf, len, n_written, &msg->fileio_read_dir_req);
     case SBP_MSG_FILEIO_READ_DIR_RESP:
-      return sbp_pack_sbp_msg_fileio_read_dir_resp_t(buf, len, n_written, &msg->fileio_read_dir_resp);
+      return sbp_encode_sbp_msg_fileio_read_dir_resp_t(buf, len, n_written, &msg->fileio_read_dir_resp);
     case SBP_MSG_FILEIO_REMOVE:
-      return sbp_pack_sbp_msg_fileio_remove_t(buf, len, n_written, &msg->fileio_remove);
+      return sbp_encode_sbp_msg_fileio_remove_t(buf, len, n_written, &msg->fileio_remove);
     case SBP_MSG_FILEIO_WRITE_REQ:
-      return sbp_pack_sbp_msg_fileio_write_req_t(buf, len, n_written, &msg->fileio_write_req);
+      return sbp_encode_sbp_msg_fileio_write_req_t(buf, len, n_written, &msg->fileio_write_req);
     case SBP_MSG_FILEIO_WRITE_RESP:
-      return sbp_pack_sbp_msg_fileio_write_resp_t(buf, len, n_written, &msg->fileio_write_resp);
+      return sbp_encode_sbp_msg_fileio_write_resp_t(buf, len, n_written, &msg->fileio_write_resp);
     case SBP_MSG_FILEIO_CONFIG_REQ:
-      return sbp_pack_sbp_msg_fileio_config_req_t(buf, len, n_written, &msg->fileio_config_req);
+      return sbp_encode_sbp_msg_fileio_config_req_t(buf, len, n_written, &msg->fileio_config_req);
     case SBP_MSG_FILEIO_CONFIG_RESP:
-      return sbp_pack_sbp_msg_fileio_config_resp_t(buf, len, n_written, &msg->fileio_config_resp);
+      return sbp_encode_sbp_msg_fileio_config_resp_t(buf, len, n_written, &msg->fileio_config_resp);
     case SBP_MSG_LOG:
-      return sbp_pack_sbp_msg_log_t(buf, len, n_written, &msg->log);
+      return sbp_encode_sbp_msg_log_t(buf, len, n_written, &msg->log);
     case SBP_MSG_FWD:
-      return sbp_pack_sbp_msg_fwd_t(buf, len, n_written, &msg->fwd);
+      return sbp_encode_sbp_msg_fwd_t(buf, len, n_written, &msg->fwd);
     case SBP_MSG_PRINT_DEP:
-      return sbp_pack_sbp_msg_print_dep_t(buf, len, n_written, &msg->print_dep);
+      return sbp_encode_sbp_msg_print_dep_t(buf, len, n_written, &msg->print_dep);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_REQ:
-      return sbp_pack_sbp_msg_bootloader_handshake_req_t(buf, len, n_written, &msg->bootloader_handshake_req);
+      return sbp_encode_sbp_msg_bootloader_handshake_req_t(buf, len, n_written, &msg->bootloader_handshake_req);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_RESP:
-      return sbp_pack_sbp_msg_bootloader_handshake_resp_t(buf, len, n_written, &msg->bootloader_handshake_resp);
+      return sbp_encode_sbp_msg_bootloader_handshake_resp_t(buf, len, n_written, &msg->bootloader_handshake_resp);
     case SBP_MSG_BOOTLOADER_JUMP_TO_APP:
-      return sbp_pack_sbp_msg_bootloader_jump_to_app_t(buf, len, n_written, &msg->bootloader_jump_to_app);
+      return sbp_encode_sbp_msg_bootloader_jump_to_app_t(buf, len, n_written, &msg->bootloader_jump_to_app);
     case SBP_MSG_NAP_DEVICE_DNA_REQ:
-      return sbp_pack_sbp_msg_nap_device_dna_req_t(buf, len, n_written, &msg->nap_device_dna_req);
+      return sbp_encode_sbp_msg_nap_device_dna_req_t(buf, len, n_written, &msg->nap_device_dna_req);
     case SBP_MSG_NAP_DEVICE_DNA_RESP:
-      return sbp_pack_sbp_msg_nap_device_dna_resp_t(buf, len, n_written, &msg->nap_device_dna_resp);
+      return sbp_encode_sbp_msg_nap_device_dna_resp_t(buf, len, n_written, &msg->nap_device_dna_resp);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A:
-      return sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(buf, len, n_written, &msg->bootloader_handshake_dep_a);
+      return sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(buf, len, n_written, &msg->bootloader_handshake_dep_a);
     case SBP_MSG_STARTUP:
-      return sbp_pack_sbp_msg_startup_t(buf, len, n_written, &msg->startup);
+      return sbp_encode_sbp_msg_startup_t(buf, len, n_written, &msg->startup);
     case SBP_MSG_DGNSS_STATUS:
-      return sbp_pack_sbp_msg_dgnss_status_t(buf, len, n_written, &msg->dgnss_status);
+      return sbp_encode_sbp_msg_dgnss_status_t(buf, len, n_written, &msg->dgnss_status);
     case SBP_MSG_HEARTBEAT:
-      return sbp_pack_sbp_msg_heartbeat_t(buf, len, n_written, &msg->heartbeat);
+      return sbp_encode_sbp_msg_heartbeat_t(buf, len, n_written, &msg->heartbeat);
     case SBP_MSG_STATUS_REPORT:
-      return sbp_pack_sbp_msg_status_report_t(buf, len, n_written, &msg->status_report);
+      return sbp_encode_sbp_msg_status_report_t(buf, len, n_written, &msg->status_report);
     case SBP_MSG_INS_STATUS:
-      return sbp_pack_sbp_msg_ins_status_t(buf, len, n_written, &msg->ins_status);
+      return sbp_encode_sbp_msg_ins_status_t(buf, len, n_written, &msg->ins_status);
     case SBP_MSG_CSAC_TELEMETRY:
-      return sbp_pack_sbp_msg_csac_telemetry_t(buf, len, n_written, &msg->csac_telemetry);
+      return sbp_encode_sbp_msg_csac_telemetry_t(buf, len, n_written, &msg->csac_telemetry);
     case SBP_MSG_CSAC_TELEMETRY_LABELS:
-      return sbp_pack_sbp_msg_csac_telemetry_labels_t(buf, len, n_written, &msg->csac_telemetry_labels);
+      return sbp_encode_sbp_msg_csac_telemetry_labels_t(buf, len, n_written, &msg->csac_telemetry_labels);
     case SBP_MSG_INS_UPDATES:
-      return sbp_pack_sbp_msg_ins_updates_t(buf, len, n_written, &msg->ins_updates);
+      return sbp_encode_sbp_msg_ins_updates_t(buf, len, n_written, &msg->ins_updates);
     case SBP_MSG_GNSS_TIME_OFFSET:
-      return sbp_pack_sbp_msg_gnss_time_offset_t(buf, len, n_written, &msg->gnss_time_offset);
+      return sbp_encode_sbp_msg_gnss_time_offset_t(buf, len, n_written, &msg->gnss_time_offset);
     case SBP_MSG_PPS_TIME:
-      return sbp_pack_sbp_msg_pps_time_t(buf, len, n_written, &msg->pps_time);
+      return sbp_encode_sbp_msg_pps_time_t(buf, len, n_written, &msg->pps_time);
     case SBP_MSG_GROUP_META:
-      return sbp_pack_sbp_msg_group_meta_t(buf, len, n_written, &msg->group_meta);
+      return sbp_encode_sbp_msg_group_meta_t(buf, len, n_written, &msg->group_meta);
     case SBP_MSG_OBS:
-      return sbp_pack_sbp_msg_obs_t(buf, len, n_written, &msg->obs);
+      return sbp_encode_sbp_msg_obs_t(buf, len, n_written, &msg->obs);
     case SBP_MSG_BASE_POS_LLH:
-      return sbp_pack_sbp_msg_base_pos_llh_t(buf, len, n_written, &msg->base_pos_llh);
+      return sbp_encode_sbp_msg_base_pos_llh_t(buf, len, n_written, &msg->base_pos_llh);
     case SBP_MSG_BASE_POS_ECEF:
-      return sbp_pack_sbp_msg_base_pos_ecef_t(buf, len, n_written, &msg->base_pos_ecef);
+      return sbp_encode_sbp_msg_base_pos_ecef_t(buf, len, n_written, &msg->base_pos_ecef);
     case SBP_MSG_EPHEMERIS_GPS_DEP_E:
-      return sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(buf, len, n_written, &msg->ephemeris_gps_dep_e);
+      return sbp_encode_sbp_msg_ephemeris_gps_dep_e_t(buf, len, n_written, &msg->ephemeris_gps_dep_e);
     case SBP_MSG_EPHEMERIS_GPS_DEP_F:
-      return sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(buf, len, n_written, &msg->ephemeris_gps_dep_f);
+      return sbp_encode_sbp_msg_ephemeris_gps_dep_f_t(buf, len, n_written, &msg->ephemeris_gps_dep_f);
     case SBP_MSG_EPHEMERIS_GPS:
-      return sbp_pack_sbp_msg_ephemeris_gps_t(buf, len, n_written, &msg->ephemeris_gps);
+      return sbp_encode_sbp_msg_ephemeris_gps_t(buf, len, n_written, &msg->ephemeris_gps);
     case SBP_MSG_EPHEMERIS_QZSS:
-      return sbp_pack_sbp_msg_ephemeris_qzss_t(buf, len, n_written, &msg->ephemeris_qzss);
+      return sbp_encode_sbp_msg_ephemeris_qzss_t(buf, len, n_written, &msg->ephemeris_qzss);
     case SBP_MSG_EPHEMERIS_BDS:
-      return sbp_pack_sbp_msg_ephemeris_bds_t(buf, len, n_written, &msg->ephemeris_bds);
+      return sbp_encode_sbp_msg_ephemeris_bds_t(buf, len, n_written, &msg->ephemeris_bds);
     case SBP_MSG_EPHEMERIS_GAL_DEP_A:
-      return sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(buf, len, n_written, &msg->ephemeris_gal_dep_a);
+      return sbp_encode_sbp_msg_ephemeris_gal_dep_a_t(buf, len, n_written, &msg->ephemeris_gal_dep_a);
     case SBP_MSG_EPHEMERIS_GAL:
-      return sbp_pack_sbp_msg_ephemeris_gal_t(buf, len, n_written, &msg->ephemeris_gal);
+      return sbp_encode_sbp_msg_ephemeris_gal_t(buf, len, n_written, &msg->ephemeris_gal);
     case SBP_MSG_EPHEMERIS_SBAS_DEP_A:
-      return sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(buf, len, n_written, &msg->ephemeris_sbas_dep_a);
+      return sbp_encode_sbp_msg_ephemeris_sbas_dep_a_t(buf, len, n_written, &msg->ephemeris_sbas_dep_a);
     case SBP_MSG_EPHEMERIS_GLO_DEP_A:
-      return sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(buf, len, n_written, &msg->ephemeris_glo_dep_a);
+      return sbp_encode_sbp_msg_ephemeris_glo_dep_a_t(buf, len, n_written, &msg->ephemeris_glo_dep_a);
     case SBP_MSG_EPHEMERIS_SBAS_DEP_B:
-      return sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(buf, len, n_written, &msg->ephemeris_sbas_dep_b);
+      return sbp_encode_sbp_msg_ephemeris_sbas_dep_b_t(buf, len, n_written, &msg->ephemeris_sbas_dep_b);
     case SBP_MSG_EPHEMERIS_SBAS:
-      return sbp_pack_sbp_msg_ephemeris_sbas_t(buf, len, n_written, &msg->ephemeris_sbas);
+      return sbp_encode_sbp_msg_ephemeris_sbas_t(buf, len, n_written, &msg->ephemeris_sbas);
     case SBP_MSG_EPHEMERIS_GLO_DEP_B:
-      return sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(buf, len, n_written, &msg->ephemeris_glo_dep_b);
+      return sbp_encode_sbp_msg_ephemeris_glo_dep_b_t(buf, len, n_written, &msg->ephemeris_glo_dep_b);
     case SBP_MSG_EPHEMERIS_GLO_DEP_C:
-      return sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(buf, len, n_written, &msg->ephemeris_glo_dep_c);
+      return sbp_encode_sbp_msg_ephemeris_glo_dep_c_t(buf, len, n_written, &msg->ephemeris_glo_dep_c);
     case SBP_MSG_EPHEMERIS_GLO_DEP_D:
-      return sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(buf, len, n_written, &msg->ephemeris_glo_dep_d);
+      return sbp_encode_sbp_msg_ephemeris_glo_dep_d_t(buf, len, n_written, &msg->ephemeris_glo_dep_d);
     case SBP_MSG_EPHEMERIS_GLO:
-      return sbp_pack_sbp_msg_ephemeris_glo_t(buf, len, n_written, &msg->ephemeris_glo);
+      return sbp_encode_sbp_msg_ephemeris_glo_t(buf, len, n_written, &msg->ephemeris_glo);
     case SBP_MSG_EPHEMERIS_DEP_D:
-      return sbp_pack_sbp_msg_ephemeris_dep_d_t(buf, len, n_written, &msg->ephemeris_dep_d);
+      return sbp_encode_sbp_msg_ephemeris_dep_d_t(buf, len, n_written, &msg->ephemeris_dep_d);
     case SBP_MSG_EPHEMERIS_DEP_A:
-      return sbp_pack_sbp_msg_ephemeris_dep_a_t(buf, len, n_written, &msg->ephemeris_dep_a);
+      return sbp_encode_sbp_msg_ephemeris_dep_a_t(buf, len, n_written, &msg->ephemeris_dep_a);
     case SBP_MSG_EPHEMERIS_DEP_B:
-      return sbp_pack_sbp_msg_ephemeris_dep_b_t(buf, len, n_written, &msg->ephemeris_dep_b);
+      return sbp_encode_sbp_msg_ephemeris_dep_b_t(buf, len, n_written, &msg->ephemeris_dep_b);
     case SBP_MSG_EPHEMERIS_DEP_C:
-      return sbp_pack_sbp_msg_ephemeris_dep_c_t(buf, len, n_written, &msg->ephemeris_dep_c);
+      return sbp_encode_sbp_msg_ephemeris_dep_c_t(buf, len, n_written, &msg->ephemeris_dep_c);
     case SBP_MSG_OBS_DEP_A:
-      return sbp_pack_sbp_msg_obs_dep_a_t(buf, len, n_written, &msg->obs_dep_a);
+      return sbp_encode_sbp_msg_obs_dep_a_t(buf, len, n_written, &msg->obs_dep_a);
     case SBP_MSG_OBS_DEP_B:
-      return sbp_pack_sbp_msg_obs_dep_b_t(buf, len, n_written, &msg->obs_dep_b);
+      return sbp_encode_sbp_msg_obs_dep_b_t(buf, len, n_written, &msg->obs_dep_b);
     case SBP_MSG_OBS_DEP_C:
-      return sbp_pack_sbp_msg_obs_dep_c_t(buf, len, n_written, &msg->obs_dep_c);
+      return sbp_encode_sbp_msg_obs_dep_c_t(buf, len, n_written, &msg->obs_dep_c);
     case SBP_MSG_IONO:
-      return sbp_pack_sbp_msg_iono_t(buf, len, n_written, &msg->iono);
+      return sbp_encode_sbp_msg_iono_t(buf, len, n_written, &msg->iono);
     case SBP_MSG_SV_CONFIGURATION_GPS_DEP:
-      return sbp_pack_sbp_msg_sv_configuration_gps_dep_t(buf, len, n_written, &msg->sv_configuration_gps_dep);
+      return sbp_encode_sbp_msg_sv_configuration_gps_dep_t(buf, len, n_written, &msg->sv_configuration_gps_dep);
     case SBP_MSG_GNSS_CAPB:
-      return sbp_pack_sbp_msg_gnss_capb_t(buf, len, n_written, &msg->gnss_capb);
+      return sbp_encode_sbp_msg_gnss_capb_t(buf, len, n_written, &msg->gnss_capb);
     case SBP_MSG_GROUP_DELAY_DEP_A:
-      return sbp_pack_sbp_msg_group_delay_dep_a_t(buf, len, n_written, &msg->group_delay_dep_a);
+      return sbp_encode_sbp_msg_group_delay_dep_a_t(buf, len, n_written, &msg->group_delay_dep_a);
     case SBP_MSG_GROUP_DELAY_DEP_B:
-      return sbp_pack_sbp_msg_group_delay_dep_b_t(buf, len, n_written, &msg->group_delay_dep_b);
+      return sbp_encode_sbp_msg_group_delay_dep_b_t(buf, len, n_written, &msg->group_delay_dep_b);
     case SBP_MSG_GROUP_DELAY:
-      return sbp_pack_sbp_msg_group_delay_t(buf, len, n_written, &msg->group_delay);
+      return sbp_encode_sbp_msg_group_delay_t(buf, len, n_written, &msg->group_delay);
     case SBP_MSG_ALMANAC_GPS_DEP:
-      return sbp_pack_sbp_msg_almanac_gps_dep_t(buf, len, n_written, &msg->almanac_gps_dep);
+      return sbp_encode_sbp_msg_almanac_gps_dep_t(buf, len, n_written, &msg->almanac_gps_dep);
     case SBP_MSG_ALMANAC_GPS:
-      return sbp_pack_sbp_msg_almanac_gps_t(buf, len, n_written, &msg->almanac_gps);
+      return sbp_encode_sbp_msg_almanac_gps_t(buf, len, n_written, &msg->almanac_gps);
     case SBP_MSG_ALMANAC_GLO_DEP:
-      return sbp_pack_sbp_msg_almanac_glo_dep_t(buf, len, n_written, &msg->almanac_glo_dep);
+      return sbp_encode_sbp_msg_almanac_glo_dep_t(buf, len, n_written, &msg->almanac_glo_dep);
     case SBP_MSG_ALMANAC_GLO:
-      return sbp_pack_sbp_msg_almanac_glo_t(buf, len, n_written, &msg->almanac_glo);
+      return sbp_encode_sbp_msg_almanac_glo_t(buf, len, n_written, &msg->almanac_glo);
     case SBP_MSG_GLO_BIASES:
-      return sbp_pack_sbp_msg_glo_biases_t(buf, len, n_written, &msg->glo_biases);
+      return sbp_encode_sbp_msg_glo_biases_t(buf, len, n_written, &msg->glo_biases);
     case SBP_MSG_SV_AZ_EL:
-      return sbp_pack_sbp_msg_sv_az_el_t(buf, len, n_written, &msg->sv_az_el);
+      return sbp_encode_sbp_msg_sv_az_el_t(buf, len, n_written, &msg->sv_az_el);
     case SBP_MSG_OSR:
-      return sbp_pack_sbp_msg_osr_t(buf, len, n_written, &msg->osr);
+      return sbp_encode_sbp_msg_osr_t(buf, len, n_written, &msg->osr);
     case SBP_MSG_SBAS_RAW:
-      return sbp_pack_sbp_msg_sbas_raw_t(buf, len, n_written, &msg->sbas_raw);
+      return sbp_encode_sbp_msg_sbas_raw_t(buf, len, n_written, &msg->sbas_raw);
     case SBP_MSG_ALMANAC:
-      return sbp_pack_sbp_msg_almanac_t(buf, len, n_written, &msg->almanac);
+      return sbp_encode_sbp_msg_almanac_t(buf, len, n_written, &msg->almanac);
     case SBP_MSG_SET_TIME:
-      return sbp_pack_sbp_msg_set_time_t(buf, len, n_written, &msg->set_time);
+      return sbp_encode_sbp_msg_set_time_t(buf, len, n_written, &msg->set_time);
     case SBP_MSG_RESET:
-      return sbp_pack_sbp_msg_reset_t(buf, len, n_written, &msg->reset);
+      return sbp_encode_sbp_msg_reset_t(buf, len, n_written, &msg->reset);
     case SBP_MSG_RESET_DEP:
-      return sbp_pack_sbp_msg_reset_dep_t(buf, len, n_written, &msg->reset_dep);
+      return sbp_encode_sbp_msg_reset_dep_t(buf, len, n_written, &msg->reset_dep);
     case SBP_MSG_CW_RESULTS:
-      return sbp_pack_sbp_msg_cw_results_t(buf, len, n_written, &msg->cw_results);
+      return sbp_encode_sbp_msg_cw_results_t(buf, len, n_written, &msg->cw_results);
     case SBP_MSG_CW_START:
-      return sbp_pack_sbp_msg_cw_start_t(buf, len, n_written, &msg->cw_start);
+      return sbp_encode_sbp_msg_cw_start_t(buf, len, n_written, &msg->cw_start);
     case SBP_MSG_RESET_FILTERS:
-      return sbp_pack_sbp_msg_reset_filters_t(buf, len, n_written, &msg->reset_filters);
+      return sbp_encode_sbp_msg_reset_filters_t(buf, len, n_written, &msg->reset_filters);
     case SBP_MSG_INIT_BASE_DEP:
-      return sbp_pack_sbp_msg_init_base_dep_t(buf, len, n_written, &msg->init_base_dep);
+      return sbp_encode_sbp_msg_init_base_dep_t(buf, len, n_written, &msg->init_base_dep);
     case SBP_MSG_THREAD_STATE:
-      return sbp_pack_sbp_msg_thread_state_t(buf, len, n_written, &msg->thread_state);
+      return sbp_encode_sbp_msg_thread_state_t(buf, len, n_written, &msg->thread_state);
     case SBP_MSG_UART_STATE:
-      return sbp_pack_sbp_msg_uart_state_t(buf, len, n_written, &msg->uart_state);
+      return sbp_encode_sbp_msg_uart_state_t(buf, len, n_written, &msg->uart_state);
     case SBP_MSG_UART_STATE_DEPA:
-      return sbp_pack_sbp_msg_uart_state_depa_t(buf, len, n_written, &msg->uart_state_depa);
+      return sbp_encode_sbp_msg_uart_state_depa_t(buf, len, n_written, &msg->uart_state_depa);
     case SBP_MSG_IAR_STATE:
-      return sbp_pack_sbp_msg_iar_state_t(buf, len, n_written, &msg->iar_state);
+      return sbp_encode_sbp_msg_iar_state_t(buf, len, n_written, &msg->iar_state);
     case SBP_MSG_MASK_SATELLITE:
-      return sbp_pack_sbp_msg_mask_satellite_t(buf, len, n_written, &msg->mask_satellite);
+      return sbp_encode_sbp_msg_mask_satellite_t(buf, len, n_written, &msg->mask_satellite);
     case SBP_MSG_MASK_SATELLITE_DEP:
-      return sbp_pack_sbp_msg_mask_satellite_dep_t(buf, len, n_written, &msg->mask_satellite_dep);
+      return sbp_encode_sbp_msg_mask_satellite_dep_t(buf, len, n_written, &msg->mask_satellite_dep);
     case SBP_MSG_DEVICE_MONITOR:
-      return sbp_pack_sbp_msg_device_monitor_t(buf, len, n_written, &msg->device_monitor);
+      return sbp_encode_sbp_msg_device_monitor_t(buf, len, n_written, &msg->device_monitor);
     case SBP_MSG_COMMAND_REQ:
-      return sbp_pack_sbp_msg_command_req_t(buf, len, n_written, &msg->command_req);
+      return sbp_encode_sbp_msg_command_req_t(buf, len, n_written, &msg->command_req);
     case SBP_MSG_COMMAND_RESP:
-      return sbp_pack_sbp_msg_command_resp_t(buf, len, n_written, &msg->command_resp);
+      return sbp_encode_sbp_msg_command_resp_t(buf, len, n_written, &msg->command_resp);
     case SBP_MSG_COMMAND_OUTPUT:
-      return sbp_pack_sbp_msg_command_output_t(buf, len, n_written, &msg->command_output);
+      return sbp_encode_sbp_msg_command_output_t(buf, len, n_written, &msg->command_output);
     case SBP_MSG_NETWORK_STATE_REQ:
-      return sbp_pack_sbp_msg_network_state_req_t(buf, len, n_written, &msg->network_state_req);
+      return sbp_encode_sbp_msg_network_state_req_t(buf, len, n_written, &msg->network_state_req);
     case SBP_MSG_NETWORK_STATE_RESP:
-      return sbp_pack_sbp_msg_network_state_resp_t(buf, len, n_written, &msg->network_state_resp);
+      return sbp_encode_sbp_msg_network_state_resp_t(buf, len, n_written, &msg->network_state_resp);
     case SBP_MSG_NETWORK_BANDWIDTH_USAGE:
-      return sbp_pack_sbp_msg_network_bandwidth_usage_t(buf, len, n_written, &msg->network_bandwidth_usage);
+      return sbp_encode_sbp_msg_network_bandwidth_usage_t(buf, len, n_written, &msg->network_bandwidth_usage);
     case SBP_MSG_CELL_MODEM_STATUS:
-      return sbp_pack_sbp_msg_cell_modem_status_t(buf, len, n_written, &msg->cell_modem_status);
+      return sbp_encode_sbp_msg_cell_modem_status_t(buf, len, n_written, &msg->cell_modem_status);
     case SBP_MSG_SPECAN_DEP:
-      return sbp_pack_sbp_msg_specan_dep_t(buf, len, n_written, &msg->specan_dep);
+      return sbp_encode_sbp_msg_specan_dep_t(buf, len, n_written, &msg->specan_dep);
     case SBP_MSG_SPECAN:
-      return sbp_pack_sbp_msg_specan_t(buf, len, n_written, &msg->specan);
+      return sbp_encode_sbp_msg_specan_t(buf, len, n_written, &msg->specan);
     case SBP_MSG_FRONT_END_GAIN:
-      return sbp_pack_sbp_msg_front_end_gain_t(buf, len, n_written, &msg->front_end_gain);
+      return sbp_encode_sbp_msg_front_end_gain_t(buf, len, n_written, &msg->front_end_gain);
     case SBP_MSG_FLASH_PROGRAM:
-      return sbp_pack_sbp_msg_flash_program_t(buf, len, n_written, &msg->flash_program);
+      return sbp_encode_sbp_msg_flash_program_t(buf, len, n_written, &msg->flash_program);
     case SBP_MSG_FLASH_DONE:
-      return sbp_pack_sbp_msg_flash_done_t(buf, len, n_written, &msg->flash_done);
+      return sbp_encode_sbp_msg_flash_done_t(buf, len, n_written, &msg->flash_done);
     case SBP_MSG_FLASH_READ_REQ:
-      return sbp_pack_sbp_msg_flash_read_req_t(buf, len, n_written, &msg->flash_read_req);
+      return sbp_encode_sbp_msg_flash_read_req_t(buf, len, n_written, &msg->flash_read_req);
     case SBP_MSG_FLASH_READ_RESP:
-      return sbp_pack_sbp_msg_flash_read_resp_t(buf, len, n_written, &msg->flash_read_resp);
+      return sbp_encode_sbp_msg_flash_read_resp_t(buf, len, n_written, &msg->flash_read_resp);
     case SBP_MSG_FLASH_ERASE:
-      return sbp_pack_sbp_msg_flash_erase_t(buf, len, n_written, &msg->flash_erase);
+      return sbp_encode_sbp_msg_flash_erase_t(buf, len, n_written, &msg->flash_erase);
     case SBP_MSG_STM_FLASH_LOCK_SECTOR:
-      return sbp_pack_sbp_msg_stm_flash_lock_sector_t(buf, len, n_written, &msg->stm_flash_lock_sector);
+      return sbp_encode_sbp_msg_stm_flash_lock_sector_t(buf, len, n_written, &msg->stm_flash_lock_sector);
     case SBP_MSG_STM_FLASH_UNLOCK_SECTOR:
-      return sbp_pack_sbp_msg_stm_flash_unlock_sector_t(buf, len, n_written, &msg->stm_flash_unlock_sector);
+      return sbp_encode_sbp_msg_stm_flash_unlock_sector_t(buf, len, n_written, &msg->stm_flash_unlock_sector);
     case SBP_MSG_STM_UNIQUE_ID_REQ:
-      return sbp_pack_sbp_msg_stm_unique_id_req_t(buf, len, n_written, &msg->stm_unique_id_req);
+      return sbp_encode_sbp_msg_stm_unique_id_req_t(buf, len, n_written, &msg->stm_unique_id_req);
     case SBP_MSG_STM_UNIQUE_ID_RESP:
-      return sbp_pack_sbp_msg_stm_unique_id_resp_t(buf, len, n_written, &msg->stm_unique_id_resp);
+      return sbp_encode_sbp_msg_stm_unique_id_resp_t(buf, len, n_written, &msg->stm_unique_id_resp);
     case SBP_MSG_M25_FLASH_WRITE_STATUS:
-      return sbp_pack_sbp_msg_m25_flash_write_status_t(buf, len, n_written, &msg->m25_flash_write_status);
+      return sbp_encode_sbp_msg_m25_flash_write_status_t(buf, len, n_written, &msg->m25_flash_write_status);
     case SBP_MSG_IMU_RAW:
-      return sbp_pack_sbp_msg_imu_raw_t(buf, len, n_written, &msg->imu_raw);
+      return sbp_encode_sbp_msg_imu_raw_t(buf, len, n_written, &msg->imu_raw);
     case SBP_MSG_IMU_AUX:
-      return sbp_pack_sbp_msg_imu_aux_t(buf, len, n_written, &msg->imu_aux);
+      return sbp_encode_sbp_msg_imu_aux_t(buf, len, n_written, &msg->imu_aux);
     case SBP_MSG_NDB_EVENT:
-      return sbp_pack_sbp_msg_ndb_event_t(buf, len, n_written, &msg->ndb_event);
+      return sbp_encode_sbp_msg_ndb_event_t(buf, len, n_written, &msg->ndb_event);
     case SBP_MSG_ACQ_RESULT:
-      return sbp_pack_sbp_msg_acq_result_t(buf, len, n_written, &msg->acq_result);
+      return sbp_encode_sbp_msg_acq_result_t(buf, len, n_written, &msg->acq_result);
     case SBP_MSG_ACQ_RESULT_DEP_C:
-      return sbp_pack_sbp_msg_acq_result_dep_c_t(buf, len, n_written, &msg->acq_result_dep_c);
+      return sbp_encode_sbp_msg_acq_result_dep_c_t(buf, len, n_written, &msg->acq_result_dep_c);
     case SBP_MSG_ACQ_RESULT_DEP_B:
-      return sbp_pack_sbp_msg_acq_result_dep_b_t(buf, len, n_written, &msg->acq_result_dep_b);
+      return sbp_encode_sbp_msg_acq_result_dep_b_t(buf, len, n_written, &msg->acq_result_dep_b);
     case SBP_MSG_ACQ_RESULT_DEP_A:
-      return sbp_pack_sbp_msg_acq_result_dep_a_t(buf, len, n_written, &msg->acq_result_dep_a);
+      return sbp_encode_sbp_msg_acq_result_dep_a_t(buf, len, n_written, &msg->acq_result_dep_a);
     case SBP_MSG_ACQ_SV_PROFILE:
-      return sbp_pack_sbp_msg_acq_sv_profile_t(buf, len, n_written, &msg->acq_sv_profile);
+      return sbp_encode_sbp_msg_acq_sv_profile_t(buf, len, n_written, &msg->acq_sv_profile);
     case SBP_MSG_ACQ_SV_PROFILE_DEP:
-      return sbp_pack_sbp_msg_acq_sv_profile_dep_t(buf, len, n_written, &msg->acq_sv_profile_dep);
+      return sbp_encode_sbp_msg_acq_sv_profile_dep_t(buf, len, n_written, &msg->acq_sv_profile_dep);
     case SBP_MSG_SOLN_META_DEP_A:
-      return sbp_pack_sbp_msg_soln_meta_dep_a_t(buf, len, n_written, &msg->soln_meta_dep_a);
+      return sbp_encode_sbp_msg_soln_meta_dep_a_t(buf, len, n_written, &msg->soln_meta_dep_a);
     case SBP_MSG_SOLN_META:
-      return sbp_pack_sbp_msg_soln_meta_t(buf, len, n_written, &msg->soln_meta);
+      return sbp_encode_sbp_msg_soln_meta_t(buf, len, n_written, &msg->soln_meta);
     case SBP_MSG_BASELINE_HEADING:
-      return sbp_pack_sbp_msg_baseline_heading_t(buf, len, n_written, &msg->baseline_heading);
+      return sbp_encode_sbp_msg_baseline_heading_t(buf, len, n_written, &msg->baseline_heading);
     case SBP_MSG_ORIENT_QUAT:
-      return sbp_pack_sbp_msg_orient_quat_t(buf, len, n_written, &msg->orient_quat);
+      return sbp_encode_sbp_msg_orient_quat_t(buf, len, n_written, &msg->orient_quat);
     case SBP_MSG_ORIENT_EULER:
-      return sbp_pack_sbp_msg_orient_euler_t(buf, len, n_written, &msg->orient_euler);
+      return sbp_encode_sbp_msg_orient_euler_t(buf, len, n_written, &msg->orient_euler);
     case SBP_MSG_ANGULAR_RATE:
-      return sbp_pack_sbp_msg_angular_rate_t(buf, len, n_written, &msg->angular_rate);
+      return sbp_encode_sbp_msg_angular_rate_t(buf, len, n_written, &msg->angular_rate);
     case SBP_MSG_MAG_RAW:
-      return sbp_pack_sbp_msg_mag_raw_t(buf, len, n_written, &msg->mag_raw);
+      return sbp_encode_sbp_msg_mag_raw_t(buf, len, n_written, &msg->mag_raw);
     default:
       break;
   }
   return -1;
 }
 
-static inline s8 sbp_unpack_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
+static inline s8 sbp_decode_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
   switch(msg_type) {
     case SBP_MSG_TRACKING_STATE_DETAILED_DEP_A:
-      return sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(buf, len, n_read, &msg->tracking_state_detailed_dep_a);
+      return sbp_decode_sbp_msg_tracking_state_detailed_dep_a_t(buf, len, n_read, &msg->tracking_state_detailed_dep_a);
     case SBP_MSG_TRACKING_STATE_DETAILED_DEP:
-      return sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(buf, len, n_read, &msg->tracking_state_detailed_dep);
+      return sbp_decode_sbp_msg_tracking_state_detailed_dep_t(buf, len, n_read, &msg->tracking_state_detailed_dep);
     case SBP_MSG_TRACKING_STATE:
-      return sbp_unpack_sbp_msg_tracking_state_t(buf, len, n_read, &msg->tracking_state);
+      return sbp_decode_sbp_msg_tracking_state_t(buf, len, n_read, &msg->tracking_state);
     case SBP_MSG_MEASUREMENT_STATE:
-      return sbp_unpack_sbp_msg_measurement_state_t(buf, len, n_read, &msg->measurement_state);
+      return sbp_decode_sbp_msg_measurement_state_t(buf, len, n_read, &msg->measurement_state);
     case SBP_MSG_TRACKING_IQ:
-      return sbp_unpack_sbp_msg_tracking_iq_t(buf, len, n_read, &msg->tracking_iq);
+      return sbp_decode_sbp_msg_tracking_iq_t(buf, len, n_read, &msg->tracking_iq);
     case SBP_MSG_TRACKING_IQ_DEP_B:
-      return sbp_unpack_sbp_msg_tracking_iq_dep_b_t(buf, len, n_read, &msg->tracking_iq_dep_b);
+      return sbp_decode_sbp_msg_tracking_iq_dep_b_t(buf, len, n_read, &msg->tracking_iq_dep_b);
     case SBP_MSG_TRACKING_IQ_DEP_A:
-      return sbp_unpack_sbp_msg_tracking_iq_dep_a_t(buf, len, n_read, &msg->tracking_iq_dep_a);
+      return sbp_decode_sbp_msg_tracking_iq_dep_a_t(buf, len, n_read, &msg->tracking_iq_dep_a);
     case SBP_MSG_TRACKING_STATE_DEP_A:
-      return sbp_unpack_sbp_msg_tracking_state_dep_a_t(buf, len, n_read, &msg->tracking_state_dep_a);
+      return sbp_decode_sbp_msg_tracking_state_dep_a_t(buf, len, n_read, &msg->tracking_state_dep_a);
     case SBP_MSG_TRACKING_STATE_DEP_B:
-      return sbp_unpack_sbp_msg_tracking_state_dep_b_t(buf, len, n_read, &msg->tracking_state_dep_b);
+      return sbp_decode_sbp_msg_tracking_state_dep_b_t(buf, len, n_read, &msg->tracking_state_dep_b);
     case SBP_MSG_SETTINGS_SAVE:
-      return sbp_unpack_sbp_msg_settings_save_t(buf, len, n_read, &msg->settings_save);
+      return sbp_decode_sbp_msg_settings_save_t(buf, len, n_read, &msg->settings_save);
     case SBP_MSG_SETTINGS_WRITE:
-      return sbp_unpack_sbp_msg_settings_write_t(buf, len, n_read, &msg->settings_write);
+      return sbp_decode_sbp_msg_settings_write_t(buf, len, n_read, &msg->settings_write);
     case SBP_MSG_SETTINGS_WRITE_RESP:
-      return sbp_unpack_sbp_msg_settings_write_resp_t(buf, len, n_read, &msg->settings_write_resp);
+      return sbp_decode_sbp_msg_settings_write_resp_t(buf, len, n_read, &msg->settings_write_resp);
     case SBP_MSG_SETTINGS_READ_REQ:
-      return sbp_unpack_sbp_msg_settings_read_req_t(buf, len, n_read, &msg->settings_read_req);
+      return sbp_decode_sbp_msg_settings_read_req_t(buf, len, n_read, &msg->settings_read_req);
     case SBP_MSG_SETTINGS_READ_RESP:
-      return sbp_unpack_sbp_msg_settings_read_resp_t(buf, len, n_read, &msg->settings_read_resp);
+      return sbp_decode_sbp_msg_settings_read_resp_t(buf, len, n_read, &msg->settings_read_resp);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_REQ:
-      return sbp_unpack_sbp_msg_settings_read_by_index_req_t(buf, len, n_read, &msg->settings_read_by_index_req);
+      return sbp_decode_sbp_msg_settings_read_by_index_req_t(buf, len, n_read, &msg->settings_read_by_index_req);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_RESP:
-      return sbp_unpack_sbp_msg_settings_read_by_index_resp_t(buf, len, n_read, &msg->settings_read_by_index_resp);
+      return sbp_decode_sbp_msg_settings_read_by_index_resp_t(buf, len, n_read, &msg->settings_read_by_index_resp);
     case SBP_MSG_SETTINGS_READ_BY_INDEX_DONE:
-      return sbp_unpack_sbp_msg_settings_read_by_index_done_t(buf, len, n_read, &msg->settings_read_by_index_done);
+      return sbp_decode_sbp_msg_settings_read_by_index_done_t(buf, len, n_read, &msg->settings_read_by_index_done);
     case SBP_MSG_SETTINGS_REGISTER:
-      return sbp_unpack_sbp_msg_settings_register_t(buf, len, n_read, &msg->settings_register);
+      return sbp_decode_sbp_msg_settings_register_t(buf, len, n_read, &msg->settings_register);
     case SBP_MSG_SETTINGS_REGISTER_RESP:
-      return sbp_unpack_sbp_msg_settings_register_resp_t(buf, len, n_read, &msg->settings_register_resp);
+      return sbp_decode_sbp_msg_settings_register_resp_t(buf, len, n_read, &msg->settings_register_resp);
     case SBP_MSG_SSR_ORBIT_CLOCK:
-      return sbp_unpack_sbp_msg_ssr_orbit_clock_t(buf, len, n_read, &msg->ssr_orbit_clock);
+      return sbp_decode_sbp_msg_ssr_orbit_clock_t(buf, len, n_read, &msg->ssr_orbit_clock);
     case SBP_MSG_SSR_CODE_BIASES:
-      return sbp_unpack_sbp_msg_ssr_code_biases_t(buf, len, n_read, &msg->ssr_code_biases);
+      return sbp_decode_sbp_msg_ssr_code_biases_t(buf, len, n_read, &msg->ssr_code_biases);
     case SBP_MSG_SSR_PHASE_BIASES:
-      return sbp_unpack_sbp_msg_ssr_phase_biases_t(buf, len, n_read, &msg->ssr_phase_biases);
+      return sbp_decode_sbp_msg_ssr_phase_biases_t(buf, len, n_read, &msg->ssr_phase_biases);
     case SBP_MSG_SSR_STEC_CORRECTION:
-      return sbp_unpack_sbp_msg_ssr_stec_correction_t(buf, len, n_read, &msg->ssr_stec_correction);
+      return sbp_decode_sbp_msg_ssr_stec_correction_t(buf, len, n_read, &msg->ssr_stec_correction);
     case SBP_MSG_SSR_GRIDDED_CORRECTION:
-      return sbp_unpack_sbp_msg_ssr_gridded_correction_t(buf, len, n_read, &msg->ssr_gridded_correction);
+      return sbp_decode_sbp_msg_ssr_gridded_correction_t(buf, len, n_read, &msg->ssr_gridded_correction);
     case SBP_MSG_SSR_TILE_DEFINITION:
-      return sbp_unpack_sbp_msg_ssr_tile_definition_t(buf, len, n_read, &msg->ssr_tile_definition);
+      return sbp_decode_sbp_msg_ssr_tile_definition_t(buf, len, n_read, &msg->ssr_tile_definition);
     case SBP_MSG_SSR_SATELLITE_APC:
-      return sbp_unpack_sbp_msg_ssr_satellite_apc_t(buf, len, n_read, &msg->ssr_satellite_apc);
+      return sbp_decode_sbp_msg_ssr_satellite_apc_t(buf, len, n_read, &msg->ssr_satellite_apc);
     case SBP_MSG_SSR_ORBIT_CLOCK_DEP_A:
-      return sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(buf, len, n_read, &msg->ssr_orbit_clock_dep_a);
+      return sbp_decode_sbp_msg_ssr_orbit_clock_dep_a_t(buf, len, n_read, &msg->ssr_orbit_clock_dep_a);
     case SBP_MSG_SSR_STEC_CORRECTION_DEP_A:
-      return sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(buf, len, n_read, &msg->ssr_stec_correction_dep_a);
+      return sbp_decode_sbp_msg_ssr_stec_correction_dep_a_t(buf, len, n_read, &msg->ssr_stec_correction_dep_a);
     case SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A:
-      return sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(buf, len, n_read, &msg->ssr_gridded_correction_no_std_dep_a);
+      return sbp_decode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(buf, len, n_read, &msg->ssr_gridded_correction_no_std_dep_a);
     case SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A:
-      return sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(buf, len, n_read, &msg->ssr_gridded_correction_dep_a);
+      return sbp_decode_sbp_msg_ssr_gridded_correction_dep_a_t(buf, len, n_read, &msg->ssr_gridded_correction_dep_a);
     case SBP_MSG_SSR_GRID_DEFINITION_DEP_A:
-      return sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(buf, len, n_read, &msg->ssr_grid_definition_dep_a);
+      return sbp_decode_sbp_msg_ssr_grid_definition_dep_a_t(buf, len, n_read, &msg->ssr_grid_definition_dep_a);
     case SBP_MSG_EXT_EVENT:
-      return sbp_unpack_sbp_msg_ext_event_t(buf, len, n_read, &msg->ext_event);
+      return sbp_decode_sbp_msg_ext_event_t(buf, len, n_read, &msg->ext_event);
     case SBP_MSG_ODOMETRY:
-      return sbp_unpack_sbp_msg_odometry_t(buf, len, n_read, &msg->odometry);
+      return sbp_decode_sbp_msg_odometry_t(buf, len, n_read, &msg->odometry);
     case SBP_MSG_WHEELTICK:
-      return sbp_unpack_sbp_msg_wheeltick_t(buf, len, n_read, &msg->wheeltick);
+      return sbp_decode_sbp_msg_wheeltick_t(buf, len, n_read, &msg->wheeltick);
     case SBP_MSG_USER_DATA:
-      return sbp_unpack_sbp_msg_user_data_t(buf, len, n_read, &msg->user_data);
+      return sbp_decode_sbp_msg_user_data_t(buf, len, n_read, &msg->user_data);
     case SBP_MSG_LINUX_CPU_STATE_DEP_A:
-      return sbp_unpack_sbp_msg_linux_cpu_state_dep_a_t(buf, len, n_read, &msg->linux_cpu_state_dep_a);
+      return sbp_decode_sbp_msg_linux_cpu_state_dep_a_t(buf, len, n_read, &msg->linux_cpu_state_dep_a);
     case SBP_MSG_LINUX_MEM_STATE_DEP_A:
-      return sbp_unpack_sbp_msg_linux_mem_state_dep_a_t(buf, len, n_read, &msg->linux_mem_state_dep_a);
+      return sbp_decode_sbp_msg_linux_mem_state_dep_a_t(buf, len, n_read, &msg->linux_mem_state_dep_a);
     case SBP_MSG_LINUX_SYS_STATE_DEP_A:
-      return sbp_unpack_sbp_msg_linux_sys_state_dep_a_t(buf, len, n_read, &msg->linux_sys_state_dep_a);
+      return sbp_decode_sbp_msg_linux_sys_state_dep_a_t(buf, len, n_read, &msg->linux_sys_state_dep_a);
     case SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS:
-      return sbp_unpack_sbp_msg_linux_process_socket_counts_t(buf, len, n_read, &msg->linux_process_socket_counts);
+      return sbp_decode_sbp_msg_linux_process_socket_counts_t(buf, len, n_read, &msg->linux_process_socket_counts);
     case SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES:
-      return sbp_unpack_sbp_msg_linux_process_socket_queues_t(buf, len, n_read, &msg->linux_process_socket_queues);
+      return sbp_decode_sbp_msg_linux_process_socket_queues_t(buf, len, n_read, &msg->linux_process_socket_queues);
     case SBP_MSG_LINUX_SOCKET_USAGE:
-      return sbp_unpack_sbp_msg_linux_socket_usage_t(buf, len, n_read, &msg->linux_socket_usage);
+      return sbp_decode_sbp_msg_linux_socket_usage_t(buf, len, n_read, &msg->linux_socket_usage);
     case SBP_MSG_LINUX_PROCESS_FD_COUNT:
-      return sbp_unpack_sbp_msg_linux_process_fd_count_t(buf, len, n_read, &msg->linux_process_fd_count);
+      return sbp_decode_sbp_msg_linux_process_fd_count_t(buf, len, n_read, &msg->linux_process_fd_count);
     case SBP_MSG_LINUX_PROCESS_FD_SUMMARY:
-      return sbp_unpack_sbp_msg_linux_process_fd_summary_t(buf, len, n_read, &msg->linux_process_fd_summary);
+      return sbp_decode_sbp_msg_linux_process_fd_summary_t(buf, len, n_read, &msg->linux_process_fd_summary);
     case SBP_MSG_LINUX_CPU_STATE:
-      return sbp_unpack_sbp_msg_linux_cpu_state_t(buf, len, n_read, &msg->linux_cpu_state);
+      return sbp_decode_sbp_msg_linux_cpu_state_t(buf, len, n_read, &msg->linux_cpu_state);
     case SBP_MSG_LINUX_MEM_STATE:
-      return sbp_unpack_sbp_msg_linux_mem_state_t(buf, len, n_read, &msg->linux_mem_state);
+      return sbp_decode_sbp_msg_linux_mem_state_t(buf, len, n_read, &msg->linux_mem_state);
     case SBP_MSG_LINUX_SYS_STATE:
-      return sbp_unpack_sbp_msg_linux_sys_state_t(buf, len, n_read, &msg->linux_sys_state);
+      return sbp_decode_sbp_msg_linux_sys_state_t(buf, len, n_read, &msg->linux_sys_state);
     case SBP_MSG_GPS_TIME:
-      return sbp_unpack_sbp_msg_gps_time_t(buf, len, n_read, &msg->gps_time);
+      return sbp_decode_sbp_msg_gps_time_t(buf, len, n_read, &msg->gps_time);
     case SBP_MSG_GPS_TIME_GNSS:
-      return sbp_unpack_sbp_msg_gps_time_gnss_t(buf, len, n_read, &msg->gps_time_gnss);
+      return sbp_decode_sbp_msg_gps_time_gnss_t(buf, len, n_read, &msg->gps_time_gnss);
     case SBP_MSG_UTC_TIME:
-      return sbp_unpack_sbp_msg_utc_time_t(buf, len, n_read, &msg->utc_time);
+      return sbp_decode_sbp_msg_utc_time_t(buf, len, n_read, &msg->utc_time);
     case SBP_MSG_UTC_TIME_GNSS:
-      return sbp_unpack_sbp_msg_utc_time_gnss_t(buf, len, n_read, &msg->utc_time_gnss);
+      return sbp_decode_sbp_msg_utc_time_gnss_t(buf, len, n_read, &msg->utc_time_gnss);
     case SBP_MSG_DOPS:
-      return sbp_unpack_sbp_msg_dops_t(buf, len, n_read, &msg->dops);
+      return sbp_decode_sbp_msg_dops_t(buf, len, n_read, &msg->dops);
     case SBP_MSG_POS_ECEF:
-      return sbp_unpack_sbp_msg_pos_ecef_t(buf, len, n_read, &msg->pos_ecef);
+      return sbp_decode_sbp_msg_pos_ecef_t(buf, len, n_read, &msg->pos_ecef);
     case SBP_MSG_POS_ECEF_COV:
-      return sbp_unpack_sbp_msg_pos_ecef_cov_t(buf, len, n_read, &msg->pos_ecef_cov);
+      return sbp_decode_sbp_msg_pos_ecef_cov_t(buf, len, n_read, &msg->pos_ecef_cov);
     case SBP_MSG_POS_LLH:
-      return sbp_unpack_sbp_msg_pos_llh_t(buf, len, n_read, &msg->pos_llh);
+      return sbp_decode_sbp_msg_pos_llh_t(buf, len, n_read, &msg->pos_llh);
     case SBP_MSG_POS_LLH_COV:
-      return sbp_unpack_sbp_msg_pos_llh_cov_t(buf, len, n_read, &msg->pos_llh_cov);
+      return sbp_decode_sbp_msg_pos_llh_cov_t(buf, len, n_read, &msg->pos_llh_cov);
     case SBP_MSG_BASELINE_ECEF:
-      return sbp_unpack_sbp_msg_baseline_ecef_t(buf, len, n_read, &msg->baseline_ecef);
+      return sbp_decode_sbp_msg_baseline_ecef_t(buf, len, n_read, &msg->baseline_ecef);
     case SBP_MSG_BASELINE_NED:
-      return sbp_unpack_sbp_msg_baseline_ned_t(buf, len, n_read, &msg->baseline_ned);
+      return sbp_decode_sbp_msg_baseline_ned_t(buf, len, n_read, &msg->baseline_ned);
     case SBP_MSG_VEL_ECEF:
-      return sbp_unpack_sbp_msg_vel_ecef_t(buf, len, n_read, &msg->vel_ecef);
+      return sbp_decode_sbp_msg_vel_ecef_t(buf, len, n_read, &msg->vel_ecef);
     case SBP_MSG_VEL_ECEF_COV:
-      return sbp_unpack_sbp_msg_vel_ecef_cov_t(buf, len, n_read, &msg->vel_ecef_cov);
+      return sbp_decode_sbp_msg_vel_ecef_cov_t(buf, len, n_read, &msg->vel_ecef_cov);
     case SBP_MSG_VEL_NED:
-      return sbp_unpack_sbp_msg_vel_ned_t(buf, len, n_read, &msg->vel_ned);
+      return sbp_decode_sbp_msg_vel_ned_t(buf, len, n_read, &msg->vel_ned);
     case SBP_MSG_VEL_NED_COV:
-      return sbp_unpack_sbp_msg_vel_ned_cov_t(buf, len, n_read, &msg->vel_ned_cov);
+      return sbp_decode_sbp_msg_vel_ned_cov_t(buf, len, n_read, &msg->vel_ned_cov);
     case SBP_MSG_POS_ECEF_GNSS:
-      return sbp_unpack_sbp_msg_pos_ecef_gnss_t(buf, len, n_read, &msg->pos_ecef_gnss);
+      return sbp_decode_sbp_msg_pos_ecef_gnss_t(buf, len, n_read, &msg->pos_ecef_gnss);
     case SBP_MSG_POS_ECEF_COV_GNSS:
-      return sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(buf, len, n_read, &msg->pos_ecef_cov_gnss);
+      return sbp_decode_sbp_msg_pos_ecef_cov_gnss_t(buf, len, n_read, &msg->pos_ecef_cov_gnss);
     case SBP_MSG_POS_LLH_GNSS:
-      return sbp_unpack_sbp_msg_pos_llh_gnss_t(buf, len, n_read, &msg->pos_llh_gnss);
+      return sbp_decode_sbp_msg_pos_llh_gnss_t(buf, len, n_read, &msg->pos_llh_gnss);
     case SBP_MSG_POS_LLH_COV_GNSS:
-      return sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(buf, len, n_read, &msg->pos_llh_cov_gnss);
+      return sbp_decode_sbp_msg_pos_llh_cov_gnss_t(buf, len, n_read, &msg->pos_llh_cov_gnss);
     case SBP_MSG_VEL_ECEF_GNSS:
-      return sbp_unpack_sbp_msg_vel_ecef_gnss_t(buf, len, n_read, &msg->vel_ecef_gnss);
+      return sbp_decode_sbp_msg_vel_ecef_gnss_t(buf, len, n_read, &msg->vel_ecef_gnss);
     case SBP_MSG_VEL_ECEF_COV_GNSS:
-      return sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(buf, len, n_read, &msg->vel_ecef_cov_gnss);
+      return sbp_decode_sbp_msg_vel_ecef_cov_gnss_t(buf, len, n_read, &msg->vel_ecef_cov_gnss);
     case SBP_MSG_VEL_NED_GNSS:
-      return sbp_unpack_sbp_msg_vel_ned_gnss_t(buf, len, n_read, &msg->vel_ned_gnss);
+      return sbp_decode_sbp_msg_vel_ned_gnss_t(buf, len, n_read, &msg->vel_ned_gnss);
     case SBP_MSG_VEL_NED_COV_GNSS:
-      return sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(buf, len, n_read, &msg->vel_ned_cov_gnss);
+      return sbp_decode_sbp_msg_vel_ned_cov_gnss_t(buf, len, n_read, &msg->vel_ned_cov_gnss);
     case SBP_MSG_VEL_BODY:
-      return sbp_unpack_sbp_msg_vel_body_t(buf, len, n_read, &msg->vel_body);
+      return sbp_decode_sbp_msg_vel_body_t(buf, len, n_read, &msg->vel_body);
     case SBP_MSG_AGE_CORRECTIONS:
-      return sbp_unpack_sbp_msg_age_corrections_t(buf, len, n_read, &msg->age_corrections);
+      return sbp_decode_sbp_msg_age_corrections_t(buf, len, n_read, &msg->age_corrections);
     case SBP_MSG_GPS_TIME_DEP_A:
-      return sbp_unpack_sbp_msg_gps_time_dep_a_t(buf, len, n_read, &msg->gps_time_dep_a);
+      return sbp_decode_sbp_msg_gps_time_dep_a_t(buf, len, n_read, &msg->gps_time_dep_a);
     case SBP_MSG_DOPS_DEP_A:
-      return sbp_unpack_sbp_msg_dops_dep_a_t(buf, len, n_read, &msg->dops_dep_a);
+      return sbp_decode_sbp_msg_dops_dep_a_t(buf, len, n_read, &msg->dops_dep_a);
     case SBP_MSG_POS_ECEF_DEP_A:
-      return sbp_unpack_sbp_msg_pos_ecef_dep_a_t(buf, len, n_read, &msg->pos_ecef_dep_a);
+      return sbp_decode_sbp_msg_pos_ecef_dep_a_t(buf, len, n_read, &msg->pos_ecef_dep_a);
     case SBP_MSG_POS_LLH_DEP_A:
-      return sbp_unpack_sbp_msg_pos_llh_dep_a_t(buf, len, n_read, &msg->pos_llh_dep_a);
+      return sbp_decode_sbp_msg_pos_llh_dep_a_t(buf, len, n_read, &msg->pos_llh_dep_a);
     case SBP_MSG_BASELINE_ECEF_DEP_A:
-      return sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(buf, len, n_read, &msg->baseline_ecef_dep_a);
+      return sbp_decode_sbp_msg_baseline_ecef_dep_a_t(buf, len, n_read, &msg->baseline_ecef_dep_a);
     case SBP_MSG_BASELINE_NED_DEP_A:
-      return sbp_unpack_sbp_msg_baseline_ned_dep_a_t(buf, len, n_read, &msg->baseline_ned_dep_a);
+      return sbp_decode_sbp_msg_baseline_ned_dep_a_t(buf, len, n_read, &msg->baseline_ned_dep_a);
     case SBP_MSG_VEL_ECEF_DEP_A:
-      return sbp_unpack_sbp_msg_vel_ecef_dep_a_t(buf, len, n_read, &msg->vel_ecef_dep_a);
+      return sbp_decode_sbp_msg_vel_ecef_dep_a_t(buf, len, n_read, &msg->vel_ecef_dep_a);
     case SBP_MSG_VEL_NED_DEP_A:
-      return sbp_unpack_sbp_msg_vel_ned_dep_a_t(buf, len, n_read, &msg->vel_ned_dep_a);
+      return sbp_decode_sbp_msg_vel_ned_dep_a_t(buf, len, n_read, &msg->vel_ned_dep_a);
     case SBP_MSG_BASELINE_HEADING_DEP_A:
-      return sbp_unpack_sbp_msg_baseline_heading_dep_a_t(buf, len, n_read, &msg->baseline_heading_dep_a);
+      return sbp_decode_sbp_msg_baseline_heading_dep_a_t(buf, len, n_read, &msg->baseline_heading_dep_a);
     case SBP_MSG_PROTECTION_LEVEL_DEP_A:
-      return sbp_unpack_sbp_msg_protection_level_dep_a_t(buf, len, n_read, &msg->protection_level_dep_a);
+      return sbp_decode_sbp_msg_protection_level_dep_a_t(buf, len, n_read, &msg->protection_level_dep_a);
     case SBP_MSG_PROTECTION_LEVEL:
-      return sbp_unpack_sbp_msg_protection_level_t(buf, len, n_read, &msg->protection_level);
+      return sbp_decode_sbp_msg_protection_level_t(buf, len, n_read, &msg->protection_level);
     case SBP_MSG_FILEIO_READ_REQ:
-      return sbp_unpack_sbp_msg_fileio_read_req_t(buf, len, n_read, &msg->fileio_read_req);
+      return sbp_decode_sbp_msg_fileio_read_req_t(buf, len, n_read, &msg->fileio_read_req);
     case SBP_MSG_FILEIO_READ_RESP:
-      return sbp_unpack_sbp_msg_fileio_read_resp_t(buf, len, n_read, &msg->fileio_read_resp);
+      return sbp_decode_sbp_msg_fileio_read_resp_t(buf, len, n_read, &msg->fileio_read_resp);
     case SBP_MSG_FILEIO_READ_DIR_REQ:
-      return sbp_unpack_sbp_msg_fileio_read_dir_req_t(buf, len, n_read, &msg->fileio_read_dir_req);
+      return sbp_decode_sbp_msg_fileio_read_dir_req_t(buf, len, n_read, &msg->fileio_read_dir_req);
     case SBP_MSG_FILEIO_READ_DIR_RESP:
-      return sbp_unpack_sbp_msg_fileio_read_dir_resp_t(buf, len, n_read, &msg->fileio_read_dir_resp);
+      return sbp_decode_sbp_msg_fileio_read_dir_resp_t(buf, len, n_read, &msg->fileio_read_dir_resp);
     case SBP_MSG_FILEIO_REMOVE:
-      return sbp_unpack_sbp_msg_fileio_remove_t(buf, len, n_read, &msg->fileio_remove);
+      return sbp_decode_sbp_msg_fileio_remove_t(buf, len, n_read, &msg->fileio_remove);
     case SBP_MSG_FILEIO_WRITE_REQ:
-      return sbp_unpack_sbp_msg_fileio_write_req_t(buf, len, n_read, &msg->fileio_write_req);
+      return sbp_decode_sbp_msg_fileio_write_req_t(buf, len, n_read, &msg->fileio_write_req);
     case SBP_MSG_FILEIO_WRITE_RESP:
-      return sbp_unpack_sbp_msg_fileio_write_resp_t(buf, len, n_read, &msg->fileio_write_resp);
+      return sbp_decode_sbp_msg_fileio_write_resp_t(buf, len, n_read, &msg->fileio_write_resp);
     case SBP_MSG_FILEIO_CONFIG_REQ:
-      return sbp_unpack_sbp_msg_fileio_config_req_t(buf, len, n_read, &msg->fileio_config_req);
+      return sbp_decode_sbp_msg_fileio_config_req_t(buf, len, n_read, &msg->fileio_config_req);
     case SBP_MSG_FILEIO_CONFIG_RESP:
-      return sbp_unpack_sbp_msg_fileio_config_resp_t(buf, len, n_read, &msg->fileio_config_resp);
+      return sbp_decode_sbp_msg_fileio_config_resp_t(buf, len, n_read, &msg->fileio_config_resp);
     case SBP_MSG_LOG:
-      return sbp_unpack_sbp_msg_log_t(buf, len, n_read, &msg->log);
+      return sbp_decode_sbp_msg_log_t(buf, len, n_read, &msg->log);
     case SBP_MSG_FWD:
-      return sbp_unpack_sbp_msg_fwd_t(buf, len, n_read, &msg->fwd);
+      return sbp_decode_sbp_msg_fwd_t(buf, len, n_read, &msg->fwd);
     case SBP_MSG_PRINT_DEP:
-      return sbp_unpack_sbp_msg_print_dep_t(buf, len, n_read, &msg->print_dep);
+      return sbp_decode_sbp_msg_print_dep_t(buf, len, n_read, &msg->print_dep);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_REQ:
-      return sbp_unpack_sbp_msg_bootloader_handshake_req_t(buf, len, n_read, &msg->bootloader_handshake_req);
+      return sbp_decode_sbp_msg_bootloader_handshake_req_t(buf, len, n_read, &msg->bootloader_handshake_req);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_RESP:
-      return sbp_unpack_sbp_msg_bootloader_handshake_resp_t(buf, len, n_read, &msg->bootloader_handshake_resp);
+      return sbp_decode_sbp_msg_bootloader_handshake_resp_t(buf, len, n_read, &msg->bootloader_handshake_resp);
     case SBP_MSG_BOOTLOADER_JUMP_TO_APP:
-      return sbp_unpack_sbp_msg_bootloader_jump_to_app_t(buf, len, n_read, &msg->bootloader_jump_to_app);
+      return sbp_decode_sbp_msg_bootloader_jump_to_app_t(buf, len, n_read, &msg->bootloader_jump_to_app);
     case SBP_MSG_NAP_DEVICE_DNA_REQ:
-      return sbp_unpack_sbp_msg_nap_device_dna_req_t(buf, len, n_read, &msg->nap_device_dna_req);
+      return sbp_decode_sbp_msg_nap_device_dna_req_t(buf, len, n_read, &msg->nap_device_dna_req);
     case SBP_MSG_NAP_DEVICE_DNA_RESP:
-      return sbp_unpack_sbp_msg_nap_device_dna_resp_t(buf, len, n_read, &msg->nap_device_dna_resp);
+      return sbp_decode_sbp_msg_nap_device_dna_resp_t(buf, len, n_read, &msg->nap_device_dna_resp);
     case SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A:
-      return sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(buf, len, n_read, &msg->bootloader_handshake_dep_a);
+      return sbp_decode_sbp_msg_bootloader_handshake_dep_a_t(buf, len, n_read, &msg->bootloader_handshake_dep_a);
     case SBP_MSG_STARTUP:
-      return sbp_unpack_sbp_msg_startup_t(buf, len, n_read, &msg->startup);
+      return sbp_decode_sbp_msg_startup_t(buf, len, n_read, &msg->startup);
     case SBP_MSG_DGNSS_STATUS:
-      return sbp_unpack_sbp_msg_dgnss_status_t(buf, len, n_read, &msg->dgnss_status);
+      return sbp_decode_sbp_msg_dgnss_status_t(buf, len, n_read, &msg->dgnss_status);
     case SBP_MSG_HEARTBEAT:
-      return sbp_unpack_sbp_msg_heartbeat_t(buf, len, n_read, &msg->heartbeat);
+      return sbp_decode_sbp_msg_heartbeat_t(buf, len, n_read, &msg->heartbeat);
     case SBP_MSG_STATUS_REPORT:
-      return sbp_unpack_sbp_msg_status_report_t(buf, len, n_read, &msg->status_report);
+      return sbp_decode_sbp_msg_status_report_t(buf, len, n_read, &msg->status_report);
     case SBP_MSG_INS_STATUS:
-      return sbp_unpack_sbp_msg_ins_status_t(buf, len, n_read, &msg->ins_status);
+      return sbp_decode_sbp_msg_ins_status_t(buf, len, n_read, &msg->ins_status);
     case SBP_MSG_CSAC_TELEMETRY:
-      return sbp_unpack_sbp_msg_csac_telemetry_t(buf, len, n_read, &msg->csac_telemetry);
+      return sbp_decode_sbp_msg_csac_telemetry_t(buf, len, n_read, &msg->csac_telemetry);
     case SBP_MSG_CSAC_TELEMETRY_LABELS:
-      return sbp_unpack_sbp_msg_csac_telemetry_labels_t(buf, len, n_read, &msg->csac_telemetry_labels);
+      return sbp_decode_sbp_msg_csac_telemetry_labels_t(buf, len, n_read, &msg->csac_telemetry_labels);
     case SBP_MSG_INS_UPDATES:
-      return sbp_unpack_sbp_msg_ins_updates_t(buf, len, n_read, &msg->ins_updates);
+      return sbp_decode_sbp_msg_ins_updates_t(buf, len, n_read, &msg->ins_updates);
     case SBP_MSG_GNSS_TIME_OFFSET:
-      return sbp_unpack_sbp_msg_gnss_time_offset_t(buf, len, n_read, &msg->gnss_time_offset);
+      return sbp_decode_sbp_msg_gnss_time_offset_t(buf, len, n_read, &msg->gnss_time_offset);
     case SBP_MSG_PPS_TIME:
-      return sbp_unpack_sbp_msg_pps_time_t(buf, len, n_read, &msg->pps_time);
+      return sbp_decode_sbp_msg_pps_time_t(buf, len, n_read, &msg->pps_time);
     case SBP_MSG_GROUP_META:
-      return sbp_unpack_sbp_msg_group_meta_t(buf, len, n_read, &msg->group_meta);
+      return sbp_decode_sbp_msg_group_meta_t(buf, len, n_read, &msg->group_meta);
     case SBP_MSG_OBS:
-      return sbp_unpack_sbp_msg_obs_t(buf, len, n_read, &msg->obs);
+      return sbp_decode_sbp_msg_obs_t(buf, len, n_read, &msg->obs);
     case SBP_MSG_BASE_POS_LLH:
-      return sbp_unpack_sbp_msg_base_pos_llh_t(buf, len, n_read, &msg->base_pos_llh);
+      return sbp_decode_sbp_msg_base_pos_llh_t(buf, len, n_read, &msg->base_pos_llh);
     case SBP_MSG_BASE_POS_ECEF:
-      return sbp_unpack_sbp_msg_base_pos_ecef_t(buf, len, n_read, &msg->base_pos_ecef);
+      return sbp_decode_sbp_msg_base_pos_ecef_t(buf, len, n_read, &msg->base_pos_ecef);
     case SBP_MSG_EPHEMERIS_GPS_DEP_E:
-      return sbp_unpack_sbp_msg_ephemeris_gps_dep_e_t(buf, len, n_read, &msg->ephemeris_gps_dep_e);
+      return sbp_decode_sbp_msg_ephemeris_gps_dep_e_t(buf, len, n_read, &msg->ephemeris_gps_dep_e);
     case SBP_MSG_EPHEMERIS_GPS_DEP_F:
-      return sbp_unpack_sbp_msg_ephemeris_gps_dep_f_t(buf, len, n_read, &msg->ephemeris_gps_dep_f);
+      return sbp_decode_sbp_msg_ephemeris_gps_dep_f_t(buf, len, n_read, &msg->ephemeris_gps_dep_f);
     case SBP_MSG_EPHEMERIS_GPS:
-      return sbp_unpack_sbp_msg_ephemeris_gps_t(buf, len, n_read, &msg->ephemeris_gps);
+      return sbp_decode_sbp_msg_ephemeris_gps_t(buf, len, n_read, &msg->ephemeris_gps);
     case SBP_MSG_EPHEMERIS_QZSS:
-      return sbp_unpack_sbp_msg_ephemeris_qzss_t(buf, len, n_read, &msg->ephemeris_qzss);
+      return sbp_decode_sbp_msg_ephemeris_qzss_t(buf, len, n_read, &msg->ephemeris_qzss);
     case SBP_MSG_EPHEMERIS_BDS:
-      return sbp_unpack_sbp_msg_ephemeris_bds_t(buf, len, n_read, &msg->ephemeris_bds);
+      return sbp_decode_sbp_msg_ephemeris_bds_t(buf, len, n_read, &msg->ephemeris_bds);
     case SBP_MSG_EPHEMERIS_GAL_DEP_A:
-      return sbp_unpack_sbp_msg_ephemeris_gal_dep_a_t(buf, len, n_read, &msg->ephemeris_gal_dep_a);
+      return sbp_decode_sbp_msg_ephemeris_gal_dep_a_t(buf, len, n_read, &msg->ephemeris_gal_dep_a);
     case SBP_MSG_EPHEMERIS_GAL:
-      return sbp_unpack_sbp_msg_ephemeris_gal_t(buf, len, n_read, &msg->ephemeris_gal);
+      return sbp_decode_sbp_msg_ephemeris_gal_t(buf, len, n_read, &msg->ephemeris_gal);
     case SBP_MSG_EPHEMERIS_SBAS_DEP_A:
-      return sbp_unpack_sbp_msg_ephemeris_sbas_dep_a_t(buf, len, n_read, &msg->ephemeris_sbas_dep_a);
+      return sbp_decode_sbp_msg_ephemeris_sbas_dep_a_t(buf, len, n_read, &msg->ephemeris_sbas_dep_a);
     case SBP_MSG_EPHEMERIS_GLO_DEP_A:
-      return sbp_unpack_sbp_msg_ephemeris_glo_dep_a_t(buf, len, n_read, &msg->ephemeris_glo_dep_a);
+      return sbp_decode_sbp_msg_ephemeris_glo_dep_a_t(buf, len, n_read, &msg->ephemeris_glo_dep_a);
     case SBP_MSG_EPHEMERIS_SBAS_DEP_B:
-      return sbp_unpack_sbp_msg_ephemeris_sbas_dep_b_t(buf, len, n_read, &msg->ephemeris_sbas_dep_b);
+      return sbp_decode_sbp_msg_ephemeris_sbas_dep_b_t(buf, len, n_read, &msg->ephemeris_sbas_dep_b);
     case SBP_MSG_EPHEMERIS_SBAS:
-      return sbp_unpack_sbp_msg_ephemeris_sbas_t(buf, len, n_read, &msg->ephemeris_sbas);
+      return sbp_decode_sbp_msg_ephemeris_sbas_t(buf, len, n_read, &msg->ephemeris_sbas);
     case SBP_MSG_EPHEMERIS_GLO_DEP_B:
-      return sbp_unpack_sbp_msg_ephemeris_glo_dep_b_t(buf, len, n_read, &msg->ephemeris_glo_dep_b);
+      return sbp_decode_sbp_msg_ephemeris_glo_dep_b_t(buf, len, n_read, &msg->ephemeris_glo_dep_b);
     case SBP_MSG_EPHEMERIS_GLO_DEP_C:
-      return sbp_unpack_sbp_msg_ephemeris_glo_dep_c_t(buf, len, n_read, &msg->ephemeris_glo_dep_c);
+      return sbp_decode_sbp_msg_ephemeris_glo_dep_c_t(buf, len, n_read, &msg->ephemeris_glo_dep_c);
     case SBP_MSG_EPHEMERIS_GLO_DEP_D:
-      return sbp_unpack_sbp_msg_ephemeris_glo_dep_d_t(buf, len, n_read, &msg->ephemeris_glo_dep_d);
+      return sbp_decode_sbp_msg_ephemeris_glo_dep_d_t(buf, len, n_read, &msg->ephemeris_glo_dep_d);
     case SBP_MSG_EPHEMERIS_GLO:
-      return sbp_unpack_sbp_msg_ephemeris_glo_t(buf, len, n_read, &msg->ephemeris_glo);
+      return sbp_decode_sbp_msg_ephemeris_glo_t(buf, len, n_read, &msg->ephemeris_glo);
     case SBP_MSG_EPHEMERIS_DEP_D:
-      return sbp_unpack_sbp_msg_ephemeris_dep_d_t(buf, len, n_read, &msg->ephemeris_dep_d);
+      return sbp_decode_sbp_msg_ephemeris_dep_d_t(buf, len, n_read, &msg->ephemeris_dep_d);
     case SBP_MSG_EPHEMERIS_DEP_A:
-      return sbp_unpack_sbp_msg_ephemeris_dep_a_t(buf, len, n_read, &msg->ephemeris_dep_a);
+      return sbp_decode_sbp_msg_ephemeris_dep_a_t(buf, len, n_read, &msg->ephemeris_dep_a);
     case SBP_MSG_EPHEMERIS_DEP_B:
-      return sbp_unpack_sbp_msg_ephemeris_dep_b_t(buf, len, n_read, &msg->ephemeris_dep_b);
+      return sbp_decode_sbp_msg_ephemeris_dep_b_t(buf, len, n_read, &msg->ephemeris_dep_b);
     case SBP_MSG_EPHEMERIS_DEP_C:
-      return sbp_unpack_sbp_msg_ephemeris_dep_c_t(buf, len, n_read, &msg->ephemeris_dep_c);
+      return sbp_decode_sbp_msg_ephemeris_dep_c_t(buf, len, n_read, &msg->ephemeris_dep_c);
     case SBP_MSG_OBS_DEP_A:
-      return sbp_unpack_sbp_msg_obs_dep_a_t(buf, len, n_read, &msg->obs_dep_a);
+      return sbp_decode_sbp_msg_obs_dep_a_t(buf, len, n_read, &msg->obs_dep_a);
     case SBP_MSG_OBS_DEP_B:
-      return sbp_unpack_sbp_msg_obs_dep_b_t(buf, len, n_read, &msg->obs_dep_b);
+      return sbp_decode_sbp_msg_obs_dep_b_t(buf, len, n_read, &msg->obs_dep_b);
     case SBP_MSG_OBS_DEP_C:
-      return sbp_unpack_sbp_msg_obs_dep_c_t(buf, len, n_read, &msg->obs_dep_c);
+      return sbp_decode_sbp_msg_obs_dep_c_t(buf, len, n_read, &msg->obs_dep_c);
     case SBP_MSG_IONO:
-      return sbp_unpack_sbp_msg_iono_t(buf, len, n_read, &msg->iono);
+      return sbp_decode_sbp_msg_iono_t(buf, len, n_read, &msg->iono);
     case SBP_MSG_SV_CONFIGURATION_GPS_DEP:
-      return sbp_unpack_sbp_msg_sv_configuration_gps_dep_t(buf, len, n_read, &msg->sv_configuration_gps_dep);
+      return sbp_decode_sbp_msg_sv_configuration_gps_dep_t(buf, len, n_read, &msg->sv_configuration_gps_dep);
     case SBP_MSG_GNSS_CAPB:
-      return sbp_unpack_sbp_msg_gnss_capb_t(buf, len, n_read, &msg->gnss_capb);
+      return sbp_decode_sbp_msg_gnss_capb_t(buf, len, n_read, &msg->gnss_capb);
     case SBP_MSG_GROUP_DELAY_DEP_A:
-      return sbp_unpack_sbp_msg_group_delay_dep_a_t(buf, len, n_read, &msg->group_delay_dep_a);
+      return sbp_decode_sbp_msg_group_delay_dep_a_t(buf, len, n_read, &msg->group_delay_dep_a);
     case SBP_MSG_GROUP_DELAY_DEP_B:
-      return sbp_unpack_sbp_msg_group_delay_dep_b_t(buf, len, n_read, &msg->group_delay_dep_b);
+      return sbp_decode_sbp_msg_group_delay_dep_b_t(buf, len, n_read, &msg->group_delay_dep_b);
     case SBP_MSG_GROUP_DELAY:
-      return sbp_unpack_sbp_msg_group_delay_t(buf, len, n_read, &msg->group_delay);
+      return sbp_decode_sbp_msg_group_delay_t(buf, len, n_read, &msg->group_delay);
     case SBP_MSG_ALMANAC_GPS_DEP:
-      return sbp_unpack_sbp_msg_almanac_gps_dep_t(buf, len, n_read, &msg->almanac_gps_dep);
+      return sbp_decode_sbp_msg_almanac_gps_dep_t(buf, len, n_read, &msg->almanac_gps_dep);
     case SBP_MSG_ALMANAC_GPS:
-      return sbp_unpack_sbp_msg_almanac_gps_t(buf, len, n_read, &msg->almanac_gps);
+      return sbp_decode_sbp_msg_almanac_gps_t(buf, len, n_read, &msg->almanac_gps);
     case SBP_MSG_ALMANAC_GLO_DEP:
-      return sbp_unpack_sbp_msg_almanac_glo_dep_t(buf, len, n_read, &msg->almanac_glo_dep);
+      return sbp_decode_sbp_msg_almanac_glo_dep_t(buf, len, n_read, &msg->almanac_glo_dep);
     case SBP_MSG_ALMANAC_GLO:
-      return sbp_unpack_sbp_msg_almanac_glo_t(buf, len, n_read, &msg->almanac_glo);
+      return sbp_decode_sbp_msg_almanac_glo_t(buf, len, n_read, &msg->almanac_glo);
     case SBP_MSG_GLO_BIASES:
-      return sbp_unpack_sbp_msg_glo_biases_t(buf, len, n_read, &msg->glo_biases);
+      return sbp_decode_sbp_msg_glo_biases_t(buf, len, n_read, &msg->glo_biases);
     case SBP_MSG_SV_AZ_EL:
-      return sbp_unpack_sbp_msg_sv_az_el_t(buf, len, n_read, &msg->sv_az_el);
+      return sbp_decode_sbp_msg_sv_az_el_t(buf, len, n_read, &msg->sv_az_el);
     case SBP_MSG_OSR:
-      return sbp_unpack_sbp_msg_osr_t(buf, len, n_read, &msg->osr);
+      return sbp_decode_sbp_msg_osr_t(buf, len, n_read, &msg->osr);
     case SBP_MSG_SBAS_RAW:
-      return sbp_unpack_sbp_msg_sbas_raw_t(buf, len, n_read, &msg->sbas_raw);
+      return sbp_decode_sbp_msg_sbas_raw_t(buf, len, n_read, &msg->sbas_raw);
     case SBP_MSG_ALMANAC:
-      return sbp_unpack_sbp_msg_almanac_t(buf, len, n_read, &msg->almanac);
+      return sbp_decode_sbp_msg_almanac_t(buf, len, n_read, &msg->almanac);
     case SBP_MSG_SET_TIME:
-      return sbp_unpack_sbp_msg_set_time_t(buf, len, n_read, &msg->set_time);
+      return sbp_decode_sbp_msg_set_time_t(buf, len, n_read, &msg->set_time);
     case SBP_MSG_RESET:
-      return sbp_unpack_sbp_msg_reset_t(buf, len, n_read, &msg->reset);
+      return sbp_decode_sbp_msg_reset_t(buf, len, n_read, &msg->reset);
     case SBP_MSG_RESET_DEP:
-      return sbp_unpack_sbp_msg_reset_dep_t(buf, len, n_read, &msg->reset_dep);
+      return sbp_decode_sbp_msg_reset_dep_t(buf, len, n_read, &msg->reset_dep);
     case SBP_MSG_CW_RESULTS:
-      return sbp_unpack_sbp_msg_cw_results_t(buf, len, n_read, &msg->cw_results);
+      return sbp_decode_sbp_msg_cw_results_t(buf, len, n_read, &msg->cw_results);
     case SBP_MSG_CW_START:
-      return sbp_unpack_sbp_msg_cw_start_t(buf, len, n_read, &msg->cw_start);
+      return sbp_decode_sbp_msg_cw_start_t(buf, len, n_read, &msg->cw_start);
     case SBP_MSG_RESET_FILTERS:
-      return sbp_unpack_sbp_msg_reset_filters_t(buf, len, n_read, &msg->reset_filters);
+      return sbp_decode_sbp_msg_reset_filters_t(buf, len, n_read, &msg->reset_filters);
     case SBP_MSG_INIT_BASE_DEP:
-      return sbp_unpack_sbp_msg_init_base_dep_t(buf, len, n_read, &msg->init_base_dep);
+      return sbp_decode_sbp_msg_init_base_dep_t(buf, len, n_read, &msg->init_base_dep);
     case SBP_MSG_THREAD_STATE:
-      return sbp_unpack_sbp_msg_thread_state_t(buf, len, n_read, &msg->thread_state);
+      return sbp_decode_sbp_msg_thread_state_t(buf, len, n_read, &msg->thread_state);
     case SBP_MSG_UART_STATE:
-      return sbp_unpack_sbp_msg_uart_state_t(buf, len, n_read, &msg->uart_state);
+      return sbp_decode_sbp_msg_uart_state_t(buf, len, n_read, &msg->uart_state);
     case SBP_MSG_UART_STATE_DEPA:
-      return sbp_unpack_sbp_msg_uart_state_depa_t(buf, len, n_read, &msg->uart_state_depa);
+      return sbp_decode_sbp_msg_uart_state_depa_t(buf, len, n_read, &msg->uart_state_depa);
     case SBP_MSG_IAR_STATE:
-      return sbp_unpack_sbp_msg_iar_state_t(buf, len, n_read, &msg->iar_state);
+      return sbp_decode_sbp_msg_iar_state_t(buf, len, n_read, &msg->iar_state);
     case SBP_MSG_MASK_SATELLITE:
-      return sbp_unpack_sbp_msg_mask_satellite_t(buf, len, n_read, &msg->mask_satellite);
+      return sbp_decode_sbp_msg_mask_satellite_t(buf, len, n_read, &msg->mask_satellite);
     case SBP_MSG_MASK_SATELLITE_DEP:
-      return sbp_unpack_sbp_msg_mask_satellite_dep_t(buf, len, n_read, &msg->mask_satellite_dep);
+      return sbp_decode_sbp_msg_mask_satellite_dep_t(buf, len, n_read, &msg->mask_satellite_dep);
     case SBP_MSG_DEVICE_MONITOR:
-      return sbp_unpack_sbp_msg_device_monitor_t(buf, len, n_read, &msg->device_monitor);
+      return sbp_decode_sbp_msg_device_monitor_t(buf, len, n_read, &msg->device_monitor);
     case SBP_MSG_COMMAND_REQ:
-      return sbp_unpack_sbp_msg_command_req_t(buf, len, n_read, &msg->command_req);
+      return sbp_decode_sbp_msg_command_req_t(buf, len, n_read, &msg->command_req);
     case SBP_MSG_COMMAND_RESP:
-      return sbp_unpack_sbp_msg_command_resp_t(buf, len, n_read, &msg->command_resp);
+      return sbp_decode_sbp_msg_command_resp_t(buf, len, n_read, &msg->command_resp);
     case SBP_MSG_COMMAND_OUTPUT:
-      return sbp_unpack_sbp_msg_command_output_t(buf, len, n_read, &msg->command_output);
+      return sbp_decode_sbp_msg_command_output_t(buf, len, n_read, &msg->command_output);
     case SBP_MSG_NETWORK_STATE_REQ:
-      return sbp_unpack_sbp_msg_network_state_req_t(buf, len, n_read, &msg->network_state_req);
+      return sbp_decode_sbp_msg_network_state_req_t(buf, len, n_read, &msg->network_state_req);
     case SBP_MSG_NETWORK_STATE_RESP:
-      return sbp_unpack_sbp_msg_network_state_resp_t(buf, len, n_read, &msg->network_state_resp);
+      return sbp_decode_sbp_msg_network_state_resp_t(buf, len, n_read, &msg->network_state_resp);
     case SBP_MSG_NETWORK_BANDWIDTH_USAGE:
-      return sbp_unpack_sbp_msg_network_bandwidth_usage_t(buf, len, n_read, &msg->network_bandwidth_usage);
+      return sbp_decode_sbp_msg_network_bandwidth_usage_t(buf, len, n_read, &msg->network_bandwidth_usage);
     case SBP_MSG_CELL_MODEM_STATUS:
-      return sbp_unpack_sbp_msg_cell_modem_status_t(buf, len, n_read, &msg->cell_modem_status);
+      return sbp_decode_sbp_msg_cell_modem_status_t(buf, len, n_read, &msg->cell_modem_status);
     case SBP_MSG_SPECAN_DEP:
-      return sbp_unpack_sbp_msg_specan_dep_t(buf, len, n_read, &msg->specan_dep);
+      return sbp_decode_sbp_msg_specan_dep_t(buf, len, n_read, &msg->specan_dep);
     case SBP_MSG_SPECAN:
-      return sbp_unpack_sbp_msg_specan_t(buf, len, n_read, &msg->specan);
+      return sbp_decode_sbp_msg_specan_t(buf, len, n_read, &msg->specan);
     case SBP_MSG_FRONT_END_GAIN:
-      return sbp_unpack_sbp_msg_front_end_gain_t(buf, len, n_read, &msg->front_end_gain);
+      return sbp_decode_sbp_msg_front_end_gain_t(buf, len, n_read, &msg->front_end_gain);
     case SBP_MSG_FLASH_PROGRAM:
-      return sbp_unpack_sbp_msg_flash_program_t(buf, len, n_read, &msg->flash_program);
+      return sbp_decode_sbp_msg_flash_program_t(buf, len, n_read, &msg->flash_program);
     case SBP_MSG_FLASH_DONE:
-      return sbp_unpack_sbp_msg_flash_done_t(buf, len, n_read, &msg->flash_done);
+      return sbp_decode_sbp_msg_flash_done_t(buf, len, n_read, &msg->flash_done);
     case SBP_MSG_FLASH_READ_REQ:
-      return sbp_unpack_sbp_msg_flash_read_req_t(buf, len, n_read, &msg->flash_read_req);
+      return sbp_decode_sbp_msg_flash_read_req_t(buf, len, n_read, &msg->flash_read_req);
     case SBP_MSG_FLASH_READ_RESP:
-      return sbp_unpack_sbp_msg_flash_read_resp_t(buf, len, n_read, &msg->flash_read_resp);
+      return sbp_decode_sbp_msg_flash_read_resp_t(buf, len, n_read, &msg->flash_read_resp);
     case SBP_MSG_FLASH_ERASE:
-      return sbp_unpack_sbp_msg_flash_erase_t(buf, len, n_read, &msg->flash_erase);
+      return sbp_decode_sbp_msg_flash_erase_t(buf, len, n_read, &msg->flash_erase);
     case SBP_MSG_STM_FLASH_LOCK_SECTOR:
-      return sbp_unpack_sbp_msg_stm_flash_lock_sector_t(buf, len, n_read, &msg->stm_flash_lock_sector);
+      return sbp_decode_sbp_msg_stm_flash_lock_sector_t(buf, len, n_read, &msg->stm_flash_lock_sector);
     case SBP_MSG_STM_FLASH_UNLOCK_SECTOR:
-      return sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(buf, len, n_read, &msg->stm_flash_unlock_sector);
+      return sbp_decode_sbp_msg_stm_flash_unlock_sector_t(buf, len, n_read, &msg->stm_flash_unlock_sector);
     case SBP_MSG_STM_UNIQUE_ID_REQ:
-      return sbp_unpack_sbp_msg_stm_unique_id_req_t(buf, len, n_read, &msg->stm_unique_id_req);
+      return sbp_decode_sbp_msg_stm_unique_id_req_t(buf, len, n_read, &msg->stm_unique_id_req);
     case SBP_MSG_STM_UNIQUE_ID_RESP:
-      return sbp_unpack_sbp_msg_stm_unique_id_resp_t(buf, len, n_read, &msg->stm_unique_id_resp);
+      return sbp_decode_sbp_msg_stm_unique_id_resp_t(buf, len, n_read, &msg->stm_unique_id_resp);
     case SBP_MSG_M25_FLASH_WRITE_STATUS:
-      return sbp_unpack_sbp_msg_m25_flash_write_status_t(buf, len, n_read, &msg->m25_flash_write_status);
+      return sbp_decode_sbp_msg_m25_flash_write_status_t(buf, len, n_read, &msg->m25_flash_write_status);
     case SBP_MSG_IMU_RAW:
-      return sbp_unpack_sbp_msg_imu_raw_t(buf, len, n_read, &msg->imu_raw);
+      return sbp_decode_sbp_msg_imu_raw_t(buf, len, n_read, &msg->imu_raw);
     case SBP_MSG_IMU_AUX:
-      return sbp_unpack_sbp_msg_imu_aux_t(buf, len, n_read, &msg->imu_aux);
+      return sbp_decode_sbp_msg_imu_aux_t(buf, len, n_read, &msg->imu_aux);
     case SBP_MSG_NDB_EVENT:
-      return sbp_unpack_sbp_msg_ndb_event_t(buf, len, n_read, &msg->ndb_event);
+      return sbp_decode_sbp_msg_ndb_event_t(buf, len, n_read, &msg->ndb_event);
     case SBP_MSG_ACQ_RESULT:
-      return sbp_unpack_sbp_msg_acq_result_t(buf, len, n_read, &msg->acq_result);
+      return sbp_decode_sbp_msg_acq_result_t(buf, len, n_read, &msg->acq_result);
     case SBP_MSG_ACQ_RESULT_DEP_C:
-      return sbp_unpack_sbp_msg_acq_result_dep_c_t(buf, len, n_read, &msg->acq_result_dep_c);
+      return sbp_decode_sbp_msg_acq_result_dep_c_t(buf, len, n_read, &msg->acq_result_dep_c);
     case SBP_MSG_ACQ_RESULT_DEP_B:
-      return sbp_unpack_sbp_msg_acq_result_dep_b_t(buf, len, n_read, &msg->acq_result_dep_b);
+      return sbp_decode_sbp_msg_acq_result_dep_b_t(buf, len, n_read, &msg->acq_result_dep_b);
     case SBP_MSG_ACQ_RESULT_DEP_A:
-      return sbp_unpack_sbp_msg_acq_result_dep_a_t(buf, len, n_read, &msg->acq_result_dep_a);
+      return sbp_decode_sbp_msg_acq_result_dep_a_t(buf, len, n_read, &msg->acq_result_dep_a);
     case SBP_MSG_ACQ_SV_PROFILE:
-      return sbp_unpack_sbp_msg_acq_sv_profile_t(buf, len, n_read, &msg->acq_sv_profile);
+      return sbp_decode_sbp_msg_acq_sv_profile_t(buf, len, n_read, &msg->acq_sv_profile);
     case SBP_MSG_ACQ_SV_PROFILE_DEP:
-      return sbp_unpack_sbp_msg_acq_sv_profile_dep_t(buf, len, n_read, &msg->acq_sv_profile_dep);
+      return sbp_decode_sbp_msg_acq_sv_profile_dep_t(buf, len, n_read, &msg->acq_sv_profile_dep);
     case SBP_MSG_SOLN_META_DEP_A:
-      return sbp_unpack_sbp_msg_soln_meta_dep_a_t(buf, len, n_read, &msg->soln_meta_dep_a);
+      return sbp_decode_sbp_msg_soln_meta_dep_a_t(buf, len, n_read, &msg->soln_meta_dep_a);
     case SBP_MSG_SOLN_META:
-      return sbp_unpack_sbp_msg_soln_meta_t(buf, len, n_read, &msg->soln_meta);
+      return sbp_decode_sbp_msg_soln_meta_t(buf, len, n_read, &msg->soln_meta);
     case SBP_MSG_BASELINE_HEADING:
-      return sbp_unpack_sbp_msg_baseline_heading_t(buf, len, n_read, &msg->baseline_heading);
+      return sbp_decode_sbp_msg_baseline_heading_t(buf, len, n_read, &msg->baseline_heading);
     case SBP_MSG_ORIENT_QUAT:
-      return sbp_unpack_sbp_msg_orient_quat_t(buf, len, n_read, &msg->orient_quat);
+      return sbp_decode_sbp_msg_orient_quat_t(buf, len, n_read, &msg->orient_quat);
     case SBP_MSG_ORIENT_EULER:
-      return sbp_unpack_sbp_msg_orient_euler_t(buf, len, n_read, &msg->orient_euler);
+      return sbp_decode_sbp_msg_orient_euler_t(buf, len, n_read, &msg->orient_euler);
     case SBP_MSG_ANGULAR_RATE:
-      return sbp_unpack_sbp_msg_angular_rate_t(buf, len, n_read, &msg->angular_rate);
+      return sbp_decode_sbp_msg_angular_rate_t(buf, len, n_read, &msg->angular_rate);
     case SBP_MSG_MAG_RAW:
-      return sbp_unpack_sbp_msg_mag_raw_t(buf, len, n_read, &msg->mag_raw);
+      return sbp_decode_sbp_msg_mag_raw_t(buf, len, n_read, &msg->mag_raw);
     default:
       break;
   }
@@ -1877,8 +1877,6 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
   }
   return 0;
 }
-
-s8 sbp_pack_and_send_message(struct sbp_state *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 #ifdef __cplusplus
 }

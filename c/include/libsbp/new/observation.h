@@ -30,8 +30,8 @@ typedef struct {
 } sbp_observation_header_t;
 
 size_t sbp_packed_size_sbp_observation_header_t(const sbp_observation_header_t *msg);
-s8 sbp_pack_sbp_observation_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_observation_header_t *msg);
-s8 sbp_unpack_sbp_observation_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_observation_header_t *msg);
+s8 sbp_encode_sbp_observation_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_observation_header_t *msg);
+s8 sbp_decode_sbp_observation_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_observation_header_t *msg);
 
 int sbp_cmp_sbp_observation_header_t(const sbp_observation_header_t *a, const sbp_observation_header_t *b);
 
@@ -46,8 +46,8 @@ typedef struct {
 } sbp_doppler_t;
 
 size_t sbp_packed_size_sbp_doppler_t(const sbp_doppler_t *msg);
-s8 sbp_pack_sbp_doppler_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_doppler_t *msg);
-s8 sbp_unpack_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_doppler_t *msg);
+s8 sbp_encode_sbp_doppler_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_doppler_t *msg);
+s8 sbp_decode_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_doppler_t *msg);
 
 int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
@@ -132,8 +132,8 @@ typedef struct {
 } sbp_packed_obs_content_t;
 
 size_t sbp_packed_size_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *msg);
-s8 sbp_pack_sbp_packed_obs_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_t *msg);
-s8 sbp_unpack_sbp_packed_obs_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_t *msg);
+s8 sbp_encode_sbp_packed_obs_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_t *msg);
+s8 sbp_decode_sbp_packed_obs_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_t *msg);
 
 int sbp_cmp_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *a, const sbp_packed_obs_content_t *b);
 
@@ -219,8 +219,8 @@ typedef struct {
 } sbp_packed_osr_content_t;
 
 size_t sbp_packed_size_sbp_packed_osr_content_t(const sbp_packed_osr_content_t *msg);
-s8 sbp_pack_sbp_packed_osr_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_osr_content_t *msg);
-s8 sbp_unpack_sbp_packed_osr_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_osr_content_t *msg);
+s8 sbp_encode_sbp_packed_osr_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_osr_content_t *msg);
+s8 sbp_decode_sbp_packed_osr_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_osr_content_t *msg);
 
 int sbp_cmp_sbp_packed_osr_content_t(const sbp_packed_osr_content_t *a, const sbp_packed_osr_content_t *b);
 
@@ -237,8 +237,8 @@ typedef struct {
 } sbp_msg_obs_t;
 
 size_t sbp_packed_size_sbp_msg_obs_t(const sbp_msg_obs_t *msg);
-s8 sbp_pack_sbp_msg_obs_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_t *msg);
-s8 sbp_unpack_sbp_msg_obs_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_t *msg);
+s8 sbp_encode_sbp_msg_obs_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_t *msg);
+s8 sbp_decode_sbp_msg_obs_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_t *msg);
 s8 sbp_send_sbp_msg_obs_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_obs_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_obs_t(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b);
@@ -256,8 +256,8 @@ typedef struct {
 } sbp_msg_base_pos_llh_t;
 
 size_t sbp_packed_size_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *msg);
-s8 sbp_pack_sbp_msg_base_pos_llh_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_base_pos_llh_t *msg);
-s8 sbp_unpack_sbp_msg_base_pos_llh_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_base_pos_llh_t *msg);
+s8 sbp_encode_sbp_msg_base_pos_llh_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_base_pos_llh_t *msg);
+s8 sbp_decode_sbp_msg_base_pos_llh_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_base_pos_llh_t *msg);
 s8 sbp_send_sbp_msg_base_pos_llh_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_base_pos_llh_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *a, const sbp_msg_base_pos_llh_t *b);
@@ -275,8 +275,8 @@ typedef struct {
 } sbp_msg_base_pos_ecef_t;
 
 size_t sbp_packed_size_sbp_msg_base_pos_ecef_t(const sbp_msg_base_pos_ecef_t *msg);
-s8 sbp_pack_sbp_msg_base_pos_ecef_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_base_pos_ecef_t *msg);
-s8 sbp_unpack_sbp_msg_base_pos_ecef_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_base_pos_ecef_t *msg);
+s8 sbp_encode_sbp_msg_base_pos_ecef_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_base_pos_ecef_t *msg);
+s8 sbp_decode_sbp_msg_base_pos_ecef_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_base_pos_ecef_t *msg);
 s8 sbp_send_sbp_msg_base_pos_ecef_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_base_pos_ecef_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_base_pos_ecef_t(const sbp_msg_base_pos_ecef_t *a, const sbp_msg_base_pos_ecef_t *b);
@@ -292,8 +292,8 @@ typedef struct {
 } sbp_ephemeris_common_content_t;
 
 size_t sbp_packed_size_sbp_ephemeris_common_content_t(const sbp_ephemeris_common_content_t *msg);
-s8 sbp_pack_sbp_ephemeris_common_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_t *msg);
-s8 sbp_unpack_sbp_ephemeris_common_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_t *msg);
+s8 sbp_encode_sbp_ephemeris_common_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_t *msg);
+s8 sbp_decode_sbp_ephemeris_common_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_t *msg);
 
 int sbp_cmp_sbp_ephemeris_common_content_t(const sbp_ephemeris_common_content_t *a, const sbp_ephemeris_common_content_t *b);
 
@@ -308,8 +308,8 @@ typedef struct {
 } sbp_ephemeris_common_content_dep_b_t;
 
 size_t sbp_packed_size_sbp_ephemeris_common_content_dep_b_t(const sbp_ephemeris_common_content_dep_b_t *msg);
-s8 sbp_pack_sbp_ephemeris_common_content_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_dep_b_t *msg);
-s8 sbp_unpack_sbp_ephemeris_common_content_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_dep_b_t *msg);
+s8 sbp_encode_sbp_ephemeris_common_content_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_dep_b_t *msg);
+s8 sbp_decode_sbp_ephemeris_common_content_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_dep_b_t *msg);
 
 int sbp_cmp_sbp_ephemeris_common_content_dep_b_t(const sbp_ephemeris_common_content_dep_b_t *a, const sbp_ephemeris_common_content_dep_b_t *b);
 
@@ -324,8 +324,8 @@ typedef struct {
 } sbp_ephemeris_common_content_dep_a_t;
 
 size_t sbp_packed_size_sbp_ephemeris_common_content_dep_a_t(const sbp_ephemeris_common_content_dep_a_t *msg);
-s8 sbp_pack_sbp_ephemeris_common_content_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_dep_a_t *msg);
-s8 sbp_unpack_sbp_ephemeris_common_content_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_dep_a_t *msg);
+s8 sbp_encode_sbp_ephemeris_common_content_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_ephemeris_common_content_dep_a_t *msg);
+s8 sbp_decode_sbp_ephemeris_common_content_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_ephemeris_common_content_dep_a_t *msg);
 
 int sbp_cmp_sbp_ephemeris_common_content_dep_a_t(const sbp_ephemeris_common_content_dep_a_t *a, const sbp_ephemeris_common_content_dep_a_t *b);
 
@@ -362,8 +362,8 @@ typedef struct {
 } sbp_msg_ephemeris_gps_dep_e_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_gps_dep_e_t(const sbp_msg_ephemeris_gps_dep_e_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_dep_e_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_gps_dep_e_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_dep_e_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_gps_dep_e_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_dep_e_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_gps_dep_e_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_dep_e_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_gps_dep_e_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_gps_dep_e_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(const sbp_msg_ephemeris_gps_dep_e_t *a, const sbp_msg_ephemeris_gps_dep_e_t *b);
@@ -401,8 +401,8 @@ typedef struct {
 } sbp_msg_ephemeris_gps_dep_f_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_gps_dep_f_t(const sbp_msg_ephemeris_gps_dep_f_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_dep_f_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_gps_dep_f_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_dep_f_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_gps_dep_f_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_dep_f_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_gps_dep_f_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_dep_f_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_gps_dep_f_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_gps_dep_f_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(const sbp_msg_ephemeris_gps_dep_f_t *a, const sbp_msg_ephemeris_gps_dep_f_t *b);
@@ -440,8 +440,8 @@ typedef struct {
 } sbp_msg_ephemeris_gps_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_gps_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_gps_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_gps_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gps_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_gps_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gps_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_gps_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_gps_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *a, const sbp_msg_ephemeris_gps_t *b);
@@ -479,8 +479,8 @@ typedef struct {
 } sbp_msg_ephemeris_qzss_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_qzss_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_qzss_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_qzss_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_qzss_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_qzss_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_qzss_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_qzss_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_qzss_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_qzss_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_qzss_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *a, const sbp_msg_ephemeris_qzss_t *b);
@@ -519,8 +519,8 @@ typedef struct {
 } sbp_msg_ephemeris_bds_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_bds_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_bds_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_bds_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_bds_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_bds_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_bds_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_bds_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_bds_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_bds_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_bds_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *a, const sbp_msg_ephemeris_bds_t *b);
@@ -559,8 +559,8 @@ typedef struct {
 } sbp_msg_ephemeris_gal_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_gal_dep_a_t(const sbp_msg_ephemeris_gal_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gal_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_gal_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gal_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_gal_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gal_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_gal_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gal_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_gal_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_gal_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(const sbp_msg_ephemeris_gal_dep_a_t *a, const sbp_msg_ephemeris_gal_dep_a_t *b);
@@ -600,8 +600,8 @@ typedef struct {
 } sbp_msg_ephemeris_gal_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_gal_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gal_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_gal_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gal_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_gal_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_gal_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_gal_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_gal_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_gal_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_gal_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *a, const sbp_msg_ephemeris_gal_t *b);
@@ -618,8 +618,8 @@ typedef struct {
 } sbp_msg_ephemeris_sbas_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_a_t(const sbp_msg_ephemeris_sbas_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_sbas_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_sbas_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_sbas_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_sbas_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_sbas_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(const sbp_msg_ephemeris_sbas_dep_a_t *a, const sbp_msg_ephemeris_sbas_dep_a_t *b);
@@ -640,8 +640,8 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(const sbp_msg_ephemeris_glo_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_glo_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_glo_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_glo_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(const sbp_msg_ephemeris_glo_dep_a_t *a, const sbp_msg_ephemeris_glo_dep_a_t *b);
@@ -662,8 +662,8 @@ typedef struct {
 } sbp_msg_ephemeris_sbas_dep_b_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_b_t(const sbp_msg_ephemeris_sbas_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_sbas_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_dep_b_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_sbas_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_dep_b_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_sbas_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_dep_b_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_sbas_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_sbas_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(const sbp_msg_ephemeris_sbas_dep_b_t *a, const sbp_msg_ephemeris_sbas_dep_b_t *b);
@@ -680,8 +680,8 @@ typedef struct {
 } sbp_msg_ephemeris_sbas_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_sbas_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_sbas_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_sbas_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_sbas_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_sbas_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_sbas_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_sbas_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_sbas_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *a, const sbp_msg_ephemeris_sbas_t *b);
@@ -702,8 +702,8 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_b_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(const sbp_msg_ephemeris_glo_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_glo_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_b_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_glo_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_b_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_glo_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_b_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(const sbp_msg_ephemeris_glo_dep_b_t *a, const sbp_msg_ephemeris_glo_dep_b_t *b);
@@ -726,8 +726,8 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_c_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_c_t(const sbp_msg_ephemeris_glo_dep_c_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_c_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_glo_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_c_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_glo_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_c_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_glo_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_c_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_c_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_dep_c_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(const sbp_msg_ephemeris_glo_dep_c_t *a, const sbp_msg_ephemeris_glo_dep_c_t *b);
@@ -751,8 +751,8 @@ typedef struct {
 } sbp_msg_ephemeris_glo_dep_d_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_d_t(const sbp_msg_ephemeris_glo_dep_d_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_d_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_glo_dep_d_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_d_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_glo_dep_d_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_dep_d_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_glo_dep_d_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_dep_d_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_d_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_dep_d_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(const sbp_msg_ephemeris_glo_dep_d_t *a, const sbp_msg_ephemeris_glo_dep_d_t *b);
@@ -776,8 +776,8 @@ typedef struct {
 } sbp_msg_ephemeris_glo_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_glo_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_glo_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_glo_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_glo_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_glo_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *a, const sbp_msg_ephemeris_glo_t *b);
@@ -821,8 +821,8 @@ typedef struct {
 } sbp_msg_ephemeris_dep_d_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_dep_d_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_d_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_dep_d_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_d_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_dep_d_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_d_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_dep_d_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_d_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_dep_d_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_dep_d_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *a, const sbp_msg_ephemeris_dep_d_t *b);
@@ -863,8 +863,8 @@ typedef struct {
 } sbp_msg_ephemeris_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_a_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *a, const sbp_msg_ephemeris_dep_a_t *b);
@@ -906,8 +906,8 @@ typedef struct {
 } sbp_msg_ephemeris_dep_b_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_b_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_b_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_b_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *a, const sbp_msg_ephemeris_dep_b_t *b);
@@ -951,8 +951,8 @@ typedef struct {
 } sbp_msg_ephemeris_dep_c_t;
 
 size_t sbp_packed_size_sbp_msg_ephemeris_dep_c_t(const sbp_msg_ephemeris_dep_c_t *msg);
-s8 sbp_pack_sbp_msg_ephemeris_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_c_t *msg);
-s8 sbp_unpack_sbp_msg_ephemeris_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_c_t *msg);
+s8 sbp_encode_sbp_msg_ephemeris_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_dep_c_t *msg);
+s8 sbp_decode_sbp_msg_ephemeris_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_dep_c_t *msg);
 s8 sbp_send_sbp_msg_ephemeris_dep_c_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_dep_c_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_ephemeris_dep_c_t(const sbp_msg_ephemeris_dep_c_t *a, const sbp_msg_ephemeris_dep_c_t *b);
@@ -968,8 +968,8 @@ typedef struct {
 } sbp_observation_header_dep_t;
 
 size_t sbp_packed_size_sbp_observation_header_dep_t(const sbp_observation_header_dep_t *msg);
-s8 sbp_pack_sbp_observation_header_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_observation_header_dep_t *msg);
-s8 sbp_unpack_sbp_observation_header_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_observation_header_dep_t *msg);
+s8 sbp_encode_sbp_observation_header_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_observation_header_dep_t *msg);
+s8 sbp_decode_sbp_observation_header_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_observation_header_dep_t *msg);
 
 int sbp_cmp_sbp_observation_header_dep_t(const sbp_observation_header_dep_t *a, const sbp_observation_header_dep_t *b);
 
@@ -984,8 +984,8 @@ typedef struct {
 } sbp_carrier_phase_dep_a_t;
 
 size_t sbp_packed_size_sbp_carrier_phase_dep_a_t(const sbp_carrier_phase_dep_a_t *msg);
-s8 sbp_pack_sbp_carrier_phase_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_dep_a_t *msg);
-s8 sbp_unpack_sbp_carrier_phase_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_dep_a_t *msg);
+s8 sbp_encode_sbp_carrier_phase_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_dep_a_t *msg);
+s8 sbp_decode_sbp_carrier_phase_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_dep_a_t *msg);
 
 int sbp_cmp_sbp_carrier_phase_dep_a_t(const sbp_carrier_phase_dep_a_t *a, const sbp_carrier_phase_dep_a_t *b);
 
@@ -1003,8 +1003,8 @@ typedef struct {
 } sbp_packed_obs_content_dep_a_t;
 
 size_t sbp_packed_size_sbp_packed_obs_content_dep_a_t(const sbp_packed_obs_content_dep_a_t *msg);
-s8 sbp_pack_sbp_packed_obs_content_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_a_t *msg);
-s8 sbp_unpack_sbp_packed_obs_content_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_a_t *msg);
+s8 sbp_encode_sbp_packed_obs_content_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_a_t *msg);
+s8 sbp_decode_sbp_packed_obs_content_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_a_t *msg);
 
 int sbp_cmp_sbp_packed_obs_content_dep_a_t(const sbp_packed_obs_content_dep_a_t *a, const sbp_packed_obs_content_dep_a_t *b);
 
@@ -1022,8 +1022,8 @@ typedef struct {
 } sbp_packed_obs_content_dep_b_t;
 
 size_t sbp_packed_size_sbp_packed_obs_content_dep_b_t(const sbp_packed_obs_content_dep_b_t *msg);
-s8 sbp_pack_sbp_packed_obs_content_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_b_t *msg);
-s8 sbp_unpack_sbp_packed_obs_content_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_b_t *msg);
+s8 sbp_encode_sbp_packed_obs_content_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_b_t *msg);
+s8 sbp_decode_sbp_packed_obs_content_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_b_t *msg);
 
 int sbp_cmp_sbp_packed_obs_content_dep_b_t(const sbp_packed_obs_content_dep_b_t *a, const sbp_packed_obs_content_dep_b_t *b);
 
@@ -1041,8 +1041,8 @@ typedef struct {
 } sbp_packed_obs_content_dep_c_t;
 
 size_t sbp_packed_size_sbp_packed_obs_content_dep_c_t(const sbp_packed_obs_content_dep_c_t *msg);
-s8 sbp_pack_sbp_packed_obs_content_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_c_t *msg);
-s8 sbp_unpack_sbp_packed_obs_content_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_c_t *msg);
+s8 sbp_encode_sbp_packed_obs_content_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_packed_obs_content_dep_c_t *msg);
+s8 sbp_decode_sbp_packed_obs_content_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_packed_obs_content_dep_c_t *msg);
 
 int sbp_cmp_sbp_packed_obs_content_dep_c_t(const sbp_packed_obs_content_dep_c_t *a, const sbp_packed_obs_content_dep_c_t *b);
 
@@ -1059,8 +1059,8 @@ typedef struct {
 } sbp_msg_obs_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_obs_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_obs_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_obs_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_obs_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_a_t *msg);
 s8 sbp_send_sbp_msg_obs_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_obs_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *a, const sbp_msg_obs_dep_a_t *b);
@@ -1078,8 +1078,8 @@ typedef struct {
 } sbp_msg_obs_dep_b_t;
 
 size_t sbp_packed_size_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_obs_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_obs_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_b_t *msg);
+s8 sbp_encode_sbp_msg_obs_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_b_t *msg);
+s8 sbp_decode_sbp_msg_obs_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_b_t *msg);
 s8 sbp_send_sbp_msg_obs_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_obs_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *a, const sbp_msg_obs_dep_b_t *b);
@@ -1097,8 +1097,8 @@ typedef struct {
 } sbp_msg_obs_dep_c_t;
 
 size_t sbp_packed_size_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *msg);
-s8 sbp_pack_sbp_msg_obs_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_c_t *msg);
-s8 sbp_unpack_sbp_msg_obs_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_c_t *msg);
+s8 sbp_encode_sbp_msg_obs_dep_c_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_obs_dep_c_t *msg);
+s8 sbp_decode_sbp_msg_obs_dep_c_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_obs_dep_c_t *msg);
 s8 sbp_send_sbp_msg_obs_dep_c_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_obs_dep_c_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *a, const sbp_msg_obs_dep_c_t *b);
@@ -1122,8 +1122,8 @@ typedef struct {
 } sbp_msg_iono_t;
 
 size_t sbp_packed_size_sbp_msg_iono_t(const sbp_msg_iono_t *msg);
-s8 sbp_pack_sbp_msg_iono_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_iono_t *msg);
-s8 sbp_unpack_sbp_msg_iono_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_iono_t *msg);
+s8 sbp_encode_sbp_msg_iono_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_iono_t *msg);
+s8 sbp_decode_sbp_msg_iono_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_iono_t *msg);
 s8 sbp_send_sbp_msg_iono_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_iono_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_iono_t(const sbp_msg_iono_t *a, const sbp_msg_iono_t *b);
@@ -1140,8 +1140,8 @@ typedef struct {
 } sbp_msg_sv_configuration_gps_dep_t;
 
 size_t sbp_packed_size_sbp_msg_sv_configuration_gps_dep_t(const sbp_msg_sv_configuration_gps_dep_t *msg);
-s8 sbp_pack_sbp_msg_sv_configuration_gps_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_sv_configuration_gps_dep_t *msg);
-s8 sbp_unpack_sbp_msg_sv_configuration_gps_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_sv_configuration_gps_dep_t *msg);
+s8 sbp_encode_sbp_msg_sv_configuration_gps_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_sv_configuration_gps_dep_t *msg);
+s8 sbp_decode_sbp_msg_sv_configuration_gps_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_sv_configuration_gps_dep_t *msg);
 s8 sbp_send_sbp_msg_sv_configuration_gps_dep_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_sv_configuration_gps_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(const sbp_msg_sv_configuration_gps_dep_t *a, const sbp_msg_sv_configuration_gps_dep_t *b);
@@ -1166,8 +1166,8 @@ typedef struct {
 } sbp_gnss_capb_t;
 
 size_t sbp_packed_size_sbp_gnss_capb_t(const sbp_gnss_capb_t *msg);
-s8 sbp_pack_sbp_gnss_capb_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gnss_capb_t *msg);
-s8 sbp_unpack_sbp_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gnss_capb_t *msg);
+s8 sbp_encode_sbp_gnss_capb_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gnss_capb_t *msg);
+s8 sbp_decode_sbp_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gnss_capb_t *msg);
 
 int sbp_cmp_sbp_gnss_capb_t(const sbp_gnss_capb_t *a, const sbp_gnss_capb_t *b);
 
@@ -1179,8 +1179,8 @@ typedef struct {
 } sbp_msg_gnss_capb_t;
 
 size_t sbp_packed_size_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *msg);
-s8 sbp_pack_sbp_msg_gnss_capb_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_gnss_capb_t *msg);
-s8 sbp_unpack_sbp_msg_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_gnss_capb_t *msg);
+s8 sbp_encode_sbp_msg_gnss_capb_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_gnss_capb_t *msg);
+s8 sbp_decode_sbp_msg_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_gnss_capb_t *msg);
 s8 sbp_send_sbp_msg_gnss_capb_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_gnss_capb_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *a, const sbp_msg_gnss_capb_t *b);
@@ -1201,8 +1201,8 @@ typedef struct {
 } sbp_msg_group_delay_dep_a_t;
 
 size_t sbp_packed_size_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *msg);
-s8 sbp_pack_sbp_msg_group_delay_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_dep_a_t *msg);
-s8 sbp_unpack_sbp_msg_group_delay_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_group_delay_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_group_delay_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_dep_a_t *msg);
 s8 sbp_send_sbp_msg_group_delay_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_group_delay_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *a, const sbp_msg_group_delay_dep_a_t *b);
@@ -1223,8 +1223,8 @@ typedef struct {
 } sbp_msg_group_delay_dep_b_t;
 
 size_t sbp_packed_size_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *msg);
-s8 sbp_pack_sbp_msg_group_delay_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_dep_b_t *msg);
-s8 sbp_unpack_sbp_msg_group_delay_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_dep_b_t *msg);
+s8 sbp_encode_sbp_msg_group_delay_dep_b_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_dep_b_t *msg);
+s8 sbp_decode_sbp_msg_group_delay_dep_b_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_dep_b_t *msg);
 s8 sbp_send_sbp_msg_group_delay_dep_b_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_group_delay_dep_b_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *a, const sbp_msg_group_delay_dep_b_t *b);
@@ -1245,8 +1245,8 @@ typedef struct {
 } sbp_msg_group_delay_t;
 
 size_t sbp_packed_size_sbp_msg_group_delay_t(const sbp_msg_group_delay_t *msg);
-s8 sbp_pack_sbp_msg_group_delay_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_t *msg);
-s8 sbp_unpack_sbp_msg_group_delay_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_t *msg);
+s8 sbp_encode_sbp_msg_group_delay_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_group_delay_t *msg);
+s8 sbp_decode_sbp_msg_group_delay_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_group_delay_t *msg);
 s8 sbp_send_sbp_msg_group_delay_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_group_delay_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_group_delay_t(const sbp_msg_group_delay_t *a, const sbp_msg_group_delay_t *b);
@@ -1262,8 +1262,8 @@ typedef struct {
 } sbp_almanac_common_content_t;
 
 size_t sbp_packed_size_sbp_almanac_common_content_t(const sbp_almanac_common_content_t *msg);
-s8 sbp_pack_sbp_almanac_common_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_almanac_common_content_t *msg);
-s8 sbp_unpack_sbp_almanac_common_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_almanac_common_content_t *msg);
+s8 sbp_encode_sbp_almanac_common_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_almanac_common_content_t *msg);
+s8 sbp_decode_sbp_almanac_common_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_almanac_common_content_t *msg);
 
 int sbp_cmp_sbp_almanac_common_content_t(const sbp_almanac_common_content_t *a, const sbp_almanac_common_content_t *b);
 
@@ -1278,8 +1278,8 @@ typedef struct {
 } sbp_almanac_common_content_dep_t;
 
 size_t sbp_packed_size_sbp_almanac_common_content_dep_t(const sbp_almanac_common_content_dep_t *msg);
-s8 sbp_pack_sbp_almanac_common_content_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_almanac_common_content_dep_t *msg);
-s8 sbp_unpack_sbp_almanac_common_content_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_almanac_common_content_dep_t *msg);
+s8 sbp_encode_sbp_almanac_common_content_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_almanac_common_content_dep_t *msg);
+s8 sbp_decode_sbp_almanac_common_content_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_almanac_common_content_dep_t *msg);
 
 int sbp_cmp_sbp_almanac_common_content_dep_t(const sbp_almanac_common_content_dep_t *a, const sbp_almanac_common_content_dep_t *b);
 
@@ -1303,8 +1303,8 @@ typedef struct {
 } sbp_msg_almanac_gps_dep_t;
 
 size_t sbp_packed_size_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *msg);
-s8 sbp_pack_sbp_msg_almanac_gps_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_gps_dep_t *msg);
-s8 sbp_unpack_sbp_msg_almanac_gps_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_gps_dep_t *msg);
+s8 sbp_encode_sbp_msg_almanac_gps_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_gps_dep_t *msg);
+s8 sbp_decode_sbp_msg_almanac_gps_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_gps_dep_t *msg);
 s8 sbp_send_sbp_msg_almanac_gps_dep_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_almanac_gps_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *a, const sbp_msg_almanac_gps_dep_t *b);
@@ -1329,8 +1329,8 @@ typedef struct {
 } sbp_msg_almanac_gps_t;
 
 size_t sbp_packed_size_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *msg);
-s8 sbp_pack_sbp_msg_almanac_gps_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_gps_t *msg);
-s8 sbp_unpack_sbp_msg_almanac_gps_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_gps_t *msg);
+s8 sbp_encode_sbp_msg_almanac_gps_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_gps_t *msg);
+s8 sbp_decode_sbp_msg_almanac_gps_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_gps_t *msg);
 s8 sbp_send_sbp_msg_almanac_gps_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_almanac_gps_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *a, const sbp_msg_almanac_gps_t *b);
@@ -1353,8 +1353,8 @@ typedef struct {
 } sbp_msg_almanac_glo_dep_t;
 
 size_t sbp_packed_size_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *msg);
-s8 sbp_pack_sbp_msg_almanac_glo_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_glo_dep_t *msg);
-s8 sbp_unpack_sbp_msg_almanac_glo_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_glo_dep_t *msg);
+s8 sbp_encode_sbp_msg_almanac_glo_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_glo_dep_t *msg);
+s8 sbp_decode_sbp_msg_almanac_glo_dep_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_glo_dep_t *msg);
 s8 sbp_send_sbp_msg_almanac_glo_dep_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_almanac_glo_dep_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *a, const sbp_msg_almanac_glo_dep_t *b);
@@ -1377,8 +1377,8 @@ typedef struct {
 } sbp_msg_almanac_glo_t;
 
 size_t sbp_packed_size_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *msg);
-s8 sbp_pack_sbp_msg_almanac_glo_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_glo_t *msg);
-s8 sbp_unpack_sbp_msg_almanac_glo_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_glo_t *msg);
+s8 sbp_encode_sbp_msg_almanac_glo_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_almanac_glo_t *msg);
+s8 sbp_decode_sbp_msg_almanac_glo_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_almanac_glo_t *msg);
 s8 sbp_send_sbp_msg_almanac_glo_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_almanac_glo_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *a, const sbp_msg_almanac_glo_t *b);
@@ -1398,8 +1398,8 @@ typedef struct {
 } sbp_msg_glo_biases_t;
 
 size_t sbp_packed_size_sbp_msg_glo_biases_t(const sbp_msg_glo_biases_t *msg);
-s8 sbp_pack_sbp_msg_glo_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_glo_biases_t *msg);
-s8 sbp_unpack_sbp_msg_glo_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_glo_biases_t *msg);
+s8 sbp_encode_sbp_msg_glo_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_glo_biases_t *msg);
+s8 sbp_decode_sbp_msg_glo_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_glo_biases_t *msg);
 s8 sbp_send_sbp_msg_glo_biases_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_glo_biases_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_glo_biases_t(const sbp_msg_glo_biases_t *a, const sbp_msg_glo_biases_t *b);
@@ -1416,8 +1416,8 @@ typedef struct {
 } sbp_sv_az_el_t;
 
 size_t sbp_packed_size_sbp_sv_az_el_t(const sbp_sv_az_el_t *msg);
-s8 sbp_pack_sbp_sv_az_el_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sv_az_el_t *msg);
-s8 sbp_unpack_sbp_sv_az_el_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_az_el_t *msg);
+s8 sbp_encode_sbp_sv_az_el_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sv_az_el_t *msg);
+s8 sbp_decode_sbp_sv_az_el_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_az_el_t *msg);
 
 int sbp_cmp_sbp_sv_az_el_t(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b);
 
@@ -1433,8 +1433,8 @@ typedef struct {
 } sbp_msg_sv_az_el_t;
 
 size_t sbp_packed_size_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *msg);
-s8 sbp_pack_sbp_msg_sv_az_el_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_sv_az_el_t *msg);
-s8 sbp_unpack_sbp_msg_sv_az_el_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_sv_az_el_t *msg);
+s8 sbp_encode_sbp_msg_sv_az_el_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_sv_az_el_t *msg);
+s8 sbp_decode_sbp_msg_sv_az_el_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_sv_az_el_t *msg);
 s8 sbp_send_sbp_msg_sv_az_el_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_sv_az_el_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *a, const sbp_msg_sv_az_el_t *b);
@@ -1452,8 +1452,8 @@ typedef struct {
 } sbp_msg_osr_t;
 
 size_t sbp_packed_size_sbp_msg_osr_t(const sbp_msg_osr_t *msg);
-s8 sbp_pack_sbp_msg_osr_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_osr_t *msg);
-s8 sbp_unpack_sbp_msg_osr_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_osr_t *msg);
+s8 sbp_encode_sbp_msg_osr_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_osr_t *msg);
+s8 sbp_decode_sbp_msg_osr_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_osr_t *msg);
 s8 sbp_send_sbp_msg_osr_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_osr_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
 
 int sbp_cmp_sbp_msg_osr_t(const sbp_msg_osr_t *a, const sbp_msg_osr_t *b);

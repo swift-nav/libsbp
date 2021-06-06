@@ -86,21 +86,21 @@ size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_read_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg)
+bool encode_sbp_msg_fileio_read_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
-  if (!pack_u32(ctx, &msg->offset)) { return false; }
-  if (!pack_u8(ctx, &msg->chunk_size)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->offset)) { return false; }
+  if (!encode_u8(ctx, &msg->chunk_size)) { return false; }
   if (!sbp_null_terminated_string_pack(&msg->filename, &sbp_msg_fileio_read_req_tfilename_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_read_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_read_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -109,21 +109,21 @@ s8 sbp_pack_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len, uint8_t *n_writ
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_read_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_read_req_t *msg)
+bool decode_sbp_msg_fileio_read_req_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_req_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
-  if (!unpack_u32(ctx, &msg->offset)) { return false; }
-  if (!unpack_u8(ctx, &msg->chunk_size)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->offset)) { return false; }
+  if (!decode_u8(ctx, &msg->chunk_size)) { return false; }
   if (!sbp_null_terminated_string_unpack(&msg->filename, &sbp_msg_fileio_read_req_tfilename_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_read_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_read_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -135,7 +135,7 @@ s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state *s, u16 sender_id, const 
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_read_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_read_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_READ_REQ, sender_id, payload_len, payload, write);
 }
@@ -164,22 +164,22 @@ size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_read_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg)
+bool encode_sbp_msg_fileio_read_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
   for (uint8_t i = 0; i < msg->n_contents; i++)
   {
-    if (!pack_u8(ctx, &msg->contents[i])) { return false; }
+    if (!encode_u8(ctx, &msg->contents[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_read_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_read_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -188,22 +188,22 @@ s8 sbp_pack_sbp_msg_fileio_read_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_read_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_read_resp_t *msg)
+bool decode_sbp_msg_fileio_read_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_resp_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
     msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_u8(&msg->contents[0]));
   for (uint8_t i = 0; i < msg->n_contents; i++) {
-    if (!unpack_u8(ctx, &msg->contents[i])) { return false; }
+    if (!decode_u8(ctx, &msg->contents[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_read_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_read_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -215,7 +215,7 @@ s8 sbp_send_sbp_msg_fileio_read_resp_t(struct sbp_state *s, u16 sender_id, const
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_read_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_read_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_READ_RESP, sender_id, payload_len, payload, write);
 }
@@ -309,20 +309,20 @@ size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_d
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_read_dir_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_read_dir_req_t *msg)
+bool encode_sbp_msg_fileio_read_dir_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_req_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
-  if (!pack_u32(ctx, &msg->offset)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->offset)) { return false; }
   if (!sbp_null_terminated_string_pack(&msg->dirname, &sbp_msg_fileio_read_dir_req_tdirname_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_read_dir_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_read_dir_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -331,20 +331,20 @@ s8 sbp_pack_sbp_msg_fileio_read_dir_req_t(uint8_t *buf, uint8_t len, uint8_t *n_
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_read_dir_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_read_dir_req_t *msg)
+bool decode_sbp_msg_fileio_read_dir_req_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_req_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
-  if (!unpack_u32(ctx, &msg->offset)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->offset)) { return false; }
   if (!sbp_null_terminated_string_unpack(&msg->dirname, &sbp_msg_fileio_read_dir_req_tdirname_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_read_dir_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_read_dir_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_read_dir_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_read_dir_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -356,7 +356,7 @@ s8 sbp_send_sbp_msg_fileio_read_dir_req_t(struct sbp_state *s, u16 sender_id, co
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_read_dir_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_read_dir_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_READ_DIR_REQ, sender_id, payload_len, payload, write);
 }
@@ -463,19 +463,19 @@ size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_read_dir_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg)
+bool encode_sbp_msg_fileio_read_dir_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
   if (!sbp_multipart_string_pack(&msg->contents, &sbp_msg_fileio_read_dir_resp_tcontents_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_read_dir_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_read_dir_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_read_dir_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -484,19 +484,19 @@ s8 sbp_pack_sbp_msg_fileio_read_dir_resp_t(uint8_t *buf, uint8_t len, uint8_t *n
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_read_dir_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_read_dir_resp_t *msg)
+bool decode_sbp_msg_fileio_read_dir_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_resp_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
   if (!sbp_multipart_string_unpack(&msg->contents, &sbp_msg_fileio_read_dir_resp_tcontents_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_read_dir_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_read_dir_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_read_dir_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_read_dir_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -508,7 +508,7 @@ s8 sbp_send_sbp_msg_fileio_read_dir_resp_t(struct sbp_state *s, u16 sender_id, c
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_read_dir_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_read_dir_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_READ_DIR_RESP, sender_id, payload_len, payload, write);
 }
@@ -596,18 +596,18 @@ size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *ms
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_remove_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_remove_t *msg)
+bool encode_sbp_msg_fileio_remove_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_remove_t *msg)
 {
   if (!sbp_null_terminated_string_pack(&msg->filename, &sbp_msg_fileio_remove_tfilename_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_remove_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_remove_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_remove_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_remove_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -616,18 +616,18 @@ s8 sbp_pack_sbp_msg_fileio_remove_t(uint8_t *buf, uint8_t len, uint8_t *n_writte
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_remove_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_remove_t *msg)
+bool decode_sbp_msg_fileio_remove_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_remove_t *msg)
 {
   if (!sbp_null_terminated_string_unpack(&msg->filename, &sbp_msg_fileio_remove_tfilename_params, ctx)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_remove_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_remove_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_remove_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_remove_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -639,7 +639,7 @@ s8 sbp_send_sbp_msg_fileio_remove_t(struct sbp_state *s, u16 sender_id, const sb
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_remove_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_remove_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_REMOVE, sender_id, payload_len, payload, write);
 }
@@ -727,24 +727,24 @@ size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_write_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg)
+bool encode_sbp_msg_fileio_write_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
-  if (!pack_u32(ctx, &msg->offset)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->offset)) { return false; }
   if (!sbp_null_terminated_string_pack(&msg->filename, &sbp_msg_fileio_write_req_tfilename_params, ctx)) { return false; }
   for (uint8_t i = 0; i < msg->n_data; i++)
   {
-    if (!pack_u8(ctx, &msg->data[i])) { return false; }
+    if (!encode_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_write_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_write_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_write_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_write_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -753,24 +753,24 @@ s8 sbp_pack_sbp_msg_fileio_write_req_t(uint8_t *buf, uint8_t len, uint8_t *n_wri
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_write_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_write_req_t *msg)
+bool decode_sbp_msg_fileio_write_req_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_req_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
-  if (!unpack_u32(ctx, &msg->offset)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->offset)) { return false; }
   if (!sbp_null_terminated_string_unpack(&msg->filename, &sbp_msg_fileio_write_req_tfilename_params, ctx)) { return false; }
     msg->n_data = (uint8_t)((ctx->buf_len - ctx->offset) / sbp_packed_size_u8(&msg->data[0]));
   for (uint8_t i = 0; i < msg->n_data; i++) {
-    if (!unpack_u8(ctx, &msg->data[i])) { return false; }
+    if (!decode_u8(ctx, &msg->data[i])) { return false; }
   }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_write_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_write_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -782,7 +782,7 @@ s8 sbp_send_sbp_msg_fileio_write_req_t(struct sbp_state *s, u16 sender_id, const
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_write_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_write_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_WRITE_REQ, sender_id, payload_len, payload, write);
 }
@@ -814,18 +814,18 @@ size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_re
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_write_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_write_resp_t *msg)
+bool encode_sbp_msg_fileio_write_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_resp_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_write_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_write_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_write_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -834,18 +834,18 @@ s8 sbp_pack_sbp_msg_fileio_write_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_wr
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_write_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_write_resp_t *msg)
+bool decode_sbp_msg_fileio_write_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_resp_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_write_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_write_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_write_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -857,7 +857,7 @@ s8 sbp_send_sbp_msg_fileio_write_resp_t(struct sbp_state *s, u16 sender_id, cons
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_write_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_write_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_WRITE_RESP, sender_id, payload_len, payload, write);
 }
@@ -876,18 +876,18 @@ size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_r
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_config_req_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg)
+bool encode_sbp_msg_fileio_config_req_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_req_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_config_req_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_config_req_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -896,18 +896,18 @@ s8 sbp_pack_sbp_msg_fileio_config_req_t(uint8_t *buf, uint8_t len, uint8_t *n_wr
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_config_req_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_config_req_t *msg)
+bool decode_sbp_msg_fileio_config_req_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_req_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_req_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_config_req_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_config_req_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -919,7 +919,7 @@ s8 sbp_send_sbp_msg_fileio_config_req_t(struct sbp_state *s, u16 sender_id, cons
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_config_req_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_config_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_CONFIG_REQ, sender_id, payload_len, payload, write);
 }
@@ -941,21 +941,21 @@ size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_
   return packed_size;
 }
 
-bool pack_sbp_msg_fileio_config_resp_t(sbp_pack_ctx_t *ctx, const sbp_msg_fileio_config_resp_t *msg)
+bool encode_sbp_msg_fileio_config_resp_t(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_resp_t *msg)
 {
-  if (!pack_u32(ctx, &msg->sequence)) { return false; }
-  if (!pack_u32(ctx, &msg->window_size)) { return false; }
-  if (!pack_u32(ctx, &msg->batch_size)) { return false; }
-  if (!pack_u32(ctx, &msg->fileio_version)) { return false; }
+  if (!encode_u32(ctx, &msg->sequence)) { return false; }
+  if (!encode_u32(ctx, &msg->window_size)) { return false; }
+  if (!encode_u32(ctx, &msg->batch_size)) { return false; }
+  if (!encode_u32(ctx, &msg->fileio_version)) { return false; }
   return true;
 }
 
-s8 sbp_pack_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg) {
-  sbp_pack_ctx_t ctx;
+s8 sbp_encode_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_fileio_config_resp_t *msg) {
+  sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!pack_sbp_msg_fileio_config_resp_t(&ctx, msg)) {
+  if (!encode_sbp_msg_fileio_config_resp_t(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -964,21 +964,21 @@ s8 sbp_pack_sbp_msg_fileio_config_resp_t(uint8_t *buf, uint8_t len, uint8_t *n_w
   return SBP_OK;
 }
 
-bool unpack_sbp_msg_fileio_config_resp_t(sbp_unpack_ctx_t *ctx, sbp_msg_fileio_config_resp_t *msg)
+bool decode_sbp_msg_fileio_config_resp_t(sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_resp_t *msg)
 {
-  if (!unpack_u32(ctx, &msg->sequence)) { return false; }
-  if (!unpack_u32(ctx, &msg->window_size)) { return false; }
-  if (!unpack_u32(ctx, &msg->batch_size)) { return false; }
-  if (!unpack_u32(ctx, &msg->fileio_version)) { return false; }
+  if (!decode_u32(ctx, &msg->sequence)) { return false; }
+  if (!decode_u32(ctx, &msg->window_size)) { return false; }
+  if (!decode_u32(ctx, &msg->batch_size)) { return false; }
+  if (!decode_u32(ctx, &msg->fileio_version)) { return false; }
   return true;
 }
 
-s8 sbp_unpack_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg) {
-  sbp_unpack_ctx_t ctx;
+s8 sbp_decode_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_fileio_config_resp_t *msg) {
+  sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!unpack_sbp_msg_fileio_config_resp_t(&ctx, msg)) {
+  if (!decode_sbp_msg_fileio_config_resp_t(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -990,7 +990,7 @@ s8 sbp_send_sbp_msg_fileio_config_resp_t(struct sbp_state *s, u16 sender_id, con
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_pack_sbp_msg_fileio_config_resp_t(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_encode_sbp_msg_fileio_config_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_send_payload(s, SBP_MSG_FILEIO_CONFIG_RESP, sender_id, payload_len, payload, write);
 }

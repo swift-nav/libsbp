@@ -167,7 +167,7 @@ const char *sbp_null_terminated_string_get(const sbp_null_terminated_string_t *s
 
 bool sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
                                      const sbp_null_terminated_string_params_t *params,
-                                     sbp_pack_ctx_t *ctx)
+                                     sbp_encode_ctx_t *ctx)
 {
   if ((ctx->buf_len - ctx->offset) < sbp_null_terminated_string_packed_len(s, params))
     return false;
@@ -185,7 +185,7 @@ bool sbp_null_terminated_string_pack(const sbp_null_terminated_string_t *s,
 
 bool sbp_null_terminated_string_unpack(sbp_null_terminated_string_t *s,
                                        const sbp_null_terminated_string_params_t *params,
-                                       sbp_unpack_ctx_t *ctx)
+                                       sbp_decode_ctx_t *ctx)
 {
   // Find out if we have a valid string. The valid unpack cases are
   // - A NULL is found up to params->max_packed_len into the incoming buffer
