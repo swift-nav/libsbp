@@ -36,7 +36,6 @@ INCLUDE_MAP = {
         "GnssSignal",
         "GnssSignalDep",
         "GPSTime",
-        "GPSTime",
         "GPSTimeDep",
         "GPSTimeSec",
         "SvId",

@@ -2,3 +2,4 @@
 -e generator
 -e python
 sphinx
+autoflake

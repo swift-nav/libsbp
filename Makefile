@@ -204,6 +204,10 @@ gen-python:
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
 		       -r $(SBP_VERSION) \
 		       --python
+
+	$(call announce-begin,"Formatting Python code")
+	tox -e py --run-command="autoflake -i --remove-all-unused-imports -r python/sbp"
+	$(call announce-end,"Finished formatting Python code")
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
 gen-javascript:
