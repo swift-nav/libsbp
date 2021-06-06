@@ -60,14 +60,14 @@ impl Dispatcher {
 
     pub fn take_handler<H, E, const N: usize>(&mut self, key: HandlerKey<H, E>) -> H
     where
-        H: Handler<Event = E> + Any + Default,
+        H: Handler<Event = E> + Any,
         E: Event<N> + FromSbp,
     {
-        let mut handler = self.remove_boxed(key).as_any();
-        let handler = handler
-            .downcast_mut::<H>()
-            .expect("failed to downcast handler");
-        std::mem::take(handler)
+        *self
+            .remove_boxed(key)
+            .into_any()
+            .downcast::<H>()
+            .expect("failed to downcast handler")
     }
 
     fn remove_boxed<H, E, const N: usize>(
@@ -98,10 +98,11 @@ pub struct HandlerKey<H, E> {
 slotmap::new_key_type! {
     struct HandlerKeyInner;
 }
+
 trait StoredHandler {
     fn run(&mut self, msg: SBP);
 
-    fn as_any(self: Box<Self>) -> Box<dyn Any>;
+    fn into_any(self: Box<Self>) -> Box<dyn Any>;
 }
 
 impl<H> StoredHandler for H
@@ -113,7 +114,7 @@ where
         self.run(msg);
     }
 
-    fn as_any(self: Box<Self>) -> Box<dyn Any> {
+    fn into_any(self: Box<Self>) -> Box<dyn Any> {
         self
     }
 }
@@ -266,7 +267,6 @@ mod tests {
 
     #[test]
     fn test_struct_handler() {
-        #[derive(Default)]
         struct Counter(usize);
 
         impl Handler for Counter {
