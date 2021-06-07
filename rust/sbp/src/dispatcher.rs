@@ -1,22 +1,24 @@
-use std::{any::{self, Any}, borrow::Borrow, collections::HashMap, convert::TryInto, marker::PhantomData};
+use std::{borrow::Borrow, collections::HashMap, convert::TryInto, marker::PhantomData};
 
-use any::TypeId;
 use slotmap::SlotMap;
 
 use crate::messages::{RealMessage, SBPMessage, SBP};
 
 #[derive(Default)]
-pub struct Dispatcher {
-    handlers: SlotMap<HandlerKeyInner, Box<dyn SbpHandler>>,
+pub struct Dispatcher<'a> {
+    handlers: SlotMap<HandlerKeyInner, Handler<'a>>,
     msg_map: HashMap<u16, Vec<HandlerKeyInner>>,
 }
 
-impl Dispatcher {
-    pub fn new() -> Dispatcher {
+impl<'a> Dispatcher<'a> {
+    pub fn new() -> Dispatcher<'a> {
         Default::default()
     }
 
-    pub fn run(&mut self, msg: impl Borrow<SBP>) -> bool {
+    pub fn run<B>(&mut self, msg: B) -> bool
+    where
+        B: Borrow<SBP>,
+    {
         let msg = msg.borrow();
         let msg_type = msg.get_message_type();
 
@@ -26,20 +28,21 @@ impl Dispatcher {
         };
 
         for key in keys {
-            self.handlers[*key].recv(msg.clone());
+            (self.handlers[*key])(msg.clone());
         }
 
         true
     }
 
-    pub fn add_handler<T, H, E>(&mut self, h: T) -> HandlerKey<H>
+    pub fn add<F, E, O>(&mut self, mut func: F) -> HandlerKey<E>
     where
-        T: IntoHandler<SBP, H, E>,
-        H: Handler<Event = E>,
-        E: Event + Any,
+        F: FnMut(E) -> O + 'a,
+        E: Event,
     {
-        let key = self.handlers.insert(Box::new(h.handler()));
-        let id = TypeId::of::<E>();
+        let key = self.handlers.insert(Box::new(move |msg: SBP| {
+            let event = E::from_sbp(msg);
+            func(event);
+        }));
         for msg_type in E::MESSAGE_TYPES {
             self.msg_map.entry(*msg_type).or_default().push(key);
         }
@@ -49,84 +52,30 @@ impl Dispatcher {
         }
     }
 
-    pub fn remove_handler<H, E>(&mut self, key: HandlerKey<H>)
+    pub fn remove<E>(&mut self, key: HandlerKey<E>)
     where
-        H: Handler<Event = E>,
-        E: Event,
-    {
-        self.remove_boxed(key);
-    }
-
-    pub fn take_handler<H, E>(&mut self, key: HandlerKey<H>) -> H
-    where
-        H: Handler<Event = E>,
-        E: Event,
-    {
-        *self
-            .remove_boxed(key)
-            .into_any()
-            .downcast::<H>()
-            .expect("failed to downcast handler")
-    }
-
-    fn remove_boxed<H, E>(&mut self, key: HandlerKey<H>) -> Box<dyn SbpHandler>
-    where
-        H: Handler<Event = E>,
         E: Event,
     {
         for msg_type in E::MESSAGE_TYPES {
             if let Some(keys) = self.msg_map.get_mut(msg_type) {
                 keys.iter_mut()
                     .position(|k| k == &key.key)
-                    .map(|i| keys.swap_remove(i))
-                    .expect("handler already removed");
+                    .map(|i| keys.swap_remove(i));
             }
         }
-        self.handlers.remove(key.key).expect("handler not found")
+        self.handlers.remove(key.key);
     }
 }
 
-pub struct HandlerKey<H> {
+pub type Handler<'a> = Box<dyn FnMut(SBP) + 'a>;
+
+pub struct HandlerKey<E> {
     key: HandlerKeyInner,
-    marker: PhantomData<H>,
+    marker: PhantomData<E>,
 }
 
 slotmap::new_key_type! {
     struct HandlerKeyInner;
-}
-
-pub trait EventHandler<E>
-where
-    E: Event,
-{
-    fn recv(&mut self, event: E);
-}
-
-pub trait Handler: 'static {
-    type Event: Event;
-
-    fn recv(&mut self, event: Self::Event);
-}
-
-/// A handler without the associated type, replaced by the concrete type SBP
-trait SbpHandler {
-    fn recv(&mut self, msg: SBP);
-
-    fn into_any(self: Box<Self>) -> Box<dyn Any>;
-}
-
-impl<H> SbpHandler for H
-where
-    H: Handler,
-{
-    fn recv(&mut self, msg: SBP) {
-        let event = H::Event::from_sbp(msg);
-        self.recv(event);
-    }
-
-    fn into_any(self: Box<Self>) -> Box<dyn Any> {
-        self
-    }
 }
 
 pub trait Event {
@@ -150,59 +99,6 @@ where
     }
 }
 
-/// Something that can be used as an event handler.
-pub trait IntoHandler<M, H, E>
-where
-    H: Handler<Event = E>,
-    E: Event,
-{
-    fn handler(self) -> H;
-}
-
-// All handlers can be used as handlers.
-impl<H, E> IntoHandler<SBP, H, E> for H
-where
-    H: Handler<Event = E>,
-    E: Event,
-{
-    fn handler(self) -> H {
-        self
-    }
-}
-
-/// A handler from a closure or function pointer.
-struct FuncHandler<F, E, O> {
-    func: F,
-    marker: PhantomData<fn(E) -> O>,
-}
-
-impl<F, E, O> Handler for FuncHandler<F, E, O>
-where
-    F: FnMut(E) -> O + 'static,
-    E: Event + 'static,
-    O: 'static,
-{
-    type Event = E;
-
-    fn recv(&mut self, event: E) {
-        (self.func)(event);
-    }
-}
-
-impl<F, E, O> IntoHandler<SBP, FuncHandler<F, E, O>, E> for F
-where
-    F: FnMut(E) -> O + 'static,
-    E: Event + 'static,
-    O: 'static,
-{
-    fn handler(self) -> FuncHandler<F, E, O> {
-        FuncHandler {
-            func: self,
-            marker: PhantomData,
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use std::sync::mpsc::{self, Receiver, Sender};
@@ -219,13 +115,27 @@ mod tests {
         let mut d = Dispatcher::new();
 
         let (tx, rx) = test_channel();
-        d.add_handler(move |_: MsgObs| tx.send(true));
+        d.add(move |_: MsgObs| tx.send(true));
 
         assert!(d.run(make_msg_obs()));
         assert!(rx.recv().unwrap());
 
         assert!(!d.run(make_msg_obs_dep_a()));
         assert!(rx.try_recv().is_err());
+    }
+
+    #[test]
+    fn test_dispatcher_capture() {
+        let mut d = Dispatcher::new();
+
+        let mut counter = 0;
+        d.add(|_: MsgObs| counter += 1);
+
+        assert!(d.run(make_msg_obs()));
+        assert!(!d.run(make_msg_obs_dep_a()));
+
+        drop(d);
+        assert_eq!(counter, 1);
     }
 
     #[test]
@@ -237,7 +147,7 @@ mod tests {
             unsafe { COUNTER += 1 }
         }
 
-        d.add_handler(dont_do_this);
+        d.add(dont_do_this);
         d.run(make_msg_obs());
         d.run(make_msg_obs_dep_a());
 
@@ -249,10 +159,10 @@ mod tests {
         let mut d = Dispatcher::new();
 
         let (tx_custom, rx_custom) = test_channel();
-        d.add_handler(move |_: ObsMsg| tx_custom.send(true));
+        d.add(move |_: ObsMsg| tx_custom.send(true));
 
         let (tx_obs, rx_obs) = test_channel();
-        d.add_handler(move |_: MsgObs| tx_obs.send(true));
+        d.add(move |_: MsgObs| tx_obs.send(true));
 
         d.run(make_msg_obs());
         d.run(make_msg_obs_dep_a());
@@ -261,47 +171,6 @@ mod tests {
         assert!(rx_custom.recv().unwrap());
         assert!(rx_obs.recv().unwrap());
         assert!(rx_obs.try_recv().is_err());
-    }
-
-    #[test]
-    fn test_struct_handler() {
-        struct Counter(usize);
-
-        impl Counter {
-            fn on_msg_obs(&mut self, msg: MsgObs) {
-                self.0 += 1;
-            }
-            fn on_msg_obs_dep_a(&mut self, msg: MsgObsDepA) {
-                self.0 += 1;
-            }
-        }
-
-        impl Handler for Counter {
-            type Event = MsgObs;
-
-            fn recv(&mut self, _: MsgObs) {
-                self.0 += 1;
-            }
-        }
-
-        let mut d = Dispatcher::new();
-        let key = d.add_handler(Counter(0));
-
-        d.run(make_msg_obs());
-        d.run(make_msg_obs_dep_a());
-
-        let counter = d.take_handler(key);
-
-        assert_eq!(counter.0, 1);
-        assert!(!d.run(make_msg_obs()));
-
-        let key = d.add_handler(counter);
-
-        d.run(make_msg_obs());
-
-        let counter = d.take_handler(key);
-
-        assert_eq!(counter.0, 2);
     }
 
     enum ObsMsg {
