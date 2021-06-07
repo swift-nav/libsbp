@@ -96,7 +96,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_(((s.suite_name))) )
+START_TEST( test_legacy_(((s.suite_name))) )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
@@ -235,11 +235,11 @@ START_TEST( test_(((s.suite_name))) )
 }
 END_TEST
 
-Suite* (((s.suite_name)))_suite(void)
+Suite* legacy_(((s.suite_name)))_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: (((s.suite_name)))");
-  TCase *tc_acq = tcase_create("Automated_Suite_(((s.suite_name)))");
-  tcase_add_test(tc_acq, test_(((s.suite_name))));
+  Suite *s = suite_create("SBP generated test suite: legacy_(((s.suite_name)))");
+  TCase *tc_acq = tcase_create("Automated_Suite_legacy_(((s.suite_name)))");
+  tcase_add_test(tc_acq, test_legacy_(((s.suite_name))));
   suite_add_tcase(s, tc_acq);
   return s;
 }

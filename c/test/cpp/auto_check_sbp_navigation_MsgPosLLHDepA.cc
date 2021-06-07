@@ -15,24 +15,24 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
+#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/legacy/cpp/message_handler.h>
-#include <libsbp/legacy/cpp/message_traits.h>
+#include <cstring>
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -58,16 +58,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA0
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -83,20 +81,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA0, Test) {
       160, 232, 122, 115, 81,  64,  0,  0,   0,  0,   9,   0,   236, 139,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 69.80437675175607;
-  test_msg->lat = 37.42906890908121;
-  test_msg->lon = -122.17338662202773;
-  test_msg->n_sats = 9;
-  test_msg->tow = 2567700;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 69.80437675175607;
+  test_msg.lat = 37.42906890908121;
+  test_msg.lon = -122.17338662202773;
+  test_msg.n_sats = 9;
+  test_msg.tow = 2567700;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 55286, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -107,44 +102,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA0, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 69.8043767518 * 100), 0.05)
-      << "incorrect value for height, expected 69.8043767518, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.4290689091 * 100), 0.05)
-      << "incorrect value for lat, expected 37.4290689091, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.173386622 * 100), 0.05)
-      << "incorrect value for lon, expected -122.173386622, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 9)
-      << "incorrect value for n_sats, expected 9, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2567700)
-      << "incorrect value for tow, expected 2567700, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 69.8043767518 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 69.8043767518, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.4290689091 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.4290689091, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.173386622 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.173386622, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 9)
+      << "incorrect value for last_msg_.n_sats, expected 9, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 2567700)
+      << "incorrect value for last_msg_.tow, expected 2567700, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -170,16 +167,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA1
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -195,20 +190,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA1, Test) {
       49,  127, 10, 108, 81,  64, 0,   0,  0,  0,   9,   1,   25,  117,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 1;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 69.68814067715354;
-  test_msg->lat = 37.42906430885274;
-  test_msg->lon = -122.17340826071865;
-  test_msg->n_sats = 9;
-  test_msg->tow = 2567700;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 1;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 69.68814067715354;
+  test_msg.lat = 37.42906430885274;
+  test_msg.lon = -122.17340826071865;
+  test_msg.n_sats = 9;
+  test_msg.tow = 2567700;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 55286, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -219,44 +211,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA1, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 1)
-      << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 69.6881406772 * 100), 0.05)
-      << "incorrect value for height, expected 69.6881406772, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.4290643089 * 100), 0.05)
-      << "incorrect value for lat, expected 37.4290643089, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.173408261 * 100), 0.05)
-      << "incorrect value for lon, expected -122.173408261, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 9)
-      << "incorrect value for n_sats, expected 9, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2567700)
-      << "incorrect value for tow, expected 2567700, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 1)
+      << "incorrect value for last_msg_.flags, expected 1, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 69.6881406772 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 69.6881406772, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.4290643089 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.4290643089, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.173408261 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.173408261, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 9)
+      << "incorrect value for last_msg_.n_sats, expected 9, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 2567700)
+      << "incorrect value for last_msg_.tow, expected 2567700, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -282,16 +276,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA2
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -307,20 +299,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA2, Test) {
       46,  234, 191, 95,  81,  64, 0,   0,  0,  0,   9,  0,   174, 105,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 69.49608854815264;
-  test_msg->lat = 37.42905447764173;
-  test_msg->lon = -122.17342007549469;
-  test_msg->n_sats = 9;
-  test_msg->tow = 2567800;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 69.49608854815264;
+  test_msg.lat = 37.42905447764173;
+  test_msg.lon = -122.17342007549469;
+  test_msg.n_sats = 9;
+  test_msg.tow = 2567800;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 55286, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -331,44 +320,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA2, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 69.4960885482 * 100), 0.05)
-      << "incorrect value for height, expected 69.4960885482, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.4290544776 * 100), 0.05)
-      << "incorrect value for lat, expected 37.4290544776, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.173420075 * 100), 0.05)
-      << "incorrect value for lon, expected -122.173420075, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 9)
-      << "incorrect value for n_sats, expected 9, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2567800)
-      << "incorrect value for tow, expected 2567800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 69.4960885482 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 69.4960885482, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.4290544776 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.4290544776, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.173420075 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.173420075, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 9)
+      << "incorrect value for last_msg_.n_sats, expected 9, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 2567800)
+      << "incorrect value for last_msg_.tow, expected 2567800, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -394,16 +385,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA3
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -419,20 +408,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA3, Test) {
       137, 253, 4,  108, 81,  64,  0,   0,  0,  0,   9,   1,   122, 127,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 1;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 69.68780458819901;
-  test_msg->lat = 37.429063373925565;
-  test_msg->lon = -122.17340389594972;
-  test_msg->n_sats = 9;
-  test_msg->tow = 2567800;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 1;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 69.68780458819901;
+  test_msg.lat = 37.429063373925565;
+  test_msg.lon = -122.17340389594972;
+  test_msg.n_sats = 9;
+  test_msg.tow = 2567800;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 55286, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -443,44 +429,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA3, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 1)
-      << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 69.6878045882 * 100), 0.05)
-      << "incorrect value for height, expected 69.6878045882, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.4290633739 * 100), 0.05)
-      << "incorrect value for lat, expected 37.4290633739, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.173403896 * 100), 0.05)
-      << "incorrect value for lon, expected -122.173403896, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 9)
-      << "incorrect value for n_sats, expected 9, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2567800)
-      << "incorrect value for tow, expected 2567800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 1)
+      << "incorrect value for last_msg_.flags, expected 1, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 69.6878045882 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 69.6878045882, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.4290633739 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.4290633739, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.173403896 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.173403896, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 9)
+      << "incorrect value for last_msg_.n_sats, expected 9, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 2567800)
+      << "incorrect value for last_msg_.tow, expected 2567800, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -506,16 +494,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA4
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -531,20 +517,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA4, Test) {
       187, 219, 152, 161, 81,  64, 0,   0,  0,  0,   9,  0,   194, 158,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 70.5249547317965;
-  test_msg->lat = 37.42907659359516;
-  test_msg->lon = -122.17340492645452;
-  test_msg->n_sats = 9;
-  test_msg->tow = 2567900;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 70.5249547317965;
+  test_msg.lat = 37.42907659359516;
+  test_msg.lon = -122.17340492645452;
+  test_msg.n_sats = 9;
+  test_msg.tow = 2567900;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 55286, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -555,44 +538,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA4, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 70.5249547318 * 100), 0.05)
-      << "incorrect value for height, expected 70.5249547318, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.4290765936 * 100), 0.05)
-      << "incorrect value for lat, expected 37.4290765936, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.173404926 * 100), 0.05)
-      << "incorrect value for lon, expected -122.173404926, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 9)
-      << "incorrect value for n_sats, expected 9, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2567900)
-      << "incorrect value for tow, expected 2567900, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 70.5249547318 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 70.5249547318, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.4290765936 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.4290765936, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.173404926 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.173404926, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 9)
+      << "incorrect value for last_msg_.n_sats, expected 9, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 2567900)
+      << "incorrect value for last_msg_.tow, expected 2567900, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -618,16 +603,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA5
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -643,20 +626,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA5, Test) {
       72,  47,  196, 40,  16,  64,  0,   0,   0,   0,   8,  0,   237, 169,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 4.039810885214956;
-  test_msg->lat = 37.76242171418386;
-  test_msg->lon = -122.38908437889262;
-  test_msg->n_sats = 8;
-  test_msg->tow = 407084500;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 4.039810885214956;
+  test_msg.lat = 37.76242171418386;
+  test_msg.lon = -122.38908437889262;
+  test_msg.n_sats = 8;
+  test_msg.tow = 407084500;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -667,44 +647,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA5, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 4.03981088521 * 100), 0.05)
-      << "incorrect value for height, expected 4.03981088521, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.7624217142 * 100), 0.05)
-      << "incorrect value for lat, expected 37.7624217142, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389084379 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389084379, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 8)
-      << "incorrect value for n_sats, expected 8, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407084500)
-      << "incorrect value for tow, expected 407084500, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 4.03981088521 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 4.03981088521, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.7624217142 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.7624217142, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389084379 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389084379, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 8)
+      << "incorrect value for last_msg_.n_sats, expected 8, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407084500)
+      << "incorrect value for last_msg_.tow, expected 407084500, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -730,16 +712,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA6
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -755,20 +735,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA6, Test) {
       67,  19,  233, 105, 7,   64,  0,   0,   0,   0,   8,   0,   152, 11,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 2.926714087009657;
-  test_msg->lat = 37.76242361423985;
-  test_msg->lon = -122.38909053700489;
-  test_msg->n_sats = 8;
-  test_msg->tow = 407084600;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 2.926714087009657;
+  test_msg.lat = 37.76242361423985;
+  test_msg.lon = -122.38909053700489;
+  test_msg.n_sats = 8;
+  test_msg.tow = 407084600;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -779,44 +756,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA6, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 2.92671408701 * 100), 0.05)
-      << "incorrect value for height, expected 2.92671408701, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.7624236142 * 100), 0.05)
-      << "incorrect value for lat, expected 37.7624236142, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389090537 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389090537, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 8)
-      << "incorrect value for n_sats, expected 8, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407084600)
-      << "incorrect value for tow, expected 407084600, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 2.92671408701 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 2.92671408701, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.7624236142 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.7624236142, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389090537 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389090537, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 8)
+      << "incorrect value for last_msg_.n_sats, expected 8, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407084600)
+      << "incorrect value for last_msg_.tow, expected 407084600, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -842,16 +821,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA7
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -867,20 +844,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA7, Test) {
       145, 188, 89, 112, 238, 63,  0,   0,   0,   0,   8,  0,   221, 155,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 0.9512146647395566;
-  test_msg->lat = 37.762422076126406;
-  test_msg->lon = -122.3890907340148;
-  test_msg->n_sats = 8;
-  test_msg->tow = 407084700;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 0.9512146647395566;
+  test_msg.lat = 37.762422076126406;
+  test_msg.lon = -122.3890907340148;
+  test_msg.n_sats = 8;
+  test_msg.tow = 407084700;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -891,44 +865,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA7, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 0.95121466474 * 100), 0.05)
-      << "incorrect value for height, expected 0.95121466474, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.7624220761 * 100), 0.05)
-      << "incorrect value for lat, expected 37.7624220761, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389090734 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389090734, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 8)
-      << "incorrect value for n_sats, expected 8, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407084700)
-      << "incorrect value for tow, expected 407084700, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 0.95121466474 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 0.95121466474, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.7624220761 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.7624220761, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389090734 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389090734, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 8)
+      << "incorrect value for last_msg_.n_sats, expected 8, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407084700)
+      << "incorrect value for last_msg_.tow, expected 407084700, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -954,16 +930,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA8
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -979,20 +953,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA8, Test) {
       11,  32,  69, 213, 2,  64,  0,   0,   0,   0,   8,  0,   82,  94,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 2.354135752047538;
-  test_msg->lat = 37.762421610632735;
-  test_msg->lon = -122.38909854449612;
-  test_msg->n_sats = 8;
-  test_msg->tow = 407084800;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 2.354135752047538;
+  test_msg.lat = 37.762421610632735;
+  test_msg.lon = -122.38909854449612;
+  test_msg.n_sats = 8;
+  test_msg.tow = 407084800;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -1003,44 +974,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA8, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 2.35413575205 * 100), 0.05)
-      << "incorrect value for height, expected 2.35413575205, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.7624216106 * 100), 0.05)
-      << "incorrect value for lat, expected 37.7624216106, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389098544 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389098544, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 8)
-      << "incorrect value for n_sats, expected 8, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407084800)
-      << "incorrect value for tow, expected 407084800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 2.35413575205 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 2.35413575205, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.7624216106 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.7624216106, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389098544 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389098544, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 8)
+      << "incorrect value for last_msg_.n_sats, expected 8, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407084800)
+      << "incorrect value for last_msg_.tow, expected 407084800, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA9
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -1066,16 +1039,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA9
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -1091,20 +1062,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA9, Test) {
       114, 72,  31, 103, 241, 63,  0,   0,   0,   0,   8,  0,   70,  60,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 1.0876763181642641;
-  test_msg->lat = 37.76242334502801;
-  test_msg->lon = -122.38909230523223;
-  test_msg->n_sats = 8;
-  test_msg->tow = 407084900;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 1.0876763181642641;
+  test_msg.lat = 37.76242334502801;
+  test_msg.lon = -122.38909230523223;
+  test_msg.n_sats = 8;
+  test_msg.tow = 407084900;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -1115,44 +1083,46 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA9, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 1.08767631816 * 100), 0.05)
-      << "incorrect value for height, expected 1.08767631816, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.762423345 * 100), 0.05)
-      << "incorrect value for lat, expected 37.762423345, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389092305 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389092305, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 8)
-      << "incorrect value for n_sats, expected 8, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407084900)
-      << "incorrect value for tow, expected 407084900, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 1.08767631816 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 1.08767631816, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.762423345 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.762423345, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389092305 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389092305, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 8)
+      << "incorrect value for last_msg_.n_sats, expected 8, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407084900)
+      << "incorrect value for last_msg_.tow, expected 407084900, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }
 class Test_auto_check_sbp_navigation_MsgPosLLHDepA10
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_pos_llh_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgPosLLHDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_pos_llh_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_pos_llh_dep_a_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_pos_llh_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -1178,16 +1148,14 @@ class Test_auto_check_sbp_navigation_MsgPosLLHDepA10
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_pos_llh_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_pos_llh_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_pos_llh_dep_a_t *last_msg_;
+  sbp_msg_pos_llh_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -1203,20 +1171,17 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA10, Test) {
       115, 145, 166, 175, 20,  64,  0,   0,   0,   0,   5,   0,   212, 121,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  test_msg->h_accuracy = 0;
-  test_msg->height = 5.171533844654222;
-  test_msg->lat = 37.76244082253376;
-  test_msg->lon = -122.38908288868525;
-  test_msg->n_sats = 5;
-  test_msg->tow = 407151150;
-  test_msg->v_accuracy = 0;
+  sbp_msg_pos_llh_dep_a_t test_msg{};
+  test_msg.flags = 0;
+  test_msg.h_accuracy = 0;
+  test_msg.height = 5.171533844654222;
+  test_msg.lat = 37.76244082253376;
+  test_msg.lon = -122.38908288868525;
+  test_msg.n_sats = 5;
+  test_msg.tow = 407151150;
+  test_msg.v_accuracy = 0;
 
-  EXPECT_EQ(send_message(0x201, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -1227,26 +1192,29 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosLLHDepA10, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->h_accuracy, 0)
-      << "incorrect value for h_accuracy, expected 0, is "
-      << last_msg_->h_accuracy;
-  EXPECT_LT((last_msg_->height * 100 - 5.17153384465 * 100), 0.05)
-      << "incorrect value for height, expected 5.17153384465, is "
-      << last_msg_->height;
-  EXPECT_LT((last_msg_->lat * 100 - 37.7624408225 * 100), 0.05)
-      << "incorrect value for lat, expected 37.7624408225, is "
-      << last_msg_->lat;
-  EXPECT_LT((last_msg_->lon * 100 - -122.389082889 * 100), 0.05)
-      << "incorrect value for lon, expected -122.389082889, is "
-      << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 5)
-      << "incorrect value for n_sats, expected 5, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 407151150)
-      << "incorrect value for tow, expected 407151150, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_accuracy, 0)
-      << "incorrect value for v_accuracy, expected 0, is "
-      << last_msg_->v_accuracy;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+  EXPECT_EQ(last_msg_.h_accuracy, 0)
+      << "incorrect value for last_msg_.h_accuracy, expected 0, is "
+      << last_msg_.h_accuracy;
+  EXPECT_LT((last_msg_.height * 100 - 5.17153384465 * 100), 0.05)
+      << "incorrect value for last_msg_.height, expected 5.17153384465, is "
+      << last_msg_.height;
+  EXPECT_LT((last_msg_.lat * 100 - 37.7624408225 * 100), 0.05)
+      << "incorrect value for last_msg_.lat, expected 37.7624408225, is "
+      << last_msg_.lat;
+  EXPECT_LT((last_msg_.lon * 100 - -122.389082889 * 100), 0.05)
+      << "incorrect value for last_msg_.lon, expected -122.389082889, is "
+      << last_msg_.lon;
+  EXPECT_EQ(last_msg_.n_sats, 5)
+      << "incorrect value for last_msg_.n_sats, expected 5, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.tow, 407151150)
+      << "incorrect value for last_msg_.tow, expected 407151150, is "
+      << last_msg_.tow;
+  EXPECT_EQ(last_msg_.v_accuracy, 0)
+      << "incorrect value for last_msg_.v_accuracy, expected 0, is "
+      << last_msg_.v_accuracy;
 }

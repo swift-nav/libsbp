@@ -15,24 +15,24 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
+#include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/legacy/cpp/message_handler.h>
-#include <libsbp/legacy/cpp/message_traits.h>
+#include <cstring>
 class Test_auto_check_sbp_logging_MsgPrintDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -58,16 +58,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep0
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -84,10 +82,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
       122, 44,  32,  50, 48, 32, 83, 78, 82, 10, 116, 103,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -98,13 +93,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
         (char)55,  (char)32,  (char)72,  (char)122, (char)44,  (char)32,
         (char)50,  (char)48,  (char)32,  (char)83,  (char)78,  (char)82,
         (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 43;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -115,7 +108,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -126,26 +119,29 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
         (char)55,  (char)32,  (char)72,  (char)122, (char)44,  (char)32,
         (char)50,  (char)48,  (char)32,  (char)83,  (char)78,  (char)82,
         (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 43)
+      << "incorrect value for last_msg_.text.packed_len, expected 43, is "
+      << last_msg_.text.packed_len;
 }
 class Test_auto_check_sbp_logging_MsgPrintDep1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -171,16 +167,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep1
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -196,10 +190,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
       52, 53, 32, 72, 122, 44, 32, 50,  49,  32,  83,  78,  82, 10, 140, 43,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -209,13 +200,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
         (char)64,  (char)32,  (char)52,  (char)50,  (char)52,  (char)53,
         (char)32,  (char)72,  (char)122, (char)44,  (char)32,  (char)50,
         (char)49,  (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 42;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -226,7 +215,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -236,26 +225,29 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
         (char)64,  (char)32,  (char)52,  (char)50,  (char)52,  (char)53,
         (char)32,  (char)72,  (char)122, (char)44,  (char)32,  (char)50,
         (char)49,  (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 42)
+      << "incorrect value for last_msg_.text.packed_len, expected 42, is "
+      << last_msg_.text.packed_len;
 }
 class Test_auto_check_sbp_logging_MsgPrintDep2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -281,16 +273,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep2
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -306,10 +296,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
       48, 32, 40,  80,  82,  78,  32, 49, 49,  41, 10,  23,  143,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -318,13 +305,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
         (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
         (char)48,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
         (char)32,  (char)49,  (char)49,  (char)41,  (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 35;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -335,7 +320,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -344,26 +329,29 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
         (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
         (char)48,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
         (char)32,  (char)49,  (char)49,  (char)41,  (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 35)
+      << "incorrect value for last_msg_.text.packed_len, expected 35, is "
+      << last_msg_.text.packed_len;
 }
 class Test_auto_check_sbp_logging_MsgPrintDep3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -389,16 +377,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep3
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -415,10 +401,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
       32,  50,  48, 32, 83, 78, 82, 10, 239, 48,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
@@ -428,13 +411,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
         (char)32,  (char)51,  (char)57,  (char)57,  (char)54, (char)32,
         (char)72,  (char)122, (char)44,  (char)32,  (char)50, (char)48,
         (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 41;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -445,7 +426,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
@@ -455,26 +436,29 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
         (char)32,  (char)51,  (char)57,  (char)57,  (char)54, (char)32,
         (char)72,  (char)122, (char)44,  (char)32,  (char)50, (char)48,
         (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 41)
+      << "incorrect value for last_msg_.text.packed_len, expected 41, is "
+      << last_msg_.text.packed_len;
 }
 class Test_auto_check_sbp_logging_MsgPrintDep4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -500,16 +484,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep4
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -526,10 +508,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
       44,  32,  50, 48, 32, 83, 78, 82, 10, 47, 248,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
@@ -539,13 +518,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
         (char)32,  (char)45,  (char)55,  (char)52,  (char)57, (char)50,
         (char)32,  (char)72,  (char)122, (char)44,  (char)32, (char)50,
         (char)48,  (char)32,  (char)83,  (char)78,  (char)82, (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 42;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -556,7 +533,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
@@ -566,26 +543,29 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
         (char)32,  (char)45,  (char)55,  (char)52,  (char)57, (char)50,
         (char)32,  (char)72,  (char)122, (char)44,  (char)32, (char)50,
         (char)48,  (char)32,  (char)83,  (char)78,  (char)82, (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 42)
+      << "incorrect value for last_msg_.text.packed_len, expected 42, is "
+      << last_msg_.text.packed_len;
 }
 class Test_auto_check_sbp_logging_MsgPrintDep5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_print_dep_t> {
+      sbp::MessageHandler<sbp_msg_print_dep_t> {
  public:
   Test_auto_check_sbp_logging_MsgPrintDep5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_print_dep_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_print_dep_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -611,16 +591,14 @@ class Test_auto_check_sbp_logging_MsgPrintDep5
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_print_dep_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_print_dep_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_print_dep_t *last_msg_;
+  sbp_msg_print_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -636,10 +614,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
       49, 32, 40,  80,  82,  78,  32, 49, 53,  41, 10,  158, 139,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_print_dep_t *test_msg = (msg_print_dep_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
+  sbp_msg_print_dep_t test_msg{};
   {
     const char assign_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -648,13 +623,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
         (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
         (char)49,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
         (char)32,  (char)49,  (char)53,  (char)41,  (char)10};
-    memcpy(test_msg->text, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->text) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
+    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
+  test_msg.text.packed_len = 35;
 
-  EXPECT_EQ(send_message(0x10, 8738, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -665,7 +638,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 8738);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
+  EXPECT_EQ(last_msg_, test_msg);
   {
     const char check_string[] = {
         (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
@@ -674,8 +647,12 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
         (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
         (char)49,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
         (char)32,  (char)49,  (char)53,  (char)41,  (char)10};
-    EXPECT_EQ(memcmp(last_msg_->text, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->text, expected string '"
-        << check_string << "', is '" << last_msg_->text << "'";
+    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
+              0)
+        << "incorrect value for last_msg_.text.data, expected string '"
+        << check_string << "', is '" << last_msg_.text.data << "'";
   }
+  EXPECT_EQ(last_msg_.text.packed_len, 35)
+      << "incorrect value for last_msg_.text.packed_len, expected 35, is "
+      << last_msg_.text.packed_len;
 }

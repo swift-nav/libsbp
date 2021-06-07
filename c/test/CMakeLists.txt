@@ -6,7 +6,7 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   set(TEST_LIBS ${TEST_LIBS} rt)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
-FILE(GLOB generated_c_sources auto*.c)
+FILE(GLOB generated_c_sources auto*.c legacy/auto*.c)
 
 set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include/libsbp)
 
@@ -49,3 +49,4 @@ swift_set_compile_options(test-libsbp
 )
 
 add_subdirectory(cpp)
+add_subdirectory(legacy/cpp)

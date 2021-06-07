@@ -14,18 +14,34 @@ Generator for c tests target.
 """
 
 from sbpg.targets.templating import *
-from sbpg.targets.legacy_c import *
+from sbpg.targets.c import *
+from sbpg.targets.legacy_c import mk_id as mk_packed_id
+from sbpg.targets.legacy_c import mk_size
 from sbpg.targets.common import *
 
-TEST_TEMPLATE_NAME = "c/test/sbp_c_test.c.j2"
-CPP_TEST_TEMPLATE_NAME = "c/test/sbp_cpp_test.cc.j2"
+TEST_TEMPLATE_NAME = "c/test/new/sbp_c_test.c.j2"
+CPP_TEST_TEMPLATE_NAME = "c/test/new/sbp_cpp_test.cc.j2"
 CHECK_SUITES_TEMPLATE_NAME = "c/test/sbp_c_suites.h.j2"
 CHECK_MAIN_TEMPLATE_NAME = "c/test/sbp_c_main.c.j2"
 
-def str_escape(value):
+def strEscape(value):
     return ",".join(["(char)" + str(ord(ch)) for ch in value])
 
-JENV.filters['str_escape'] = str_escape
+def convert_upper(value):
+    return convert_unpacked(value)[4:-2].upper()
+
+def convert_unpacked_union(value):
+    return convert_unpacked(value)[8:-2].lower()
+
+JENV.filters['commentify'] = commentify
+JENV.filters['mk_packed_id'] = mk_packed_id
+JENV.filters['mk_size'] = mk_size
+JENV.filters['convert_packed'] = convert_packed
+JENV.filters['convert_unpacked'] = convert_unpacked
+JENV.filters['convert_unpacked_union'] = convert_unpacked_union
+JENV.filters['convert_upper'] = convert_upper
+JENV.filters['type'] = type
+JENV.filters['str_escape'] = strEscape
 JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
 
@@ -70,3 +86,4 @@ def render_check_main(output_dir, all_package_specs):
   py_template = JENV.get_template(CHECK_MAIN_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(package_suites=all_package_specs))
+

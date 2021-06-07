@@ -7,7 +7,7 @@ set -e -x
 # in the Google style of hand-written code.
 GENERATED_HEADERS=$(grep -rl --include="*.h" "Automatically generated" include/libsbp/*)
 CLANG_FORMAT=clang-format-6.0
-$CLANG_FORMAT -i $GENERATED_HEADERS test/*.c test/*.h test/cpp/*.cc
+$CLANG_FORMAT -i $GENERATED_HEADERS test/*.c test/*.h test/legacy/cpp/*.cc test/legacy/*.c test/auto* test/cpp/auto*
 
 # clang-format-6 adds whitespace to blank lines inside comments
 sed -i.bak 's/^  *$//' $GENERATED_HEADERS
