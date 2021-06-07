@@ -83,6 +83,19 @@ impl super::SBPMessage for MsgImuAux {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgImuAux {
+    const MESSAGE_TYPE: u16 = 2305;
+}
+impl TryFrom<super::SBP> for MsgImuAux {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgImuAux(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgImuAux {
     #[allow(unused_variables)]
@@ -195,6 +208,19 @@ impl super::SBPMessage for MsgImuRaw {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgImuRaw {
+    const MESSAGE_TYPE: u16 = 2304;
+}
+impl TryFrom<super::SBP> for MsgImuRaw {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgImuRaw(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

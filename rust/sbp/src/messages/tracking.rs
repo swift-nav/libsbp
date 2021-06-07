@@ -78,6 +78,19 @@ impl super::SBPMessage for MsgMeasurementState {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgMeasurementState {
+    const MESSAGE_TYPE: u16 = 97;
+}
+impl TryFrom<super::SBP> for MsgMeasurementState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgMeasurementState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgMeasurementState {
     #[allow(unused_variables)]
@@ -147,6 +160,19 @@ impl super::SBPMessage for MsgTrackingIq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgTrackingIq {
+    const MESSAGE_TYPE: u16 = 45;
+}
+impl TryFrom<super::SBP> for MsgTrackingIq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -221,6 +247,19 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgTrackingIqDepA {
+    const MESSAGE_TYPE: u16 = 28;
+}
+impl TryFrom<super::SBP> for MsgTrackingIqDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIqDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -298,6 +337,19 @@ impl super::SBPMessage for MsgTrackingIqDepB {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgTrackingIqDepB {
+    const MESSAGE_TYPE: u16 = 44;
+}
+impl TryFrom<super::SBP> for MsgTrackingIqDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingIqDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
     #[allow(unused_variables)]
@@ -368,6 +420,19 @@ impl super::SBPMessage for MsgTrackingState {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgTrackingState {
+    const MESSAGE_TYPE: u16 = 65;
+}
+impl TryFrom<super::SBP> for MsgTrackingState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgTrackingState {
     #[allow(unused_variables)]
@@ -432,6 +497,19 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgTrackingStateDepA {
+    const MESSAGE_TYPE: u16 = 22;
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
     #[allow(unused_variables)]
@@ -494,6 +572,19 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgTrackingStateDepB {
+    const MESSAGE_TYPE: u16 = 19;
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -624,6 +715,19 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgTrackingStateDetailedDep {
+    const MESSAGE_TYPE: u16 = 17;
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDetailedDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -795,6 +899,19 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgTrackingStateDetailedDepA {
+    const MESSAGE_TYPE: u16 = 33;
+}
+impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgTrackingStateDetailedDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

@@ -107,6 +107,19 @@ impl super::SBPMessage for MsgAngularRate {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgAngularRate {
+    const MESSAGE_TYPE: u16 = 546;
+}
+impl TryFrom<super::SBP> for MsgAngularRate {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAngularRate(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAngularRate {
     #[allow(unused_variables)]
@@ -202,6 +215,19 @@ impl super::SBPMessage for MsgBaselineHeading {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgBaselineHeading {
+    const MESSAGE_TYPE: u16 = 527;
+}
+impl TryFrom<super::SBP> for MsgBaselineHeading {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineHeading(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -310,6 +336,19 @@ impl super::SBPMessage for MsgOrientEuler {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgOrientEuler {
+    const MESSAGE_TYPE: u16 = 545;
+}
+impl TryFrom<super::SBP> for MsgOrientEuler {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOrientEuler(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -432,6 +471,19 @@ impl super::SBPMessage for MsgOrientQuat {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgOrientQuat {
+    const MESSAGE_TYPE: u16 = 544;
+}
+impl TryFrom<super::SBP> for MsgOrientQuat {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOrientQuat(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

@@ -114,6 +114,19 @@ impl super::SBPMessage for MsgAgeCorrections {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgAgeCorrections {
+    const MESSAGE_TYPE: u16 = 528;
+}
+impl TryFrom<super::SBP> for MsgAgeCorrections {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAgeCorrections(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAgeCorrections {
     #[allow(unused_variables)]
@@ -211,6 +224,19 @@ impl super::SBPMessage for MsgBaselineECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgBaselineECEF {
+    const MESSAGE_TYPE: u16 = 523;
+}
+impl TryFrom<super::SBP> for MsgBaselineECEF {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineECEF(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -322,6 +348,19 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgBaselineECEFDepA {
+    const MESSAGE_TYPE: u16 = 514;
+}
+impl TryFrom<super::SBP> for MsgBaselineECEFDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
     #[allow(unused_variables)]
@@ -419,6 +458,19 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgBaselineHeadingDepA {
+    const MESSAGE_TYPE: u16 = 519;
+}
+impl TryFrom<super::SBP> for MsgBaselineHeadingDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineHeadingDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -527,6 +579,19 @@ impl super::SBPMessage for MsgBaselineNED {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgBaselineNED {
+    const MESSAGE_TYPE: u16 = 524;
+}
+impl TryFrom<super::SBP> for MsgBaselineNED {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineNED(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -645,6 +710,19 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgBaselineNEDDepA {
+    const MESSAGE_TYPE: u16 = 515;
+}
+impl TryFrom<super::SBP> for MsgBaselineNEDDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBaselineNEDDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
     #[allow(unused_variables)]
@@ -756,6 +834,19 @@ impl super::SBPMessage for MsgDops {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgDops {
+    const MESSAGE_TYPE: u16 = 520;
+}
+impl TryFrom<super::SBP> for MsgDops {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgDops(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgDops {
     #[allow(unused_variables)]
@@ -858,6 +949,19 @@ impl super::SBPMessage for MsgDopsDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgDopsDepA {
+    const MESSAGE_TYPE: u16 = 518;
+}
+impl TryFrom<super::SBP> for MsgDopsDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgDopsDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -970,6 +1074,19 @@ impl super::SBPMessage for MsgGPSTime {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgGPSTime {
+    const MESSAGE_TYPE: u16 = 258;
+}
+impl TryFrom<super::SBP> for MsgGPSTime {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTime(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgGPSTime {
     #[allow(unused_variables)]
@@ -1074,6 +1191,19 @@ impl super::SBPMessage for MsgGPSTimeDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgGPSTimeDepA {
+    const MESSAGE_TYPE: u16 = 256;
+}
+impl TryFrom<super::SBP> for MsgGPSTimeDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTimeDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1182,6 +1312,19 @@ impl super::SBPMessage for MsgGPSTimeGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgGPSTimeGnss {
+    const MESSAGE_TYPE: u16 = 260;
+}
+impl TryFrom<super::SBP> for MsgGPSTimeGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGPSTimeGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
     #[allow(unused_variables)]
@@ -1286,6 +1429,19 @@ impl super::SBPMessage for MsgPosECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosECEF {
+    const MESSAGE_TYPE: u16 = 521;
+}
+impl TryFrom<super::SBP> for MsgPosECEF {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEF(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1414,6 +1570,19 @@ impl super::SBPMessage for MsgPosECEFCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosECEFCov {
+    const MESSAGE_TYPE: u16 = 532;
+}
+impl TryFrom<super::SBP> for MsgPosECEFCov {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFCov(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1554,6 +1723,19 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgPosECEFCovGnss {
+    const MESSAGE_TYPE: u16 = 564;
+}
+impl TryFrom<super::SBP> for MsgPosECEFCovGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
     #[allow(unused_variables)]
@@ -1676,6 +1858,19 @@ impl super::SBPMessage for MsgPosECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgPosECEFDepA {
+    const MESSAGE_TYPE: u16 = 512;
+}
+impl TryFrom<super::SBP> for MsgPosECEFDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
     #[allow(unused_variables)]
@@ -1786,6 +1981,19 @@ impl super::SBPMessage for MsgPosECEFGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosECEFGnss {
+    const MESSAGE_TYPE: u16 = 553;
+}
+impl TryFrom<super::SBP> for MsgPosECEFGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosECEFGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1901,6 +2109,19 @@ impl super::SBPMessage for MsgPosLLH {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosLLH {
+    const MESSAGE_TYPE: u16 = 522;
+}
+impl TryFrom<super::SBP> for MsgPosLLH {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLH(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2031,6 +2252,19 @@ impl super::SBPMessage for MsgPosLLHCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosLLHCov {
+    const MESSAGE_TYPE: u16 = 529;
+}
+impl TryFrom<super::SBP> for MsgPosLLHCov {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHCov(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2171,6 +2405,19 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgPosLLHCovGnss {
+    const MESSAGE_TYPE: u16 = 561;
+}
+impl TryFrom<super::SBP> for MsgPosLLHCovGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
     #[allow(unused_variables)]
@@ -2296,6 +2543,19 @@ impl super::SBPMessage for MsgPosLLHDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgPosLLHDepA {
+    const MESSAGE_TYPE: u16 = 513;
+}
+impl TryFrom<super::SBP> for MsgPosLLHDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
     #[allow(unused_variables)]
@@ -2411,6 +2671,19 @@ impl super::SBPMessage for MsgPosLLHGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgPosLLHGnss {
+    const MESSAGE_TYPE: u16 = 554;
+}
+impl TryFrom<super::SBP> for MsgPosLLHGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2571,6 +2844,19 @@ impl super::SBPMessage for MsgProtectionLevel {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgProtectionLevel {
+    const MESSAGE_TYPE: u16 = 535;
+}
+impl TryFrom<super::SBP> for MsgProtectionLevel {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgProtectionLevel(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgProtectionLevel {
     #[allow(unused_variables)]
@@ -2707,6 +2993,19 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgProtectionLevelDepA {
+    const MESSAGE_TYPE: u16 = 534;
+}
+impl TryFrom<super::SBP> for MsgProtectionLevelDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgProtectionLevelDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
     #[allow(unused_variables)]
@@ -2819,6 +3118,19 @@ impl super::SBPMessage for MsgUtcTime {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgUtcTime {
+    const MESSAGE_TYPE: u16 = 259;
+}
+impl TryFrom<super::SBP> for MsgUtcTime {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUtcTime(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2937,6 +3249,19 @@ impl super::SBPMessage for MsgUtcTimeGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgUtcTimeGnss {
+    const MESSAGE_TYPE: u16 = 261;
+}
+impl TryFrom<super::SBP> for MsgUtcTimeGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUtcTimeGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3072,6 +3397,19 @@ impl super::SBPMessage for MsgVelBody {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgVelBody {
+    const MESSAGE_TYPE: u16 = 531;
+}
+impl TryFrom<super::SBP> for MsgVelBody {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelBody(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgVelBody {
     #[allow(unused_variables)]
@@ -3188,6 +3526,19 @@ impl super::SBPMessage for MsgVelECEF {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelECEF {
+    const MESSAGE_TYPE: u16 = 525;
+}
+impl TryFrom<super::SBP> for MsgVelECEF {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEF(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3311,6 +3662,19 @@ impl super::SBPMessage for MsgVelECEFCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelECEFCov {
+    const MESSAGE_TYPE: u16 = 533;
+}
+impl TryFrom<super::SBP> for MsgVelECEFCov {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFCov(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3446,6 +3810,19 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgVelECEFCovGnss {
+    const MESSAGE_TYPE: u16 = 565;
+}
+impl TryFrom<super::SBP> for MsgVelECEFCovGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
     #[allow(unused_variables)]
@@ -3564,6 +3941,19 @@ impl super::SBPMessage for MsgVelECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgVelECEFDepA {
+    const MESSAGE_TYPE: u16 = 516;
+}
+impl TryFrom<super::SBP> for MsgVelECEFDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
     #[allow(unused_variables)]
@@ -3670,6 +4060,19 @@ impl super::SBPMessage for MsgVelECEFGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelECEFGnss {
+    const MESSAGE_TYPE: u16 = 557;
+}
+impl TryFrom<super::SBP> for MsgVelECEFGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelECEFGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3782,6 +4185,19 @@ impl super::SBPMessage for MsgVelNED {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelNED {
+    const MESSAGE_TYPE: u16 = 526;
+}
+impl TryFrom<super::SBP> for MsgVelNED {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNED(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3910,6 +4326,19 @@ impl super::SBPMessage for MsgVelNEDCov {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelNEDCov {
+    const MESSAGE_TYPE: u16 = 530;
+}
+impl TryFrom<super::SBP> for MsgVelNEDCov {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDCov(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4048,6 +4477,19 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgVelNEDCovGnss {
+    const MESSAGE_TYPE: u16 = 562;
+}
+impl TryFrom<super::SBP> for MsgVelNEDCovGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
     #[allow(unused_variables)]
@@ -4170,6 +4612,19 @@ impl super::SBPMessage for MsgVelNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgVelNEDDepA {
+    const MESSAGE_TYPE: u16 = 517;
+}
+impl TryFrom<super::SBP> for MsgVelNEDDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
     #[allow(unused_variables)]
@@ -4282,6 +4737,19 @@ impl super::SBPMessage for MsgVelNEDGnss {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgVelNEDGnss {
+    const MESSAGE_TYPE: u16 = 558;
+}
+impl TryFrom<super::SBP> for MsgVelNEDGnss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelNEDGnss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

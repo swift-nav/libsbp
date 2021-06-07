@@ -735,6 +735,19 @@ impl super::SBPMessage for MsgAlmanacGlo {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgAlmanacGlo {
+    const MESSAGE_TYPE: u16 = 115;
+}
+impl TryFrom<super::SBP> for MsgAlmanacGlo {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAlmanacGlo(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
     #[allow(unused_variables)]
@@ -836,6 +849,19 @@ impl super::SBPMessage for MsgAlmanacGloDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgAlmanacGloDep {
+    const MESSAGE_TYPE: u16 = 113;
+}
+impl TryFrom<super::SBP> for MsgAlmanacGloDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAlmanacGloDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -944,6 +970,19 @@ impl super::SBPMessage for MsgAlmanacGPS {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgAlmanacGPS {
+    const MESSAGE_TYPE: u16 = 114;
+}
+impl TryFrom<super::SBP> for MsgAlmanacGPS {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAlmanacGPS(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1058,6 +1097,19 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgAlmanacGPSDep {
+    const MESSAGE_TYPE: u16 = 112;
+}
+impl TryFrom<super::SBP> for MsgAlmanacGPSDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAlmanacGPSDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
     #[allow(unused_variables)]
@@ -1150,6 +1202,19 @@ impl super::SBPMessage for MsgBasePosECEF {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgBasePosECEF {
+    const MESSAGE_TYPE: u16 = 72;
+}
+impl TryFrom<super::SBP> for MsgBasePosECEF {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBasePosECEF(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgBasePosECEF {
     #[allow(unused_variables)]
@@ -1225,6 +1290,19 @@ impl super::SBPMessage for MsgBasePosLLH {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgBasePosLLH {
+    const MESSAGE_TYPE: u16 = 68;
+}
+impl TryFrom<super::SBP> for MsgBasePosLLH {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgBasePosLLH(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1373,6 +1451,19 @@ impl super::SBPMessage for MsgEphemerisBds {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisBds {
+    const MESSAGE_TYPE: u16 = 137;
+}
+impl TryFrom<super::SBP> for MsgEphemerisBds {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisBds(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1562,6 +1653,19 @@ impl super::SBPMessage for MsgEphemerisDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisDepA {
+    const MESSAGE_TYPE: u16 = 26;
+}
+impl TryFrom<super::SBP> for MsgEphemerisDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1758,6 +1862,19 @@ impl super::SBPMessage for MsgEphemerisDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisDepB {
+    const MESSAGE_TYPE: u16 = 70;
+}
+impl TryFrom<super::SBP> for MsgEphemerisDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1965,6 +2082,19 @@ impl super::SBPMessage for MsgEphemerisDepC {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisDepC {
+    const MESSAGE_TYPE: u16 = 71;
+}
+impl TryFrom<super::SBP> for MsgEphemerisDepC {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisDepC(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2178,6 +2308,19 @@ impl super::SBPMessage for MsgEphemerisDepD {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisDepD {
+    const MESSAGE_TYPE: u16 = 128;
+}
+impl TryFrom<super::SBP> for MsgEphemerisDepD {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisDepD(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
     #[allow(unused_variables)]
@@ -2377,6 +2520,19 @@ impl super::SBPMessage for MsgEphemerisGal {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisGal {
+    const MESSAGE_TYPE: u16 = 141;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGal {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGal(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisGal {
     #[allow(unused_variables)]
@@ -2563,6 +2719,19 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisGalDepA {
+    const MESSAGE_TYPE: u16 = 149;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGalDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGalDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
     #[allow(unused_variables)]
@@ -2700,6 +2869,19 @@ impl super::SBPMessage for MsgEphemerisGlo {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisGlo {
+    const MESSAGE_TYPE: u16 = 139;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGlo {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGlo(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
     #[allow(unused_variables)]
@@ -2798,6 +2980,19 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisGloDepA {
+    const MESSAGE_TYPE: u16 = 131;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGloDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGloDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
     #[allow(unused_variables)]
@@ -2888,6 +3083,19 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisGloDepB {
+    const MESSAGE_TYPE: u16 = 133;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGloDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGloDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -2986,6 +3194,19 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisGloDepC {
+    const MESSAGE_TYPE: u16 = 135;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGloDepC {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGloDepC(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3089,6 +3310,19 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisGloDepD {
+    const MESSAGE_TYPE: u16 = 136;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGloDepD {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGloDepD(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3242,6 +3476,19 @@ impl super::SBPMessage for MsgEphemerisGPS {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisGPS {
+    const MESSAGE_TYPE: u16 = 138;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGPS {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGPS(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3425,6 +3672,19 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisGPSDepE {
+    const MESSAGE_TYPE: u16 = 129;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGPSDepE {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGPSDepE(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
     #[allow(unused_variables)]
@@ -3602,6 +3862,19 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisGPSDepF {
+    const MESSAGE_TYPE: u16 = 134;
+}
+impl TryFrom<super::SBP> for MsgEphemerisGPSDepF {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisGPSDepF(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -3783,6 +4056,19 @@ impl super::SBPMessage for MsgEphemerisQzss {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisQzss {
+    const MESSAGE_TYPE: u16 = 142;
+}
+impl TryFrom<super::SBP> for MsgEphemerisQzss {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisQzss(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
     #[allow(unused_variables)]
@@ -3902,6 +4188,19 @@ impl super::SBPMessage for MsgEphemerisSbas {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisSbas {
+    const MESSAGE_TYPE: u16 = 140;
+}
+impl TryFrom<super::SBP> for MsgEphemerisSbas {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisSbas(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
     #[allow(unused_variables)]
@@ -3985,6 +4284,19 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgEphemerisSbasDepA {
+    const MESSAGE_TYPE: u16 = 130;
+}
+impl TryFrom<super::SBP> for MsgEphemerisSbasDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisSbasDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4077,6 +4389,19 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgEphemerisSbasDepB {
+    const MESSAGE_TYPE: u16 = 132;
+}
+impl TryFrom<super::SBP> for MsgEphemerisSbasDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgEphemerisSbasDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
     #[allow(unused_variables)]
@@ -4165,6 +4490,19 @@ impl super::SBPMessage for MsgGloBiases {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgGloBiases {
+    const MESSAGE_TYPE: u16 = 117;
+}
+impl TryFrom<super::SBP> for MsgGloBiases {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGloBiases(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgGloBiases {
     #[allow(unused_variables)]
@@ -4234,6 +4572,19 @@ impl super::SBPMessage for MsgGnssCapb {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgGnssCapb {
+    const MESSAGE_TYPE: u16 = 150;
+}
+impl TryFrom<super::SBP> for MsgGnssCapb {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGnssCapb(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4313,6 +4664,19 @@ impl super::SBPMessage for MsgGroupDelay {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgGroupDelay {
+    const MESSAGE_TYPE: u16 = 148;
+}
+impl TryFrom<super::SBP> for MsgGroupDelay {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGroupDelay(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4402,6 +4766,19 @@ impl super::SBPMessage for MsgGroupDelayDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgGroupDelayDepA {
+    const MESSAGE_TYPE: u16 = 146;
+}
+impl TryFrom<super::SBP> for MsgGroupDelayDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGroupDelayDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
     #[allow(unused_variables)]
@@ -4487,6 +4864,19 @@ impl super::SBPMessage for MsgGroupDelayDepB {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgGroupDelayDepB {
+    const MESSAGE_TYPE: u16 = 147;
+}
+impl TryFrom<super::SBP> for MsgGroupDelayDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgGroupDelayDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4579,6 +4969,19 @@ impl super::SBPMessage for MsgIono {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgIono {
+    const MESSAGE_TYPE: u16 = 144;
+}
+impl TryFrom<super::SBP> for MsgIono {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgIono(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4685,6 +5088,19 @@ impl super::SBPMessage for MsgObs {
         Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgObs {
+    const MESSAGE_TYPE: u16 = 74;
+}
+impl TryFrom<super::SBP> for MsgObs {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgObs(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgObs {
     #[allow(unused_variables)]
@@ -4768,6 +5184,19 @@ impl super::SBPMessage for MsgObsDepA {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgObsDepA {
+    const MESSAGE_TYPE: u16 = 69;
+}
+impl TryFrom<super::SBP> for MsgObsDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgObsDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4856,6 +5285,19 @@ impl super::SBPMessage for MsgObsDepB {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::RealMessage for MsgObsDepB {
+    const MESSAGE_TYPE: u16 = 67;
+}
+impl TryFrom<super::SBP> for MsgObsDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgObsDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -4948,6 +5390,19 @@ impl super::SBPMessage for MsgObsDepC {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgObsDepC {
+    const MESSAGE_TYPE: u16 = 73;
+}
+impl TryFrom<super::SBP> for MsgObsDepC {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgObsDepC(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgObsDepC {
     #[allow(unused_variables)]
@@ -5034,6 +5489,19 @@ impl super::SBPMessage for MsgOsr {
         Some(Ok(crate::time::MessageTime::Base(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgOsr {
+    const MESSAGE_TYPE: u16 = 1600;
+}
+impl TryFrom<super::SBP> for MsgOsr {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOsr(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgOsr {
     #[allow(unused_variables)]
@@ -5101,6 +5569,19 @@ impl super::SBPMessage for MsgSvAzEl {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgSvAzEl {
+    const MESSAGE_TYPE: u16 = 151;
+}
+impl TryFrom<super::SBP> for MsgSvAzEl {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSvAzEl(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSvAzEl {
     #[allow(unused_variables)]
@@ -5166,6 +5647,19 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgSvConfigurationGPSDep {
+    const MESSAGE_TYPE: u16 = 145;
+}
+impl TryFrom<super::SBP> for MsgSvConfigurationGPSDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSvConfigurationGPSDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
