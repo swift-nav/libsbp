@@ -1,5 +1,5 @@
-#ifndef LIBSBP_NDB_MESSAGES_H
-#define LIBSBP_NDB_MESSAGES_H
+#ifndef LIBSBP_NEW_NDB_MESSAGES_H
+#define LIBSBP_NEW_NDB_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -20,6 +20,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags) \
@@ -35,6 +36,8 @@ struct sbp_state;
 #define SBP_NDB_EVENT_EVENT_TYPE_STORE (1)
 #define SBP_NDB_EVENT_EVENT_TYPE_FETCH (2)
 #define SBP_NDB_EVENT_EVENT_TYPE_ERASE (3)
+#endif
+#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK (0x7)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_GET(flags) \
@@ -53,6 +56,8 @@ struct sbp_state;
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_IONO (4)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_L2C_CAP (5)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_LGF (6)
+#endif
+#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
 #define SBP_NDB_EVENT_EVENT_RESULT_MASK (0xf)
 #define SBP_NDB_EVENT_EVENT_RESULT_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_RESULT_GET(flags) \
@@ -75,6 +80,8 @@ struct sbp_state;
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NO_DATA (8)
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NO_CHANGE (9)
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_OLDER_DATA (10)
+#endif
+#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
 #define SBP_NDB_EVENT_DATA_SOURCE_MASK (0x3)
 #define SBP_NDB_EVENT_DATA_SOURCE_SHIFT (0u)
 #define SBP_NDB_EVENT_DATA_SOURCE_GET(flags) \
@@ -90,11 +97,14 @@ struct sbp_state;
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_INIT (1)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_RECEIVER (2)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_SBP (3)
+#endif
 /** Navigation DataBase Event
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
 #define SBP_MSG_NDB_EVENT 0x0400
+#endif
 typedef struct {
   u64 recv_time;
   u8 event;
@@ -143,4 +153,4 @@ static inline bool operator>=(const sbp_msg_ndb_event_t &a, const sbp_msg_ndb_ev
 
 #endif
 
-#endif /* LIBSBP_NDB_MESSAGES_H */
+#endif /* LIBSBP_NEW_NDB_MESSAGES_H */

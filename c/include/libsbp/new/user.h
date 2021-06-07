@@ -1,5 +1,5 @@
-#ifndef LIBSBP_USER_MESSAGES_H
-#define LIBSBP_USER_MESSAGES_H
+#ifndef LIBSBP_NEW_USER_MESSAGES_H
+#define LIBSBP_NEW_USER_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_USER_MESSAGES_H
 #define SBP_MSG_USER_DATA 0x0800
+#endif
 typedef struct {
   u8 contents[255];
   u8 n_contents;
@@ -66,4 +68,4 @@ static inline bool operator>=(const sbp_msg_user_data_t &a, const sbp_msg_user_d
 
 #endif
 
-#endif /* LIBSBP_USER_MESSAGES_H */
+#endif /* LIBSBP_NEW_USER_MESSAGES_H */

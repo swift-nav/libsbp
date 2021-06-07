@@ -1,5 +1,5 @@
-#ifndef LIBSBP_SETTINGS_MESSAGES_H
-#define LIBSBP_SETTINGS_MESSAGES_H
+#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
+#define LIBSBP_NEW_SETTINGS_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_SAVE               0x00A1
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_settings_save_t;
@@ -40,7 +42,9 @@ int sbp_cmp_sbp_msg_settings_save_t(const sbp_msg_settings_save_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
+#endif
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_write_t;
@@ -67,6 +71,7 @@ s8 sbp_send_sbp_msg_settings_write_t(struct sbp_state  *s, u16 sender_id, const 
 int sbp_cmp_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *a, const sbp_msg_settings_write_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags) \
@@ -85,11 +90,14 @@ int sbp_cmp_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *a, const sb
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED (5)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
+#endif
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
+#endif
 typedef struct {
   u8 status;
   sbp_multipart_string_t setting;
@@ -121,7 +129,9 @@ int sbp_cmp_sbp_msg_settings_write_resp_t(const sbp_msg_settings_write_resp_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
+#endif
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_req_t;
@@ -152,7 +162,9 @@ int sbp_cmp_sbp_msg_settings_read_req_t(const sbp_msg_settings_read_req_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
+#endif
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_read_resp_t;
@@ -183,7 +195,9 @@ int sbp_cmp_sbp_msg_settings_read_resp_t(const sbp_msg_settings_read_resp_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
+#endif
 typedef struct {
   u16 index;
 } sbp_msg_settings_read_by_index_req_t;
@@ -200,7 +214,9 @@ int sbp_cmp_sbp_msg_settings_read_by_index_req_t(const sbp_msg_settings_read_by_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+#endif
 typedef struct {
   u16 index;
   sbp_multipart_string_t setting;
@@ -232,7 +248,9 @@ int sbp_cmp_sbp_msg_settings_read_by_index_resp_t(const sbp_msg_settings_read_by
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_settings_read_by_index_done_t;
@@ -249,7 +267,9 @@ int sbp_cmp_sbp_msg_settings_read_by_index_done_t(const sbp_msg_settings_read_by
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
+#endif
 typedef struct {
   sbp_multipart_string_t setting;
 } sbp_msg_settings_register_t;
@@ -276,6 +296,7 @@ s8 sbp_send_sbp_msg_settings_register_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *a, const sbp_msg_settings_register_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags) \
@@ -291,11 +312,14 @@ int sbp_cmp_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *a, co
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED (1)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED (2)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE (3)
+#endif
 /** Register setting and default value (device <= host)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SETTINGS_MESSAGES_H
 #define SBP_MSG_SETTINGS_REGISTER_RESP      0x01AF
+#endif
 typedef struct {
   u8 status;
   sbp_multipart_string_t setting;
@@ -559,4 +583,4 @@ static inline bool operator>=(const sbp_msg_settings_register_resp_t &a, const s
 
 #endif
 
-#endif /* LIBSBP_SETTINGS_MESSAGES_H */
+#endif /* LIBSBP_NEW_SETTINGS_MESSAGES_H */

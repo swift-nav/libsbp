@@ -1,5 +1,5 @@
-#ifndef LIBSBP_PIKSI_MESSAGES_H
-#define LIBSBP_PIKSI_MESSAGES_H
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
+#define LIBSBP_NEW_PIKSI_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -24,7 +24,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_ALMANAC                 0x0069
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_almanac_t;
@@ -41,7 +43,9 @@ int sbp_cmp_sbp_msg_almanac_t(const sbp_msg_almanac_t *a, const sbp_msg_almanac_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_SET_TIME                0x0068
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_set_time_t;
@@ -54,6 +58,7 @@ s8 sbp_send_sbp_msg_set_time_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_set_time_t(const sbp_msg_set_time_t *a, const sbp_msg_set_time_t *b);
 
 
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
 #define SBP_RESET_DEFAULT_SETTINGS_SHIFT (0u)
 #define SBP_RESET_DEFAULT_SETTINGS_GET(flags) \
@@ -67,11 +72,14 @@ int sbp_cmp_sbp_msg_set_time_t(const sbp_msg_set_time_t *a, const sbp_msg_set_ti
 
 #define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
 #define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
+#endif
 /** Reset the device (host => Piksi)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET                   0x00B6
+#endif
 typedef struct {
   u32 flags;
 } sbp_msg_reset_t;
@@ -88,7 +96,9 @@ int sbp_cmp_sbp_msg_reset_t(const sbp_msg_reset_t *a, const sbp_msg_reset_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET_DEP               0x00B2
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_reset_dep_t;
@@ -105,7 +115,9 @@ int sbp_cmp_sbp_msg_reset_dep_t(const sbp_msg_reset_dep_t *a, const sbp_msg_rese
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_CW_RESULTS              0x00C0
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_cw_results_t;
@@ -122,7 +134,9 @@ int sbp_cmp_sbp_msg_cw_results_t(const sbp_msg_cw_results_t *a, const sbp_msg_cw
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_CW_START                0x00C1
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_cw_start_t;
@@ -135,6 +149,7 @@ s8 sbp_send_sbp_msg_cw_start_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_cw_start_t(const sbp_msg_cw_start_t *a, const sbp_msg_cw_start_t *b);
 
 
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_GET(flags) \
@@ -149,11 +164,14 @@ int sbp_cmp_sbp_msg_cw_start_t(const sbp_msg_cw_start_t *a, const sbp_msg_cw_sta
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
+#endif
 /** Reset IAR filters (host => Piksi)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET_FILTERS           0x0022
+#endif
 typedef struct {
   u8 filter;
 } sbp_msg_reset_filters_t;
@@ -170,7 +188,9 @@ int sbp_cmp_sbp_msg_reset_filters_t(const sbp_msg_reset_filters_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_INIT_BASE_DEP           0x0023
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_init_base_dep_t;
@@ -187,7 +207,9 @@ int sbp_cmp_sbp_msg_init_base_dep_t(const sbp_msg_init_base_dep_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_THREAD_STATE            0x0017
+#endif
 typedef struct {
   char name[20];
   u16 cpu;
@@ -262,7 +284,9 @@ int sbp_cmp_sbp_latency_t(const sbp_latency_t *a, const sbp_latency_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_UART_STATE              0x001D
+#endif
 typedef struct {
   sbp_uart_channel_t uart_a;
   sbp_uart_channel_t uart_b;
@@ -283,7 +307,9 @@ int sbp_cmp_sbp_msg_uart_state_t(const sbp_msg_uart_state_t *a, const sbp_msg_ua
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_UART_STATE_DEPA         0x0018
+#endif
 typedef struct {
   sbp_uart_channel_t uart_a;
   sbp_uart_channel_t uart_b;
@@ -303,7 +329,9 @@ int sbp_cmp_sbp_msg_uart_state_depa_t(const sbp_msg_uart_state_depa_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_IAR_STATE               0x0019
+#endif
 typedef struct {
   u32 num_hyps;
 } sbp_msg_iar_state_t;
@@ -316,6 +344,7 @@ s8 sbp_send_sbp_msg_iar_state_t(struct sbp_state  *s, u16 sender_id, const sbp_m
 int sbp_cmp_sbp_msg_iar_state_t(const sbp_msg_iar_state_t *a, const sbp_msg_iar_state_t *b);
 
 
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT (1u)
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_GET(flags) \
@@ -342,11 +371,14 @@ int sbp_cmp_sbp_msg_iar_state_t(const sbp_msg_iar_state_t *a, const sbp_msg_iar_
 
 #define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_ENABLED (0)
 #define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS (1)
+#endif
 /** Mask a satellite from use in Piksi subsystems
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_MASK_SATELLITE          0x002B
+#endif
 typedef struct {
   u8 mask;
   sbp_sbp_gnss_signal_t sid;
@@ -360,6 +392,7 @@ s8 sbp_send_sbp_msg_mask_satellite_t(struct sbp_state  *s, u16 sender_id, const 
 int sbp_cmp_sbp_msg_mask_satellite_t(const sbp_msg_mask_satellite_t *a, const sbp_msg_mask_satellite_t *b);
 
 
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags) \
@@ -386,11 +419,14 @@ int sbp_cmp_sbp_msg_mask_satellite_t(const sbp_msg_mask_satellite_t *a, const sb
 
 #define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_ENABLED (0)
 #define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS (1)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_MASK_SATELLITE_DEP      0x001B
+#endif
 typedef struct {
   u8 mask;
   sbp_gnss_signal_dep_t sid;
@@ -408,7 +444,9 @@ int sbp_cmp_sbp_msg_mask_satellite_dep_t(const sbp_msg_mask_satellite_dep_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_DEVICE_MONITOR          0x00B5
+#endif
 typedef struct {
   s16 dev_vin;
   s16 cpu_vint;
@@ -429,7 +467,9 @@ int sbp_cmp_sbp_msg_device_monitor_t(const sbp_msg_device_monitor_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_REQ             0x00B8
+#endif
 typedef struct {
   u32 sequence;
   sbp_null_terminated_string_t command;
@@ -458,7 +498,9 @@ int sbp_cmp_sbp_msg_command_req_t(const sbp_msg_command_req_t *a, const sbp_msg_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_RESP            0x00B9
+#endif
 typedef struct {
   u32 sequence;
   s32 code;
@@ -476,7 +518,9 @@ int sbp_cmp_sbp_msg_command_resp_t(const sbp_msg_command_resp_t *a, const sbp_ms
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_OUTPUT          0x00BC
+#endif
 typedef struct {
   u32 sequence;
   sbp_unterminated_string_t line;
@@ -505,7 +549,9 @@ int sbp_cmp_sbp_msg_command_output_t(const sbp_msg_command_output_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_STATE_REQ       0x00BA
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_network_state_req_t;
@@ -518,6 +564,7 @@ s8 sbp_send_sbp_msg_network_state_req_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_network_state_req_t(const sbp_msg_network_state_req_t *a, const sbp_msg_network_state_req_t *b);
 
 
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
@@ -694,11 +741,14 @@ int sbp_cmp_sbp_msg_network_state_req_t(const sbp_msg_network_state_req_t *a, co
                              << (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT)));} while(0)
                              
 
+#endif
 /** State of network interface
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_STATE_RESP      0x00BB
+#endif
 typedef struct {
   u8 ipv4_address[4];
   u8 ipv4_mask_size;
@@ -741,7 +791,9 @@ int sbp_cmp_sbp_network_usage_t(const sbp_network_usage_t *a, const sbp_network_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
+#endif
 typedef struct {
   sbp_network_usage_t interfaces[6];
   u8 n_interfaces;
@@ -759,7 +811,9 @@ int sbp_cmp_sbp_msg_network_bandwidth_usage_t(const sbp_msg_network_bandwidth_us
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_CELL_MODEM_STATUS       0x00BE
+#endif
 typedef struct {
   s8 signal_strength;
   float signal_error_rate;
@@ -779,7 +833,9 @@ int sbp_cmp_sbp_msg_cell_modem_status_t(const sbp_msg_cell_modem_status_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_SPECAN_DEP              0x0050
+#endif
 typedef struct {
   u16 channel_tag;
   sbp_gps_time_dep_t t;
@@ -803,7 +859,9 @@ int sbp_cmp_sbp_msg_specan_dep_t(const sbp_msg_specan_dep_t *a, const sbp_msg_sp
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_SPECAN                  0x0051
+#endif
 typedef struct {
   u16 channel_tag;
   sbp_sbp_gps_time_t t;
@@ -827,7 +885,9 @@ int sbp_cmp_sbp_msg_specan_t(const sbp_msg_specan_t *a, const sbp_msg_specan_t *
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
 #define SBP_MSG_FRONT_END_GAIN          0x00BF
+#endif
 typedef struct {
   s8 rf_gain[8];
   s8 if_gain[8];
@@ -1514,4 +1574,4 @@ static inline bool operator>=(const sbp_msg_front_end_gain_t &a, const sbp_msg_f
 
 #endif
 
-#endif /* LIBSBP_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_NEW_PIKSI_MESSAGES_H */

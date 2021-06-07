@@ -1,5 +1,5 @@
-#ifndef LIBSBP_NAVIGATION_MESSAGES_H
-#define LIBSBP_NAVIGATION_MESSAGES_H
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
+#define LIBSBP_NEW_NAVIGATION_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_GPS_TIME_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_TIME_SOURCE_GET(flags) \
@@ -33,11 +34,14 @@ struct sbp_state;
 #define SBP_GPS_TIME_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_TIME_SOURCE_PROPAGATED (2)
+#endif
 /** GPS Time
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME               0x0102
+#endif
 typedef struct {
   u16 wn;
   u32 tow;
@@ -53,6 +57,7 @@ s8 sbp_send_sbp_msg_gps_time_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *a, const sbp_msg_gps_time_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GET(flags) \
@@ -67,11 +72,14 @@ int sbp_cmp_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *a, const sbp_msg_gps_ti
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+#endif
 /** GPS Time
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME_GNSS          0x0104
+#endif
 typedef struct {
   u16 wn;
   u32 tow;
@@ -87,6 +95,7 @@ s8 sbp_send_sbp_msg_gps_time_gnss_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_gps_time_gnss_t(const sbp_msg_gps_time_gnss_t *a, const sbp_msg_gps_time_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_GET(flags) \
@@ -115,11 +124,14 @@ int sbp_cmp_sbp_msg_gps_time_gnss_t(const sbp_msg_gps_time_gnss_t *a, const sbp_
 #define SBP_UTC_TIME_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_TIME_SOURCE_PROPAGATED (2)
+#endif
 /** UTC Time
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_UTC_TIME               0x0103
+#endif
 typedef struct {
   u8 flags;
   u32 tow;
@@ -140,6 +152,7 @@ s8 sbp_send_sbp_msg_utc_time_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_utc_time_t(const sbp_msg_utc_time_t *a, const sbp_msg_utc_time_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_GET(flags) \
@@ -168,11 +181,14 @@ int sbp_cmp_sbp_msg_utc_time_t(const sbp_msg_utc_time_t *a, const sbp_msg_utc_ti
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+#endif
 /** UTC Time
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_UTC_TIME_GNSS          0x0105
+#endif
 typedef struct {
   u8 flags;
   u32 tow;
@@ -193,6 +209,7 @@ s8 sbp_send_sbp_msg_utc_time_gnss_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_utc_time_gnss_t(const sbp_msg_utc_time_gnss_t *a, const sbp_msg_utc_time_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_GET(flags) \
@@ -222,11 +239,14 @@ int sbp_cmp_sbp_msg_utc_time_gnss_t(const sbp_msg_utc_time_gnss_t *a, const sbp_
 #define SBP_DOPS_FIX_MODE_FIXED_RTK (4)
 #define SBP_DOPS_FIX_MODE_UNDEFINED (5)
 #define SBP_DOPS_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** Dilution of Precision
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_DOPS                   0x0208
+#endif
 typedef struct {
   u32 tow;
   u16 gdop;
@@ -245,6 +265,7 @@ s8 sbp_send_sbp_msg_dops_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_do
 int sbp_cmp_sbp_msg_dops_t(const sbp_msg_dops_t *a, const sbp_msg_dops_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
 #define SBP_POS_ECEF_TOW_TYPE_SHIFT (5u)
 #define SBP_POS_ECEF_TOW_TYPE_GET(flags) \
@@ -289,11 +310,14 @@ int sbp_cmp_sbp_msg_dops_t(const sbp_msg_dops_t *a, const sbp_msg_dops_t *b);
 #define SBP_POS_ECEF_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** Single-point position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF               0x0209
+#endif
 typedef struct {
   u32 tow;
   double x;
@@ -312,6 +336,7 @@ s8 sbp_send_sbp_msg_pos_ecef_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_pos_ecef_t(const sbp_msg_pos_ecef_t *a, const sbp_msg_pos_ecef_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -356,11 +381,14 @@ int sbp_cmp_sbp_msg_pos_ecef_t(const sbp_msg_pos_ecef_t *a, const sbp_msg_pos_ec
 #define SBP_POS_ECEF_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_COV_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** Single-point position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_COV           0x0214
+#endif
 typedef struct {
   u32 tow;
   double x;
@@ -384,6 +412,7 @@ s8 sbp_send_sbp_msg_pos_ecef_cov_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_pos_ecef_cov_t(const sbp_msg_pos_ecef_cov_t *a, const sbp_msg_pos_ecef_cov_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -428,11 +457,14 @@ int sbp_cmp_sbp_msg_pos_ecef_cov_t(const sbp_msg_pos_ecef_cov_t *a, const sbp_ms
 #define SBP_POS_LLH_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** Geodetic Position
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH                0x020A
+#endif
 typedef struct {
   u32 tow;
   double lat;
@@ -452,6 +484,7 @@ s8 sbp_send_sbp_msg_pos_llh_t(struct sbp_state  *s, u16 sender_id, const sbp_msg
 int sbp_cmp_sbp_msg_pos_llh_t(const sbp_msg_pos_llh_t *a, const sbp_msg_pos_llh_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -496,11 +529,14 @@ int sbp_cmp_sbp_msg_pos_llh_t(const sbp_msg_pos_llh_t *a, const sbp_msg_pos_llh_
 #define SBP_POS_LLH_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** Geodetic Position
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_COV            0x0211
+#endif
 typedef struct {
   u32 tow;
   double lat;
@@ -524,6 +560,7 @@ s8 sbp_send_sbp_msg_pos_llh_cov_t(struct sbp_state  *s, u16 sender_id, const sbp
 int sbp_cmp_sbp_msg_pos_llh_cov_t(const sbp_msg_pos_llh_cov_t *a, const sbp_msg_pos_llh_cov_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_ECEF_FIX_MODE_GET(flags) \
@@ -539,11 +576,14 @@ int sbp_cmp_sbp_msg_pos_llh_cov_t(const sbp_msg_pos_llh_cov_t *a, const sbp_msg_
 #define SBP_BASELINE_ECEF_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_ECEF_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_ECEF_FIX_MODE_FIXED_RTK (4)
+#endif
 /** Baseline Position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_ECEF          0x020B
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -562,6 +602,7 @@ s8 sbp_send_sbp_msg_baseline_ecef_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_baseline_ecef_t(const sbp_msg_baseline_ecef_t *a, const sbp_msg_baseline_ecef_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_NED_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_NED_FIX_MODE_GET(flags) \
@@ -577,11 +618,14 @@ int sbp_cmp_sbp_msg_baseline_ecef_t(const sbp_msg_baseline_ecef_t *a, const sbp_
 #define SBP_BASELINE_NED_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_NED_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_NED_FIX_MODE_FIXED_RTK (4)
+#endif
 /** Baseline in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_NED           0x020C
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -601,6 +645,7 @@ s8 sbp_send_sbp_msg_baseline_ned_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_baseline_ned_t(const sbp_msg_baseline_ned_t *a, const sbp_msg_baseline_ned_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -642,11 +687,14 @@ int sbp_cmp_sbp_msg_baseline_ned_t(const sbp_msg_baseline_ned_t *a, const sbp_ms
 #define SBP_VEL_ECEF_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 /** Velocity in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF               0x020D
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -665,6 +713,7 @@ s8 sbp_send_sbp_msg_vel_ecef_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_vel_ecef_t(const sbp_msg_vel_ecef_t *a, const sbp_msg_vel_ecef_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -706,11 +755,14 @@ int sbp_cmp_sbp_msg_vel_ecef_t(const sbp_msg_vel_ecef_t *a, const sbp_msg_vel_ec
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 /** Velocity in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_COV           0x0215
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -734,6 +786,7 @@ s8 sbp_send_sbp_msg_vel_ecef_cov_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_vel_ecef_cov_t(const sbp_msg_vel_ecef_cov_t *a, const sbp_msg_vel_ecef_cov_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -775,11 +828,14 @@ int sbp_cmp_sbp_msg_vel_ecef_cov_t(const sbp_msg_vel_ecef_cov_t *a, const sbp_ms
 #define SBP_VEL_NED_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 /** Velocity in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED                0x020E
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -799,6 +855,7 @@ s8 sbp_send_sbp_msg_vel_ned_t(struct sbp_state  *s, u16 sender_id, const sbp_msg
 int sbp_cmp_sbp_msg_vel_ned_t(const sbp_msg_vel_ned_t *a, const sbp_msg_vel_ned_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
@@ -840,11 +897,14 @@ int sbp_cmp_sbp_msg_vel_ned_t(const sbp_msg_vel_ned_t *a, const sbp_msg_vel_ned_
 #define SBP_VEL_NED_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 /** Velocity in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_COV            0x0212
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -868,6 +928,7 @@ s8 sbp_send_sbp_msg_vel_ned_cov_t(struct sbp_state  *s, u16 sender_id, const sbp
 int sbp_cmp_sbp_msg_vel_ned_cov_t(const sbp_msg_vel_ned_cov_t *a, const sbp_msg_vel_ned_cov_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_GET(flags) \
@@ -885,11 +946,14 @@ int sbp_cmp_sbp_msg_vel_ned_cov_t(const sbp_msg_vel_ned_cov_t *a, const sbp_msg_
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** GNSS-only Position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_GNSS          0x0229
+#endif
 typedef struct {
   u32 tow;
   double x;
@@ -908,6 +972,7 @@ s8 sbp_send_sbp_msg_pos_ecef_gnss_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_pos_ecef_gnss_t(const sbp_msg_pos_ecef_gnss_t *a, const sbp_msg_pos_ecef_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_GET(flags) \
@@ -925,11 +990,14 @@ int sbp_cmp_sbp_msg_pos_ecef_gnss_t(const sbp_msg_pos_ecef_gnss_t *a, const sbp_
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** GNSS-only Position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_COV_GNSS      0x0234
+#endif
 typedef struct {
   u32 tow;
   double x;
@@ -953,6 +1021,7 @@ s8 sbp_send_sbp_msg_pos_ecef_cov_gnss_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_pos_ecef_cov_gnss_t(const sbp_msg_pos_ecef_cov_gnss_t *a, const sbp_msg_pos_ecef_cov_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_GNSS_FIX_MODE_GET(flags) \
@@ -970,11 +1039,14 @@ int sbp_cmp_sbp_msg_pos_ecef_cov_gnss_t(const sbp_msg_pos_ecef_cov_gnss_t *a, co
 #define SBP_POS_LLH_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_LLH_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** GNSS-only Geodetic Position
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_GNSS           0x022A
+#endif
 typedef struct {
   u32 tow;
   double lat;
@@ -994,6 +1066,7 @@ s8 sbp_send_sbp_msg_pos_llh_gnss_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_pos_llh_gnss_t(const sbp_msg_pos_llh_gnss_t *a, const sbp_msg_pos_llh_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_GET(flags) \
@@ -1012,11 +1085,14 @@ int sbp_cmp_sbp_msg_pos_llh_gnss_t(const sbp_msg_pos_llh_gnss_t *a, const sbp_ms
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 /** GNSS-only Geodetic Position
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_COV_GNSS       0x0231
+#endif
 typedef struct {
   u32 tow;
   double lat;
@@ -1040,6 +1116,7 @@ s8 sbp_send_sbp_msg_pos_llh_cov_gnss_t(struct sbp_state  *s, u16 sender_id, cons
 int sbp_cmp_sbp_msg_pos_llh_cov_gnss_t(const sbp_msg_pos_llh_cov_gnss_t *a, const sbp_msg_pos_llh_cov_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_GET(flags) \
@@ -1054,11 +1131,14 @@ int sbp_cmp_sbp_msg_pos_llh_cov_gnss_t(const sbp_msg_pos_llh_cov_gnss_t *a, cons
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 /** GNSS-only Velocity in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_GNSS          0x022D
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -1077,6 +1157,7 @@ s8 sbp_send_sbp_msg_vel_ecef_gnss_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_vel_ecef_gnss_t(const sbp_msg_vel_ecef_gnss_t *a, const sbp_msg_vel_ecef_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_GET(flags) \
@@ -1091,11 +1172,14 @@ int sbp_cmp_sbp_msg_vel_ecef_gnss_t(const sbp_msg_vel_ecef_gnss_t *a, const sbp_
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 /** GNSS-only Velocity in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_COV_GNSS      0x0235
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -1119,6 +1203,7 @@ s8 sbp_send_sbp_msg_vel_ecef_cov_gnss_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_vel_ecef_cov_gnss_t(const sbp_msg_vel_ecef_cov_gnss_t *a, const sbp_msg_vel_ecef_cov_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_GET(flags) \
@@ -1133,11 +1218,14 @@ int sbp_cmp_sbp_msg_vel_ecef_cov_gnss_t(const sbp_msg_vel_ecef_cov_gnss_t *a, co
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 /** GNSS-only Velocity in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_GNSS           0x022E
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -1157,6 +1245,7 @@ s8 sbp_send_sbp_msg_vel_ned_gnss_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_vel_ned_gnss_t(const sbp_msg_vel_ned_gnss_t *a, const sbp_msg_vel_ned_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_GET(flags) \
@@ -1171,11 +1260,14 @@ int sbp_cmp_sbp_msg_vel_ned_gnss_t(const sbp_msg_vel_ned_gnss_t *a, const sbp_ms
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 /** GNSS-only Velocity in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_COV_GNSS       0x0232
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -1199,6 +1291,7 @@ s8 sbp_send_sbp_msg_vel_ned_cov_gnss_t(struct sbp_state  *s, u16 sender_id, cons
 int sbp_cmp_sbp_msg_vel_ned_cov_gnss_t(const sbp_msg_vel_ned_cov_gnss_t *a, const sbp_msg_vel_ned_cov_gnss_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_GET(flags) \
@@ -1227,11 +1320,14 @@ int sbp_cmp_sbp_msg_vel_ned_cov_gnss_t(const sbp_msg_vel_ned_cov_gnss_t *a, cons
 #define SBP_VEL_BODY_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_BODY_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_BODY_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 /** Velocity in User Frame
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_BODY               0x0213
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -1259,7 +1355,9 @@ int sbp_cmp_sbp_msg_vel_body_t(const sbp_msg_vel_body_t *a, const sbp_msg_vel_bo
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_AGE_CORRECTIONS        0x0210
+#endif
 typedef struct {
   u32 tow;
   u16 age;
@@ -1277,7 +1375,9 @@ int sbp_cmp_sbp_msg_age_corrections_t(const sbp_msg_age_corrections_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
+#endif
 typedef struct {
   u16 wn;
   u32 tow;
@@ -1297,7 +1397,9 @@ int sbp_cmp_sbp_msg_gps_time_dep_a_t(const sbp_msg_gps_time_dep_a_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_DOPS_DEP_A             0x0206
+#endif
 typedef struct {
   u32 tow;
   u16 gdop;
@@ -1315,6 +1417,7 @@ s8 sbp_send_sbp_msg_dops_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_
 int sbp_cmp_sbp_msg_dops_dep_a_t(const sbp_msg_dops_dep_a_t *a, const sbp_msg_dops_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1355,11 +1458,14 @@ int sbp_cmp_sbp_msg_dops_dep_a_t(const sbp_msg_dops_dep_a_t *a, const sbp_msg_do
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (2)
+#endif
 /** Single-point position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_DEP_A         0x0200
+#endif
 typedef struct {
   u32 tow;
   double x;
@@ -1378,6 +1484,7 @@ s8 sbp_send_sbp_msg_pos_ecef_dep_a_t(struct sbp_state  *s, u16 sender_id, const 
 int sbp_cmp_sbp_msg_pos_ecef_dep_a_t(const sbp_msg_pos_ecef_dep_a_t *a, const sbp_msg_pos_ecef_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT (5u)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1431,11 +1538,14 @@ int sbp_cmp_sbp_msg_pos_ecef_dep_a_t(const sbp_msg_pos_ecef_dep_a_t *a, const sb
 #define SBP_POS_LLH_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FLOAT_RTK (2)
+#endif
 /** Geodetic Position
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_DEP_A          0x0201
+#endif
 typedef struct {
   u32 tow;
   double lat;
@@ -1455,6 +1565,7 @@ s8 sbp_send_sbp_msg_pos_llh_dep_a_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_pos_llh_dep_a_t(const sbp_msg_pos_llh_dep_a_t *a, const sbp_msg_pos_llh_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1494,11 +1605,14 @@ int sbp_cmp_sbp_msg_pos_llh_dep_a_t(const sbp_msg_pos_llh_dep_a_t *a, const sbp_
 
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 /** Baseline Position in ECEF
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_ECEF_DEP_A    0x0202
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -1517,6 +1631,7 @@ s8 sbp_send_sbp_msg_baseline_ecef_dep_a_t(struct sbp_state  *s, u16 sender_id, c
 int sbp_cmp_sbp_msg_baseline_ecef_dep_a_t(const sbp_msg_baseline_ecef_dep_a_t *a, const sbp_msg_baseline_ecef_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1556,11 +1671,14 @@ int sbp_cmp_sbp_msg_baseline_ecef_dep_a_t(const sbp_msg_baseline_ecef_dep_a_t *a
 
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 /** Baseline in NED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_NED_DEP_A     0x0203
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -1584,7 +1702,9 @@ int sbp_cmp_sbp_msg_baseline_ned_dep_a_t(const sbp_msg_baseline_ned_dep_a_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_DEP_A         0x0204
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -1607,7 +1727,9 @@ int sbp_cmp_sbp_msg_vel_ecef_dep_a_t(const sbp_msg_vel_ecef_dep_a_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_DEP_A          0x0205
+#endif
 typedef struct {
   u32 tow;
   s32 n;
@@ -1627,6 +1749,7 @@ s8 sbp_send_sbp_msg_vel_ned_dep_a_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_vel_ned_dep_a_t(const sbp_msg_vel_ned_dep_a_t *a, const sbp_msg_vel_ned_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
@@ -1666,11 +1789,14 @@ int sbp_cmp_sbp_msg_vel_ned_dep_a_t(const sbp_msg_vel_ned_dep_a_t *a, const sbp_
 
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 /** Heading relative to True North
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+#endif
 typedef struct {
   u32 tow;
   u32 heading;
@@ -1686,6 +1812,7 @@ s8 sbp_send_sbp_msg_baseline_heading_dep_a_t(struct sbp_state  *s, u16 sender_id
 int sbp_cmp_sbp_msg_baseline_heading_dep_a_t(const sbp_msg_baseline_heading_dep_a_t *a, const sbp_msg_baseline_heading_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1701,11 +1828,14 @@ int sbp_cmp_sbp_msg_baseline_heading_dep_a_t(const sbp_msg_baseline_heading_dep_
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_1 (1)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_2 (2)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
+#endif
 /** Computed Position and Protection Level
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_PROTECTION_LEVEL_DEP_A 0x0216
+#endif
 typedef struct {
   u32 tow;
   u16 vpl;
@@ -1724,6 +1854,7 @@ s8 sbp_send_sbp_msg_protection_level_dep_a_t(struct sbp_state  *s, u16 sender_id
 int sbp_cmp_sbp_msg_protection_level_dep_a_t(const sbp_msg_protection_level_dep_a_t *a, const sbp_msg_protection_level_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1900,11 +2031,14 @@ int sbp_cmp_sbp_msg_protection_level_dep_a_t(const sbp_msg_protection_level_dep_
                              << (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT)));} while(0)
                              
 
+#endif
 /** Computed state and Protection Levels
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_NAVIGATION_MESSAGES_H
 #define SBP_MSG_PROTECTION_LEVEL       0x0217
+#endif
 typedef struct {
   u32 tow;
   s16 wn;
@@ -2771,4 +2905,4 @@ static inline bool operator>=(const sbp_msg_protection_level_t &a, const sbp_msg
 
 #endif
 
-#endif /* LIBSBP_NAVIGATION_MESSAGES_H */
+#endif /* LIBSBP_NEW_NAVIGATION_MESSAGES_H */

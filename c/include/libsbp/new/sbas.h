@@ -1,5 +1,5 @@
-#ifndef LIBSBP_SBAS_MESSAGES_H
-#define LIBSBP_SBAS_MESSAGES_H
+#ifndef LIBSBP_NEW_SBAS_MESSAGES_H
+#define LIBSBP_NEW_SBAS_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -24,7 +24,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SBAS_MESSAGES_H
 #define SBP_MSG_SBAS_RAW 0x7777
+#endif
 typedef struct {
   sbp_sbp_gnss_signal_t sid;
   u32 tow;
@@ -69,4 +71,4 @@ static inline bool operator>=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_ra
 
 #endif
 
-#endif /* LIBSBP_SBAS_MESSAGES_H */
+#endif /* LIBSBP_NEW_SBAS_MESSAGES_H */

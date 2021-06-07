@@ -1,5 +1,5 @@
-#ifndef LIBSBP_GNSS_MESSAGES_H
-#define LIBSBP_GNSS_MESSAGES_H
+#ifndef LIBSBP_NEW_GNSS_MESSAGES_H
+#define LIBSBP_NEW_GNSS_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_GNSS_MESSAGES_H
 #define SBP_GNSSSIGNAL__MASK (0xff)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \
@@ -42,6 +43,7 @@ struct sbp_state;
 #define SBP_GNSSSIGNAL__GAL_E1B (14)
 #define SBP_GNSSSIGNAL__GAL_E7I (20)
 #define SBP_GNSSSIGNAL__BDS3_B2A (47)
+#endif
 /** Represents all the relevant information about the signal
  *
 ((m.desc|commentify)))
@@ -74,6 +76,7 @@ s8 sbp_decode_sbp_sv_id_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_
 int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b);
 
 
+#ifndef LIBSBP_LEGACY_GNSS_MESSAGES_H
 #define SBP_GNSSSIGNALDEP__MASK (0xff)
 #define SBP_GNSSSIGNALDEP__SHIFT (0u)
 #define SBP_GNSSSIGNALDEP__GET(flags) \
@@ -92,6 +95,7 @@ int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b);
 #define SBP_GNSSSIGNALDEP__GLO_L2CA (4)
 #define SBP_GNSSSIGNALDEP__GPS_L1P (5)
 #define SBP_GNSSSIGNALDEP__GPS_L2P (6)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -341,4 +345,4 @@ static inline bool operator>=(const sbp_carrier_phase_t &a, const sbp_carrier_ph
 
 #endif
 
-#endif /* LIBSBP_GNSS_MESSAGES_H */
+#endif /* LIBSBP_NEW_GNSS_MESSAGES_H */

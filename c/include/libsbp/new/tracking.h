@@ -1,5 +1,5 @@
-#ifndef LIBSBP_TRACKING_MESSAGES_H
-#define LIBSBP_TRACKING_MESSAGES_H
+#ifndef LIBSBP_NEW_TRACKING_MESSAGES_H
+#define LIBSBP_NEW_TRACKING_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -20,6 +20,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_GET(flags) \
@@ -35,6 +36,8 @@ struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_BIT_SYNCHRONIZATION (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_WORD_SYNCHRONIZATION (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SUB_FRAME_SYNCHRONIZATION__MESSAGE_SYNCHRONIZATION (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SHIFT (3u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_GET(flags) \
@@ -62,6 +65,8 @@ struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_TOW_IS_NOT_AVAILABLE (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_DECODED_TOW_IS_AVAILABLE (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_PROPAGATED_TOW_IS_AVAILABLE (2)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SHIFT (4u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_GET(flags) \
@@ -103,6 +108,8 @@ struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_FLLDLL_LOCK (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_PLL_OPTIMISTIC_LOCK (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_PLL_PESSIMISTIC_LOCK (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SHIFT (4u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_GET(flags) \
@@ -143,6 +150,8 @@ struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_HEALTH_IS_UNKNOWN (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_SIGNAL_IS_UNHEALTHY (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_SIGNAL_IS_HEALTHY (2)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_GET(flags) \
@@ -158,6 +167,8 @@ struct sbp_state;
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_5_MS_INTEGRATION_TIME (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_10_MS_INTEGRATION_TIME (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_20_MS_INTEGRATION_TIME (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SHIFT (5u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_GET(flags) \
@@ -223,11 +234,14 @@ struct sbp_state;
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RE_ACQUISITION (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RUNNING (1)
+#endif
 /** Detailed signal tracking channel states. DEPRECATED
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A 0x0021
+#endif
 typedef struct {
   u64 recv_time;
   sbp_sbp_gps_time_t tot;
@@ -260,6 +274,7 @@ s8 sbp_send_sbp_msg_tracking_state_detailed_dep_a_t(struct sbp_state  *s, u16 se
 int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state_detailed_dep_a_t *a, const sbp_msg_tracking_state_detailed_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_GET(flags) \
@@ -275,6 +290,8 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_BIT_SYNCHRONIZATION (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_WORD_SYNCHRONIZATION (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SUB_FRAME_SYNCHRONIZATION__MESSAGE_SYNCHRONIZATION (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SHIFT (3u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_GET(flags) \
@@ -302,6 +319,8 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 #define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_TOW_IS_NOT_AVAILABLE (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_DECODED_TOW_IS_AVAILABLE (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_PROPAGATED_TOW_IS_AVAILABLE (2)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SHIFT (4u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_GET(flags) \
@@ -343,6 +362,8 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_FLLDLL_LOCK (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_PLL_OPTIMISTIC_LOCK (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_PLL_PESSIMISTIC_LOCK (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SHIFT (4u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_GET(flags) \
@@ -383,6 +404,8 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 #define SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_HEALTH_IS_UNKNOWN (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_SIGNAL_IS_UNHEALTHY (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_SIGNAL_IS_HEALTHY (2)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_SHIFT (0u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_GET(flags) \
@@ -398,6 +421,8 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_5_MS_INTEGRATION_TIME (1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_10_MS_INTEGRATION_TIME (2)
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_20_MS_INTEGRATION_TIME (3)
+#endif
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_MASK (0x1)
 #define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SHIFT (5u)
 #define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_GET(flags) \
@@ -463,11 +488,14 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(const sbp_msg_tracking_state
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RE_ACQUISITION (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RUNNING (1)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP   0x0011
+#endif
 typedef struct {
   u64 recv_time;
   sbp_gps_time_dep_t tot;
@@ -521,7 +549,9 @@ int sbp_cmp_sbp_tracking_channel_state_t(const sbp_tracking_channel_state_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_STATE                0x0041
+#endif
 typedef struct {
   sbp_tracking_channel_state_t states[63];
   u8 n_states;
@@ -555,7 +585,9 @@ int sbp_cmp_sbp_measurement_state_t(const sbp_measurement_state_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_MEASUREMENT_STATE             0x0061
+#endif
 typedef struct {
   sbp_measurement_state_t states[85];
   u8 n_states;
@@ -589,7 +621,9 @@ int sbp_cmp_sbp_tracking_channel_correlation_t(const sbp_tracking_channel_correl
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_IQ                   0x002D
+#endif
 typedef struct {
   u8 channel;
   sbp_sbp_gnss_signal_t sid;
@@ -624,7 +658,9 @@ int sbp_cmp_sbp_tracking_channel_correlation_dep_t(const sbp_tracking_channel_co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_IQ_DEP_B             0x002C
+#endif
 typedef struct {
   u8 channel;
   sbp_sbp_gnss_signal_t sid;
@@ -643,7 +679,9 @@ int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_IQ_DEP_A             0x001C
+#endif
 typedef struct {
   u8 channel;
   sbp_gnss_signal_dep_t sid;
@@ -658,6 +696,7 @@ s8 sbp_send_sbp_msg_tracking_iq_dep_a_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, const sbp_msg_tracking_iq_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK (0x3)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT (0u)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_GET(flags) \
@@ -671,6 +710,7 @@ int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a, co
 
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_RUNNING (1)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -692,7 +732,9 @@ int sbp_cmp_sbp_tracking_channel_state_dep_a_t(const sbp_tracking_channel_state_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
+#endif
 typedef struct {
   sbp_tracking_channel_state_dep_a_t states[42];
   u8 n_states;
@@ -706,6 +748,7 @@ s8 sbp_send_sbp_msg_tracking_state_dep_a_t(struct sbp_state  *s, u16 sender_id, 
 int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *a, const sbp_msg_tracking_state_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK (0x3)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT (0u)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_GET(flags) \
@@ -719,6 +762,7 @@ int sbp_cmp_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t 
 
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_RUNNING (1)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
@@ -740,7 +784,9 @@ int sbp_cmp_sbp_tracking_channel_state_dep_b_t(const sbp_tracking_channel_state_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_TRACKING_MESSAGES_H
 #define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
+#endif
 typedef struct {
   sbp_tracking_channel_state_dep_b_t states[28];
   u8 n_states;
@@ -1105,4 +1151,4 @@ static inline bool operator>=(const sbp_msg_tracking_state_dep_b_t &a, const sbp
 
 #endif
 
-#endif /* LIBSBP_TRACKING_MESSAGES_H */
+#endif /* LIBSBP_NEW_TRACKING_MESSAGES_H */

@@ -1,5 +1,5 @@
-#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
-#define LIBSBP_SOLUTION_META_MESSAGES_H
+#ifndef LIBSBP_NEW_SOLUTION_META_MESSAGES_H
+#define LIBSBP_NEW_SOLUTION_META_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK (0x3)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT (3u)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_GET(flags) \
@@ -51,6 +52,7 @@ struct sbp_state;
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_TICKS (4)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_IMU_SENSOR (6)
+#endif
 /** Flags for a given solution input type
  *
 ((m.desc|commentify)))
@@ -67,6 +69,7 @@ s8 sbp_decode_sbp_solution_input_type_t(const uint8_t *buf, uint8_t len, uint8_t
 int sbp_cmp_sbp_solution_input_type_t(const sbp_solution_input_type_t *a, const sbp_solution_input_type_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags) \
@@ -83,11 +86,14 @@ int sbp_cmp_sbp_solution_input_type_t(const sbp_solution_input_type_t *a, const 
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_AND_ALIGNMENT_IN_PROGRESS (2)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SEED_VALUES_LOADED_BUT_NO_GNSS_MEASUREMENTS (3)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS (4)
+#endif
 /** Deprecated
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
+#endif
 typedef struct {
   u16 pdop;
   u16 hdop;
@@ -109,6 +115,7 @@ s8 sbp_send_sbp_msg_soln_meta_dep_a_t(struct sbp_state  *s, u16 sender_id, const
 int sbp_cmp_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *a, const sbp_msg_soln_meta_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
 #define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
 #define SBP_SOLN_META_TIME_STATUS_GET(flags) \
@@ -133,11 +140,14 @@ int sbp_cmp_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *a, const 
                              << (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT)));} while(0)
                              
 
+#endif
 /** Solution Sensors Metadata
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_MSG_SOLN_META       0xFF0E
+#endif
 typedef struct {
   u32 tow;
   u16 pdop;
@@ -157,6 +167,7 @@ s8 sbp_send_sbp_msg_soln_meta_t(struct sbp_state  *s, u16 sender_id, const sbp_m
 int sbp_cmp_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *a, const sbp_msg_soln_meta_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK (0x3)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT (0u)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags) \
@@ -171,6 +182,7 @@ int sbp_cmp_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *a, const sbp_msg_soln
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_POSITION (0)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DOPPLER (1)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DISPLACEMENT (2)
+#endif
 /** Instruments the physical type of GNSS sensor input to the fuzed solution
  *
 ((m.desc|commentify)))
@@ -186,6 +198,7 @@ s8 sbp_decode_sbp_gnss_input_type_t(const uint8_t *buf, uint8_t len, uint8_t *n_
 int sbp_cmp_sbp_gnss_input_type_t(const sbp_gnss_input_type_t *a, const sbp_gnss_input_type_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_IMUINPUTTYPE_TIME_STATUS_MASK (0x3)
 #define SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT (4u)
 #define SBP_IMUINPUTTYPE_TIME_STATUS_GET(flags) \
@@ -229,6 +242,7 @@ int sbp_cmp_sbp_gnss_input_type_t(const sbp_gnss_input_type_t *a, const sbp_gnss
 
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_6_AXIS_MEMS (0)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_OTHER_TYPE (1)
+#endif
 /** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution
 
  *
@@ -245,6 +259,7 @@ s8 sbp_decode_sbp_imu_input_type_t(const uint8_t *buf, uint8_t len, uint8_t *n_r
 int sbp_cmp_sbp_imu_input_type_t(const sbp_imu_input_type_t *a, const sbp_imu_input_type_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SOLUTION_META_MESSAGES_H
 #define SBP_ODOINPUTTYPE_RATE_MASK (0x3)
 #define SBP_ODOINPUTTYPE_RATE_SHIFT (4u)
 #define SBP_ODOINPUTTYPE_RATE_GET(flags) \
@@ -287,6 +302,7 @@ int sbp_cmp_sbp_imu_input_type_t(const sbp_imu_input_type_t *a, const sbp_imu_in
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SINGLE_OR_AVERAGED_SPEED (1)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_TICKS (2)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_SPEED (3)
+#endif
 /** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution
 
  *
@@ -447,4 +463,4 @@ static inline bool operator>=(const sbp_odo_input_type_t &a, const sbp_odo_input
 
 #endif
 
-#endif /* LIBSBP_SOLUTION_META_MESSAGES_H */
+#endif /* LIBSBP_NEW_SOLUTION_META_MESSAGES_H */

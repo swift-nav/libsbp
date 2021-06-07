@@ -1,5 +1,5 @@
-#ifndef LIBSBP_FLASH_MESSAGES_H
-#define LIBSBP_FLASH_MESSAGES_H
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
+#define LIBSBP_NEW_FLASH_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags) \
@@ -32,11 +33,14 @@ struct sbp_state;
 
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 /** Program flash addresses
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_PROGRAM           0x00E6
+#endif
 typedef struct {
   u8 target;
   u8 addr_start[3];
@@ -52,6 +56,7 @@ s8 sbp_send_sbp_msg_flash_program_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_msg_flash_program_t *b);
 
 
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
 #define SBP_FLASH_DONE_RESPONSE_CODE_SHIFT (0u)
 #define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags) \
@@ -69,11 +74,14 @@ int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_ADDR (3)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_RANGE (4)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_SECTOR (5)
+#endif
 /** Flash response message (host <= device)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_DONE              0x00E0
+#endif
 typedef struct {
   u8 response;
 } sbp_msg_flash_done_t;
@@ -86,6 +94,7 @@ s8 sbp_send_sbp_msg_flash_done_t(struct sbp_state  *s, u16 sender_id, const sbp_
 int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_flash_done_t *b);
 
 
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags) \
@@ -99,11 +108,14 @@ int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_fl
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 /** Read STM or M25 flash address request (host => device)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_READ_REQ          0x00E7
+#endif
 typedef struct {
   u8 target;
   u8 addr_start[3];
@@ -118,6 +130,7 @@ s8 sbp_send_sbp_msg_flash_read_req_t(struct sbp_state  *s, u16 sender_id, const 
 int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sbp_msg_flash_read_req_t *b);
 
 
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_GET(flags) \
@@ -131,11 +144,14 @@ int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sb
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 /** Read STM or M25 flash address response (host <= device)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_READ_RESP         0x00E1
+#endif
 typedef struct {
   u8 target;
   u8 addr_start[3];
@@ -150,6 +166,7 @@ s8 sbp_send_sbp_msg_flash_read_resp_t(struct sbp_state  *s, u16 sender_id, const
 int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const sbp_msg_flash_read_resp_t *b);
 
 
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags) \
@@ -163,11 +180,14 @@ int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const 
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 /** Erase sector of device flash memory (host => device)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_ERASE             0x00E2
+#endif
 typedef struct {
   u8 target;
   u32 sector_num;
@@ -185,7 +205,9 @@ int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a, const sbp_msg_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
+#endif
 typedef struct {
   u32 sector;
 } sbp_msg_stm_flash_lock_sector_t;
@@ -202,7 +224,9 @@ int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
+#endif
 typedef struct {
   u32 sector;
 } sbp_msg_stm_flash_unlock_sector_t;
@@ -220,7 +244,9 @@ int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sec
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_STM_UNIQUE_ID_REQ       0x00E8
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_stm_unique_id_req_t;
@@ -238,7 +264,9 @@ int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_STM_UNIQUE_ID_RESP      0x00E5
+#endif
 typedef struct {
   u8 stm_id[12];
 } sbp_msg_stm_unique_id_resp_t;
@@ -255,7 +283,9 @@ int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FLASH_MESSAGES_H
 #define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
+#endif
 typedef struct {
   u8 status[1];
 } sbp_msg_m25_flash_write_status_t;
@@ -504,4 +534,4 @@ static inline bool operator>=(const sbp_msg_m25_flash_write_status_t &a, const s
 
 #endif
 
-#endif /* LIBSBP_FLASH_MESSAGES_H */
+#endif /* LIBSBP_NEW_FLASH_MESSAGES_H */

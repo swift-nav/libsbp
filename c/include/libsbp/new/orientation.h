@@ -1,5 +1,5 @@
-#ifndef LIBSBP_ORIENTATION_MESSAGES_H
-#define LIBSBP_ORIENTATION_MESSAGES_H
+#ifndef LIBSBP_NEW_ORIENTATION_MESSAGES_H
+#define LIBSBP_NEW_ORIENTATION_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_HEADING_FIX_MODE_GET(flags) \
@@ -34,11 +35,14 @@ struct sbp_state;
 #define SBP_BASELINE_HEADING_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_HEADING_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_HEADING_FIX_MODE_FIXED_RTK (4)
+#endif
 /** Heading relative to True North
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_MSG_BASELINE_HEADING 0x020F
+#endif
 typedef struct {
   u32 tow;
   u32 heading;
@@ -54,6 +58,7 @@ s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state  *s, u16 sender_id, cons
 int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a, const sbp_msg_baseline_heading_t *b);
 
 
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags) \
@@ -67,11 +72,14 @@ int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a, cons
 
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_VALID (1)
+#endif
 /** Quaternion 4 component vector
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_MSG_ORIENT_QUAT      0x0220
+#endif
 typedef struct {
   u32 tow;
   s32 w;
@@ -93,6 +101,7 @@ s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state  *s, u16 sender_id, const sbp
 int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a, const sbp_msg_orient_quat_t *b);
 
 
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags) \
@@ -106,11 +115,14 @@ int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a, const sbp_msg_
 
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_VALID (1)
+#endif
 /** Euler angles
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_MSG_ORIENT_EULER     0x0221
+#endif
 typedef struct {
   u32 tow;
   s32 roll;
@@ -130,6 +142,7 @@ s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a, const sbp_msg_orient_euler_t *b);
 
 
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags) \
@@ -143,11 +156,14 @@ int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a, const sbp_ms
 
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_VALID (1)
+#endif
 /** Vehicle Body Frame instantaneous angular rates
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ORIENTATION_MESSAGES_H
 #define SBP_MSG_ANGULAR_RATE     0x0222
+#endif
 typedef struct {
   u32 tow;
   s32 x;
@@ -262,4 +278,4 @@ static inline bool operator>=(const sbp_msg_angular_rate_t &a, const sbp_msg_ang
 
 #endif
 
-#endif /* LIBSBP_ORIENTATION_MESSAGES_H */
+#endif /* LIBSBP_NEW_ORIENTATION_MESSAGES_H */

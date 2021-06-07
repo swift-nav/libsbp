@@ -33,7 +33,10 @@ SBP_PACK_START
  * the host or other attached devices that the system has started and is now
  * ready to respond to commands or configuration requests.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_STARTUP 0xFF00
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags)      \
@@ -48,6 +51,8 @@ SBP_PACK_START
 #define SBP_STARTUP_CAUSE_OF_STARTUP_POWER_ON (0)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SOFTWARE_RESET (1)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_WATCHDOG_RESET (2)
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_STARTUP__MASK (0x1ff)
 #define SBP_STARTUP__SHIFT (0u)
 #define SBP_STARTUP__GET(flags) \
@@ -62,6 +67,7 @@ SBP_PACK_START
 #define SBP_STARTUP_WARM_START (1)
 #define SBP_STARTUP_HOT_START (2)
 #define SBP_STARTUP_HOT_START (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 cause;        /**< Cause of startup */
@@ -75,7 +81,10 @@ typedef struct SBP_ATTR_PACKED {
  * corrections.  It is expected to be sent with each receipt of a complete
  * corrections packet.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_DGNSS_STATUS 0xFF02
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags)      \
@@ -90,6 +99,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_INVALID (0)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_CODE_DIFFERENCE (1)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 flags;       /**< Status flags */
@@ -110,7 +120,10 @@ typedef struct SBP_ATTR_PACKED {
  * system. To determine the source of the error, the remaining error flags
  * should be inspected.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_HEARTBEAT 0xFFFF
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_GET(flags)      \
@@ -199,6 +212,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Status flags */
@@ -209,6 +223,7 @@ typedef struct SBP_ATTR_PACKED {
  * Report the general and specific state of a sub-system.  If the generic
  * state is reported as initializing, the specific state should be ignored.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags)      \
@@ -227,6 +242,8 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_CAN (4)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_WHEEL_ODOMETRY (5)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SENSOR_FUSION_ENGINE (6)
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_SUBSYSTEMREPORT_GENERIC_MASK (0xff)
 #define SBP_SUBSYSTEMREPORT_GENERIC_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_GENERIC_GET(flags)      \
@@ -243,6 +260,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNKNOWN (2)
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 component; /**< Identity of reporting subsystem */
@@ -261,7 +279,10 @@ typedef struct SBP_ATTR_PACKED {
  * but if the generic status code is initializing, it should be ignored.
  * Refer to product documentation for details.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_STATUS_REPORT 0xFFFE
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_REPORT_SYSTEM_GET(flags) \
@@ -274,6 +295,8 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_STATUS_REPORT_SYSTEM_STARLING (0)
 #define SBP_STATUS_REPORT_SYSTEM_PRECISION_GNSS_MODULE (1)
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0x1ff)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
@@ -298,6 +321,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
   } while (0)
 
+#endif
+
 typedef struct SBP_ATTR_PACKED {
   u16 reporting_system;          /**< Identity of reporting system */
   u16 sbp_version;               /**< SBP protocol version */
@@ -312,7 +337,10 @@ typedef struct SBP_ATTR_PACKED {
  * The INS status message describes the state of the operation and
  * initialization of the inertial navigation system.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_INS_STATUS 0xFF03
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)
 #define SBP_INS_STATUS_INS_TYPE_GET(flags) \
@@ -410,6 +438,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_INS_STATUS_MODE_FASTSTART_SEEDING (4)
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Status flags */
@@ -421,7 +450,9 @@ typedef struct SBP_ATTR_PACKED {
  * from a device. It is not produced or available on general Swift Products.
  * It is intended to be a low rate message for status purposes.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_CSAC_TELEMETRY 0xFF04
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;             /**< Index representing the type of telemetry in use.  It
@@ -436,7 +467,9 @@ typedef struct SBP_ATTR_PACKED {
  * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
  * lower rate than the MSG_CSAC_TELEMETRY.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;                    /**< Index representing the type of telemetry in
@@ -451,7 +484,10 @@ typedef struct SBP_ATTR_PACKED {
  * rejected INS updates. This message is expected to be extended in the future
  * as new types of measurements are being added.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_INS_UPDATES 0xFF06
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -488,6 +524,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -524,6 +562,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -560,6 +600,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -596,6 +638,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_NHC_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_NHC_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -632,6 +676,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_NHC_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -668,6 +714,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+#endif
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
   u8 gnsspos;    /**< GNSS position update status flags */
@@ -684,7 +732,9 @@ typedef struct SBP_ATTR_PACKED {
  * translate messages tagged with a local timestamp (e.g. IMU or wheeltick
  * messages) to GNSS time for the sender producing this message.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   s16 weeks;        /**< Weeks portion of the time offset [weeks] */
@@ -708,7 +758,10 @@ typedef struct SBP_ATTR_PACKED {
  * The sender ID for each of these MSG_PPS_TIME messages should match the
  * sender ID of the respective sensor data.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_PPS_TIME 0xFF08
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT (2u)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_GET(flags)      \
@@ -739,6 +792,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_10_MICROSECONDS (2)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_1_MICROSECONDS (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u64 time; /**< Local time in microseconds [microseconds] */
@@ -751,7 +805,10 @@ typedef struct SBP_ATTR_PACKED {
  * lists the atomic contents (i.e. types of messages included) of the Solution
  * Group.
  */
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_MSG_GROUP_META 0xFF0A
+#endif
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags)      \
@@ -766,6 +823,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_NONE (0)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSS_ONLY (1)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 group_id;       /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2

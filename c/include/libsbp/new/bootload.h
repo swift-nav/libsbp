@@ -1,5 +1,5 @@
-#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
-#define LIBSBP_BOOTLOAD_MESSAGES_H
+#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
+#define LIBSBP_NEW_BOOTLOAD_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ   0x00B3
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_bootloader_handshake_req_t;
@@ -36,6 +38,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_req_t(struct sbp_state  *s, u16 sender_
 int sbp_cmp_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshake_req_t *a, const sbp_msg_bootloader_handshake_req_t *b);
 
 
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
@@ -58,11 +61,14 @@ int sbp_cmp_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshak
                              << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
                              
 
+#endif
 /** Bootloading handshake response (host <= device)
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP  0x00B4
+#endif
 typedef struct {
   u32 flags;
   sbp_unterminated_string_t version;
@@ -91,7 +97,9 @@ int sbp_cmp_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handsha
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP     0x00B1
+#endif
 typedef struct {
   u8 jump;
 } sbp_msg_bootloader_jump_to_app_t;
@@ -108,7 +116,9 @@ int sbp_cmp_sbp_msg_bootloader_jump_to_app_t(const sbp_msg_bootloader_jump_to_ap
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_NAP_DEVICE_DNA_REQ         0x00DE
+#endif
 typedef struct {
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_nap_device_dna_req_t;
@@ -125,7 +135,9 @@ int sbp_cmp_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna_req_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_NAP_DEVICE_DNA_RESP        0x00DD
+#endif
 typedef struct {
   u8 dna[8];
 } sbp_msg_nap_device_dna_resp_t;
@@ -142,7 +154,9 @@ int sbp_cmp_sbp_msg_nap_device_dna_resp_t(const sbp_msg_nap_device_dna_resp_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+#endif
 typedef struct {
   sbp_unterminated_string_t handshake;
 } sbp_msg_bootloader_handshake_dep_a_t;
@@ -310,4 +324,4 @@ static inline bool operator>=(const sbp_msg_bootloader_handshake_dep_a_t &a, con
 
 #endif
 
-#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_NEW_BOOTLOAD_MESSAGES_H */

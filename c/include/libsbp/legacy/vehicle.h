@@ -39,7 +39,10 @@ SBP_PACK_START
  * synchronise odometry measurements with GNSS. Processor time shall roll over
  * to zero after one week.
  */
+#ifndef LIBSBP_NEW_VEHICLE_MESSAGES_H
 #define SBP_MSG_ODOMETRY 0x0903
+#endif
+#ifndef LIBSBP_NEW_VEHICLE_MESSAGES_H
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
 #define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
 #define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)      \
@@ -83,6 +86,7 @@ SBP_PACK_START
 #define SBP_ODOMETRY_TIME_SOURCE_NONE (0)
 #define SBP_ODOMETRY_TIME_SOURCE_GPS_SOLUTION (1)
 #define SBP_ODOMETRY_TIME_SOURCE_PROCESSOR_TIME (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< Time field representing either milliseconds in the GPS
@@ -107,7 +111,10 @@ typedef struct SBP_ATTR_PACKED {
  * when a PVT fix becomes available to synchronise wheeltick measurements with
  * GNSS. Local CPU time shall roll over to zero after one week.
  */
+#ifndef LIBSBP_NEW_VEHICLE_MESSAGES_H
 #define SBP_MSG_WHEELTICK 0x0904
+#endif
+#ifndef LIBSBP_NEW_VEHICLE_MESSAGES_H
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
 #define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)      \
@@ -138,6 +145,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MICROSECONDS_IN_GPS_WEEK (1)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_LOCAL_CPU_TIME_IN_NOMINAL_MICROSECONDS \
   (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u64 time;  /**< Time field representing either microseconds since the
