@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GPS_TIME
+ *
+ *****************************************************************************/
 /** GPS Time
  *
  * This message reports the GPS time, representing the time since the GPS epoch
@@ -154,6 +163,15 @@ s8 sbp_send_sbp_msg_gps_time_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *a,
                                const sbp_msg_gps_time_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GPS_TIME_GNSS
+ *
+ *****************************************************************************/
 /** GPS Time
  *
  * This message reports the GPS time, representing the time since the GPS epoch
@@ -274,6 +292,15 @@ s8 sbp_send_sbp_msg_gps_time_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_gps_time_gnss_t(const sbp_msg_gps_time_gnss_t *a,
                                     const sbp_msg_gps_time_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_UTC_TIME
+ *
+ *****************************************************************************/
 /** UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -411,6 +438,15 @@ s8 sbp_send_sbp_msg_utc_time_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_utc_time_t(const sbp_msg_utc_time_t *a,
                                const sbp_msg_utc_time_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_UTC_TIME_GNSS
+ *
+ *****************************************************************************/
 /** UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -552,6 +588,15 @@ s8 sbp_send_sbp_msg_utc_time_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_utc_time_gnss_t(const sbp_msg_utc_time_gnss_t *a,
                                     const sbp_msg_utc_time_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_DOPS
+ *
+ *****************************************************************************/
 /** Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of navigation
@@ -680,6 +725,15 @@ s8 sbp_send_sbp_msg_dops_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_dops_t(const sbp_msg_dops_t *a, const sbp_msg_dops_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_ECEF
+ *
+ *****************************************************************************/
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
@@ -812,6 +866,15 @@ s8 sbp_send_sbp_msg_pos_ecef_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_ecef_t(const sbp_msg_pos_ecef_t *a,
                                const sbp_msg_pos_ecef_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_ECEF_COV
+ *
+ *****************************************************************************/
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
@@ -974,6 +1037,15 @@ s8 sbp_send_sbp_msg_pos_ecef_cov_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_ecef_cov_t(const sbp_msg_pos_ecef_cov_t *a,
                                    const sbp_msg_pos_ecef_cov_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_LLH
+ *
+ *****************************************************************************/
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates and
@@ -1110,6 +1182,15 @@ s8 sbp_send_sbp_msg_pos_llh_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_llh_t(const sbp_msg_pos_llh_t *a,
                               const sbp_msg_pos_llh_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_LLH_COV
+ *
+ *****************************************************************************/
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates and
@@ -1270,6 +1351,15 @@ s8 sbp_send_sbp_msg_pos_llh_cov_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_llh_cov_t(const sbp_msg_pos_llh_cov_t *a,
                                   const sbp_msg_pos_llh_cov_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_ECEF
+ *
+ *****************************************************************************/
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed
@@ -1403,6 +1493,15 @@ s8 sbp_send_sbp_msg_baseline_ecef_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_baseline_ecef_t(const sbp_msg_baseline_ecef_t *a,
                                     const sbp_msg_baseline_ecef_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_NED
+ *
+ *****************************************************************************/
 /** Baseline in NED
  *
  * This message reports the baseline solution in North East Down (NED)
@@ -1543,6 +1642,15 @@ s8 sbp_send_sbp_msg_baseline_ned_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_baseline_ned_t(const sbp_msg_baseline_ned_t *a,
                                    const sbp_msg_baseline_ned_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_ECEF
+ *
+ *****************************************************************************/
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -1671,6 +1779,15 @@ s8 sbp_send_sbp_msg_vel_ecef_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ecef_t(const sbp_msg_vel_ecef_t *a,
                                const sbp_msg_vel_ecef_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_ECEF_COV
+ *
+ *****************************************************************************/
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -1828,6 +1945,15 @@ s8 sbp_send_sbp_msg_vel_ecef_cov_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ecef_cov_t(const sbp_msg_vel_ecef_cov_t *a,
                                    const sbp_msg_vel_ecef_cov_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_NED
+ *
+ *****************************************************************************/
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -1962,6 +2088,15 @@ s8 sbp_send_sbp_msg_vel_ned_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ned_t(const sbp_msg_vel_ned_t *a,
                               const sbp_msg_vel_ned_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_NED_COV
+ *
+ *****************************************************************************/
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -2120,6 +2255,15 @@ s8 sbp_send_sbp_msg_vel_ned_cov_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ned_cov_t(const sbp_msg_vel_ned_cov_t *a,
                                   const sbp_msg_vel_ned_cov_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_ECEF_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
@@ -2256,6 +2400,15 @@ s8 sbp_send_sbp_msg_pos_ecef_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_ecef_gnss_t(const sbp_msg_pos_ecef_gnss_t *a,
                                     const sbp_msg_pos_ecef_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_ECEF_COV_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
@@ -2418,6 +2571,15 @@ s8 sbp_send_sbp_msg_pos_ecef_cov_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_ecef_cov_gnss_t(const sbp_msg_pos_ecef_cov_gnss_t *a,
                                         const sbp_msg_pos_ecef_cov_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_LLH_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates and
@@ -2558,6 +2720,15 @@ s8 sbp_send_sbp_msg_pos_llh_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_llh_gnss_t(const sbp_msg_pos_llh_gnss_t *a,
                                    const sbp_msg_pos_llh_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_LLH_COV_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates and
@@ -2720,6 +2891,15 @@ s8 sbp_send_sbp_msg_pos_llh_cov_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_llh_cov_gnss_t(const sbp_msg_pos_llh_cov_gnss_t *a,
                                        const sbp_msg_pos_llh_cov_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_ECEF_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -2852,6 +3032,15 @@ s8 sbp_send_sbp_msg_vel_ecef_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ecef_gnss_t(const sbp_msg_vel_ecef_gnss_t *a,
                                     const sbp_msg_vel_ecef_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_ECEF_COV_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -3009,6 +3198,15 @@ s8 sbp_send_sbp_msg_vel_ecef_cov_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ecef_cov_gnss_t(const sbp_msg_vel_ecef_cov_gnss_t *a,
                                         const sbp_msg_vel_ecef_cov_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_NED_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -3147,6 +3345,15 @@ s8 sbp_send_sbp_msg_vel_ned_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ned_gnss_t(const sbp_msg_vel_ned_gnss_t *a,
                                    const sbp_msg_vel_ned_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_NED_COV_GNSS
+ *
+ *****************************************************************************/
 /** GNSS-only Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -3307,6 +3514,15 @@ s8 sbp_send_sbp_msg_vel_ned_cov_gnss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ned_cov_gnss_t(const sbp_msg_vel_ned_cov_gnss_t *a,
                                        const sbp_msg_vel_ned_cov_gnss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_BODY
+ *
+ *****************************************************************************/
 /** Velocity in User Frame
  *
  * This message reports the velocity in the Vehicle Body Frame. By convention,
@@ -3466,6 +3682,15 @@ s8 sbp_send_sbp_msg_vel_body_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_body_t(const sbp_msg_vel_body_t *a,
                                const sbp_msg_vel_body_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_AGE_CORRECTIONS
+ *
+ *****************************************************************************/
 /** Age of corrections
  *
  * This message reports the Age of the corrections used for the current
@@ -3572,6 +3797,15 @@ s8 sbp_send_sbp_msg_age_corrections_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_age_corrections_t(const sbp_msg_age_corrections_t *a,
                                       const sbp_msg_age_corrections_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GPS_TIME_DEP_A
+ *
+ *****************************************************************************/
 /** GPS Time (v1.0)
  *
  * This message reports the GPS time, representing the time since the GPS epoch
@@ -3692,6 +3926,15 @@ s8 sbp_send_sbp_msg_gps_time_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_gps_time_dep_a_t(const sbp_msg_gps_time_dep_a_t *a,
                                      const sbp_msg_gps_time_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_DOPS_DEP_A
+ *
+ *****************************************************************************/
 /** Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of navigation
@@ -3815,6 +4058,15 @@ s8 sbp_send_sbp_msg_dops_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_dops_dep_a_t(const sbp_msg_dops_dep_a_t *a,
                                  const sbp_msg_dops_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_ECEF_DEP_A
+ *
+ *****************************************************************************/
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
@@ -3951,6 +4203,15 @@ s8 sbp_send_sbp_msg_pos_ecef_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_ecef_dep_a_t(const sbp_msg_pos_ecef_dep_a_t *a,
                                      const sbp_msg_pos_ecef_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_POS_LLH_DEP_A
+ *
+ *****************************************************************************/
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates and
@@ -4092,6 +4353,15 @@ s8 sbp_send_sbp_msg_pos_llh_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pos_llh_dep_a_t(const sbp_msg_pos_llh_dep_a_t *a,
                                     const sbp_msg_pos_llh_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_ECEF_DEP_A
+ *
+ *****************************************************************************/
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed
@@ -4227,6 +4497,15 @@ int sbp_cmp_sbp_msg_baseline_ecef_dep_a_t(
     const sbp_msg_baseline_ecef_dep_a_t *a,
     const sbp_msg_baseline_ecef_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_NED_DEP_A
+ *
+ *****************************************************************************/
 /** Baseline in NED
  *
  * This message reports the baseline solution in North East Down (NED)
@@ -4368,6 +4647,15 @@ s8 sbp_send_sbp_msg_baseline_ned_dep_a_t(
 int sbp_cmp_sbp_msg_baseline_ned_dep_a_t(const sbp_msg_baseline_ned_dep_a_t *a,
                                          const sbp_msg_baseline_ned_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_ECEF_DEP_A
+ *
+ *****************************************************************************/
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -4500,6 +4788,15 @@ s8 sbp_send_sbp_msg_vel_ecef_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ecef_dep_a_t(const sbp_msg_vel_ecef_dep_a_t *a,
                                      const sbp_msg_vel_ecef_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_VEL_NED_DEP_A
+ *
+ *****************************************************************************/
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -4640,6 +4937,15 @@ s8 sbp_send_sbp_msg_vel_ned_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_vel_ned_dep_a_t(const sbp_msg_vel_ned_dep_a_t *a,
                                     const sbp_msg_vel_ned_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_HEADING_DEP_A
+ *
+ *****************************************************************************/
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station to
@@ -4761,6 +5067,15 @@ int sbp_cmp_sbp_msg_baseline_heading_dep_a_t(
     const sbp_msg_baseline_heading_dep_a_t *a,
     const sbp_msg_baseline_heading_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_PROTECTION_LEVEL_DEP_A
+ *
+ *****************************************************************************/
 /** Computed Position and Protection Level
  *
  * This message reports the local vertical and horizontal protection levels
@@ -4897,6 +5212,15 @@ int sbp_cmp_sbp_msg_protection_level_dep_a_t(
     const sbp_msg_protection_level_dep_a_t *a,
     const sbp_msg_protection_level_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_PROTECTION_LEVEL
+ *
+ *****************************************************************************/
 /** Computed state and Protection Levels
  *
  * This message reports the protection levels associated to the given state

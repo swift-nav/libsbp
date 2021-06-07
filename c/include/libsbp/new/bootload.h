@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BOOTLOADER_HANDSHAKE_REQ
+ *
+ *****************************************************************************/
 /** Bootloading handshake request (host => device)
  *
  * The handshake message request from the host establishes a handshake between
@@ -146,6 +155,15 @@ int sbp_cmp_sbp_msg_bootloader_handshake_req_t(
     const sbp_msg_bootloader_handshake_req_t *a,
     const sbp_msg_bootloader_handshake_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BOOTLOADER_HANDSHAKE_RESP
+ *
+ *****************************************************************************/
 /** Bootloading handshake response (host <= device)
  *
  * The handshake message response from the device establishes a handshake
@@ -164,28 +182,159 @@ typedef struct {
    */
   sbp_unterminated_string_t version;
 } sbp_msg_bootloader_handshake_resp_t;
+
+/**
+ * Initialise sbp_msg_bootloader_handshake_resp_t::version to empty
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ */
 void sbp_msg_bootloader_handshake_resp_t_version_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_bootloader_handshake_resp_t::version for validity
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @return true is sbp_msg_bootloader_handshake_resp_t::version is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_bootloader_handshake_resp_t::version for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_bootloader_handshake_resp_t instance
+ * @param b sbp_msg_bootloader_handshake_resp_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_bootloader_handshake_resp_t_version_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_bootloader_handshake_resp_t::version
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @return Size of sbp_msg_bootloader_handshake_resp_t::version in wire
+ * representation
+ */
 uint8_t sbp_msg_bootloader_handshake_resp_t_version_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_bootloader_handshake_resp_t::version for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_bootloader_handshake_resp_t::version before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_bootloader_handshake_resp_t_version_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_bootloader_handshake_resp_t::version
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_set(
     sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_bootloader_handshake_resp_t::version with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_bootloader_handshake_resp_t::version with printf style formatting
+ *
+ * Identical to #sbp_msg_bootloader_handshake_resp_t_version_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_bootloader_handshake_resp_t::version with printf style
+ * formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_bootloader_handshake_resp_t::version with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_bootloader_handshake_resp_t_version_append_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_bootloader_handshake_resp_t_version_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_bootloader_handshake_resp_t::version
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @return String contents
+ */
 const char *sbp_msg_bootloader_handshake_resp_t_version_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_bootloader_handshake_resp_t::version
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_bootloader_handshake_resp_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_bootloader_handshake_resp_t_version_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_bootloader_handshake_resp_t
@@ -281,6 +430,15 @@ int sbp_cmp_sbp_msg_bootloader_handshake_resp_t(
     const sbp_msg_bootloader_handshake_resp_t *a,
     const sbp_msg_bootloader_handshake_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BOOTLOADER_JUMP_TO_APP
+ *
+ *****************************************************************************/
 /** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
@@ -385,6 +543,15 @@ int sbp_cmp_sbp_msg_bootloader_jump_to_app_t(
     const sbp_msg_bootloader_jump_to_app_t *a,
     const sbp_msg_bootloader_jump_to_app_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NAP_DEVICE_DNA_REQ
+ *
+ *****************************************************************************/
 /** Read FPGA device ID over UART request (host => device)
  *
  * The device message from the host reads a unique device identifier from the
@@ -490,6 +657,15 @@ s8 sbp_send_sbp_msg_nap_device_dna_req_t(
 int sbp_cmp_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna_req_t *a,
                                          const sbp_msg_nap_device_dna_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NAP_DEVICE_DNA_RESP
+ *
+ *****************************************************************************/
 /** Read FPGA device ID over UART response (host <= device)
  *
  * The device message from the host reads a unique device identifier from the
@@ -597,6 +773,15 @@ int sbp_cmp_sbp_msg_nap_device_dna_resp_t(
     const sbp_msg_nap_device_dna_resp_t *a,
     const sbp_msg_nap_device_dna_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -607,28 +792,161 @@ typedef struct {
    */
   sbp_unterminated_string_t handshake;
 } sbp_msg_bootloader_handshake_dep_a_t;
+
+/**
+ * Initialise sbp_msg_bootloader_handshake_dep_a_t::handshake to empty
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ */
 void sbp_msg_bootloader_handshake_dep_a_t_handshake_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_bootloader_handshake_dep_a_t::handshake for validity
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return true is sbp_msg_bootloader_handshake_dep_a_t::handshake is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_bootloader_handshake_dep_a_t::handshake for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param b sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_bootloader_handshake_dep_a_t::handshake
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return Size of sbp_msg_bootloader_handshake_dep_a_t::handshake in wire
+ * representation
+ */
 uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_bootloader_handshake_dep_a_t::handshake for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_bootloader_handshake_dep_a_t::handshake before it exceeds
+ * the maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_bootloader_handshake_dep_a_t::handshake
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_set(
     sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
+ * formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_bootloader_handshake_dep_a_t_handshake_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
+ * formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_bootloader_handshake_dep_a_t::handshake
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return String contents
+ */
 const char *sbp_msg_bootloader_handshake_dep_a_t_handshake_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_bootloader_handshake_dep_a_t::handshake
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_bootloader_handshake_dep_a_t

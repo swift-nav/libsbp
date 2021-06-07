@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_SOLUTIONINPUTTYPE
+ *
+ *****************************************************************************/
 /** Flags for a given solution input type
  *
  * Metadata describing which sensors were involved in the solution. The
@@ -128,6 +137,15 @@ s8 sbp_decode_sbp_solution_input_type_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_solution_input_type_t(const sbp_solution_input_type_t *a,
                                       const sbp_solution_input_type_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SOLN_META_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -287,6 +305,15 @@ s8 sbp_send_sbp_msg_soln_meta_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *a,
                                       const sbp_msg_soln_meta_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SOLN_META
+ *
+ *****************************************************************************/
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used in
@@ -439,6 +466,15 @@ s8 sbp_send_sbp_msg_soln_meta_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *a,
                                 const sbp_msg_soln_meta_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GNSSINPUTTYPE
+ *
+ *****************************************************************************/
 /** Instruments the physical type of GNSS sensor input to the fuzed solution
  *
  * Metadata around the GNSS sensors involved in the fuzed solution. Accessible
@@ -519,6 +555,15 @@ s8 sbp_decode_sbp_gnss_input_type_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_gnss_input_type_t(const sbp_gnss_input_type_t *a,
                                   const sbp_gnss_input_type_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_IMUINPUTTYPE
+ *
+ *****************************************************************************/
 /** Provides detail about the IMU sensor, its timestamping mode, and its quality
 for input to the fuzed solution
 
@@ -600,6 +645,15 @@ s8 sbp_decode_sbp_imu_input_type_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_imu_input_type_t(const sbp_imu_input_type_t *a,
                                  const sbp_imu_input_type_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_ODOINPUTTYPE
+ *
+ *****************************************************************************/
 /** Provides detail about the Odometry sensor, its timestamping mode, and its
 quality for input to the fuzed solution
 

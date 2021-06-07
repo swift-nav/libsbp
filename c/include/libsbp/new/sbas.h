@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SBAS_RAW
+ *
+ *****************************************************************************/
 /** Raw SBAS data
  *
  * This message is sent once per second per SBAS satellite. ME checks the parity

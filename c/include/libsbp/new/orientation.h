@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASELINE_HEADING
+ *
+ *****************************************************************************/
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station to
@@ -156,6 +165,15 @@ s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a,
                                        const sbp_msg_baseline_heading_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ORIENT_QUAT
+ *
+ *****************************************************************************/
 /** Quaternion 4 component vector
  *
  * This message reports the quaternion vector describing the vehicle body
@@ -303,6 +321,15 @@ s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a,
                                   const sbp_msg_orient_quat_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ORIENT_EULER
+ *
+ *****************************************************************************/
 /** Euler angles
  *
  * This message reports the yaw, pitch, and roll angles of the vehicle body
@@ -443,6 +470,15 @@ s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a,
                                    const sbp_msg_orient_euler_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ANGULAR_RATE
+ *
+ *****************************************************************************/
 /** Vehicle Body Frame instantaneous angular rates
  *
  * This message reports the orientation rates in the vehicle body frame. The

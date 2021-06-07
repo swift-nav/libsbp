@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ALMANAC
+ *
+ *****************************************************************************/
 /** Legacy message to load satellite almanac (host => Piksi)
  *
  * This is a legacy message for sending and loading a satellite alamanac onto
@@ -137,6 +146,15 @@ s8 sbp_send_sbp_msg_almanac_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_almanac_t(const sbp_msg_almanac_t *a,
                               const sbp_msg_almanac_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SET_TIME
+ *
+ *****************************************************************************/
 /** Send GPS time from host (host => Piksi)
  *
  * This message sets up timing functionality using a coarse GPS time estimate
@@ -235,6 +253,15 @@ s8 sbp_send_sbp_msg_set_time_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_set_time_t(const sbp_msg_set_time_t *a,
                                const sbp_msg_set_time_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_RESET
+ *
+ *****************************************************************************/
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the bootloader.
@@ -330,6 +357,15 @@ s8 sbp_send_sbp_msg_reset_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_reset_t(const sbp_msg_reset_t *a, const sbp_msg_reset_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_RESET_DEP
+ *
+ *****************************************************************************/
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the bootloader.
@@ -427,6 +463,15 @@ s8 sbp_send_sbp_msg_reset_dep_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_reset_dep_t(const sbp_msg_reset_dep_t *a,
                                 const sbp_msg_reset_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_CW_RESULTS
+ *
+ *****************************************************************************/
 /** Legacy message for CW interference channel (Piksi => host)
  *
  * This is an unused legacy message for result reporting from the CW
@@ -527,6 +572,15 @@ s8 sbp_send_sbp_msg_cw_results_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_cw_results_t(const sbp_msg_cw_results_t *a,
                                  const sbp_msg_cw_results_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_CW_START
+ *
+ *****************************************************************************/
 /** Legacy message for CW interference channel (host => Piksi)
  *
  * This is an unused legacy message from the host for starting the CW
@@ -626,6 +680,15 @@ s8 sbp_send_sbp_msg_cw_start_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_cw_start_t(const sbp_msg_cw_start_t *a,
                                const sbp_msg_cw_start_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_RESET_FILTERS
+ *
+ *****************************************************************************/
 /** Reset IAR filters (host => Piksi)
  *
  * This message resets either the DGNSS Kalman filters or Integer Ambiguity
@@ -727,6 +790,15 @@ s8 sbp_send_sbp_msg_reset_filters_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_reset_filters_t(const sbp_msg_reset_filters_t *a,
                                     const sbp_msg_reset_filters_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_INIT_BASE_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated
@@ -828,6 +900,15 @@ s8 sbp_send_sbp_msg_init_base_dep_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_init_base_dep_t(const sbp_msg_init_base_dep_t *a,
                                     const sbp_msg_init_base_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_THREAD_STATE
+ *
+ *****************************************************************************/
 /** State of an RTOS thread
  *
  * The thread usage message from the device reports real-time operating system
@@ -941,6 +1022,15 @@ s8 sbp_send_sbp_msg_thread_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_thread_state_t(const sbp_msg_thread_state_t *a,
                                    const sbp_msg_thread_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_UARTCHANNEL
+ *
+ *****************************************************************************/
 /** State of the UART channel
  *
  * Throughput, utilization, and error counts on the RX/TX buffers of this UART
@@ -1044,6 +1134,15 @@ s8 sbp_decode_sbp_uart_channel_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_uart_channel_t(const sbp_uart_channel_t *a,
                                const sbp_uart_channel_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PERIOD
+ *
+ *****************************************************************************/
 /** base station observation message receipt period
  *
  * Statistics on the period of observations received from the base station. As
@@ -1139,6 +1238,15 @@ s8 sbp_decode_sbp_period_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_period_t(const sbp_period_t *a, const sbp_period_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_LATENCY
+ *
+ *****************************************************************************/
 /** Receiver-to-base station latency
  *
  * Statistics on the latency of observations received from the base station. As
@@ -1233,6 +1341,15 @@ s8 sbp_decode_sbp_latency_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_latency_t(const sbp_latency_t *a, const sbp_latency_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_UART_STATE
+ *
+ *****************************************************************************/
 /** State of the UART channels
  *
  * The UART message reports data latency and throughput of the UART channels
@@ -1357,6 +1474,15 @@ s8 sbp_send_sbp_msg_uart_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_uart_state_t(const sbp_msg_uart_state_t *a,
                                  const sbp_msg_uart_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_UART_STATE_DEPA
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated
@@ -1472,6 +1598,15 @@ s8 sbp_send_sbp_msg_uart_state_depa_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_uart_state_depa_t(const sbp_msg_uart_state_depa_t *a,
                                       const sbp_msg_uart_state_depa_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_IAR_STATE
+ *
+ *****************************************************************************/
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
  * This message reports the state of the Integer Ambiguity Resolution (IAR)
@@ -1570,6 +1705,15 @@ s8 sbp_send_sbp_msg_iar_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_iar_state_t(const sbp_msg_iar_state_t *a,
                                 const sbp_msg_iar_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_MASK_SATELLITE
+ *
+ *****************************************************************************/
 /** Mask a satellite from use in Piksi subsystems
  *
  * This message allows setting a mask to prevent a particular satellite from
@@ -1676,6 +1820,15 @@ s8 sbp_send_sbp_msg_mask_satellite_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_mask_satellite_t(const sbp_msg_mask_satellite_t *a,
                                      const sbp_msg_mask_satellite_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_MASK_SATELLITE_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -1781,6 +1934,15 @@ s8 sbp_send_sbp_msg_mask_satellite_dep_t(
 int sbp_cmp_sbp_msg_mask_satellite_dep_t(const sbp_msg_mask_satellite_dep_t *a,
                                          const sbp_msg_mask_satellite_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_DEVICE_MONITOR
+ *
+ *****************************************************************************/
 /** Device temperature and voltage levels
  *
  * This message contains temperature and voltage level measurements from the
@@ -1903,6 +2065,15 @@ s8 sbp_send_sbp_msg_device_monitor_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_device_monitor_t(const sbp_msg_device_monitor_t *a,
                                      const sbp_msg_device_monitor_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_COMMAND_REQ
+ *
+ *****************************************************************************/
 /** Execute a command (host => device)
  *
  * Request the recipient to execute an command. Output will be sent in MSG_LOG
@@ -1919,28 +2090,155 @@ typedef struct {
    */
   sbp_null_terminated_string_t command;
 } sbp_msg_command_req_t;
+
+/**
+ * Initialise sbp_msg_command_req_t::command to empty
+ *
+ * @param msg sbp_msg_command_req_t instance
+ */
 void sbp_msg_command_req_t_command_init(sbp_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_command_req_t::command for validity
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return true is sbp_msg_command_req_t::command is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_command_req_t_command_valid(const sbp_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_command_req_t::command for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_command_req_t instance
+ * @param b sbp_msg_command_req_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_command_req_t_command_strcmp(const sbp_null_terminated_string_t *a,
                                          const sbp_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_command_req_t::command
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return Size of sbp_msg_command_req_t::command in wire representation
+ */
 uint8_t sbp_msg_command_req_t_command_packed_len(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_command_req_t::command for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_command_req_t::command before it exceeds the maximum size of
+ * the field in wire representation
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_command_req_t_command_space_remaining(
     const sbp_null_terminated_string_t *s);
+/**
+ * Set sbp_msg_command_req_t::command
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_req_t_command_set(sbp_null_terminated_string_t *s,
                                        const char *new_str);
+
+/**
+ * Set sbp_msg_command_req_t::command with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_req_t_command_printf(sbp_null_terminated_string_t *s,
                                           const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_command_req_t::command with printf style formatting
+ *
+ * Identical to #sbp_msg_command_req_t_command_printf except it takes a va_list
+ * argument
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_req_t_command_vprintf(sbp_null_terminated_string_t *s,
                                            const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_command_req_t::command with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_req_t_command_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_command_req_t::command with printf style formatting
+ *
+ * Identical to #sbp_msg_command_req_t_command_append_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_command_req_t_command_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_command_req_t::command
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return String contents
+ */
 const char *sbp_msg_command_req_t_command_get(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_command_req_t::command
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_command_req_t_command_section_strlen(
+    const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_command_req_t
@@ -2029,6 +2327,15 @@ s8 sbp_send_sbp_msg_command_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_command_req_t(const sbp_msg_command_req_t *a,
                                   const sbp_msg_command_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_COMMAND_RESP
+ *
+ *****************************************************************************/
 /** Exit code from executed command (device => host)
  *
  * The response to MSG_COMMAND_REQ with the return code of the command.  A
@@ -2135,6 +2442,15 @@ s8 sbp_send_sbp_msg_command_resp_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_command_resp_t(const sbp_msg_command_resp_t *a,
                                    const sbp_msg_command_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_COMMAND_OUTPUT
+ *
+ *****************************************************************************/
 /** Command output
  *
  * Returns the standard output and standard error of the command requested by
@@ -2152,28 +2468,155 @@ typedef struct {
    */
   sbp_unterminated_string_t line;
 } sbp_msg_command_output_t;
+
+/**
+ * Initialise sbp_msg_command_output_t::line to empty
+ *
+ * @param msg sbp_msg_command_output_t instance
+ */
 void sbp_msg_command_output_t_line_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_command_output_t::line for validity
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return true is sbp_msg_command_output_t::line is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_command_output_t_line_valid(const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_command_output_t::line for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_command_output_t instance
+ * @param b sbp_msg_command_output_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_command_output_t_line_strcmp(const sbp_unterminated_string_t *a,
                                          const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_command_output_t::line
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return Size of sbp_msg_command_output_t::line in wire representation
+ */
 uint8_t sbp_msg_command_output_t_line_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_command_output_t::line for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_command_output_t::line before it exceeds the maximum size of
+ * the field in wire representation
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_command_output_t_line_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_command_output_t::line
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_output_t_line_set(sbp_unterminated_string_t *s,
                                        const char *new_str);
+
+/**
+ * Set sbp_msg_command_output_t::line with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_output_t_line_printf(sbp_unterminated_string_t *s,
                                           const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_command_output_t::line with printf style formatting
+ *
+ * Identical to #sbp_msg_command_output_t_line_printf except it takes a va_list
+ * argument
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_output_t_line_vprintf(sbp_unterminated_string_t *s,
                                            const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_command_output_t::line with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_command_output_t_line_append_printf(sbp_unterminated_string_t *s,
                                                  const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_command_output_t::line with printf style formatting
+ *
+ * Identical to #sbp_msg_command_output_t_line_append_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_command_output_t_line_append_vprintf(sbp_unterminated_string_t *s,
                                                   const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_command_output_t::line
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return String contents
+ */
 const char *sbp_msg_command_output_t_line_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_command_output_t::line
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_command_output_t_line_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_command_output_t
@@ -2264,6 +2707,15 @@ s8 sbp_send_sbp_msg_command_output_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_command_output_t(const sbp_msg_command_output_t *a,
                                      const sbp_msg_command_output_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NETWORK_STATE_REQ
+ *
+ *****************************************************************************/
 /** Request state of Piksi network interfaces
  *
  * Request state of Piksi network interfaces. Output will be sent in
@@ -2366,6 +2818,15 @@ s8 sbp_send_sbp_msg_network_state_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_network_state_req_t(const sbp_msg_network_state_req_t *a,
                                         const sbp_msg_network_state_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NETWORK_STATE_RESP
+ *
+ *****************************************************************************/
 /** State of network interface
  *
  * The state of a network interface on the Piksi. Data is made to reflect output
@@ -2502,6 +2963,15 @@ s8 sbp_send_sbp_msg_network_state_resp_t(
 int sbp_cmp_sbp_msg_network_state_resp_t(const sbp_msg_network_state_resp_t *a,
                                          const sbp_msg_network_state_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_NETWORKUSAGE
+ *
+ *****************************************************************************/
 /** Bandwidth usage measurement for a single interface
  *
  * The bandwidth usage for each interface can be reported within this struct and
@@ -2603,6 +3073,15 @@ s8 sbp_decode_sbp_network_usage_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_network_usage_t(const sbp_network_usage_t *a,
                                 const sbp_network_usage_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NETWORK_BANDWIDTH_USAGE
+ *
+ *****************************************************************************/
 /** Bandwidth usage reporting message
  *
  * The bandwidth usage, a list of usage by interface.
@@ -2719,6 +3198,15 @@ int sbp_cmp_sbp_msg_network_bandwidth_usage_t(
     const sbp_msg_network_bandwidth_usage_t *a,
     const sbp_msg_network_bandwidth_usage_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_CELL_MODEM_STATUS
+ *
+ *****************************************************************************/
 /** Cell modem information update message
  *
  * If a cell modem is present on a piksi device, this message will be send
@@ -2842,6 +3330,15 @@ s8 sbp_send_sbp_msg_cell_modem_status_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_cell_modem_status_t(const sbp_msg_cell_modem_status_t *a,
                                         const sbp_msg_cell_modem_status_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SPECAN_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -2980,6 +3477,15 @@ s8 sbp_send_sbp_msg_specan_dep_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_specan_dep_t(const sbp_msg_specan_dep_t *a,
                                  const sbp_msg_specan_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SPECAN
+ *
+ *****************************************************************************/
 /** Spectrum analyzer
  *
  * Spectrum analyzer packet.
@@ -3117,6 +3623,15 @@ s8 sbp_send_sbp_msg_specan_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_specan_t(const sbp_msg_specan_t *a,
                              const sbp_msg_specan_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FRONT_END_GAIN
+ *
+ *****************************************************************************/
 /** RF AGC status
  *
  * This message describes the gain of each channel in the receiver frontend.

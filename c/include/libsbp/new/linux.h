@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_CPU_STATE_DEP_A
+ *
+ *****************************************************************************/
 /** List CPU state on the system. DEPRECATED
  *
  * This message indicates the process state of the top 10 heaviest consumers of
@@ -69,27 +78,155 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
+
+/**
+ * Initialise sbp_msg_linux_cpu_state_dep_a_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ */
 void sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_cpu_state_dep_a_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return true is sbp_msg_linux_cpu_state_dep_a_t::cmdline is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_cpu_state_dep_a_t::cmdline for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param b sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_cpu_state_dep_a_t::cmdline
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return Size of sbp_msg_linux_cpu_state_dep_a_t::cmdline in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_cpu_state_dep_a_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_cpu_state_dep_a_t::cmdline before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_cpu_state_dep_a_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s,
                                                  const char *new_str);
+
+/**
+ * Set sbp_msg_linux_cpu_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_cpu_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_cpu_state_dep_a_t::cmdline with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_cpu_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_cpu_state_dep_a_t::cmdline
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_cpu_state_dep_a_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_cpu_state_dep_a_t
@@ -184,6 +321,15 @@ int sbp_cmp_sbp_msg_linux_cpu_state_dep_a_t(
     const sbp_msg_linux_cpu_state_dep_a_t *a,
     const sbp_msg_linux_cpu_state_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_MEM_STATE_DEP_A
+ *
+ *****************************************************************************/
 /** List memory state on the system. DEPRECATED
  *
  * This message indicates the process state of the top 10 heaviest consumers of
@@ -215,27 +361,155 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
+
+/**
+ * Initialise sbp_msg_linux_mem_state_dep_a_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ */
 void sbp_msg_linux_mem_state_dep_a_t_cmdline_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_mem_state_dep_a_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @return true is sbp_msg_linux_mem_state_dep_a_t::cmdline is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_mem_state_dep_a_t::cmdline for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_mem_state_dep_a_t instance
+ * @param b sbp_msg_linux_mem_state_dep_a_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_mem_state_dep_a_t::cmdline
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @return Size of sbp_msg_linux_mem_state_dep_a_t::cmdline in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_mem_state_dep_a_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_mem_state_dep_a_t::cmdline before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_mem_state_dep_a_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s,
                                                  const char *new_str);
+
+/**
+ * Set sbp_msg_linux_mem_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_mem_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_mem_state_dep_a_t_cmdline_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_mem_state_dep_a_t::cmdline with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_mem_state_dep_a_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_mem_state_dep_a_t_cmdline_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_mem_state_dep_a_t::cmdline
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_mem_state_dep_a_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_mem_state_dep_a_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_mem_state_dep_a_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_mem_state_dep_a_t
@@ -330,6 +604,15 @@ int sbp_cmp_sbp_msg_linux_mem_state_dep_a_t(
     const sbp_msg_linux_mem_state_dep_a_t *a,
     const sbp_msg_linux_mem_state_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_SYS_STATE_DEP_A
+ *
+ *****************************************************************************/
 /** CPU, Memory and Process Starts/Stops. DEPRECATED
  *
  * This presents a summary of CPU and memory utilization.
@@ -459,6 +742,15 @@ int sbp_cmp_sbp_msg_linux_sys_state_dep_a_t(
     const sbp_msg_linux_sys_state_dep_a_t *a,
     const sbp_msg_linux_sys_state_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS
+ *
+ *****************************************************************************/
 /** A list of processes with high socket counts
  *
  * Top 10 list of processes with high socket counts.
@@ -498,28 +790,161 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_counts_t;
+
+/**
+ * Initialise sbp_msg_linux_process_socket_counts_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ */
 void sbp_msg_linux_process_socket_counts_t_cmdline_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_process_socket_counts_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @return true is sbp_msg_linux_process_socket_counts_t::cmdline is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_process_socket_counts_t::cmdline for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_process_socket_counts_t instance
+ * @param b sbp_msg_linux_process_socket_counts_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_process_socket_counts_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @return Size of sbp_msg_linux_process_socket_counts_t::cmdline in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_process_socket_counts_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_process_socket_counts_t::cmdline before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_process_socket_counts_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_set(
     sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_linux_process_socket_counts_t::cmdline with printf style
+ * formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_process_socket_counts_t::cmdline with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_linux_process_socket_counts_t_cmdline_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_process_socket_counts_t::cmdline with printf style
+ * formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_process_socket_counts_t::cmdline with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_linux_process_socket_counts_t_cmdline_append_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_process_socket_counts_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_process_socket_counts_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_process_socket_counts_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_process_socket_counts_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_socket_counts_t
@@ -616,6 +1041,15 @@ int sbp_cmp_sbp_msg_linux_process_socket_counts_t(
     const sbp_msg_linux_process_socket_counts_t *a,
     const sbp_msg_linux_process_socket_counts_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES
+ *
+ *****************************************************************************/
 /** A list of processes with deep socket queues
  *
  * Top 10 list of sockets with deep queues.
@@ -666,28 +1100,161 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_socket_queues_t;
+
+/**
+ * Initialise sbp_msg_linux_process_socket_queues_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ */
 void sbp_msg_linux_process_socket_queues_t_cmdline_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_process_socket_queues_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @return true is sbp_msg_linux_process_socket_queues_t::cmdline is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_process_socket_queues_t::cmdline for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_process_socket_queues_t instance
+ * @param b sbp_msg_linux_process_socket_queues_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_process_socket_queues_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @return Size of sbp_msg_linux_process_socket_queues_t::cmdline in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_process_socket_queues_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_process_socket_queues_t::cmdline before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_process_socket_queues_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_set(
     sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_linux_process_socket_queues_t::cmdline with printf style
+ * formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_process_socket_queues_t::cmdline with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_linux_process_socket_queues_t_cmdline_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_process_socket_queues_t::cmdline with printf style
+ * formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_process_socket_queues_t::cmdline with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_linux_process_socket_queues_t_cmdline_append_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_process_socket_queues_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_process_socket_queues_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_process_socket_queues_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_process_socket_queues_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_process_socket_queues_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_socket_queues_t
@@ -784,6 +1351,15 @@ int sbp_cmp_sbp_msg_linux_process_socket_queues_t(
     const sbp_msg_linux_process_socket_queues_t *a,
     const sbp_msg_linux_process_socket_queues_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_SOCKET_USAGE
+ *
+ *****************************************************************************/
 /** Summary of socket usage across the system
  *
  * Summaries the socket usage across the system.
@@ -901,6 +1477,15 @@ s8 sbp_send_sbp_msg_linux_socket_usage_t(
 int sbp_cmp_sbp_msg_linux_socket_usage_t(const sbp_msg_linux_socket_usage_t *a,
                                          const sbp_msg_linux_socket_usage_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_PROCESS_FD_COUNT
+ *
+ *****************************************************************************/
 /** Summary of processes with large amounts of open file descriptors
  *
  * Top 10 list of processes with a large number of open file descriptors.
@@ -926,28 +1511,156 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_process_fd_count_t;
+
+/**
+ * Initialise sbp_msg_linux_process_fd_count_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ */
 void sbp_msg_linux_process_fd_count_t_cmdline_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_process_fd_count_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @return true is sbp_msg_linux_process_fd_count_t::cmdline is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_process_fd_count_t::cmdline for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_process_fd_count_t instance
+ * @param b sbp_msg_linux_process_fd_count_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_process_fd_count_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_process_fd_count_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @return Size of sbp_msg_linux_process_fd_count_t::cmdline in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_process_fd_count_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_process_fd_count_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_process_fd_count_t::cmdline before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_process_fd_count_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_process_fd_count_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_set(sbp_unterminated_string_t *s,
                                                   const char *new_str);
+
+/**
+ * Set sbp_msg_linux_process_fd_count_t::cmdline with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_process_fd_count_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_process_fd_count_t_cmdline_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_process_fd_count_t::cmdline with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_process_fd_count_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_process_fd_count_t_cmdline_append_printf except
+ * it takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_process_fd_count_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_process_fd_count_t::cmdline
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_process_fd_count_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_process_fd_count_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_process_fd_count_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_process_fd_count_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_fd_count_t
@@ -1042,6 +1755,15 @@ int sbp_cmp_sbp_msg_linux_process_fd_count_t(
     const sbp_msg_linux_process_fd_count_t *a,
     const sbp_msg_linux_process_fd_count_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_PROCESS_FD_SUMMARY
+ *
+ *****************************************************************************/
 /** Summary of open file descriptors on the system
  *
  * Summary of open file descriptors on the system.
@@ -1061,35 +1783,210 @@ typedef struct {
    */
   sbp_double_null_terminated_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
+
+/**
+ * Initialise sbp_msg_linux_process_fd_summary_t::most_opened to empty
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ */
 void sbp_msg_linux_process_fd_summary_t_most_opened_init(
     sbp_double_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_process_fd_summary_t::most_opened for validity
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @return true is sbp_msg_linux_process_fd_summary_t::most_opened is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_valid(
     const sbp_double_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_process_fd_summary_t::most_opened for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_process_fd_summary_t instance
+ * @param b sbp_msg_linux_process_fd_summary_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(
     const sbp_double_null_terminated_string_t *a,
     const sbp_double_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @return Size of sbp_msg_linux_process_fd_summary_t::most_opened in wire
+ * representation
+ */
 uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(
     const sbp_double_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_process_fd_summary_t::most_opened for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_process_fd_summary_t::most_opened before it exceeds
+ * the maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(
     const sbp_double_null_terminated_string_t *s);
+/**
+ * Return the number of sections in
+ * sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @return Number of sections in string
+ */
 uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(
     const sbp_double_null_terminated_string_t *s);
+
+/**
+ * Add a section to sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * The specified string will be appended to the field as a new section. If the
+ * new section would end up overflowing the maximum encoded length of this field
+ * the string will not be changed and this function will return false
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section(
     sbp_double_null_terminated_string_t *s, const char *new_str);
+
+/**
+ * Add a section to sbp_msg_linux_process_fd_summary_t::most_opened with printf
+ * style formatting
+ *
+ * A new section will be added to the field according to the specified printf
+ * style format string and arguments. If the operation would end up overflowing
+ * the maximum size of this field in wire encoding the existing contents will be
+ * unmodified and this function will return false.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(
     sbp_double_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Add a section to sbp_msg_linux_process_fd_summary_t::most_opened with printf
+ * style formatting
+ *
+ * Identical to
+ * #sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf(
     sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_linux_process_fd_summary_t_most_opened_add_section
+ *
+ * If the field already contains one or more sections the given string will be
+ * appended on to the last section in the string.
+ *
+ * If the operation would end up overflowing the maximum size of this field in
+ * wire encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_append(
     sbp_double_null_terminated_string_t *s, const char *str);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_linux_process_fd_summary_t::most_opened with printf style formatting
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf
+ *
+ * If the field already contains one or more sections the given string will be
+ * appended on to the last section in the string.
+ *
+ * If the operation would end up overflowing the maximum size of this field in
+ * wire encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(
     sbp_double_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_linux_process_fd_summary_t::most_opened with printf style formatting
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf
+ *
+ * If the field already contains one or more sections the given string will be
+ * sppended on to the last section in the string.
+ *
+ * If the operation would end overflowing the maximum size of this field in wire
+ * encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(
     sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain a section from sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * Returns a pointer to the given subsection in the field. Sections are
+ * 0-indexed, the \p section parameters must be less than the value returned
+ * from #sbp_msg_linux_process_fd_summary_t_most_opened_count_sections.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param section Section number
+ * @return Pointer to C string, NULL on error
+ */
 const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(
     const sbp_double_null_terminated_string_t *s, uint8_t section);
+
+/**
+ * Obtain the length of a section in
+ * sbp_msg_linux_process_fd_summary_t::most_opened
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * If the given section does not exist 0 is returned.
+ *
+ * @param msg sbp_msg_linux_process_fd_summary_t instance
+ * @param section Section number
+ * @return Length of section
+ */
 uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(
     const sbp_double_null_terminated_string_t *s, uint8_t section);
 
@@ -1187,6 +2084,15 @@ int sbp_cmp_sbp_msg_linux_process_fd_summary_t(
     const sbp_msg_linux_process_fd_summary_t *a,
     const sbp_msg_linux_process_fd_summary_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_CPU_STATE
+ *
+ *****************************************************************************/
 /** List CPU state on the system
  *
  * This message indicates the process state of the top 10 heaviest consumers of
@@ -1228,28 +2134,155 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_cpu_state_t;
+
+/**
+ * Initialise sbp_msg_linux_cpu_state_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ */
 void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_cpu_state_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @return true is sbp_msg_linux_cpu_state_t::cmdline is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_cpu_state_t::cmdline for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_cpu_state_t instance
+ * @param b sbp_msg_linux_cpu_state_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_cpu_state_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_cpu_state_t::cmdline
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @return Size of sbp_msg_linux_cpu_state_t::cmdline in wire representation
+ */
 uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_cpu_state_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_cpu_state_t::cmdline before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_cpu_state_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t *s,
                                            const char *new_str);
+
+/**
+ * Set sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s,
                                               const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_cpu_state_t_cmdline_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
                                                const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_cpu_state_t_cmdline_append_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_cpu_state_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_cpu_state_t::cmdline
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_cpu_state_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_cpu_state_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_cpu_state_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_cpu_state_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_cpu_state_t
@@ -1340,6 +2373,15 @@ s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a,
                                       const sbp_msg_linux_cpu_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_MEM_STATE
+ *
+ *****************************************************************************/
 /** List memory state on the system
  *
  * This message indicates the process state of the top 10 heaviest consumers of
@@ -1381,28 +2423,155 @@ typedef struct {
    */
   sbp_unterminated_string_t cmdline;
 } sbp_msg_linux_mem_state_t;
+
+/**
+ * Initialise sbp_msg_linux_mem_state_t::cmdline to empty
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ */
 void sbp_msg_linux_mem_state_t_cmdline_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_linux_mem_state_t::cmdline for validity
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @return true is sbp_msg_linux_mem_state_t::cmdline is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_linux_mem_state_t::cmdline for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_linux_mem_state_t instance
+ * @param b sbp_msg_linux_mem_state_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_linux_mem_state_t_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_linux_mem_state_t::cmdline
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @return Size of sbp_msg_linux_mem_state_t::cmdline in wire representation
+ */
 uint8_t sbp_msg_linux_mem_state_t_cmdline_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_linux_mem_state_t::cmdline for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_linux_mem_state_t::cmdline before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_linux_mem_state_t_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_linux_mem_state_t::cmdline
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_set(sbp_unterminated_string_t *s,
                                            const char *new_str);
+
+/**
+ * Set sbp_msg_linux_mem_state_t::cmdline with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_printf(sbp_unterminated_string_t *s,
                                               const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_linux_mem_state_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_mem_state_t_cmdline_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
                                                const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_linux_mem_state_t::cmdline with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_linux_mem_state_t::cmdline with printf style formatting
+ *
+ * Identical to #sbp_msg_linux_mem_state_t_cmdline_append_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_linux_mem_state_t_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_linux_mem_state_t::cmdline
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @return String contents
+ */
 const char *sbp_msg_linux_mem_state_t_cmdline_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_linux_mem_state_t::cmdline
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_linux_mem_state_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_linux_mem_state_t_cmdline_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_mem_state_t
@@ -1493,6 +2662,15 @@ s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *a,
                                       const sbp_msg_linux_mem_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LINUX_SYS_STATE
+ *
+ *****************************************************************************/
 /** CPU, Memory and Process Starts/Stops
  *
  * This presents a summary of CPU and memory utilization, including a timestamp.

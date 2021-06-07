@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_READ_REQ
+ *
+ *****************************************************************************/
 /** Read file from the file system (host => device)
  *
  * The file read message reads a certain length (up to 255 bytes) from a given
@@ -69,30 +78,157 @@ typedef struct {
    */
   sbp_null_terminated_string_t filename;
 } sbp_msg_fileio_read_req_t;
+
+/**
+ * Initialise sbp_msg_fileio_read_req_t::filename to empty
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ */
 void sbp_msg_fileio_read_req_t_filename_init(sbp_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_fileio_read_req_t::filename for validity
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @return true is sbp_msg_fileio_read_req_t::filename is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_fileio_read_req_t_filename_valid(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_fileio_read_req_t::filename for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_fileio_read_req_t instance
+ * @param b sbp_msg_fileio_read_req_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_fileio_read_req_t_filename_strcmp(
     const sbp_null_terminated_string_t *a,
     const sbp_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_fileio_read_req_t::filename
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @return Size of sbp_msg_fileio_read_req_t::filename in wire representation
+ */
 uint8_t sbp_msg_fileio_read_req_t_filename_packed_len(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_fileio_read_req_t::filename for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_fileio_read_req_t::filename before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_fileio_read_req_t_filename_space_remaining(
     const sbp_null_terminated_string_t *s);
+/**
+ * Set sbp_msg_fileio_read_req_t::filename
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_req_t_filename_set(sbp_null_terminated_string_t *s,
                                             const char *new_str);
+
+/**
+ * Set sbp_msg_fileio_read_req_t::filename with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_req_t_filename_printf(sbp_null_terminated_string_t *s,
                                                const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_fileio_read_req_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_read_req_t_filename_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_req_t_filename_vprintf(sbp_null_terminated_string_t *s,
                                                 const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_fileio_read_req_t::filename with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_req_t_filename_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_fileio_read_req_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_read_req_t_filename_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_fileio_read_req_t_filename_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_fileio_read_req_t::filename
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @return String contents
+ */
 const char *sbp_msg_fileio_read_req_t_filename_get(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_fileio_read_req_t::filename
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_fileio_read_req_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_fileio_read_req_t_filename_section_strlen(
+    const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_read_req_t
@@ -183,6 +319,15 @@ s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a,
                                       const sbp_msg_fileio_read_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_READ_RESP
+ *
+ *****************************************************************************/
 /** File read from the file system (host <= device)
  *
  * The file read message reads a certain length (up to 255 bytes) from a given
@@ -302,6 +447,15 @@ s8 sbp_send_sbp_msg_fileio_read_resp_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a,
                                        const sbp_msg_fileio_read_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_READ_DIR_REQ
+ *
+ *****************************************************************************/
 /** List files in a directory (host => device)
  *
  * The read directory message lists the files in a directory on the device's
@@ -329,31 +483,158 @@ typedef struct {
    */
   sbp_null_terminated_string_t dirname;
 } sbp_msg_fileio_read_dir_req_t;
+
+/**
+ * Initialise sbp_msg_fileio_read_dir_req_t::dirname to empty
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ */
 void sbp_msg_fileio_read_dir_req_t_dirname_init(
     sbp_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_fileio_read_dir_req_t::dirname for validity
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @return true is sbp_msg_fileio_read_dir_req_t::dirname is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_valid(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_fileio_read_dir_req_t::dirname for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_fileio_read_dir_req_t instance
+ * @param b sbp_msg_fileio_read_dir_req_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_fileio_read_dir_req_t_dirname_strcmp(
     const sbp_null_terminated_string_t *a,
     const sbp_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_fileio_read_dir_req_t::dirname
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @return Size of sbp_msg_fileio_read_dir_req_t::dirname in wire representation
+ */
 uint8_t sbp_msg_fileio_read_dir_req_t_dirname_packed_len(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_fileio_read_dir_req_t::dirname for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_fileio_read_dir_req_t::dirname before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_fileio_read_dir_req_t_dirname_space_remaining(
     const sbp_null_terminated_string_t *s);
+/**
+ * Set sbp_msg_fileio_read_dir_req_t::dirname
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_set(sbp_null_terminated_string_t *s,
                                                const char *new_str);
+
+/**
+ * Set sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_read_dir_req_t_dirname_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_read_dir_req_t_dirname_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_fileio_read_dir_req_t_dirname_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_fileio_read_dir_req_t::dirname
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @return String contents
+ */
 const char *sbp_msg_fileio_read_dir_req_t_dirname_get(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_fileio_read_dir_req_t::dirname
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_fileio_read_dir_req_t_dirname_section_strlen(
+    const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_read_dir_req_t
@@ -446,6 +727,15 @@ int sbp_cmp_sbp_msg_fileio_read_dir_req_t(
     const sbp_msg_fileio_read_dir_req_t *a,
     const sbp_msg_fileio_read_dir_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_READ_DIR_RESP
+ *
+ *****************************************************************************/
 /** Files listed in a directory (host <= device)
  *
  * The read directory message lists the files in a directory on the device's
@@ -465,31 +755,202 @@ typedef struct {
    */
   sbp_multipart_string_t contents;
 } sbp_msg_fileio_read_dir_resp_t;
+
+/**
+ * Initialise sbp_msg_fileio_read_dir_resp_t::contents to empty
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ */
 void sbp_msg_fileio_read_dir_resp_t_contents_init(sbp_multipart_string_t *s);
+
+/**
+ * Test sbp_msg_fileio_read_dir_resp_t::contents for validity
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @return true is sbp_msg_fileio_read_dir_resp_t::contents is valid for
+ * encoding purposes, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_valid(
     const sbp_multipart_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_fileio_read_dir_resp_t::contents for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_fileio_read_dir_resp_t instance
+ * @param b sbp_msg_fileio_read_dir_resp_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_fileio_read_dir_resp_t_contents_strcmp(
     const sbp_multipart_string_t *a, const sbp_multipart_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @return Size of sbp_msg_fileio_read_dir_resp_t::contents in wire
+ * representation
+ */
 uint8_t sbp_msg_fileio_read_dir_resp_t_contents_packed_len(
     const sbp_multipart_string_t *s);
+
+/**
+ * Query sbp_msg_fileio_read_dir_resp_t::contents for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_fileio_read_dir_resp_t::contents before it exceeds the
+ * maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_fileio_read_dir_resp_t_contents_space_remaining(
     const sbp_multipart_string_t *s);
+/**
+ * Return the number of sections in sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @return Number of sections in string
+ */
 uint8_t sbp_msg_fileio_read_dir_resp_t_contents_count_sections(
     const sbp_multipart_string_t *s);
+
+/**
+ * Add a section to sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * The specified string will be appended to the field as a new section. If the
+ * new section would end up overflowing the maximum encoded length of this field
+ * the string will not be changed and this function will return false
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_add_section(
     sbp_multipart_string_t *s, const char *new_str);
+
+/**
+ * Add a section to sbp_msg_fileio_read_dir_resp_t::contents with printf style
+ * formatting
+ *
+ * A new section will be added to the field according to the specified printf
+ * style format string and arguments. If the operation would end up overflowing
+ * the maximum size of this field in wire encoding the existing contents will be
+ * unmodified and this function will return false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_add_section_printf(
     sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Add a section to sbp_msg_fileio_read_dir_resp_t::contents with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_fileio_read_dir_resp_t_contents_add_section_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_add_section_vprintf(
     sbp_multipart_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_fileio_read_dir_resp_t_contents_add_section
+ *
+ * If the field already contains one or more sections the given string will be
+ * appended on to the last section in the string.
+ *
+ * If the operation would end up overflowing the maximum size of this field in
+ * wire encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_append(sbp_multipart_string_t *s,
                                                     const char *str);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_fileio_read_dir_resp_t::contents with printf style formatting
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_fileio_read_dir_resp_t_contents_add_section_printf
+ *
+ * If the field already contains one or more sections the given string will be
+ * appended on to the last section in the string.
+ *
+ * If the operation would end up overflowing the maximum size of this field in
+ * wire encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_append_printf(
     sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append a string to the last section in
+ * sbp_msg_fileio_read_dir_resp_t::contents with printf style formatting
+ *
+ * If the field is currently empty this function will behave exactly like
+ * #sbp_msg_fileio_read_dir_resp_t_contents_add_section_vprintf
+ *
+ * If the field already contains one or more sections the given string will be
+ * sppended on to the last section in the string.
+ *
+ * If the operation would end overflowing the maximum size of this field in wire
+ * encoding the existing contents will be unmodified and this function will
+ * return false.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_read_dir_resp_t_contents_append_vprintf(
     sbp_multipart_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain a section from sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * Returns a pointer to the given subsection in the field. Sections are
+ * 0-indexed, the \p section parameters must be less than the value returned
+ * from #sbp_msg_fileio_read_dir_resp_t_contents_count_sections.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param section Section number
+ * @return Pointer to C string, NULL on error
+ */
 const char *sbp_msg_fileio_read_dir_resp_t_contents_get_section(
     const sbp_multipart_string_t *s, uint8_t section);
+
+/**
+ * Obtain the length of a section in sbp_msg_fileio_read_dir_resp_t::contents
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * If the given section does not exist 0 is returned.
+ *
+ * @param msg sbp_msg_fileio_read_dir_resp_t instance
+ * @param section Section number
+ * @return Length of section
+ */
 uint8_t sbp_msg_fileio_read_dir_resp_t_contents_section_strlen(
     const sbp_multipart_string_t *s, uint8_t section);
 
@@ -584,6 +1045,15 @@ int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(
     const sbp_msg_fileio_read_dir_resp_t *a,
     const sbp_msg_fileio_read_dir_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_REMOVE
+ *
+ *****************************************************************************/
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system. If the message
@@ -597,30 +1067,157 @@ typedef struct {
    */
   sbp_null_terminated_string_t filename;
 } sbp_msg_fileio_remove_t;
+
+/**
+ * Initialise sbp_msg_fileio_remove_t::filename to empty
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ */
 void sbp_msg_fileio_remove_t_filename_init(sbp_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_fileio_remove_t::filename for validity
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @return true is sbp_msg_fileio_remove_t::filename is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_fileio_remove_t_filename_valid(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_fileio_remove_t::filename for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_fileio_remove_t instance
+ * @param b sbp_msg_fileio_remove_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_fileio_remove_t_filename_strcmp(
     const sbp_null_terminated_string_t *a,
     const sbp_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_fileio_remove_t::filename
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @return Size of sbp_msg_fileio_remove_t::filename in wire representation
+ */
 uint8_t sbp_msg_fileio_remove_t_filename_packed_len(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_fileio_remove_t::filename for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_fileio_remove_t::filename before it exceeds the maximum size
+ * of the field in wire representation
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_fileio_remove_t_filename_space_remaining(
     const sbp_null_terminated_string_t *s);
+/**
+ * Set sbp_msg_fileio_remove_t::filename
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_remove_t_filename_set(sbp_null_terminated_string_t *s,
                                           const char *new_str);
+
+/**
+ * Set sbp_msg_fileio_remove_t::filename with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_remove_t_filename_printf(sbp_null_terminated_string_t *s,
                                              const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_fileio_remove_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_remove_t_filename_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_remove_t_filename_vprintf(sbp_null_terminated_string_t *s,
                                               const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_fileio_remove_t::filename with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_remove_t_filename_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_fileio_remove_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_remove_t_filename_append_printf except it takes
+ * a va_list argument
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_fileio_remove_t_filename_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_fileio_remove_t::filename
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @return String contents
+ */
 const char *sbp_msg_fileio_remove_t_filename_get(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_fileio_remove_t::filename
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_fileio_remove_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_fileio_remove_t_filename_section_strlen(
+    const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_remove_t
@@ -711,6 +1308,15 @@ s8 sbp_send_sbp_msg_fileio_remove_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a,
                                     const sbp_msg_fileio_remove_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_WRITE_REQ
+ *
+ *****************************************************************************/
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes) of data to a
@@ -752,30 +1358,157 @@ typedef struct {
    */
   u8 n_data;
 } sbp_msg_fileio_write_req_t;
+
+/**
+ * Initialise sbp_msg_fileio_write_req_t::filename to empty
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ */
 void sbp_msg_fileio_write_req_t_filename_init(sbp_null_terminated_string_t *s);
+
+/**
+ * Test sbp_msg_fileio_write_req_t::filename for validity
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @return true is sbp_msg_fileio_write_req_t::filename is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_fileio_write_req_t_filename_valid(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_fileio_write_req_t::filename for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_fileio_write_req_t instance
+ * @param b sbp_msg_fileio_write_req_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_fileio_write_req_t_filename_strcmp(
     const sbp_null_terminated_string_t *a,
     const sbp_null_terminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_fileio_write_req_t::filename
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @return Size of sbp_msg_fileio_write_req_t::filename in wire representation
+ */
 uint8_t sbp_msg_fileio_write_req_t_filename_packed_len(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Query sbp_msg_fileio_write_req_t::filename for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_fileio_write_req_t::filename before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_fileio_write_req_t_filename_space_remaining(
     const sbp_null_terminated_string_t *s);
+/**
+ * Set sbp_msg_fileio_write_req_t::filename
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_write_req_t_filename_set(sbp_null_terminated_string_t *s,
                                              const char *new_str);
+
+/**
+ * Set sbp_msg_fileio_write_req_t::filename with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_write_req_t_filename_printf(sbp_null_terminated_string_t *s,
                                                 const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_fileio_write_req_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_write_req_t_filename_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_write_req_t_filename_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_fileio_write_req_t::filename with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_fileio_write_req_t_filename_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_fileio_write_req_t::filename with printf style formatting
+ *
+ * Identical to #sbp_msg_fileio_write_req_t_filename_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_fileio_write_req_t_filename_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_fileio_write_req_t::filename
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @return String contents
+ */
 const char *sbp_msg_fileio_write_req_t_filename_get(
     const sbp_null_terminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_fileio_write_req_t::filename
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_fileio_write_req_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_fileio_write_req_t_filename_section_strlen(
+    const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_write_req_t
@@ -866,6 +1599,15 @@ s8 sbp_send_sbp_msg_fileio_write_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a,
                                        const sbp_msg_fileio_write_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_WRITE_RESP
+ *
+ *****************************************************************************/
 /** File written to (host <= device)
  *
  * The file write message writes a certain length (up to 255 bytes) of data to a
@@ -969,6 +1711,15 @@ s8 sbp_send_sbp_msg_fileio_write_resp_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a,
                                         const sbp_msg_fileio_write_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_CONFIG_REQ
+ *
+ *****************************************************************************/
 /** Request advice on the optimal configuration for FileIO
  *
  * Requests advice on the optimal configuration for a FileIO transfer.  Newer
@@ -1071,6 +1822,15 @@ s8 sbp_send_sbp_msg_fileio_config_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a,
                                         const sbp_msg_fileio_config_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FILEIO_CONFIG_RESP
+ *
+ *****************************************************************************/
 /** Response with advice on the optimal configuration for FileIO.
 
  *

@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_STATE_DETAILED_DEP_A
+ *
+ *****************************************************************************/
 /** Detailed signal tracking channel states. DEPRECATED
  *
  * The tracking message returns a set tracking channel parameters for a single
@@ -255,6 +264,15 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_a_t(
     const sbp_msg_tracking_state_detailed_dep_a_t *a,
     const sbp_msg_tracking_state_detailed_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_STATE_DETAILED_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -470,6 +488,15 @@ int sbp_cmp_sbp_msg_tracking_state_detailed_dep_t(
     const sbp_msg_tracking_state_detailed_dep_t *a,
     const sbp_msg_tracking_state_detailed_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TRACKINGCHANNELSTATE
+ *
+ *****************************************************************************/
 /** Signal tracking channel state
  *
  * Tracking channel state for a specific satellite signal and measured signal
@@ -561,6 +588,15 @@ s8 sbp_decode_sbp_tracking_channel_state_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_tracking_channel_state_t(const sbp_tracking_channel_state_t *a,
                                          const sbp_tracking_channel_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_STATE
+ *
+ *****************************************************************************/
 /** Signal tracking channel states
  *
  * The tracking message returns a variable-length array of tracking channel
@@ -674,6 +710,15 @@ s8 sbp_send_sbp_msg_tracking_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *a,
                                      const sbp_msg_tracking_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MEASUREMENTSTATE
+ *
+ *****************************************************************************/
 /** Measurement Engine signal tracking channel state
  *
  * Measurement Engine tracking channel state for a specific satellite signal and
@@ -762,6 +807,15 @@ s8 sbp_decode_sbp_measurement_state_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_measurement_state_t(const sbp_measurement_state_t *a,
                                     const sbp_measurement_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_MEASUREMENT_STATE
+ *
+ *****************************************************************************/
 /** Measurement Engine signal tracking channel states
  *
  * The tracking message returns a variable-length array of tracking channel
@@ -875,6 +929,15 @@ s8 sbp_send_sbp_msg_measurement_state_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *a,
                                         const sbp_msg_measurement_state_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TRACKINGCHANNELCORRELATION
+ *
+ *****************************************************************************/
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.
@@ -964,6 +1027,15 @@ int sbp_cmp_sbp_tracking_channel_correlation_t(
     const sbp_tracking_channel_correlation_t *a,
     const sbp_tracking_channel_correlation_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_IQ
+ *
+ *****************************************************************************/
 /** Tracking channel correlations
  *
  * When enabled, a tracking channel can output the correlations at each update
@@ -1073,6 +1145,15 @@ s8 sbp_send_sbp_msg_tracking_iq_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_tracking_iq_t(const sbp_msg_tracking_iq_t *a,
                                   const sbp_msg_tracking_iq_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TRACKINGCHANNELCORRELATIONDEP
+ *
+ *****************************************************************************/
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.
@@ -1163,6 +1244,15 @@ int sbp_cmp_sbp_tracking_channel_correlation_dep_t(
     const sbp_tracking_channel_correlation_dep_t *a,
     const sbp_tracking_channel_correlation_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_IQ_DEP_B
+ *
+ *****************************************************************************/
 /** Tracking channel correlations
  *
  * When enabled, a tracking channel can output the correlations at each update
@@ -1274,6 +1364,15 @@ s8 sbp_send_sbp_msg_tracking_iq_dep_b_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_tracking_iq_dep_b_t(const sbp_msg_tracking_iq_dep_b_t *a,
                                         const sbp_msg_tracking_iq_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_IQ_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -1384,6 +1483,15 @@ s8 sbp_send_sbp_msg_tracking_iq_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_tracking_iq_dep_a_t(const sbp_msg_tracking_iq_dep_a_t *a,
                                         const sbp_msg_tracking_iq_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TRACKINGCHANNELSTATEDEPA
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -1478,6 +1586,15 @@ int sbp_cmp_sbp_tracking_channel_state_dep_a_t(
     const sbp_tracking_channel_state_dep_a_t *a,
     const sbp_tracking_channel_state_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_STATE_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -1591,6 +1708,15 @@ int sbp_cmp_sbp_msg_tracking_state_dep_a_t(
     const sbp_msg_tracking_state_dep_a_t *a,
     const sbp_msg_tracking_state_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TRACKINGCHANNELSTATEDEPB
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -1685,6 +1811,15 @@ int sbp_cmp_sbp_tracking_channel_state_dep_b_t(
     const sbp_tracking_channel_state_dep_b_t *a,
     const sbp_tracking_channel_state_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_TRACKING_STATE_DEP_B
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.

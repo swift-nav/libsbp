@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_RESULT
+ *
+ *****************************************************************************/
 /** Satellite acquisition result
  *
  * This message describes the results from an attempted GPS signal acquisition
@@ -154,6 +163,15 @@ s8 sbp_send_sbp_msg_acq_result_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *a,
                                  const sbp_msg_acq_result_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_RESULT_DEP_C
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -269,6 +287,15 @@ s8 sbp_send_sbp_msg_acq_result_dep_c_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *a,
                                        const sbp_msg_acq_result_dep_c_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_RESULT_DEP_B
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -385,6 +412,15 @@ s8 sbp_send_sbp_msg_acq_result_dep_b_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *a,
                                        const sbp_msg_acq_result_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_RESULT_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -502,6 +538,15 @@ s8 sbp_send_sbp_msg_acq_result_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_acq_result_dep_a_t(const sbp_msg_acq_result_dep_a_t *a,
                                        const sbp_msg_acq_result_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_ACQSVPROFILE
+ *
+ *****************************************************************************/
 /** Acq perfomance measurement and debug
  *
  * Profile for a specific SV for debugging purposes. The message describes SV
@@ -637,6 +682,15 @@ s8 sbp_decode_sbp_acq_sv_profile_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_acq_sv_profile_t(const sbp_acq_sv_profile_t *a,
                                  const sbp_acq_sv_profile_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_ACQSVPROFILEDEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -772,6 +826,15 @@ s8 sbp_decode_sbp_acq_sv_profile_dep_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *a,
                                      const sbp_acq_sv_profile_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_SV_PROFILE
+ *
+ *****************************************************************************/
 /** Acquisition perfomance measurement and debug
  *
  * The message describes all SV profiles during acquisition time. The message is
@@ -884,6 +947,15 @@ s8 sbp_send_sbp_msg_acq_sv_profile_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a,
                                      const sbp_msg_acq_sv_profile_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ACQ_SV_PROFILE_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.

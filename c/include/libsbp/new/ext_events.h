@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EXT_EVENT
+ *
+ *****************************************************************************/
 /** Reports timestamped external pin event
  *
  * Reports detection of an external event, the GPS time it occurred, which pin

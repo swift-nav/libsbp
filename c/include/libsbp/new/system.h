@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STARTUP
+ *
+ *****************************************************************************/
 /** System start-up message
  *
  * The system start-up message is sent once on system start-up. It notifies the
@@ -146,6 +155,15 @@ s8 sbp_send_sbp_msg_startup_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_startup_t(const sbp_msg_startup_t *a,
                               const sbp_msg_startup_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_DGNSS_STATUS
+ *
+ *****************************************************************************/
 /** Status of received corrections
  *
  * This message provides information about the receipt of Differential
@@ -173,28 +191,155 @@ typedef struct {
    */
   sbp_unterminated_string_t source;
 } sbp_msg_dgnss_status_t;
+
+/**
+ * Initialise sbp_msg_dgnss_status_t::source to empty
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ */
 void sbp_msg_dgnss_status_t_source_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_dgnss_status_t::source for validity
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @return true is sbp_msg_dgnss_status_t::source is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_dgnss_status_t_source_valid(const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_dgnss_status_t::source for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_dgnss_status_t instance
+ * @param b sbp_msg_dgnss_status_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_dgnss_status_t_source_strcmp(const sbp_unterminated_string_t *a,
                                          const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_dgnss_status_t::source
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @return Size of sbp_msg_dgnss_status_t::source in wire representation
+ */
 uint8_t sbp_msg_dgnss_status_t_source_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_dgnss_status_t::source for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_dgnss_status_t::source before it exceeds the maximum size of
+ * the field in wire representation
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_dgnss_status_t_source_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_dgnss_status_t::source
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_dgnss_status_t_source_set(sbp_unterminated_string_t *s,
                                        const char *new_str);
+
+/**
+ * Set sbp_msg_dgnss_status_t::source with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_dgnss_status_t_source_printf(sbp_unterminated_string_t *s,
                                           const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_dgnss_status_t::source with printf style formatting
+ *
+ * Identical to #sbp_msg_dgnss_status_t_source_printf except it takes a va_list
+ * argument
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_dgnss_status_t_source_vprintf(sbp_unterminated_string_t *s,
                                            const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_dgnss_status_t::source with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_dgnss_status_t_source_append_printf(sbp_unterminated_string_t *s,
                                                  const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_dgnss_status_t::source with printf style formatting
+ *
+ * Identical to #sbp_msg_dgnss_status_t_source_append_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_dgnss_status_t_source_append_vprintf(sbp_unterminated_string_t *s,
                                                   const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_dgnss_status_t::source
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @return String contents
+ */
 const char *sbp_msg_dgnss_status_t_source_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_dgnss_status_t::source
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_dgnss_status_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_dgnss_status_t_source_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_dgnss_status_t
@@ -285,6 +430,15 @@ s8 sbp_send_sbp_msg_dgnss_status_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *a,
                                    const sbp_msg_dgnss_status_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_HEARTBEAT
+ *
+ *****************************************************************************/
 /** System heartbeat message
  *
  * The heartbeat message is sent periodically to inform the host or other
@@ -386,6 +540,15 @@ s8 sbp_send_sbp_msg_heartbeat_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_heartbeat_t(const sbp_msg_heartbeat_t *a,
                                 const sbp_msg_heartbeat_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_SUBSYSTEMREPORT
+ *
+ *****************************************************************************/
 /** Sub-system Status report
  *
  * Report the general and specific state of a sub-system.  If the generic state
@@ -477,6 +640,15 @@ s8 sbp_decode_sbp_sub_system_report_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_sub_system_report_t(const sbp_sub_system_report_t *a,
                                     const sbp_sub_system_report_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STATUS_REPORT
+ *
+ *****************************************************************************/
 /** Status report message
  *
  * The status report is sent periodically to inform the host or other attached
@@ -612,6 +784,15 @@ s8 sbp_send_sbp_msg_status_report_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_status_report_t(const sbp_msg_status_report_t *a,
                                     const sbp_msg_status_report_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_INS_STATUS
+ *
+ *****************************************************************************/
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation and
@@ -710,6 +891,15 @@ s8 sbp_send_sbp_msg_ins_status_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ins_status_t(const sbp_msg_ins_status_t *a,
                                  const sbp_msg_ins_status_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_CSAC_TELEMETRY
+ *
+ *****************************************************************************/
 /** Experimental telemetry message
  *
  * The CSAC telemetry message has an implementation defined telemetry string
@@ -728,28 +918,155 @@ typedef struct {
    */
   sbp_unterminated_string_t telemetry;
 } sbp_msg_csac_telemetry_t;
+
+/**
+ * Initialise sbp_msg_csac_telemetry_t::telemetry to empty
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ */
 void sbp_msg_csac_telemetry_t_telemetry_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_csac_telemetry_t::telemetry for validity
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @return true is sbp_msg_csac_telemetry_t::telemetry is valid for encoding
+ * purposes, false otherwise
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_csac_telemetry_t::telemetry for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_csac_telemetry_t instance
+ * @param b sbp_msg_csac_telemetry_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_csac_telemetry_t_telemetry_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_csac_telemetry_t::telemetry
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @return Size of sbp_msg_csac_telemetry_t::telemetry in wire representation
+ */
 uint8_t sbp_msg_csac_telemetry_t_telemetry_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_csac_telemetry_t::telemetry for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_csac_telemetry_t::telemetry before it exceeds the maximum
+ * size of the field in wire representation
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_csac_telemetry_t_telemetry_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_csac_telemetry_t::telemetry
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_set(sbp_unterminated_string_t *s,
                                             const char *new_str);
+
+/**
+ * Set sbp_msg_csac_telemetry_t::telemetry with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_printf(sbp_unterminated_string_t *s,
                                                const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_csac_telemetry_t::telemetry with printf style formatting
+ *
+ * Identical to #sbp_msg_csac_telemetry_t_telemetry_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_vprintf(sbp_unterminated_string_t *s,
                                                 const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_csac_telemetry_t::telemetry with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_csac_telemetry_t::telemetry with printf style formatting
+ *
+ * Identical to #sbp_msg_csac_telemetry_t_telemetry_append_printf except it
+ * takes a va_list argument
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_csac_telemetry_t_telemetry_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_csac_telemetry_t::telemetry
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @return String contents
+ */
 const char *sbp_msg_csac_telemetry_t_telemetry_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_csac_telemetry_t::telemetry
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_csac_telemetry_t_telemetry_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_csac_telemetry_t
@@ -840,6 +1157,15 @@ s8 sbp_send_sbp_msg_csac_telemetry_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *a,
                                      const sbp_msg_csac_telemetry_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_CSAC_TELEMETRY_LABELS
+ *
+ *****************************************************************************/
 /** Experimental telemetry message labels
  *
  * The CSAC telemetry message provides labels for each member of the string
@@ -858,28 +1184,162 @@ typedef struct {
    */
   sbp_unterminated_string_t telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
+
+/**
+ * Initialise sbp_msg_csac_telemetry_labels_t::telemetry_labels to empty
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ */
 void sbp_msg_csac_telemetry_labels_t_telemetry_labels_init(
     sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_csac_telemetry_labels_t::telemetry_labels for validity
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @return true is sbp_msg_csac_telemetry_labels_t::telemetry_labels is valid
+ * for encoding purposes, false otherwise
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_valid(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_csac_telemetry_labels_t::telemetry_labels for
+ * equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_csac_telemetry_labels_t instance
+ * @param b sbp_msg_csac_telemetry_labels_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_csac_telemetry_labels_t::telemetry_labels
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @return Size of sbp_msg_csac_telemetry_labels_t::telemetry_labels in wire
+ * representation
+ */
 uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_csac_telemetry_labels_t::telemetry_labels for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_csac_telemetry_labels_t::telemetry_labels before it exceeds
+ * the maximum size of the field in wire representation
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_set(
     sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
+ * formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_csac_telemetry_labels_t_telemetry_labels_printf except
+ * it takes a va_list argument
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
+ * formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
+ * formatting
+ *
+ * Identical to #sbp_msg_csac_telemetry_labels_t_telemetry_labels_append_printf
+ * except it takes a va_list argument
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from
+ * sbp_msg_csac_telemetry_labels_t::telemetry_labels
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @return String contents
+ */
 const char *sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(
     const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_csac_telemetry_labels_t::telemetry_labels
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_csac_telemetry_labels_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_csac_telemetry_labels_t
@@ -974,6 +1434,15 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(
     const sbp_msg_csac_telemetry_labels_t *a,
     const sbp_msg_csac_telemetry_labels_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_INS_UPDATES
+ *
+ *****************************************************************************/
 /** Inertial Navigation System update status message
  *
  * The INS update status message contains informations about executed and
@@ -1104,6 +1573,15 @@ s8 sbp_send_sbp_msg_ins_updates_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ins_updates_t(const sbp_msg_ins_updates_t *a,
                                   const sbp_msg_ins_updates_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GNSS_TIME_OFFSET
+ *
+ *****************************************************************************/
 /** Offset of the local time with respect to GNSS time
  *
  * The GNSS time offset message contains the information that is needed to
@@ -1221,6 +1699,15 @@ s8 sbp_send_sbp_msg_gnss_time_offset_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_gnss_time_offset_t(const sbp_msg_gnss_time_offset_t *a,
                                        const sbp_msg_gnss_time_offset_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_PPS_TIME
+ *
+ *****************************************************************************/
 /** Local time at detection of PPS pulse
  *
  * The PPS time message contains the value of the sender's local time in
@@ -1326,6 +1813,15 @@ s8 sbp_send_sbp_msg_pps_time_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_pps_time_t(const sbp_msg_pps_time_t *a,
                                const sbp_msg_pps_time_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GROUP_META
+ *
+ *****************************************************************************/
 /** Solution Group Metadata
  *
  * This leading message lists the time metadata of the Solution Group. It also

@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_NDB_EVENT
+ *
+ *****************************************************************************/
 /** Navigation DataBase Event
  *
  * This message is sent out when an object is stored into NDB. If needed message

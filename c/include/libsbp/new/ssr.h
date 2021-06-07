@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_CODEBIASESCONTENT
+ *
+ *****************************************************************************/
 /** SSR code biases corrections for a particular satellite
  *
  * Code biases are to be added to pseudorange. The corrections conform with
@@ -126,6 +135,15 @@ s8 sbp_decode_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_code_biases_content_t(const sbp_code_biases_content_t *a,
                                       const sbp_code_biases_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PHASEBIASESCONTENT
+ *
+ *****************************************************************************/
 /** SSR phase biases corrections for a particular satellite
  *
  * Phase biases are to be added to carrier phase measurements.
@@ -228,6 +246,15 @@ s8 sbp_decode_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *a,
                                        const sbp_phase_biases_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_STECHEADER
+ *
+ *****************************************************************************/
 /** Header for the MSG_SSR_STEC_CORRECTION message
  *
  * A full set of STEC information will likely span multiple SBP messages, since
@@ -338,6 +365,15 @@ s8 sbp_decode_sbp_stec_header_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_stec_header_t(const sbp_stec_header_t *a,
                               const sbp_stec_header_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GRIDDEDCORRECTIONHEADER
+ *
+ *****************************************************************************/
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
  * The LPP message contains nested variable length arrays which are not
@@ -459,6 +495,15 @@ int sbp_cmp_sbp_gridded_correction_header_t(
     const sbp_gridded_correction_header_t *a,
     const sbp_gridded_correction_header_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_STECSATELEMENT
+ *
+ *****************************************************************************/
 /** None
  *
  * STEC polynomial for the given satellite.
@@ -551,6 +596,15 @@ s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a,
                                    const sbp_stec_sat_element_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TROPOSPHERICDELAYCORRECTIONNOSTD
+ *
+ *****************************************************************************/
 /** None
  *
  * Troposphere vertical delays at the grid point.
@@ -642,6 +696,15 @@ int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(
     const sbp_tropospheric_delay_correction_no_std_t *a,
     const sbp_tropospheric_delay_correction_no_std_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_TROPOSPHERICDELAYCORRECTION
+ *
+ *****************************************************************************/
 /** None
  *
  * Troposphere vertical delays (mean and standard deviation) at the grid point.
@@ -739,6 +802,15 @@ int sbp_cmp_sbp_tropospheric_delay_correction_t(
     const sbp_tropospheric_delay_correction_t *a,
     const sbp_tropospheric_delay_correction_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_STECRESIDUALNOSTD
+ *
+ *****************************************************************************/
 /** None
  *
  * STEC residual for the given satellite at the grid point.
@@ -824,6 +896,15 @@ s8 sbp_decode_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *a,
                                        const sbp_stec_residual_no_std_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_STECRESIDUAL
+ *
+ *****************************************************************************/
 /** None
  *
  * STEC residual (mean and standard deviation) for the given satellite at the
@@ -914,6 +995,15 @@ s8 sbp_decode_sbp_stec_residual_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a,
                                 const sbp_stec_residual_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_ORBIT_CLOCK
+ *
+ *****************************************************************************/
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is to be applied as a delta
@@ -1086,6 +1176,15 @@ s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a,
                                       const sbp_msg_ssr_orbit_clock_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_CODE_BIASES
+ *
+ *****************************************************************************/
 /** Precise code biases correction
  *
  * The precise code biases message is to be added to the pseudorange of the
@@ -1221,6 +1320,15 @@ s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a,
                                       const sbp_msg_ssr_code_biases_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_PHASE_BIASES
+ *
+ *****************************************************************************/
 /** Precise phase biases correction
  *
  * The precise phase biases message contains the biases to be added to the
@@ -1378,6 +1486,15 @@ s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a,
                                        const sbp_msg_ssr_phase_biases_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_STEC_CORRECTION
+ *
+ *****************************************************************************/
 /** STEC correction polynomial coeffcients
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
@@ -1500,6 +1617,15 @@ int sbp_cmp_sbp_msg_ssr_stec_correction_t(
     const sbp_msg_ssr_stec_correction_t *a,
     const sbp_msg_ssr_stec_correction_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_GRIDDED_CORRECTION
+ *
+ *****************************************************************************/
 /** Gridded troposphere and STEC correction residuals
  *
  * STEC residuals are per space vehicle, troposphere is not.
@@ -1631,6 +1757,15 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_t(
     const sbp_msg_ssr_gridded_correction_t *a,
     const sbp_msg_ssr_gridded_correction_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_TILE_DEFINITION
+ *
+ *****************************************************************************/
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -1815,6 +1950,15 @@ int sbp_cmp_sbp_msg_ssr_tile_definition_t(
     const sbp_msg_ssr_tile_definition_t *a,
     const sbp_msg_ssr_tile_definition_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_SATELLITEAPC
+ *
+ *****************************************************************************/
 /** Antenna phase center correction
  *
  * Contains phase center offset and elevation variation corrections for one
@@ -1916,6 +2060,15 @@ s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a,
                                 const sbp_satellite_apc_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_SATELLITE_APC
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Satellite antenna phase center corrections
@@ -2023,6 +2176,15 @@ s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a,
                                         const sbp_msg_ssr_satellite_apc_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_ORBIT_CLOCK_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS reference time of the correction
@@ -2193,6 +2355,15 @@ int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(
     const sbp_msg_ssr_orbit_clock_dep_a_t *a,
     const sbp_msg_ssr_orbit_clock_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_STECHEADERDEPA
+ *
+ *****************************************************************************/
 /** Header for MSG_SSR_STEC_CORRECTION_DEP message
  *
  * A full set of STEC information will likely span multiple SBP messages, since
@@ -2296,6 +2467,15 @@ s8 sbp_decode_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a,
                                     const sbp_stec_header_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GRIDDEDCORRECTIONHEADERDEPA
+ *
+ *****************************************************************************/
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
  * The 3GPP message contains nested variable length arrays which are not
@@ -2409,6 +2589,15 @@ int sbp_cmp_sbp_gridded_correction_header_dep_a_t(
     const sbp_gridded_correction_header_dep_a_t *a,
     const sbp_gridded_correction_header_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GRIDDEFINITIONHEADERDEPA
+ *
+ *****************************************************************************/
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages
  *
  * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
@@ -2521,6 +2710,15 @@ int sbp_cmp_sbp_grid_definition_header_dep_a_t(
     const sbp_grid_definition_header_dep_a_t *a,
     const sbp_grid_definition_header_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_STEC_CORRECTION_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Header of a STEC message
@@ -2638,6 +2836,15 @@ int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(
     const sbp_msg_ssr_stec_correction_dep_a_t *a,
     const sbp_msg_ssr_stec_correction_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Header of a Gridded Correction message
@@ -2768,6 +2975,15 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
     const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a,
     const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Header of a Gridded Correction message
@@ -2896,6 +3112,15 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(
     const sbp_msg_ssr_gridded_correction_dep_a_t *a,
     const sbp_msg_ssr_gridded_correction_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SSR_GRID_DEFINITION_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Header of a Gridded Correction message

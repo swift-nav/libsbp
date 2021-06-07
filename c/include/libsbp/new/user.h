@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_USER_DATA
+ *
+ *****************************************************************************/
 /** User data
  *
  * This message can contain any application specific user data up to a maximum

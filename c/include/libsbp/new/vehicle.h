@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ODOMETRY
+ *
+ *****************************************************************************/
 /** Vehicle forward (x-axis) velocity
  *
  * Message representing the x component of vehicle velocity in the user frame at
@@ -154,6 +163,15 @@ s8 sbp_send_sbp_msg_odometry_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_odometry_t(const sbp_msg_odometry_t *a,
                                const sbp_msg_odometry_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_WHEELTICK
+ *
+ *****************************************************************************/
 /** Accumulated wheeltick count message
  *
  * Message containing the accumulated distance travelled by a wheel located at

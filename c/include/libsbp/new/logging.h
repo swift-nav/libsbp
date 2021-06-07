@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_LOG
+ *
+ *****************************************************************************/
 /** Plaintext logging messages with levels
  *
  * This message contains a human-readable payload string from the device
@@ -55,23 +64,149 @@ typedef struct {
    */
   sbp_unterminated_string_t text;
 } sbp_msg_log_t;
+
+/**
+ * Initialise sbp_msg_log_t::text to empty
+ *
+ * @param msg sbp_msg_log_t instance
+ */
 void sbp_msg_log_t_text_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_log_t::text for validity
+ *
+ * @param msg sbp_msg_log_t instance
+ * @return true is sbp_msg_log_t::text is valid for encoding purposes, false
+ * otherwise
+ */
 bool sbp_msg_log_t_text_valid(const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_log_t::text for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_log_t instance
+ * @param b sbp_msg_log_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_log_t_text_strcmp(const sbp_unterminated_string_t *a,
                               const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_log_t::text
+ *
+ * @param msg sbp_msg_log_t instance
+ * @return Size of sbp_msg_log_t::text in wire representation
+ */
 uint8_t sbp_msg_log_t_text_packed_len(const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_log_t::text for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_log_t::text before it exceeds the maximum size of the field
+ * in wire representation
+ *
+ * @param msg sbp_msg_log_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_log_t_text_space_remaining(const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_log_t::text
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_log_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_log_t_text_set(sbp_unterminated_string_t *s, const char *new_str);
+
+/**
+ * Set sbp_msg_log_t::text with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_log_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_log_t_text_printf(sbp_unterminated_string_t *s, const char *fmt,
                                ...) SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_log_t::text with printf style formatting
+ *
+ * Identical to #sbp_msg_log_t_text_printf except it takes a va_list argument
+ *
+ * @param msg sbp_msg_log_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_log_t_text_vprintf(sbp_unterminated_string_t *s, const char *fmt,
                                 va_list ap);
+
+/**
+ * Append sbp_msg_log_t::text with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_log_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_log_t_text_append_printf(sbp_unterminated_string_t *s,
                                       const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_log_t::text with printf style formatting
+ *
+ * Identical to #sbp_msg_log_t_text_append_printf except it takes a va_list
+ * argument
+ *
+ * @param msg sbp_msg_log_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_log_t_text_append_vprintf(sbp_unterminated_string_t *s,
                                        const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_log_t::text
+ *
+ * @param msg sbp_msg_log_t instance
+ * @return String contents
+ */
 const char *sbp_msg_log_t_text_get(const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_log_t::text
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_log_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_log_t_text_section_strlen(const sbp_unterminated_string_t *s,
+                                          uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_log_t
@@ -157,6 +292,15 @@ s8 sbp_send_sbp_msg_log_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FWD
+ *
+ *****************************************************************************/
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may
@@ -276,6 +420,15 @@ s8 sbp_send_sbp_msg_fwd_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_PRINT_DEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -286,26 +439,153 @@ typedef struct {
    */
   sbp_unterminated_string_t text;
 } sbp_msg_print_dep_t;
+
+/**
+ * Initialise sbp_msg_print_dep_t::text to empty
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ */
 void sbp_msg_print_dep_t_text_init(sbp_unterminated_string_t *s);
+
+/**
+ * Test sbp_msg_print_dep_t::text for validity
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @return true is sbp_msg_print_dep_t::text is valid for encoding purposes,
+ * false otherwise
+ */
 bool sbp_msg_print_dep_t_text_valid(const sbp_unterminated_string_t *s);
+
+/**
+ * Tests 2 instances of sbp_msg_print_dep_t::text for equality
+ *
+ * Returns a value with the same definitions as #strcmp from the C standard
+ * library
+ *
+ * @param a sbp_msg_print_dep_t instance
+ * @param b sbp_msg_print_dep_t instance
+ * @return 0 if equal, <0 if a<b, >0 if a>b
+ */
 int sbp_msg_print_dep_t_text_strcmp(const sbp_unterminated_string_t *a,
                                     const sbp_unterminated_string_t *b);
+
+/**
+ * Get the encoded size of sbp_msg_print_dep_t::text
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @return Size of sbp_msg_print_dep_t::text in wire representation
+ */
 uint8_t sbp_msg_print_dep_t_text_packed_len(const sbp_unterminated_string_t *s);
+
+/**
+ * Query sbp_msg_print_dep_t::text for remaining space
+ *
+ * Returns the number of bytes (not including NULL terminator) which can be
+ * added to sbp_msg_print_dep_t::text before it exceeds the maximum size of the
+ * field in wire representation
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @return Maximum number of bytes that can be appended to the existing string
+ */
 uint8_t sbp_msg_print_dep_t_text_space_remaining(
     const sbp_unterminated_string_t *s);
+/**
+ * Set sbp_msg_print_dep_t::text
+ *
+ * Erase any existing content and replace with the specified string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the specified string is longer than can be represented in wire encoding this
+ * function will return false
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @param new_str New string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_print_dep_t_text_set(sbp_unterminated_string_t *s,
                                   const char *new_str);
+
+/**
+ * Set sbp_msg_print_dep_t::text with printf style formatting
+ *
+ * Erase any existing content and replace with the formatted string
+ *
+ * This function will return true if the new string was successfully applied. If
+ * the operation would end up overflowing the maximum size of this field in wire
+ * encoding the existing contents will be erased and this function will return
+ * false.
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_print_dep_t_text_printf(sbp_unterminated_string_t *s,
                                      const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Set sbp_msg_print_dep_t::text with printf style formatting
+ *
+ * Identical to #sbp_msg_print_dep_t_text_printf except it takes a va_list
+ * argument
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_print_dep_t_text_vprintf(sbp_unterminated_string_t *s,
                                       const char *fmt, va_list ap);
+
+/**
+ * Append sbp_msg_print_dep_t::text with printf style formatting
+ *
+ * The new string will be appended to the existing contents of the string (if
+ * any). If the operation would end up overflowing the maximum size of this
+ * field in wire encoding the existing contents will be unmodified and this
+ * function will return false.
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @param fmt printf style format string
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_print_dep_t_text_append_printf(sbp_unterminated_string_t *s,
                                             const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
+
+/**
+ * Append sbp_msg_print_dep_t::text with printf style formatting
+ *
+ * Identical to #sbp_msg_print_dep_t_text_append_printf except it takes a
+ * va_list argument
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @param fmt printf style format string
+ * @param ap Argument list
+ * @return true on success, false otherwise
+ *
+ */
 bool sbp_msg_print_dep_t_text_append_vprintf(sbp_unterminated_string_t *s,
                                              const char *fmt, va_list ap);
+
+/**
+ * Obtain the string value from sbp_msg_print_dep_t::text
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @return String contents
+ */
 const char *sbp_msg_print_dep_t_text_get(const sbp_unterminated_string_t *s);
+
+/**
+ * Obtain the length of sbp_msg_print_dep_t::text
+ *
+ * The returned value does not include the NULL terminator.
+ *
+ * @param msg sbp_msg_print_dep_t instance
+ * @return Length of section
+ */
+uint8_t sbp_msg_print_dep_t_text_section_strlen(
+    const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_print_dep_t

@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_IMU_RAW
+ *
+ *****************************************************************************/
 /** Raw IMU data
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
@@ -177,6 +186,15 @@ s8 sbp_send_sbp_msg_imu_raw_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a,
                               const sbp_msg_imu_raw_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_IMU_AUX
+ *
+ *****************************************************************************/
 /** Auxiliary IMU data
  *
  * Auxiliary data specific to a particular IMU. The `imu_type` field will always

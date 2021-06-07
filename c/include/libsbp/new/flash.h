@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FLASH_PROGRAM
+ *
+ *****************************************************************************/
 /** Program flash addresses
  *
  * The flash program message programs a set of addresses of either the STM or
@@ -158,6 +167,15 @@ s8 sbp_send_sbp_msg_flash_program_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a,
                                     const sbp_msg_flash_program_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FLASH_DONE
+ *
+ *****************************************************************************/
 /** Flash response message (host <= device)
  *
  * This message defines success or failure codes for a variety of flash memory
@@ -257,6 +275,15 @@ s8 sbp_send_sbp_msg_flash_done_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a,
                                  const sbp_msg_flash_done_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FLASH_READ_REQ
+ *
+ *****************************************************************************/
 /** Read STM or M25 flash address request (host => device)
  *
  * The flash read message reads a set of addresses of either the STM or M25
@@ -373,6 +400,15 @@ s8 sbp_send_sbp_msg_flash_read_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a,
                                      const sbp_msg_flash_read_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FLASH_READ_RESP
+ *
+ *****************************************************************************/
 /** Read STM or M25 flash address response (host <= device)
  *
  * The flash read message reads a set of addresses of either the STM or M25
@@ -489,6 +525,15 @@ s8 sbp_send_sbp_msg_flash_read_resp_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a,
                                       const sbp_msg_flash_read_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_FLASH_ERASE
+ *
+ *****************************************************************************/
 /** Erase sector of device flash memory (host => device)
  *
  * The flash erase message from the host erases a sector of either the STM or
@@ -595,6 +640,15 @@ s8 sbp_send_sbp_msg_flash_erase_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a,
                                   const sbp_msg_flash_erase_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STM_FLASH_LOCK_SECTOR
+ *
+ *****************************************************************************/
 /** Lock sector of STM flash memory (host => device)
  *
  * The flash lock message locks a sector of the STM flash memory. The device
@@ -700,6 +754,15 @@ int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(
     const sbp_msg_stm_flash_lock_sector_t *a,
     const sbp_msg_stm_flash_lock_sector_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STM_FLASH_UNLOCK_SECTOR
+ *
+ *****************************************************************************/
 /** Unlock sector of STM flash memory (host => device)
  *
  * The flash unlock message unlocks a sector of the STM flash memory. The device
@@ -806,6 +869,15 @@ int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(
     const sbp_msg_stm_flash_unlock_sector_t *a,
     const sbp_msg_stm_flash_unlock_sector_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STM_UNIQUE_ID_REQ
+ *
+ *****************************************************************************/
 /** Read device's hardcoded unique ID request (host => device)
 
  *
@@ -910,6 +982,15 @@ s8 sbp_send_sbp_msg_stm_unique_id_req_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a,
                                         const sbp_msg_stm_unique_id_req_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_STM_UNIQUE_ID_RESP
+ *
+ *****************************************************************************/
 /** Read device's hardcoded unique ID response (host <= device)
 
  *
@@ -1013,6 +1094,15 @@ s8 sbp_send_sbp_msg_stm_unique_id_resp_t(
 int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a,
                                          const sbp_msg_stm_unique_id_resp_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_M25_FLASH_WRITE_STATUS
+ *
+ *****************************************************************************/
 /** Write M25 flash status register (host => device)
  *
  * The flash status message writes to the 8-bit M25 flash status register. The

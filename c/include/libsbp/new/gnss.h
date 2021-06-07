@@ -38,6 +38,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GNSSSIGNAL
+ *
+ *****************************************************************************/
 /** Represents all the relevant information about the signal
  *
  * Signal identifier containing constellation, band, and satellite identifier.
@@ -123,6 +132,15 @@ s8 sbp_decode_sbp_sbp_gnss_signal_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_sbp_gnss_signal_t(const sbp_sbp_gnss_signal_t *a,
                                   const sbp_sbp_gnss_signal_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_SVID
+ *
+ *****************************************************************************/
 /** Space vehicle identifier
  *
  * A (Constellation ID, satellite ID) tuple that uniquely identifies a space
@@ -205,6 +223,15 @@ s8 sbp_decode_sbp_sv_id_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_sv_id_t(const sbp_sv_id_t *a, const sbp_sv_id_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GNSSSIGNALDEP
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -297,6 +324,15 @@ s8 sbp_decode_sbp_gnss_signal_dep_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_gnss_signal_dep_t(const sbp_gnss_signal_dep_t *a,
                                   const sbp_gnss_signal_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GPSTIMEDEP
+ *
+ *****************************************************************************/
 /** Millisecond-accurate GPS time
  *
  * A wire-appropriate GPS time, defined as the number of milliseconds since
@@ -380,6 +416,15 @@ s8 sbp_decode_sbp_gps_time_dep_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_gps_time_dep_t(const sbp_gps_time_dep_t *a,
                                const sbp_gps_time_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GPSTIMESEC
+ *
+ *****************************************************************************/
 /** Whole second accurate GPS time
  *
  * A GPS time, defined as the number of seconds since beginning of the week on
@@ -463,6 +508,15 @@ s8 sbp_decode_sbp_gps_time_sec_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_gps_time_sec_t(const sbp_gps_time_sec_t *a,
                                const sbp_gps_time_sec_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GPSTIME
+ *
+ *****************************************************************************/
 /** Nanosecond-accurate receiver clock time
  *
  * A wire-appropriate receiver clock time, defined as the time since the
@@ -553,6 +607,15 @@ s8 sbp_decode_sbp_sbp_gps_time_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_sbp_gps_time_t(const sbp_sbp_gps_time_t *a,
                                const sbp_sbp_gps_time_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_CARRIERPHASE
+ *
+ *****************************************************************************/
 /** GNSS carrier phase measurement
  *
  * Carrier phase measurement in cycles represented as a 40-bit fixed point

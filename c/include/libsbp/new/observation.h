@@ -39,6 +39,15 @@ extern "C" {
 
 struct sbp_state;
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_OBSERVATIONHEADER
+ *
+ *****************************************************************************/
 /** Header for observation message
  *
  * Header of a GNSS observation message.
@@ -125,6 +134,15 @@ s8 sbp_decode_sbp_observation_header_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_observation_header_t(const sbp_observation_header_t *a,
                                      const sbp_observation_header_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_DOPPLER
+ *
+ *****************************************************************************/
 /** GNSS doppler measurement
  *
  * Doppler measurement in Hz represented as a 24-bit fixed point number with
@@ -208,6 +226,15 @@ s8 sbp_decode_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PACKEDOBSCONTENT
+ *
+ *****************************************************************************/
 /** GNSS observations for a particular satellite signal
  *
  * Pseudorange and carrier phase observation for a satellite being tracked. The
@@ -327,6 +354,15 @@ s8 sbp_decode_sbp_packed_obs_content_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *a,
                                      const sbp_packed_obs_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PACKEDOSRCONTENT
+ *
+ *****************************************************************************/
 /** Network correction for a particular satellite signal
  *
  * Pseudorange and carrier phase network corrections for a satellite signal.
@@ -446,6 +482,15 @@ s8 sbp_decode_sbp_packed_osr_content_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_packed_osr_content_t(const sbp_packed_osr_content_t *a,
                                      const sbp_packed_osr_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_OBS
+ *
+ *****************************************************************************/
 /** GPS satellite observations
  *
  * The GPS observations message reports all the raw pseudorange and carrier
@@ -562,6 +607,15 @@ s8 sbp_send_sbp_msg_obs_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_obs_t(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASE_POS_LLH
+ *
+ *****************************************************************************/
 /** Base station position
  *
  * The base station position message is the position reported by the base
@@ -675,6 +729,15 @@ s8 sbp_send_sbp_msg_base_pos_llh_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *a,
                                    const sbp_msg_base_pos_llh_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_BASE_POS_ECEF
+ *
+ *****************************************************************************/
 /** Base station position in ECEF
  *
  * The base station position message is the position reported by the base
@@ -789,6 +852,15 @@ s8 sbp_send_sbp_msg_base_pos_ecef_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_base_pos_ecef_t(const sbp_msg_base_pos_ecef_t *a,
                                     const sbp_msg_base_pos_ecef_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_EPHEMERISCOMMONCONTENT
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS signal identifier (16 bit)
@@ -894,6 +966,15 @@ int sbp_cmp_sbp_ephemeris_common_content_t(
     const sbp_ephemeris_common_content_t *a,
     const sbp_ephemeris_common_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_EPHEMERISCOMMONCONTENTDEPB
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS signal identifier (16 bit)
@@ -1002,6 +1083,15 @@ int sbp_cmp_sbp_ephemeris_common_content_dep_b_t(
     const sbp_ephemeris_common_content_dep_b_t *a,
     const sbp_ephemeris_common_content_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_EPHEMERISCOMMONCONTENTDEPA
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS signal identifier
@@ -1111,6 +1201,15 @@ int sbp_cmp_sbp_ephemeris_common_content_dep_a_t(
     const sbp_ephemeris_common_content_dep_a_t *a,
     const sbp_ephemeris_common_content_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GPS_DEP_E
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GPS
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -1330,6 +1429,15 @@ int sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(
     const sbp_msg_ephemeris_gps_dep_e_t *a,
     const sbp_msg_ephemeris_gps_dep_e_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GPS_DEP_F
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * This observation message has been deprecated in favor of ephemeris message
@@ -1547,6 +1655,15 @@ int sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(
     const sbp_msg_ephemeris_gps_dep_f_t *a,
     const sbp_msg_ephemeris_gps_dep_f_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GPS
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GPS
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -1764,6 +1881,15 @@ s8 sbp_send_sbp_msg_ephemeris_gps_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *a,
                                     const sbp_msg_ephemeris_gps_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_QZSS
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for QZSS
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -1979,6 +2105,15 @@ s8 sbp_send_sbp_msg_ephemeris_qzss_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *a,
                                      const sbp_msg_ephemeris_qzss_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_BDS
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for BDS
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -2205,6 +2340,15 @@ s8 sbp_send_sbp_msg_ephemeris_bds_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *a,
                                     const sbp_msg_ephemeris_bds_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GAL_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * This observation message has been deprecated in favor of an ephemeris message
@@ -2427,6 +2571,15 @@ int sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(
     const sbp_msg_ephemeris_gal_dep_a_t *a,
     const sbp_msg_ephemeris_gal_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GAL
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for Galileo
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -2654,6 +2807,15 @@ s8 sbp_send_sbp_msg_ephemeris_gal_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *a,
                                     const sbp_msg_ephemeris_gal_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_SBAS_DEP_A
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Values common for all ephemeris types
@@ -2777,6 +2939,15 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(
     const sbp_msg_ephemeris_sbas_dep_a_t *a,
     const sbp_msg_ephemeris_sbas_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GLO_DEP_A
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -2907,6 +3078,15 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(
     const sbp_msg_ephemeris_glo_dep_a_t *a,
     const sbp_msg_ephemeris_glo_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_SBAS_DEP_B
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * This observation message has been deprecated in favor of ephemeris message
@@ -3035,6 +3215,15 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(
     const sbp_msg_ephemeris_sbas_dep_b_t *a,
     const sbp_msg_ephemeris_sbas_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_SBAS
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Values common for all ephemeris types
@@ -3156,6 +3345,15 @@ s8 sbp_send_sbp_msg_ephemeris_sbas_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *a,
                                      const sbp_msg_ephemeris_sbas_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GLO_DEP_B
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -3286,6 +3484,15 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(
     const sbp_msg_ephemeris_glo_dep_b_t *a,
     const sbp_msg_ephemeris_glo_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GLO_DEP_C
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -3426,6 +3633,15 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(
     const sbp_msg_ephemeris_glo_dep_c_t *a,
     const sbp_msg_ephemeris_glo_dep_c_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GLO_DEP_D
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * This observation message has been deprecated in favor of ephemeris message
@@ -3569,6 +3785,15 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(
     const sbp_msg_ephemeris_glo_dep_d_t *a,
     const sbp_msg_ephemeris_glo_dep_d_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_GLO
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -3712,6 +3937,15 @@ s8 sbp_send_sbp_msg_ephemeris_glo_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *a,
                                     const sbp_msg_ephemeris_glo_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_DEP_D
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -3959,6 +4193,15 @@ s8 sbp_send_sbp_msg_ephemeris_dep_d_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *a,
                                       const sbp_msg_ephemeris_dep_d_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -4188,6 +4431,15 @@ s8 sbp_send_sbp_msg_ephemeris_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *a,
                                       const sbp_msg_ephemeris_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_DEP_B
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -4422,6 +4674,15 @@ s8 sbp_send_sbp_msg_ephemeris_dep_b_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *a,
                                       const sbp_msg_ephemeris_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_EPHEMERIS_DEP_C
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
@@ -4669,6 +4930,15 @@ s8 sbp_send_sbp_msg_ephemeris_dep_c_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_ephemeris_dep_c_t(const sbp_msg_ephemeris_dep_c_t *a,
                                       const sbp_msg_ephemeris_dep_c_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_OBSERVATIONHEADERDEP
+ *
+ *****************************************************************************/
 /** Header for observation message
  *
  * Header of a GPS observation message.
@@ -4755,6 +5025,15 @@ s8 sbp_decode_sbp_observation_header_dep_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_observation_header_dep_t(const sbp_observation_header_dep_t *a,
                                          const sbp_observation_header_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_CARRIERPHASEDEPA
+ *
+ *****************************************************************************/
 /** GPS carrier phase measurement
  *
  * Carrier phase measurement in cycles represented as a 40-bit fixed point
@@ -4843,6 +5122,15 @@ s8 sbp_decode_sbp_carrier_phase_dep_a_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_carrier_phase_dep_a_t(const sbp_carrier_phase_dep_a_t *a,
                                       const sbp_carrier_phase_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PACKEDOBSCONTENTDEPA
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -4946,6 +5234,15 @@ int sbp_cmp_sbp_packed_obs_content_dep_a_t(
     const sbp_packed_obs_content_dep_a_t *a,
     const sbp_packed_obs_content_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PACKEDOBSCONTENTDEPB
+ *
+ *****************************************************************************/
 /** GPS observations for a particular satellite signal
  *
  * Pseudorange and carrier phase observation for a satellite being tracked.
@@ -5050,6 +5347,15 @@ int sbp_cmp_sbp_packed_obs_content_dep_b_t(
     const sbp_packed_obs_content_dep_b_t *a,
     const sbp_packed_obs_content_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_PACKEDOBSCONTENTDEPC
+ *
+ *****************************************************************************/
 /** GPS observations for a particular satellite signal
  *
  * Pseudorange and carrier phase observation for a satellite being tracked. The
@@ -5155,6 +5461,15 @@ int sbp_cmp_sbp_packed_obs_content_dep_c_t(
     const sbp_packed_obs_content_dep_c_t *a,
     const sbp_packed_obs_content_dep_c_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_OBS_DEP_A
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * Deprecated.
@@ -5267,6 +5582,15 @@ s8 sbp_send_sbp_msg_obs_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *a,
                                 const sbp_msg_obs_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_OBS_DEP_B
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * This observation message has been deprecated in favor of observations that
@@ -5382,6 +5706,15 @@ s8 sbp_send_sbp_msg_obs_dep_b_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *a,
                                 const sbp_msg_obs_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_OBS_DEP_C
+ *
+ *****************************************************************************/
 /** Deprecated
  *
  * The GPS observations message reports all the raw pseudorange and carrier
@@ -5499,6 +5832,15 @@ s8 sbp_send_sbp_msg_obs_dep_c_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *a,
                                 const sbp_msg_obs_dep_c_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_IONO
+ *
+ *****************************************************************************/
 /** Iono corrections
  *
  * The ionospheric parameters which allow the "L1 only" or "L2 only" user to
@@ -5612,6 +5954,15 @@ s8 sbp_send_sbp_msg_iono_t(struct sbp_state *s, u16 sender_id,
  */
 int sbp_cmp_sbp_msg_iono_t(const sbp_msg_iono_t *a, const sbp_msg_iono_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SV_CONFIGURATION_GPS_DEP
+ *
+ *****************************************************************************/
 /** L2C capability mask
  *
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
@@ -5722,6 +6073,15 @@ int sbp_cmp_sbp_msg_sv_configuration_gps_dep_t(
     const sbp_msg_sv_configuration_gps_dep_t *a,
     const sbp_msg_sv_configuration_gps_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_GNSSCAPB
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GPS SV active mask
@@ -5866,6 +6226,15 @@ s8 sbp_decode_sbp_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_gnss_capb_t(const sbp_gnss_capb_t *a, const sbp_gnss_capb_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GNSS_CAPB
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * Navigation Message Correction Table Validity Time
@@ -5963,6 +6332,15 @@ s8 sbp_send_sbp_msg_gnss_capb_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *a,
                                 const sbp_msg_gnss_capb_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GROUP_DELAY_DEP_A
+ *
+ *****************************************************************************/
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
@@ -6080,6 +6458,15 @@ s8 sbp_send_sbp_msg_group_delay_dep_a_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *a,
                                         const sbp_msg_group_delay_dep_a_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GROUP_DELAY_DEP_B
+ *
+ *****************************************************************************/
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
@@ -6197,6 +6584,15 @@ s8 sbp_send_sbp_msg_group_delay_dep_b_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *a,
                                         const sbp_msg_group_delay_dep_b_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GROUP_DELAY
+ *
+ *****************************************************************************/
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
@@ -6312,6 +6708,15 @@ s8 sbp_send_sbp_msg_group_delay_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_group_delay_t(const sbp_msg_group_delay_t *a,
                                   const sbp_msg_group_delay_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_ALMANACCOMMONCONTENT
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS signal identifier
@@ -6426,6 +6831,15 @@ s8 sbp_decode_sbp_almanac_common_content_t(const uint8_t *buf, uint8_t len,
 int sbp_cmp_sbp_almanac_common_content_t(const sbp_almanac_common_content_t *a,
                                          const sbp_almanac_common_content_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_ALMANACCOMMONCONTENTDEP
+ *
+ *****************************************************************************/
 typedef struct {
   /**
    * GNSS signal identifier
@@ -6543,6 +6957,15 @@ int sbp_cmp_sbp_almanac_common_content_dep_t(
     const sbp_almanac_common_content_dep_t *a,
     const sbp_almanac_common_content_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ALMANAC_GPS_DEP
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
@@ -6691,6 +7114,15 @@ s8 sbp_send_sbp_msg_almanac_gps_dep_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *a,
                                       const sbp_msg_almanac_gps_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ALMANAC_GPS
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
@@ -6837,6 +7269,15 @@ s8 sbp_send_sbp_msg_almanac_gps_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *a,
                                   const sbp_msg_almanac_gps_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ALMANAC_GLO_DEP
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
@@ -6976,6 +7417,15 @@ s8 sbp_send_sbp_msg_almanac_glo_dep_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *a,
                                       const sbp_msg_almanac_glo_dep_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_ALMANAC_GLO
+ *
+ *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
@@ -7113,6 +7563,15 @@ s8 sbp_send_sbp_msg_almanac_glo_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *a,
                                   const sbp_msg_almanac_glo_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_GLO_BIASES
+ *
+ *****************************************************************************/
 /** GLONASS L1/L2 Code-Phase biases
  *
  * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
@@ -7232,6 +7691,15 @@ s8 sbp_send_sbp_msg_glo_biases_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_glo_biases_t(const sbp_msg_glo_biases_t *a,
                                  const sbp_msg_glo_biases_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_SVAZEL
+ *
+ *****************************************************************************/
 /** Satellite azimuth and elevation
  *
  * Satellite azimuth and elevation.
@@ -7318,6 +7786,15 @@ s8 sbp_decode_sbp_sv_az_el_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  */
 int sbp_cmp_sbp_sv_az_el_t(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_SV_AZ_EL
+ *
+ *****************************************************************************/
 /** Satellite azimuths and elevations
  *
  * Azimuth and elevation angles of all the visible satellites that the device
@@ -7426,6 +7903,15 @@ s8 sbp_send_sbp_msg_sv_az_el_t(struct sbp_state *s, u16 sender_id,
 int sbp_cmp_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *a,
                                const sbp_msg_sv_az_el_t *b);
 
+/*
+ *
+ *
+ *
+ ******************************************************************************
+ *
+ * SBP_MSG_OSR
+ *
+ *****************************************************************************/
 /** OSR corrections
  *
  * The OSR message contains network corrections in an observation-like format.
