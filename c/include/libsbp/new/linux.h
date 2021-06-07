@@ -1,5 +1,5 @@
-#ifndef LIBSBP_LINUX_MESSAGES_H
-#define LIBSBP_LINUX_MESSAGES_H
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
+#define LIBSBP_NEW_LINUX_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A       0x7F00
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -55,7 +57,9 @@ int sbp_cmp_sbp_msg_linux_cpu_state_dep_a_t(const sbp_msg_linux_cpu_state_dep_a_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A       0x7F01
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -87,7 +91,9 @@ int sbp_cmp_sbp_msg_linux_mem_state_dep_a_t(const sbp_msg_linux_mem_state_dep_a_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SYS_STATE_DEP_A       0x7F02
+#endif
 typedef struct {
   u16 mem_total;
   u8 pcpu;
@@ -109,7 +115,9 @@ int sbp_cmp_sbp_msg_linux_sys_state_dep_a_t(const sbp_msg_linux_sys_state_dep_a_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS 0x7F03
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -142,7 +150,9 @@ int sbp_cmp_sbp_msg_linux_process_socket_counts_t(const sbp_msg_linux_process_so
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES 0x7F04
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -177,7 +187,9 @@ int sbp_cmp_sbp_msg_linux_process_socket_queues_t(const sbp_msg_linux_process_so
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SOCKET_USAGE          0x7F05
+#endif
 typedef struct {
   u32 avg_queue_depth;
   u32 max_queue_depth;
@@ -197,7 +209,9 @@ int sbp_cmp_sbp_msg_linux_socket_usage_t(const sbp_msg_linux_socket_usage_t *a, 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT      0x7F06
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -228,7 +242,9 @@ int sbp_cmp_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_coun
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY    0x7F07
+#endif
 typedef struct {
   u32 sys_fd_count;
   sbp_double_null_terminated_string_t most_opened;
@@ -256,6 +272,7 @@ s8 sbp_send_sbp_msg_linux_process_fd_summary_t(struct sbp_state  *s, u16 sender_
 int sbp_cmp_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *a, const sbp_msg_linux_process_fd_summary_t *b);
 
 
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags) \
@@ -269,11 +286,14 @@ int sbp_cmp_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_su
 
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 /** List CPU state on the system
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_CPU_STATE             0x7F08
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -303,6 +323,7 @@ s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state  *s, u16 sender_id, const
 int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a, const sbp_msg_linux_cpu_state_t *b);
 
 
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags) \
@@ -316,11 +337,14 @@ int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a, const 
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 /** List memory state on the system
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_MEM_STATE             0x7F09
+#endif
 typedef struct {
   u8 index;
   u16 pid;
@@ -350,6 +374,7 @@ s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state  *s, u16 sender_id, const
 int sbp_cmp_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *a, const sbp_msg_linux_mem_state_t *b);
 
 
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags) \
@@ -363,11 +388,14 @@ int sbp_cmp_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *a, const 
 
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 /** CPU, Memory and Process Starts/Stops
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SYS_STATE             0x7F0A
+#endif
 typedef struct {
   u16 mem_total;
   u8 pcpu;
@@ -646,4 +674,4 @@ static inline bool operator>=(const sbp_msg_linux_sys_state_t &a, const sbp_msg_
 
 #endif
 
-#endif /* LIBSBP_LINUX_MESSAGES_H */
+#endif /* LIBSBP_NEW_LINUX_MESSAGES_H */

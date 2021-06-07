@@ -1,5 +1,5 @@
-#ifndef LIBSBP_IMU_MESSAGES_H
-#define LIBSBP_IMU_MESSAGES_H
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
+#define LIBSBP_NEW_IMU_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
@@ -45,11 +46,14 @@ struct sbp_state;
                              << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));} while(0)
                              
 
+#endif
 /** Raw IMU data
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
 #define SBP_MSG_IMU_RAW 0x0900
+#endif
 typedef struct {
   u32 tow;
   u8 tow_f;
@@ -69,6 +73,7 @@ s8 sbp_send_sbp_msg_imu_raw_t(struct sbp_state  *s, u16 sender_id, const sbp_msg
 int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a, const sbp_msg_imu_raw_t *b);
 
 
+#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
@@ -82,6 +87,8 @@ int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a, const sbp_msg_imu_raw_
 
 #define SBP_IMU_AUX_IMU_TYPE_BOSCH_BMI160 (0)
 #define SBP_IMU_AUX_IMU_TYPE_ST_MICROELECTRONICS_ASM330LLH (1)
+#endif
+#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_MASK (0xf)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT (4u)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags) \
@@ -113,11 +120,14 @@ int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a, const sbp_msg_imu_raw_
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__4G (1)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__8G (2)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
+#endif
 /** Auxiliary IMU data
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
 #define SBP_MSG_IMU_AUX 0x0901
+#endif
 typedef struct {
   u8 imu_type;
   s16 temp;
@@ -184,4 +194,4 @@ static inline bool operator>=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_
 
 #endif
 
-#endif /* LIBSBP_IMU_MESSAGES_H */
+#endif /* LIBSBP_NEW_IMU_MESSAGES_H */

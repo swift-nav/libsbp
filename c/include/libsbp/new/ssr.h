@@ -1,5 +1,5 @@
-#ifndef LIBSBP_SSR_MESSAGES_H
-#define LIBSBP_SSR_MESSAGES_H
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
+#define LIBSBP_NEW_SSR_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -185,7 +185,9 @@ int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a, const sbp_stec_res
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_ORBIT_CLOCK                     0x05DD
+#endif
 typedef struct {
   sbp_gps_time_sec_t time;
   sbp_sbp_gnss_signal_t sid;
@@ -215,7 +217,9 @@ int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_CODE_BIASES                     0x05E1
+#endif
 typedef struct {
   sbp_gps_time_sec_t time;
   sbp_sbp_gnss_signal_t sid;
@@ -237,7 +241,9 @@ int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_PHASE_BIASES                    0x05E6
+#endif
 typedef struct {
   sbp_gps_time_sec_t time;
   sbp_sbp_gnss_signal_t sid;
@@ -263,7 +269,9 @@ int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a, cons
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_STEC_CORRECTION                 0x05FB
+#endif
 typedef struct {
   sbp_stec_header_t header;
   sbp_stec_sat_element_t stec_sat_list[21];
@@ -282,7 +290,9 @@ int sbp_cmp_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION              0x05FC
+#endif
 typedef struct {
   sbp_gridded_correction_header_t header;
   u16 index;
@@ -304,7 +314,9 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correctio
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_TILE_DEFINITION                 0x05F6
+#endif
 typedef struct {
   u16 tile_set_id;
   u16 tile_id;
@@ -325,6 +337,7 @@ s8 sbp_send_sbp_msg_ssr_tile_definition_t(struct sbp_state  *s, u16 sender_id, c
 int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a, const sbp_msg_ssr_tile_definition_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags) \
@@ -356,6 +369,7 @@ int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3G_CAST (17)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3I_CAST (18)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_QZSS (19)
+#endif
 /** Antenna phase center correction
  *
 ((m.desc|commentify)))
@@ -375,7 +389,9 @@ s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_re
 int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a, const sbp_satellite_apc_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_SATELLITE_APC                   0x0604
+#endif
 typedef struct {
   sbp_satellite_apc_t apc[7];
   u8 n_apc;
@@ -389,7 +405,9 @@ s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state  *s, u16 sender_id, con
 int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a, const sbp_msg_ssr_satellite_apc_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
+#endif
 typedef struct {
   sbp_gps_time_sec_t time;
   sbp_sbp_gnss_signal_t sid;
@@ -474,7 +492,9 @@ s8 sbp_decode_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len
 int sbp_cmp_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *a, const sbp_grid_definition_header_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
+#endif
 typedef struct {
   sbp_stec_header_dep_a_t header;
   sbp_stec_sat_element_t stec_sat_list[22];
@@ -489,7 +509,9 @@ s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(struct sbp_state  *s, u16 sender
 int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+#endif
 typedef struct {
   sbp_gridded_correction_header_dep_a_t header;
   u16 index;
@@ -506,7 +528,9 @@ s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(struct sbp_state  *s, 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
+#endif
 typedef struct {
   sbp_gridded_correction_header_dep_a_t header;
   u16 index;
@@ -523,7 +547,9 @@ s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(struct sbp_state  *s, u16 sen
 int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
+#endif
 typedef struct {
   sbp_grid_definition_header_dep_a_t header;
   u8 rle_list[246];
@@ -1119,4 +1145,4 @@ static inline bool operator>=(const sbp_msg_ssr_grid_definition_dep_a_t &a, cons
 
 #endif
 
-#endif /* LIBSBP_SSR_MESSAGES_H */
+#endif /* LIBSBP_NEW_SSR_MESSAGES_H */

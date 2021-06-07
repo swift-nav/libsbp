@@ -63,7 +63,10 @@ SBP_PACK_START
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME 0x0102
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_GPS_TIME_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_TIME_SOURCE_GET(flags) \
@@ -77,6 +80,7 @@ SBP_PACK_START
 #define SBP_GPS_TIME_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_TIME_SOURCE_PROPAGATED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 wn;  /**< GPS week number [weeks] */
@@ -100,7 +104,10 @@ typedef struct SBP_ATTR_PACKED {
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME_GNSS 0x0104
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GET(flags)      \
@@ -115,6 +122,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 wn;  /**< GPS week number [weeks] */
@@ -130,7 +138,10 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time
  * fix.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_UTC_TIME 0x0103
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_GET(flags)      \
@@ -158,6 +169,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_UTC_TIME_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_TIME_SOURCE_PROPAGATED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 flags;   /**< Indicates source and time validity */
@@ -177,7 +189,10 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time
  * fix.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_UTC_TIME_GNSS 0x0105
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_GET(flags)      \
@@ -206,6 +221,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 flags;   /**< Indicates source and time validity */
@@ -226,7 +242,10 @@ typedef struct SBP_ATTR_PACKED {
  * indicated whether the DOP reported corresponds to differential or SPP
  * solution.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_DOPS 0x0208
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -255,6 +274,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_DOPS_FIX_MODE_FIXED_RTK (4)
 #define SBP_DOPS_FIX_MODE_UNDEFINED (5)
 #define SBP_DOPS_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;  /**< GPS Time of Week [ms] */
@@ -277,7 +297,10 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF 0x0209
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
 #define SBP_POS_ECEF_TOW_TYPE_SHIFT (5u)
 #define SBP_POS_ECEF_TOW_TYPE_GET(flags) \
@@ -320,6 +343,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_ECEF_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -342,7 +366,10 @@ typedef struct SBP_ATTR_PACKED {
  * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_COV 0x0214
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -387,6 +414,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_ECEF_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_COV_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -413,7 +441,10 @@ typedef struct SBP_ATTR_PACKED {
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH 0x020A
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -457,6 +488,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -480,7 +512,10 @@ typedef struct SBP_ATTR_PACKED {
  * covariances are reported against the "downward" measurement and care should
  * be taken with the sign convention.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_COV 0x0211
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -524,6 +559,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -547,7 +583,10 @@ typedef struct SBP_ATTR_PACKED {
  * base station to the rover receiver. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_ECEF 0x020B
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_ECEF_FIX_MODE_GET(flags)      \
@@ -563,6 +602,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_BASELINE_ECEF_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_ECEF_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_ECEF_FIX_MODE_FIXED_RTK (4)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -583,7 +623,10 @@ typedef struct SBP_ATTR_PACKED {
  * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
  * week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_NED 0x020C
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_NED_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_NED_FIX_MODE_GET(flags)      \
@@ -599,6 +642,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_BASELINE_NED_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_NED_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_NED_FIX_MODE_FIXED_RTK (4)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -617,7 +661,10 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF 0x020D
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -659,6 +706,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_ECEF_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -676,7 +724,10 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_COV 0x0215
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -718,6 +769,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -741,7 +793,10 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED 0x020E
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -783,6 +838,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_NED_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -805,7 +861,10 @@ typedef struct SBP_ATTR_PACKED {
  * message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_COV 0x0212
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -847,6 +906,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_NED_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -873,7 +933,10 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_GNSS 0x0229
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_GET(flags)      \
@@ -891,6 +954,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -913,7 +977,10 @@ typedef struct SBP_ATTR_PACKED {
  * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_COV_GNSS 0x0234
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_GET(flags)      \
@@ -931,6 +998,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -957,7 +1025,10 @@ typedef struct SBP_ATTR_PACKED {
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_GNSS 0x022A
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_GNSS_FIX_MODE_GET(flags)      \
@@ -975,6 +1046,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_LLH_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -998,7 +1070,10 @@ typedef struct SBP_ATTR_PACKED {
  * covariances are reported against the "downward" measurement and care should
  * be taken with the sign convention.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_COV_GNSS 0x0231
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_GET(flags)      \
@@ -1017,6 +1092,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -1039,7 +1115,10 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_GNSS 0x022D
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1054,6 +1133,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -1071,7 +1151,10 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_COV_GNSS 0x0235
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1086,6 +1169,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -1109,7 +1193,10 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_GNSS 0x022E
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1124,6 +1211,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -1146,7 +1234,10 @@ typedef struct SBP_ATTR_PACKED {
  * message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_COV_GNSS 0x0232
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1161,6 +1252,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -1189,7 +1281,10 @@ typedef struct SBP_ATTR_PACKED {
  * is only produced by inertial versions of Swift products and is not
  * available from Piksi Multi or Duro.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_BODY 0x0213
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_GET(flags)      \
@@ -1218,6 +1313,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_BODY_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_BODY_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_BODY_VELOCITY_MODE_DEAD_RECKONING (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -1239,7 +1335,9 @@ typedef struct SBP_ATTR_PACKED {
  * This message reports the Age of the corrections used for the current
  * Differential solution.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_AGE_CORRECTIONS 0x0210
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow; /**< GPS Time of Week [ms] */
@@ -1261,7 +1359,9 @@ typedef struct SBP_ATTR_PACKED {
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_GPS_TIME_DEP_A 0x0100
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 wn;  /**< GPS week number [weeks] */
@@ -1276,7 +1376,9 @@ typedef struct SBP_ATTR_PACKED {
  * This dilution of precision (DOP) message describes the effect of navigation
  * satellite geometry on positional measurement precision.
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_DOPS_DEP_A 0x0206
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;  /**< GPS Time of Week [ms] */
@@ -1297,7 +1399,10 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_ECEF_DEP_A 0x0200
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -1339,6 +1444,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -1361,7 +1467,10 @@ typedef struct SBP_ATTR_PACKED {
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_POS_LLH_DEP_A 0x0201
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT (5u)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -1416,6 +1525,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FLOAT_RTK (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -1437,7 +1547,10 @@ typedef struct SBP_ATTR_PACKED {
  * base station to the rover receiver. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_ECEF_DEP_A 0x0202
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -1481,6 +1594,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -1501,7 +1615,10 @@ typedef struct SBP_ATTR_PACKED {
  * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
  * week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_NED_DEP_A 0x0203
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -1545,6 +1662,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -1565,7 +1683,9 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_ECEF_DEP_A 0x0204
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
@@ -1585,7 +1705,9 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_VEL_NED_DEP_A 0x0205
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
@@ -1606,7 +1728,10 @@ typedef struct SBP_ATTR_PACKED {
  * the rover relative to True North. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -1650,6 +1775,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FIXED_RTK (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;     /**< GPS Time of Week [ms] */
@@ -1664,7 +1790,10 @@ typedef struct SBP_ATTR_PACKED {
  * associated with a given LLH position solution. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_PROTECTION_LEVEL_DEP_A 0x0216
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1688,6 +1817,7 @@ typedef struct SBP_ATTR_PACKED {
   (2)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 \
   (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
@@ -1705,7 +1835,10 @@ typedef struct SBP_ATTR_PACKED {
  * estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_MSG_PROTECTION_LEVEL 0x0217
+#endif
+#ifndef LIBSBP_NEW_NAVIGATION_MESSAGES_H
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags)      \
@@ -1883,6 +2016,8 @@ typedef struct SBP_ATTR_PACKED {
     ((flags) |= (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_MASK)) \
                  << (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT)));    \
   } while (0)
+
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */

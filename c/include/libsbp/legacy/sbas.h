@@ -33,7 +33,9 @@ SBP_PACK_START
  * This message is sent once per second per SBAS satellite. ME checks the
  * parity of the data block and sends only blocks that pass the check.
  */
+#ifndef LIBSBP_NEW_SBAS_MESSAGES_H
 #define SBP_MSG_SBAS_RAW 0x7777
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid; /**< GNSS signal identifier. */

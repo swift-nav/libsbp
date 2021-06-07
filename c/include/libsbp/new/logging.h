@@ -1,5 +1,5 @@
-#ifndef LIBSBP_LOGGING_MESSAGES_H
-#define LIBSBP_LOGGING_MESSAGES_H
+#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
+#define LIBSBP_NEW_LOGGING_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_LOGGING_MESSAGES_H
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
@@ -38,11 +39,14 @@ struct sbp_state;
 #define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
 #define SBP_LOG_LOGGING_LEVEL_INFO (6)
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
+#endif
 /** Plaintext logging messages with levels
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LOGGING_MESSAGES_H
 #define SBP_MSG_LOG       0x0401
+#endif
 typedef struct {
   u8 level;
   sbp_unterminated_string_t text;
@@ -71,7 +75,9 @@ int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LOGGING_MESSAGES_H
 #define SBP_MSG_FWD       0x0402
+#endif
 typedef struct {
   u8 source;
   u8 protocol;
@@ -91,7 +97,9 @@ int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_LOGGING_MESSAGES_H
 #define SBP_MSG_PRINT_DEP 0x0010
+#endif
 typedef struct {
   sbp_unterminated_string_t text;
 } sbp_msg_print_dep_t;
@@ -190,4 +198,4 @@ static inline bool operator>=(const sbp_msg_print_dep_t &a, const sbp_msg_print_
 
 #endif
 
-#endif /* LIBSBP_LOGGING_MESSAGES_H */
+#endif /* LIBSBP_NEW_LOGGING_MESSAGES_H */

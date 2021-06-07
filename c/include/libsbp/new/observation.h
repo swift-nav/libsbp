@@ -1,5 +1,5 @@
-#ifndef LIBSBP_OBSERVATION_MESSAGES_H
-#define LIBSBP_OBSERVATION_MESSAGES_H
+#ifndef LIBSBP_NEW_OBSERVATION_MESSAGES_H
+#define LIBSBP_NEW_OBSERVATION_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -52,6 +52,7 @@ s8 sbp_decode_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sb
 int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
 
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK (0x1)
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT (7u)
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_GET(flags) \
@@ -117,6 +118,7 @@ int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
 #define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_INVALID_PSEUDORANGE_MEASUREMENT (0)
 #define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_VALID_PSEUDORANGE_MEASUREMENT_AND_COARSE_TOW_DECODED (1)
+#endif
 /** GNSS observations for a particular satellite signal
  *
 ((m.desc|commentify)))
@@ -138,6 +140,7 @@ s8 sbp_decode_sbp_packed_obs_content_t(const uint8_t *buf, uint8_t len, uint8_t 
 int sbp_cmp_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *a, const sbp_packed_obs_content_t *b);
 
 
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK (0x1)
 #define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SHIFT (4u)
 #define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_GET(flags) \
@@ -203,6 +206,7 @@ int sbp_cmp_sbp_packed_obs_content_t(const sbp_packed_obs_content_t *a, const sb
 
 #define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_DO_NOT_USE_SIGNAL (0)
 #define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_VALID_SIGNAL (1)
+#endif
 /** Network correction for a particular satellite signal
  *
 ((m.desc|commentify)))
@@ -229,7 +233,9 @@ int sbp_cmp_sbp_packed_osr_content_t(const sbp_packed_osr_content_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_OBS                      0x004A
+#endif
 typedef struct {
   sbp_observation_header_t header;
   sbp_packed_obs_content_t obs[14];
@@ -248,7 +254,9 @@ int sbp_cmp_sbp_msg_obs_t(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_BASE_POS_LLH             0x0044
+#endif
 typedef struct {
   double lat;
   double lon;
@@ -267,7 +275,9 @@ int sbp_cmp_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *a, const sbp_ms
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_BASE_POS_ECEF            0x0048
+#endif
 typedef struct {
   double x;
   double y;
@@ -334,7 +344,9 @@ int sbp_cmp_sbp_ephemeris_common_content_dep_a_t(const sbp_ephemeris_common_cont
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GPS_DEP_E      0x0081
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_a_t common;
   double tgd;
@@ -373,7 +385,9 @@ int sbp_cmp_sbp_msg_ephemeris_gps_dep_e_t(const sbp_msg_ephemeris_gps_dep_e_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GPS_DEP_F      0x0086
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_b_t common;
   double tgd;
@@ -412,7 +426,9 @@ int sbp_cmp_sbp_msg_ephemeris_gps_dep_f_t(const sbp_msg_ephemeris_gps_dep_f_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GPS            0x008A
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float tgd;
@@ -451,7 +467,9 @@ int sbp_cmp_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_QZSS           0x008E
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float tgd;
@@ -490,7 +508,9 @@ int sbp_cmp_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_BDS            0x0089
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float tgd1;
@@ -530,7 +550,9 @@ int sbp_cmp_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GAL_DEP_A      0x0095
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float bgd_e1e5a;
@@ -570,7 +592,9 @@ int sbp_cmp_sbp_msg_ephemeris_gal_dep_a_t(const sbp_msg_ephemeris_gal_dep_a_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GAL            0x008D
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float bgd_e1e5a;
@@ -607,7 +631,9 @@ s8 sbp_send_sbp_msg_ephemeris_gal_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *a, const sbp_msg_ephemeris_gal_t *b);
 
 
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A     0x0082
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_a_t common;
   double pos[3];
@@ -629,7 +655,9 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(const sbp_msg_ephemeris_sbas_dep_a_t 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GLO_DEP_A      0x0083
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_a_t common;
   double gamma;
@@ -651,7 +679,9 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(const sbp_msg_ephemeris_glo_dep_a_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_B     0x0084
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_b_t common;
   double pos[3];
@@ -669,7 +699,9 @@ s8 sbp_send_sbp_msg_ephemeris_sbas_dep_b_t(struct sbp_state  *s, u16 sender_id, 
 int sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(const sbp_msg_ephemeris_sbas_dep_b_t *a, const sbp_msg_ephemeris_sbas_dep_b_t *b);
 
 
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_SBAS           0x008C
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   double pos[3];
@@ -691,7 +723,9 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B      0x0085
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_b_t common;
   double gamma;
@@ -713,7 +747,9 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(const sbp_msg_ephemeris_glo_dep_b_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GLO_DEP_C      0x0087
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_b_t common;
   double gamma;
@@ -737,7 +773,9 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(const sbp_msg_ephemeris_glo_dep_c_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GLO_DEP_D      0x0088
+#endif
 typedef struct {
   sbp_ephemeris_common_content_dep_b_t common;
   double gamma;
@@ -762,7 +800,9 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(const sbp_msg_ephemeris_glo_dep_d_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_GLO            0x008B
+#endif
 typedef struct {
   sbp_ephemeris_common_content_t common;
   float gamma;
@@ -787,7 +827,9 @@ int sbp_cmp_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_DEP_D          0x0080
+#endif
 typedef struct {
   double tgd;
   double c_rs;
@@ -832,7 +874,9 @@ int sbp_cmp_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_DEP_A          0x001A
+#endif
 typedef struct {
   double tgd;
   double c_rs;
@@ -874,7 +918,9 @@ int sbp_cmp_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_DEP_B          0x0046
+#endif
 typedef struct {
   double tgd;
   double c_rs;
@@ -917,7 +963,9 @@ int sbp_cmp_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_EPHEMERIS_DEP_C          0x0047
+#endif
 typedef struct {
   double tgd;
   double c_rs;
@@ -1051,7 +1099,9 @@ int sbp_cmp_sbp_packed_obs_content_dep_c_t(const sbp_packed_obs_content_dep_c_t 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_OBS_DEP_A                0x0045
+#endif
 typedef struct {
   sbp_observation_header_dep_t header;
   sbp_packed_obs_content_dep_a_t obs[19];
@@ -1070,7 +1120,9 @@ int sbp_cmp_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *a, const sbp_msg_obs_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_OBS_DEP_B                0x0043
+#endif
 typedef struct {
   sbp_observation_header_dep_t header;
   sbp_packed_obs_content_dep_b_t obs[15];
@@ -1089,7 +1141,9 @@ int sbp_cmp_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *a, const sbp_msg_obs_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_OBS_DEP_C                0x0049
+#endif
 typedef struct {
   sbp_observation_header_dep_t header;
   sbp_packed_obs_content_dep_c_t obs[15];
@@ -1108,7 +1162,9 @@ int sbp_cmp_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *a, const sbp_msg_obs_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_IONO                     0x0090
+#endif
 typedef struct {
   sbp_gps_time_sec_t t_nmct;
   double a0;
@@ -1133,7 +1189,9 @@ int sbp_cmp_sbp_msg_iono_t(const sbp_msg_iono_t *a, const sbp_msg_iono_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_SV_CONFIGURATION_GPS_DEP 0x0091
+#endif
 typedef struct {
   sbp_gps_time_sec_t t_nmct;
   u32 l2c_mask;
@@ -1172,7 +1230,9 @@ s8 sbp_decode_sbp_gnss_capb_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, 
 int sbp_cmp_sbp_gnss_capb_t(const sbp_gnss_capb_t *a, const sbp_gnss_capb_t *b);
 
 
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_GNSS_CAPB                0x0096
+#endif
 typedef struct {
   sbp_gps_time_sec_t t_nmct;
   sbp_gnss_capb_t gc;
@@ -1190,7 +1250,9 @@ int sbp_cmp_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *a, const sbp_msg_gnss
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_GROUP_DELAY_DEP_A        0x0092
+#endif
 typedef struct {
   sbp_gps_time_dep_t t_op;
   u8 prn;
@@ -1212,7 +1274,9 @@ int sbp_cmp_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_GROUP_DELAY_DEP_B        0x0093
+#endif
 typedef struct {
   sbp_gps_time_sec_t t_op;
   sbp_gnss_signal_dep_t sid;
@@ -1234,7 +1298,9 @@ int sbp_cmp_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_GROUP_DELAY              0x0094
+#endif
 typedef struct {
   sbp_gps_time_sec_t t_op;
   sbp_sbp_gnss_signal_t sid;
@@ -1288,7 +1354,9 @@ int sbp_cmp_sbp_almanac_common_content_dep_t(const sbp_almanac_common_content_de
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_ALMANAC_GPS_DEP          0x0070
+#endif
 typedef struct {
   sbp_almanac_common_content_dep_t common;
   double m0;
@@ -1314,7 +1382,9 @@ int sbp_cmp_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_ALMANAC_GPS              0x0072
+#endif
 typedef struct {
   sbp_almanac_common_content_t common;
   double m0;
@@ -1340,7 +1410,9 @@ int sbp_cmp_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *a, const sbp_msg_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_ALMANAC_GLO_DEP          0x0071
+#endif
 typedef struct {
   sbp_almanac_common_content_dep_t common;
   double lambda_na;
@@ -1364,7 +1436,9 @@ int sbp_cmp_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_ALMANAC_GLO              0x0073
+#endif
 typedef struct {
   sbp_almanac_common_content_t common;
   double lambda_na;
@@ -1388,7 +1462,9 @@ int sbp_cmp_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *a, const sbp_msg_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_GLO_BIASES               0x0075
+#endif
 typedef struct {
   u8 mask;
   s16 l1ca_bias;
@@ -1426,7 +1502,9 @@ int sbp_cmp_sbp_sv_az_el_t(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b);
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_SV_AZ_EL                 0x0097
+#endif
 typedef struct {
   sbp_sv_az_el_t azel[63];
   u8 n_azel;
@@ -1444,7 +1522,9 @@ int sbp_cmp_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *a, const sbp_msg_sv_az_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_OBSERVATION_MESSAGES_H
 #define SBP_MSG_OSR                      0x0640
+#endif
 typedef struct {
   sbp_observation_header_t header;
   sbp_packed_osr_content_t obs[12];
@@ -2707,4 +2787,4 @@ static inline bool operator>=(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b) {
 
 #endif
 
-#endif /* LIBSBP_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_NEW_OBSERVATION_MESSAGES_H */

@@ -33,7 +33,10 @@ SBP_PACK_START
  * containing errors, warnings and informational messages at ERROR, WARNING,
  * DEBUG, INFO logging levels.
  */
+#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
 #define SBP_MSG_LOG 0x0401
+#endif
+#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
@@ -52,6 +55,7 @@ SBP_PACK_START
 #define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
 #define SBP_LOG_LOGGING_LEVEL_INFO (6)
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 level;     /**< Logging level */
@@ -69,7 +73,9 @@ typedef struct SBP_ATTR_PACKED {
  * forwarded msg contains. Protocol 0 represents SBP and the remaining values
  * are implementation defined.
  */
+#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
 #define SBP_MSG_FWD 0x0402
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
@@ -81,7 +87,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
+#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
 #define SBP_MSG_PRINT_DEP 0x0010
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */

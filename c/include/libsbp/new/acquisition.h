@@ -1,5 +1,5 @@
-#ifndef LIBSBP_ACQUISITION_MESSAGES_H
-#define LIBSBP_ACQUISITION_MESSAGES_H
+#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
+#define LIBSBP_NEW_ACQUISITION_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -24,7 +24,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_RESULT         0x002F
+#endif
 typedef struct {
   float cn0;
   float cp;
@@ -44,7 +46,9 @@ int sbp_cmp_sbp_msg_acq_result_t(const sbp_msg_acq_result_t *a, const sbp_msg_ac
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_RESULT_DEP_C   0x001F
+#endif
 typedef struct {
   float cn0;
   float cp;
@@ -64,7 +68,9 @@ int sbp_cmp_sbp_msg_acq_result_dep_c_t(const sbp_msg_acq_result_dep_c_t *a, cons
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_RESULT_DEP_B   0x0014
+#endif
 typedef struct {
   float snr;
   float cp;
@@ -84,7 +90,9 @@ int sbp_cmp_sbp_msg_acq_result_dep_b_t(const sbp_msg_acq_result_dep_b_t *a, cons
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_RESULT_DEP_A   0x0015
+#endif
 typedef struct {
   float snr;
   float cp;
@@ -156,7 +164,9 @@ int sbp_cmp_sbp_acq_sv_profile_dep_t(const sbp_acq_sv_profile_dep_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
+#endif
 typedef struct {
   sbp_acq_sv_profile_t acq_sv_profile[7];
   u8 n_acq_sv_profile;
@@ -174,7 +184,9 @@ int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+#endif
 typedef struct {
   sbp_acq_sv_profile_dep_t acq_sv_profile[7];
   u8 n_acq_sv_profile;
@@ -378,4 +390,4 @@ static inline bool operator>=(const sbp_msg_acq_sv_profile_dep_t &a, const sbp_m
 
 #endif
 
-#endif /* LIBSBP_ACQUISITION_MESSAGES_H */
+#endif /* LIBSBP_NEW_ACQUISITION_MESSAGES_H */

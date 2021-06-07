@@ -1,5 +1,5 @@
-#ifndef LIBSBP_MAG_MESSAGES_H
-#define LIBSBP_MAG_MESSAGES_H
+#ifndef LIBSBP_NEW_MAG_MESSAGES_H
+#define LIBSBP_NEW_MAG_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_MAG_MESSAGES_H
 #define SBP_MSG_MAG_RAW 0x0902
+#endif
 typedef struct {
   u32 tow;
   u8 tow_f;
@@ -69,4 +71,4 @@ static inline bool operator>=(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_
 
 #endif
 
-#endif /* LIBSBP_MAG_MESSAGES_H */
+#endif /* LIBSBP_NEW_MAG_MESSAGES_H */

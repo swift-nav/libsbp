@@ -1,5 +1,5 @@
-#ifndef LIBSBP_FILE_IO_MESSAGES_H
-#define LIBSBP_FILE_IO_MESSAGES_H
+#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
+#define LIBSBP_NEW_FILE_IO_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -23,7 +23,9 @@ struct sbp_state;
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_READ_REQ      0x00A8
+#endif
 typedef struct {
   u32 sequence;
   u32 offset;
@@ -54,7 +56,9 @@ int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a, const 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_READ_RESP     0x00A3
+#endif
 typedef struct {
   u32 sequence;
   u8 contents[251];
@@ -73,7 +77,9 @@ int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a, cons
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
+#endif
 typedef struct {
   u32 sequence;
   u32 offset;
@@ -103,7 +109,9 @@ int sbp_cmp_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *a
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
+#endif
 typedef struct {
   u32 sequence;
   sbp_multipart_string_t contents;
@@ -135,7 +143,9 @@ int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t 
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_REMOVE        0x00AC
+#endif
 typedef struct {
   sbp_null_terminated_string_t filename;
 } sbp_msg_fileio_remove_t;
@@ -163,7 +173,9 @@ int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a, const sbp_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
+#endif
 typedef struct {
   u32 sequence;
   u32 offset;
@@ -195,7 +207,9 @@ int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a, cons
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+#endif
 typedef struct {
   u32 sequence;
 } sbp_msg_fileio_write_resp_t;
@@ -212,7 +226,9 @@ int sbp_cmp_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+#endif
 typedef struct {
   u32 sequence;
 } sbp_msg_fileio_config_req_t;
@@ -230,7 +246,9 @@ int sbp_cmp_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *a, co
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_FILE_IO_MESSAGES_H
 #define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+#endif
 typedef struct {
   u32 sequence;
   u32 window_size;
@@ -459,4 +477,4 @@ static inline bool operator>=(const sbp_msg_fileio_config_resp_t &a, const sbp_m
 
 #endif
 
-#endif /* LIBSBP_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_NEW_FILE_IO_MESSAGES_H */

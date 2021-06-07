@@ -1,5 +1,5 @@
-#ifndef LIBSBP_SYSTEM_MESSAGES_H
-#define LIBSBP_SYSTEM_MESSAGES_H
+#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
+#define LIBSBP_NEW_SYSTEM_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags) \
@@ -33,6 +34,8 @@ struct sbp_state;
 #define SBP_STARTUP_CAUSE_OF_STARTUP_POWER_ON (0)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SOFTWARE_RESET (1)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_WATCHDOG_RESET (2)
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_STARTUP__MASK (0x1ff)
 #define SBP_STARTUP__SHIFT (0u)
 #define SBP_STARTUP__GET(flags) \
@@ -47,11 +50,14 @@ struct sbp_state;
 #define SBP_STARTUP__COLD_START (0)
 #define SBP_STARTUP__WARM_START (1)
 #define SBP_STARTUP__HOT_START (2)
+#endif
 /** System start-up message
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_STARTUP               0xFF00
+#endif
 typedef struct {
   u8 cause;
   u8 startup_type;
@@ -66,6 +72,7 @@ s8 sbp_send_sbp_msg_startup_t(struct sbp_state  *s, u16 sender_id, const sbp_msg
 int sbp_cmp_sbp_msg_startup_t(const sbp_msg_startup_t *a, const sbp_msg_startup_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags) \
@@ -80,11 +87,14 @@ int sbp_cmp_sbp_msg_startup_t(const sbp_msg_startup_t *a, const sbp_msg_startup_
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_INVALID (0)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_CODE_DIFFERENCE (1)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
+#endif
 /** Status of received corrections
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_DGNSS_STATUS          0xFF02
+#endif
 typedef struct {
   u8 flags;
   u16 latency;
@@ -111,6 +121,7 @@ s8 sbp_send_sbp_msg_dgnss_status_t(struct sbp_state  *s, u16 sender_id, const sb
 int sbp_cmp_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *a, const sbp_msg_dgnss_status_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_GET(flags) \
@@ -198,11 +209,14 @@ int sbp_cmp_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *a, const sbp_ms
 
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
+#endif
 /** System heartbeat message
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_HEARTBEAT             0xFFFF
+#endif
 typedef struct {
   u32 flags;
 } sbp_msg_heartbeat_t;
@@ -215,6 +229,7 @@ s8 sbp_send_sbp_msg_heartbeat_t(struct sbp_state  *s, u16 sender_id, const sbp_m
 int sbp_cmp_sbp_msg_heartbeat_t(const sbp_msg_heartbeat_t *a, const sbp_msg_heartbeat_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags) \
@@ -233,6 +248,8 @@ int sbp_cmp_sbp_msg_heartbeat_t(const sbp_msg_heartbeat_t *a, const sbp_msg_hear
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_CAN (4)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_WHEEL_ODOMETRY (5)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SENSOR_FUSION_ENGINE (6)
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_SUBSYSTEMREPORT_GENERIC_MASK (0xff)
 #define SBP_SUBSYSTEMREPORT_GENERIC_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_GENERIC_GET(flags) \
@@ -249,6 +266,7 @@ int sbp_cmp_sbp_msg_heartbeat_t(const sbp_msg_heartbeat_t *a, const sbp_msg_hear
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNKNOWN (2)
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
+#endif
 /** Sub-system Status report
  *
 ((m.desc|commentify)))
@@ -266,6 +284,7 @@ s8 sbp_decode_sbp_sub_system_report_t(const uint8_t *buf, uint8_t len, uint8_t *
 int sbp_cmp_sbp_sub_system_report_t(const sbp_sub_system_report_t *a, const sbp_sub_system_report_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_REPORT_SYSTEM_GET(flags) \
@@ -279,6 +298,8 @@ int sbp_cmp_sbp_sub_system_report_t(const sbp_sub_system_report_t *a, const sbp_
 
 #define SBP_STATUS_REPORT_SYSTEM_STARLING (0)
 #define SBP_STATUS_REPORT_SYSTEM_PRECISION_GNSS_MODULE (1)
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0x1ff)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
@@ -301,11 +322,14 @@ int sbp_cmp_sbp_sub_system_report_t(const sbp_sub_system_report_t *a, const sbp_
                              << (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
                              
 
+#endif
 /** Status report message
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_STATUS_REPORT         0xFFFE
+#endif
 typedef struct {
   u16 reporting_system;
   u16 sbp_version;
@@ -323,6 +347,7 @@ s8 sbp_send_sbp_msg_status_report_t(struct sbp_state  *s, u16 sender_id, const s
 int sbp_cmp_sbp_msg_status_report_t(const sbp_msg_status_report_t *a, const sbp_msg_status_report_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)
 #define SBP_INS_STATUS_INS_TYPE_GET(flags) \
@@ -423,11 +448,14 @@ int sbp_cmp_sbp_msg_status_report_t(const sbp_msg_status_report_t *a, const sbp_
 #define SBP_INS_STATUS_MODE_FASTSTART_SEEDING (4)
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
+#endif
 /** Inertial Navigation System status message
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_INS_STATUS            0xFF03
+#endif
 typedef struct {
   u32 flags;
 } sbp_msg_ins_status_t;
@@ -444,7 +472,9 @@ int sbp_cmp_sbp_msg_ins_status_t(const sbp_msg_ins_status_t *a, const sbp_msg_in
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_CSAC_TELEMETRY        0xFF04
+#endif
 typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry;
@@ -473,7 +503,9 @@ int sbp_cmp_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *a, const sb
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+#endif
 typedef struct {
   u8 id;
   sbp_unterminated_string_t telemetry_labels;
@@ -498,6 +530,7 @@ s8 sbp_send_sbp_msg_csac_telemetry_labels_t(struct sbp_state  *s, u16 sender_id,
 int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_t *a, const sbp_msg_csac_telemetry_labels_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -520,6 +553,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -542,6 +577,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_GNSS_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -564,6 +601,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_WHEELTICK_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -586,6 +625,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_SPEED_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_NHC_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_NHC_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_NHC_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -608,6 +649,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_NHC_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -630,11 +673,14 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
+#endif
 /** Inertial Navigation System update status message
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_INS_UPDATES           0xFF06
+#endif
 typedef struct {
   u32 tow;
   u8 gnsspos;
@@ -657,7 +703,9 @@ int sbp_cmp_sbp_msg_ins_updates_t(const sbp_msg_ins_updates_t *a, const sbp_msg_
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_GNSS_TIME_OFFSET      0xFF07
+#endif
 typedef struct {
   s16 weeks;
   s32 milliseconds;
@@ -673,6 +721,7 @@ s8 sbp_send_sbp_msg_gnss_time_offset_t(struct sbp_state  *s, u16 sender_id, cons
 int sbp_cmp_sbp_msg_gnss_time_offset_t(const sbp_msg_gnss_time_offset_t *a, const sbp_msg_gnss_time_offset_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT (2u)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_GET(flags) \
@@ -699,11 +748,14 @@ int sbp_cmp_sbp_msg_gnss_time_offset_t(const sbp_msg_gnss_time_offset_t *a, cons
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MILLISECONDS (1)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MICROSECONDS (2)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
+#endif
 /** Local time at detection of PPS pulse
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_PPS_TIME              0xFF08
+#endif
 typedef struct {
   u64 time;
   u8 flags;
@@ -717,6 +769,7 @@ s8 sbp_send_sbp_msg_pps_time_t(struct sbp_state  *s, u16 sender_id, const sbp_ms
 int sbp_cmp_sbp_msg_pps_time_t(const sbp_msg_pps_time_t *a, const sbp_msg_pps_time_t *b);
 
 
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags) \
@@ -731,11 +784,14 @@ int sbp_cmp_sbp_msg_pps_time_t(const sbp_msg_pps_time_t *a, const sbp_msg_pps_ti
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_NONE (0)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSS_ONLY (1)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
+#endif
 /** Solution Group Metadata
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_SYSTEM_MESSAGES_H
 #define SBP_MSG_GROUP_META            0xFF0A
+#endif
 typedef struct {
   u8 group_id;
   u8 flags;
@@ -1033,4 +1089,4 @@ static inline bool operator>=(const sbp_msg_group_meta_t &a, const sbp_msg_group
 
 #endif
 
-#endif /* LIBSBP_SYSTEM_MESSAGES_H */
+#endif /* LIBSBP_NEW_SYSTEM_MESSAGES_H */

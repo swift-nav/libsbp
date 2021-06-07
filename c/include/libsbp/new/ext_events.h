@@ -1,5 +1,5 @@
-#ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
-#define LIBSBP_EXT_EVENTS_MESSAGES_H
+#ifndef LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
+#define LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #endif
 
 struct sbp_state;
+#ifndef LIBSBP_LEGACY_EXT_EVENTS_MESSAGES_H
 #define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1)
 #define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
 #define SBP_EXT_EVENT_TIME_QUALITY_GET(flags) \
@@ -45,11 +46,14 @@ struct sbp_state;
 
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_HIGH (1)
+#endif
 /** Reports timestamped external pin event
  *
 ((m.desc|commentify)))
  */
+#ifndef LIBSBP_LEGACY_EXT_EVENTS_MESSAGES_H
 #define SBP_MSG_EXT_EVENT 0x0101
+#endif
 typedef struct {
   u16 wn;
   u32 tow;
@@ -95,4 +99,4 @@ static inline bool operator>=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_ev
 
 #endif
 
-#endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
+#endif /* LIBSBP_NEW_EXT_EVENTS_MESSAGES_H */

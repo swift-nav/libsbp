@@ -1,5 +1,5 @@
-#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
-#define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#ifndef LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
+#define LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -28,7 +28,9 @@ struct sbp_state;
 ((*- if m.fields *))
 ((*- for f in m.fields *))
 ((*- if f.options.fields *))
+#ifndef LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
 (((f|create_bitfield_macros(m.name))))
+#endif
 ((*- endif *))
 ((*- endfor *))
 ((*- endif *))
@@ -39,7 +41,9 @@ struct sbp_state;
  */
 ((*- endif *))
 ((*- if m.is_real_message *))
+#ifndef LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
 #define SBP_(((m.name.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
+#endif
 ((*- endif *))
 typedef struct {
   ((*- if m.fields *))
@@ -133,5 +137,5 @@ static inline bool operator>=(const (((m.name|convert_unpacked))) &a, const (((m
 
 #endif
 
-#endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H */
 
