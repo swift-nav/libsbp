@@ -1,12 +1,13 @@
-use std::{any::Any, borrow::Borrow, collections::HashMap, convert::TryInto, marker::PhantomData};
+use std::{any::{self, Any}, borrow::Borrow, collections::HashMap, convert::TryInto, marker::PhantomData};
 
+use any::TypeId;
 use slotmap::SlotMap;
 
 use crate::messages::{RealMessage, SBPMessage, SBP};
 
 #[derive(Default)]
 pub struct Dispatcher {
-    handlers: SlotMap<HandlerKeyInner, Box<dyn StoredHandler>>,
+    handlers: SlotMap<HandlerKeyInner, Box<dyn SbpHandler>>,
     msg_map: HashMap<u16, Vec<HandlerKeyInner>>,
 }
 
@@ -15,10 +16,7 @@ impl Dispatcher {
         Default::default()
     }
 
-    pub fn run<M>(&mut self, msg: M) -> bool
-    where
-        M: Borrow<SBP>,
-    {
+    pub fn run(&mut self, msg: impl Borrow<SBP>) -> bool {
         let msg = msg.borrow();
         let msg_type = msg.get_message_type();
 
@@ -28,21 +26,22 @@ impl Dispatcher {
         };
 
         for key in keys {
-            self.handlers[*key].run(msg.clone());
+            self.handlers[*key].recv(msg.clone());
         }
 
         true
     }
 
-    pub fn add_handler<T, H, E, const N: usize>(&mut self, h: T) -> HandlerKey<H, E>
+    pub fn add_handler<T, H, E>(&mut self, h: T) -> HandlerKey<H>
     where
-        T: IntoHandler<SBP, H>,
-        H: Handler<Event = E> + Any,
-        E: Event<N> + FromSbp,
+        T: IntoHandler<SBP, H, E>,
+        H: Handler<Event = E>,
+        E: Event + Any,
     {
         let key = self.handlers.insert(Box::new(h.handler()));
+        let id = TypeId::of::<E>();
         for msg_type in E::MESSAGE_TYPES {
-            self.msg_map.entry(msg_type).or_default().push(key);
+            self.msg_map.entry(*msg_type).or_default().push(key);
         }
         HandlerKey {
             key,
@@ -50,18 +49,18 @@ impl Dispatcher {
         }
     }
 
-    pub fn remove_handler<H, E, const N: usize>(&mut self, key: HandlerKey<H, E>)
+    pub fn remove_handler<H, E>(&mut self, key: HandlerKey<H>)
     where
         H: Handler<Event = E>,
-        E: Event<N> + FromSbp,
+        E: Event,
     {
         self.remove_boxed(key);
     }
 
-    pub fn take_handler<H, E, const N: usize>(&mut self, key: HandlerKey<H, E>) -> H
+    pub fn take_handler<H, E>(&mut self, key: HandlerKey<H>) -> H
     where
-        H: Handler<Event = E> + Any,
-        E: Event<N> + FromSbp,
+        H: Handler<Event = E>,
+        E: Event,
     {
         *self
             .remove_boxed(key)
@@ -70,15 +69,12 @@ impl Dispatcher {
             .expect("failed to downcast handler")
     }
 
-    fn remove_boxed<H, E, const N: usize>(
-        &mut self,
-        key: HandlerKey<H, E>,
-    ) -> Box<dyn StoredHandler>
+    fn remove_boxed<H, E>(&mut self, key: HandlerKey<H>) -> Box<dyn SbpHandler>
     where
         H: Handler<Event = E>,
-        E: Event<N>,
+        E: Event,
     {
-        for msg_type in &E::MESSAGE_TYPES {
+        for msg_type in E::MESSAGE_TYPES {
             if let Some(keys) = self.msg_map.get_mut(msg_type) {
                 keys.iter_mut()
                     .position(|k| k == &key.key)
@@ -90,28 +86,42 @@ impl Dispatcher {
     }
 }
 
-pub struct HandlerKey<H, E> {
+pub struct HandlerKey<H> {
     key: HandlerKeyInner,
-    marker: PhantomData<(H, E)>,
+    marker: PhantomData<H>,
 }
 
 slotmap::new_key_type! {
     struct HandlerKeyInner;
 }
 
-trait StoredHandler {
-    fn run(&mut self, msg: SBP);
+pub trait EventHandler<E>
+where
+    E: Event,
+{
+    fn recv(&mut self, event: E);
+}
+
+pub trait Handler: 'static {
+    type Event: Event;
+
+    fn recv(&mut self, event: Self::Event);
+}
+
+/// A handler without the associated type, replaced by the concrete type SBP
+trait SbpHandler {
+    fn recv(&mut self, msg: SBP);
 
     fn into_any(self: Box<Self>) -> Box<dyn Any>;
 }
 
-impl<H> StoredHandler for H
+impl<H> SbpHandler for H
 where
-    H: Handler + 'static,
-    H::Event: FromSbp,
+    H: Handler,
 {
-    fn run(&mut self, msg: SBP) {
-        self.run(msg);
+    fn recv(&mut self, msg: SBP) {
+        let event = H::Event::from_sbp(msg);
+        self.recv(event);
     }
 
     fn into_any(self: Box<Self>) -> Box<dyn Any> {
@@ -119,88 +129,76 @@ where
     }
 }
 
-pub trait Handler {
-    type Event;
+pub trait Event {
+    /// The message types from which the event can be derived.
+    const MESSAGE_TYPES: &'static [u16];
 
-    fn recv(&mut self, event: Self::Event);
-
-    fn run(&mut self, msg: SBP)
-    where
-        Self::Event: FromSbp,
-    {
-        let event = Self::Event::from_sbp(msg);
-        self.recv(event);
-    }
-}
-
-pub trait FromSbp {
+    /// Conversion from SBP. The message type of `msg` is guaranteed to be in
+    /// `Self::MESSAGE_TYPES`.
     fn from_sbp(msg: SBP) -> Self;
 }
 
-impl<T> FromSbp for T
+// All concrete message types can be used as events.
+impl<T> Event for T
 where
     T: RealMessage,
 {
+    const MESSAGE_TYPES: &'static [u16] = &[T::MESSAGE_TYPE];
+
     fn from_sbp(msg: SBP) -> Self {
         msg.try_into().unwrap()
     }
 }
 
-pub trait Event<const N: usize> {
-    const MESSAGE_TYPES: [u16; N];
-}
-
-impl<T> Event<1> for T
+/// Something that can be used as an event handler.
+pub trait IntoHandler<M, H, E>
 where
-    T: RealMessage,
-{
-    const MESSAGE_TYPES: [u16; 1] = [T::MESSAGE_TYPE];
-}
-
-pub trait IntoHandler<M, H>
-where
-    H: Handler,
+    H: Handler<Event = E>,
+    E: Event,
 {
     fn handler(self) -> H;
 }
 
-impl<H> IntoHandler<SBP, H> for H
+// All handlers can be used as handlers.
+impl<H, E> IntoHandler<SBP, H, E> for H
 where
-    H: Handler,
+    H: Handler<Event = E>,
+    E: Event,
 {
     fn handler(self) -> H {
         self
     }
 }
 
-struct FuncHandler<E, O, F, const N: usize> {
+/// A handler from a closure or function pointer.
+struct FuncHandler<F, E, O> {
     func: F,
-    func_marker: PhantomData<fn(E) -> O>,
-    msg_types_marker: PhantomData<[u16; N]>,
+    marker: PhantomData<fn(E) -> O>,
 }
 
-impl<E, O, F, const N: usize> Handler for FuncHandler<E, O, F, N>
+impl<F, E, O> Handler for FuncHandler<F, E, O>
 where
-    E: Event<N>,
-    F: FnMut(E) -> O,
+    F: FnMut(E) -> O + 'static,
+    E: Event + 'static,
+    O: 'static,
 {
     type Event = E;
 
-    fn recv(&mut self, event: Self::Event) {
+    fn recv(&mut self, event: E) {
         (self.func)(event);
     }
 }
 
-impl<E, O, F, const N: usize> IntoHandler<SBP, FuncHandler<E, O, F, N>> for F
+impl<F, E, O> IntoHandler<SBP, FuncHandler<F, E, O>, E> for F
 where
-    E: Event<N>,
-    F: FnMut(E) -> O,
+    F: FnMut(E) -> O + 'static,
+    E: Event + 'static,
+    O: 'static,
 {
-    fn handler(self) -> FuncHandler<E, O, F, N> {
+    fn handler(self) -> FuncHandler<F, E, O> {
         FuncHandler {
             func: self,
-            func_marker: PhantomData,
-            msg_types_marker: PhantomData,
+            marker: PhantomData,
         }
     }
 }
@@ -269,10 +267,19 @@ mod tests {
     fn test_struct_handler() {
         struct Counter(usize);
 
+        impl Counter {
+            fn on_msg_obs(&mut self, msg: MsgObs) {
+                self.0 += 1;
+            }
+            fn on_msg_obs_dep_a(&mut self, msg: MsgObsDepA) {
+                self.0 += 1;
+            }
+        }
+
         impl Handler for Counter {
             type Event = MsgObs;
 
-            fn recv(&mut self, _: Self::Event) {
+            fn recv(&mut self, _: MsgObs) {
                 self.0 += 1;
             }
         }
@@ -302,11 +309,9 @@ mod tests {
         DepA(MsgObsDepA),
     }
 
-    impl Event<2> for ObsMsg {
-        const MESSAGE_TYPES: [u16; 2] = [MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
-    }
+    impl Event for ObsMsg {
+        const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
 
-    impl FromSbp for ObsMsg {
         fn from_sbp(msg: SBP) -> Self {
             match msg {
                 SBP::MsgObs(m) => ObsMsg::Obs(m),
