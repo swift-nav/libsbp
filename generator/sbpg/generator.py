@@ -185,13 +185,13 @@ def main():
       if args.c:
         import sbpg.targets.c as c
         c.render_version(output_dir, release)
-        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
         legacy_c.render_traits(output_dir, parsed)
         c.render_traits(output_dir, parsed)
         c.render_headers(output_dir, parsed)
       elif args.c_sources:
         import sbpg.targets.c as c
-        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
         c.render_sources(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
