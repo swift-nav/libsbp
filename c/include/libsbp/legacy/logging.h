@@ -27,24 +27,22 @@
 
 SBP_PACK_START
 
-
 /** Plaintext logging messages with levels
  *
  * This message contains a human-readable payload string from the device
  * containing errors, warnings and informational messages at ERROR, WARNING,
  * DEBUG, INFO logging levels.
  */
-#define SBP_MSG_LOG       0x0401
+#define SBP_MSG_LOG 0x0401
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
-                             (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) \
-                             & SBP_LOG_LOGGING_LEVEL_MASK)
-#define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
-                             << (SBP_LOG_LOGGING_LEVEL_SHIFT)));} while(0)
-                             
+  (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) & SBP_LOG_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LOGGING_LEVEL_SET(flags, val)           \
+  do {                                                  \
+    ((flags) |= (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
+                 << (SBP_LOG_LOGGING_LEVEL_SHIFT)));    \
+  } while (0)
 
 #define SBP_LOG_LOGGING_LEVEL_EMERG (0)
 #define SBP_LOG_LOGGING_LEVEL_ALERT (1)
@@ -56,10 +54,9 @@ SBP_PACK_START
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
 
 typedef struct SBP_ATTR_PACKED {
-  u8 level;    /**< Logging level */
-  char text[0];  /**< Human-readable string */
+  u8 level;     /**< Logging level */
+  char text[0]; /**< Human-readable string */
 } msg_log_t;
-
 
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -72,14 +69,13 @@ typedef struct SBP_ATTR_PACKED {
  * forwarded msg contains. Protocol 0 represents SBP and the remaining values
  * are implementation defined.
  */
-#define SBP_MSG_FWD       0x0402
+#define SBP_MSG_FWD 0x0402
 
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
   u8 fwd_payload[0]; /**< variable length wrapped binary message */
 } msg_fwd_t;
-
 
 /** Deprecated
  *
@@ -90,7 +86,6 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
-
 
 /** \} */
 

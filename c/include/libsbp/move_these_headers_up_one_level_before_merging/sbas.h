@@ -18,7 +18,10 @@
 #ifndef LIBSBP_SBAS_MESSAGES_H
 #define LIBSBP_SBAS_MESSAGES_H
 
-SWIFT_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/sbas.h` instead. Access to legacy types via `libsbp/sbas.h` will be removed in version 5.")
+SWIFT_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/sbas.h` instead. Access to legacy "
+    "types via `libsbp/sbas.h` will be removed in version 5.")
 
 #include <libsbp/legacy/sbas.h>
 

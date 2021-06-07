@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station to
@@ -38,14 +37,14 @@ SBP_PACK_START
 #define SBP_MSG_BASELINE_HEADING 0x020F
 #define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
-#define SBP_BASELINE_HEADING_FIX_MODE_GET(flags) \
-                             (((flags) >> SBP_BASELINE_HEADING_FIX_MODE_SHIFT) \
-                             & SBP_BASELINE_HEADING_FIX_MODE_MASK)
-#define SBP_BASELINE_HEADING_FIX_MODE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_BASELINE_HEADING_FIX_MODE_MASK)) \
-                             << (SBP_BASELINE_HEADING_FIX_MODE_SHIFT)));} while(0)
-                             
+#define SBP_BASELINE_HEADING_FIX_MODE_GET(flags)      \
+  (((flags) >> SBP_BASELINE_HEADING_FIX_MODE_SHIFT) & \
+   SBP_BASELINE_HEADING_FIX_MODE_MASK)
+#define SBP_BASELINE_HEADING_FIX_MODE_SET(flags, val)           \
+  do {                                                          \
+    ((flags) |= (((val) & (SBP_BASELINE_HEADING_FIX_MODE_MASK)) \
+                 << (SBP_BASELINE_HEADING_FIX_MODE_SHIFT)));    \
+  } while (0)
 
 #define SBP_BASELINE_HEADING_FIX_MODE_INVALID (0)
 #define SBP_BASELINE_HEADING_FIX_MODE_DIFFERENTIAL_GNSS (2)
@@ -53,12 +52,11 @@ SBP_PACK_START
 #define SBP_BASELINE_HEADING_FIX_MODE_FIXED_RTK (4)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;        /**< GPS Time of Week [ms] */
-  u32 heading;    /**< Heading [mdeg] */
-  u8 n_sats;     /**< Number of satellites used in solution */
-  u8 flags;      /**< Status flags */
+  u32 tow;     /**< GPS Time of Week [ms] */
+  u32 heading; /**< Heading [mdeg] */
+  u8 n_sats;   /**< Number of satellites used in solution */
+  u8 flags;    /**< Status flags */
 } msg_baseline_heading_t;
-
 
 /** Quaternion 4 component vector
  *
@@ -69,34 +67,33 @@ typedef struct SBP_ATTR_PACKED {
  * future INS versions of Swift Products and is not produced by Piksi Multi or
  * Duro.
  */
-#define SBP_MSG_ORIENT_QUAT      0x0220
+#define SBP_MSG_ORIENT_QUAT 0x0220
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags) \
-                             (((flags) >> SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT) \
-                             & SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)) \
-                             << (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT)));} while(0)
-                             
+#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)
+#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                \
+    ((flags) |= (((val) & (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT)));    \
+  } while (0)
 
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_VALID (1)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;           /**< GPS Time of Week [ms] */
-  s32 w;             /**< Real component [2^-31] */
-  s32 x;             /**< 1st imaginary component [2^-31] */
-  s32 y;             /**< 2nd imaginary component [2^-31] */
-  s32 z;             /**< 3rd imaginary component [2^-31] */
-  float w_accuracy;    /**< Estimated standard deviation of w [N/A] */
-  float x_accuracy;    /**< Estimated standard deviation of x [N/A] */
-  float y_accuracy;    /**< Estimated standard deviation of y [N/A] */
-  float z_accuracy;    /**< Estimated standard deviation of z [N/A] */
+  u32 tow;          /**< GPS Time of Week [ms] */
+  s32 w;            /**< Real component [2^-31] */
+  s32 x;            /**< 1st imaginary component [2^-31] */
+  s32 y;            /**< 2nd imaginary component [2^-31] */
+  s32 z;            /**< 3rd imaginary component [2^-31] */
+  float w_accuracy; /**< Estimated standard deviation of w [N/A] */
+  float x_accuracy; /**< Estimated standard deviation of x [N/A] */
+  float y_accuracy; /**< Estimated standard deviation of y [N/A] */
+  float z_accuracy; /**< Estimated standard deviation of z [N/A] */
   u8 flags;         /**< Status flags */
 } msg_orient_quat_t;
-
 
 /** Euler angles
  *
@@ -107,32 +104,34 @@ typedef struct SBP_ATTR_PACKED {
  * in future INS versions of Swift Products and is not produced by Piksi Multi
  * or Duro.
  */
-#define SBP_MSG_ORIENT_EULER     0x0221
+#define SBP_MSG_ORIENT_EULER 0x0221
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags) \
-                             (((flags) >> SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT) \
-                             & SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)) \
-                             << (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT)));} while(0)
-                             
+#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)
+#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                 \
+    ((flags) |= (((val) & (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT)));    \
+  } while (0)
 
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_VALID (1)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;               /**< GPS Time of Week [ms] */
-  s32 roll;              /**< rotation about the forward axis of the vehicle [microdegrees] */
-  s32 pitch;             /**< rotation about the rightward axis of the vehicle [microdegrees] */
-  s32 yaw;               /**< rotation about the downward axis of the vehicle [microdegrees] */
-  float roll_accuracy;     /**< Estimated standard deviation of roll [degrees] */
-  float pitch_accuracy;    /**< Estimated standard deviation of pitch [degrees] */
-  float yaw_accuracy;      /**< Estimated standard deviation of yaw [degrees] */
+  u32 tow;   /**< GPS Time of Week [ms] */
+  s32 roll;  /**< rotation about the forward axis of the vehicle [microdegrees]
+              */
+  s32 pitch; /**< rotation about the rightward axis of the vehicle
+                [microdegrees] */
+  s32 yaw;   /**< rotation about the downward axis of the vehicle [microdegrees]
+              */
+  float roll_accuracy;  /**< Estimated standard deviation of roll [degrees] */
+  float pitch_accuracy; /**< Estimated standard deviation of pitch [degrees] */
+  float yaw_accuracy;   /**< Estimated standard deviation of yaw [degrees] */
   u8 flags;             /**< Status flags */
 } msg_orient_euler_t;
-
 
 /** Vehicle Body Frame instantaneous angular rates
  *
@@ -146,29 +145,28 @@ typedef struct SBP_ATTR_PACKED {
  * direction. This message will only be available in future INS versions of
  * Swift Products and is not produced by Piksi Multi or Duro.
  */
-#define SBP_MSG_ANGULAR_RATE     0x0222
+#define SBP_MSG_ANGULAR_RATE 0x0222
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags) \
-                             (((flags) >> SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT) \
-                             & SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)) \
-                             << (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT)));} while(0)
-                             
+#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)
+#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                 \
+    ((flags) |= (((val) & (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT)));    \
+  } while (0)
 
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_VALID (1)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;      /**< GPS Time of Week [ms] */
-  s32 x;        /**< angular rate about x axis [microdegrees/s] */
-  s32 y;        /**< angular rate about y axis [microdegrees/s] */
-  s32 z;        /**< angular rate about z axis [microdegrees/s] */
-  u8 flags;    /**< Status flags */
+  u32 tow;  /**< GPS Time of Week [ms] */
+  s32 x;    /**< angular rate about x axis [microdegrees/s] */
+  s32 y;    /**< angular rate about y axis [microdegrees/s] */
+  s32 z;    /**< angular rate about z axis [microdegrees/s] */
+  u8 flags; /**< Status flags */
 } msg_angular_rate_t;
-
 
 /** \} */
 

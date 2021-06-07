@@ -18,7 +18,10 @@
 #ifndef LIBSBP_NDB_MESSAGES_H
 #define LIBSBP_NDB_MESSAGES_H
 
-SWIFT_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/ndb.h` instead. Access to legacy types via `libsbp/ndb.h` will be removed in version 5.")
+SWIFT_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/ndb.h` instead. Access to legacy types "
+    "via `libsbp/ndb.h` will be removed in version 5.")
 
 #include <libsbp/legacy/ndb.h>
 

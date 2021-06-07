@@ -18,7 +18,10 @@
 #ifndef LIBSBP_USER_MESSAGES_H
 #define LIBSBP_USER_MESSAGES_H
 
-SWIFT_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/user.h` instead. Access to legacy types via `libsbp/user.h` will be removed in version 5.")
+SWIFT_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/user.h` instead. Access to legacy "
+    "types via `libsbp/user.h` will be removed in version 5.")
 
 #include <libsbp/legacy/user.h>
 

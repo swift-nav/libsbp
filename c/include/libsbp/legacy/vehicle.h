@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-
 /** Vehicle forward (x-axis) velocity
  *
  * Message representing the x component of vehicle velocity in the user frame
@@ -40,17 +39,17 @@ SBP_PACK_START
  * synchronise odometry measurements with GNSS. Processor time shall roll over
  * to zero after one week.
  */
-#define SBP_MSG_ODOMETRY  0x0903
+#define SBP_MSG_ODOMETRY 0x0903
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
 #define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
-#define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags) \
-                             (((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) \
-                             & SBP_ODOMETRY_VEHICLE_METADATA_MASK)
-#define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ODOMETRY_VEHICLE_METADATA_MASK)) \
-                             << (SBP_ODOMETRY_VEHICLE_METADATA_SHIFT)));} while(0)
-                             
+#define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)      \
+  (((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) & \
+   SBP_ODOMETRY_VEHICLE_METADATA_MASK)
+#define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val)           \
+  do {                                                          \
+    ((flags) |= (((val) & (SBP_ODOMETRY_VEHICLE_METADATA_MASK)) \
+                 << (SBP_ODOMETRY_VEHICLE_METADATA_SHIFT)));    \
+  } while (0)
 
 #define SBP_ODOMETRY_VEHICLE_METADATA_UNAVAILABLE (0)
 #define SBP_ODOMETRY_VEHICLE_METADATA_FORWARD (1)
@@ -58,14 +57,14 @@ SBP_PACK_START
 #define SBP_ODOMETRY_VEHICLE_METADATA_PARK (3)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_MASK (0x3)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT (3u)
-#define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags) \
-                             (((flags) >> SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT) \
-                             & SBP_ODOMETRY_VELOCITY_SOURCE_MASK)
-#define SBP_ODOMETRY_VELOCITY_SOURCE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ODOMETRY_VELOCITY_SOURCE_MASK)) \
-                             << (SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT)));} while(0)
-                             
+#define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags)      \
+  (((flags) >> SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT) & \
+   SBP_ODOMETRY_VELOCITY_SOURCE_MASK)
+#define SBP_ODOMETRY_VELOCITY_SOURCE_SET(flags, val)           \
+  do {                                                         \
+    ((flags) |= (((val) & (SBP_ODOMETRY_VELOCITY_SOURCE_MASK)) \
+                 << (SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT)));    \
+  } while (0)
 
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SOURCE_0 (0)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SOURCE_1 (1)
@@ -74,27 +73,25 @@ SBP_PACK_START
 #define SBP_ODOMETRY_TIME_SOURCE_MASK (0x7)
 #define SBP_ODOMETRY_TIME_SOURCE_SHIFT (0u)
 #define SBP_ODOMETRY_TIME_SOURCE_GET(flags) \
-                             (((flags) >> SBP_ODOMETRY_TIME_SOURCE_SHIFT) \
-                             & SBP_ODOMETRY_TIME_SOURCE_MASK)
-#define SBP_ODOMETRY_TIME_SOURCE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_ODOMETRY_TIME_SOURCE_MASK)) \
-                             << (SBP_ODOMETRY_TIME_SOURCE_SHIFT)));} while(0)
-                             
+  (((flags) >> SBP_ODOMETRY_TIME_SOURCE_SHIFT) & SBP_ODOMETRY_TIME_SOURCE_MASK)
+#define SBP_ODOMETRY_TIME_SOURCE_SET(flags, val)           \
+  do {                                                     \
+    ((flags) |= (((val) & (SBP_ODOMETRY_TIME_SOURCE_MASK)) \
+                 << (SBP_ODOMETRY_TIME_SOURCE_SHIFT)));    \
+  } while (0)
 
 #define SBP_ODOMETRY_TIME_SOURCE_NONE (0)
 #define SBP_ODOMETRY_TIME_SOURCE_GPS_SOLUTION (1)
 #define SBP_ODOMETRY_TIME_SOURCE_PROCESSOR_TIME (2)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;         /**< Time field representing either milliseconds in the GPS
-                        Week or local CPU time from the producing system in
-                        milliseconds.  See the tow_source flag for the exact
-                        source of this timestamp. [ms] */
-  s32 velocity;    /**< The signed forward component of vehicle velocity. [mm/s] */
-  u8 flags;       /**< Status flags */
+  u32 tow;      /**< Time field representing either milliseconds in the GPS
+                     Week or local CPU time from the producing system in
+                     milliseconds.  See the tow_source flag for the exact
+                     source of this timestamp. [ms] */
+  s32 velocity; /**< The signed forward component of vehicle velocity. [mm/s] */
+  u8 flags;     /**< Status flags */
 } msg_odometry_t;
-
 
 /** Accumulated wheeltick count message
  *
@@ -113,14 +110,14 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_WHEELTICK 0x0904
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
-#define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags) \
-                             (((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) \
-                             & SBP_WHEELTICK_VEHICLE_METADATA_MASK)
-#define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_WHEELTICK_VEHICLE_METADATA_MASK)) \
-                             << (SBP_WHEELTICK_VEHICLE_METADATA_SHIFT)));} while(0)
-                             
+#define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)      \
+  (((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) & \
+   SBP_WHEELTICK_VEHICLE_METADATA_MASK)
+#define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val)           \
+  do {                                                           \
+    ((flags) |= (((val) & (SBP_WHEELTICK_VEHICLE_METADATA_MASK)) \
+                 << (SBP_WHEELTICK_VEHICLE_METADATA_SHIFT)));    \
+  } while (0)
 
 #define SBP_WHEELTICK_VEHICLE_METADATA_UNAVAILABLE (0)
 #define SBP_WHEELTICK_VEHICLE_METADATA_FORWARD (1)
@@ -128,34 +125,35 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_WHEELTICK_VEHICLE_METADATA_PARK (3)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK (0x3)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT (0u)
-#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags) \
-                             (((flags) >> SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT) \
-                             & SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK)
-#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK)) \
-                             << (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT)));} while(0)
-                             
+#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags)      \
+  (((flags) >> SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT) & \
+   SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK)
+#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SET(flags, val)           \
+  do {                                                               \
+    ((flags) |= (((val) & (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK)) \
+                 << (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT)));    \
+  } while (0)
 
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MICROSECONDS_SINCE_LAST_PPS (0)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MICROSECONDS_IN_GPS_WEEK (1)
-#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_LOCAL_CPU_TIME_IN_NOMINAL_MICROSECONDS (2)
+#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_LOCAL_CPU_TIME_IN_NOMINAL_MICROSECONDS \
+  (2)
 
 typedef struct SBP_ATTR_PACKED {
-  u64 time;      /**< Time field representing either microseconds since the
-                      last PPS, microseconds in the GPS Week or local CPU time
-                      from the producing system in microseconds. See the
-                      synch_type field for the exact meaning of this
-                      timestamp. [us] */
-  u8 flags;     /**< Field indicating the type of timestamp contained in the
-                     time field. */
-  u8 source;    /**< ID of the sensor producing this message */
-  s32 ticks;     /**< Free-running counter of the accumulated distance for
-                      this sensor. The counter should be incrementing if
-                      travelling into one direction and decrementing when
-                      travelling in the opposite direction. [arbitrary distance units] */
+  u64 time;  /**< Time field representing either microseconds since the
+                  last PPS, microseconds in the GPS Week or local CPU time
+                  from the producing system in microseconds. See the
+                  synch_type field for the exact meaning of this
+                  timestamp. [us] */
+  u8 flags;  /**< Field indicating the type of timestamp contained in the
+                  time field. */
+  u8 source; /**< ID of the sensor producing this message */
+  s32 ticks; /**< Free-running counter of the accumulated distance for
+                  this sensor. The counter should be incrementing if
+                  travelling into one direction and decrementing when
+                  travelling in the opposite direction. [arbitrary distance
+                units] */
 } msg_wheeltick_t;
-
 
 /** \} */
 
