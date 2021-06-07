@@ -36,7 +36,7 @@ impl<'a> Dispatcher<'a> {
 
     pub fn add<F, E, O>(&mut self, mut func: F) -> HandlerKey<E>
     where
-        F: FnMut(E) -> O + 'a,
+        F: FnMut(E) -> O + Send + 'a,
         E: Event,
     {
         let key = self.handlers.insert(Box::new(move |msg: SBP| {
@@ -67,7 +67,7 @@ impl<'a> Dispatcher<'a> {
     }
 }
 
-pub type Handler<'a> = Box<dyn FnMut(SBP) + 'a>;
+pub type Handler<'a> = Box<dyn FnMut(SBP) + Send + 'a>;
 
 pub struct HandlerKey<E> {
     key: HandlerKeyInner,
