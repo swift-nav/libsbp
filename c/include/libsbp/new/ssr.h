@@ -1,22 +1,39 @@
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/ssr.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
 #ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define LIBSBP_NEW_SSR_MESSAGES_H
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
 #include <endian.h>
 #include <math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/new/string/multipart.h>
-#include <libsbp/new/string/double_null_terminated.h>
-#include <libsbp/new/string/unterminated.h>
-#include <libsbp/new/string/null_terminated.h>
 #include <libsbp/new/gnss.h>
+#include <libsbp/new/string/double_null_terminated.h>
+#include <libsbp/new/string/multipart.h>
+#include <libsbp/new/string/null_terminated.h>
+#include <libsbp/new/string/unterminated.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 struct sbp_state;
@@ -29,12 +46,17 @@ typedef struct {
   s16 value;
 } sbp_code_biases_content_t;
 
-size_t sbp_packed_size_sbp_code_biases_content_t(const sbp_code_biases_content_t *msg);
-s8 sbp_encode_sbp_code_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_code_biases_content_t *msg);
-s8 sbp_decode_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_code_biases_content_t *msg);
+size_t sbp_packed_size_sbp_code_biases_content_t(
+    const sbp_code_biases_content_t *msg);
+s8 sbp_encode_sbp_code_biases_content_t(uint8_t *buf, uint8_t len,
+                                        uint8_t *n_written,
+                                        const sbp_code_biases_content_t *msg);
+s8 sbp_decode_sbp_code_biases_content_t(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_code_biases_content_t *msg);
 
-int sbp_cmp_sbp_code_biases_content_t(const sbp_code_biases_content_t *a, const sbp_code_biases_content_t *b);
-
+int sbp_cmp_sbp_code_biases_content_t(const sbp_code_biases_content_t *a,
+                                      const sbp_code_biases_content_t *b);
 
 /** SSR phase biases corrections for a particular satellite
  *
@@ -48,12 +70,17 @@ typedef struct {
   s32 bias;
 } sbp_phase_biases_content_t;
 
-size_t sbp_packed_size_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *msg);
-s8 sbp_encode_sbp_phase_biases_content_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_phase_biases_content_t *msg);
-s8 sbp_decode_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_phase_biases_content_t *msg);
+size_t sbp_packed_size_sbp_phase_biases_content_t(
+    const sbp_phase_biases_content_t *msg);
+s8 sbp_encode_sbp_phase_biases_content_t(uint8_t *buf, uint8_t len,
+                                         uint8_t *n_written,
+                                         const sbp_phase_biases_content_t *msg);
+s8 sbp_decode_sbp_phase_biases_content_t(const uint8_t *buf, uint8_t len,
+                                         uint8_t *n_read,
+                                         sbp_phase_biases_content_t *msg);
 
-int sbp_cmp_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *a, const sbp_phase_biases_content_t *b);
-
+int sbp_cmp_sbp_phase_biases_content_t(const sbp_phase_biases_content_t *a,
+                                       const sbp_phase_biases_content_t *b);
 
 /** Header for the MSG_SSR_STEC_CORRECTION message
  *
@@ -70,11 +97,13 @@ typedef struct {
 } sbp_stec_header_t;
 
 size_t sbp_packed_size_sbp_stec_header_t(const sbp_stec_header_t *msg);
-s8 sbp_encode_sbp_stec_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_t *msg);
-s8 sbp_decode_sbp_stec_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_t *msg);
+s8 sbp_encode_sbp_stec_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                const sbp_stec_header_t *msg);
+s8 sbp_decode_sbp_stec_header_t(const uint8_t *buf, uint8_t len,
+                                uint8_t *n_read, sbp_stec_header_t *msg);
 
-int sbp_cmp_sbp_stec_header_t(const sbp_stec_header_t *a, const sbp_stec_header_t *b);
-
+int sbp_cmp_sbp_stec_header_t(const sbp_stec_header_t *a,
+                              const sbp_stec_header_t *b);
 
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
@@ -91,12 +120,18 @@ typedef struct {
   u8 tropo_quality_indicator;
 } sbp_gridded_correction_header_t;
 
-size_t sbp_packed_size_sbp_gridded_correction_header_t(const sbp_gridded_correction_header_t *msg);
-s8 sbp_encode_sbp_gridded_correction_header_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_t *msg);
-s8 sbp_decode_sbp_gridded_correction_header_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_t *msg);
+size_t sbp_packed_size_sbp_gridded_correction_header_t(
+    const sbp_gridded_correction_header_t *msg);
+s8 sbp_encode_sbp_gridded_correction_header_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_gridded_correction_header_t *msg);
+s8 sbp_decode_sbp_gridded_correction_header_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_gridded_correction_header_t *msg);
 
-int sbp_cmp_sbp_gridded_correction_header_t(const sbp_gridded_correction_header_t *a, const sbp_gridded_correction_header_t *b);
-
+int sbp_cmp_sbp_gridded_correction_header_t(
+    const sbp_gridded_correction_header_t *a,
+    const sbp_gridded_correction_header_t *b);
 
 /** None
  *
@@ -108,12 +143,17 @@ typedef struct {
   s16 stec_coeff[4];
 } sbp_stec_sat_element_t;
 
-size_t sbp_packed_size_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *msg);
-s8 sbp_encode_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_sat_element_t *msg);
-s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_sat_element_t *msg);
+size_t sbp_packed_size_sbp_stec_sat_element_t(
+    const sbp_stec_sat_element_t *msg);
+s8 sbp_encode_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len,
+                                     uint8_t *n_written,
+                                     const sbp_stec_sat_element_t *msg);
+s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len,
+                                     uint8_t *n_read,
+                                     sbp_stec_sat_element_t *msg);
 
-int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a, const sbp_stec_sat_element_t *b);
-
+int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a,
+                                   const sbp_stec_sat_element_t *b);
 
 /** None
  *
@@ -124,12 +164,18 @@ typedef struct {
   s8 wet;
 } sbp_tropospheric_delay_correction_no_std_t;
 
-size_t sbp_packed_size_sbp_tropospheric_delay_correction_no_std_t(const sbp_tropospheric_delay_correction_no_std_t *msg);
-s8 sbp_encode_sbp_tropospheric_delay_correction_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_no_std_t *msg);
-s8 sbp_decode_sbp_tropospheric_delay_correction_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_no_std_t *msg);
+size_t sbp_packed_size_sbp_tropospheric_delay_correction_no_std_t(
+    const sbp_tropospheric_delay_correction_no_std_t *msg);
+s8 sbp_encode_sbp_tropospheric_delay_correction_no_std_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_tropospheric_delay_correction_no_std_t *msg);
+s8 sbp_decode_sbp_tropospheric_delay_correction_no_std_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_tropospheric_delay_correction_no_std_t *msg);
 
-int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(const sbp_tropospheric_delay_correction_no_std_t *a, const sbp_tropospheric_delay_correction_no_std_t *b);
-
+int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(
+    const sbp_tropospheric_delay_correction_no_std_t *a,
+    const sbp_tropospheric_delay_correction_no_std_t *b);
 
 /** None
  *
@@ -141,12 +187,18 @@ typedef struct {
   u8 stddev;
 } sbp_tropospheric_delay_correction_t;
 
-size_t sbp_packed_size_sbp_tropospheric_delay_correction_t(const sbp_tropospheric_delay_correction_t *msg);
-s8 sbp_encode_sbp_tropospheric_delay_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_tropospheric_delay_correction_t *msg);
-s8 sbp_decode_sbp_tropospheric_delay_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_tropospheric_delay_correction_t *msg);
+size_t sbp_packed_size_sbp_tropospheric_delay_correction_t(
+    const sbp_tropospheric_delay_correction_t *msg);
+s8 sbp_encode_sbp_tropospheric_delay_correction_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_tropospheric_delay_correction_t *msg);
+s8 sbp_decode_sbp_tropospheric_delay_correction_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_tropospheric_delay_correction_t *msg);
 
-int sbp_cmp_sbp_tropospheric_delay_correction_t(const sbp_tropospheric_delay_correction_t *a, const sbp_tropospheric_delay_correction_t *b);
-
+int sbp_cmp_sbp_tropospheric_delay_correction_t(
+    const sbp_tropospheric_delay_correction_t *a,
+    const sbp_tropospheric_delay_correction_t *b);
 
 /** None
  *
@@ -157,12 +209,17 @@ typedef struct {
   s16 residual;
 } sbp_stec_residual_no_std_t;
 
-size_t sbp_packed_size_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *msg);
-s8 sbp_encode_sbp_stec_residual_no_std_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_no_std_t *msg);
-s8 sbp_decode_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_no_std_t *msg);
+size_t sbp_packed_size_sbp_stec_residual_no_std_t(
+    const sbp_stec_residual_no_std_t *msg);
+s8 sbp_encode_sbp_stec_residual_no_std_t(uint8_t *buf, uint8_t len,
+                                         uint8_t *n_written,
+                                         const sbp_stec_residual_no_std_t *msg);
+s8 sbp_decode_sbp_stec_residual_no_std_t(const uint8_t *buf, uint8_t len,
+                                         uint8_t *n_read,
+                                         sbp_stec_residual_no_std_t *msg);
 
-int sbp_cmp_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *a, const sbp_stec_residual_no_std_t *b);
-
+int sbp_cmp_sbp_stec_residual_no_std_t(const sbp_stec_residual_no_std_t *a,
+                                       const sbp_stec_residual_no_std_t *b);
 
 /** None
  *
@@ -175,18 +232,20 @@ typedef struct {
 } sbp_stec_residual_t;
 
 size_t sbp_packed_size_sbp_stec_residual_t(const sbp_stec_residual_t *msg);
-s8 sbp_encode_sbp_stec_residual_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_residual_t *msg);
-s8 sbp_decode_sbp_stec_residual_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_residual_t *msg);
+s8 sbp_encode_sbp_stec_residual_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_stec_residual_t *msg);
+s8 sbp_decode_sbp_stec_residual_t(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read, sbp_stec_residual_t *msg);
 
-int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a, const sbp_stec_residual_t *b);
-
+int sbp_cmp_sbp_stec_residual_t(const sbp_stec_residual_t *a,
+                                const sbp_stec_residual_t *b);
 
 /** Precise orbit and clock correction
  *
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_ORBIT_CLOCK                     0x05DD
+#define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
 #endif
 typedef struct {
   sbp_gps_time_sec_t time;
@@ -205,20 +264,28 @@ typedef struct {
   s32 c2;
 } sbp_msg_ssr_orbit_clock_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *msg);
-s8 sbp_encode_sbp_msg_ssr_orbit_clock_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_t *msg);
-s8 sbp_decode_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_t *msg);
-s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_orbit_clock_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_t(
+    const sbp_msg_ssr_orbit_clock_t *msg);
+s8 sbp_encode_sbp_msg_ssr_orbit_clock_t(uint8_t *buf, uint8_t len,
+                                        uint8_t *n_written,
+                                        const sbp_msg_ssr_orbit_clock_t *msg);
+s8 sbp_decode_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_ssr_orbit_clock_t *msg);
+s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state *s, u16 sender_id,
+                                      const sbp_msg_ssr_orbit_clock_t *msg,
+                                      s32 (*write)(u8 *buff, u32 n,
+                                                   void *context));
 
-int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a, const sbp_msg_ssr_orbit_clock_t *b);
-
+int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a,
+                                      const sbp_msg_ssr_orbit_clock_t *b);
 
 /** Precise code biases correction
  *
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_CODE_BIASES                     0x05E1
+#define SBP_MSG_SSR_CODE_BIASES 0x05E1
 #endif
 typedef struct {
   sbp_gps_time_sec_t time;
@@ -229,20 +296,28 @@ typedef struct {
   u8 n_biases;
 } sbp_msg_ssr_code_biases_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *msg);
-s8 sbp_encode_sbp_msg_ssr_code_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_code_biases_t *msg);
-s8 sbp_decode_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_code_biases_t *msg);
-s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_code_biases_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_code_biases_t(
+    const sbp_msg_ssr_code_biases_t *msg);
+s8 sbp_encode_sbp_msg_ssr_code_biases_t(uint8_t *buf, uint8_t len,
+                                        uint8_t *n_written,
+                                        const sbp_msg_ssr_code_biases_t *msg);
+s8 sbp_decode_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_ssr_code_biases_t *msg);
+s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state *s, u16 sender_id,
+                                      const sbp_msg_ssr_code_biases_t *msg,
+                                      s32 (*write)(u8 *buff, u32 n,
+                                                   void *context));
 
-int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a, const sbp_msg_ssr_code_biases_t *b);
-
+int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a,
+                                      const sbp_msg_ssr_code_biases_t *b);
 
 /** Precise phase biases correction
  *
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_PHASE_BIASES                    0x05E6
+#define SBP_MSG_SSR_PHASE_BIASES 0x05E6
 #endif
 typedef struct {
   sbp_gps_time_sec_t time;
@@ -257,20 +332,28 @@ typedef struct {
   u8 n_biases;
 } sbp_msg_ssr_phase_biases_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *msg);
-s8 sbp_encode_sbp_msg_ssr_phase_biases_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_phase_biases_t *msg);
-s8 sbp_decode_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_phase_biases_t *msg);
-s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_phase_biases_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_phase_biases_t(
+    const sbp_msg_ssr_phase_biases_t *msg);
+s8 sbp_encode_sbp_msg_ssr_phase_biases_t(uint8_t *buf, uint8_t len,
+                                         uint8_t *n_written,
+                                         const sbp_msg_ssr_phase_biases_t *msg);
+s8 sbp_decode_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len,
+                                         uint8_t *n_read,
+                                         sbp_msg_ssr_phase_biases_t *msg);
+s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state *s, u16 sender_id,
+                                       const sbp_msg_ssr_phase_biases_t *msg,
+                                       s32 (*write)(u8 *buff, u32 n,
+                                                    void *context));
 
-int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a, const sbp_msg_ssr_phase_biases_t *b);
-
+int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a,
+                                       const sbp_msg_ssr_phase_biases_t *b);
 
 /** STEC correction polynomial coeffcients
  *
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_STEC_CORRECTION                 0x05FB
+#define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
 #endif
 typedef struct {
   sbp_stec_header_t header;
@@ -278,20 +361,29 @@ typedef struct {
   u8 n_stec_sat_list;
 } sbp_msg_ssr_stec_correction_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *msg);
-s8 sbp_encode_sbp_msg_ssr_stec_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_t *msg);
-s8 sbp_decode_sbp_msg_ssr_stec_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_t *msg);
-s8 sbp_send_sbp_msg_ssr_stec_correction_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_stec_correction_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_stec_correction_t(
+    const sbp_msg_ssr_stec_correction_t *msg);
+s8 sbp_encode_sbp_msg_ssr_stec_correction_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_stec_correction_t *msg);
+s8 sbp_decode_sbp_msg_ssr_stec_correction_t(const uint8_t *buf, uint8_t len,
+                                            uint8_t *n_read,
+                                            sbp_msg_ssr_stec_correction_t *msg);
+s8 sbp_send_sbp_msg_ssr_stec_correction_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_stec_correction_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *a, const sbp_msg_ssr_stec_correction_t *b);
-
+int sbp_cmp_sbp_msg_ssr_stec_correction_t(
+    const sbp_msg_ssr_stec_correction_t *a,
+    const sbp_msg_ssr_stec_correction_t *b);
 
 /** Gridded troposphere and STEC correction residuals
  *
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_GRIDDED_CORRECTION              0x05FC
+#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
 #endif
 typedef struct {
   sbp_gridded_correction_header_t header;
@@ -301,13 +393,22 @@ typedef struct {
   u8 n_stec_residuals;
 } sbp_msg_ssr_gridded_correction_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *msg);
-s8 sbp_encode_sbp_msg_ssr_gridded_correction_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_t *msg);
-s8 sbp_decode_sbp_msg_ssr_gridded_correction_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_t *msg);
-s8 sbp_send_sbp_msg_ssr_gridded_correction_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_t(
+    const sbp_msg_ssr_gridded_correction_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_gridded_correction_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_gridded_correction_t *msg);
+s8 sbp_send_sbp_msg_ssr_gridded_correction_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_gridded_correction_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *a, const sbp_msg_ssr_gridded_correction_t *b);
-
+int sbp_cmp_sbp_msg_ssr_gridded_correction_t(
+    const sbp_msg_ssr_gridded_correction_t *a,
+    const sbp_msg_ssr_gridded_correction_t *b);
 
 /** Definition of a SSR atmospheric correction tile.
 
@@ -315,7 +416,7 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correctio
 ((m.desc|commentify)))
  */
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_TILE_DEFINITION                 0x05F6
+#define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
 #endif
 typedef struct {
   u16 tile_set_id;
@@ -329,25 +430,34 @@ typedef struct {
   u64 bitmask;
 } sbp_msg_ssr_tile_definition_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *msg);
-s8 sbp_encode_sbp_msg_ssr_tile_definition_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_tile_definition_t *msg);
-s8 sbp_decode_sbp_msg_ssr_tile_definition_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_tile_definition_t *msg);
-s8 sbp_send_sbp_msg_ssr_tile_definition_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_tile_definition_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_tile_definition_t(
+    const sbp_msg_ssr_tile_definition_t *msg);
+s8 sbp_encode_sbp_msg_ssr_tile_definition_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_tile_definition_t *msg);
+s8 sbp_decode_sbp_msg_ssr_tile_definition_t(const uint8_t *buf, uint8_t len,
+                                            uint8_t *n_read,
+                                            sbp_msg_ssr_tile_definition_t *msg);
+s8 sbp_send_sbp_msg_ssr_tile_definition_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_tile_definition_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a, const sbp_msg_ssr_tile_definition_t *b);
-
+int sbp_cmp_sbp_msg_ssr_tile_definition_t(
+    const sbp_msg_ssr_tile_definition_t *a,
+    const sbp_msg_ssr_tile_definition_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
-#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags) \
-                             (((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) \
-                             & SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)
-#define SBP_SATELLITEAPC_SATELLITE_TYPE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)) \
-                             << (SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT)));} while(0)
-                             
+#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags)      \
+  (((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) & \
+   SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)
+#define SBP_SATELLITEAPC_SATELLITE_TYPE_SET(flags, val)           \
+  do {                                                            \
+    ((flags) |= (((val) & (SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)) \
+                 << (SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT)));    \
+  } while (0)
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_UNKNOWN_TYPE (0)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_GPS_I (1)
@@ -383,30 +493,40 @@ typedef struct {
 } sbp_satellite_apc_t;
 
 size_t sbp_packed_size_sbp_satellite_apc_t(const sbp_satellite_apc_t *msg);
-s8 sbp_encode_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_satellite_apc_t *msg);
-s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_satellite_apc_t *msg);
+s8 sbp_encode_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_satellite_apc_t *msg);
+s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read, sbp_satellite_apc_t *msg);
 
-int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a, const sbp_satellite_apc_t *b);
-
+int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a,
+                                const sbp_satellite_apc_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_SATELLITE_APC                   0x0604
+#define SBP_MSG_SSR_SATELLITE_APC 0x0604
 #endif
 typedef struct {
   sbp_satellite_apc_t apc[7];
   u8 n_apc;
 } sbp_msg_ssr_satellite_apc_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *msg);
-s8 sbp_encode_sbp_msg_ssr_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_satellite_apc_t *msg);
-s8 sbp_decode_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_satellite_apc_t *msg);
-s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_satellite_apc_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(
+    const sbp_msg_ssr_satellite_apc_t *msg);
+s8 sbp_encode_sbp_msg_ssr_satellite_apc_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_satellite_apc_t *msg);
+s8 sbp_decode_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len,
+                                          uint8_t *n_read,
+                                          sbp_msg_ssr_satellite_apc_t *msg);
+s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state *s, u16 sender_id,
+                                        const sbp_msg_ssr_satellite_apc_t *msg,
+                                        s32 (*write)(u8 *buff, u32 n,
+                                                     void *context));
 
-int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a, const sbp_msg_ssr_satellite_apc_t *b);
-
+int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a,
+                                        const sbp_msg_ssr_satellite_apc_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 #endif
 typedef struct {
   sbp_gps_time_sec_t time;
@@ -425,13 +545,22 @@ typedef struct {
   s32 c2;
 } sbp_msg_ssr_orbit_clock_dep_a_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
-s8 sbp_encode_sbp_msg_ssr_orbit_clock_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
-s8 sbp_decode_sbp_msg_ssr_orbit_clock_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_orbit_clock_dep_a_t *msg);
-s8 sbp_send_sbp_msg_ssr_orbit_clock_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_orbit_clock_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_orbit_clock_dep_a_t(
+    const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_orbit_clock_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_orbit_clock_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_orbit_clock_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_orbit_clock_dep_a_t *msg);
+s8 sbp_send_sbp_msg_ssr_orbit_clock_dep_a_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_orbit_clock_dep_a_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *a, const sbp_msg_ssr_orbit_clock_dep_a_t *b);
-
+int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(
+    const sbp_msg_ssr_orbit_clock_dep_a_t *a,
+    const sbp_msg_ssr_orbit_clock_dep_a_t *b);
 
 /** Header for MSG_SSR_STEC_CORRECTION_DEP message
  *
@@ -445,12 +574,17 @@ typedef struct {
   u8 iod_atmo;
 } sbp_stec_header_dep_a_t;
 
-size_t sbp_packed_size_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *msg);
-s8 sbp_encode_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_stec_header_dep_a_t *msg);
-s8 sbp_decode_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_stec_header_dep_a_t *msg);
+size_t sbp_packed_size_sbp_stec_header_dep_a_t(
+    const sbp_stec_header_dep_a_t *msg);
+s8 sbp_encode_sbp_stec_header_dep_a_t(uint8_t *buf, uint8_t len,
+                                      uint8_t *n_written,
+                                      const sbp_stec_header_dep_a_t *msg);
+s8 sbp_decode_sbp_stec_header_dep_a_t(const uint8_t *buf, uint8_t len,
+                                      uint8_t *n_read,
+                                      sbp_stec_header_dep_a_t *msg);
 
-int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a, const sbp_stec_header_dep_a_t *b);
-
+int sbp_cmp_sbp_stec_header_dep_a_t(const sbp_stec_header_dep_a_t *a,
+                                    const sbp_stec_header_dep_a_t *b);
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
@@ -465,12 +599,18 @@ typedef struct {
   u8 tropo_quality_indicator;
 } sbp_gridded_correction_header_dep_a_t;
 
-size_t sbp_packed_size_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_encode_sbp_gridded_correction_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_gridded_correction_header_dep_a_t *msg);
-s8 sbp_decode_sbp_gridded_correction_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_gridded_correction_header_dep_a_t *msg);
+size_t sbp_packed_size_sbp_gridded_correction_header_dep_a_t(
+    const sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_encode_sbp_gridded_correction_header_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_gridded_correction_header_dep_a_t *msg);
+s8 sbp_decode_sbp_gridded_correction_header_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_gridded_correction_header_dep_a_t *msg);
 
-int sbp_cmp_sbp_gridded_correction_header_dep_a_t(const sbp_gridded_correction_header_dep_a_t *a, const sbp_gridded_correction_header_dep_a_t *b);
-
+int sbp_cmp_sbp_gridded_correction_header_dep_a_t(
+    const sbp_gridded_correction_header_dep_a_t *a,
+    const sbp_gridded_correction_header_dep_a_t *b);
 
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages
  *
@@ -485,15 +625,21 @@ typedef struct {
   u8 seq_num;
 } sbp_grid_definition_header_dep_a_t;
 
-size_t sbp_packed_size_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_encode_sbp_grid_definition_header_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_grid_definition_header_dep_a_t *msg);
-s8 sbp_decode_sbp_grid_definition_header_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_grid_definition_header_dep_a_t *msg);
+size_t sbp_packed_size_sbp_grid_definition_header_dep_a_t(
+    const sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_encode_sbp_grid_definition_header_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_grid_definition_header_dep_a_t *msg);
+s8 sbp_decode_sbp_grid_definition_header_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_grid_definition_header_dep_a_t *msg);
 
-int sbp_cmp_sbp_grid_definition_header_dep_a_t(const sbp_grid_definition_header_dep_a_t *a, const sbp_grid_definition_header_dep_a_t *b);
-
+int sbp_cmp_sbp_grid_definition_header_dep_a_t(
+    const sbp_grid_definition_header_dep_a_t *a,
+    const sbp_grid_definition_header_dep_a_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
 #endif
 typedef struct {
   sbp_stec_header_dep_a_t header;
@@ -501,13 +647,22 @@ typedef struct {
   u8 n_stec_sat_list;
 } sbp_msg_ssr_stec_correction_dep_a_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_encode_sbp_msg_ssr_stec_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_decode_sbp_msg_ssr_stec_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_stec_correction_dep_a_t *msg);
-s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_stec_correction_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(
+    const sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_stec_correction_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_stec_correction_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_stec_correction_dep_a_t *msg);
+s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_stec_correction_dep_a_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b);
-
+int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(
+    const sbp_msg_ssr_stec_correction_dep_a_t *a,
+    const sbp_msg_ssr_stec_correction_dep_a_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
@@ -520,16 +675,25 @@ typedef struct {
   u8 n_stec_residuals;
 } sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_decode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
-s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
-
+int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
 #endif
 typedef struct {
   sbp_gridded_correction_header_dep_a_t header;
@@ -539,16 +703,25 @@ typedef struct {
   u8 n_stec_residuals;
 } sbp_msg_ssr_gridded_correction_dep_a_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_encode_sbp_msg_ssr_gridded_correction_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_decode_sbp_msg_ssr_gridded_correction_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_gridded_correction_dep_a_t *msg);
-s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(
+    const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_gridded_correction_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_gridded_correction_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_gridded_correction_dep_a_t *msg);
+s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_gridded_correction_dep_a_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b);
-
+int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(
+    const sbp_msg_ssr_gridded_correction_dep_a_t *a,
+    const sbp_msg_ssr_gridded_correction_dep_a_t *b);
 
 #ifndef LIBSBP_LEGACY_SSR_MESSAGES_H
-#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
 #endif
 typedef struct {
   sbp_grid_definition_header_dep_a_t header;
@@ -556,590 +729,760 @@ typedef struct {
   u8 n_rle_list;
 } sbp_msg_ssr_grid_definition_dep_a_t;
 
-size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_encode_sbp_msg_ssr_grid_definition_dep_a_t(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_decode_sbp_msg_ssr_grid_definition_dep_a_t(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ssr_grid_definition_dep_a_t *msg);
-s8 sbp_send_sbp_msg_ssr_grid_definition_dep_a_t(struct sbp_state  *s, u16 sender_id, const sbp_msg_ssr_grid_definition_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(
+    const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_encode_sbp_msg_ssr_grid_definition_dep_a_t(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_decode_sbp_msg_ssr_grid_definition_dep_a_t(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_grid_definition_dep_a_t *msg);
+s8 sbp_send_sbp_msg_ssr_grid_definition_dep_a_t(
+    struct sbp_state *s, u16 sender_id,
+    const sbp_msg_ssr_grid_definition_dep_a_t *msg,
+    s32 (*write)(u8 *buff, u32 n, void *context));
 
-int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *a, const sbp_msg_ssr_grid_definition_dep_a_t *b);
-
-
+int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(
+    const sbp_msg_ssr_grid_definition_dep_a_t *a,
+    const sbp_msg_ssr_grid_definition_dep_a_t *b);
 
 #ifdef __cplusplus
-  }
-static inline bool operator==(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+}
+static inline bool operator==(const sbp_code_biases_content_t &a,
+                              const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+static inline bool operator!=(const sbp_code_biases_content_t &a,
+                              const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+static inline bool operator<(const sbp_code_biases_content_t &a,
+                             const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+static inline bool operator<=(const sbp_code_biases_content_t &a,
+                              const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+static inline bool operator>(const sbp_code_biases_content_t &a,
+                             const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_code_biases_content_t &a, const sbp_code_biases_content_t &b) {
+static inline bool operator>=(const sbp_code_biases_content_t &a,
+                              const sbp_code_biases_content_t &b) {
   return sbp_cmp_sbp_code_biases_content_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator==(const sbp_phase_biases_content_t &a,
+                              const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator!=(const sbp_phase_biases_content_t &a,
+                              const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator<(const sbp_phase_biases_content_t &a,
+                             const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator<=(const sbp_phase_biases_content_t &a,
+                              const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator>(const sbp_phase_biases_content_t &a,
+                             const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_phase_biases_content_t &a, const sbp_phase_biases_content_t &b) {
+static inline bool operator>=(const sbp_phase_biases_content_t &a,
+                              const sbp_phase_biases_content_t &b) {
   return sbp_cmp_sbp_phase_biases_content_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator==(const sbp_stec_header_t &a,
+                              const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator!=(const sbp_stec_header_t &a,
+                              const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator<(const sbp_stec_header_t &a,
+                             const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator<=(const sbp_stec_header_t &a,
+                              const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator>(const sbp_stec_header_t &a,
+                             const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_stec_header_t &a, const sbp_stec_header_t &b) {
+static inline bool operator>=(const sbp_stec_header_t &a,
+                              const sbp_stec_header_t &b) {
   return sbp_cmp_sbp_stec_header_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator==(const sbp_gridded_correction_header_t &a,
+                              const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator!=(const sbp_gridded_correction_header_t &a,
+                              const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator<(const sbp_gridded_correction_header_t &a,
+                             const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator<=(const sbp_gridded_correction_header_t &a,
+                              const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator>(const sbp_gridded_correction_header_t &a,
+                             const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_gridded_correction_header_t &a, const sbp_gridded_correction_header_t &b) {
+static inline bool operator>=(const sbp_gridded_correction_header_t &a,
+                              const sbp_gridded_correction_header_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator==(const sbp_stec_sat_element_t &a,
+                              const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator!=(const sbp_stec_sat_element_t &a,
+                              const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator<(const sbp_stec_sat_element_t &a,
+                             const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator<=(const sbp_stec_sat_element_t &a,
+                              const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator>(const sbp_stec_sat_element_t &a,
+                             const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_stec_sat_element_t &a, const sbp_stec_sat_element_t &b) {
+static inline bool operator>=(const sbp_stec_sat_element_t &a,
+                              const sbp_stec_sat_element_t &b) {
   return sbp_cmp_sbp_stec_sat_element_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator==(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator!=(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator<(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator<=(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator>(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_tropospheric_delay_correction_no_std_t &a, const sbp_tropospheric_delay_correction_no_std_t &b) {
+static inline bool operator>=(
+    const sbp_tropospheric_delay_correction_no_std_t &a,
+    const sbp_tropospheric_delay_correction_no_std_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator==(const sbp_tropospheric_delay_correction_t &a,
+                              const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator!=(const sbp_tropospheric_delay_correction_t &a,
+                              const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator<(const sbp_tropospheric_delay_correction_t &a,
+                             const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator<=(const sbp_tropospheric_delay_correction_t &a,
+                              const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator>(const sbp_tropospheric_delay_correction_t &a,
+                             const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_tropospheric_delay_correction_t &a, const sbp_tropospheric_delay_correction_t &b) {
+static inline bool operator>=(const sbp_tropospheric_delay_correction_t &a,
+                              const sbp_tropospheric_delay_correction_t &b) {
   return sbp_cmp_sbp_tropospheric_delay_correction_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator==(const sbp_stec_residual_no_std_t &a,
+                              const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator!=(const sbp_stec_residual_no_std_t &a,
+                              const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator<(const sbp_stec_residual_no_std_t &a,
+                             const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator<=(const sbp_stec_residual_no_std_t &a,
+                              const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator>(const sbp_stec_residual_no_std_t &a,
+                             const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_stec_residual_no_std_t &a, const sbp_stec_residual_no_std_t &b) {
+static inline bool operator>=(const sbp_stec_residual_no_std_t &a,
+                              const sbp_stec_residual_no_std_t &b) {
   return sbp_cmp_sbp_stec_residual_no_std_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator==(const sbp_stec_residual_t &a,
+                              const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator!=(const sbp_stec_residual_t &a,
+                              const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator<(const sbp_stec_residual_t &a,
+                             const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator<=(const sbp_stec_residual_t &a,
+                              const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator>(const sbp_stec_residual_t &a,
+                             const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_stec_residual_t &a, const sbp_stec_residual_t &b) {
+static inline bool operator>=(const sbp_stec_residual_t &a,
+                              const sbp_stec_residual_t &b) {
   return sbp_cmp_sbp_stec_residual_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator==(const sbp_msg_ssr_orbit_clock_t &a,
+                              const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_orbit_clock_t &a,
+                              const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator<(const sbp_msg_ssr_orbit_clock_t &a,
+                             const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_orbit_clock_t &a,
+                              const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator>(const sbp_msg_ssr_orbit_clock_t &a,
+                             const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_orbit_clock_t &a, const sbp_msg_ssr_orbit_clock_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_orbit_clock_t &a,
+                              const sbp_msg_ssr_orbit_clock_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator==(const sbp_msg_ssr_code_biases_t &a,
+                              const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_code_biases_t &a,
+                              const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator<(const sbp_msg_ssr_code_biases_t &a,
+                             const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_code_biases_t &a,
+                              const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator>(const sbp_msg_ssr_code_biases_t &a,
+                             const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_ssr_code_biases_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_code_biases_t &a,
+                              const sbp_msg_ssr_code_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_code_biases_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator==(const sbp_msg_ssr_phase_biases_t &a,
+                              const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_phase_biases_t &a,
+                              const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator<(const sbp_msg_ssr_phase_biases_t &a,
+                             const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_phase_biases_t &a,
+                              const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator>(const sbp_msg_ssr_phase_biases_t &a,
+                             const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg_ssr_phase_biases_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_phase_biases_t &a,
+                              const sbp_msg_ssr_phase_biases_t &b) {
   return sbp_cmp_sbp_msg_ssr_phase_biases_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator==(const sbp_msg_ssr_stec_correction_t &a,
+                              const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_stec_correction_t &a,
+                              const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator<(const sbp_msg_ssr_stec_correction_t &a,
+                             const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_stec_correction_t &a,
+                              const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator>(const sbp_msg_ssr_stec_correction_t &a,
+                             const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &a, const sbp_msg_ssr_stec_correction_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &a,
+                              const sbp_msg_ssr_stec_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator==(const sbp_msg_ssr_gridded_correction_t &a,
+                              const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_gridded_correction_t &a,
+                              const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator<(const sbp_msg_ssr_gridded_correction_t &a,
+                             const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_gridded_correction_t &a,
+                              const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator>(const sbp_msg_ssr_gridded_correction_t &a,
+                             const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_gridded_correction_t &a, const sbp_msg_ssr_gridded_correction_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_gridded_correction_t &a,
+                              const sbp_msg_ssr_gridded_correction_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator==(const sbp_msg_ssr_tile_definition_t &a,
+                              const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_tile_definition_t &a,
+                              const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator<(const sbp_msg_ssr_tile_definition_t &a,
+                             const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_tile_definition_t &a,
+                              const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator>(const sbp_msg_ssr_tile_definition_t &a,
+                             const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_tile_definition_t &a, const sbp_msg_ssr_tile_definition_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_tile_definition_t &a,
+                              const sbp_msg_ssr_tile_definition_t &b) {
   return sbp_cmp_sbp_msg_ssr_tile_definition_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator==(const sbp_satellite_apc_t &a,
+                              const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator!=(const sbp_satellite_apc_t &a,
+                              const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator<(const sbp_satellite_apc_t &a,
+                             const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator<=(const sbp_satellite_apc_t &a,
+                              const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator>(const sbp_satellite_apc_t &a,
+                             const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_satellite_apc_t &a, const sbp_satellite_apc_t &b) {
+static inline bool operator>=(const sbp_satellite_apc_t &a,
+                              const sbp_satellite_apc_t &b) {
   return sbp_cmp_sbp_satellite_apc_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator==(const sbp_msg_ssr_satellite_apc_t &a,
+                              const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_satellite_apc_t &a,
+                              const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator<(const sbp_msg_ssr_satellite_apc_t &a,
+                             const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_satellite_apc_t &a,
+                              const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator>(const sbp_msg_ssr_satellite_apc_t &a,
+                             const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &a, const sbp_msg_ssr_satellite_apc_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &a,
+                              const sbp_msg_ssr_satellite_apc_t &b) {
   return sbp_cmp_sbp_msg_ssr_satellite_apc_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator==(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                              const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                              const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator<(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                             const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                              const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator>(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                             const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_orbit_clock_dep_a_t &a, const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_orbit_clock_dep_a_t &a,
+                              const sbp_msg_ssr_orbit_clock_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator==(const sbp_stec_header_dep_a_t &a,
+                              const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator!=(const sbp_stec_header_dep_a_t &a,
+                              const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator<(const sbp_stec_header_dep_a_t &a,
+                             const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator<=(const sbp_stec_header_dep_a_t &a,
+                              const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator>(const sbp_stec_header_dep_a_t &a,
+                             const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_stec_header_dep_a_t &a, const sbp_stec_header_dep_a_t &b) {
+static inline bool operator>=(const sbp_stec_header_dep_a_t &a,
+                              const sbp_stec_header_dep_a_t &b) {
   return sbp_cmp_sbp_stec_header_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator==(const sbp_gridded_correction_header_dep_a_t &a,
+                              const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator!=(const sbp_gridded_correction_header_dep_a_t &a,
+                              const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator<(const sbp_gridded_correction_header_dep_a_t &a,
+                             const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator<=(const sbp_gridded_correction_header_dep_a_t &a,
+                              const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator>(const sbp_gridded_correction_header_dep_a_t &a,
+                             const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_gridded_correction_header_dep_a_t &a, const sbp_gridded_correction_header_dep_a_t &b) {
+static inline bool operator>=(const sbp_gridded_correction_header_dep_a_t &a,
+                              const sbp_gridded_correction_header_dep_a_t &b) {
   return sbp_cmp_sbp_gridded_correction_header_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator==(const sbp_grid_definition_header_dep_a_t &a,
+                              const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator!=(const sbp_grid_definition_header_dep_a_t &a,
+                              const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator<(const sbp_grid_definition_header_dep_a_t &a,
+                             const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator<=(const sbp_grid_definition_header_dep_a_t &a,
+                              const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator>(const sbp_grid_definition_header_dep_a_t &a,
+                             const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_grid_definition_header_dep_a_t &a, const sbp_grid_definition_header_dep_a_t &b) {
+static inline bool operator>=(const sbp_grid_definition_header_dep_a_t &a,
+                              const sbp_grid_definition_header_dep_a_t &b) {
   return sbp_cmp_sbp_grid_definition_header_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator==(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                              const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                              const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator<(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                             const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                              const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator>(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                             const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_stec_correction_dep_a_t &a, const sbp_msg_ssr_stec_correction_dep_a_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_stec_correction_dep_a_t &a,
+                              const sbp_msg_ssr_stec_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator==(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator!=(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator<(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator<=(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator>(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
+static inline bool operator>=(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &a,
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator==(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                              const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                              const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator<(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                             const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                              const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator>(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                             const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_gridded_correction_dep_a_t &a, const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
+                              const sbp_msg_ssr_gridded_correction_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(&a, &b) >= 0;
 }
-static inline bool operator==(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator==(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                              const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator!=(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                              const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator<(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                             const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator<=(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                              const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator>(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                             const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_grid_definition_dep_a_t &a, const sbp_msg_ssr_grid_definition_dep_a_t &b) {
+static inline bool operator>=(const sbp_msg_ssr_grid_definition_dep_a_t &a,
+                              const sbp_msg_ssr_grid_definition_dep_a_t &b) {
   return sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(&a, &b) >= 0;
 }
 
