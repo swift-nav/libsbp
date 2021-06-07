@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/imu_macros.h>
 #include <libsbp/new/string/double_null_terminated.h>
 #include <libsbp/new/string/multipart.h>
 #include <libsbp/new/string/null_terminated.h>
@@ -36,195 +37,313 @@ extern "C" {
 #endif
 
 struct sbp_state;
-#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
-#define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
-#define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
-#define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
-  (((flags) >> SBP_IMU_RAW_TIME_STATUS_SHIFT) & SBP_IMU_RAW_TIME_STATUS_MASK)
-#define SBP_IMU_RAW_TIME_STATUS_SET(flags, val)           \
-  do {                                                    \
-    ((flags) |= (((val) & (SBP_IMU_RAW_TIME_STATUS_MASK)) \
-                 << (SBP_IMU_RAW_TIME_STATUS_SHIFT)));    \
-  } while (0)
 
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_START_OF_CURRENT_GPS_WEEK (0)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP (1)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN (2)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK (0x3fffffff)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT (0u)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_GET(flags)      \
-  (((flags) >> SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT) & \
-   SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SET(flags, val) \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK))  \
-      << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));     \
-  } while (0)
-
-#endif
 /** Raw IMU data
  *
-((m.desc|commentify)))
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings. The sense of the measurements are to be aligned with the
+ * indications on the device itself. Measurement units, which are specific to
+ * the device hardware and settings, are communicated via the MSG_IMU_AUX
+ * message. If using "time since startup" time tags, the receiving end will
+ * expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+ * synchronise IMU measurements with GNSS. The timestamp must wrap around to
+ * zero when reaching one week (604800 seconds).
+ *
  */
-#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
-#define SBP_MSG_IMU_RAW 0x0900
-#endif
 typedef struct {
+  /**
+   * Milliseconds since reference epoch and time status.
+   */
   u32 tow;
+
+  /**
+   * Milliseconds since reference epoch, fractional part [ms / 256]
+   */
   u8 tow_f;
+
+  /**
+   * Acceleration in the IMU frame X axis
+   */
   s16 acc_x;
+
+  /**
+   * Acceleration in the IMU frame Y axis
+   */
   s16 acc_y;
+
+  /**
+   * Acceleration in the IMU frame Z axis
+   */
   s16 acc_z;
+
+  /**
+   * Angular rate around IMU frame X axis
+   */
   s16 gyr_x;
+
+  /**
+   * Angular rate around IMU frame Y axis
+   */
   s16 gyr_y;
+
+  /**
+   * Angular rate around IMU frame Z axis
+   */
   s16 gyr_z;
 } sbp_msg_imu_raw_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_imu_raw_t
+ *
+ * @param msg sbp_msg_imu_raw_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_imu_raw_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_imu_raw_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_imu_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                 const sbp_msg_imu_raw_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_imu_raw_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_imu_raw_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_imu_raw_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_imu_raw_t(const uint8_t *buf, uint8_t len,
                                 uint8_t *n_read, sbp_msg_imu_raw_t *msg);
+/**
+ * Send an instance of sbp_msg_imu_raw_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_imu_raw_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_imu_raw_t(struct sbp_state *s, u16 sender_id,
                               const sbp_msg_imu_raw_t *msg,
                               s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_imu_raw_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_imu_raw_t instance
+ * @param b sbp_msg_imu_raw_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_imu_raw_t(const sbp_msg_imu_raw_t *a,
                               const sbp_msg_imu_raw_t *b);
 
-#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
-#define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
-#define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
-#define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
-  (((flags) >> SBP_IMU_AUX_IMU_TYPE_SHIFT) & SBP_IMU_AUX_IMU_TYPE_MASK)
-#define SBP_IMU_AUX_IMU_TYPE_SET(flags, val)                                   \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_IMU_AUX_IMU_TYPE_MASK)) << (SBP_IMU_AUX_IMU_TYPE_SHIFT))); \
-  } while (0)
-
-#define SBP_IMU_AUX_IMU_TYPE_BOSCH_BMI160 (0)
-#define SBP_IMU_AUX_IMU_TYPE_ST_MICROELECTRONICS_ASM330LLH (1)
-#endif
-#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_MASK (0xf)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT (4u)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags)      \
-  (((flags) >> SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT) & \
-   SBP_IMU_AUX_GYROSCOPE_RANGE_MASK)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_SET(flags, val)           \
-  do {                                                        \
-    ((flags) |= (((val) & (SBP_IMU_AUX_GYROSCOPE_RANGE_MASK)) \
-                 << (SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT)));    \
-  } while (0)
-
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__2000_DEG__S (0)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__1000_DEG__S (1)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__500_DEG__S (2)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__250_DEG__S (3)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__125_DEG__S (4)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK (0xf)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT (0u)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_GET(flags)      \
-  (((flags) >> SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT) & \
-   SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_SET(flags, val)           \
-  do {                                                            \
-    ((flags) |= (((val) & (SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK)) \
-                 << (SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT)));    \
-  } while (0)
-
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__2G (0)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__4G (1)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__8G (2)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
-#endif
 /** Auxiliary IMU data
  *
-((m.desc|commentify)))
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will always
+ * be consistent but the rest of the payload is device specific and depends on
+ * the value of `imu_type`.
  */
-#ifndef LIBSBP_LEGACY_IMU_MESSAGES_H
-#define SBP_MSG_IMU_AUX 0x0901
-#endif
 typedef struct {
+  /**
+   * IMU type
+   */
   u8 imu_type;
+
+  /**
+   * Raw IMU temperature
+   */
   s16 temp;
+
+  /**
+   * IMU configuration
+   */
   u8 imu_conf;
 } sbp_msg_imu_aux_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_imu_aux_t
+ *
+ * @param msg sbp_msg_imu_aux_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_imu_aux_t(const sbp_msg_imu_aux_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_imu_aux_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_imu_aux_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_imu_aux_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                 const sbp_msg_imu_aux_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_imu_aux_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_imu_aux_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_imu_aux_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_imu_aux_t(const uint8_t *buf, uint8_t len,
                                 uint8_t *n_read, sbp_msg_imu_aux_t *msg);
+/**
+ * Send an instance of sbp_msg_imu_aux_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_imu_aux_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_imu_aux_t(struct sbp_state *s, u16 sender_id,
                               const sbp_msg_imu_aux_t *msg,
                               s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_imu_aux_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_imu_aux_t instance
+ * @param b sbp_msg_imu_aux_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_imu_aux_t(const sbp_msg_imu_aux_t *a,
                               const sbp_msg_imu_aux_t *b);
 
 #ifdef __cplusplus
 }
-static inline bool operator==(const sbp_msg_imu_raw_t &a,
-                              const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_imu_raw_t &lhs,
+                              const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_imu_raw_t &a,
-                              const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_imu_raw_t &lhs,
+                              const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_imu_raw_t &a,
-                             const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_imu_raw_t &lhs,
+                             const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_imu_raw_t &a,
-                              const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_imu_raw_t &lhs,
+                              const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_imu_raw_t &a,
-                             const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_imu_raw_t &lhs,
+                             const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_imu_raw_t &a,
-                              const sbp_msg_imu_raw_t &b) {
-  return sbp_cmp_sbp_msg_imu_raw_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_imu_raw_t &lhs,
+                              const sbp_msg_imu_raw_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_raw_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_imu_aux_t &a,
-                              const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) == 0;
-}
-
-static inline bool operator!=(const sbp_msg_imu_aux_t &a,
-                              const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) != 0;
+static inline bool operator==(const sbp_msg_imu_aux_t &lhs,
+                              const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator<(const sbp_msg_imu_aux_t &a,
-                             const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) < 0;
+static inline bool operator!=(const sbp_msg_imu_aux_t &lhs,
+                              const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<=(const sbp_msg_imu_aux_t &a,
-                              const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) <= 0;
+static inline bool operator<(const sbp_msg_imu_aux_t &lhs,
+                             const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator>(const sbp_msg_imu_aux_t &a,
-                             const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) > 0;
+static inline bool operator<=(const sbp_msg_imu_aux_t &lhs,
+                              const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>=(const sbp_msg_imu_aux_t &a,
-                              const sbp_msg_imu_aux_t &b) {
-  return sbp_cmp_sbp_msg_imu_aux_t(&a, &b) >= 0;
+static inline bool operator>(const sbp_msg_imu_aux_t &lhs,
+                             const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) > 0;
+}
+
+static inline bool operator>=(const sbp_msg_imu_aux_t &lhs,
+                              const sbp_msg_imu_aux_t &rhs) {
+  return sbp_cmp_sbp_msg_imu_aux_t(&lhs, &rhs) >= 0;
 }
 
 #endif

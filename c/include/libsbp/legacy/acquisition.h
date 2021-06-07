@@ -24,6 +24,8 @@
 #define LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 
 #include <libsbp/common.h>
+
+#include <libsbp/acquisition_macros.h>
 #include <libsbp/legacy/gnss.h>
 
 SBP_PACK_START
@@ -35,9 +37,6 @@ SBP_PACK_START
  * contains the parameters of the point in the acquisition search space with
  * the best carrier-to-noise (CN/0) ratio.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_RESULT 0x002F
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
@@ -51,9 +50,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_RESULT_DEP_C 0x001F
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
@@ -67,9 +63,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   float snr; /**< SNR of best point. Currently in arbitrary SNR points, but
@@ -85,9 +78,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   float snr; /**< SNR of best point. Currently dimensonless, but will have
@@ -151,9 +141,6 @@ typedef struct SBP_ATTR_PACKED {
  * The message describes all SV profiles during acquisition time. The message
  * is used to debug and measure the performance.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_SV_PROFILE 0x002E
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_t
@@ -164,9 +151,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition

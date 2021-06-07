@@ -25,6 +25,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/gnss_macros.h>
+
 SBP_PACK_START
 
 /** Represents all the relevant information about the signal

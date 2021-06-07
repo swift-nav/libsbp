@@ -26,6 +26,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/ext_events_macros.h>
+
 SBP_PACK_START
 
 /** Reports timestamped external pin event
@@ -33,37 +35,6 @@ SBP_PACK_START
  * Reports detection of an external event, the GPS time it occurred, which pin
  * it was and whether it was rising or falling.
  */
-#ifndef LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
-#define SBP_MSG_EXT_EVENT 0x0101
-#endif
-#ifndef LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
-#define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1)
-#define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
-#define SBP_EXT_EVENT_TIME_QUALITY_GET(flags)      \
-  (((flags) >> SBP_EXT_EVENT_TIME_QUALITY_SHIFT) & \
-   SBP_EXT_EVENT_TIME_QUALITY_MASK)
-#define SBP_EXT_EVENT_TIME_QUALITY_SET(flags, val)           \
-  do {                                                       \
-    ((flags) |= (((val) & (SBP_EXT_EVENT_TIME_QUALITY_MASK)) \
-                 << (SBP_EXT_EVENT_TIME_QUALITY_SHIFT)));    \
-  } while (0)
-
-#define SBP_EXT_EVENT_TIME_QUALITY_UNKNOWN_DONT_HAVE_NAV_SOLUTION (0)
-#define SBP_EXT_EVENT_TIME_QUALITY_GOOD (1)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK (0x1)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT (0u)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_GET(flags)      \
-  (((flags) >> SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT) & \
-   SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SET(flags, val)           \
-  do {                                                           \
-    ((flags) |= (((val) & (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK)) \
-                 << (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT)));    \
-  } while (0)
-
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_HIGH (1)
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 wn;  /**< GPS week number [weeks] */

@@ -24,6 +24,7 @@ VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
 SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
+SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
@@ -266,6 +267,14 @@ def render_headers(include_dir, package_specs):
             #print("Adding %s" % new_msg.name)
         destination_filename = "%s/new/%s.h" % (include_dir, name)
         py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/%s_macros.h" % (include_dir, name)
+        py_template = JENV.get_template(SBP_MESSAGES_MACROS_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,
                 pkg_name = name,

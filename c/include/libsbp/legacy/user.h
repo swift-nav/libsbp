@@ -25,6 +25,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/user_macros.h>
+
 SBP_PACK_START
 
 /** User data
@@ -32,9 +34,6 @@ SBP_PACK_START
  * This message can contain any application specific user data up to a maximum
  * length of 255 bytes per message.
  */
-#ifndef LIBSBP_NEW_USER_MESSAGES_H
-#define SBP_MSG_USER_DATA 0x0800
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 contents[0]; /**< User data payload */

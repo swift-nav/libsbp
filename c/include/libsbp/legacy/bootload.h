@@ -29,6 +29,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/bootload_macros.h>
+
 SBP_PACK_START
 
 /** Bootloading handshake request (host => device)
@@ -37,9 +39,6 @@ SBP_PACK_START
  * the device bootloader and the host. The response from the device is
  * MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ 0x00B3
-#endif
 
 /** Bootloading handshake response (host <= device)
  *
@@ -48,47 +47,6 @@ SBP_PACK_START
  * MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
  * number and the SBP protocol version number.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
-#endif
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
-  (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT \
-  (8u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
-  } while (0)
-
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK \
-  (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT \
-  (0u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
-  } while (0)
-
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags;       /**< Bootloader flags */
@@ -99,9 +57,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The host initiates the bootloader to jump to the application.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 jump; /**< Ignored by the device */
@@ -116,9 +71,6 @@ typedef struct SBP_ATTR_PACKED {
  * that this ID is tied to the FPGA, and not related to the Piksi's serial
  * number.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_NAP_DEVICE_DNA_REQ 0x00DE
-#endif
 
 /** Read FPGA device ID over UART response (host <= device)
  *
@@ -129,9 +81,6 @@ typedef struct SBP_ATTR_PACKED {
  * that this ID is tied to the FPGA, and not related to the Piksi's serial
  * number.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on
@@ -142,9 +91,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#ifndef LIBSBP_NEW_BOOTLOAD_MESSAGES_H
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */

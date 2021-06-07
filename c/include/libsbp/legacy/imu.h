@@ -25,6 +25,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/imu_macros.h>
+
 SBP_PACK_START
 
 /** Raw IMU data
@@ -40,37 +42,6 @@ SBP_PACK_START
  *
  * The time-tagging mode should not change throughout a run.
  */
-#ifndef LIBSBP_NEW_IMU_MESSAGES_H
-#define SBP_MSG_IMU_RAW 0x0900
-#endif
-#ifndef LIBSBP_NEW_IMU_MESSAGES_H
-#define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
-#define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
-#define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
-  (((flags) >> SBP_IMU_RAW_TIME_STATUS_SHIFT) & SBP_IMU_RAW_TIME_STATUS_MASK)
-#define SBP_IMU_RAW_TIME_STATUS_SET(flags, val)           \
-  do {                                                    \
-    ((flags) |= (((val) & (SBP_IMU_RAW_TIME_STATUS_MASK)) \
-                 << (SBP_IMU_RAW_TIME_STATUS_SHIFT)));    \
-  } while (0)
-
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_START_OF_CURRENT_GPS_WEEK (0)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP (1)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN (2)
-#define SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK (0x3fffffff)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT (0u)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_GET(flags)      \
-  (((flags) >> SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT) & \
-   SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SET(flags, val) \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK))  \
-      << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));     \
-  } while (0)
-
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;   /**< Milliseconds since reference epoch and time status. */
@@ -90,65 +61,6 @@ typedef struct SBP_ATTR_PACKED {
  * always be consistent but the rest of the payload is device specific and
  * depends on the value of `imu_type`.
  */
-#ifndef LIBSBP_NEW_IMU_MESSAGES_H
-#define SBP_MSG_IMU_AUX 0x0901
-#endif
-#ifndef LIBSBP_NEW_IMU_MESSAGES_H
-#define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
-#define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
-#define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
-  (((flags) >> SBP_IMU_AUX_IMU_TYPE_SHIFT) & SBP_IMU_AUX_IMU_TYPE_MASK)
-#define SBP_IMU_AUX_IMU_TYPE_SET(flags, val)                                   \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_IMU_AUX_IMU_TYPE_MASK)) << (SBP_IMU_AUX_IMU_TYPE_SHIFT))); \
-  } while (0)
-
-#define SBP_IMU_AUX_IMU_TYPE_BOSCH_BMI160 (0)
-#define SBP_IMU_AUX_IMU_TYPE_ST_MICROELECTRONICS_ASM330LLH (1)
-#endif
-#ifndef LIBSBP_NEW_IMU_MESSAGES_H
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_MASK (0xf)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT (4u)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags)      \
-  (((flags) >> SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT) & \
-   SBP_IMU_AUX_GYROSCOPE_RANGE_MASK)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_SET(flags, val)           \
-  do {                                                        \
-    ((flags) |= (((val) & (SBP_IMU_AUX_GYROSCOPE_RANGE_MASK)) \
-                 << (SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT)));    \
-  } while (0)
-
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__2000_DEG__S (0)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_2000_DEG_S (0)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__1000_DEG__S (1)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_1000_DEG_S (1)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__500_DEG__S (2)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_500_DEG_S (2)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__250_DEG__S (3)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_250_DEG_S (3)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE__125_DEG__S (4)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_125_DEG_S (4)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK (0xf)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT (0u)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_GET(flags)      \
-  (((flags) >> SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT) & \
-   SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_SET(flags, val)           \
-  do {                                                            \
-    ((flags) |= (((val) & (SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK)) \
-                 << (SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT)));    \
-  } while (0)
-
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__2G (0)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_2G (0)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__4G (1)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_4G (1)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__8G (2)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_8G (2)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_16G (3)
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 imu_type; /**< IMU type */

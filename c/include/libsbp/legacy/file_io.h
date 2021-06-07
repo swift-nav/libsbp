@@ -32,6 +32,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/file_io_macros.h>
+
 SBP_PACK_START
 
 /** Read file from the file system (host => device)
@@ -44,9 +46,6 @@ SBP_PACK_START
  * fileio read message". A device will only respond to this message when it is
  * received from sender ID 0x42.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_READ_REQ 0x00A8
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;     /**< Read sequence number */
@@ -62,9 +61,6 @@ typedef struct SBP_ATTR_PACKED {
  * length field indicates how many bytes were succesfully read. The sequence
  * number in the response is preserved from the request.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_READ_RESP 0x00A3
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;   /**< Read sequence number */
@@ -83,9 +79,6 @@ typedef struct SBP_ATTR_PACKED {
  * device will only respond to this message when it is received from sender ID
  * 0x42.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
@@ -102,9 +95,6 @@ typedef struct SBP_ATTR_PACKED {
  * the end of the list is identified by an packet with no entries. The
  * sequence number in the response is preserved from the request.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;   /**< Read sequence number */
@@ -118,9 +108,6 @@ typedef struct SBP_ATTR_PACKED {
  * message". A device will only process this message when it is received from
  * sender ID 0x42.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_REMOVE 0x00AC
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
@@ -136,9 +123,6 @@ typedef struct SBP_ATTR_PACKED {
  * message". A device will only process this message when it is received from
  * sender ID 0x42.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;     /**< Write sequence number */
@@ -155,9 +139,6 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
  * number in the response is preserved from the request.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence; /**< Write sequence number */
@@ -170,9 +151,6 @@ typedef struct SBP_ATTR_PACKED {
  * window of FileIO data that can be in-flight during read or write
  * operations.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence; /**< Advice sequence number */
@@ -186,9 +164,6 @@ typedef struct SBP_ATTR_PACKED {
  * window of FileIO data that can be in-flight during read or write
  * operations.
  */
-#ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
-#define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;       /**< Advice sequence number */

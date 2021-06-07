@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/ndb_macros.h>
 #include <libsbp/new/gnss.h>
 #include <libsbp/new/string/double_null_terminated.h>
 #include <libsbp/new/string/multipart.h>
@@ -37,143 +38,174 @@ extern "C" {
 #endif
 
 struct sbp_state;
-#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
-#define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
-#define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
-#define SBP_NDB_EVENT_EVENT_TYPE_GET(flags) \
-  (((flags) >> SBP_NDB_EVENT_EVENT_TYPE_SHIFT) & SBP_NDB_EVENT_EVENT_TYPE_MASK)
-#define SBP_NDB_EVENT_EVENT_TYPE_SET(flags, val)           \
-  do {                                                     \
-    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_TYPE_MASK)) \
-                 << (SBP_NDB_EVENT_EVENT_TYPE_SHIFT)));    \
-  } while (0)
 
-#define SBP_NDB_EVENT_EVENT_TYPE_UNKNOWN (0)
-#define SBP_NDB_EVENT_EVENT_TYPE_STORE (1)
-#define SBP_NDB_EVENT_EVENT_TYPE_FETCH (2)
-#define SBP_NDB_EVENT_EVENT_TYPE_ERASE (3)
-#endif
-#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK (0x7)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT (0u)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_GET(flags)      \
-  (((flags) >> SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT) & \
-   SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SET(flags, val)           \
-  do {                                                            \
-    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)) \
-                 << (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT)));    \
-  } while (0)
-
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_UNKNOWN (0)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_EPHEMERIS (1)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_ALMANAC (2)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_ALMANAC_WN (3)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_IONO (4)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_L2C_CAP (5)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_LGF (6)
-#endif
-#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
-#define SBP_NDB_EVENT_EVENT_RESULT_MASK (0xf)
-#define SBP_NDB_EVENT_EVENT_RESULT_SHIFT (0u)
-#define SBP_NDB_EVENT_EVENT_RESULT_GET(flags)      \
-  (((flags) >> SBP_NDB_EVENT_EVENT_RESULT_SHIFT) & \
-   SBP_NDB_EVENT_EVENT_RESULT_MASK)
-#define SBP_NDB_EVENT_EVENT_RESULT_SET(flags, val)           \
-  do {                                                       \
-    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_RESULT_MASK)) \
-                 << (SBP_NDB_EVENT_EVENT_RESULT_SHIFT)));    \
-  } while (0)
-
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NONE (0)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_MISSING_IE (1)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_UNSUPPORTED (2)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_FILE_IO (3)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_INIT_DONE (4)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_BAD_PARAM (5)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_UNRELIABLE_DATA (6)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_ALGORITHM_ERROR (7)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NO_DATA (8)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NO_CHANGE (9)
-#define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_OLDER_DATA (10)
-#endif
-#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
-#define SBP_NDB_EVENT_DATA_SOURCE_MASK (0x3)
-#define SBP_NDB_EVENT_DATA_SOURCE_SHIFT (0u)
-#define SBP_NDB_EVENT_DATA_SOURCE_GET(flags)      \
-  (((flags) >> SBP_NDB_EVENT_DATA_SOURCE_SHIFT) & \
-   SBP_NDB_EVENT_DATA_SOURCE_MASK)
-#define SBP_NDB_EVENT_DATA_SOURCE_SET(flags, val)           \
-  do {                                                      \
-    ((flags) |= (((val) & (SBP_NDB_EVENT_DATA_SOURCE_MASK)) \
-                 << (SBP_NDB_EVENT_DATA_SOURCE_SHIFT)));    \
-  } while (0)
-
-#define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_UNDEFINED (0)
-#define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_INIT (1)
-#define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_RECEIVER (2)
-#define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_SBP (3)
-#endif
 /** Navigation DataBase Event
  *
-((m.desc|commentify)))
+ * This message is sent out when an object is stored into NDB. If needed message
+ * could also be sent out when fetching an object from NDB.
  */
-#ifndef LIBSBP_LEGACY_NDB_MESSAGES_H
-#define SBP_MSG_NDB_EVENT 0x0400
-#endif
 typedef struct {
+  /**
+   * HW time in milliseconds. [ms]
+   */
   u64 recv_time;
+
+  /**
+   * Event type.
+   */
   u8 event;
+
+  /**
+   * Event object type.
+   */
   u8 object_type;
+
+  /**
+   * Event result.
+   */
   u8 result;
+
+  /**
+   * Data source for STORE event, reserved for other events.
+   */
   u8 data_source;
+
+  /**
+   * GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
+   * indicates for which signal the object belongs to. Reserved in other cases.
+   */
   sbp_sbp_gnss_signal_t object_sid;
+
+  /**
+   * GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
+   * capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+   * data was decoded. Reserved in other cases.
+   */
   sbp_sbp_gnss_signal_t src_sid;
+
+  /**
+   * A unique identifier of the sending hardware. For v1.0, set to the 2 least
+   * significant bytes of the device serial number, valid only if data_source is
+   * NDB_DS_SBP. Reserved in case of other data_source.
+   */
   u16 original_sender;
 } sbp_msg_ndb_event_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_ndb_event_t
+ *
+ * @param msg sbp_msg_ndb_event_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_ndb_event_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_ndb_event_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_ndb_event_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                   const sbp_msg_ndb_event_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_ndb_event_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_ndb_event_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_ndb_event_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_ndb_event_t(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read, sbp_msg_ndb_event_t *msg);
+/**
+ * Send an instance of sbp_msg_ndb_event_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_ndb_event_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_ndb_event_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_ndb_event_t *msg,
                                 s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_ndb_event_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_ndb_event_t instance
+ * @param b sbp_msg_ndb_event_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *a,
                                 const sbp_msg_ndb_event_t *b);
 
 #ifdef __cplusplus
 }
-static inline bool operator==(const sbp_msg_ndb_event_t &a,
-                              const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_ndb_event_t &lhs,
+                              const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ndb_event_t &a,
-                              const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_ndb_event_t &lhs,
+                              const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ndb_event_t &a,
-                             const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_ndb_event_t &lhs,
+                             const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ndb_event_t &a,
-                              const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_ndb_event_t &lhs,
+                              const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ndb_event_t &a,
-                             const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_ndb_event_t &lhs,
+                             const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ndb_event_t &a,
-                              const sbp_msg_ndb_event_t &b) {
-  return sbp_cmp_sbp_msg_ndb_event_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_ndb_event_t &lhs,
+                              const sbp_msg_ndb_event_t &rhs) {
+  return sbp_cmp_sbp_msg_ndb_event_t(&lhs, &rhs) >= 0;
 }
 
 #endif

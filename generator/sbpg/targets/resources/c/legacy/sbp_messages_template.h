@@ -25,6 +25,7 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/(((pkg_name)))_macros.h>
 ((*- for i in include *))
 #include <libsbp/legacy/(((i)))>
 ((*- endfor *))
@@ -38,21 +39,7 @@ SBP_PACK_START
 (((m.desc|commentify)))
  */
 ((*- endif *))
-((*- if m.is_real_message *))
-#ifndef LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
-#define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
-#endif
-((*- endif *))
 ((*- if m.fields *))
-((*- if m.sbp_id or m.embedded_type *))
-((*- for f in m.fields *))
-((*- if f.options.fields *))
-#ifndef LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
-(((f|create_bitfield_macros(m.identifier))))
-#endif
-((*- endif *))
-((*- endfor *))
-((*- endif *))
 
 typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))

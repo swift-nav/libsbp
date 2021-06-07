@@ -31,560 +31,1892 @@
 #include <libsbp/new/string/multipart.h>
 #include <libsbp/new/string/null_terminated.h>
 #include <libsbp/new/string/unterminated.h>
+#include <libsbp/piksi_macros.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 struct sbp_state;
+
 /** Legacy message to load satellite almanac (host => Piksi)
  *
-((m.desc|commentify)))
+ * This is a legacy message for sending and loading a satellite alamanac onto
+ * the Piksi's flash memory from the host.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_ALMANAC 0x0069
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_almanac_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_almanac_t
+ *
+ * @param msg sbp_msg_almanac_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_almanac_t(const sbp_msg_almanac_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_almanac_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_almanac_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_almanac_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                 const sbp_msg_almanac_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_almanac_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_almanac_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_almanac_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_almanac_t(const uint8_t *buf, uint8_t len,
                                 uint8_t *n_read, sbp_msg_almanac_t *msg);
+/**
+ * Send an instance of sbp_msg_almanac_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_almanac_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_almanac_t(struct sbp_state *s, u16 sender_id,
                               const sbp_msg_almanac_t *msg,
                               s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_almanac_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_almanac_t instance
+ * @param b sbp_msg_almanac_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_almanac_t(const sbp_msg_almanac_t *a,
                               const sbp_msg_almanac_t *b);
 
 /** Send GPS time from host (host => Piksi)
  *
-((m.desc|commentify)))
+ * This message sets up timing functionality using a coarse GPS time estimate
+ * sent by the host.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_SET_TIME 0x0068
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_set_time_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_set_time_t
+ *
+ * @param msg sbp_msg_set_time_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_set_time_t(const sbp_msg_set_time_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_set_time_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_set_time_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_set_time_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                  const sbp_msg_set_time_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_set_time_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_set_time_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_set_time_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_set_time_t(const uint8_t *buf, uint8_t len,
                                  uint8_t *n_read, sbp_msg_set_time_t *msg);
+/**
+ * Send an instance of sbp_msg_set_time_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_set_time_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_set_time_t(struct sbp_state *s, u16 sender_id,
                                const sbp_msg_set_time_t *msg,
                                s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_set_time_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_set_time_t instance
+ * @param b sbp_msg_set_time_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_set_time_t(const sbp_msg_set_time_t *a,
                                const sbp_msg_set_time_t *b);
 
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
-#define SBP_RESET_DEFAULT_SETTINGS_SHIFT (0u)
-#define SBP_RESET_DEFAULT_SETTINGS_GET(flags)      \
-  (((flags) >> SBP_RESET_DEFAULT_SETTINGS_SHIFT) & \
-   SBP_RESET_DEFAULT_SETTINGS_MASK)
-#define SBP_RESET_DEFAULT_SETTINGS_SET(flags, val)           \
-  do {                                                       \
-    ((flags) |= (((val) & (SBP_RESET_DEFAULT_SETTINGS_MASK)) \
-                 << (SBP_RESET_DEFAULT_SETTINGS_SHIFT)));    \
-  } while (0)
-
-#define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
-#define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
-#endif
 /** Reset the device (host => Piksi)
  *
-((m.desc|commentify)))
+ * This message from the host resets the Piksi back into the bootloader.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_RESET 0x00B6
-#endif
 typedef struct {
+  /**
+   * Reset flags
+   */
   u32 flags;
 } sbp_msg_reset_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_reset_t
+ *
+ * @param msg sbp_msg_reset_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_reset_t(const sbp_msg_reset_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_reset_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_reset_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_reset_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                               const sbp_msg_reset_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_reset_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_reset_t message to
+ * the given instance. The caller must specify the length of the buffer in the
+ * \p len parameter. If non-null the number of bytes read from the buffer will
+ * be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_reset_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_reset_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
                               sbp_msg_reset_t *msg);
+/**
+ * Send an instance of sbp_msg_reset_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_reset_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_reset_t(struct sbp_state *s, u16 sender_id,
                             const sbp_msg_reset_t *msg,
                             s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_reset_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_reset_t instance
+ * @param b sbp_msg_reset_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_reset_t(const sbp_msg_reset_t *a, const sbp_msg_reset_t *b);
 
 /** Reset the device (host => Piksi)
  *
-((m.desc|commentify)))
+ * This message from the host resets the Piksi back into the bootloader.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_RESET_DEP 0x00B2
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_reset_dep_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_reset_dep_t
+ *
+ * @param msg sbp_msg_reset_dep_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_reset_dep_t(const sbp_msg_reset_dep_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_reset_dep_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_reset_dep_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_reset_dep_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                   const sbp_msg_reset_dep_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_reset_dep_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_reset_dep_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_reset_dep_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_reset_dep_t(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read, sbp_msg_reset_dep_t *msg);
+/**
+ * Send an instance of sbp_msg_reset_dep_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_reset_dep_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_reset_dep_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_reset_dep_t *msg,
                                 s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_reset_dep_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_reset_dep_t instance
+ * @param b sbp_msg_reset_dep_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_reset_dep_t(const sbp_msg_reset_dep_t *a,
                                 const sbp_msg_reset_dep_t *b);
 
 /** Legacy message for CW interference channel (Piksi => host)
  *
-((m.desc|commentify)))
+ * This is an unused legacy message for result reporting from the CW
+ * interference channel on the SwiftNAP. This message will be removed in a
+ * future release.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_CW_RESULTS 0x00C0
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_cw_results_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_cw_results_t
+ *
+ * @param msg sbp_msg_cw_results_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_cw_results_t(const sbp_msg_cw_results_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_cw_results_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_cw_results_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_cw_results_t(uint8_t *buf, uint8_t len,
                                    uint8_t *n_written,
                                    const sbp_msg_cw_results_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_cw_results_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_cw_results_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_cw_results_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_cw_results_t(const uint8_t *buf, uint8_t len,
                                    uint8_t *n_read, sbp_msg_cw_results_t *msg);
+/**
+ * Send an instance of sbp_msg_cw_results_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_cw_results_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_cw_results_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_cw_results_t *msg,
                                  s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_cw_results_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_cw_results_t instance
+ * @param b sbp_msg_cw_results_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_cw_results_t(const sbp_msg_cw_results_t *a,
                                  const sbp_msg_cw_results_t *b);
 
 /** Legacy message for CW interference channel (host => Piksi)
  *
-((m.desc|commentify)))
+ * This is an unused legacy message from the host for starting the CW
+ * interference channel on the SwiftNAP. This message will be removed in a
+ * future release.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_CW_START 0x00C1
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_cw_start_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_cw_start_t
+ *
+ * @param msg sbp_msg_cw_start_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_cw_start_t(const sbp_msg_cw_start_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_cw_start_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_cw_start_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_cw_start_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                  const sbp_msg_cw_start_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_cw_start_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_cw_start_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_cw_start_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_cw_start_t(const uint8_t *buf, uint8_t len,
                                  uint8_t *n_read, sbp_msg_cw_start_t *msg);
+/**
+ * Send an instance of sbp_msg_cw_start_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_cw_start_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_cw_start_t(struct sbp_state *s, u16 sender_id,
                                const sbp_msg_cw_start_t *msg,
                                s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_cw_start_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_cw_start_t instance
+ * @param b sbp_msg_cw_start_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_cw_start_t(const sbp_msg_cw_start_t *a,
                                const sbp_msg_cw_start_t *b);
 
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_GET(flags)      \
-  (((flags) >> SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT) & \
-   SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SET(flags, val)           \
-  do {                                                                         \
-    ((flags) |= (((val) & (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)) \
-                 << (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT)));    \
-  } while (0)
-
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
-#endif
 /** Reset IAR filters (host => Piksi)
  *
-((m.desc|commentify)))
+ * This message resets either the DGNSS Kalman filters or Integer Ambiguity
+ * Resolution (IAR) process.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_RESET_FILTERS 0x0022
-#endif
 typedef struct {
+  /**
+   * Filter flags
+   */
   u8 filter;
 } sbp_msg_reset_filters_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_reset_filters_t
+ *
+ * @param msg sbp_msg_reset_filters_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_reset_filters_t(
     const sbp_msg_reset_filters_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_reset_filters_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_reset_filters_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_reset_filters_t(uint8_t *buf, uint8_t len,
                                       uint8_t *n_written,
                                       const sbp_msg_reset_filters_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_reset_filters_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_reset_filters_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_reset_filters_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_reset_filters_t(const uint8_t *buf, uint8_t len,
                                       uint8_t *n_read,
                                       sbp_msg_reset_filters_t *msg);
+/**
+ * Send an instance of sbp_msg_reset_filters_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_reset_filters_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_reset_filters_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_reset_filters_t *msg,
                                     s32 (*write)(u8 *buff, u32 n,
                                                  void *context));
 
+/**
+ * Compare two instances of sbp_msg_reset_filters_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_reset_filters_t instance
+ * @param b sbp_msg_reset_filters_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_reset_filters_t(const sbp_msg_reset_filters_t *a,
                                     const sbp_msg_reset_filters_t *b);
 
 /** Deprecated
  *
-((m.desc|commentify)))
+ * Deprecated
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_INIT_BASE_DEP 0x0023
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_init_base_dep_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_init_base_dep_t
+ *
+ * @param msg sbp_msg_init_base_dep_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_init_base_dep_t(
     const sbp_msg_init_base_dep_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_init_base_dep_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_init_base_dep_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_init_base_dep_t(uint8_t *buf, uint8_t len,
                                       uint8_t *n_written,
                                       const sbp_msg_init_base_dep_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_init_base_dep_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_init_base_dep_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_init_base_dep_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_init_base_dep_t(const uint8_t *buf, uint8_t len,
                                       uint8_t *n_read,
                                       sbp_msg_init_base_dep_t *msg);
+/**
+ * Send an instance of sbp_msg_init_base_dep_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_init_base_dep_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_init_base_dep_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_init_base_dep_t *msg,
                                     s32 (*write)(u8 *buff, u32 n,
                                                  void *context));
 
+/**
+ * Compare two instances of sbp_msg_init_base_dep_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_init_base_dep_t instance
+ * @param b sbp_msg_init_base_dep_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_init_base_dep_t(const sbp_msg_init_base_dep_t *a,
                                     const sbp_msg_init_base_dep_t *b);
 
 /** State of an RTOS thread
  *
-((m.desc|commentify)))
+ * The thread usage message from the device reports real-time operating system
+ * (RTOS) thread usage statistics for the named thread. The reported percentage
+ * values must be normalized.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_THREAD_STATE 0x0017
-#endif
 typedef struct {
+  /**
+   * Thread name (NULL terminated)
+   */
   char name[20];
+
+  /**
+   * Percentage cpu use for this thread. Values range from 0 - 1000 and needs to
+   * be renormalized to 100
+   */
   u16 cpu;
+
+  /**
+   * Free stack space for this thread [bytes]
+   */
   u32 stack_free;
 } sbp_msg_thread_state_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_thread_state_t
+ *
+ * @param msg sbp_msg_thread_state_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_thread_state_t(
     const sbp_msg_thread_state_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_thread_state_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_thread_state_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_thread_state_t(uint8_t *buf, uint8_t len,
                                      uint8_t *n_written,
                                      const sbp_msg_thread_state_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_thread_state_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_thread_state_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_thread_state_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_thread_state_t(const uint8_t *buf, uint8_t len,
                                      uint8_t *n_read,
                                      sbp_msg_thread_state_t *msg);
+/**
+ * Send an instance of sbp_msg_thread_state_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_thread_state_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_thread_state_t(struct sbp_state *s, u16 sender_id,
                                    const sbp_msg_thread_state_t *msg,
                                    s32 (*write)(u8 *buff, u32 n,
                                                 void *context));
 
+/**
+ * Compare two instances of sbp_msg_thread_state_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_thread_state_t instance
+ * @param b sbp_msg_thread_state_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_thread_state_t(const sbp_msg_thread_state_t *a,
                                    const sbp_msg_thread_state_t *b);
 
 /** State of the UART channel
  *
-((m.desc|commentify)))
+ * Throughput, utilization, and error counts on the RX/TX buffers of this UART
+ * channel. The reported percentage values must be normalized.
  */
 typedef struct {
+  /**
+   * UART transmit throughput [kB/s]
+   */
   float tx_throughput;
+
+  /**
+   * UART receive throughput [kB/s]
+   */
   float rx_throughput;
+
+  /**
+   * UART CRC error count
+   */
   u16 crc_error_count;
+
+  /**
+   * UART IO error count
+   */
   u16 io_error_count;
+
+  /**
+   * UART transmit buffer percentage utilization (ranges from 0 to 255)
+   */
   u8 tx_buffer_level;
+
+  /**
+   * UART receive buffer percentage utilization (ranges from 0 to 255)
+   */
   u8 rx_buffer_level;
 } sbp_uart_channel_t;
 
+/**
+ * Get encoded size of an instance of sbp_uart_channel_t
+ *
+ * @param msg sbp_uart_channel_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_uart_channel_t(const sbp_uart_channel_t *msg);
+
+/**
+ * Encode an instance of sbp_uart_channel_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_uart_channel_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_uart_channel_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                  const sbp_uart_channel_t *msg);
+
+/**
+ * Decode an instance of sbp_uart_channel_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_uart_channel_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_uart_channel_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_uart_channel_t(const uint8_t *buf, uint8_t len,
                                  uint8_t *n_read, sbp_uart_channel_t *msg);
 
+/**
+ * Compare two instances of sbp_uart_channel_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_uart_channel_t instance
+ * @param b sbp_uart_channel_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_uart_channel_t(const sbp_uart_channel_t *a,
                                const sbp_uart_channel_t *b);
 
 /** base station observation message receipt period
  *
-((m.desc|commentify)))
+ * Statistics on the period of observations received from the base station. As
+ * complete observation sets are received, their time of reception is compared
+ * with the prior set''s time of reception. This measurement provides a proxy
+ * for link quality as incomplete or missing sets will increase the period. Long
+ * periods can cause momentary RTK solution outages.
  */
 typedef struct {
+  /**
+   * Average period [ms]
+   */
   s32 avg;
+
+  /**
+   * Minimum period [ms]
+   */
   s32 pmin;
+
+  /**
+   * Maximum period [ms]
+   */
   s32 pmax;
+
+  /**
+   * Smoothed estimate of the current period [ms]
+   */
   s32 current;
 } sbp_period_t;
 
+/**
+ * Get encoded size of an instance of sbp_period_t
+ *
+ * @param msg sbp_period_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_period_t(const sbp_period_t *msg);
+
+/**
+ * Encode an instance of sbp_period_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_period_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_period_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                            const sbp_period_t *msg);
+
+/**
+ * Decode an instance of sbp_period_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_period_t message to
+ * the given instance. The caller must specify the length of the buffer in the
+ * \p len parameter. If non-null the number of bytes read from the buffer will
+ * be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_period_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_period_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
                            sbp_period_t *msg);
 
+/**
+ * Compare two instances of sbp_period_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_period_t instance
+ * @param b sbp_period_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_period_t(const sbp_period_t *a, const sbp_period_t *b);
 
 /** Receiver-to-base station latency
  *
-((m.desc|commentify)))
+ * Statistics on the latency of observations received from the base station. As
+ * observation packets are received their GPS time is compared to the current
+ * GPS time calculated locally by the receiver to give a precise measurement of
+ * the end-to-end communication latency in the system.
  */
 typedef struct {
+  /**
+   * Average latency [ms]
+   */
   s32 avg;
+
+  /**
+   * Minimum latency [ms]
+   */
   s32 lmin;
+
+  /**
+   * Maximum latency [ms]
+   */
   s32 lmax;
+
+  /**
+   * Smoothed estimate of the current latency [ms]
+   */
   s32 current;
 } sbp_latency_t;
 
+/**
+ * Get encoded size of an instance of sbp_latency_t
+ *
+ * @param msg sbp_latency_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_latency_t(const sbp_latency_t *msg);
+
+/**
+ * Encode an instance of sbp_latency_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_latency_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_latency_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                             const sbp_latency_t *msg);
+
+/**
+ * Decode an instance of sbp_latency_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_latency_t message to
+ * the given instance. The caller must specify the length of the buffer in the
+ * \p len parameter. If non-null the number of bytes read from the buffer will
+ * be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_latency_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_latency_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
                             sbp_latency_t *msg);
 
+/**
+ * Compare two instances of sbp_latency_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_latency_t instance
+ * @param b sbp_latency_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_latency_t(const sbp_latency_t *a, const sbp_latency_t *b);
 
 /** State of the UART channels
  *
-((m.desc|commentify)))
+ * The UART message reports data latency and throughput of the UART channels
+ * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
+ * for telemetry radios, but can also be host access ports for embedded hosts,
+ * or other interfaces in future. The reported percentage values must be
+ * normalized. Observations latency and period can be used to assess the health
+ * of the differential corrections link. Latency provides the timeliness of
+ * received base observations while the period indicates their likelihood of
+ * transmission.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_UART_STATE 0x001D
-#endif
 typedef struct {
+  /**
+   * State of UART A
+   */
   sbp_uart_channel_t uart_a;
+
+  /**
+   * State of UART B
+   */
   sbp_uart_channel_t uart_b;
+
+  /**
+   * State of UART FTDI (USB logger)
+   */
   sbp_uart_channel_t uart_ftdi;
+
+  /**
+   * UART communication latency
+   */
   sbp_latency_t latency;
+
+  /**
+   * Observation receipt period
+   */
   sbp_period_t obs_period;
 } sbp_msg_uart_state_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_uart_state_t
+ *
+ * @param msg sbp_msg_uart_state_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_uart_state_t(const sbp_msg_uart_state_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_uart_state_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_uart_state_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_uart_state_t(uint8_t *buf, uint8_t len,
                                    uint8_t *n_written,
                                    const sbp_msg_uart_state_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_uart_state_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_uart_state_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_uart_state_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_uart_state_t(const uint8_t *buf, uint8_t len,
                                    uint8_t *n_read, sbp_msg_uart_state_t *msg);
+/**
+ * Send an instance of sbp_msg_uart_state_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_uart_state_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_uart_state_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_uart_state_t *msg,
                                  s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_uart_state_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_uart_state_t instance
+ * @param b sbp_msg_uart_state_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_uart_state_t(const sbp_msg_uart_state_t *a,
                                  const sbp_msg_uart_state_t *b);
 
 /** Deprecated
  *
-((m.desc|commentify)))
+ * Deprecated
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_UART_STATE_DEPA 0x0018
-#endif
 typedef struct {
+  /**
+   * State of UART A
+   */
   sbp_uart_channel_t uart_a;
+
+  /**
+   * State of UART B
+   */
   sbp_uart_channel_t uart_b;
+
+  /**
+   * State of UART FTDI (USB logger)
+   */
   sbp_uart_channel_t uart_ftdi;
+
+  /**
+   * UART communication latency
+   */
   sbp_latency_t latency;
 } sbp_msg_uart_state_depa_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_uart_state_depa_t
+ *
+ * @param msg sbp_msg_uart_state_depa_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_uart_state_depa_t(
     const sbp_msg_uart_state_depa_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_uart_state_depa_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_uart_state_depa_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_uart_state_depa_t(uint8_t *buf, uint8_t len,
                                         uint8_t *n_written,
                                         const sbp_msg_uart_state_depa_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_uart_state_depa_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_uart_state_depa_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_uart_state_depa_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_uart_state_depa_t(const uint8_t *buf, uint8_t len,
                                         uint8_t *n_read,
                                         sbp_msg_uart_state_depa_t *msg);
+/**
+ * Send an instance of sbp_msg_uart_state_depa_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_uart_state_depa_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_uart_state_depa_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_uart_state_depa_t *msg,
                                       s32 (*write)(u8 *buff, u32 n,
                                                    void *context));
 
+/**
+ * Compare two instances of sbp_msg_uart_state_depa_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_uart_state_depa_t instance
+ * @param b sbp_msg_uart_state_depa_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_uart_state_depa_t(const sbp_msg_uart_state_depa_t *a,
                                       const sbp_msg_uart_state_depa_t *b);
 
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
-((m.desc|commentify)))
+ * This message reports the state of the Integer Ambiguity Resolution (IAR)
+ * process, which resolves unknown integer ambiguities from double-differenced
+ * carrier-phase measurements from satellite observations.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_IAR_STATE 0x0019
-#endif
 typedef struct {
+  /**
+   * Number of integer ambiguity hypotheses remaining
+   */
   u32 num_hyps;
 } sbp_msg_iar_state_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_iar_state_t
+ *
+ * @param msg sbp_msg_iar_state_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_iar_state_t(const sbp_msg_iar_state_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_iar_state_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_iar_state_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_iar_state_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                   const sbp_msg_iar_state_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_iar_state_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_iar_state_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_iar_state_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_iar_state_t(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read, sbp_msg_iar_state_t *msg);
+/**
+ * Send an instance of sbp_msg_iar_state_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_iar_state_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_iar_state_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_iar_state_t *msg,
                                 s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_iar_state_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_iar_state_t instance
+ * @param b sbp_msg_iar_state_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_iar_state_t(const sbp_msg_iar_state_t *a,
                                 const sbp_msg_iar_state_t *b);
 
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT (1u)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT) & \
-   SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)) \
-                 << (SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT)));    \
-  } while (0)
-
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_ENABLED (0)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
-  (1)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK (0x1)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT (0u)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT) & \
-   SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SET(flags, val)           \
-  do {                                                                   \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)) \
-                 << (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT)));    \
-  } while (0)
-
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_ENABLED (0)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
-  (1)
-#endif
 /** Mask a satellite from use in Piksi subsystems
  *
-((m.desc|commentify)))
+ * This message allows setting a mask to prevent a particular satellite from
+ * being used in various Piksi subsystems.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_MASK_SATELLITE 0x002B
-#endif
 typedef struct {
+  /**
+   * Mask of systems that should ignore this satellite.
+   */
   u8 mask;
+
+  /**
+   * GNSS signal for which the mask is applied
+   */
   sbp_sbp_gnss_signal_t sid;
 } sbp_msg_mask_satellite_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_mask_satellite_t
+ *
+ * @param msg sbp_msg_mask_satellite_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_mask_satellite_t(
     const sbp_msg_mask_satellite_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_mask_satellite_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_mask_satellite_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_mask_satellite_t(uint8_t *buf, uint8_t len,
                                        uint8_t *n_written,
                                        const sbp_msg_mask_satellite_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_mask_satellite_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_mask_satellite_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_mask_satellite_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_mask_satellite_t(const uint8_t *buf, uint8_t len,
                                        uint8_t *n_read,
                                        sbp_msg_mask_satellite_t *msg);
+/**
+ * Send an instance of sbp_msg_mask_satellite_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_mask_satellite_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_mask_satellite_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_mask_satellite_t *msg,
                                      s32 (*write)(u8 *buff, u32 n,
                                                   void *context));
 
+/**
+ * Compare two instances of sbp_msg_mask_satellite_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_mask_satellite_t instance
+ * @param b sbp_msg_mask_satellite_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_mask_satellite_t(const sbp_msg_mask_satellite_t *a,
                                      const sbp_msg_mask_satellite_t *b);
 
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT) & \
-   SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SET(flags, val)           \
-  do {                                                                     \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)) \
-                 << (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT)));    \
-  } while (0)
-
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_ENABLED (0)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
-  (1)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK (0x1)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT (0u)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT) & \
-   SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SET(flags, val)           \
-  do {                                                                       \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)) \
-                 << (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT)));    \
-  } while (0)
-
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_ENABLED (0)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
-  (1)
-#endif
 /** Deprecated
  *
-((m.desc|commentify)))
+ * Deprecated.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_MASK_SATELLITE_DEP 0x001B
-#endif
 typedef struct {
+  /**
+   * Mask of systems that should ignore this satellite.
+   */
   u8 mask;
+
+  /**
+   * GNSS signal for which the mask is applied
+   */
   sbp_gnss_signal_dep_t sid;
 } sbp_msg_mask_satellite_dep_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_mask_satellite_dep_t
+ *
+ * @param msg sbp_msg_mask_satellite_dep_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_mask_satellite_dep_t(
     const sbp_msg_mask_satellite_dep_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_mask_satellite_dep_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_mask_satellite_dep_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_mask_satellite_dep_t(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_mask_satellite_dep_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_mask_satellite_dep_t from wire representation
+ *
+ * This function decodes the wire representation of a
+ * sbp_msg_mask_satellite_dep_t message to the given instance. The caller must
+ * specify the length of the buffer in the \p len parameter. If non-null the
+ * number of bytes read from the buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_mask_satellite_dep_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_mask_satellite_dep_t(const uint8_t *buf, uint8_t len,
                                            uint8_t *n_read,
                                            sbp_msg_mask_satellite_dep_t *msg);
+/**
+ * Send an instance of sbp_msg_mask_satellite_dep_t with the given write
+ * function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_mask_satellite_dep_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_mask_satellite_dep_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_mask_satellite_dep_t *msg,
     s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_mask_satellite_dep_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_mask_satellite_dep_t instance
+ * @param b sbp_msg_mask_satellite_dep_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_mask_satellite_dep_t(const sbp_msg_mask_satellite_dep_t *a,
                                          const sbp_msg_mask_satellite_dep_t *b);
 
 /** Device temperature and voltage levels
  *
-((m.desc|commentify)))
+ * This message contains temperature and voltage level measurements from the
+ * processor's monitoring system and the RF frontend die temperature if
+ * available.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_DEVICE_MONITOR 0x00B5
-#endif
 typedef struct {
+  /**
+   * Device V_in [V / 1000]
+   */
   s16 dev_vin;
+
+  /**
+   * Processor V_int [V / 1000]
+   */
   s16 cpu_vint;
+
+  /**
+   * Processor V_aux [V / 1000]
+   */
   s16 cpu_vaux;
+
+  /**
+   * Processor temperature [degrees C / 100]
+   */
   s16 cpu_temperature;
+
+  /**
+   * Frontend temperature (if available) [degrees C / 100]
+   */
   s16 fe_temperature;
 } sbp_msg_device_monitor_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_device_monitor_t
+ *
+ * @param msg sbp_msg_device_monitor_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_device_monitor_t(
     const sbp_msg_device_monitor_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_device_monitor_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_device_monitor_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_device_monitor_t(uint8_t *buf, uint8_t len,
                                        uint8_t *n_written,
                                        const sbp_msg_device_monitor_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_device_monitor_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_device_monitor_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_device_monitor_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_device_monitor_t(const uint8_t *buf, uint8_t len,
                                        uint8_t *n_read,
                                        sbp_msg_device_monitor_t *msg);
+/**
+ * Send an instance of sbp_msg_device_monitor_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_device_monitor_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_device_monitor_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_device_monitor_t *msg,
                                      s32 (*write)(u8 *buff, u32 n,
                                                   void *context));
 
+/**
+ * Compare two instances of sbp_msg_device_monitor_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_device_monitor_t instance
+ * @param b sbp_msg_device_monitor_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_device_monitor_t(const sbp_msg_device_monitor_t *a,
                                      const sbp_msg_device_monitor_t *b);
 
 /** Execute a command (host => device)
  *
-((m.desc|commentify)))
+ * Request the recipient to execute an command. Output will be sent in MSG_LOG
+ * messages, and the exit code will be returned with MSG_COMMAND_RESP.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_COMMAND_REQ 0x00B8
-#endif
 typedef struct {
+  /**
+   * Sequence number
+   */
   u32 sequence;
+
+  /**
+   * Command line to execute
+   */
   sbp_null_terminated_string_t command;
 } sbp_msg_command_req_t;
 void sbp_msg_command_req_t_command_init(sbp_null_terminated_string_t *s);
@@ -610,57 +1942,214 @@ bool sbp_msg_command_req_t_command_append_vprintf(
 const char *sbp_msg_command_req_t_command_get(
     const sbp_null_terminated_string_t *s);
 
+/**
+ * Get encoded size of an instance of sbp_msg_command_req_t
+ *
+ * @param msg sbp_msg_command_req_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_command_req_t(const sbp_msg_command_req_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_command_req_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_command_req_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_command_req_t(uint8_t *buf, uint8_t len,
                                     uint8_t *n_written,
                                     const sbp_msg_command_req_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_command_req_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_command_req_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_command_req_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_command_req_t(const uint8_t *buf, uint8_t len,
                                     uint8_t *n_read,
                                     sbp_msg_command_req_t *msg);
+/**
+ * Send an instance of sbp_msg_command_req_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_command_req_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_command_req_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_command_req_t *msg,
                                   s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_command_req_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_command_req_t instance
+ * @param b sbp_msg_command_req_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_command_req_t(const sbp_msg_command_req_t *a,
                                   const sbp_msg_command_req_t *b);
 
 /** Exit code from executed command (device => host)
  *
-((m.desc|commentify)))
+ * The response to MSG_COMMAND_REQ with the return code of the command.  A
+ * return code of zero indicates success.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_COMMAND_RESP 0x00B9
-#endif
 typedef struct {
+  /**
+   * Sequence number
+   */
   u32 sequence;
+
+  /**
+   * Exit code
+   */
   s32 code;
 } sbp_msg_command_resp_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_command_resp_t
+ *
+ * @param msg sbp_msg_command_resp_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_command_resp_t(
     const sbp_msg_command_resp_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_command_resp_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_command_resp_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_command_resp_t(uint8_t *buf, uint8_t len,
                                      uint8_t *n_written,
                                      const sbp_msg_command_resp_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_command_resp_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_command_resp_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_command_resp_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_command_resp_t(const uint8_t *buf, uint8_t len,
                                      uint8_t *n_read,
                                      sbp_msg_command_resp_t *msg);
+/**
+ * Send an instance of sbp_msg_command_resp_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_command_resp_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_command_resp_t(struct sbp_state *s, u16 sender_id,
                                    const sbp_msg_command_resp_t *msg,
                                    s32 (*write)(u8 *buff, u32 n,
                                                 void *context));
 
+/**
+ * Compare two instances of sbp_msg_command_resp_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_command_resp_t instance
+ * @param b sbp_msg_command_resp_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_command_resp_t(const sbp_msg_command_resp_t *a,
                                    const sbp_msg_command_resp_t *b);
 
 /** Command output
  *
-((m.desc|commentify)))
+ * Returns the standard output and standard error of the command requested by
+ * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
+ * correct command.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_COMMAND_OUTPUT 0x00BC
-#endif
 typedef struct {
+  /**
+   * Sequence number
+   */
   u32 sequence;
+
+  /**
+   * Line of standard output or standard error
+   */
   sbp_unterminated_string_t line;
 } sbp_msg_command_output_t;
 void sbp_msg_command_output_t_line_init(sbp_unterminated_string_t *s);
@@ -686,1333 +2175,1899 @@ bool sbp_msg_command_output_t_line_append_vprintf(sbp_unterminated_string_t *s,
 const char *sbp_msg_command_output_t_line_get(
     const sbp_unterminated_string_t *s);
 
+/**
+ * Get encoded size of an instance of sbp_msg_command_output_t
+ *
+ * @param msg sbp_msg_command_output_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_command_output_t(
     const sbp_msg_command_output_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_command_output_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_command_output_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_command_output_t(uint8_t *buf, uint8_t len,
                                        uint8_t *n_written,
                                        const sbp_msg_command_output_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_command_output_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_command_output_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_command_output_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_command_output_t(const uint8_t *buf, uint8_t len,
                                        uint8_t *n_read,
                                        sbp_msg_command_output_t *msg);
+/**
+ * Send an instance of sbp_msg_command_output_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_command_output_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_command_output_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_command_output_t *msg,
                                      s32 (*write)(u8 *buff, u32 n,
                                                   void *context));
 
+/**
+ * Compare two instances of sbp_msg_command_output_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_command_output_t instance
+ * @param b sbp_msg_command_output_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_command_output_t(const sbp_msg_command_output_t *a,
                                      const sbp_msg_command_output_t *b);
 
 /** Request state of Piksi network interfaces
  *
-((m.desc|commentify)))
+ * Request state of Piksi network interfaces. Output will be sent in
+ * MSG_NETWORK_STATE_RESP messages.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_NETWORK_STATE_REQ 0x00BA
-#endif
 typedef struct {
+  /**
+   * Do not use this field, it exists only to prevent illegal C syntax. Any
+   * value written to this field will be ignored
+   */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
 } sbp_msg_network_state_req_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_network_state_req_t
+ *
+ * @param msg sbp_msg_network_state_req_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_network_state_req_t(
     const sbp_msg_network_state_req_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_network_state_req_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_network_state_req_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_network_state_req_t(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_network_state_req_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_network_state_req_t from wire representation
+ *
+ * This function decodes the wire representation of a
+ * sbp_msg_network_state_req_t message to the given instance. The caller must
+ * specify the length of the buffer in the \p len parameter. If non-null the
+ * number of bytes read from the buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_network_state_req_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_network_state_req_t(const uint8_t *buf, uint8_t len,
                                           uint8_t *n_read,
                                           sbp_msg_network_state_req_t *msg);
+/**
+ * Send an instance of sbp_msg_network_state_req_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_network_state_req_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_network_state_req_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_network_state_req_t *msg,
                                         s32 (*write)(u8 *buff, u32 n,
                                                      void *context));
 
+/**
+ * Compare two instances of sbp_msg_network_state_req_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_network_state_req_t instance
+ * @param b sbp_msg_network_state_req_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_network_state_req_t(const sbp_msg_network_state_req_t *a,
                                         const sbp_msg_network_state_req_t *b);
 
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
-  (((flags) >>                                                              \
-    SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SET(flags,  \
-                                                                     val)    \
-  do {                                                                       \
-    ((flags) |=                                                              \
-     (((val) &                                                               \
-       (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT (14u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT (13u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT (12u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK \
-  (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT \
-  (11u)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT (10u)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK \
-  (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT \
-  (9u)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_GET( \
-    flags)                                                                      \
-  (((flags) >>                                                                  \
-    SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SET(        \
-    flags, val)                                                                        \
-  do {                                                                                 \
-    ((flags) |=                                                                        \
-     (((val) &                                                                         \
-       (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT (8u)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_GET(flags) \
-  (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)) \
-      << (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT)));    \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK \
-  (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT \
-  (7u)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_GET( \
-    flags)                                                                    \
-  (((flags) >>                                                                \
-    SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SET(        \
-    flags, val)                                                                      \
-  do {                                                                               \
-    ((flags) |=                                                                      \
-     (((val) &                                                                       \
-       (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT (6u)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_GET(flags) \
-  (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)) \
-      << (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT)));    \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT (5u)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK \
-  (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT \
-  (4u)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_GET( \
-    flags)                                                                          \
-  (((flags) >>                                                                      \
-    SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SET(        \
-    flags, val)                                                                            \
-  do {                                                                                     \
-    ((flags) |=                                                                            \
-     (((val) &                                                                             \
-       (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT (3u)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_GET(flags)      \
-  (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SET(flags, val) \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK))  \
-      << (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT)));     \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT (2u)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_GET(flags) \
-  (((flags) >>                                                               \
-    SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SET(flags,  \
-                                                                      val)    \
-  do {                                                                        \
-    ((flags) |=                                                               \
-     (((val) &                                                                \
-       (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT (1u)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_GET( \
-    flags)                                                                 \
-  (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SET(        \
-    flags, val)                                                                   \
-  do {                                                                            \
-    ((flags) |=                                                                   \
-     (((val) &                                                                    \
-       (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT (0u)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_GET(flags)      \
-  (((flags) >> SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SET(flags, val) \
-  do {                                                                 \
-    ((flags) |=                                                        \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK))  \
-      << (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT)));     \
-  } while (0)
-
-#endif
 /** State of network interface
  *
-((m.desc|commentify)))
+ * The state of a network interface on the Piksi. Data is made to reflect output
+ * of ifaddrs struct returned by getifaddrs in c.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_NETWORK_STATE_RESP 0x00BB
-#endif
 typedef struct {
+  /**
+   * IPv4 address (all zero when unavailable)
+   */
   u8 ipv4_address[4];
+
+  /**
+   * IPv4 netmask CIDR notation
+   */
   u8 ipv4_mask_size;
+
+  /**
+   * IPv6 address (all zero when unavailable)
+   */
   u8 ipv6_address[16];
+
+  /**
+   * IPv6 netmask CIDR notation
+   */
   u8 ipv6_mask_size;
+
+  /**
+   * Number of Rx bytes
+   */
   u32 rx_bytes;
+
+  /**
+   * Number of Tx bytes
+   */
   u32 tx_bytes;
+
+  /**
+   * Interface Name
+   */
   char interface_name[16];
+
+  /**
+   * Interface flags from SIOCGIFFLAGS
+   */
   u32 flags;
 } sbp_msg_network_state_resp_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_network_state_resp_t
+ *
+ * @param msg sbp_msg_network_state_resp_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_network_state_resp_t(
     const sbp_msg_network_state_resp_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_network_state_resp_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_network_state_resp_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_network_state_resp_t(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_network_state_resp_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_network_state_resp_t from wire representation
+ *
+ * This function decodes the wire representation of a
+ * sbp_msg_network_state_resp_t message to the given instance. The caller must
+ * specify the length of the buffer in the \p len parameter. If non-null the
+ * number of bytes read from the buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_network_state_resp_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_network_state_resp_t(const uint8_t *buf, uint8_t len,
                                            uint8_t *n_read,
                                            sbp_msg_network_state_resp_t *msg);
+/**
+ * Send an instance of sbp_msg_network_state_resp_t with the given write
+ * function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_network_state_resp_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_network_state_resp_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_network_state_resp_t *msg,
     s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_network_state_resp_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_network_state_resp_t instance
+ * @param b sbp_msg_network_state_resp_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_network_state_resp_t(const sbp_msg_network_state_resp_t *a,
                                          const sbp_msg_network_state_resp_t *b);
 
 /** Bandwidth usage measurement for a single interface
  *
-((m.desc|commentify)))
+ * The bandwidth usage for each interface can be reported within this struct and
+ * utilize multiple fields to fully specify the type of traffic that is being
+ * tracked. As either the interval of collection or the collection time may
+ * vary, both a timestamp and period field is provided, though may not
+ * necessarily be populated with a value.
  */
 typedef struct {
+  /**
+   * Duration over which the measurement was collected [ms]
+   */
   u64 duration;
+
+  /**
+   * Number of bytes handled in total within period
+   */
   u64 total_bytes;
+
+  /**
+   * Number of bytes transmitted within period
+   */
   u32 rx_bytes;
+
+  /**
+   * Number of bytes received within period
+   */
   u32 tx_bytes;
+
+  /**
+   * Interface Name
+   */
   char interface_name[16];
 } sbp_network_usage_t;
 
+/**
+ * Get encoded size of an instance of sbp_network_usage_t
+ *
+ * @param msg sbp_network_usage_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_network_usage_t(const sbp_network_usage_t *msg);
+
+/**
+ * Encode an instance of sbp_network_usage_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_network_usage_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_network_usage_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                   const sbp_network_usage_t *msg);
+
+/**
+ * Decode an instance of sbp_network_usage_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_network_usage_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_network_usage_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_network_usage_t(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read, sbp_network_usage_t *msg);
 
+/**
+ * Compare two instances of sbp_network_usage_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_network_usage_t instance
+ * @param b sbp_network_usage_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_network_usage_t(const sbp_network_usage_t *a,
                                 const sbp_network_usage_t *b);
 
 /** Bandwidth usage reporting message
  *
-((m.desc|commentify)))
+ * The bandwidth usage, a list of usage by interface.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
-#endif
 typedef struct {
+  /**
+   * Usage measurement array
+   */
   sbp_network_usage_t interfaces[6];
+  /**
+   * Number of elements in interfaces
+   *
+   * When sending a message fill in this field with the number elements set in
+   * interfaces before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * interfaces. The value of any elements beyond the index specified in this
+   * field is undefined
+   */
   u8 n_interfaces;
 } sbp_msg_network_bandwidth_usage_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_network_bandwidth_usage_t
+ *
+ * @param msg sbp_msg_network_bandwidth_usage_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_network_bandwidth_usage_t(
     const sbp_msg_network_bandwidth_usage_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_network_bandwidth_usage_t to wire
+ * representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_network_bandwidth_usage_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_network_bandwidth_usage_t(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_network_bandwidth_usage_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_network_bandwidth_usage_t from wire
+ * representation
+ *
+ * This function decodes the wire representation of a
+ * sbp_msg_network_bandwidth_usage_t message to the given instance. The caller
+ * must specify the length of the buffer in the \p len parameter. If non-null
+ * the number of bytes read from the buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_network_bandwidth_usage_t
+ * instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_network_bandwidth_usage_t(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_network_bandwidth_usage_t *msg);
+/**
+ * Send an instance of sbp_msg_network_bandwidth_usage_t with the given write
+ * function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_network_bandwidth_usage_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_network_bandwidth_usage_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_network_bandwidth_usage_t *msg,
     s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_network_bandwidth_usage_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_network_bandwidth_usage_t instance
+ * @param b sbp_msg_network_bandwidth_usage_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_network_bandwidth_usage_t(
     const sbp_msg_network_bandwidth_usage_t *a,
     const sbp_msg_network_bandwidth_usage_t *b);
 
 /** Cell modem information update message
  *
-((m.desc|commentify)))
+ * If a cell modem is present on a piksi device, this message will be send
+ * periodically to update the host on the status of the modem and its various
+ * parameters.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_CELL_MODEM_STATUS 0x00BE
-#endif
 typedef struct {
+  /**
+   * Received cell signal strength in dBm, zero translates to unknown [dBm]
+   */
   s8 signal_strength;
+
+  /**
+   * BER as reported by the modem, zero translates to unknown
+   */
   float signal_error_rate;
+
+  /**
+   * Unspecified data TBD for this schema
+   */
   u8 reserved[250];
+  /**
+   * Number of elements in reserved
+   *
+   * When sending a message fill in this field with the number elements set in
+   * reserved before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * reserved. The value of any elements beyond the index specified in this
+   * field is undefined
+   */
   u8 n_reserved;
 } sbp_msg_cell_modem_status_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_cell_modem_status_t
+ *
+ * @param msg sbp_msg_cell_modem_status_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_cell_modem_status_t(
     const sbp_msg_cell_modem_status_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_cell_modem_status_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_cell_modem_status_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_cell_modem_status_t(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_cell_modem_status_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_cell_modem_status_t from wire representation
+ *
+ * This function decodes the wire representation of a
+ * sbp_msg_cell_modem_status_t message to the given instance. The caller must
+ * specify the length of the buffer in the \p len parameter. If non-null the
+ * number of bytes read from the buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_cell_modem_status_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_cell_modem_status_t(const uint8_t *buf, uint8_t len,
                                           uint8_t *n_read,
                                           sbp_msg_cell_modem_status_t *msg);
+/**
+ * Send an instance of sbp_msg_cell_modem_status_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_cell_modem_status_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_cell_modem_status_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_cell_modem_status_t *msg,
                                         s32 (*write)(u8 *buff, u32 n,
                                                      void *context));
 
+/**
+ * Compare two instances of sbp_msg_cell_modem_status_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_cell_modem_status_t instance
+ * @param b sbp_msg_cell_modem_status_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_cell_modem_status_t(const sbp_msg_cell_modem_status_t *a,
                                         const sbp_msg_cell_modem_status_t *b);
 
 /** Deprecated
  *
-((m.desc|commentify)))
+ * Deprecated.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_SPECAN_DEP 0x0050
-#endif
 typedef struct {
+  /**
+   * Channel ID
+   */
   u16 channel_tag;
+
+  /**
+   * Receiver time of this observation
+   */
   sbp_gps_time_dep_t t;
+
+  /**
+   * Reference frequency of this packet [MHz]
+   */
   float freq_ref;
+
+  /**
+   * Frequency step of points in this packet [MHz]
+   */
   float freq_step;
+
+  /**
+   * Reference amplitude of this packet [dB]
+   */
   float amplitude_ref;
+
+  /**
+   * Amplitude unit value of points in this packet [dB]
+   */
   float amplitude_unit;
+
+  /**
+   * Amplitude values (in the above units) of points in this packet
+   */
   u8 amplitude_value[231];
+  /**
+   * Number of elements in amplitude_value
+   *
+   * When sending a message fill in this field with the number elements set in
+   * amplitude_value before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * amplitude_value. The value of any elements beyond the index specified in
+   * this field is undefined
+   */
   u8 n_amplitude_value;
 } sbp_msg_specan_dep_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_specan_dep_t
+ *
+ * @param msg sbp_msg_specan_dep_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_specan_dep_t(const sbp_msg_specan_dep_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_specan_dep_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_specan_dep_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_specan_dep_t(uint8_t *buf, uint8_t len,
                                    uint8_t *n_written,
                                    const sbp_msg_specan_dep_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_specan_dep_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_specan_dep_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_specan_dep_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_specan_dep_t(const uint8_t *buf, uint8_t len,
                                    uint8_t *n_read, sbp_msg_specan_dep_t *msg);
+/**
+ * Send an instance of sbp_msg_specan_dep_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_specan_dep_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_specan_dep_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_specan_dep_t *msg,
                                  s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_specan_dep_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_specan_dep_t instance
+ * @param b sbp_msg_specan_dep_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_specan_dep_t(const sbp_msg_specan_dep_t *a,
                                  const sbp_msg_specan_dep_t *b);
 
 /** Spectrum analyzer
  *
-((m.desc|commentify)))
+ * Spectrum analyzer packet.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_SPECAN 0x0051
-#endif
 typedef struct {
+  /**
+   * Channel ID
+   */
   u16 channel_tag;
+
+  /**
+   * Receiver time of this observation
+   */
   sbp_sbp_gps_time_t t;
+
+  /**
+   * Reference frequency of this packet [MHz]
+   */
   float freq_ref;
+
+  /**
+   * Frequency step of points in this packet [MHz]
+   */
   float freq_step;
+
+  /**
+   * Reference amplitude of this packet [dB]
+   */
   float amplitude_ref;
+
+  /**
+   * Amplitude unit value of points in this packet [dB]
+   */
   float amplitude_unit;
+
+  /**
+   * Amplitude values (in the above units) of points in this packet
+   */
   u8 amplitude_value[227];
+  /**
+   * Number of elements in amplitude_value
+   *
+   * When sending a message fill in this field with the number elements set in
+   * amplitude_value before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * amplitude_value. The value of any elements beyond the index specified in
+   * this field is undefined
+   */
   u8 n_amplitude_value;
 } sbp_msg_specan_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_specan_t
+ *
+ * @param msg sbp_msg_specan_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_specan_t(const sbp_msg_specan_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_specan_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_specan_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_specan_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                const sbp_msg_specan_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_specan_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_specan_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_specan_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_specan_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
                                sbp_msg_specan_t *msg);
+/**
+ * Send an instance of sbp_msg_specan_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_specan_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_specan_t(struct sbp_state *s, u16 sender_id,
                              const sbp_msg_specan_t *msg,
                              s32 (*write)(u8 *buff, u32 n, void *context));
 
+/**
+ * Compare two instances of sbp_msg_specan_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_specan_t instance
+ * @param b sbp_msg_specan_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_specan_t(const sbp_msg_specan_t *a,
                              const sbp_msg_specan_t *b);
 
 /** RF AGC status
  *
-((m.desc|commentify)))
+ * This message describes the gain of each channel in the receiver frontend.
+ * Each gain is encoded as a non-dimensional percentage relative to the maximum
+ * range possible for the gain stage of the frontend. By convention, each gain
+ * array has 8 entries and the index of the array corresponding to the index of
+ * the rf channel in the frontend. A gain of 127 percent encodes that rf channel
+ * is not present in the hardware. A negative value implies an error for the
+ * particular gain stage as reported by the frontend.
  */
-#ifndef LIBSBP_LEGACY_PIKSI_MESSAGES_H
-#define SBP_MSG_FRONT_END_GAIN 0x00BF
-#endif
 typedef struct {
+  /**
+   * RF gain for each frontend channel [percent]
+   */
   s8 rf_gain[8];
+
+  /**
+   * Intermediate frequency gain for each frontend channel [percent]
+   */
   s8 if_gain[8];
 } sbp_msg_front_end_gain_t;
 
+/**
+ * Get encoded size of an instance of sbp_msg_front_end_gain_t
+ *
+ * @param msg sbp_msg_front_end_gain_t instance
+ * @return Length of on-wire representation
+ */
 size_t sbp_packed_size_sbp_msg_front_end_gain_t(
     const sbp_msg_front_end_gain_t *msg);
+
+/**
+ * Encode an instance of sbp_msg_front_end_gain_t to wire representation
+ *
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
+ *
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
+ *
+ * @param buf Destination buffer
+ * @param len Length of \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
+ * @param msg Instance of sbp_msg_front_end_gain_t to encode
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_encode_sbp_msg_front_end_gain_t(uint8_t *buf, uint8_t len,
                                        uint8_t *n_written,
                                        const sbp_msg_front_end_gain_t *msg);
+
+/**
+ * Decode an instance of sbp_msg_front_end_gain_t from wire representation
+ *
+ * This function decodes the wire representation of a sbp_msg_front_end_gain_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
+ *
+ * @param buf Wire representation of the sbp_msg_front_end_gain_t instance
+ * @param len Length of \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
+ * @param msg Destination
+ * @return SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_decode_sbp_msg_front_end_gain_t(const uint8_t *buf, uint8_t len,
                                        uint8_t *n_read,
                                        sbp_msg_front_end_gain_t *msg);
+/**
+ * Send an instance of sbp_msg_front_end_gain_t with the given write function
+ *
+ * An equivalent of #sbp_send_message which operates specifically on
+ * sbp_msg_front_end_gain_t
+ *
+ * The given message will be encoded to wire representation and passed in to the
+ * given write function callback. The write callback will be called several
+ * times for each invocation of this function.
+ *
+ * @param s SBP state
+ * @param sender_id SBP sender id
+ * @param msg Message to send
+ * @param write Write function
+ * @param SBP_OK on success, or other libsbp error code
+ */
 s8 sbp_send_sbp_msg_front_end_gain_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_front_end_gain_t *msg,
                                      s32 (*write)(u8 *buff, u32 n,
                                                   void *context));
 
+/**
+ * Compare two instances of sbp_msg_front_end_gain_t
+ *
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
+ *
+ * 0 will be returned if \p a and \p b are considered equal
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
+ *
+ * @param a sbp_msg_front_end_gain_t instance
+ * @param b sbp_msg_front_end_gain_t instance
+ * @return 0, <0, >0
+ */
 int sbp_cmp_sbp_msg_front_end_gain_t(const sbp_msg_front_end_gain_t *a,
                                      const sbp_msg_front_end_gain_t *b);
 
 #ifdef __cplusplus
 }
-static inline bool operator==(const sbp_msg_almanac_t &a,
-                              const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_almanac_t &lhs,
+                              const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_almanac_t &a,
-                              const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_almanac_t &lhs,
+                              const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_almanac_t &a,
-                             const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_almanac_t &lhs,
+                             const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_almanac_t &a,
-                              const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_almanac_t &lhs,
+                              const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_almanac_t &a,
-                             const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_almanac_t &lhs,
+                             const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_almanac_t &a,
-                              const sbp_msg_almanac_t &b) {
-  return sbp_cmp_sbp_msg_almanac_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_almanac_t &lhs,
+                              const sbp_msg_almanac_t &rhs) {
+  return sbp_cmp_sbp_msg_almanac_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_set_time_t &a,
-                              const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_set_time_t &lhs,
+                              const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_set_time_t &a,
-                              const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_set_time_t &lhs,
+                              const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_set_time_t &a,
-                             const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_set_time_t &lhs,
+                             const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_set_time_t &a,
-                              const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_set_time_t &lhs,
+                              const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_set_time_t &a,
-                             const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_set_time_t &lhs,
+                             const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_set_time_t &a,
-                              const sbp_msg_set_time_t &b) {
-  return sbp_cmp_sbp_msg_set_time_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_set_time_t &lhs,
+                              const sbp_msg_set_time_t &rhs) {
+  return sbp_cmp_sbp_msg_set_time_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_reset_t &a,
-                              const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_reset_t &lhs,
+                              const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_reset_t &a,
-                              const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_reset_t &lhs,
+                              const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_reset_t &a,
-                             const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_reset_t &lhs,
+                             const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_reset_t &a,
-                              const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_reset_t &lhs,
+                              const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_reset_t &a,
-                             const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_reset_t &lhs,
+                             const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_reset_t &a,
-                              const sbp_msg_reset_t &b) {
-  return sbp_cmp_sbp_msg_reset_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_reset_t &lhs,
+                              const sbp_msg_reset_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_reset_dep_t &a,
-                              const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_reset_dep_t &lhs,
+                              const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_reset_dep_t &a,
-                              const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_reset_dep_t &lhs,
+                              const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_reset_dep_t &a,
-                             const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_reset_dep_t &lhs,
+                             const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_reset_dep_t &a,
-                              const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_reset_dep_t &lhs,
+                              const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_reset_dep_t &a,
-                             const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_reset_dep_t &lhs,
+                             const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_reset_dep_t &a,
-                              const sbp_msg_reset_dep_t &b) {
-  return sbp_cmp_sbp_msg_reset_dep_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_reset_dep_t &lhs,
+                              const sbp_msg_reset_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_dep_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_cw_results_t &a,
-                              const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_cw_results_t &lhs,
+                              const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_cw_results_t &a,
-                              const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_cw_results_t &lhs,
+                              const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_cw_results_t &a,
-                             const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_cw_results_t &lhs,
+                             const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_cw_results_t &a,
-                              const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_cw_results_t &lhs,
+                              const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_cw_results_t &a,
-                             const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_cw_results_t &lhs,
+                             const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_cw_results_t &a,
-                              const sbp_msg_cw_results_t &b) {
-  return sbp_cmp_sbp_msg_cw_results_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_cw_results_t &lhs,
+                              const sbp_msg_cw_results_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_results_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_cw_start_t &a,
-                              const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_cw_start_t &lhs,
+                              const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_cw_start_t &a,
-                              const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_cw_start_t &lhs,
+                              const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_cw_start_t &a,
-                             const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_cw_start_t &lhs,
+                             const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_cw_start_t &a,
-                              const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_cw_start_t &lhs,
+                              const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_cw_start_t &a,
-                             const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_cw_start_t &lhs,
+                             const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_cw_start_t &a,
-                              const sbp_msg_cw_start_t &b) {
-  return sbp_cmp_sbp_msg_cw_start_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_cw_start_t &lhs,
+                              const sbp_msg_cw_start_t &rhs) {
+  return sbp_cmp_sbp_msg_cw_start_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_reset_filters_t &a,
-                              const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_reset_filters_t &lhs,
+                              const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_reset_filters_t &a,
-                              const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_reset_filters_t &lhs,
+                              const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_reset_filters_t &a,
-                             const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_reset_filters_t &lhs,
+                             const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_reset_filters_t &a,
-                              const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_reset_filters_t &lhs,
+                              const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_reset_filters_t &a,
-                             const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_reset_filters_t &lhs,
+                             const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_reset_filters_t &a,
-                              const sbp_msg_reset_filters_t &b) {
-  return sbp_cmp_sbp_msg_reset_filters_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_reset_filters_t &lhs,
+                              const sbp_msg_reset_filters_t &rhs) {
+  return sbp_cmp_sbp_msg_reset_filters_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_init_base_dep_t &a,
-                              const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_init_base_dep_t &lhs,
+                              const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_init_base_dep_t &a,
-                              const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_init_base_dep_t &lhs,
+                              const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_init_base_dep_t &a,
-                             const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_init_base_dep_t &lhs,
+                             const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_init_base_dep_t &a,
-                              const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_init_base_dep_t &lhs,
+                              const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_init_base_dep_t &a,
-                             const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_init_base_dep_t &lhs,
+                             const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_init_base_dep_t &a,
-                              const sbp_msg_init_base_dep_t &b) {
-  return sbp_cmp_sbp_msg_init_base_dep_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_init_base_dep_t &lhs,
+                              const sbp_msg_init_base_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_init_base_dep_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_thread_state_t &a,
-                              const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_thread_state_t &lhs,
+                              const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_thread_state_t &a,
-                              const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_thread_state_t &lhs,
+                              const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_thread_state_t &a,
-                             const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_thread_state_t &lhs,
+                             const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_thread_state_t &a,
-                              const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_thread_state_t &lhs,
+                              const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_thread_state_t &a,
-                             const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_thread_state_t &lhs,
+                             const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_thread_state_t &a,
-                              const sbp_msg_thread_state_t &b) {
-  return sbp_cmp_sbp_msg_thread_state_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_thread_state_t &lhs,
+                              const sbp_msg_thread_state_t &rhs) {
+  return sbp_cmp_sbp_msg_thread_state_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_uart_channel_t &a,
-                              const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) == 0;
+static inline bool operator==(const sbp_uart_channel_t &lhs,
+                              const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_uart_channel_t &a,
-                              const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_uart_channel_t &lhs,
+                              const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_uart_channel_t &a,
-                             const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) < 0;
+static inline bool operator<(const sbp_uart_channel_t &lhs,
+                             const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_uart_channel_t &a,
-                              const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_uart_channel_t &lhs,
+                              const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_uart_channel_t &a,
-                             const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) > 0;
+static inline bool operator>(const sbp_uart_channel_t &lhs,
+                             const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_uart_channel_t &a,
-                              const sbp_uart_channel_t &b) {
-  return sbp_cmp_sbp_uart_channel_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_uart_channel_t &lhs,
+                              const sbp_uart_channel_t &rhs) {
+  return sbp_cmp_sbp_uart_channel_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) == 0;
+static inline bool operator==(const sbp_period_t &lhs,
+                              const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_period_t &lhs,
+                              const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) < 0;
+static inline bool operator<(const sbp_period_t &lhs, const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_period_t &lhs,
+                              const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) > 0;
+static inline bool operator>(const sbp_period_t &lhs, const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_period_t &a, const sbp_period_t &b) {
-  return sbp_cmp_sbp_period_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_period_t &lhs,
+                              const sbp_period_t &rhs) {
+  return sbp_cmp_sbp_period_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) == 0;
+static inline bool operator==(const sbp_latency_t &lhs,
+                              const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_latency_t &lhs,
+                              const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) < 0;
+static inline bool operator<(const sbp_latency_t &lhs,
+                             const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_latency_t &lhs,
+                              const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) > 0;
+static inline bool operator>(const sbp_latency_t &lhs,
+                             const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_latency_t &a, const sbp_latency_t &b) {
-  return sbp_cmp_sbp_latency_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_latency_t &lhs,
+                              const sbp_latency_t &rhs) {
+  return sbp_cmp_sbp_latency_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_uart_state_t &a,
-                              const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_uart_state_t &lhs,
+                              const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_uart_state_t &a,
-                              const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_uart_state_t &lhs,
+                              const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_uart_state_t &a,
-                             const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_uart_state_t &lhs,
+                             const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_uart_state_t &a,
-                              const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_uart_state_t &lhs,
+                              const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_uart_state_t &a,
-                             const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_uart_state_t &lhs,
+                             const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_uart_state_t &a,
-                              const sbp_msg_uart_state_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_uart_state_t &lhs,
+                              const sbp_msg_uart_state_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_uart_state_depa_t &a,
-                              const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_uart_state_depa_t &lhs,
+                              const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_uart_state_depa_t &a,
-                              const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_uart_state_depa_t &lhs,
+                              const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_uart_state_depa_t &a,
-                             const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_uart_state_depa_t &lhs,
+                             const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_uart_state_depa_t &a,
-                              const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_uart_state_depa_t &lhs,
+                              const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_uart_state_depa_t &a,
-                             const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_uart_state_depa_t &lhs,
+                             const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_uart_state_depa_t &a,
-                              const sbp_msg_uart_state_depa_t &b) {
-  return sbp_cmp_sbp_msg_uart_state_depa_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_uart_state_depa_t &lhs,
+                              const sbp_msg_uart_state_depa_t &rhs) {
+  return sbp_cmp_sbp_msg_uart_state_depa_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_iar_state_t &a,
-                              const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_iar_state_t &lhs,
+                              const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_iar_state_t &a,
-                              const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_iar_state_t &lhs,
+                              const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_iar_state_t &a,
-                             const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_iar_state_t &lhs,
+                             const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_iar_state_t &a,
-                              const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_iar_state_t &lhs,
+                              const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_iar_state_t &a,
-                             const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_iar_state_t &lhs,
+                             const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_iar_state_t &a,
-                              const sbp_msg_iar_state_t &b) {
-  return sbp_cmp_sbp_msg_iar_state_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_iar_state_t &lhs,
+                              const sbp_msg_iar_state_t &rhs) {
+  return sbp_cmp_sbp_msg_iar_state_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_mask_satellite_t &a,
-                              const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_mask_satellite_t &lhs,
+                              const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_mask_satellite_t &a,
-                              const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_mask_satellite_t &lhs,
+                              const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_mask_satellite_t &a,
-                             const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_mask_satellite_t &lhs,
+                             const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_mask_satellite_t &a,
-                              const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_mask_satellite_t &lhs,
+                              const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_mask_satellite_t &a,
-                             const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_mask_satellite_t &lhs,
+                             const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_mask_satellite_t &a,
-                              const sbp_msg_mask_satellite_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_mask_satellite_t &lhs,
+                              const sbp_msg_mask_satellite_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_mask_satellite_dep_t &a,
-                              const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_mask_satellite_dep_t &lhs,
+                              const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_mask_satellite_dep_t &a,
-                              const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_mask_satellite_dep_t &lhs,
+                              const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_mask_satellite_dep_t &a,
-                             const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_mask_satellite_dep_t &lhs,
+                             const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_mask_satellite_dep_t &a,
-                              const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_mask_satellite_dep_t &lhs,
+                              const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_mask_satellite_dep_t &a,
-                             const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_mask_satellite_dep_t &lhs,
+                             const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_mask_satellite_dep_t &a,
-                              const sbp_msg_mask_satellite_dep_t &b) {
-  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_mask_satellite_dep_t &lhs,
+                              const sbp_msg_mask_satellite_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_mask_satellite_dep_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_device_monitor_t &a,
-                              const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_device_monitor_t &lhs,
+                              const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_device_monitor_t &a,
-                              const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_device_monitor_t &lhs,
+                              const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_device_monitor_t &a,
-                             const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_device_monitor_t &lhs,
+                             const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_device_monitor_t &a,
-                              const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_device_monitor_t &lhs,
+                              const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_device_monitor_t &a,
-                             const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_device_monitor_t &lhs,
+                             const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_device_monitor_t &a,
-                              const sbp_msg_device_monitor_t &b) {
-  return sbp_cmp_sbp_msg_device_monitor_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_device_monitor_t &lhs,
+                              const sbp_msg_device_monitor_t &rhs) {
+  return sbp_cmp_sbp_msg_device_monitor_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_command_req_t &a,
-                              const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_command_req_t &lhs,
+                              const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_command_req_t &a,
-                              const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_command_req_t &lhs,
+                              const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_command_req_t &a,
-                             const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_command_req_t &lhs,
+                             const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_command_req_t &a,
-                              const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_command_req_t &lhs,
+                              const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_command_req_t &a,
-                             const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_command_req_t &lhs,
+                             const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_command_req_t &a,
-                              const sbp_msg_command_req_t &b) {
-  return sbp_cmp_sbp_msg_command_req_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_command_req_t &lhs,
+                              const sbp_msg_command_req_t &rhs) {
+  return sbp_cmp_sbp_msg_command_req_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_command_resp_t &a,
-                              const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_command_resp_t &lhs,
+                              const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_command_resp_t &a,
-                              const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_command_resp_t &lhs,
+                              const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_command_resp_t &a,
-                             const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_command_resp_t &lhs,
+                             const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_command_resp_t &a,
-                              const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_command_resp_t &lhs,
+                              const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_command_resp_t &a,
-                             const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_command_resp_t &lhs,
+                             const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_command_resp_t &a,
-                              const sbp_msg_command_resp_t &b) {
-  return sbp_cmp_sbp_msg_command_resp_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_command_resp_t &lhs,
+                              const sbp_msg_command_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_command_resp_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_command_output_t &a,
-                              const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_command_output_t &lhs,
+                              const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_command_output_t &a,
-                              const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_command_output_t &lhs,
+                              const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_command_output_t &a,
-                             const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_command_output_t &lhs,
+                             const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_command_output_t &a,
-                              const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_command_output_t &lhs,
+                              const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_command_output_t &a,
-                             const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_command_output_t &lhs,
+                             const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_command_output_t &a,
-                              const sbp_msg_command_output_t &b) {
-  return sbp_cmp_sbp_msg_command_output_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_command_output_t &lhs,
+                              const sbp_msg_command_output_t &rhs) {
+  return sbp_cmp_sbp_msg_command_output_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_network_state_req_t &a,
-                              const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_network_state_req_t &lhs,
+                              const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_network_state_req_t &a,
-                              const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_network_state_req_t &lhs,
+                              const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_network_state_req_t &a,
-                             const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_network_state_req_t &lhs,
+                             const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_network_state_req_t &a,
-                              const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_network_state_req_t &lhs,
+                              const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_network_state_req_t &a,
-                             const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_network_state_req_t &lhs,
+                             const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_network_state_req_t &a,
-                              const sbp_msg_network_state_req_t &b) {
-  return sbp_cmp_sbp_msg_network_state_req_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_network_state_req_t &lhs,
+                              const sbp_msg_network_state_req_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_req_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_network_state_resp_t &a,
-                              const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_network_state_resp_t &lhs,
+                              const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_network_state_resp_t &a,
-                              const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_network_state_resp_t &lhs,
+                              const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_network_state_resp_t &a,
-                             const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_network_state_resp_t &lhs,
+                             const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_network_state_resp_t &a,
-                              const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_network_state_resp_t &lhs,
+                              const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_network_state_resp_t &a,
-                             const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_network_state_resp_t &lhs,
+                             const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_network_state_resp_t &a,
-                              const sbp_msg_network_state_resp_t &b) {
-  return sbp_cmp_sbp_msg_network_state_resp_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_network_state_resp_t &lhs,
+                              const sbp_msg_network_state_resp_t &rhs) {
+  return sbp_cmp_sbp_msg_network_state_resp_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_network_usage_t &a,
-                              const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) == 0;
+static inline bool operator==(const sbp_network_usage_t &lhs,
+                              const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_network_usage_t &a,
-                              const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_network_usage_t &lhs,
+                              const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_network_usage_t &a,
-                             const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) < 0;
+static inline bool operator<(const sbp_network_usage_t &lhs,
+                             const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_network_usage_t &a,
-                              const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_network_usage_t &lhs,
+                              const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_network_usage_t &a,
-                             const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) > 0;
+static inline bool operator>(const sbp_network_usage_t &lhs,
+                             const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_network_usage_t &a,
-                              const sbp_network_usage_t &b) {
-  return sbp_cmp_sbp_network_usage_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_network_usage_t &lhs,
+                              const sbp_network_usage_t &rhs) {
+  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_network_bandwidth_usage_t &a,
-                              const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_network_bandwidth_usage_t &lhs,
+                              const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_network_bandwidth_usage_t &a,
-                              const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_network_bandwidth_usage_t &lhs,
+                              const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_network_bandwidth_usage_t &a,
-                             const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_network_bandwidth_usage_t &lhs,
+                             const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_network_bandwidth_usage_t &a,
-                              const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_network_bandwidth_usage_t &lhs,
+                              const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_network_bandwidth_usage_t &a,
-                             const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_network_bandwidth_usage_t &lhs,
+                             const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_network_bandwidth_usage_t &a,
-                              const sbp_msg_network_bandwidth_usage_t &b) {
-  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_network_bandwidth_usage_t &lhs,
+                              const sbp_msg_network_bandwidth_usage_t &rhs) {
+  return sbp_cmp_sbp_msg_network_bandwidth_usage_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_cell_modem_status_t &a,
-                              const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_cell_modem_status_t &lhs,
+                              const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_cell_modem_status_t &a,
-                              const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_cell_modem_status_t &lhs,
+                              const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_cell_modem_status_t &a,
-                             const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_cell_modem_status_t &lhs,
+                             const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_cell_modem_status_t &a,
-                              const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_cell_modem_status_t &lhs,
+                              const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_cell_modem_status_t &a,
-                             const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_cell_modem_status_t &lhs,
+                             const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_cell_modem_status_t &a,
-                              const sbp_msg_cell_modem_status_t &b) {
-  return sbp_cmp_sbp_msg_cell_modem_status_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_cell_modem_status_t &lhs,
+                              const sbp_msg_cell_modem_status_t &rhs) {
+  return sbp_cmp_sbp_msg_cell_modem_status_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_specan_dep_t &a,
-                              const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_specan_dep_t &lhs,
+                              const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_specan_dep_t &a,
-                              const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_specan_dep_t &lhs,
+                              const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_specan_dep_t &a,
-                             const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_specan_dep_t &lhs,
+                             const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_specan_dep_t &a,
-                              const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_specan_dep_t &lhs,
+                              const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_specan_dep_t &a,
-                             const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_specan_dep_t &lhs,
+                             const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_specan_dep_t &a,
-                              const sbp_msg_specan_dep_t &b) {
-  return sbp_cmp_sbp_msg_specan_dep_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_specan_dep_t &lhs,
+                              const sbp_msg_specan_dep_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_dep_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_specan_t &a,
-                              const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_specan_t &lhs,
+                              const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_specan_t &a,
-                              const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_specan_t &lhs,
+                              const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_specan_t &a,
-                             const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_specan_t &lhs,
+                             const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_specan_t &a,
-                              const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_specan_t &lhs,
+                              const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_specan_t &a,
-                             const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_specan_t &lhs,
+                             const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_specan_t &a,
-                              const sbp_msg_specan_t &b) {
-  return sbp_cmp_sbp_msg_specan_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_specan_t &lhs,
+                              const sbp_msg_specan_t &rhs) {
+  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) >= 0;
 }
-static inline bool operator==(const sbp_msg_front_end_gain_t &a,
-                              const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) == 0;
+static inline bool operator==(const sbp_msg_front_end_gain_t &lhs,
+                              const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_front_end_gain_t &a,
-                              const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) != 0;
+static inline bool operator!=(const sbp_msg_front_end_gain_t &lhs,
+                              const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_front_end_gain_t &a,
-                             const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) < 0;
+static inline bool operator<(const sbp_msg_front_end_gain_t &lhs,
+                             const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_front_end_gain_t &a,
-                              const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) <= 0;
+static inline bool operator<=(const sbp_msg_front_end_gain_t &lhs,
+                              const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_front_end_gain_t &a,
-                             const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) > 0;
+static inline bool operator>(const sbp_msg_front_end_gain_t &lhs,
+                             const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_front_end_gain_t &a,
-                              const sbp_msg_front_end_gain_t &b) {
-  return sbp_cmp_sbp_msg_front_end_gain_t(&a, &b) >= 0;
+static inline bool operator>=(const sbp_msg_front_end_gain_t &lhs,
+                              const sbp_msg_front_end_gain_t &rhs) {
+  return sbp_cmp_sbp_msg_front_end_gain_t(&lhs, &rhs) >= 0;
 }
 
 #endif
