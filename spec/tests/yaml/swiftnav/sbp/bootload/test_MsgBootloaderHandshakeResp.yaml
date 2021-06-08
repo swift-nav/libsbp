@@ -10,6 +10,12 @@ tests:
       version: 'v1.2
 
         '
+    c_decoded_fields:
+      version:
+        data: 'v1.2
+
+          '
+        packed_len: 5
     module: sbp.bootload
     name: MsgBootloaderHandshakeResp
   msg_type: '0xb4'
@@ -26,6 +32,10 @@ tests:
 - msg:
     fields:
       handshake: [118, 49, 46, 50] # 'v1.2'
+    c_decoded_fields:
+      handshake:
+        data: [118, 49, 46, 50] # 'v1.2'
+        packed_len: 4
     module: sbp.bootload
     name: MsgBootloaderHandshakeDepA
   msg_type: '0xb0'

@@ -4,7 +4,6 @@ swift_add_test(test-libsbp-cpp
     UNIT_TEST
     POST_BUILD
     SRCS
-        test_sbp_stdio.cc
         ${generated_cpp_sources}
     INCLUDE
         ${PROJECT_SOURCE_DIR}/include/libsbp
@@ -14,4 +13,3 @@ swift_add_test(test-libsbp-cpp
 swift_set_language_standards(test-libsbp-cpp)
 swift_set_compile_options(test-libsbp-cpp)
 
-file(COPY sbp_data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -87,3 +87,18 @@ class TestSpecification(object):
   def fieldskeys(self):
     return sorted(self.msg.get('fields', None) or [])
 
+  @property
+  def c_decoded_fields(self):
+    fields = self.msg.get('fields', None) or {}
+    if 'c_decoded_fields' in self.msg:
+      fields.update(self.msg['c_decoded_fields'])
+    return fields
+
+  @property
+  def c_decoded_fieldskeys(self):
+    fields = self.msg.get('fields', None) or {}
+    if 'c_decoded_fields' in self.msg:
+      fields.update(self.msg['c_decoded_fields'])
+    return sorted(fields)
+
+

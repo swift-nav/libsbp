@@ -158,6 +158,8 @@ def main():
           import sbpg.targets.legacy_c as legacy_c
           legacy_c.render_source(output_dir, parsed)
         elif args.test_c:
+          import sbpg.targets.test_legacy_c as test_legacy_c
+          test_legacy_c.render_source(output_dir, parsed)
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
         elif args.haskell:
