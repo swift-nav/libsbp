@@ -114,7 +114,7 @@ bool encode_sbp_msg_linux_cpu_state_dep_a_t(
   if (!encode_u8(ctx, &msg->pcpu)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -328,7 +328,7 @@ bool encode_sbp_msg_linux_mem_state_dep_a_t(
   if (!encode_u8(ctx, &msg->pmem)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -919,7 +919,7 @@ bool encode_sbp_msg_linux_process_socket_queues_t(
   if (!encode_u16(ctx, &msg->socket_states)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 64; i++) {
+  for (uint8_t i = 0; i < 64; i++) {
     if (!encode_char(ctx, &msg->address_of_largest[i])) {
       return false;
     }
@@ -1079,12 +1079,12 @@ bool encode_sbp_msg_linux_socket_usage_t(
   if (!encode_u32(ctx, &msg->max_queue_depth)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0; i < 16; i++) {
     if (!encode_u16(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0; i < 16; i++) {
     if (!encode_u16(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
@@ -1686,7 +1686,7 @@ bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -1920,7 +1920,7 @@ bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }

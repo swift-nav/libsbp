@@ -882,7 +882,7 @@ size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(
 
 bool encode_sbp_msg_acq_sv_profile_t(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_acq_sv_profile_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_acq_sv_profile; i++) {
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!encode_sbp_acq_sv_profile_t(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }
@@ -975,7 +975,7 @@ size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(
 
 bool encode_sbp_msg_acq_sv_profile_dep_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_dep_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_acq_sv_profile; i++) {
+  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!encode_sbp_acq_sv_profile_dep_t(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }

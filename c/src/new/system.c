@@ -498,7 +498,7 @@ bool encode_sbp_msg_status_report_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->uptime)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_status; i++) {
+  for (uint8_t i = 0; i < msg->n_status; i++) {
     if (!encode_sbp_sub_system_report_t(ctx, &msg->status[i])) {
       return false;
     }
@@ -1408,7 +1408,7 @@ bool encode_sbp_msg_group_meta_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->n_group_msgs)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_group_msgs; i++) {
+  for (uint8_t i = 0; i < msg->n_group_msgs; i++) {
     if (!encode_u16(ctx, &msg->group_msgs[i])) {
       return false;
     }

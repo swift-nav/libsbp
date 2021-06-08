@@ -759,7 +759,7 @@ size_t sbp_packed_size_sbp_msg_tracking_state_t(
 
 bool encode_sbp_msg_tracking_state_t(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_tracking_state_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_states; i++) {
+  for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!encode_sbp_tracking_channel_state_t(ctx, &msg->states[i])) {
       return false;
     }
@@ -928,7 +928,7 @@ size_t sbp_packed_size_sbp_msg_measurement_state_t(
 
 bool encode_sbp_msg_measurement_state_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_measurement_state_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_states; i++) {
+  for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!encode_sbp_measurement_state_t(ctx, &msg->states[i])) {
       return false;
     }
@@ -1105,7 +1105,7 @@ bool encode_sbp_msg_tracking_iq_t(sbp_encode_ctx_t *ctx,
   if (!encode_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_sbp_tracking_channel_correlation_t(ctx, &msg->corrs[i])) {
       return false;
     }
@@ -1296,7 +1296,7 @@ bool encode_sbp_msg_tracking_iq_dep_b_t(
   if (!encode_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_sbp_tracking_channel_correlation_dep_t(ctx, &msg->corrs[i])) {
       return false;
     }
@@ -1408,7 +1408,7 @@ bool encode_sbp_msg_tracking_iq_dep_a_t(
   if (!encode_sbp_gnss_signal_dep_t(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_sbp_tracking_channel_correlation_dep_t(ctx, &msg->corrs[i])) {
       return false;
     }
@@ -1604,7 +1604,7 @@ size_t sbp_packed_size_sbp_msg_tracking_state_dep_a_t(
 
 bool encode_sbp_msg_tracking_state_dep_a_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_a_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_states; i++) {
+  for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!encode_sbp_tracking_channel_state_dep_a_t(ctx, &msg->states[i])) {
       return false;
     }
@@ -1789,7 +1789,7 @@ size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(
 
 bool encode_sbp_msg_tracking_state_dep_b_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_b_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_states; i++) {
+  for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!encode_sbp_tracking_channel_state_dep_b_t(ctx, &msg->states[i])) {
       return false;
     }

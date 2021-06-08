@@ -608,7 +608,7 @@ size_t sbp_packed_size_sbp_msg_thread_state_t(
 
 bool encode_sbp_msg_thread_state_t(sbp_encode_ctx_t *ctx,
                                    const sbp_msg_thread_state_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 20; i++) {
+  for (uint8_t i = 0; i < 20; i++) {
     if (!encode_char(ctx, &msg->name[i])) {
       return false;
     }
@@ -2168,7 +2168,7 @@ size_t sbp_packed_size_sbp_msg_network_state_resp_t(
 
 bool encode_sbp_msg_network_state_resp_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_network_state_resp_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 4; i++) {
+  for (uint8_t i = 0; i < 4; i++) {
     if (!encode_u8(ctx, &msg->ipv4_address[i])) {
       return false;
     }
@@ -2176,7 +2176,7 @@ bool encode_sbp_msg_network_state_resp_t(
   if (!encode_u8(ctx, &msg->ipv4_mask_size)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0; i < 16; i++) {
     if (!encode_u8(ctx, &msg->ipv6_address[i])) {
       return false;
     }
@@ -2190,7 +2190,7 @@ bool encode_sbp_msg_network_state_resp_t(
   if (!encode_u32(ctx, &msg->tx_bytes)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0; i < 16; i++) {
     if (!encode_char(ctx, &msg->interface_name[i])) {
       return false;
     }
@@ -2359,7 +2359,7 @@ bool encode_sbp_network_usage_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->tx_bytes)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0; i < 16; i++) {
     if (!encode_char(ctx, &msg->interface_name[i])) {
       return false;
     }
@@ -2462,7 +2462,7 @@ size_t sbp_packed_size_sbp_msg_network_bandwidth_usage_t(
 
 bool encode_sbp_msg_network_bandwidth_usage_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_network_bandwidth_usage_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_interfaces; i++) {
+  for (uint8_t i = 0; i < msg->n_interfaces; i++) {
     if (!encode_sbp_network_usage_t(ctx, &msg->interfaces[i])) {
       return false;
     }
@@ -2561,7 +2561,7 @@ bool encode_sbp_msg_cell_modem_status_t(
   if (!encode_float(ctx, &msg->signal_error_rate)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_reserved; i++) {
+  for (uint8_t i = 0; i < msg->n_reserved; i++) {
     if (!encode_u8(ctx, &msg->reserved[i])) {
       return false;
     }
@@ -2690,7 +2690,7 @@ bool encode_sbp_msg_specan_dep_t(sbp_encode_ctx_t *ctx,
   if (!encode_float(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_amplitude_value; i++) {
+  for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!encode_u8(ctx, &msg->amplitude_value[i])) {
       return false;
     }
@@ -2851,7 +2851,7 @@ bool encode_sbp_msg_specan_t(sbp_encode_ctx_t *ctx,
   if (!encode_float(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_amplitude_value; i++) {
+  for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!encode_u8(ctx, &msg->amplitude_value[i])) {
       return false;
     }
@@ -2987,12 +2987,12 @@ size_t sbp_packed_size_sbp_msg_front_end_gain_t(
 
 bool encode_sbp_msg_front_end_gain_t(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_front_end_gain_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 8; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     if (!encode_s8(ctx, &msg->rf_gain[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; ret == 0 && i < 8; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     if (!encode_s8(ctx, &msg->if_gain[i])) {
       return false;
     }

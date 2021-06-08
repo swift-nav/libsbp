@@ -511,7 +511,7 @@ bool encode_sbp_stec_sat_element_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->stec_quality_indicator)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 4; i++) {
+  for (uint8_t i = 0; i < 4; i++) {
     if (!encode_s16(ctx, &msg->stec_coeff[i])) {
       return false;
     }
@@ -1188,7 +1188,7 @@ bool encode_sbp_msg_ssr_code_biases_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->iod_ssr)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_biases; i++) {
+  for (uint8_t i = 0; i < msg->n_biases; i++) {
     if (!encode_sbp_code_biases_content_t(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1343,7 +1343,7 @@ bool encode_sbp_msg_ssr_phase_biases_t(sbp_encode_ctx_t *ctx,
   if (!encode_s8(ctx, &msg->yaw_rate)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_biases; i++) {
+  for (uint8_t i = 0; i < msg->n_biases; i++) {
     if (!encode_sbp_phase_biases_content_t(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1502,7 +1502,7 @@ bool encode_sbp_msg_ssr_stec_correction_t(
   if (!encode_sbp_stec_header_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_sat_list; i++) {
+  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!encode_sbp_stec_sat_element_t(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -1617,7 +1617,7 @@ bool encode_sbp_msg_ssr_gridded_correction_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -1924,12 +1924,12 @@ bool encode_sbp_satellite_apc_t(sbp_encode_ctx_t *ctx,
   if (!encode_u16(ctx, &msg->svn)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_s16(ctx, &msg->pco[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; ret == 0 && i < 21; i++) {
+  for (uint8_t i = 0; i < 21; i++) {
     if (!encode_s8(ctx, &msg->pcv[i])) {
       return false;
     }
@@ -2036,7 +2036,7 @@ size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(
 
 bool encode_sbp_msg_ssr_satellite_apc_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < msg->n_apc; i++) {
+  for (uint8_t i = 0; i < msg->n_apc; i++) {
     if (!encode_sbp_satellite_apc_t(ctx, &msg->apc[i])) {
       return false;
     }
@@ -2735,7 +2735,7 @@ bool encode_sbp_msg_ssr_stec_correction_dep_a_t(
   if (!encode_sbp_stec_header_dep_a_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_sat_list; i++) {
+  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!encode_sbp_stec_sat_element_t(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -2853,7 +2853,7 @@ bool encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_no_std_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -2988,7 +2988,7 @@ bool encode_sbp_msg_ssr_gridded_correction_dep_a_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -3111,7 +3111,7 @@ bool encode_sbp_msg_ssr_grid_definition_dep_a_t(
   if (!encode_sbp_grid_definition_header_dep_a_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_rle_list; i++) {
+  for (uint8_t i = 0; i < msg->n_rle_list; i++) {
     if (!encode_u8(ctx, &msg->rle_list[i])) {
       return false;
     }

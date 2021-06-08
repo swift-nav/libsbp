@@ -222,7 +222,7 @@ bool encode_sbp_msg_fileio_read_resp_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->sequence)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_contents; i++) {
+  for (uint8_t i = 0; i < msg->n_contents; i++) {
     if (!encode_u8(ctx, &msg->contents[i])) {
       return false;
     }
@@ -939,7 +939,7 @@ bool encode_sbp_msg_fileio_write_req_t(sbp_encode_ctx_t *ctx,
           &msg->filename, &sbp_msg_fileio_write_req_tfilename_params, ctx)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_data; i++) {
+  for (uint8_t i = 0; i < msg->n_data; i++) {
     if (!encode_u8(ctx, &msg->data[i])) {
       return false;
     }

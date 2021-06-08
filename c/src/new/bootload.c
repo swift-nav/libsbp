@@ -430,7 +430,7 @@ size_t sbp_packed_size_sbp_msg_nap_device_dna_resp_t(
 
 bool encode_sbp_msg_nap_device_dna_resp_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 8; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     if (!encode_u8(ctx, &msg->dna[i])) {
       return false;
     }

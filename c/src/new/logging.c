@@ -181,7 +181,7 @@ bool encode_sbp_msg_fwd_t(sbp_encode_ctx_t *ctx, const sbp_msg_fwd_t *msg) {
   if (!encode_u8(ctx, &msg->protocol)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_fwd_payload; i++) {
+  for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
     if (!encode_u8(ctx, &msg->fwd_payload[i])) {
       return false;
     }

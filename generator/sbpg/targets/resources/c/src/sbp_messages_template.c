@@ -197,7 +197,7 @@ bool encode_(((msg_type)))(sbp_encode_ctx_t *ctx, const (((msg_type))) *msg)
   ((*- else *))
   ((*- set max_loop = "msg->" + f.size_fn *))
   ((*- endif *))
-  for (uint8_t i = 0; ret == 0 && i < (((max_loop))); i++)
+  for (uint8_t i = 0; i < (((max_loop))); i++)
   {
     if (!encode_(((basetype)))(ctx, &(((field)))[i])) { return false; }
   }

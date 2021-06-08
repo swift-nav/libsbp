@@ -136,7 +136,7 @@ bool encode_sbp_msg_soln_meta_dep_a_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->last_used_gnss_vel_tow)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_sol_in; i++) {
+  for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!encode_sbp_solution_input_type_t(ctx, &msg->sol_in[i])) {
       return false;
     }
@@ -314,7 +314,7 @@ bool encode_sbp_msg_soln_meta_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->age_gnss)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->n_sol_in; i++) {
+  for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!encode_sbp_solution_input_type_t(ctx, &msg->sol_in[i])) {
       return false;
     }

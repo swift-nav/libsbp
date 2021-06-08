@@ -31,7 +31,7 @@ bool encode_sbp_msg_flash_program_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -39,7 +39,7 @@ bool encode_sbp_msg_flash_program_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->addr_len)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < msg->addr_len; i++) {
+  for (uint8_t i = 0; i < msg->addr_len; i++) {
     if (!encode_u8(ctx, &msg->data[i])) {
       return false;
     }
@@ -239,7 +239,7 @@ bool encode_sbp_msg_flash_read_req_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -349,7 +349,7 @@ bool encode_sbp_msg_flash_read_resp_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -781,7 +781,7 @@ size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(
 
 bool encode_sbp_msg_stm_unique_id_resp_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_resp_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 12; i++) {
+  for (uint8_t i = 0; i < 12; i++) {
     if (!encode_u8(ctx, &msg->stm_id[i])) {
       return false;
     }
@@ -868,7 +868,7 @@ size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(
 
 bool encode_sbp_msg_m25_flash_write_status_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_m25_flash_write_status_t *msg) {
-  for (uint8_t i = 0; ret == 0 && i < 1; i++) {
+  for (uint8_t i = 0; i < 1; i++) {
     if (!encode_u8(ctx, &msg->status[i])) {
       return false;
     }
