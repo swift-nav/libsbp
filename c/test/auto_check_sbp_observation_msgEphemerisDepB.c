@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -169,7 +169,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = 1.0525047200405302;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -358,7 +358,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -437,7 +437,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = -1.9736022837941165;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -626,7 +626,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -705,7 +705,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = 0.37873566614641857;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -894,7 +894,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -973,7 +973,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = -1.9736022837941165;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1162,7 +1162,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1241,7 +1241,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = -2.7021241452652935;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1430,7 +1430,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x46, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x46, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1509,7 +1509,7 @@ START_TEST(test_auto_check_sbp_observation_msgEphemerisDepB) {
 
     test_msg.ephemeris_dep_b.w = -0.5237901716088061;
 
-    sbp_send_message(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_EPHEMERIS_DEP_B, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

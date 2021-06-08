@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -118,7 +118,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3855357.977260149;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -190,7 +190,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -218,7 +218,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3855357.5011712564;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -290,7 +290,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -318,7 +318,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3855356.517968082;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -390,7 +390,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -418,7 +418,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3855357.4185667858;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -490,7 +490,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -518,7 +518,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3855359.0924900775;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -590,7 +590,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -618,7 +618,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884633.142084079;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -690,7 +690,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -718,7 +718,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884632.627157578;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -790,7 +790,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -818,7 +818,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884631.282421521;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -890,7 +890,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -918,7 +918,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884632.1007095524;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -990,7 +990,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1018,7 +1018,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884631.4773294823;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1090,7 +1090,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x200, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1118,7 +1118,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFDepA) {
 
     test_msg.pos_ecef_dep_a.z = 3884635.5118107493;
 
-    sbp_send_message(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_POS_ECEF_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

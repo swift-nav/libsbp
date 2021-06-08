@@ -97,7 +97,7 @@ class CallbackInterface<MsgType> {
   virtual void handle_sbp_msg(uint16_t sender_id, const MsgType& msg) = 0;
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(state,
+    sbp_callback_register(state,
                           sbp::MessageTraits<MsgType>::id,
                           &sbp_msg_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
                           this,
@@ -191,7 +191,7 @@ class AllMessageHandler {
   public:
 
     explicit AllMessageHandler(State *state) : state_(*state), callback_node_() {
-      sbp_register_all_msg_callback(state_.get_state(),
+      sbp_all_message_callback_register(state_.get_state(),
               sbp_all_msg_cb_passthrough<AllMessageHandler>,
               this,
               &callback_node_);

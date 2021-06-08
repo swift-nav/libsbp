@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNedGnss) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x22e, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x22e, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -119,7 +119,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNedGnss) {
 
     test_msg.vel_ned_gnss.v_accuracy = 89;
 
-    sbp_send_message(&sbp_state, SBP_MSG_VEL_NED_GNSS, 4096, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_VEL_NED_GNSS, 4096, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

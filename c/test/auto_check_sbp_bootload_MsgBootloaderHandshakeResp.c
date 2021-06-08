@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb4, &msg_callback,
+    sbp_callback_register(&sbp_state, 0xb4, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -113,7 +113,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     test_msg.bootloader_handshake_resp.version.packed_len = 5;
 
-    sbp_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0,
+    sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -172,7 +172,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb0, &msg_callback,
+    sbp_callback_register(&sbp_state, 0xb0, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -194,7 +194,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     test_msg.bootloader_handshake_dep_a.handshake.packed_len = 4;
 
-    sbp_send_message(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219,
+    sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x11, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x11, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -155,7 +155,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     test_msg.tracking_state_detailed_dep.uptime = 1;
 
-    sbp_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
+    sbp_message_send(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -340,7 +340,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x11, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x11, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -405,7 +405,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     test_msg.tracking_state_detailed_dep.uptime = 1;
 
-    sbp_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
+    sbp_message_send(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -590,7 +590,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x11, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x11, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -655,7 +655,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     test_msg.tracking_state_detailed_dep.uptime = 2;
 
-    sbp_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
+    sbp_message_send(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -840,7 +840,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x11, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x11, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -905,7 +905,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     test_msg.tracking_state_detailed_dep.uptime = 2;
 
-    sbp_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
+    sbp_message_send(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1090,7 +1090,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x11, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x11, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1155,7 +1155,7 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
 
     test_msg.tracking_state_detailed_dep.uptime = 3;
 
-    sbp_send_message(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
+    sbp_message_send(&sbp_state, SBP_MSG_TRACKING_STATE_DETAILED_DEP, 26427,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

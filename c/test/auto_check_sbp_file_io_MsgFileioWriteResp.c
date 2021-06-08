@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_file_io_MsgFileioWriteResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xab, &msg_callback,
+    sbp_callback_register(&sbp_state, 0xab, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -104,7 +104,7 @@ START_TEST(test_auto_check_sbp_file_io_MsgFileioWriteResp) {
 
     test_msg.fileio_write_resp.sequence = 202;
 
-    sbp_send_message(&sbp_state, SBP_MSG_FILEIO_WRITE_RESP, 66, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_FILEIO_WRITE_RESP, 66, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

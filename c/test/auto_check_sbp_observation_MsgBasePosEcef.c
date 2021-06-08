@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_observation_MsgBasePosEcef) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x48, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x48, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -110,7 +110,7 @@ START_TEST(test_auto_check_sbp_observation_MsgBasePosEcef) {
 
     test_msg.base_pos_ecef.z = 3811455.9642;
 
-    sbp_send_message(&sbp_state, SBP_MSG_BASE_POS_ECEF, 0, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_BASE_POS_ECEF, 0, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

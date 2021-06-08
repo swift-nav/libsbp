@@ -182,7 +182,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
   if ((cb_type == SBP_MSG_CALLBACK && cb.msg == 0) ||
-      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0)) {
+      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0) ||
+      (cb_type == SBP_DECODED_CALLBACK && cb.decoded == 0)) {
     return SBP_NULL_ERROR;
   }
 
@@ -203,8 +204,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
       if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
         return SBP_CALLBACK_ERROR;
       }
-      if ((cb_type == SBP_MSG_CALLBACK) &&
-          (n->cb.msg == cb.msg)) {
+      if ((cb_type == SBP_DECODED_CALLBACK) &&
+          (n->cb.decoded == cb.decoded)) {
         return SBP_CALLBACK_ERROR;
       }
     }
@@ -218,8 +219,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
     node->cb.msg = cb.msg;
   } else if (cb_type == SBP_FRAME_CALLBACK) {
     node->cb.frame = cb.frame;
-  } else if (cb_type == SBP_MSG_CALLBACK) {
-    node->cb.msg = cb.msg;
+  } else if (cb_type == SBP_DECODED_CALLBACK) {
+    node->cb.decoded = cb.decoded;
   }
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
@@ -337,7 +338,7 @@ s8 sbp_callback_register(sbp_state_t *s, u16 msg_type,
   sbp_callback_t callback;
   callback.decoded = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
-                                       SBP_MSG_CALLBACK, context, node);
+                                       SBP_DECODED_CALLBACK, context, node);
 }
 
 s8 sbp_all_message_callback_register(sbp_state_t *s,
@@ -346,7 +347,7 @@ s8 sbp_all_message_callback_register(sbp_state_t *s,
   sbp_callback_t callback;
   callback.decoded = cb;
   return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
-                                       SBP_MSG_CALLBACK, context, node);
+                                       SBP_DECODED_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.

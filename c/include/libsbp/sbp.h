@@ -142,7 +142,7 @@ typedef struct sbp_state {
 
 s8 sbp_callback_register(sbp_state_t* s, u16 msg_type, sbp_decoded_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
-s8 sbp_all_message_register_callback(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
+s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
                                  sbp_msg_callbacks_node_t *node);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);

@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x4a, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x4a, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -410,7 +410,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     test_msg.obs.obs[13].sid.sat = 18;
 
-    sbp_send_message(&sbp_state, SBP_MSG_OBS, 61569, &test_msg, &dummy_write);
+    sbp_message_send(&sbp_state, SBP_MSG_OBS, 61569, &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
                   "not enough data was written to dummy_buff");
@@ -1167,7 +1167,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x4a, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x4a, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1188,7 +1188,7 @@ START_TEST(test_auto_check_sbp_observation_MsgObs) {
 
     test_msg.obs.header.t.wn = 2154;
 
-    sbp_send_message(&sbp_state, SBP_MSG_OBS, 61569, &test_msg, &dummy_write);
+    sbp_message_send(&sbp_state, SBP_MSG_OBS, 61569, &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
                   "not enough data was written to dummy_buff");

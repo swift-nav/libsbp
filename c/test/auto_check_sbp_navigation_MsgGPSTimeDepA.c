@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -110,7 +110,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1787;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -164,7 +164,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -184,7 +184,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1787;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -238,7 +238,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -258,7 +258,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1787;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -312,7 +312,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -332,7 +332,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1787;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -386,7 +386,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -406,7 +406,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1787;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 55286, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -460,7 +460,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -481,7 +481,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -536,7 +536,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -557,7 +557,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -612,7 +612,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -633,7 +633,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -688,7 +688,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -708,7 +708,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -763,7 +763,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -784,7 +784,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -839,7 +839,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x100, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -860,7 +860,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     test_msg.gps_time_dep_a.wn = 1838;
 
-    sbp_send_message(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_GPS_TIME_DEP_A, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),

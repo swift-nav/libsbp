@@ -90,7 +90,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -150,7 +150,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 11.600000381469727;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -322,7 +322,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -382,7 +382,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 0.06599999964237213;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -554,7 +554,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -614,7 +614,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 0.13899999856948853;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -786,7 +786,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -846,7 +846,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 0.06599999964237213;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1018,7 +1018,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1078,7 +1078,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 0.49399998784065247;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -1250,7 +1250,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x18, &msg_callback,
+    sbp_callback_register(&sbp_state, 0x18, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
@@ -1310,7 +1310,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
 
     test_msg.uart_state_depa.uart_ftdi.tx_throughput = 1.315000057220459;
 
-    sbp_send_message(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
+    sbp_message_send(&sbp_state, SBP_MSG_UART_STATE_DEPA, 1219, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
