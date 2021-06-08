@@ -104,8 +104,9 @@ impl super::SBPMessage for MsgNdbEvent {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgNdbEvent {
+impl super::ConcreteMessage for MsgNdbEvent {
     const MESSAGE_TYPE: u16 = 1024;
+    const MESSAGE_NAME: &'static str = "MSG_NDB_EVENT";
 }
 impl TryFrom<super::SBP> for MsgNdbEvent {
     type Error = super::TryFromSBPError;

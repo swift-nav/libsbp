@@ -97,8 +97,9 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsReadByIndexDone {
+impl super::ConcreteMessage for MsgSettingsReadByIndexDone {
     const MESSAGE_TYPE: u16 = 166;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_DONE";
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
     type Error = super::TryFromSBPError;
@@ -172,8 +173,9 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsReadByIndexReq {
+impl super::ConcreteMessage for MsgSettingsReadByIndexReq {
     const MESSAGE_TYPE: u16 = 162;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_REQ";
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
     type Error = super::TryFromSBPError;
@@ -263,8 +265,9 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsReadByIndexResp {
+impl super::ConcreteMessage for MsgSettingsReadByIndexResp {
     const MESSAGE_TYPE: u16 = 167;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_RESP";
 }
 impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
     type Error = super::TryFromSBPError;
@@ -350,8 +353,9 @@ impl super::SBPMessage for MsgSettingsReadReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsReadReq {
+impl super::ConcreteMessage for MsgSettingsReadReq {
     const MESSAGE_TYPE: u16 = 164;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_REQ";
 }
 impl TryFrom<super::SBP> for MsgSettingsReadReq {
     type Error = super::TryFromSBPError;
@@ -433,8 +437,9 @@ impl super::SBPMessage for MsgSettingsReadResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsReadResp {
+impl super::ConcreteMessage for MsgSettingsReadResp {
     const MESSAGE_TYPE: u16 = 165;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_RESP";
 }
 impl TryFrom<super::SBP> for MsgSettingsReadResp {
     type Error = super::TryFromSBPError;
@@ -513,8 +518,9 @@ impl super::SBPMessage for MsgSettingsRegister {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsRegister {
+impl super::ConcreteMessage for MsgSettingsRegister {
     const MESSAGE_TYPE: u16 = 174;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER";
 }
 impl TryFrom<super::SBP> for MsgSettingsRegister {
     type Error = super::TryFromSBPError;
@@ -598,8 +604,9 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsRegisterResp {
+impl super::ConcreteMessage for MsgSettingsRegisterResp {
     const MESSAGE_TYPE: u16 = 431;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER_RESP";
 }
 impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
     type Error = super::TryFromSBPError;
@@ -675,8 +682,9 @@ impl super::SBPMessage for MsgSettingsSave {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsSave {
+impl super::ConcreteMessage for MsgSettingsSave {
     const MESSAGE_TYPE: u16 = 161;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_SAVE";
 }
 impl TryFrom<super::SBP> for MsgSettingsSave {
     type Error = super::TryFromSBPError;
@@ -755,8 +763,9 @@ impl super::SBPMessage for MsgSettingsWrite {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsWrite {
+impl super::ConcreteMessage for MsgSettingsWrite {
     const MESSAGE_TYPE: u16 = 160;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE";
 }
 impl TryFrom<super::SBP> for MsgSettingsWrite {
     type Error = super::TryFromSBPError;
@@ -842,8 +851,9 @@ impl super::SBPMessage for MsgSettingsWriteResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgSettingsWriteResp {
+impl super::ConcreteMessage for MsgSettingsWriteResp {
     const MESSAGE_TYPE: u16 = 175;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE_RESP";
 }
 impl TryFrom<super::SBP> for MsgSettingsWriteResp {
     type Error = super::TryFromSBPError;

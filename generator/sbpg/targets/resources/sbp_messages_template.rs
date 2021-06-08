@@ -121,8 +121,9 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
 ((*- endif *))
 
 ((*- if m.is_real_message *))
-impl super::RealMessage for (((m.identifier|camel_case))) {
+impl super::ConcreteMessage for (((m.identifier|camel_case))) {
     const MESSAGE_TYPE: u16 = (((m.sbp_id)));
+    const MESSAGE_NAME: &'static str = "(((m.identifier)))";
 }
 ((*- endif *))
 

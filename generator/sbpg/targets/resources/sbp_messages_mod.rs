@@ -37,8 +37,9 @@ pub trait SBPMessage: SbpSerialize {
     }
 }
 
-pub trait RealMessage: SBPMessage + std::convert::TryFrom<SBP, Error = TryFromSBPError> + Clone + Sized {
+pub trait ConcreteMessage: SBPMessage + std::convert::TryFrom<SBP, Error = TryFromSBPError> + Clone + Sized {
     const MESSAGE_TYPE: u16;
+    const MESSAGE_NAME: &'static str;
 }
 
 #[derive(Debug, Clone)]

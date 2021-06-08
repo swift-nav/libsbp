@@ -83,8 +83,9 @@ impl super::SBPMessage for MsgImuAux {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgImuAux {
+impl super::ConcreteMessage for MsgImuAux {
     const MESSAGE_TYPE: u16 = 2305;
+    const MESSAGE_NAME: &'static str = "MSG_IMU_AUX";
 }
 impl TryFrom<super::SBP> for MsgImuAux {
     type Error = super::TryFromSBPError;
@@ -210,8 +211,9 @@ impl super::SBPMessage for MsgImuRaw {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgImuRaw {
+impl super::ConcreteMessage for MsgImuRaw {
     const MESSAGE_TYPE: u16 = 2304;
+    const MESSAGE_NAME: &'static str = "MSG_IMU_RAW";
 }
 impl TryFrom<super::SBP> for MsgImuRaw {
     type Error = super::TryFromSBPError;

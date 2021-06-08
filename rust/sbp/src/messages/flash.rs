@@ -81,8 +81,9 @@ impl super::SBPMessage for MsgFlashDone {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgFlashDone {
+impl super::ConcreteMessage for MsgFlashDone {
     const MESSAGE_TYPE: u16 = 224;
+    const MESSAGE_NAME: &'static str = "MSG_FLASH_DONE";
 }
 impl TryFrom<super::SBP> for MsgFlashDone {
     type Error = super::TryFromSBPError;
@@ -164,8 +165,9 @@ impl super::SBPMessage for MsgFlashErase {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgFlashErase {
+impl super::ConcreteMessage for MsgFlashErase {
     const MESSAGE_TYPE: u16 = 226;
+    const MESSAGE_NAME: &'static str = "MSG_FLASH_ERASE";
 }
 impl TryFrom<super::SBP> for MsgFlashErase {
     type Error = super::TryFromSBPError;
@@ -256,8 +258,9 @@ impl super::SBPMessage for MsgFlashProgram {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgFlashProgram {
+impl super::ConcreteMessage for MsgFlashProgram {
     const MESSAGE_TYPE: u16 = 230;
+    const MESSAGE_NAME: &'static str = "MSG_FLASH_PROGRAM";
 }
 impl TryFrom<super::SBP> for MsgFlashProgram {
     type Error = super::TryFromSBPError;
@@ -350,8 +353,9 @@ impl super::SBPMessage for MsgFlashReadReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgFlashReadReq {
+impl super::ConcreteMessage for MsgFlashReadReq {
     const MESSAGE_TYPE: u16 = 231;
+    const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_REQ";
 }
 impl TryFrom<super::SBP> for MsgFlashReadReq {
     type Error = super::TryFromSBPError;
@@ -442,8 +446,9 @@ impl super::SBPMessage for MsgFlashReadResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgFlashReadResp {
+impl super::ConcreteMessage for MsgFlashReadResp {
     const MESSAGE_TYPE: u16 = 225;
+    const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_RESP";
 }
 impl TryFrom<super::SBP> for MsgFlashReadResp {
     type Error = super::TryFromSBPError;
@@ -524,8 +529,9 @@ impl super::SBPMessage for MsgM25FlashWriteStatus {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgM25FlashWriteStatus {
+impl super::ConcreteMessage for MsgM25FlashWriteStatus {
     const MESSAGE_TYPE: u16 = 243;
+    const MESSAGE_NAME: &'static str = "MSG_M25_FLASH_WRITE_STATUS";
 }
 impl TryFrom<super::SBP> for MsgM25FlashWriteStatus {
     type Error = super::TryFromSBPError;
@@ -602,8 +608,9 @@ impl super::SBPMessage for MsgStmFlashLockSector {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgStmFlashLockSector {
+impl super::ConcreteMessage for MsgStmFlashLockSector {
     const MESSAGE_TYPE: u16 = 227;
+    const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_LOCK_SECTOR";
 }
 impl TryFrom<super::SBP> for MsgStmFlashLockSector {
     type Error = super::TryFromSBPError;
@@ -680,8 +687,9 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgStmFlashUnlockSector {
+impl super::ConcreteMessage for MsgStmFlashUnlockSector {
     const MESSAGE_TYPE: u16 = 228;
+    const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_UNLOCK_SECTOR";
 }
 impl TryFrom<super::SBP> for MsgStmFlashUnlockSector {
     type Error = super::TryFromSBPError;
@@ -757,8 +765,9 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgStmUniqueIdReq {
+impl super::ConcreteMessage for MsgStmUniqueIdReq {
     const MESSAGE_TYPE: u16 = 232;
+    const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_REQ";
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdReq {
     type Error = super::TryFromSBPError;
@@ -833,8 +842,9 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgStmUniqueIdResp {
+impl super::ConcreteMessage for MsgStmUniqueIdResp {
     const MESSAGE_TYPE: u16 = 229;
+    const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_RESP";
 }
 impl TryFrom<super::SBP> for MsgStmUniqueIdResp {
     type Error = super::TryFromSBPError;

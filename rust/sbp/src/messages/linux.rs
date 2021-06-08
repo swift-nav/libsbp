@@ -94,8 +94,9 @@ impl super::SBPMessage for MsgLinuxCpuState {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxCpuState {
+impl super::ConcreteMessage for MsgLinuxCpuState {
     const MESSAGE_TYPE: u16 = 32520;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE";
 }
 impl TryFrom<super::SBP> for MsgLinuxCpuState {
     type Error = super::TryFromSBPError;
@@ -196,8 +197,9 @@ impl super::SBPMessage for MsgLinuxCpuStateDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxCpuStateDepA {
+impl super::ConcreteMessage for MsgLinuxCpuStateDepA {
     const MESSAGE_TYPE: u16 = 32512;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
     type Error = super::TryFromSBPError;
@@ -300,8 +302,9 @@ impl super::SBPMessage for MsgLinuxMemState {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxMemState {
+impl super::ConcreteMessage for MsgLinuxMemState {
     const MESSAGE_TYPE: u16 = 32521;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE";
 }
 impl TryFrom<super::SBP> for MsgLinuxMemState {
     type Error = super::TryFromSBPError;
@@ -402,8 +405,9 @@ impl super::SBPMessage for MsgLinuxMemStateDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxMemStateDepA {
+impl super::ConcreteMessage for MsgLinuxMemStateDepA {
     const MESSAGE_TYPE: u16 = 32513;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
     type Error = super::TryFromSBPError;
@@ -496,8 +500,9 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxProcessFdCount {
+impl super::ConcreteMessage for MsgLinuxProcessFdCount {
     const MESSAGE_TYPE: u16 = 32518;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_COUNT";
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
     type Error = super::TryFromSBPError;
@@ -586,8 +591,9 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxProcessFdSummary {
+impl super::ConcreteMessage for MsgLinuxProcessFdSummary {
     const MESSAGE_TYPE: u16 = 32519;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_SUMMARY";
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
     type Error = super::TryFromSBPError;
@@ -684,8 +690,9 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxProcessSocketCounts {
+impl super::ConcreteMessage for MsgLinuxProcessSocketCounts {
     const MESSAGE_TYPE: u16 = 32515;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
     type Error = super::TryFromSBPError;
@@ -797,8 +804,9 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxProcessSocketQueues {
+impl super::ConcreteMessage for MsgLinuxProcessSocketQueues {
     const MESSAGE_TYPE: u16 = 32516;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
 }
 impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
     type Error = super::TryFromSBPError;
@@ -901,8 +909,9 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxSocketUsage {
+impl super::ConcreteMessage for MsgLinuxSocketUsage {
     const MESSAGE_TYPE: u16 = 32517;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_SOCKET_USAGE";
 }
 impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
     type Error = super::TryFromSBPError;
@@ -1006,8 +1015,9 @@ impl super::SBPMessage for MsgLinuxSysState {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxSysState {
+impl super::ConcreteMessage for MsgLinuxSysState {
     const MESSAGE_TYPE: u16 = 32522;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE";
 }
 impl TryFrom<super::SBP> for MsgLinuxSysState {
     type Error = super::TryFromSBPError;
@@ -1112,8 +1122,9 @@ impl super::SBPMessage for MsgLinuxSysStateDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgLinuxSysStateDepA {
+impl super::ConcreteMessage for MsgLinuxSysStateDepA {
     const MESSAGE_TYPE: u16 = 32514;
+    const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
     type Error = super::TryFromSBPError;

@@ -78,8 +78,9 @@ impl super::SBPMessage for MsgMeasurementState {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgMeasurementState {
+impl super::ConcreteMessage for MsgMeasurementState {
     const MESSAGE_TYPE: u16 = 97;
+    const MESSAGE_NAME: &'static str = "MSG_MEASUREMENT_STATE";
 }
 impl TryFrom<super::SBP> for MsgMeasurementState {
     type Error = super::TryFromSBPError;
@@ -162,8 +163,9 @@ impl super::SBPMessage for MsgTrackingIq {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingIq {
+impl super::ConcreteMessage for MsgTrackingIq {
     const MESSAGE_TYPE: u16 = 45;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ";
 }
 impl TryFrom<super::SBP> for MsgTrackingIq {
     type Error = super::TryFromSBPError;
@@ -249,8 +251,9 @@ impl super::SBPMessage for MsgTrackingIqDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingIqDepA {
+impl super::ConcreteMessage for MsgTrackingIqDepA {
     const MESSAGE_TYPE: u16 = 28;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepA {
     type Error = super::TryFromSBPError;
@@ -337,8 +340,9 @@ impl super::SBPMessage for MsgTrackingIqDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingIqDepB {
+impl super::ConcreteMessage for MsgTrackingIqDepB {
     const MESSAGE_TYPE: u16 = 44;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ_DEP_B";
 }
 impl TryFrom<super::SBP> for MsgTrackingIqDepB {
     type Error = super::TryFromSBPError;
@@ -420,8 +424,9 @@ impl super::SBPMessage for MsgTrackingState {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingState {
+impl super::ConcreteMessage for MsgTrackingState {
     const MESSAGE_TYPE: u16 = 65;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE";
 }
 impl TryFrom<super::SBP> for MsgTrackingState {
     type Error = super::TryFromSBPError;
@@ -497,8 +502,9 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingStateDepA {
+impl super::ConcreteMessage for MsgTrackingStateDepA {
     const MESSAGE_TYPE: u16 = 22;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepA {
     type Error = super::TryFromSBPError;
@@ -574,8 +580,9 @@ impl super::SBPMessage for MsgTrackingStateDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingStateDepB {
+impl super::ConcreteMessage for MsgTrackingStateDepB {
     const MESSAGE_TYPE: u16 = 19;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DEP_B";
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDepB {
     type Error = super::TryFromSBPError;
@@ -717,8 +724,9 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingStateDetailedDep {
+impl super::ConcreteMessage for MsgTrackingStateDetailedDep {
     const MESSAGE_TYPE: u16 = 17;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DETAILED_DEP";
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
     type Error = super::TryFromSBPError;
@@ -901,8 +909,9 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgTrackingStateDetailedDepA {
+impl super::ConcreteMessage for MsgTrackingStateDetailedDepA {
     const MESSAGE_TYPE: u16 = 33;
+    const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DETAILED_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
     type Error = super::TryFromSBPError;

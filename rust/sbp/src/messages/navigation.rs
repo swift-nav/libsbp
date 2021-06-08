@@ -114,8 +114,9 @@ impl super::SBPMessage for MsgAgeCorrections {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgAgeCorrections {
+impl super::ConcreteMessage for MsgAgeCorrections {
     const MESSAGE_TYPE: u16 = 528;
+    const MESSAGE_NAME: &'static str = "MSG_AGE_CORRECTIONS";
 }
 impl TryFrom<super::SBP> for MsgAgeCorrections {
     type Error = super::TryFromSBPError;
@@ -226,8 +227,9 @@ impl super::SBPMessage for MsgBaselineECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgBaselineECEF {
+impl super::ConcreteMessage for MsgBaselineECEF {
     const MESSAGE_TYPE: u16 = 523;
+    const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF";
 }
 impl TryFrom<super::SBP> for MsgBaselineECEF {
     type Error = super::TryFromSBPError;
@@ -348,8 +350,9 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgBaselineECEFDepA {
+impl super::ConcreteMessage for MsgBaselineECEFDepA {
     const MESSAGE_TYPE: u16 = 514;
+    const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgBaselineECEFDepA {
     type Error = super::TryFromSBPError;
@@ -460,8 +463,9 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgBaselineHeadingDepA {
+impl super::ConcreteMessage for MsgBaselineHeadingDepA {
     const MESSAGE_TYPE: u16 = 519;
+    const MESSAGE_NAME: &'static str = "MSG_BASELINE_HEADING_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgBaselineHeadingDepA {
     type Error = super::TryFromSBPError;
@@ -581,8 +585,9 @@ impl super::SBPMessage for MsgBaselineNED {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgBaselineNED {
+impl super::ConcreteMessage for MsgBaselineNED {
     const MESSAGE_TYPE: u16 = 524;
+    const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED";
 }
 impl TryFrom<super::SBP> for MsgBaselineNED {
     type Error = super::TryFromSBPError;
@@ -710,8 +715,9 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgBaselineNEDDepA {
+impl super::ConcreteMessage for MsgBaselineNEDDepA {
     const MESSAGE_TYPE: u16 = 515;
+    const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgBaselineNEDDepA {
     type Error = super::TryFromSBPError;
@@ -834,8 +840,9 @@ impl super::SBPMessage for MsgDops {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgDops {
+impl super::ConcreteMessage for MsgDops {
     const MESSAGE_TYPE: u16 = 520;
+    const MESSAGE_NAME: &'static str = "MSG_DOPS";
 }
 impl TryFrom<super::SBP> for MsgDops {
     type Error = super::TryFromSBPError;
@@ -951,8 +958,9 @@ impl super::SBPMessage for MsgDopsDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgDopsDepA {
+impl super::ConcreteMessage for MsgDopsDepA {
     const MESSAGE_TYPE: u16 = 518;
+    const MESSAGE_NAME: &'static str = "MSG_DOPS_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgDopsDepA {
     type Error = super::TryFromSBPError;
@@ -1074,8 +1082,9 @@ impl super::SBPMessage for MsgGPSTime {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgGPSTime {
+impl super::ConcreteMessage for MsgGPSTime {
     const MESSAGE_TYPE: u16 = 258;
+    const MESSAGE_NAME: &'static str = "MSG_GPS_TIME";
 }
 impl TryFrom<super::SBP> for MsgGPSTime {
     type Error = super::TryFromSBPError;
@@ -1193,8 +1202,9 @@ impl super::SBPMessage for MsgGPSTimeDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgGPSTimeDepA {
+impl super::ConcreteMessage for MsgGPSTimeDepA {
     const MESSAGE_TYPE: u16 = 256;
+    const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgGPSTimeDepA {
     type Error = super::TryFromSBPError;
@@ -1312,8 +1322,9 @@ impl super::SBPMessage for MsgGPSTimeGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgGPSTimeGnss {
+impl super::ConcreteMessage for MsgGPSTimeGnss {
     const MESSAGE_TYPE: u16 = 260;
+    const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_GNSS";
 }
 impl TryFrom<super::SBP> for MsgGPSTimeGnss {
     type Error = super::TryFromSBPError;
@@ -1431,8 +1442,9 @@ impl super::SBPMessage for MsgPosECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosECEF {
+impl super::ConcreteMessage for MsgPosECEF {
     const MESSAGE_TYPE: u16 = 521;
+    const MESSAGE_NAME: &'static str = "MSG_POS_ECEF";
 }
 impl TryFrom<super::SBP> for MsgPosECEF {
     type Error = super::TryFromSBPError;
@@ -1572,8 +1584,9 @@ impl super::SBPMessage for MsgPosECEFCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosECEFCov {
+impl super::ConcreteMessage for MsgPosECEFCov {
     const MESSAGE_TYPE: u16 = 532;
+    const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV";
 }
 impl TryFrom<super::SBP> for MsgPosECEFCov {
     type Error = super::TryFromSBPError;
@@ -1723,8 +1736,9 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosECEFCovGnss {
+impl super::ConcreteMessage for MsgPosECEFCovGnss {
     const MESSAGE_TYPE: u16 = 564;
+    const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV_GNSS";
 }
 impl TryFrom<super::SBP> for MsgPosECEFCovGnss {
     type Error = super::TryFromSBPError;
@@ -1858,8 +1872,9 @@ impl super::SBPMessage for MsgPosECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosECEFDepA {
+impl super::ConcreteMessage for MsgPosECEFDepA {
     const MESSAGE_TYPE: u16 = 512;
+    const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgPosECEFDepA {
     type Error = super::TryFromSBPError;
@@ -1983,8 +1998,9 @@ impl super::SBPMessage for MsgPosECEFGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosECEFGnss {
+impl super::ConcreteMessage for MsgPosECEFGnss {
     const MESSAGE_TYPE: u16 = 553;
+    const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_GNSS";
 }
 impl TryFrom<super::SBP> for MsgPosECEFGnss {
     type Error = super::TryFromSBPError;
@@ -2111,8 +2127,9 @@ impl super::SBPMessage for MsgPosLLH {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosLLH {
+impl super::ConcreteMessage for MsgPosLLH {
     const MESSAGE_TYPE: u16 = 522;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH";
 }
 impl TryFrom<super::SBP> for MsgPosLLH {
     type Error = super::TryFromSBPError;
@@ -2254,8 +2271,9 @@ impl super::SBPMessage for MsgPosLLHCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosLLHCov {
+impl super::ConcreteMessage for MsgPosLLHCov {
     const MESSAGE_TYPE: u16 = 529;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV";
 }
 impl TryFrom<super::SBP> for MsgPosLLHCov {
     type Error = super::TryFromSBPError;
@@ -2405,8 +2423,9 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosLLHCovGnss {
+impl super::ConcreteMessage for MsgPosLLHCovGnss {
     const MESSAGE_TYPE: u16 = 561;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV_GNSS";
 }
 impl TryFrom<super::SBP> for MsgPosLLHCovGnss {
     type Error = super::TryFromSBPError;
@@ -2543,8 +2562,9 @@ impl super::SBPMessage for MsgPosLLHDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosLLHDepA {
+impl super::ConcreteMessage for MsgPosLLHDepA {
     const MESSAGE_TYPE: u16 = 513;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgPosLLHDepA {
     type Error = super::TryFromSBPError;
@@ -2673,8 +2693,9 @@ impl super::SBPMessage for MsgPosLLHGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgPosLLHGnss {
+impl super::ConcreteMessage for MsgPosLLHGnss {
     const MESSAGE_TYPE: u16 = 554;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH_GNSS";
 }
 impl TryFrom<super::SBP> for MsgPosLLHGnss {
     type Error = super::TryFromSBPError;
@@ -2844,8 +2865,9 @@ impl super::SBPMessage for MsgProtectionLevel {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgProtectionLevel {
+impl super::ConcreteMessage for MsgProtectionLevel {
     const MESSAGE_TYPE: u16 = 535;
+    const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL";
 }
 impl TryFrom<super::SBP> for MsgProtectionLevel {
     type Error = super::TryFromSBPError;
@@ -2993,8 +3015,9 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgProtectionLevelDepA {
+impl super::ConcreteMessage for MsgProtectionLevelDepA {
     const MESSAGE_TYPE: u16 = 534;
+    const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgProtectionLevelDepA {
     type Error = super::TryFromSBPError;
@@ -3120,8 +3143,9 @@ impl super::SBPMessage for MsgUtcTime {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgUtcTime {
+impl super::ConcreteMessage for MsgUtcTime {
     const MESSAGE_TYPE: u16 = 259;
+    const MESSAGE_NAME: &'static str = "MSG_UTC_TIME";
 }
 impl TryFrom<super::SBP> for MsgUtcTime {
     type Error = super::TryFromSBPError;
@@ -3251,8 +3275,9 @@ impl super::SBPMessage for MsgUtcTimeGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgUtcTimeGnss {
+impl super::ConcreteMessage for MsgUtcTimeGnss {
     const MESSAGE_TYPE: u16 = 261;
+    const MESSAGE_NAME: &'static str = "MSG_UTC_TIME_GNSS";
 }
 impl TryFrom<super::SBP> for MsgUtcTimeGnss {
     type Error = super::TryFromSBPError;
@@ -3397,8 +3422,9 @@ impl super::SBPMessage for MsgVelBody {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelBody {
+impl super::ConcreteMessage for MsgVelBody {
     const MESSAGE_TYPE: u16 = 531;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_BODY";
 }
 impl TryFrom<super::SBP> for MsgVelBody {
     type Error = super::TryFromSBPError;
@@ -3528,8 +3554,9 @@ impl super::SBPMessage for MsgVelECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelECEF {
+impl super::ConcreteMessage for MsgVelECEF {
     const MESSAGE_TYPE: u16 = 525;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF";
 }
 impl TryFrom<super::SBP> for MsgVelECEF {
     type Error = super::TryFromSBPError;
@@ -3664,8 +3691,9 @@ impl super::SBPMessage for MsgVelECEFCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelECEFCov {
+impl super::ConcreteMessage for MsgVelECEFCov {
     const MESSAGE_TYPE: u16 = 533;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV";
 }
 impl TryFrom<super::SBP> for MsgVelECEFCov {
     type Error = super::TryFromSBPError;
@@ -3810,8 +3838,9 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelECEFCovGnss {
+impl super::ConcreteMessage for MsgVelECEFCovGnss {
     const MESSAGE_TYPE: u16 = 565;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV_GNSS";
 }
 impl TryFrom<super::SBP> for MsgVelECEFCovGnss {
     type Error = super::TryFromSBPError;
@@ -3941,8 +3970,9 @@ impl super::SBPMessage for MsgVelECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelECEFDepA {
+impl super::ConcreteMessage for MsgVelECEFDepA {
     const MESSAGE_TYPE: u16 = 516;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgVelECEFDepA {
     type Error = super::TryFromSBPError;
@@ -4062,8 +4092,9 @@ impl super::SBPMessage for MsgVelECEFGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelECEFGnss {
+impl super::ConcreteMessage for MsgVelECEFGnss {
     const MESSAGE_TYPE: u16 = 557;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_GNSS";
 }
 impl TryFrom<super::SBP> for MsgVelECEFGnss {
     type Error = super::TryFromSBPError;
@@ -4187,8 +4218,9 @@ impl super::SBPMessage for MsgVelNED {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelNED {
+impl super::ConcreteMessage for MsgVelNED {
     const MESSAGE_TYPE: u16 = 526;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_NED";
 }
 impl TryFrom<super::SBP> for MsgVelNED {
     type Error = super::TryFromSBPError;
@@ -4328,8 +4360,9 @@ impl super::SBPMessage for MsgVelNEDCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelNEDCov {
+impl super::ConcreteMessage for MsgVelNEDCov {
     const MESSAGE_TYPE: u16 = 530;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV";
 }
 impl TryFrom<super::SBP> for MsgVelNEDCov {
     type Error = super::TryFromSBPError;
@@ -4477,8 +4510,9 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelNEDCovGnss {
+impl super::ConcreteMessage for MsgVelNEDCovGnss {
     const MESSAGE_TYPE: u16 = 562;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV_GNSS";
 }
 impl TryFrom<super::SBP> for MsgVelNEDCovGnss {
     type Error = super::TryFromSBPError;
@@ -4612,8 +4646,9 @@ impl super::SBPMessage for MsgVelNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelNEDDepA {
+impl super::ConcreteMessage for MsgVelNEDDepA {
     const MESSAGE_TYPE: u16 = 517;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_NED_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgVelNEDDepA {
     type Error = super::TryFromSBPError;
@@ -4739,8 +4774,9 @@ impl super::SBPMessage for MsgVelNEDGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgVelNEDGnss {
+impl super::ConcreteMessage for MsgVelNEDGnss {
     const MESSAGE_TYPE: u16 = 558;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_NED_GNSS";
 }
 impl TryFrom<super::SBP> for MsgVelNEDGnss {
     type Error = super::TryFromSBPError;

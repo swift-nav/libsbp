@@ -301,8 +301,9 @@ impl super::SBPMessage for MsgAcqResult {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqResult {
+impl super::ConcreteMessage for MsgAcqResult {
     const MESSAGE_TYPE: u16 = 47;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT";
 }
 impl TryFrom<super::SBP> for MsgAcqResult {
     type Error = super::TryFromSBPError;
@@ -395,8 +396,9 @@ impl super::SBPMessage for MsgAcqResultDepA {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqResultDepA {
+impl super::ConcreteMessage for MsgAcqResultDepA {
     const MESSAGE_TYPE: u16 = 21;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_A";
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepA {
     type Error = super::TryFromSBPError;
@@ -488,8 +490,9 @@ impl super::SBPMessage for MsgAcqResultDepB {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqResultDepB {
+impl super::ConcreteMessage for MsgAcqResultDepB {
     const MESSAGE_TYPE: u16 = 20;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_B";
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepB {
     type Error = super::TryFromSBPError;
@@ -580,8 +583,9 @@ impl super::SBPMessage for MsgAcqResultDepC {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqResultDepC {
+impl super::ConcreteMessage for MsgAcqResultDepC {
     const MESSAGE_TYPE: u16 = 31;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_C";
 }
 impl TryFrom<super::SBP> for MsgAcqResultDepC {
     type Error = super::TryFromSBPError;
@@ -664,8 +668,9 @@ impl super::SBPMessage for MsgAcqSvProfile {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqSvProfile {
+impl super::ConcreteMessage for MsgAcqSvProfile {
     const MESSAGE_TYPE: u16 = 46;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE";
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfile {
     type Error = super::TryFromSBPError;
@@ -741,8 +746,9 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::RealMessage for MsgAcqSvProfileDep {
+impl super::ConcreteMessage for MsgAcqSvProfileDep {
     const MESSAGE_TYPE: u16 = 30;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE_DEP";
 }
 impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
     type Error = super::TryFromSBPError;

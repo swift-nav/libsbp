@@ -98,8 +98,9 @@ impl super::SBPMessage for MsgSbasRaw {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::RealMessage for MsgSbasRaw {
+impl super::ConcreteMessage for MsgSbasRaw {
     const MESSAGE_TYPE: u16 = 30583;
+    const MESSAGE_NAME: &'static str = "MSG_SBAS_RAW";
 }
 impl TryFrom<super::SBP> for MsgSbasRaw {
     type Error = super::TryFromSBPError;
