@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -49,6 +49,8 @@
 
 #include <libsbp/common.h>
 
+#include <libsbp/settings_macros.h>
+
 SBP_PACK_START
 
 /** Save settings to flash (host => device)
@@ -56,9 +58,6 @@ SBP_PACK_START
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_SAVE 0x00A1
-#endif
 
 /** Write device configuration settings (host => device)
  *
@@ -70,9 +69,6 @@ SBP_PACK_START
  * example string that could be sent to a device is
  * "solution\0soln_freq\010\0".
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_WRITE 0x00A0
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
@@ -88,33 +84,6 @@ typedef struct SBP_ATTR_PACKED {
  * the NULL character and where quotation marks are omitted. An example string
  * that could be sent from device is "solution\0soln_freq\010\0".
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
-#endif
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)      \
-  (((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & \
-   SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)) \
-                 << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT)));    \
-  } while (0)
-
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE \
-  (1)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST \
-  (2)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED \
-  (3)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED \
-  (5)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 status;       /**< Write status */
@@ -133,9 +102,6 @@ typedef struct SBP_ATTR_PACKED {
  * device should respond with a MSG_SETTINGS_READ_RESP message (msg_id
  * 0x00A5).
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_READ_REQ 0x00A4
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
@@ -151,9 +117,6 @@ typedef struct SBP_ATTR_PACKED {
  * the NULL character and where quotation marks are omitted. An example string
  * that could be sent from device is "solution\0soln_freq\010\0".
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_READ_RESP 0x00A5
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
@@ -165,9 +128,6 @@ typedef struct SBP_ATTR_PACKED {
  * The settings message for iterating through the settings values. A device
  * will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 index; /**< An index into the device settings, with values ranging
@@ -187,9 +147,6 @@ typedef struct SBP_ATTR_PACKED {
  * example string that could be sent from the device is
  * "simulator\0enabled\0True\0enum:True,False\0".
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 index;       /**< An index into the device settings, with values ranging
@@ -202,9 +159,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The settings message for indicating end of the settings values.
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
-#endif
 
 /** Register setting and default value (device => host)
  *
@@ -212,9 +166,6 @@ typedef struct SBP_ATTR_PACKED {
  * settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
  * setting to set the initial value.
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_REGISTER 0x00AE
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
@@ -228,30 +179,6 @@ typedef struct SBP_ATTR_PACKED {
  * already registered or is available in the permanent setting storage and had
  * a different value.
  */
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
-#endif
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)      \
-  (((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & \
-   SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val)           \
-  do {                                                                       \
-    ((flags) |= (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)) \
-                 << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT)));    \
-  } while (0)
-
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED \
-  (0)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED \
-  (1)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED \
-  (2)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE \
-  (3)
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 status;       /**< Register status */

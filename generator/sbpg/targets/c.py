@@ -19,11 +19,13 @@ from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
 SBP_MESSAGES_TEMPLATE_NAME = "c/new/sbp_messages_template.h"
+SBP_PACKAGE_TEMPLATE_NAME = "c/new/sbp_package_template.h"
 SBP_MSG_TEMPLATE_NAME = "c/new/sbp_msg_template.h"
 VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
 SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
+SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
@@ -218,6 +220,14 @@ class FieldItem(object):
             self.options = field.options
 
 
+def find_package(package_specs, type_id):
+    for p in package_specs:
+        for m in p.definitions:
+            if m.identifier == type_id:
+                return p.identifier.split('.', 2)[2]
+    raise Exception("Can't find package for type %s" % type_id)
+
+
 class MsgItem(object):
     """MsgItem
     """
@@ -229,6 +239,7 @@ class MsgItem(object):
         self.short_desc = msg.short_desc
         self.fields = []
         self.is_real_message = msg.is_real_message
+        self.sibling_include = []
         #print("Creating message %s" % self.name)
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
@@ -236,6 +247,8 @@ class MsgItem(object):
                 print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
                 raise "error"
             self.fields.append(new_field)
+            if new_field.basetype not in PRIMITIVE_TYPES:
+                self.sibling_include.append(find_package(package_specs, new_field.basetype) + "/" + new_field.basetype)
 
 JENV.filters['convert_unpacked'] = convert_unpacked
 JENV.filters['convert_unpacked_union'] = convert_unpacked_union
@@ -263,9 +276,26 @@ def render_headers(include_dir, package_specs):
             msgs.append(new_msg)
             if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
+            destination_filename = "%s/new/%s/%s.h" % (include_dir, name, new_msg.name)
+            py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
+            with open(destination_filename, 'w') as f:
+                f.write(py_template.render(m = new_msg,
+                    pkg_name = name,
+                    filepath="/".join(package_spec.filepath) + ".yaml",
+                    max_msgid_len=package_spec.max_msgid_len,
+                    include=extensions(package_spec.includes),
+                    sibling_include=new_msg.sibling_include))
             #print("Adding %s" % new_msg.name)
         destination_filename = "%s/new/%s.h" % (include_dir, name)
-        py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
+        py_template = JENV.get_template(SBP_PACKAGE_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/%s_macros.h" % (include_dir, name)
+        py_template = JENV.get_template(SBP_MESSAGES_MACROS_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,
                 pkg_name = name,

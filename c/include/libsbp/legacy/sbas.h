@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -24,7 +24,9 @@
 #define LIBSBP_LEGACY_SBAS_MESSAGES_H
 
 #include <libsbp/common.h>
+
 #include <libsbp/legacy/gnss.h>
+#include <libsbp/sbas_macros.h>
 
 SBP_PACK_START
 
@@ -33,9 +35,6 @@ SBP_PACK_START
  * This message is sent once per second per SBAS satellite. ME checks the
  * parity of the data block and sends only blocks that pass the check.
  */
-#ifndef LIBSBP_NEW_SBAS_MESSAGES_H
-#define SBP_MSG_SBAS_RAW 0x7777
-#endif
 
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid; /**< GNSS signal identifier. */

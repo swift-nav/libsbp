@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -24,6 +24,8 @@
 #define LIBSBP_LEGACY_GNSS_MESSAGES_H
 
 #include <libsbp/common.h>
+
+#include <libsbp/gnss_macros.h>
 
 SBP_PACK_START
 
