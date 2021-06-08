@@ -226,6 +226,19 @@ impl super::SBPMessage for MsgSolnMeta {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::RealMessage for MsgSolnMeta {
+    const MESSAGE_TYPE: u16 = 65294;
+}
+impl TryFrom<super::SBP> for MsgSolnMeta {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSolnMeta(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSolnMeta {
     #[allow(unused_variables)]
@@ -336,6 +349,19 @@ impl super::SBPMessage for MsgSolnMetaDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgSolnMetaDepA {
+    const MESSAGE_TYPE: u16 = 65295;
+}
+impl TryFrom<super::SBP> for MsgSolnMetaDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSolnMetaDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

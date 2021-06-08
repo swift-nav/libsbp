@@ -88,6 +88,19 @@ impl super::SBPMessage for MsgFwd {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFwd {
+    const MESSAGE_TYPE: u16 = 1026;
+}
+impl TryFrom<super::SBP> for MsgFwd {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFwd(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFwd {
     #[allow(unused_variables)]
@@ -161,6 +174,19 @@ impl super::SBPMessage for MsgLog {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLog {
+    const MESSAGE_TYPE: u16 = 1025;
+}
+impl TryFrom<super::SBP> for MsgLog {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLog(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLog {
     #[allow(unused_variables)]
@@ -225,6 +251,19 @@ impl super::SBPMessage for MsgPrintDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgPrintDep {
+    const MESSAGE_TYPE: u16 = 16;
+}
+impl TryFrom<super::SBP> for MsgPrintDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPrintDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

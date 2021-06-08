@@ -94,6 +94,19 @@ impl super::SBPMessage for MsgLinuxCpuState {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxCpuState {
+    const MESSAGE_TYPE: u16 = 32520;
+}
+impl TryFrom<super::SBP> for MsgLinuxCpuState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxCpuState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
     #[allow(unused_variables)]
@@ -181,6 +194,19 @@ impl super::SBPMessage for MsgLinuxCpuStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgLinuxCpuStateDepA {
+    const MESSAGE_TYPE: u16 = 32512;
+}
+impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxCpuStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -274,6 +300,19 @@ impl super::SBPMessage for MsgLinuxMemState {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxMemState {
+    const MESSAGE_TYPE: u16 = 32521;
+}
+impl TryFrom<super::SBP> for MsgLinuxMemState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxMemState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxMemState {
     #[allow(unused_variables)]
@@ -363,6 +402,19 @@ impl super::SBPMessage for MsgLinuxMemStateDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxMemStateDepA {
+    const MESSAGE_TYPE: u16 = 32513;
+}
+impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxMemStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxMemStateDepA {
     #[allow(unused_variables)]
@@ -444,6 +496,19 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxProcessFdCount {
+    const MESSAGE_TYPE: u16 = 32518;
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessFdCount(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
     #[allow(unused_variables)]
@@ -519,6 +584,19 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgLinuxProcessFdSummary {
+    const MESSAGE_TYPE: u16 = 32519;
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessFdSummary(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -604,6 +682,19 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgLinuxProcessSocketCounts {
+    const MESSAGE_TYPE: u16 = 32515;
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessSocketCounts(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -706,6 +797,19 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxProcessSocketQueues {
+    const MESSAGE_TYPE: u16 = 32516;
+}
+impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxProcessSocketQueues(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
     #[allow(unused_variables)]
@@ -795,6 +899,19 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgLinuxSocketUsage {
+    const MESSAGE_TYPE: u16 = 32517;
+}
+impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSocketUsage(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -889,6 +1006,19 @@ impl super::SBPMessage for MsgLinuxSysState {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgLinuxSysState {
+    const MESSAGE_TYPE: u16 = 32522;
+}
+impl TryFrom<super::SBP> for MsgLinuxSysState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSysState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgLinuxSysState {
     #[allow(unused_variables)]
@@ -980,6 +1110,19 @@ impl super::SBPMessage for MsgLinuxSysStateDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgLinuxSysStateDepA {
+    const MESSAGE_TYPE: u16 = 32514;
+}
+impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgLinuxSysStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

@@ -85,6 +85,19 @@ impl super::SBPMessage for MsgFileioConfigReq {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFileioConfigReq {
+    const MESSAGE_TYPE: u16 = 4097;
+}
+impl TryFrom<super::SBP> for MsgFileioConfigReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioConfigReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
     #[allow(unused_variables)]
@@ -160,6 +173,19 @@ impl super::SBPMessage for MsgFileioConfigResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgFileioConfigResp {
+    const MESSAGE_TYPE: u16 = 4098;
+}
+impl TryFrom<super::SBP> for MsgFileioConfigResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioConfigResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -246,6 +272,19 @@ impl super::SBPMessage for MsgFileioReadDirReq {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFileioReadDirReq {
+    const MESSAGE_TYPE: u16 = 169;
+}
+impl TryFrom<super::SBP> for MsgFileioReadDirReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioReadDirReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
     #[allow(unused_variables)]
@@ -319,6 +358,19 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgFileioReadDirResp {
+    const MESSAGE_TYPE: u16 = 170;
+}
+impl TryFrom<super::SBP> for MsgFileioReadDirResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioReadDirResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -402,6 +454,19 @@ impl super::SBPMessage for MsgFileioReadReq {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFileioReadReq {
+    const MESSAGE_TYPE: u16 = 168;
+}
+impl TryFrom<super::SBP> for MsgFileioReadReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioReadReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFileioReadReq {
     #[allow(unused_variables)]
@@ -478,6 +543,19 @@ impl super::SBPMessage for MsgFileioReadResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFileioReadResp {
+    const MESSAGE_TYPE: u16 = 163;
+}
+impl TryFrom<super::SBP> for MsgFileioReadResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioReadResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFileioReadResp {
     #[allow(unused_variables)]
@@ -545,6 +623,19 @@ impl super::SBPMessage for MsgFileioRemove {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgFileioRemove {
+    const MESSAGE_TYPE: u16 = 172;
+}
+impl TryFrom<super::SBP> for MsgFileioRemove {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioRemove(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -626,6 +717,19 @@ impl super::SBPMessage for MsgFileioWriteReq {
         crate::write_frame(self, frame)
     }
 }
+impl super::RealMessage for MsgFileioWriteReq {
+    const MESSAGE_TYPE: u16 = 173;
+}
+impl TryFrom<super::SBP> for MsgFileioWriteReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioWriteReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
     #[allow(unused_variables)]
@@ -697,6 +801,19 @@ impl super::SBPMessage for MsgFileioWriteResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::RealMessage for MsgFileioWriteResp {
+    const MESSAGE_TYPE: u16 = 171;
+}
+impl TryFrom<super::SBP> for MsgFileioWriteResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFileioWriteResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
