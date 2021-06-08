@@ -17,6 +17,5 @@
 
 #ifndef LIBSBP_NEW_MAG_MESSAGES_H
 #define LIBSBP_NEW_MAG_MESSAGES_H
-#include <libsbp/new/mag/MSG_MAG_RAW.h>
 
 #endif

@@ -17,6 +17,5 @@
 
 #ifndef LIBSBP_NEW_USER_MESSAGES_H
 #define LIBSBP_NEW_USER_MESSAGES_H
-#include <libsbp/new/user/MSG_USER_DATA.h>
 
 #endif

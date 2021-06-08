@@ -17,7 +17,5 @@
 
 #ifndef LIBSBP_NEW_VEHICLE_MESSAGES_H
 #define LIBSBP_NEW_VEHICLE_MESSAGES_H
-#include <libsbp/new/vehicle/MSG_ODOMETRY.h>
-#include <libsbp/new/vehicle/MSG_WHEELTICK.h>
 
 #endif

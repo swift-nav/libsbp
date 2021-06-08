@@ -17,17 +17,6 @@
 
 #ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
 #define LIBSBP_NEW_SYSTEM_MESSAGES_H
-#include <libsbp/new/system/MSG_CSAC_TELEMETRY.h>
-#include <libsbp/new/system/MSG_CSAC_TELEMETRY_LABELS.h>
-#include <libsbp/new/system/MSG_DGNSS_STATUS.h>
-#include <libsbp/new/system/MSG_GNSS_TIME_OFFSET.h>
 #include <libsbp/new/system/MSG_GROUP_META.h>
-#include <libsbp/new/system/MSG_HEARTBEAT.h>
-#include <libsbp/new/system/MSG_INS_STATUS.h>
-#include <libsbp/new/system/MSG_INS_UPDATES.h>
-#include <libsbp/new/system/MSG_PPS_TIME.h>
-#include <libsbp/new/system/MSG_STARTUP.h>
-#include <libsbp/new/system/MSG_STATUS_REPORT.h>
-#include <libsbp/new/system/SubSystemReport.h>
 
 #endif

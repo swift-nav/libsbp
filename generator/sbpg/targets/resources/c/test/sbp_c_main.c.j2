@@ -24,7 +24,7 @@ int main(void)
   SRunner *sr = srunner_create(s);
   srunner_set_xml(sr, "test_results.xml");
   srunner_add_suite(sr, sbp_suite());
-  srunner_add_suite(sr, bitfield_macros_suite());
+  //srunner_add_suite(sr, bitfield_macros_suite());
 
   // auto-generated tests:
   ((*- for s in package_suites *))

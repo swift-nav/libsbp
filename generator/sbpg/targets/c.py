@@ -27,6 +27,21 @@ SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
 SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
 SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
 
+TYPES_FILTERED_FOR_REVIEW = set([
+    'MSG_OBS',
+    'ObservationHeader',
+    'GPSTime',
+    'PackedObsContent',
+    'CarrierPhase',
+    'Doppler',
+    'GnssSignal',
+    'MSG_LOG',
+    'MSG_SV_AZ_EL',
+    'SvAzEl',
+    'MSG_SETTINGS_READ_BY_INDEX_RESP',
+    'MSG_SETTINGS_READ_BY_INDEX_DONE',
+    'MSG_GROUP_META',
+    ])
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
 PRIMITIVE_SIZES = {
@@ -273,9 +288,10 @@ def render_headers(include_dir, package_specs):
         all_packages.append(name)                                                                             
         for m in package_spec.definitions:                                                                    
             new_msg = MsgItem(m, package_specs)                                                           
-            msgs.append(new_msg)
-            if m.is_real_message:
-                all_msgs.append(new_msg.name)                                                                 
+            if new_msg.name in TYPES_FILTERED_FOR_REVIEW:
+                msgs.append(new_msg)
+                if m.is_real_message:
+                    all_msgs.append(new_msg.name)                                                                 
             destination_filename = "%s/new/%s/%s.h" % (include_dir, name, new_msg.name)
             py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
             with open(destination_filename, 'w') as f:
@@ -325,9 +341,10 @@ def render_sources(output_dir, package_specs):
         all_packages.append(name)                                                                             
         for m in package_spec.definitions:                                                                    
             new_msg = MsgItem(m, package_specs)                                                           
-            msgs.append(new_msg)
-            if m.is_real_message:
-                all_msgs.append(new_msg.name)                                                                 
+            if new_msg.name in TYPES_FILTERED_FOR_REVIEW:
+                msgs.append(new_msg)
+                if m.is_real_message:
+                    all_msgs.append(new_msg.name)                                                                 
             #print("Adding %s" % new_msg.name)
         destination_filename = "%s/new/%s.c" % (output_dir, name)
         py_template = JENV.get_template(SBP_MESSAGES_SOURCE_TEMPLATE_NAME)
@@ -366,8 +383,9 @@ def render_traits(output_dir, package_specs):
     if name != 'types' and name != 'base':
       includes.append(name)
     for m in package_spec.definitions:
-      if m.is_real_message:
-        msgs.append(m)
+      if m.identifier in TYPES_FILTERED_FOR_REVIEW:
+        if m.is_real_message:
+            msgs.append(m)
   destination_filename = "%s/cpp/message_traits.h" % output_dir
   py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:

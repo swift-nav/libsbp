@@ -17,14 +17,5 @@
 
 #ifndef LIBSBP_NEW_FILE_IO_MESSAGES_H
 #define LIBSBP_NEW_FILE_IO_MESSAGES_H
-#include <libsbp/new/file_io/MSG_FILEIO_CONFIG_REQ.h>
-#include <libsbp/new/file_io/MSG_FILEIO_CONFIG_RESP.h>
-#include <libsbp/new/file_io/MSG_FILEIO_READ_DIR_REQ.h>
-#include <libsbp/new/file_io/MSG_FILEIO_READ_DIR_RESP.h>
-#include <libsbp/new/file_io/MSG_FILEIO_READ_REQ.h>
-#include <libsbp/new/file_io/MSG_FILEIO_READ_RESP.h>
-#include <libsbp/new/file_io/MSG_FILEIO_REMOVE.h>
-#include <libsbp/new/file_io/MSG_FILEIO_WRITE_REQ.h>
-#include <libsbp/new/file_io/MSG_FILEIO_WRITE_RESP.h>
 
 #endif

@@ -40,22 +40,5 @@
 #define SBP_GNSSSIGNAL__GAL_E1B (14)
 #define SBP_GNSSSIGNAL__GAL_E7I (20)
 #define SBP_GNSSSIGNAL__BDS3_B2A (47)
-#define SBP_GNSSSIGNALDEP__MASK (0xff)
-#define SBP_GNSSSIGNALDEP__SHIFT (0u)
-#define SBP_GNSSSIGNALDEP__GET(flags) \
-  (((flags) >> SBP_GNSSSIGNALDEP__SHIFT) & SBP_GNSSSIGNALDEP__MASK)
-#define SBP_GNSSSIGNALDEP__SET(flags, val)                                 \
-  do {                                                                     \
-    ((flags) |=                                                            \
-     (((val) & (SBP_GNSSSIGNALDEP__MASK)) << (SBP_GNSSSIGNALDEP__SHIFT))); \
-  } while (0)
-
-#define SBP_GNSSSIGNALDEP__GPS_L1CA (0)
-#define SBP_GNSSSIGNALDEP__GPS_L2CM (1)
-#define SBP_GNSSSIGNALDEP__SBAS_L1CA (2)
-#define SBP_GNSSSIGNALDEP__GLO_L1CA (3)
-#define SBP_GNSSSIGNALDEP__GLO_L2CA (4)
-#define SBP_GNSSSIGNALDEP__GPS_L1P (5)
-#define SBP_GNSSSIGNALDEP__GPS_L2P (6)
 
 #endif

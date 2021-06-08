@@ -51,11 +51,22 @@ JENV.tests['dict_type'] = dict_type
 JENV.tests['float_type'] = float_type
 JENV.tests['empty'] = is_empty
 
+TESTS_FILTERED_FOR_REVIEW = set([
+    'auto_check_sbp_observation_MsgObs',
+    'auto_check_sbp_observation_MsgSvAzEl',
+    'auto_check_sbp_logging_MsgLog',
+    'auto_check_sbp_settings_MsgSettingsReadByIndexDone',
+    'auto_check_sbp_settings_MsgSettingsReadByIndexResp',
+    'auto_check_sbp_system_MsgGroupMeta',
+    ])
+
 def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
+  if name not in TESTS_FILTERED_FOR_REVIEW:
+      return
   destination_filename = "%s/%s.c" % (output_dir, name)
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
@@ -77,13 +88,23 @@ def render_source(output_dir, package_spec):
 def render_check_suites(output_dir, all_package_specs):
   destination_filename = "%s/%s.h" % (output_dir, "check_suites")
   py_template = JENV.get_template(CHECK_SUITES_TEMPLATE_NAME)
+  filtered = []
+  for p in all_package_specs:
+      path, name = p.filepath
+      if name in TESTS_FILTERED_FOR_REVIEW:
+          filtered.append(p)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(package_suites=all_package_specs))
+    f.write(py_template.render(package_suites=filtered))
 
 
 def render_check_main(output_dir, all_package_specs):
   destination_filename = "%s/%s.c" % (output_dir, "check_main")
   py_template = JENV.get_template(CHECK_MAIN_TEMPLATE_NAME)
+  filtered = []
+  for p in all_package_specs:
+      path, name = p.filepath
+      if name in TESTS_FILTERED_FOR_REVIEW:
+          filtered.append(p)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(package_suites=all_package_specs))
+    f.write(py_template.render(package_suites=filtered))
 

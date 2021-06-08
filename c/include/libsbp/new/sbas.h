@@ -17,6 +17,5 @@
 
 #ifndef LIBSBP_NEW_SBAS_MESSAGES_H
 #define LIBSBP_NEW_SBAS_MESSAGES_H
-#include <libsbp/new/sbas/MSG_SBAS_RAW.h>
 
 #endif

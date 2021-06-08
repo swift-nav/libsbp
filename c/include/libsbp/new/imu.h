@@ -17,7 +17,5 @@
 
 #ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define LIBSBP_NEW_IMU_MESSAGES_H
-#include <libsbp/new/imu/MSG_IMU_AUX.h>
-#include <libsbp/new/imu/MSG_IMU_RAW.h>
 
 #endif

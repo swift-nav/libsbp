@@ -17,13 +17,5 @@
 
 #ifndef LIBSBP_NEW_ACQUISITION_MESSAGES_H
 #define LIBSBP_NEW_ACQUISITION_MESSAGES_H
-#include <libsbp/new/acquisition/AcqSvProfile.h>
-#include <libsbp/new/acquisition/AcqSvProfileDep.h>
-#include <libsbp/new/acquisition/MSG_ACQ_RESULT.h>
-#include <libsbp/new/acquisition/MSG_ACQ_RESULT_DEP_A.h>
-#include <libsbp/new/acquisition/MSG_ACQ_RESULT_DEP_B.h>
-#include <libsbp/new/acquisition/MSG_ACQ_RESULT_DEP_C.h>
-#include <libsbp/new/acquisition/MSG_ACQ_SV_PROFILE.h>
-#include <libsbp/new/acquisition/MSG_ACQ_SV_PROFILE_DEP.h>
 
 #endif

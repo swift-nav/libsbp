@@ -30,7 +30,7 @@ swift_add_test(test-libsbp
     check_main.c
     check_edc.c
     check_sbp.c
-    check_bitfield_macros.c
+    #check_bitfield_macros.c
     ${generated_c_sources}
   INCLUDE
     ${TEST_INCLUDES}

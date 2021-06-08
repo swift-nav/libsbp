@@ -17,6 +17,5 @@
 
 #ifndef LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
 #define LIBSBP_NEW_EXT_EVENTS_MESSAGES_H
-#include <libsbp/new/ext_events/MSG_EXT_EVENT.h>
 
 #endif

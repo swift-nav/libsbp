@@ -17,6 +17,5 @@
 
 #ifndef LIBSBP_NEW_NDB_MESSAGES_H
 #define LIBSBP_NEW_NDB_MESSAGES_H
-#include <libsbp/new/ndb/MSG_NDB_EVENT.h>
 
 #endif

@@ -17,9 +17,5 @@
 
 #ifndef LIBSBP_NEW_ORIENTATION_MESSAGES_H
 #define LIBSBP_NEW_ORIENTATION_MESSAGES_H
-#include <libsbp/new/orientation/MSG_ANGULAR_RATE.h>
-#include <libsbp/new/orientation/MSG_BASELINE_HEADING.h>
-#include <libsbp/new/orientation/MSG_ORIENT_EULER.h>
-#include <libsbp/new/orientation/MSG_ORIENT_QUAT.h>
 
 #endif

@@ -18,14 +18,6 @@
 #ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
 #define LIBSBP_NEW_SETTINGS_MESSAGES_H
 #include <libsbp/new/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
-#include <libsbp/new/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
 #include <libsbp/new/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
-#include <libsbp/new/settings/MSG_SETTINGS_READ_REQ.h>
-#include <libsbp/new/settings/MSG_SETTINGS_READ_RESP.h>
-#include <libsbp/new/settings/MSG_SETTINGS_REGISTER.h>
-#include <libsbp/new/settings/MSG_SETTINGS_REGISTER_RESP.h>
-#include <libsbp/new/settings/MSG_SETTINGS_SAVE.h>
-#include <libsbp/new/settings/MSG_SETTINGS_WRITE.h>
-#include <libsbp/new/settings/MSG_SETTINGS_WRITE_RESP.h>
 
 #endif

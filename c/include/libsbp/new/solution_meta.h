@@ -17,11 +17,5 @@
 
 #ifndef LIBSBP_NEW_SOLUTION_META_MESSAGES_H
 #define LIBSBP_NEW_SOLUTION_META_MESSAGES_H
-#include <libsbp/new/solution_meta/GNSSInputType.h>
-#include <libsbp/new/solution_meta/IMUInputType.h>
-#include <libsbp/new/solution_meta/MSG_SOLN_META.h>
-#include <libsbp/new/solution_meta/MSG_SOLN_META_DEP_A.h>
-#include <libsbp/new/solution_meta/OdoInputType.h>
-#include <libsbp/new/solution_meta/SolutionInputType.h>
 
 #endif

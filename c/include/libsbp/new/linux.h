@@ -17,16 +17,5 @@
 
 #ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define LIBSBP_NEW_LINUX_MESSAGES_H
-#include <libsbp/new/linux/MSG_LINUX_CPU_STATE.h>
-#include <libsbp/new/linux/MSG_LINUX_CPU_STATE_DEP_A.h>
-#include <libsbp/new/linux/MSG_LINUX_MEM_STATE.h>
-#include <libsbp/new/linux/MSG_LINUX_MEM_STATE_DEP_A.h>
-#include <libsbp/new/linux/MSG_LINUX_PROCESS_FD_COUNT.h>
-#include <libsbp/new/linux/MSG_LINUX_PROCESS_FD_SUMMARY.h>
-#include <libsbp/new/linux/MSG_LINUX_PROCESS_SOCKET_COUNTS.h>
-#include <libsbp/new/linux/MSG_LINUX_PROCESS_SOCKET_QUEUES.h>
-#include <libsbp/new/linux/MSG_LINUX_SOCKET_USAGE.h>
-#include <libsbp/new/linux/MSG_LINUX_SYS_STATE.h>
-#include <libsbp/new/linux/MSG_LINUX_SYS_STATE_DEP_A.h>
 
 #endif

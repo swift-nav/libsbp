@@ -19,10 +19,6 @@
 #define LIBSBP_NEW_GNSS_MESSAGES_H
 #include <libsbp/new/gnss/CarrierPhase.h>
 #include <libsbp/new/gnss/GPSTime.h>
-#include <libsbp/new/gnss/GPSTimeDep.h>
-#include <libsbp/new/gnss/GPSTimeSec.h>
 #include <libsbp/new/gnss/GnssSignal.h>
-#include <libsbp/new/gnss/GnssSignalDep.h>
-#include <libsbp/new/gnss/SvId.h>
 
 #endif
