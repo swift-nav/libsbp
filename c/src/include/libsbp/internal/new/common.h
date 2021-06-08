@@ -190,16 +190,32 @@ static inline size_t sbp_packed_size_float(const float *v) {
 
 static inline size_t encode_float(sbp_encode_ctx_t *ctx, const float *v) {
   if (!SBP_CAN_PACK(ctx, float)) { return false; }
-  memcpy(&ctx->buf[ctx->offset], v, 4);
-  ctx->offset += 4;
+
+  union {
+    const uint32_t *i;
+    const float *f;
+  } u;
+
+  u.f = v;
+
+  if (!(encode_u32(ctx, u.i))) { return false; }
+
   return true;
 }
 
 static inline size_t decode_float(sbp_decode_ctx_t *ctx,
                                       float *v) {
   if (!SBP_CAN_UNPACK(ctx, float)) { return false; }
-  memcpy(v, &ctx->buf[ctx->offset], 4);
-  ctx->offset += 4;
+
+  union {
+    uint32_t *i;
+    float *f;
+  } u;
+
+  u.f = v;
+
+  if (!(decode_u32(ctx, u.i))) { return false; }
+
   return true;
 }
 
@@ -211,16 +227,32 @@ static inline size_t sbp_packed_size_double(const double *v) {
 static inline size_t encode_double(sbp_encode_ctx_t *ctx,
                                      const double *v) {
   if (!SBP_CAN_PACK(ctx, double)) { return false; }
-  memcpy(&ctx->buf[ctx->offset], v, 8);
-  ctx->offset += 8;
+
+  union {
+    const uint64_t *i;
+    const double *d;
+  } u;
+
+  u.d = v;
+
+  if (!(encode_u64(ctx, u.i))) { return false; }
+
   return true;
 }
 
 static inline size_t decode_double(sbp_decode_ctx_t *ctx,
                                        double *v) {
   if (!SBP_CAN_UNPACK(ctx, double)) { return false; }
-  memcpy(v, &ctx->buf[ctx->offset], 8);
-  ctx->offset += 8;
+
+  union {
+    uint64_t *i;
+    double *d;
+  } u;
+
+  u.d = v;
+
+  if (!(decode_u64(ctx, u.i))) { return false; }
+
   return true;
 }
 
