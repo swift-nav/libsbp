@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/ssr.yaml
  * with generate.py. Please do not hand edit!
@@ -523,7 +511,7 @@ bool encode_sbp_stec_sat_element_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->stec_quality_indicator)) {
     return false;
   }
-  for (uint8_t i = 0; i < 4; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 4; i++) {
     if (!encode_s16(ctx, &msg->stec_coeff[i])) {
       return false;
     }
@@ -593,7 +581,7 @@ int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 4 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 4; i++) {
     ret = sbp_cmp_s16(&a->stec_coeff[i], &b->stec_coeff[i]);
   }
   if (ret != 0) {
@@ -1083,6 +1071,7 @@ s8 sbp_decode_sbp_msg_ssr_orbit_clock_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ssr_orbit_clock_t *msg,
                                       sbp_write_fn_t write) {
@@ -1199,7 +1188,7 @@ bool encode_sbp_msg_ssr_code_biases_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->iod_ssr)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_biases; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_biases; i++) {
     if (!encode_sbp_code_biases_content_t(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1263,6 +1252,7 @@ s8 sbp_decode_sbp_msg_ssr_code_biases_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ssr_code_biases_t *msg,
                                       sbp_write_fn_t write) {
@@ -1302,7 +1292,7 @@ int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_biases, &b->n_biases);
-  for (uint8_t i = 0; i < a->n_biases && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_biases; i++) {
     ret = sbp_cmp_sbp_code_biases_content_t(&a->biases[i], &b->biases[i]);
   }
   if (ret != 0) {
@@ -1353,7 +1343,7 @@ bool encode_sbp_msg_ssr_phase_biases_t(sbp_encode_ctx_t *ctx,
   if (!encode_s8(ctx, &msg->yaw_rate)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_biases; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_biases; i++) {
     if (!encode_sbp_phase_biases_content_t(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1429,6 +1419,7 @@ s8 sbp_decode_sbp_msg_ssr_phase_biases_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_ssr_phase_biases_t *msg,
                                        sbp_write_fn_t write) {
@@ -1488,7 +1479,7 @@ int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_biases, &b->n_biases);
-  for (uint8_t i = 0; i < a->n_biases && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_biases; i++) {
     ret = sbp_cmp_sbp_phase_biases_content_t(&a->biases[i], &b->biases[i]);
   }
   if (ret != 0) {
@@ -1511,7 +1502,7 @@ bool encode_sbp_msg_ssr_stec_correction_t(
   if (!encode_sbp_stec_header_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_sat_list; i++) {
     if (!encode_sbp_stec_sat_element_t(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -1566,6 +1557,7 @@ s8 sbp_decode_sbp_msg_ssr_stec_correction_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_stec_correction_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_stec_correction_t *msg, sbp_write_fn_t write) {
@@ -1591,7 +1583,7 @@ int sbp_cmp_sbp_msg_ssr_stec_correction_t(
   }
 
   ret = sbp_cmp_u8(&a->n_stec_sat_list, &b->n_stec_sat_list);
-  for (uint8_t i = 0; i < a->n_stec_sat_list && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_stec_sat_list; i++) {
     ret = sbp_cmp_sbp_stec_sat_element_t(&a->stec_sat_list[i],
                                          &b->stec_sat_list[i]);
   }
@@ -1625,7 +1617,7 @@ bool encode_sbp_msg_ssr_gridded_correction_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -1687,6 +1679,7 @@ s8 sbp_decode_sbp_msg_ssr_gridded_correction_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_gridded_correction_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_gridded_correction_t *msg, sbp_write_fn_t write) {
@@ -1723,7 +1716,7 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_t(
   }
 
   ret = sbp_cmp_u8(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; i < a->n_stec_residuals && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
     ret = sbp_cmp_sbp_stec_residual_t(&a->stec_residuals[i],
                                       &b->stec_residuals[i]);
   }
@@ -1843,6 +1836,7 @@ s8 sbp_decode_sbp_msg_ssr_tile_definition_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_tile_definition_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_tile_definition_t *msg, sbp_write_fn_t write) {
@@ -1930,12 +1924,12 @@ bool encode_sbp_satellite_apc_t(sbp_encode_ctx_t *ctx,
   if (!encode_u16(ctx, &msg->svn)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_s16(ctx, &msg->pco[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 21; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 21; i++) {
     if (!encode_s8(ctx, &msg->pcv[i])) {
       return false;
     }
@@ -2016,14 +2010,14 @@ int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_s16(&a->pco[i], &b->pco[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 21 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 21; i++) {
     ret = sbp_cmp_s8(&a->pcv[i], &b->pcv[i]);
   }
   if (ret != 0) {
@@ -2042,7 +2036,7 @@ size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(
 
 bool encode_sbp_msg_ssr_satellite_apc_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_t *msg) {
-  for (uint8_t i = 0; i < msg->n_apc; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_apc; i++) {
     if (!encode_sbp_satellite_apc_t(ctx, &msg->apc[i])) {
       return false;
     }
@@ -2093,6 +2087,7 @@ s8 sbp_decode_sbp_msg_ssr_satellite_apc_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_ssr_satellite_apc_t *msg,
                                         sbp_write_fn_t write) {
@@ -2112,7 +2107,7 @@ int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a,
   int ret = 0;
 
   ret = sbp_cmp_u8(&a->n_apc, &b->n_apc);
-  for (uint8_t i = 0; i < a->n_apc && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_apc; i++) {
     ret = sbp_cmp_sbp_satellite_apc_t(&a->apc[i], &b->apc[i]);
   }
   if (ret != 0) {
@@ -2266,6 +2261,7 @@ s8 sbp_decode_sbp_msg_ssr_orbit_clock_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_orbit_clock_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_orbit_clock_dep_a_t *msg, sbp_write_fn_t write) {
@@ -2739,7 +2735,7 @@ bool encode_sbp_msg_ssr_stec_correction_dep_a_t(
   if (!encode_sbp_stec_header_dep_a_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_sat_list; i++) {
     if (!encode_sbp_stec_sat_element_t(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -2794,6 +2790,7 @@ s8 sbp_decode_sbp_msg_ssr_stec_correction_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_stec_correction_dep_a_t *msg, sbp_write_fn_t write) {
@@ -2819,7 +2816,7 @@ int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(
   }
 
   ret = sbp_cmp_u8(&a->n_stec_sat_list, &b->n_stec_sat_list);
-  for (uint8_t i = 0; i < a->n_stec_sat_list && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_stec_sat_list; i++) {
     ret = sbp_cmp_sbp_stec_sat_element_t(&a->stec_sat_list[i],
                                          &b->stec_sat_list[i]);
   }
@@ -2856,7 +2853,7 @@ bool encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_no_std_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -2918,6 +2915,7 @@ s8 sbp_decode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg,
@@ -2955,7 +2953,7 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(
   }
 
   ret = sbp_cmp_u8(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; i < a->n_stec_residuals && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
     ret = sbp_cmp_sbp_stec_residual_no_std_t(&a->stec_residuals[i],
                                              &b->stec_residuals[i]);
   }
@@ -2990,7 +2988,7 @@ bool encode_sbp_msg_ssr_gridded_correction_dep_a_t(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_stec_residuals; i++) {
     if (!encode_sbp_stec_residual_t(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -3052,6 +3050,7 @@ s8 sbp_decode_sbp_msg_ssr_gridded_correction_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_gridded_correction_dep_a_t *msg, sbp_write_fn_t write) {
@@ -3088,7 +3087,7 @@ int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(
   }
 
   ret = sbp_cmp_u8(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; i < a->n_stec_residuals && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
     ret = sbp_cmp_sbp_stec_residual_t(&a->stec_residuals[i],
                                       &b->stec_residuals[i]);
   }
@@ -3112,7 +3111,7 @@ bool encode_sbp_msg_ssr_grid_definition_dep_a_t(
   if (!encode_sbp_grid_definition_header_dep_a_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_rle_list; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_rle_list; i++) {
     if (!encode_u8(ctx, &msg->rle_list[i])) {
       return false;
     }
@@ -3166,6 +3165,7 @@ s8 sbp_decode_sbp_msg_ssr_grid_definition_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ssr_grid_definition_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ssr_grid_definition_dep_a_t *msg, sbp_write_fn_t write) {
@@ -3191,7 +3191,7 @@ int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(
   }
 
   ret = sbp_cmp_u8(&a->n_rle_list, &b->n_rle_list);
-  for (uint8_t i = 0; i < a->n_rle_list && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_rle_list; i++) {
     ret = sbp_cmp_u8(&a->rle_list[i], &b->rle_list[i]);
   }
   if (ret != 0) {

@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/flash.yaml
  * with generate.py. Please do not hand edit!
@@ -43,7 +31,7 @@ bool encode_sbp_msg_flash_program_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -51,7 +39,7 @@ bool encode_sbp_msg_flash_program_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->addr_len)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->addr_len; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->addr_len; i++) {
     if (!encode_u8(ctx, &msg->data[i])) {
       return false;
     }
@@ -113,6 +101,7 @@ s8 sbp_decode_sbp_msg_flash_program_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_flash_program_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_flash_program_t *msg,
                                     sbp_write_fn_t write) {
@@ -136,7 +125,7 @@ int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_u8(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -149,7 +138,7 @@ int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a,
   }
 
   ret = sbp_cmp_u8(&a->addr_len, &b->addr_len);
-  for (uint8_t i = 0; i < a->addr_len && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->addr_len; i++) {
     ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {
@@ -210,6 +199,7 @@ s8 sbp_decode_sbp_msg_flash_done_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_flash_done_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_flash_done_t *msg,
                                  sbp_write_fn_t write) {
@@ -249,7 +239,7 @@ bool encode_sbp_msg_flash_read_req_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -307,6 +297,7 @@ s8 sbp_decode_sbp_msg_flash_read_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_flash_read_req_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_flash_read_req_t *msg,
                                      sbp_write_fn_t write) {
@@ -330,7 +321,7 @@ int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_u8(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -358,7 +349,7 @@ bool encode_sbp_msg_flash_read_resp_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_u8(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -416,6 +407,7 @@ s8 sbp_decode_sbp_msg_flash_read_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_flash_read_resp_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_flash_read_resp_t *msg,
                                       sbp_write_fn_t write) {
@@ -439,7 +431,7 @@ int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_u8(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -513,6 +505,7 @@ s8 sbp_decode_sbp_msg_flash_erase_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_flash_erase_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_flash_erase_t *msg,
                                   sbp_write_fn_t write) {
@@ -597,6 +590,7 @@ s8 sbp_decode_sbp_msg_stm_flash_lock_sector_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_stm_flash_lock_sector_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_stm_flash_lock_sector_t *msg, sbp_write_fn_t write) {
@@ -677,6 +671,7 @@ s8 sbp_decode_sbp_msg_stm_flash_unlock_sector_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_stm_flash_unlock_sector_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_stm_flash_unlock_sector_t *msg, sbp_write_fn_t write) {
@@ -754,6 +749,7 @@ s8 sbp_decode_sbp_msg_stm_unique_id_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_stm_unique_id_req_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_stm_unique_id_req_t *msg,
                                         sbp_write_fn_t write) {
@@ -785,7 +781,7 @@ size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(
 
 bool encode_sbp_msg_stm_unique_id_resp_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_resp_t *msg) {
-  for (uint8_t i = 0; i < 12; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 12; i++) {
     if (!encode_u8(ctx, &msg->stm_id[i])) {
       return false;
     }
@@ -834,6 +830,7 @@ s8 sbp_decode_sbp_msg_stm_unique_id_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_stm_unique_id_resp_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_stm_unique_id_resp_t *msg,
     sbp_write_fn_t write) {
@@ -853,7 +850,7 @@ int sbp_cmp_sbp_msg_stm_unique_id_resp_t(
     const sbp_msg_stm_unique_id_resp_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; i < 12 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 12; i++) {
     ret = sbp_cmp_u8(&a->stm_id[i], &b->stm_id[i]);
   }
   if (ret != 0) {
@@ -871,7 +868,7 @@ size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(
 
 bool encode_sbp_msg_m25_flash_write_status_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_m25_flash_write_status_t *msg) {
-  for (uint8_t i = 0; i < 1; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 1; i++) {
     if (!encode_u8(ctx, &msg->status[i])) {
       return false;
     }
@@ -920,6 +917,7 @@ s8 sbp_decode_sbp_msg_m25_flash_write_status_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_m25_flash_write_status_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_m25_flash_write_status_t *msg, sbp_write_fn_t write) {
@@ -939,7 +937,7 @@ int sbp_cmp_sbp_msg_m25_flash_write_status_t(
     const sbp_msg_m25_flash_write_status_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; i < 1 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 1; i++) {
     ret = sbp_cmp_u8(&a->status[i], &b->status[i]);
   }
   if (ret != 0) {

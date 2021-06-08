@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/file_io.yaml
  * with generate.py. Please do not hand edit!
@@ -180,6 +168,7 @@ s8 sbp_decode_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_fileio_read_req_t *msg,
                                       sbp_write_fn_t write) {
@@ -213,8 +202,7 @@ int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a,
     return ret;
   }
 
-  ret = sbp_null_terminated_string_strcmp(
-      &a->filename, &b->filename, &sbp_msg_fileio_read_req_tfilename_params);
+  ret = sbp_msg_fileio_read_req_t_filename_strcmp(&a->filename, &b->filename);
   if (ret != 0) {
     return ret;
   }
@@ -234,7 +222,7 @@ bool encode_sbp_msg_fileio_read_resp_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->sequence)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_contents; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_contents; i++) {
     if (!encode_u8(ctx, &msg->contents[i])) {
       return false;
     }
@@ -288,6 +276,7 @@ s8 sbp_decode_sbp_msg_fileio_read_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_read_resp_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_fileio_read_resp_t *msg,
                                        sbp_write_fn_t write) {
@@ -312,7 +301,7 @@ int sbp_cmp_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_contents, &b->n_contents);
-  for (uint8_t i = 0; i < a->n_contents && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_contents; i++) {
     ret = sbp_cmp_u8(&a->contents[i], &b->contents[i]);
   }
   if (ret != 0) {
@@ -468,6 +457,7 @@ s8 sbp_decode_sbp_msg_fileio_read_dir_req_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_read_dir_req_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_fileio_read_dir_req_t *msg, sbp_write_fn_t write) {
@@ -497,8 +487,7 @@ int sbp_cmp_sbp_msg_fileio_read_dir_req_t(
     return ret;
   }
 
-  ret = sbp_null_terminated_string_strcmp(
-      &a->dirname, &b->dirname, &sbp_msg_fileio_read_dir_req_tdirname_params);
+  ret = sbp_msg_fileio_read_dir_req_t_dirname_strcmp(&a->dirname, &b->dirname);
   if (ret != 0) {
     return ret;
   }
@@ -662,6 +651,7 @@ s8 sbp_decode_sbp_msg_fileio_read_dir_resp_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_read_dir_resp_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_fileio_read_dir_resp_t *msg, sbp_write_fn_t write) {
@@ -686,9 +676,8 @@ int sbp_cmp_sbp_msg_fileio_read_dir_resp_t(
     return ret;
   }
 
-  ret = sbp_multipart_string_strcmp(
-      &a->contents, &b->contents,
-      &sbp_msg_fileio_read_dir_resp_tcontents_params);
+  ret = sbp_msg_fileio_read_dir_resp_t_contents_strcmp(&a->contents,
+                                                       &b->contents);
   if (ret != 0) {
     return ret;
   }
@@ -826,6 +815,7 @@ s8 sbp_decode_sbp_msg_fileio_remove_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_remove_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_fileio_remove_t *msg,
                                     sbp_write_fn_t write) {
@@ -844,8 +834,7 @@ int sbp_cmp_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *a,
                                     const sbp_msg_fileio_remove_t *b) {
   int ret = 0;
 
-  ret = sbp_null_terminated_string_strcmp(
-      &a->filename, &b->filename, &sbp_msg_fileio_remove_tfilename_params);
+  ret = sbp_msg_fileio_remove_t_filename_strcmp(&a->filename, &b->filename);
   if (ret != 0) {
     return ret;
   }
@@ -950,7 +939,7 @@ bool encode_sbp_msg_fileio_write_req_t(sbp_encode_ctx_t *ctx,
           &msg->filename, &sbp_msg_fileio_write_req_tfilename_params, ctx)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_data; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_data; i++) {
     if (!encode_u8(ctx, &msg->data[i])) {
       return false;
     }
@@ -1011,6 +1000,7 @@ s8 sbp_decode_sbp_msg_fileio_write_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_write_req_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_fileio_write_req_t *msg,
                                        sbp_write_fn_t write) {
@@ -1039,14 +1029,13 @@ int sbp_cmp_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *a,
     return ret;
   }
 
-  ret = sbp_null_terminated_string_strcmp(
-      &a->filename, &b->filename, &sbp_msg_fileio_write_req_tfilename_params);
+  ret = sbp_msg_fileio_write_req_t_filename_strcmp(&a->filename, &b->filename);
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_cmp_u8(&a->n_data, &b->n_data);
-  for (uint8_t i = 0; i < a->n_data && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_data; i++) {
     ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {
@@ -1109,6 +1098,7 @@ s8 sbp_decode_sbp_msg_fileio_write_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_write_resp_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_fileio_write_resp_t *msg,
                                         sbp_write_fn_t write) {
@@ -1188,6 +1178,7 @@ s8 sbp_decode_sbp_msg_fileio_config_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_config_req_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_fileio_config_req_t *msg,
                                         sbp_write_fn_t write) {
@@ -1288,6 +1279,7 @@ s8 sbp_decode_sbp_msg_fileio_config_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fileio_config_resp_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_fileio_config_resp_t *msg,
     sbp_write_fn_t write) {

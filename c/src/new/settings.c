@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/settings.yaml
  * with generate.py. Please do not hand edit!
@@ -79,6 +67,7 @@ s8 sbp_decode_sbp_msg_settings_save_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_save_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_settings_save_t *msg,
                                     sbp_write_fn_t write) {
@@ -248,6 +237,7 @@ s8 sbp_decode_sbp_msg_settings_write_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_write_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_settings_write_t *msg,
                                      sbp_write_fn_t write) {
@@ -266,8 +256,7 @@ int sbp_cmp_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *a,
                                      const sbp_msg_settings_write_t *b) {
   int ret = 0;
 
-  ret = sbp_multipart_string_strcmp(&a->setting, &b->setting,
-                                    &sbp_msg_settings_write_tsetting_params);
+  ret = sbp_msg_settings_write_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -429,6 +418,7 @@ s8 sbp_decode_sbp_msg_settings_write_resp_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_write_resp_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_write_resp_t *msg, sbp_write_fn_t write) {
@@ -453,8 +443,7 @@ int sbp_cmp_sbp_msg_settings_write_resp_t(
     return ret;
   }
 
-  ret = sbp_multipart_string_strcmp(
-      &a->setting, &b->setting, &sbp_msg_settings_write_resp_tsetting_params);
+  ret = sbp_msg_settings_write_resp_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -609,6 +598,7 @@ s8 sbp_decode_sbp_msg_settings_read_req_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_read_req_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_settings_read_req_t *msg,
                                         sbp_write_fn_t write) {
@@ -627,8 +617,7 @@ int sbp_cmp_sbp_msg_settings_read_req_t(const sbp_msg_settings_read_req_t *a,
                                         const sbp_msg_settings_read_req_t *b) {
   int ret = 0;
 
-  ret = sbp_multipart_string_strcmp(&a->setting, &b->setting,
-                                    &sbp_msg_settings_read_req_tsetting_params);
+  ret = sbp_msg_settings_read_req_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -783,6 +772,7 @@ s8 sbp_decode_sbp_msg_settings_read_resp_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_read_resp_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_resp_t *msg,
     sbp_write_fn_t write) {
@@ -802,8 +792,7 @@ int sbp_cmp_sbp_msg_settings_read_resp_t(
     const sbp_msg_settings_read_resp_t *b) {
   int ret = 0;
 
-  ret = sbp_multipart_string_strcmp(
-      &a->setting, &b->setting, &sbp_msg_settings_read_resp_tsetting_params);
+  ret = sbp_msg_settings_read_resp_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -864,6 +853,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_req_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_read_by_index_req_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_read_by_index_req_t *msg, sbp_write_fn_t write) {
@@ -1050,6 +1040,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_resp_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_read_by_index_resp_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_read_by_index_resp_t *msg, sbp_write_fn_t write) {
@@ -1074,9 +1065,8 @@ int sbp_cmp_sbp_msg_settings_read_by_index_resp_t(
     return ret;
   }
 
-  ret = sbp_multipart_string_strcmp(
-      &a->setting, &b->setting,
-      &sbp_msg_settings_read_by_index_resp_tsetting_params);
+  ret = sbp_msg_settings_read_by_index_resp_t_setting_strcmp(&a->setting,
+                                                             &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -1134,6 +1124,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_done_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_read_by_index_done_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_read_by_index_done_t *msg, sbp_write_fn_t write) {
@@ -1305,6 +1296,7 @@ s8 sbp_decode_sbp_msg_settings_register_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_register_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_settings_register_t *msg,
                                         sbp_write_fn_t write) {
@@ -1323,8 +1315,7 @@ int sbp_cmp_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *a,
                                         const sbp_msg_settings_register_t *b) {
   int ret = 0;
 
-  ret = sbp_multipart_string_strcmp(&a->setting, &b->setting,
-                                    &sbp_msg_settings_register_tsetting_params);
+  ret = sbp_msg_settings_register_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }
@@ -1488,6 +1479,7 @@ s8 sbp_decode_sbp_msg_settings_register_resp_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_settings_register_resp_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_register_resp_t *msg, sbp_write_fn_t write) {
@@ -1512,9 +1504,8 @@ int sbp_cmp_sbp_msg_settings_register_resp_t(
     return ret;
   }
 
-  ret = sbp_multipart_string_strcmp(
-      &a->setting, &b->setting,
-      &sbp_msg_settings_register_resp_tsetting_params);
+  ret =
+      sbp_msg_settings_register_resp_t_setting_strcmp(&a->setting, &b->setting);
   if (ret != 0) {
     return ret;
   }

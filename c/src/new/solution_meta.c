@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/solution_meta.yaml
  * with generate.py. Please do not hand edit!
@@ -148,7 +136,7 @@ bool encode_sbp_msg_soln_meta_dep_a_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->last_used_gnss_vel_tow)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_sol_in; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_sol_in; i++) {
     if (!encode_sbp_solution_input_type_t(ctx, &msg->sol_in[i])) {
       return false;
     }
@@ -224,6 +212,7 @@ s8 sbp_decode_sbp_msg_soln_meta_dep_a_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_soln_meta_dep_a_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_soln_meta_dep_a_t *msg,
                                       sbp_write_fn_t write) {
@@ -283,7 +272,7 @@ int sbp_cmp_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_sol_in, &b->n_sol_in);
-  for (uint8_t i = 0; i < a->n_sol_in && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_sol_in; i++) {
     ret = sbp_cmp_sbp_solution_input_type_t(&a->sol_in[i], &b->sol_in[i]);
   }
   if (ret != 0) {
@@ -325,7 +314,7 @@ bool encode_sbp_msg_soln_meta_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->age_gnss)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_sol_in; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_sol_in; i++) {
     if (!encode_sbp_solution_input_type_t(ctx, &msg->sol_in[i])) {
       return false;
     }
@@ -393,6 +382,7 @@ s8 sbp_decode_sbp_msg_soln_meta_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_soln_meta_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_soln_meta_t *msg,
                                 sbp_write_fn_t write) {
@@ -442,7 +432,7 @@ int sbp_cmp_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_sol_in, &b->n_sol_in);
-  for (uint8_t i = 0; i < a->n_sol_in && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_sol_in; i++) {
     ret = sbp_cmp_sbp_solution_input_type_t(&a->sol_in[i], &b->sol_in[i]);
   }
   if (ret != 0) {

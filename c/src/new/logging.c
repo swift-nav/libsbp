@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/logging.yaml
  * with generate.py. Please do not hand edit!
@@ -148,6 +136,7 @@ s8 sbp_decode_sbp_msg_log_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_log_t(struct sbp_state *s, u16 sender_id,
                           const sbp_msg_log_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -169,8 +158,7 @@ int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(&a->text, &b->text,
-                                       &sbp_msg_log_ttext_params);
+  ret = sbp_msg_log_t_text_strcmp(&a->text, &b->text);
   if (ret != 0) {
     return ret;
   }
@@ -193,7 +181,7 @@ bool encode_sbp_msg_fwd_t(sbp_encode_ctx_t *ctx, const sbp_msg_fwd_t *msg) {
   if (!encode_u8(ctx, &msg->protocol)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_fwd_payload; i++) {
     if (!encode_u8(ctx, &msg->fwd_payload[i])) {
       return false;
     }
@@ -247,6 +235,7 @@ s8 sbp_decode_sbp_msg_fwd_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_fwd_t(struct sbp_state *s, u16 sender_id,
                           const sbp_msg_fwd_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -274,7 +263,7 @@ int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
   }
 
   ret = sbp_cmp_u8(&a->n_fwd_payload, &b->n_fwd_payload);
-  for (uint8_t i = 0; i < a->n_fwd_payload && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_fwd_payload; i++) {
     ret = sbp_cmp_u8(&a->fwd_payload[i], &b->fwd_payload[i]);
   }
   if (ret != 0) {
@@ -404,6 +393,7 @@ s8 sbp_decode_sbp_msg_print_dep_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_print_dep_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_print_dep_t *msg,
                                 sbp_write_fn_t write) {
@@ -422,8 +412,7 @@ int sbp_cmp_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *a,
                                 const sbp_msg_print_dep_t *b) {
   int ret = 0;
 
-  ret = sbp_unterminated_string_strcmp(&a->text, &b->text,
-                                       &sbp_msg_print_dep_ttext_params);
+  ret = sbp_msg_print_dep_t_text_strcmp(&a->text, &b->text);
   if (ret != 0) {
     return ret;
   }

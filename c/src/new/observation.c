@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/observation.yaml
  * with generate.py. Please do not hand edit!
@@ -478,7 +466,7 @@ bool encode_sbp_msg_obs_t(sbp_encode_ctx_t *ctx, const sbp_msg_obs_t *msg) {
   if (!encode_sbp_observation_header_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_obs; i++) {
     if (!encode_sbp_packed_obs_content_t(ctx, &msg->obs[i])) {
       return false;
     }
@@ -530,6 +518,7 @@ s8 sbp_decode_sbp_msg_obs_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_obs_t(struct sbp_state *s, u16 sender_id,
                           const sbp_msg_obs_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -552,7 +541,7 @@ int sbp_cmp_sbp_msg_obs_t(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b) {
   }
 
   ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
-  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_obs; i++) {
     ret = sbp_cmp_sbp_packed_obs_content_t(&a->obs[i], &b->obs[i]);
   }
   if (ret != 0) {
@@ -629,6 +618,7 @@ s8 sbp_decode_sbp_msg_base_pos_llh_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_base_pos_llh_t(struct sbp_state *s, u16 sender_id,
                                    const sbp_msg_base_pos_llh_t *msg,
                                    sbp_write_fn_t write) {
@@ -732,6 +722,7 @@ s8 sbp_decode_sbp_msg_base_pos_ecef_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_base_pos_ecef_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_base_pos_ecef_t *msg,
                                     sbp_write_fn_t write) {
@@ -1357,6 +1348,7 @@ s8 sbp_decode_sbp_msg_ephemeris_gps_dep_e_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_gps_dep_e_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_gps_dep_e_t *msg, sbp_write_fn_t write) {
@@ -1702,6 +1694,7 @@ s8 sbp_decode_sbp_msg_ephemeris_gps_dep_f_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_gps_dep_f_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_gps_dep_f_t *msg, sbp_write_fn_t write) {
@@ -2046,6 +2039,7 @@ s8 sbp_decode_sbp_msg_ephemeris_gps_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_gps_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_ephemeris_gps_t *msg,
                                     sbp_write_fn_t write) {
@@ -2389,6 +2383,7 @@ s8 sbp_decode_sbp_msg_ephemeris_qzss_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_qzss_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_ephemeris_qzss_t *msg,
                                      sbp_write_fn_t write) {
@@ -2739,6 +2734,7 @@ s8 sbp_decode_sbp_msg_ephemeris_bds_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_bds_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_ephemeris_bds_t *msg,
                                     sbp_write_fn_t write) {
@@ -3094,6 +3090,7 @@ s8 sbp_decode_sbp_msg_ephemeris_gal_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_gal_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_gal_dep_a_t *msg, sbp_write_fn_t write) {
@@ -3457,6 +3454,7 @@ s8 sbp_decode_sbp_msg_ephemeris_gal_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_gal_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_ephemeris_gal_t *msg,
                                     sbp_write_fn_t write) {
@@ -3620,17 +3618,17 @@ bool encode_sbp_msg_ephemeris_sbas_dep_a_t(
   if (!encode_sbp_ephemeris_common_content_dep_a_t(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3704,6 +3702,7 @@ s8 sbp_decode_sbp_msg_ephemeris_sbas_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_sbas_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_sbas_dep_a_t *msg, sbp_write_fn_t write) {
@@ -3728,21 +3727,21 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_dep_a_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3785,17 +3784,17 @@ bool encode_sbp_msg_ephemeris_glo_dep_a_t(
   if (!encode_double(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3863,6 +3862,7 @@ s8 sbp_decode_sbp_msg_ephemeris_glo_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_glo_dep_a_t *msg, sbp_write_fn_t write) {
@@ -3897,21 +3897,21 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_a_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3938,17 +3938,17 @@ bool encode_sbp_msg_ephemeris_sbas_dep_b_t(
   if (!encode_sbp_ephemeris_common_content_dep_b_t(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4022,6 +4022,7 @@ s8 sbp_decode_sbp_msg_ephemeris_sbas_dep_b_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_sbas_dep_b_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_sbas_dep_b_t *msg, sbp_write_fn_t write) {
@@ -4046,21 +4047,21 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_dep_b_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4096,17 +4097,17 @@ bool encode_sbp_msg_ephemeris_sbas_t(sbp_encode_ctx_t *ctx,
   if (!encode_sbp_ephemeris_common_content_t(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_float(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_float(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4180,6 +4181,7 @@ s8 sbp_decode_sbp_msg_ephemeris_sbas_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_sbas_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_ephemeris_sbas_t *msg,
                                      sbp_write_fn_t write) {
@@ -4203,21 +4205,21 @@ int sbp_cmp_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_float(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_float(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4260,17 +4262,17 @@ bool encode_sbp_msg_ephemeris_glo_dep_b_t(
   if (!encode_double(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4338,6 +4340,7 @@ s8 sbp_decode_sbp_msg_ephemeris_glo_dep_b_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_b_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_glo_dep_b_t *msg, sbp_write_fn_t write) {
@@ -4372,21 +4375,21 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_b_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4424,17 +4427,17 @@ bool encode_sbp_msg_ephemeris_glo_dep_c_t(
   if (!encode_double(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4511,6 +4514,7 @@ s8 sbp_decode_sbp_msg_ephemeris_glo_dep_c_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_c_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_glo_dep_c_t *msg, sbp_write_fn_t write) {
@@ -4550,21 +4554,21 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_c_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4608,17 +4612,17 @@ bool encode_sbp_msg_ephemeris_glo_dep_d_t(
   if (!encode_double(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4701,6 +4705,7 @@ s8 sbp_decode_sbp_msg_ephemeris_glo_dep_d_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_glo_dep_d_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_ephemeris_glo_dep_d_t *msg, sbp_write_fn_t write) {
@@ -4740,21 +4745,21 @@ int sbp_cmp_sbp_msg_ephemeris_glo_dep_d_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4802,17 +4807,17 @@ bool encode_sbp_msg_ephemeris_glo_t(sbp_encode_ctx_t *ctx,
   if (!encode_float(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_double(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     if (!encode_float(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4895,6 +4900,7 @@ s8 sbp_decode_sbp_msg_ephemeris_glo_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_glo_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_ephemeris_glo_t *msg,
                                     sbp_write_fn_t write) {
@@ -4933,21 +4939,21 @@ int sbp_cmp_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_double(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 3 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
     ret = sbp_cmp_float(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -5216,6 +5222,7 @@ s8 sbp_decode_sbp_msg_ephemeris_dep_d_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_dep_d_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ephemeris_dep_d_t *msg,
                                       sbp_write_fn_t write) {
@@ -5610,6 +5617,7 @@ s8 sbp_decode_sbp_msg_ephemeris_dep_a_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_dep_a_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ephemeris_dep_a_t *msg,
                                       sbp_write_fn_t write) {
@@ -5996,6 +6004,7 @@ s8 sbp_decode_sbp_msg_ephemeris_dep_b_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_dep_b_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ephemeris_dep_b_t *msg,
                                       sbp_write_fn_t write) {
@@ -6401,6 +6410,7 @@ s8 sbp_decode_sbp_msg_ephemeris_dep_c_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ephemeris_dep_c_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_ephemeris_dep_c_t *msg,
                                       sbp_write_fn_t write) {
@@ -7081,7 +7091,7 @@ bool encode_sbp_msg_obs_dep_a_t(sbp_encode_ctx_t *ctx,
   if (!encode_sbp_observation_header_dep_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_obs; i++) {
     if (!encode_sbp_packed_obs_content_dep_a_t(ctx, &msg->obs[i])) {
       return false;
     }
@@ -7134,6 +7144,7 @@ s8 sbp_decode_sbp_msg_obs_dep_a_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_obs_dep_a_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_obs_dep_a_t *msg,
                                 sbp_write_fn_t write) {
@@ -7158,7 +7169,7 @@ int sbp_cmp_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
-  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_obs; i++) {
     ret = sbp_cmp_sbp_packed_obs_content_dep_a_t(&a->obs[i], &b->obs[i]);
   }
   if (ret != 0) {
@@ -7180,7 +7191,7 @@ bool encode_sbp_msg_obs_dep_b_t(sbp_encode_ctx_t *ctx,
   if (!encode_sbp_observation_header_dep_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_obs; i++) {
     if (!encode_sbp_packed_obs_content_dep_b_t(ctx, &msg->obs[i])) {
       return false;
     }
@@ -7233,6 +7244,7 @@ s8 sbp_decode_sbp_msg_obs_dep_b_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_obs_dep_b_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_obs_dep_b_t *msg,
                                 sbp_write_fn_t write) {
@@ -7257,7 +7269,7 @@ int sbp_cmp_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
-  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_obs; i++) {
     ret = sbp_cmp_sbp_packed_obs_content_dep_b_t(&a->obs[i], &b->obs[i]);
   }
   if (ret != 0) {
@@ -7279,7 +7291,7 @@ bool encode_sbp_msg_obs_dep_c_t(sbp_encode_ctx_t *ctx,
   if (!encode_sbp_observation_header_dep_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_obs; i++) {
     if (!encode_sbp_packed_obs_content_dep_c_t(ctx, &msg->obs[i])) {
       return false;
     }
@@ -7332,6 +7344,7 @@ s8 sbp_decode_sbp_msg_obs_dep_c_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_obs_dep_c_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_obs_dep_c_t *msg,
                                 sbp_write_fn_t write) {
@@ -7356,7 +7369,7 @@ int sbp_cmp_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
-  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_obs; i++) {
     ret = sbp_cmp_sbp_packed_obs_content_dep_c_t(&a->obs[i], &b->obs[i]);
   }
   if (ret != 0) {
@@ -7470,6 +7483,7 @@ s8 sbp_decode_sbp_msg_iono_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_iono_t(struct sbp_state *s, u16 sender_id,
                            const sbp_msg_iono_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -7594,6 +7608,7 @@ s8 sbp_decode_sbp_msg_sv_configuration_gps_dep_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_sv_configuration_gps_dep_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_sv_configuration_gps_dep_t *msg, sbp_write_fn_t write) {
@@ -7912,6 +7927,7 @@ s8 sbp_decode_sbp_msg_gnss_capb_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_gnss_capb_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_gnss_capb_t *msg,
                                 sbp_write_fn_t write) {
@@ -8031,6 +8047,7 @@ s8 sbp_decode_sbp_msg_group_delay_dep_a_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_group_delay_dep_a_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_group_delay_dep_a_t *msg,
                                         sbp_write_fn_t write) {
@@ -8170,6 +8187,7 @@ s8 sbp_decode_sbp_msg_group_delay_dep_b_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_group_delay_dep_b_t(struct sbp_state *s, u16 sender_id,
                                         const sbp_msg_group_delay_dep_b_t *msg,
                                         sbp_write_fn_t write) {
@@ -8308,6 +8326,7 @@ s8 sbp_decode_sbp_msg_group_delay_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_group_delay_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_group_delay_t *msg,
                                   sbp_write_fn_t write) {
@@ -8729,6 +8748,7 @@ s8 sbp_decode_sbp_msg_almanac_gps_dep_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_almanac_gps_dep_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_almanac_gps_dep_t *msg,
                                       sbp_write_fn_t write) {
@@ -8915,6 +8935,7 @@ s8 sbp_decode_sbp_msg_almanac_gps_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_almanac_gps_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_almanac_gps_t *msg,
                                   sbp_write_fn_t write) {
@@ -9088,6 +9109,7 @@ s8 sbp_decode_sbp_msg_almanac_glo_dep_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_almanac_glo_dep_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_almanac_glo_dep_t *msg,
                                       sbp_write_fn_t write) {
@@ -9250,6 +9272,7 @@ s8 sbp_decode_sbp_msg_almanac_glo_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_almanac_glo_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_almanac_glo_t *msg,
                                   sbp_write_fn_t write) {
@@ -9390,6 +9413,7 @@ s8 sbp_decode_sbp_msg_glo_biases_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_glo_biases_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_glo_biases_t *msg,
                                  sbp_write_fn_t write) {
@@ -9527,7 +9551,7 @@ size_t sbp_packed_size_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *msg) {
 
 bool encode_sbp_msg_sv_az_el_t(sbp_encode_ctx_t *ctx,
                                const sbp_msg_sv_az_el_t *msg) {
-  for (uint8_t i = 0; i < msg->n_azel; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_azel; i++) {
     if (!encode_sbp_sv_az_el_t(ctx, &msg->azel[i])) {
       return false;
     }
@@ -9575,6 +9599,7 @@ s8 sbp_decode_sbp_msg_sv_az_el_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_sv_az_el_t(struct sbp_state *s, u16 sender_id,
                                const sbp_msg_sv_az_el_t *msg,
                                sbp_write_fn_t write) {
@@ -9594,7 +9619,7 @@ int sbp_cmp_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *a,
   int ret = 0;
 
   ret = sbp_cmp_u8(&a->n_azel, &b->n_azel);
-  for (uint8_t i = 0; i < a->n_azel && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_azel; i++) {
     ret = sbp_cmp_sbp_sv_az_el_t(&a->azel[i], &b->azel[i]);
   }
   if (ret != 0) {
@@ -9615,7 +9640,7 @@ bool encode_sbp_msg_osr_t(sbp_encode_ctx_t *ctx, const sbp_msg_osr_t *msg) {
   if (!encode_sbp_observation_header_t(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_obs; i++) {
     if (!encode_sbp_packed_osr_content_t(ctx, &msg->obs[i])) {
       return false;
     }
@@ -9667,6 +9692,7 @@ s8 sbp_decode_sbp_msg_osr_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_osr_t(struct sbp_state *s, u16 sender_id,
                           const sbp_msg_osr_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -9689,7 +9715,7 @@ int sbp_cmp_sbp_msg_osr_t(const sbp_msg_osr_t *a, const sbp_msg_osr_t *b) {
   }
 
   ret = sbp_cmp_u8(&a->n_obs, &b->n_obs);
-  for (uint8_t i = 0; i < a->n_obs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_obs; i++) {
     ret = sbp_cmp_sbp_packed_osr_content_t(&a->obs[i], &b->obs[i]);
   }
   if (ret != 0) {

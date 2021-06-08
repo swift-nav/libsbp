@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_UNPACKED_NDB_PRIVATE_H
-#define LIBSBP_UNPACKED_NDB_PRIVATE_H
+#ifndef LIBSBP_INTERNAL_NEW_NDB_H
+#define LIBSBP_INTERNAL_NEW_NDB_H
 
 #include <stdbool.h>
 
@@ -28,8 +28,23 @@
 extern "C" {
 #endif
 
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool encode_sbp_msg_ndb_event_t(sbp_encode_ctx_t *ctx,
                                 const sbp_msg_ndb_event_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool decode_sbp_msg_ndb_event_t(sbp_decode_ctx_t *ctx,
                                 sbp_msg_ndb_event_t *msg);
 

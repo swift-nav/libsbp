@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/sbas.yaml
  * with generate.py. Please do not hand edit!
@@ -48,7 +36,7 @@ bool encode_sbp_msg_sbas_raw_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->message_type)) {
     return false;
   }
-  for (uint8_t i = 0; i < 27; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 27; i++) {
     if (!encode_u8(ctx, &msg->data[i])) {
       return false;
     }
@@ -103,6 +91,7 @@ s8 sbp_decode_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_sbas_raw_t(struct sbp_state *s, u16 sender_id,
                                const sbp_msg_sbas_raw_t *msg,
                                sbp_write_fn_t write) {
@@ -136,7 +125,7 @@ int sbp_cmp_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 27 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 27; i++) {
     ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {

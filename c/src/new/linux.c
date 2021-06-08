@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/linux.yaml
  * with generate.py. Please do not hand edit!
@@ -126,7 +114,7 @@ bool encode_sbp_msg_linux_cpu_state_dep_a_t(
   if (!encode_u8(ctx, &msg->pcpu)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -192,6 +180,7 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_cpu_state_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_cpu_state_dep_a_t *msg, sbp_write_fn_t write) {
@@ -226,15 +215,15 @@ int sbp_cmp_sbp_msg_linux_cpu_state_dep_a_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 15 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
+  ret =
+      sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -339,7 +328,7 @@ bool encode_sbp_msg_linux_mem_state_dep_a_t(
   if (!encode_u8(ctx, &msg->pmem)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -405,6 +394,7 @@ s8 sbp_decode_sbp_msg_linux_mem_state_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_mem_state_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_mem_state_dep_a_t *msg, sbp_write_fn_t write) {
@@ -439,15 +429,15 @@ int sbp_cmp_sbp_msg_linux_mem_state_dep_a_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 15 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
+  ret =
+      sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -543,6 +533,7 @@ s8 sbp_decode_sbp_msg_linux_sys_state_dep_a_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_sys_state_dep_a_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_sys_state_dep_a_t *msg, sbp_write_fn_t write) {
@@ -764,6 +755,7 @@ s8 sbp_decode_sbp_msg_linux_process_socket_counts_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_process_socket_counts_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_socket_counts_t *msg, sbp_write_fn_t write) {
@@ -808,9 +800,8 @@ int sbp_cmp_sbp_msg_linux_process_socket_counts_t(
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline,
-      &sbp_msg_linux_process_socket_counts_tcmdline_params);
+  ret = sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(&a->cmdline,
+                                                             &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -928,7 +919,7 @@ bool encode_sbp_msg_linux_process_socket_queues_t(
   if (!encode_u16(ctx, &msg->socket_states)) {
     return false;
   }
-  for (uint8_t i = 0; i < 64; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 64; i++) {
     if (!encode_char(ctx, &msg->address_of_largest[i])) {
       return false;
     }
@@ -1005,6 +996,7 @@ s8 sbp_decode_sbp_msg_linux_process_socket_queues_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_process_socket_queues_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_socket_queues_t *msg, sbp_write_fn_t write) {
@@ -1054,16 +1046,15 @@ int sbp_cmp_sbp_msg_linux_process_socket_queues_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 64 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 64; i++) {
     ret = sbp_cmp_char(&a->address_of_largest[i], &b->address_of_largest[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline,
-      &sbp_msg_linux_process_socket_queues_tcmdline_params);
+  ret = sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(&a->cmdline,
+                                                             &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -1088,12 +1079,12 @@ bool encode_sbp_msg_linux_socket_usage_t(
   if (!encode_u32(ctx, &msg->max_queue_depth)) {
     return false;
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
     if (!encode_u16(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
     if (!encode_u16(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
@@ -1153,6 +1144,7 @@ s8 sbp_decode_sbp_msg_linux_socket_usage_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_socket_usage_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_linux_socket_usage_t *msg,
     sbp_write_fn_t write) {
@@ -1182,14 +1174,14 @@ int sbp_cmp_sbp_msg_linux_socket_usage_t(
     return ret;
   }
 
-  for (uint8_t i = 0; i < 16 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
     ret = sbp_cmp_u16(&a->socket_state_counts[i], &b->socket_state_counts[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; i < 16 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
     ret = sbp_cmp_u16(&a->socket_type_counts[i], &b->socket_type_counts[i]);
   }
   if (ret != 0) {
@@ -1353,6 +1345,7 @@ s8 sbp_decode_sbp_msg_linux_process_fd_count_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_process_fd_count_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_fd_count_t *msg, sbp_write_fn_t write) {
@@ -1387,9 +1380,8 @@ int sbp_cmp_sbp_msg_linux_process_fd_count_t(
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline,
-      &sbp_msg_linux_process_fd_count_tcmdline_params);
+  ret =
+      sbp_msg_linux_process_fd_count_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -1557,6 +1549,7 @@ s8 sbp_decode_sbp_msg_linux_process_fd_summary_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_process_fd_summary_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_fd_summary_t *msg, sbp_write_fn_t write) {
@@ -1581,9 +1574,8 @@ int sbp_cmp_sbp_msg_linux_process_fd_summary_t(
     return ret;
   }
 
-  ret = sbp_double_null_terminated_string_strcmp(
-      &a->most_opened, &b->most_opened,
-      &sbp_msg_linux_process_fd_summary_tmost_opened_params);
+  ret = sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(&a->most_opened,
+                                                              &b->most_opened);
   if (ret != 0) {
     return ret;
   }
@@ -1694,7 +1686,7 @@ bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -1766,6 +1758,7 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_linux_cpu_state_t *msg,
                                       sbp_write_fn_t write) {
@@ -1809,15 +1802,14 @@ int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 15 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline, &sbp_msg_linux_cpu_state_tcmdline_params);
+  ret = sbp_msg_linux_cpu_state_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -1928,7 +1920,7 @@ bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     if (!encode_char(ctx, &msg->tname[i])) {
       return false;
     }
@@ -2000,6 +1992,7 @@ s8 sbp_decode_sbp_msg_linux_mem_state_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_linux_mem_state_t *msg,
                                       sbp_write_fn_t write) {
@@ -2043,15 +2036,14 @@ int sbp_cmp_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; i < 15 && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
     ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->cmdline, &b->cmdline, &sbp_msg_linux_mem_state_tcmdline_params);
+  ret = sbp_msg_linux_mem_state_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -2161,6 +2153,7 @@ s8 sbp_decode_sbp_msg_linux_sys_state_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_linux_sys_state_t(struct sbp_state *s, u16 sender_id,
                                       const sbp_msg_linux_sys_state_t *msg,
                                       sbp_write_fn_t write) {

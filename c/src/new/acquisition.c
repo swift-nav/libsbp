@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
  * with generate.py. Please do not hand edit!
@@ -101,6 +89,7 @@ s8 sbp_decode_sbp_msg_acq_result_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_result_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_acq_result_t *msg,
                                  sbp_write_fn_t write) {
@@ -216,6 +205,7 @@ s8 sbp_decode_sbp_msg_acq_result_dep_c_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_result_dep_c_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_acq_result_dep_c_t *msg,
                                        sbp_write_fn_t write) {
@@ -331,6 +321,7 @@ s8 sbp_decode_sbp_msg_acq_result_dep_b_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_result_dep_b_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_acq_result_dep_b_t *msg,
                                        sbp_write_fn_t write) {
@@ -446,6 +437,7 @@ s8 sbp_decode_sbp_msg_acq_result_dep_a_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_result_dep_a_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_acq_result_dep_a_t *msg,
                                        sbp_write_fn_t write) {
@@ -890,7 +882,7 @@ size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(
 
 bool encode_sbp_msg_acq_sv_profile_t(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_acq_sv_profile_t *msg) {
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_acq_sv_profile; i++) {
     if (!encode_sbp_acq_sv_profile_t(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }
@@ -942,6 +934,7 @@ s8 sbp_decode_sbp_msg_acq_sv_profile_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_sv_profile_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_acq_sv_profile_t *msg,
                                      sbp_write_fn_t write) {
@@ -961,7 +954,7 @@ int sbp_cmp_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *a,
   int ret = 0;
 
   ret = sbp_cmp_u8(&a->n_acq_sv_profile, &b->n_acq_sv_profile);
-  for (uint8_t i = 0; i < a->n_acq_sv_profile && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_acq_sv_profile; i++) {
     ret = sbp_cmp_sbp_acq_sv_profile_t(&a->acq_sv_profile[i],
                                        &b->acq_sv_profile[i]);
   }
@@ -982,7 +975,7 @@ size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(
 
 bool encode_sbp_msg_acq_sv_profile_dep_t(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_dep_t *msg) {
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_acq_sv_profile; i++) {
     if (!encode_sbp_acq_sv_profile_dep_t(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }
@@ -1034,6 +1027,7 @@ s8 sbp_decode_sbp_msg_acq_sv_profile_dep_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_acq_sv_profile_dep_t(
     struct sbp_state *s, u16 sender_id, const sbp_msg_acq_sv_profile_dep_t *msg,
     sbp_write_fn_t write) {
@@ -1054,7 +1048,7 @@ int sbp_cmp_sbp_msg_acq_sv_profile_dep_t(
   int ret = 0;
 
   ret = sbp_cmp_u8(&a->n_acq_sv_profile, &b->n_acq_sv_profile);
-  for (uint8_t i = 0; i < a->n_acq_sv_profile && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_acq_sv_profile; i++) {
     ret = sbp_cmp_sbp_acq_sv_profile_dep_t(&a->acq_sv_profile[i],
                                            &b->acq_sv_profile[i]);
   }

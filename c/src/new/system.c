@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/system.yaml
  * with generate.py. Please do not hand edit!
@@ -92,6 +80,7 @@ s8 sbp_decode_sbp_msg_startup_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_startup_t(struct sbp_state *s, u16 sender_id,
                               const sbp_msg_startup_t *msg,
                               sbp_write_fn_t write) {
@@ -275,6 +264,7 @@ s8 sbp_decode_sbp_msg_dgnss_status_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_dgnss_status_t(struct sbp_state *s, u16 sender_id,
                                    const sbp_msg_dgnss_status_t *msg,
                                    sbp_write_fn_t write) {
@@ -308,8 +298,7 @@ int sbp_cmp_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *a,
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(&a->source, &b->source,
-                                       &sbp_msg_dgnss_status_tsource_params);
+  ret = sbp_msg_dgnss_status_t_source_strcmp(&a->source, &b->source);
   if (ret != 0) {
     return ret;
   }
@@ -367,6 +356,7 @@ s8 sbp_decode_sbp_msg_heartbeat_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_heartbeat_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_heartbeat_t *msg,
                                 sbp_write_fn_t write) {
@@ -508,7 +498,7 @@ bool encode_sbp_msg_status_report_t(sbp_encode_ctx_t *ctx,
   if (!encode_u32(ctx, &msg->uptime)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_status; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_status; i++) {
     if (!encode_sbp_sub_system_report_t(ctx, &msg->status[i])) {
       return false;
     }
@@ -572,6 +562,7 @@ s8 sbp_decode_sbp_msg_status_report_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_status_report_t(struct sbp_state *s, u16 sender_id,
                                     const sbp_msg_status_report_t *msg,
                                     sbp_write_fn_t write) {
@@ -611,7 +602,7 @@ int sbp_cmp_sbp_msg_status_report_t(const sbp_msg_status_report_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_status, &b->n_status);
-  for (uint8_t i = 0; i < a->n_status && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_status; i++) {
     ret = sbp_cmp_sbp_sub_system_report_t(&a->status[i], &b->status[i]);
   }
   if (ret != 0) {
@@ -672,6 +663,7 @@ s8 sbp_decode_sbp_msg_ins_status_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ins_status_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_ins_status_t *msg,
                                  sbp_write_fn_t write) {
@@ -834,6 +826,7 @@ s8 sbp_decode_sbp_msg_csac_telemetry_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_csac_telemetry_t(struct sbp_state *s, u16 sender_id,
                                      const sbp_msg_csac_telemetry_t *msg,
                                      sbp_write_fn_t write) {
@@ -857,8 +850,7 @@ int sbp_cmp_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *a,
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->telemetry, &b->telemetry, &sbp_msg_csac_telemetry_ttelemetry_params);
+  ret = sbp_msg_csac_telemetry_t_telemetry_strcmp(&a->telemetry, &b->telemetry);
   if (ret != 0) {
     return ret;
   }
@@ -1008,6 +1000,7 @@ s8 sbp_decode_sbp_msg_csac_telemetry_labels_t(
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_csac_telemetry_labels_t(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_csac_telemetry_labels_t *msg, sbp_write_fn_t write) {
@@ -1032,9 +1025,8 @@ int sbp_cmp_sbp_msg_csac_telemetry_labels_t(
     return ret;
   }
 
-  ret = sbp_unterminated_string_strcmp(
-      &a->telemetry_labels, &b->telemetry_labels,
-      &sbp_msg_csac_telemetry_labels_ttelemetry_labels_params);
+  ret = sbp_msg_csac_telemetry_labels_t_telemetry_labels_strcmp(
+      &a->telemetry_labels, &b->telemetry_labels);
   if (ret != 0) {
     return ret;
   }
@@ -1136,6 +1128,7 @@ s8 sbp_decode_sbp_msg_ins_updates_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_ins_updates_t(struct sbp_state *s, u16 sender_id,
                                   const sbp_msg_ins_updates_t *msg,
                                   sbp_write_fn_t write) {
@@ -1266,6 +1259,7 @@ s8 sbp_decode_sbp_msg_gnss_time_offset_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_gnss_time_offset_t(struct sbp_state *s, u16 sender_id,
                                        const sbp_msg_gnss_time_offset_t *msg,
                                        sbp_write_fn_t write) {
@@ -1363,6 +1357,7 @@ s8 sbp_decode_sbp_msg_pps_time_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_pps_time_t(struct sbp_state *s, u16 sender_id,
                                const sbp_msg_pps_time_t *msg,
                                sbp_write_fn_t write) {
@@ -1413,7 +1408,7 @@ bool encode_sbp_msg_group_meta_t(sbp_encode_ctx_t *ctx,
   if (!encode_u8(ctx, &msg->n_group_msgs)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_group_msgs; i++) {
+  for (uint8_t i = 0; ret == 0 && i < msg->n_group_msgs; i++) {
     if (!encode_u16(ctx, &msg->group_msgs[i])) {
       return false;
     }
@@ -1472,6 +1467,7 @@ s8 sbp_decode_sbp_msg_group_meta_t(const uint8_t *buf, uint8_t len,
   }
   return SBP_OK;
 }
+
 s8 sbp_send_sbp_msg_group_meta_t(struct sbp_state *s, u16 sender_id,
                                  const sbp_msg_group_meta_t *msg,
                                  sbp_write_fn_t write) {
@@ -1506,7 +1502,7 @@ int sbp_cmp_sbp_msg_group_meta_t(const sbp_msg_group_meta_t *a,
   }
 
   ret = sbp_cmp_u8(&a->n_group_msgs, &b->n_group_msgs);
-  for (uint8_t i = 0; i < a->n_group_msgs && ret == 0; i++) {
+  for (uint8_t i = 0; ret == 0 && i < a->n_group_msgs; i++) {
     ret = sbp_cmp_u16(&a->group_msgs[i], &b->group_msgs[i]);
   }
   if (ret != 0) {
