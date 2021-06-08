@@ -153,7 +153,7 @@ s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_ms
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
 s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg,
-                    s32 (*write)(u8 *buff, u32 n, void* context));
+                    sbp_write_fn_t write);
 
 #ifdef __cplusplus
 }

@@ -46,7 +46,7 @@ static inline s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 payload[], s32 (*write)(u8 *buff, u32 n, void* context))
+static inline s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 payload[], sbp_write_fn_t write)
 {
   return sbp_payload_send(s, msg_type, sender_id, len, payload, write);
 }

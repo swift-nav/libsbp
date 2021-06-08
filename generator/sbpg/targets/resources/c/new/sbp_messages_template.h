@@ -392,7 +392,7 @@ s8 sbp_decode_(((msg_type)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_(((msg_type)))(struct sbp_state  *s, u16 sender_id, const (((msg_type))) *msg, s32 (*write)(u8 *buff, u32 n, void *context));
+s8 sbp_send_(((msg_type)))(struct sbp_state  *s, u16 sender_id, const (((msg_type))) *msg, sbp_write_fn_t write);
 ((*- endif *))
 
 /**

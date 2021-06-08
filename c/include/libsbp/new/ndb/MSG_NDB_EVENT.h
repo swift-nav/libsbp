@@ -161,7 +161,7 @@ s8 sbp_decode_sbp_msg_ndb_event_t(const uint8_t *buf, uint8_t len,
  */
 s8 sbp_send_sbp_msg_ndb_event_t(struct sbp_state *s, u16 sender_id,
                                 const sbp_msg_ndb_event_t *msg,
-                                s32 (*write)(u8 *buff, u32 n, void *context));
+                                sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_ndb_event_t

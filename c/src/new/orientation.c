@@ -65,7 +65,7 @@ s8 sbp_decode_sbp_msg_baseline_heading_t(const uint8_t *buf, uint8_t len, uint8_
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state *s, u16 sender_id, const sbp_msg_baseline_heading_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state *s, u16 sender_id, const sbp_msg_baseline_heading_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -163,7 +163,7 @@ s8 sbp_decode_sbp_msg_orient_quat_t(const uint8_t *buf, uint8_t len, uint8_t *n_
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state *s, u16 sender_id, const sbp_msg_orient_quat_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state *s, u16 sender_id, const sbp_msg_orient_quat_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -273,7 +273,7 @@ s8 sbp_decode_sbp_msg_orient_euler_t(const uint8_t *buf, uint8_t len, uint8_t *n
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state *s, u16 sender_id, const sbp_msg_orient_euler_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state *s, u16 sender_id, const sbp_msg_orient_euler_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -368,7 +368,7 @@ s8 sbp_decode_sbp_msg_angular_rate_t(const uint8_t *buf, uint8_t len, uint8_t *n
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_angular_rate_t(struct sbp_state *s, u16 sender_id, const sbp_msg_angular_rate_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_angular_rate_t(struct sbp_state *s, u16 sender_id, const sbp_msg_angular_rate_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
