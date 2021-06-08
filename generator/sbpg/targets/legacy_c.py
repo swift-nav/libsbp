@@ -157,7 +157,7 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/move_these_headers_up_one_level_before_merging/%s.h" % (output_dir, name)
+  destination_filename = "%s/%s.h" % (output_dir, name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
