@@ -49,7 +49,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user
+          sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user g++-mips-linux-gnu
 
       - name: Run big endian tests
         run: make test-c-v4
