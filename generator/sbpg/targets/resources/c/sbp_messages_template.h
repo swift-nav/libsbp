@@ -18,7 +18,9 @@
 #ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
 #define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
 
-SWIFT_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/(((pkg_name))).h` instead. Access to legacy types via `libsbp/(((pkg_name))).h` will be removed in version 5.")
+#include <libsbp/common.h>
+
+SBP_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/(((pkg_name))).h` instead. Access to legacy types via `libsbp/(((pkg_name))).h` will be removed in version 5.")
 
 #include <libsbp/legacy/(((pkg_name))).h>
 

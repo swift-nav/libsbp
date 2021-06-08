@@ -13,6 +13,8 @@
 #include <libsbp/edc.h>
 #include <libsbp/sbp.h>
 
+#include <libsbp/move_these_headers_up_one_level_before_merging/acquisition.h>
+
 #define SBP_PREAMBLE 0x55
 
 /** \addtogroup io Input / Output

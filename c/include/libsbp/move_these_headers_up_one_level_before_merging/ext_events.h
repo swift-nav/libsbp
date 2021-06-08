@@ -18,7 +18,9 @@
 #ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
 #define LIBSBP_EXT_EVENTS_MESSAGES_H
 
-SWIFT_MESSAGE(
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
     "Legacy SBP definitions have moved. To continue using legacy message "
     "definitions include `libsbp/legacy/ext_events.h` instead. Access to "
     "legacy types via `libsbp/ext_events.h` will be removed in version 5.")

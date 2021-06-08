@@ -10,5 +10,4 @@ CLANG_FORMAT=clang-format-6.0
 $CLANG_FORMAT -i $GENERATED_HEADERS test/*.c test/*.h test/cpp/*.cc
 
 # clang-format-6 adds whitespace to blank lines inside comments
-sed -i.bak 's/^  *$//' $GENERATED_HEADERS
-rm include/libsbp/*.h.bak
+sed -i 's/^  *$//' $GENERATED_HEADERS
