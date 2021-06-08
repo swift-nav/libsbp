@@ -144,7 +144,7 @@ s8 sbp_msg_ssr_gridded_correction_dep_a_decode(
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_ssr_gridded_correction_dep_a_send(
     sbp_state_t *s, u16 sender_id,

@@ -100,7 +100,7 @@ bool sbp_msg_linux_process_socket_counts_cmdline_valid(
  * Tests 2 instances of sbp_msg_linux_process_socket_counts_t::cmdline for
  * equality
  *
- * Returns a value with the same definitions as #strcmp from the C standard
+ * Returns a value with the same definitions as strcmp from the C standard
  * library
  *
  * @param a sbp_msg_linux_process_socket_counts_t instance
@@ -231,6 +231,8 @@ const char *sbp_msg_linux_process_socket_counts_cmdline_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param msg sbp_msg_linux_process_socket_counts_t instance
+ * @param section Section number
  * @return Length of section
  */
 size_t sbp_msg_linux_process_socket_counts_cmdline_section_strlen(
@@ -305,7 +307,7 @@ s8 sbp_msg_linux_process_socket_counts_decode(
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_linux_process_socket_counts_send(
     sbp_state_t *s, u16 sender_id,

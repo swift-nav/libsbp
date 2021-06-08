@@ -122,7 +122,7 @@ s8 sbp_msg_ssr_satellite_apc_decode(const uint8_t *buf, uint8_t len,
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_ssr_satellite_apc_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_ssr_satellite_apc_t *msg,

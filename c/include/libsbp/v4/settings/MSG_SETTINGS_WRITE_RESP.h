@@ -81,7 +81,7 @@ bool sbp_msg_settings_write_resp_setting_valid(
 /**
  * Tests 2 instances of sbp_msg_settings_write_resp_t::setting for equality
  *
- * Returns a value with the same definitions as #strcmp from the C standard
+ * Returns a value with the same definitions as strcmp from the C standard
  * library
  *
  * @param a sbp_msg_settings_write_resp_t instance
@@ -325,7 +325,7 @@ s8 sbp_msg_settings_write_resp_decode(const uint8_t *buf, uint8_t len,
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_settings_write_resp_send(sbp_state_t *s, u16 sender_id,
                                     const sbp_msg_settings_write_resp_t *msg,

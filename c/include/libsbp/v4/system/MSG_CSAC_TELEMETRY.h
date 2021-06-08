@@ -77,7 +77,7 @@ bool sbp_msg_csac_telemetry_telemetry_valid(
 /**
  * Tests 2 instances of sbp_msg_csac_telemetry_t::telemetry for equality
  *
- * Returns a value with the same definitions as #strcmp from the C standard
+ * Returns a value with the same definitions as strcmp from the C standard
  * library
  *
  * @param a sbp_msg_csac_telemetry_t instance
@@ -201,6 +201,8 @@ const char *sbp_msg_csac_telemetry_telemetry_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_csac_telemetry_t instance
+ * @param msg sbp_msg_csac_telemetry_t instance
+ * @param section Section number
  * @return Length of section
  */
 size_t sbp_msg_csac_telemetry_telemetry_section_strlen(
@@ -268,7 +270,7 @@ s8 sbp_msg_csac_telemetry_decode(const uint8_t *buf, uint8_t len,
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_csac_telemetry_send(sbp_state_t *s, u16 sender_id,
                                const sbp_msg_csac_telemetry_t *msg,

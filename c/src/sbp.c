@@ -29,7 +29,7 @@
  * ---------
  *
  * First setup a callback for the message you will be receiving. Our callback
- * function must have type #sbp_msg_callback_t or #sbp_msg_frame_callback_t,
+ * function must have type #sbp_msg_callback_t or #sbp_frame_callback_t,
  * i.e. it must be of the form:
  *
  * ~~~

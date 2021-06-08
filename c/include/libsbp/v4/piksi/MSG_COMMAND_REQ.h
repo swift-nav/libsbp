@@ -75,7 +75,7 @@ bool sbp_msg_command_req_command_valid(const sbp_msg_command_req_t *msg);
 /**
  * Tests 2 instances of sbp_msg_command_req_t::command for equality
  *
- * Returns a value with the same definitions as #strcmp from the C standard
+ * Returns a value with the same definitions as strcmp from the C standard
  * library
  *
  * @param a sbp_msg_command_req_t instance
@@ -199,6 +199,8 @@ const char *sbp_msg_command_req_command_get(const sbp_msg_command_req_t *msg);
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_command_req_t instance
+ * @param msg sbp_msg_command_req_t instance
+ * @param section Section number
  * @return Length of section
  */
 size_t sbp_msg_command_req_command_section_strlen(
@@ -265,7 +267,7 @@ s8 sbp_msg_command_req_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_command_req_send(sbp_state_t *s, u16 sender_id,
                             const sbp_msg_command_req_t *msg,
