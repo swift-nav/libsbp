@@ -71,7 +71,7 @@ s8 sbp_send_sbp_msg_baseline_heading_t(struct sbp_state *s, u16 sender_id, const
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_baseline_heading_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_BASELINE_HEADING, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_BASELINE_HEADING, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_baseline_heading_t(const sbp_msg_baseline_heading_t *a, const sbp_msg_baseline_heading_t *b) {
@@ -169,7 +169,7 @@ s8 sbp_send_sbp_msg_orient_quat_t(struct sbp_state *s, u16 sender_id, const sbp_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_orient_quat_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_ORIENT_QUAT, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_ORIENT_QUAT, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_orient_quat_t(const sbp_msg_orient_quat_t *a, const sbp_msg_orient_quat_t *b) {
@@ -279,7 +279,7 @@ s8 sbp_send_sbp_msg_orient_euler_t(struct sbp_state *s, u16 sender_id, const sbp
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_orient_euler_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_ORIENT_EULER, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_ORIENT_EULER, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_orient_euler_t(const sbp_msg_orient_euler_t *a, const sbp_msg_orient_euler_t *b) {
@@ -374,7 +374,7 @@ s8 sbp_send_sbp_msg_angular_rate_t(struct sbp_state *s, u16 sender_id, const sbp
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_angular_rate_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_ANGULAR_RATE, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_ANGULAR_RATE, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_angular_rate_t(const sbp_msg_angular_rate_t *a, const sbp_msg_angular_rate_t *b) {

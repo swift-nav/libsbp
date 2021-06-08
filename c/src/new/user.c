@@ -68,7 +68,7 @@ s8 sbp_send_sbp_msg_user_data_t(struct sbp_state *s, u16 sender_id, const sbp_ms
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_user_data_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_USER_DATA, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_USER_DATA, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_user_data_t(const sbp_msg_user_data_t *a, const sbp_msg_user_data_t *b) {

@@ -131,7 +131,7 @@ s8 sbp_send_sbp_msg_log_t(struct sbp_state *s, u16 sender_id, const sbp_msg_log_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_log_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_LOG, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_LOG, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_log_t(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
@@ -208,7 +208,7 @@ s8 sbp_send_sbp_msg_fwd_t(struct sbp_state *s, u16 sender_id, const sbp_msg_fwd_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_fwd_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FWD, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FWD, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_fwd_t(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
@@ -346,7 +346,7 @@ s8 sbp_send_sbp_msg_print_dep_t(struct sbp_state *s, u16 sender_id, const sbp_ms
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_print_dep_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_PRINT_DEP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_PRINT_DEP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *a, const sbp_msg_print_dep_t *b) {

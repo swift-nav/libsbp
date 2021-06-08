@@ -63,7 +63,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_req_t(struct sbp_state *s, u16 sender_i
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_bootloader_handshake_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshake_req_t *a, const sbp_msg_bootloader_handshake_req_t *b) {
@@ -193,7 +193,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_resp_t(struct sbp_state *s, u16 sender_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_bootloader_handshake_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *a, const sbp_msg_bootloader_handshake_resp_t *b) {
@@ -258,7 +258,7 @@ s8 sbp_send_sbp_msg_bootloader_jump_to_app_t(struct sbp_state *s, u16 sender_id,
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_bootloader_jump_to_app_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_bootloader_jump_to_app_t(const sbp_msg_bootloader_jump_to_app_t *a, const sbp_msg_bootloader_jump_to_app_t *b) {
@@ -321,7 +321,7 @@ s8 sbp_send_sbp_msg_nap_device_dna_req_t(struct sbp_state *s, u16 sender_id, con
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_nap_device_dna_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna_req_t *a, const sbp_msg_nap_device_dna_req_t *b) {
@@ -387,7 +387,7 @@ s8 sbp_send_sbp_msg_nap_device_dna_resp_t(struct sbp_state *s, u16 sender_id, co
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_nap_device_dna_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_nap_device_dna_resp_t(const sbp_msg_nap_device_dna_resp_t *a, const sbp_msg_nap_device_dna_resp_t *b) {
@@ -518,7 +518,7 @@ s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(struct sbp_state *s, u16 sender
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootloader_handshake_dep_a_t *a, const sbp_msg_bootloader_handshake_dep_a_t *b) {

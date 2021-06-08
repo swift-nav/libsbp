@@ -78,11 +78,11 @@ extern "C" {
 #define SBP_MSG_ALL 0
 
 /** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context);
+typedef void (*sbp_decoded_callback_t)(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context);
 typedef union {
   sbp_msg_callback_t msg;
   sbp_frame_callback_t frame;
-  sbp_msg_callback_t msg;
+  sbp_decoded_callback_t decoded;
 } sbp_callback_t;
 
 /** SBP callback type enum:
@@ -94,7 +94,7 @@ typedef union {
 enum sbp_cb_type {
   SBP_MSG_CALLBACK = 0,
   SBP_FRAME_CALLBACK = 1,
-  SBP_MSG_CALLBACK = 2,
+  SBP_DECODED_CALLBACK = 2,
   SBP_CALLBACK_TYPE_COUNT = 3,
 };
 
@@ -140,9 +140,9 @@ typedef struct sbp_state {
 
 /** \} */
 
-s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
+s8 sbp_callback_register(sbp_state_t* s, u16 msg_type, sbp_decoded_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_msg_callback_t cb, void* context,
+s8 sbp_all_message_register_callback(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
                                  sbp_msg_callbacks_node_t *node);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
@@ -152,7 +152,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void* context));
 s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_msg_t *msg);
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg,
+s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg,
                     s32 (*write)(u8 *buff, u32 n, void* context));
 
 #ifdef __cplusplus

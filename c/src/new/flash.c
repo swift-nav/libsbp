@@ -82,7 +82,7 @@ s8 sbp_send_sbp_msg_flash_program_t(struct sbp_state *s, u16 sender_id, const sb
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_flash_program_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FLASH_PROGRAM, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FLASH_PROGRAM, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *a, const sbp_msg_flash_program_t *b) {
@@ -160,7 +160,7 @@ s8 sbp_send_sbp_msg_flash_done_t(struct sbp_state *s, u16 sender_id, const sbp_m
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_flash_done_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FLASH_DONE, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FLASH_DONE, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *a, const sbp_msg_flash_done_t *b) {
@@ -233,7 +233,7 @@ s8 sbp_send_sbp_msg_flash_read_req_t(struct sbp_state *s, u16 sender_id, const s
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_flash_read_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FLASH_READ_REQ, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FLASH_READ_REQ, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *a, const sbp_msg_flash_read_req_t *b) {
@@ -315,7 +315,7 @@ s8 sbp_send_sbp_msg_flash_read_resp_t(struct sbp_state *s, u16 sender_id, const 
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_flash_read_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FLASH_READ_RESP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FLASH_READ_RESP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *a, const sbp_msg_flash_read_resp_t *b) {
@@ -389,7 +389,7 @@ s8 sbp_send_sbp_msg_flash_erase_t(struct sbp_state *s, u16 sender_id, const sbp_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_flash_erase_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_FLASH_ERASE, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_FLASH_ERASE, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *a, const sbp_msg_flash_erase_t *b) {
@@ -454,7 +454,7 @@ s8 sbp_send_sbp_msg_stm_flash_lock_sector_t(struct sbp_state *s, u16 sender_id, 
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_stm_flash_lock_sector_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_STM_FLASH_LOCK_SECTOR, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_STM_FLASH_LOCK_SECTOR, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *a, const sbp_msg_stm_flash_lock_sector_t *b) {
@@ -516,7 +516,7 @@ s8 sbp_send_sbp_msg_stm_flash_unlock_sector_t(struct sbp_state *s, u16 sender_id
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_stm_flash_unlock_sector_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_STM_FLASH_UNLOCK_SECTOR, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_STM_FLASH_UNLOCK_SECTOR, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *a, const sbp_msg_stm_flash_unlock_sector_t *b) {
@@ -579,7 +579,7 @@ s8 sbp_send_sbp_msg_stm_unique_id_req_t(struct sbp_state *s, u16 sender_id, cons
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_stm_unique_id_req_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_STM_UNIQUE_ID_REQ, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_STM_UNIQUE_ID_REQ, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *a, const sbp_msg_stm_unique_id_req_t *b) {
@@ -645,7 +645,7 @@ s8 sbp_send_sbp_msg_stm_unique_id_resp_t(struct sbp_state *s, u16 sender_id, con
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_stm_unique_id_resp_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_STM_UNIQUE_ID_RESP, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_STM_UNIQUE_ID_RESP, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *a, const sbp_msg_stm_unique_id_resp_t *b) {
@@ -715,7 +715,7 @@ s8 sbp_send_sbp_msg_m25_flash_write_status_t(struct sbp_state *s, u16 sender_id,
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_m25_flash_write_status_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_M25_FLASH_WRITE_STATUS, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_M25_FLASH_WRITE_STATUS, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *a, const sbp_msg_m25_flash_write_status_t *b) {

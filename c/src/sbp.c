@@ -326,25 +326,25 @@ s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
 s8 sbp_payload_callback_register(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
                          sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
-  callback.payload = cb;
+  callback.msg = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
                                        SBP_MSG_CALLBACK, context, node);
 }
 
-s8 sbp_register_callback(sbp_state_t *s, u16 msg_type,
-                                  sbp_msg_callback_t cb, void *context,
+s8 sbp_callback_register(sbp_state_t *s, u16 msg_type,
+                                  sbp_decoded_callback_t cb, void *context,
                                   sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
-  callback.msg = cb;
+  callback.decoded = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
                                        SBP_MSG_CALLBACK, context, node);
 }
 
-s8 sbp_register_all_msg_callback(sbp_state_t *s,
-                                 sbp_msg_callback_t cb, void *context,
+s8 sbp_all_message_callback_register(sbp_state_t *s,
+                                 sbp_decoded_callback_t cb, void *context,
                                  sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
-  callback.msg = cb;
+  callback.decoded = cb;
   return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
                                        SBP_MSG_CALLBACK, context, node);
 }
@@ -616,7 +616,7 @@ s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type,
     if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
       switch (node->cb_type) {
         case SBP_FRAME_CALLBACK:
-        case SBP_PAYLOAD_CALLBACK:
+        case SBP_MSG_CALLBACK:
           {
             if (need_pack) {
               need_pack = false;
@@ -630,13 +630,13 @@ s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type,
               if (node->cb_type == SBP_FRAME_CALLBACK) {
                 node->cb.frame(sender_id, msg_type, payload_len, payload, 0, 0, node->context);
               } else {
-                node->cb.payload(sender_id, payload_len, payload, node->context);
+                node->cb.msg(sender_id, payload_len, payload, node->context);
               }
             }
           }
           break;
-        case SBP_MSG_CALLBACK: {
-                                 node->cb.msg(sender_id, msg_type, msg, node->context);
+        case SBP_DECODED_CALLBACK: {
+                                 node->cb.decoded(sender_id, msg_type, msg, node->context);
                                  ret = SBP_OK_CALLBACK_EXECUTED;
                                } break;
         case SBP_CALLBACK_TYPE_COUNT:
@@ -689,10 +689,10 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
         } break;
         case SBP_MSG_CALLBACK:
         {
-          node->cb.payload(sender_id, payload_len, payload, node->context);
+          node->cb.msg(sender_id, payload_len, payload, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
-        case SBP_MSG_CALLBACK: {
+        case SBP_DECODED_CALLBACK: {
                                  if (need_unpack) {
                                    need_unpack = false;
                                    if (sbp_decode_msg(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
@@ -701,7 +701,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                                    else { ret = SBP_DECODE_ERROR; }
                                  }
                                  if (unpacked_successfully) {
-                                   node->cb.msg(sender_id, msg_type, &unpacked_msg, node->context);
+                                   node->cb.decoded(sender_id, msg_type, &unpacked_msg, node->context);
                                    ret = SBP_OK_CALLBACK_EXECUTED;
                                  } 
                                } break;
@@ -821,12 +821,12 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   return SBP_OK;
 }
 
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context)) {
+s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context)) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, msg_type, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, msg_type, sender_id, payload_len, payload, write);
 }
 
 /** \} */

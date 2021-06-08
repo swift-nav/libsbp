@@ -252,7 +252,7 @@ s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state *s, u16 sender_id, co
   uint8_t payload_len;
   s8 ret = sbp_encode_(((m.name|convert_unpacked)))(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_(((m.name))), sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_(((m.name))), sender_id, payload_len, payload, write);
 }
 ((*- endif *))
 

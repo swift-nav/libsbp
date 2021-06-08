@@ -751,7 +751,7 @@ s8 sbp_send_sbp_msg_ssr_orbit_clock_t(struct sbp_state *s, u16 sender_id, const 
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_orbit_clock_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_ORBIT_CLOCK, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_ORBIT_CLOCK, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_t(const sbp_msg_ssr_orbit_clock_t *a, const sbp_msg_ssr_orbit_clock_t *b) {
@@ -870,7 +870,7 @@ s8 sbp_send_sbp_msg_ssr_code_biases_t(struct sbp_state *s, u16 sender_id, const 
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_code_biases_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_CODE_BIASES, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_CODE_BIASES, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr_code_biases_t *a, const sbp_msg_ssr_code_biases_t *b) {
@@ -978,7 +978,7 @@ s8 sbp_send_sbp_msg_ssr_phase_biases_t(struct sbp_state *s, u16 sender_id, const
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_phase_biases_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_PHASE_BIASES, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_PHASE_BIASES, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_phase_biases_t(const sbp_msg_ssr_phase_biases_t *a, const sbp_msg_ssr_phase_biases_t *b) {
@@ -1077,7 +1077,7 @@ s8 sbp_send_sbp_msg_ssr_stec_correction_t(struct sbp_state *s, u16 sender_id, co
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_stec_correction_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_STEC_CORRECTION, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_STEC_CORRECTION, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_stec_correction_t(const sbp_msg_ssr_stec_correction_t *a, const sbp_msg_ssr_stec_correction_t *b) {
@@ -1161,7 +1161,7 @@ s8 sbp_send_sbp_msg_ssr_gridded_correction_t(struct sbp_state *s, u16 sender_id,
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_gridded_correction_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_GRIDDED_CORRECTION, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_GRIDDED_CORRECTION, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_t(const sbp_msg_ssr_gridded_correction_t *a, const sbp_msg_ssr_gridded_correction_t *b) {
@@ -1260,7 +1260,7 @@ s8 sbp_send_sbp_msg_ssr_tile_definition_t(struct sbp_state *s, u16 sender_id, co
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_tile_definition_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_TILE_DEFINITION, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_TILE_DEFINITION, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_tile_definition_t(const sbp_msg_ssr_tile_definition_t *a, const sbp_msg_ssr_tile_definition_t *b) {
@@ -1446,7 +1446,7 @@ s8 sbp_send_sbp_msg_ssr_satellite_apc_t(struct sbp_state *s, u16 sender_id, cons
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_satellite_apc_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_SATELLITE_APC, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_SATELLITE_APC, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *a, const sbp_msg_ssr_satellite_apc_t *b) {
@@ -1551,7 +1551,7 @@ s8 sbp_send_sbp_msg_ssr_orbit_clock_dep_a_t(struct sbp_state *s, u16 sender_id, 
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_orbit_clock_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_ORBIT_CLOCK_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_ORBIT_CLOCK_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_orbit_clock_dep_a_t(const sbp_msg_ssr_orbit_clock_dep_a_t *a, const sbp_msg_ssr_orbit_clock_dep_a_t *b) {
@@ -1907,7 +1907,7 @@ s8 sbp_send_sbp_msg_ssr_stec_correction_dep_a_t(struct sbp_state *s, u16 sender_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_stec_correction_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_STEC_CORRECTION_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_STEC_CORRECTION_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_stec_correction_dep_a_t(const sbp_msg_ssr_stec_correction_dep_a_t *a, const sbp_msg_ssr_stec_correction_dep_a_t *b) {
@@ -1991,7 +1991,7 @@ s8 sbp_send_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(struct sbp_state *s, u
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *a, const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *b) {
@@ -2081,7 +2081,7 @@ s8 sbp_send_sbp_msg_ssr_gridded_correction_dep_a_t(struct sbp_state *s, u16 send
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_gridded_correction_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded_correction_dep_a_t *a, const sbp_msg_ssr_gridded_correction_dep_a_t *b) {
@@ -2165,7 +2165,7 @@ s8 sbp_send_sbp_msg_ssr_grid_definition_dep_a_t(struct sbp_state *s, u16 sender_
   uint8_t payload_len;
   s8 ret = sbp_encode_sbp_msg_ssr_grid_definition_dep_a_t(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_send_payload(s, SBP_MSG_SSR_GRID_DEFINITION_DEP_A, sender_id, payload_len, payload, write);
+  return sbp_payload_send(s, SBP_MSG_SSR_GRID_DEFINITION_DEP_A, sender_id, payload_len, payload, write);
 }
 
 int sbp_cmp_sbp_msg_ssr_grid_definition_dep_a_t(const sbp_msg_ssr_grid_definition_dep_a_t *a, const sbp_msg_ssr_grid_definition_dep_a_t *b) {
