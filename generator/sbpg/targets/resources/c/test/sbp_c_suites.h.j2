@@ -20,8 +20,11 @@ Suite* sbp_suite(void);
 Suite* bitfield_macros_suite(void);
 
 ((*- for s in package_suites *))
+((*- if test_type == 'legacy' *))
 Suite* legacy_(((s.suite_name)))_suite(void);
+((*- else *))
 Suite* (((s.suite_name)))_suite(void);
+((*- endif *))
 ((*- endfor *))
 
 #endif /* CHECK_SUITES_H */
