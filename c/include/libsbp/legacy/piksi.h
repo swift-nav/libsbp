@@ -35,20 +35,27 @@ SBP_PACK_START
  * This is a legacy message for sending and loading a satellite alamanac onto
  * the Piksi's flash memory from the host.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_ALMANAC 0x0069
+#endif
 
 /** Send GPS time from host (host => Piksi)
  *
  * This message sets up timing functionality using a coarse GPS time estimate
  * sent by the host.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_SET_TIME 0x0068
+#endif
 
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the bootloader.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET 0x00B6
+#endif
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
 #define SBP_RESET_DEFAULT_SETTINGS_SHIFT (0u)
 #define SBP_RESET_DEFAULT_SETTINGS_GET(flags)      \
@@ -62,6 +69,7 @@ SBP_PACK_START
 
 #define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
 #define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Reset flags */
@@ -71,7 +79,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * This message from the host resets the Piksi back into the bootloader.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET_DEP 0x00B2
+#endif
 
 /** Legacy message for CW interference channel (Piksi => host)
  *
@@ -79,7 +89,9 @@ typedef struct SBP_ATTR_PACKED {
  * interference channel on the SwiftNAP. This message will be removed in a
  * future release.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_CW_RESULTS 0x00C0
+#endif
 
 /** Legacy message for CW interference channel (host => Piksi)
  *
@@ -87,14 +99,19 @@ typedef struct SBP_ATTR_PACKED {
  * interference channel on the SwiftNAP. This message will be removed in a
  * future release.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_CW_START 0x00C1
+#endif
 
 /** Reset IAR filters (host => Piksi)
  *
  * This message resets either the DGNSS Kalman filters or Integer Ambiguity
  * Resolution (IAR) process.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_RESET_FILTERS 0x0022
+#endif
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_GET(flags)      \
@@ -109,6 +126,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 filter; /**< Filter flags */
@@ -118,7 +136,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_INIT_BASE_DEP 0x0023
+#endif
 
 /** State of an RTOS thread
  *
@@ -126,7 +146,9 @@ typedef struct SBP_ATTR_PACKED {
  * (RTOS) thread usage statistics for the named thread. The reported
  * percentage values must be normalized.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_THREAD_STATE 0x0017
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   char name[20];  /**< Thread name (NULL terminated) */
@@ -194,7 +216,9 @@ typedef struct SBP_ATTR_PACKED {
  * timeliness of received base observations while the period indicates their
  * likelihood of transmission.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_UART_STATE 0x001D
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;    /**< State of UART A */
@@ -208,7 +232,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_UART_STATE_DEPA 0x0018
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;    /**< State of UART A */
@@ -223,7 +249,9 @@ typedef struct SBP_ATTR_PACKED {
  * process, which resolves unknown integer ambiguities from double-differenced
  * carrier-phase measurements from satellite observations.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_IAR_STATE 0x0019
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 num_hyps; /**< Number of integer ambiguity hypotheses remaining */
@@ -234,7 +262,10 @@ typedef struct SBP_ATTR_PACKED {
  * This message allows setting a mask to prevent a particular satellite from
  * being used in various Piksi subsystems.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_MASK_SATELLITE 0x002B
+#endif
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT (1u)
 #define SBP_MASK_SATELLITE_TRACKING_CHANNELS_GET(flags)      \
@@ -263,6 +294,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_ENABLED (0)
 #define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 mask; /**< Mask of systems that should ignore this satellite. */
@@ -273,7 +305,10 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_MASK_SATELLITE_DEP 0x001B
+#endif
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
 #define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags)      \
@@ -302,6 +337,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_ENABLED (0)
 #define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 mask; /**< Mask of systems that should ignore this satellite. */
@@ -314,7 +350,9 @@ typedef struct SBP_ATTR_PACKED {
  * processor's monitoring system and the RF frontend die temperature if
  * available.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_DEVICE_MONITOR 0x00B5
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   s16 dev_vin;         /**< Device V_in [V / 1000] */
@@ -330,7 +368,9 @@ typedef struct SBP_ATTR_PACKED {
  * Request the recipient to execute an command. Output will be sent in MSG_LOG
  * messages, and the exit code will be returned with MSG_COMMAND_RESP.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_REQ 0x00B8
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
@@ -342,7 +382,9 @@ typedef struct SBP_ATTR_PACKED {
  * The response to MSG_COMMAND_REQ with the return code of the command.  A
  * return code of zero indicates success.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_RESP 0x00B9
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence; /**< Sequence number */
@@ -355,7 +397,9 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
  * the correct command.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_COMMAND_OUTPUT 0x00BC
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence; /**< Sequence number */
@@ -367,14 +411,19 @@ typedef struct SBP_ATTR_PACKED {
  * Request state of Piksi network interfaces. Output will be sent in
  * MSG_NETWORK_STATE_RESP messages.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_STATE_REQ 0x00BA
+#endif
 
 /** State of network interface
  *
  * The state of a network interface on the Piksi. Data is made to reflect
  * output of ifaddrs struct returned by getifaddrs in c.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
+#endif
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
@@ -625,6 +674,8 @@ typedef struct SBP_ATTR_PACKED {
       << (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT)));     \
   } while (0)
 
+#endif
+
 typedef struct SBP_ATTR_PACKED {
   u8 ipv4_address[4];      /**< IPv4 address (all zero when unavailable) */
   u8 ipv4_mask_size;       /**< IPv4 netmask CIDR notation */
@@ -658,7 +709,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The bandwidth usage, a list of usage by interface.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
@@ -670,7 +723,9 @@ typedef struct SBP_ATTR_PACKED {
  * periodically to update the host on the status of the modem and its various
  * parameters.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_CELL_MODEM_STATUS 0x00BE
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero
@@ -684,7 +739,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_SPECAN_DEP 0x0050
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;     /**< Channel ID */
@@ -702,7 +759,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Spectrum analyzer packet.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_SPECAN 0x0051
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;     /**< Channel ID */
@@ -726,7 +785,9 @@ typedef struct SBP_ATTR_PACKED {
  * that rf channel is not present in the hardware. A negative value implies an
  * error for the particular gain stage as reported by the frontend.
  */
+#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
 #define SBP_MSG_FRONT_END_GAIN 0x00BF
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */

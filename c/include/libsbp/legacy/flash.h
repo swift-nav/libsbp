@@ -38,7 +38,10 @@ SBP_PACK_START
  * (2) if the maximum write size is exceeded. Note that the sector-containing
  * addresses must be erased before addresses can be programmed.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_PROGRAM 0x00E6
+#endif
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags)      \
@@ -52,6 +55,7 @@ SBP_PACK_START
 
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 target;        /**< Target flags */
@@ -69,7 +73,10 @@ typedef struct SBP_ATTR_PACKED {
  * as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
  * failure.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_DONE 0x00E0
+#endif
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
 #define SBP_FLASH_DONE_RESPONSE_CODE_SHIFT (0u)
 #define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags)      \
@@ -87,6 +94,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_ADDR (3)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_RANGE (4)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_SECTOR (5)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 response; /**< Response flags */
@@ -101,7 +109,10 @@ typedef struct SBP_ATTR_PACKED {
  * is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
  * allowed range.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_READ_REQ 0x00E7
+#endif
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags)      \
@@ -115,6 +126,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 target;        /**< Target flags */
@@ -132,7 +144,10 @@ typedef struct SBP_ATTR_PACKED {
  * is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
  * allowed range.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_READ_RESP 0x00E1
+#endif
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_GET(flags)      \
@@ -146,6 +161,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 target;        /**< Target flags */
@@ -161,7 +177,10 @@ typedef struct SBP_ATTR_PACKED {
  * message containing the return code - FLASH_OK (0) on success or
  * FLASH_INVALID_FLASH (1) if the flash specified is invalid.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_FLASH_ERASE 0x00E2
+#endif
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags)      \
@@ -175,6 +194,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 target;      /**< Target flags */
@@ -187,7 +207,9 @@ typedef struct SBP_ATTR_PACKED {
  * The flash lock message locks a sector of the STM flash memory. The device
  * replies with a MSG_FLASH_DONE message.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR 0x00E3
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sector; /**< Flash sector number to lock */
@@ -198,7 +220,9 @@ typedef struct SBP_ATTR_PACKED {
  * The flash unlock message unlocks a sector of the STM flash memory. The
  * device replies with a MSG_FLASH_DONE message.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sector; /**< Flash sector number to unlock */
@@ -211,7 +235,9 @@ typedef struct SBP_ATTR_PACKED {
  * ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_STM_UNIQUE_ID_REQ 0x00E8
+#endif
 
 /** Read device's hardcoded unique ID response (host <= device)
 
@@ -220,7 +246,9 @@ typedef struct SBP_ATTR_PACKED {
  * ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_STM_UNIQUE_ID_RESP 0x00E5
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 stm_id[12]; /**< Device unique ID */
@@ -231,7 +259,9 @@ typedef struct SBP_ATTR_PACKED {
  * The flash status message writes to the 8-bit M25 flash status register. The
  * device replies with a MSG_FLASH_DONE message.
  */
+#ifndef LIBSBP_NEW_FLASH_MESSAGES_H
 #define SBP_MSG_M25_FLASH_WRITE_STATUS 0x00F3
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 status[1]; /**< Byte to write to the M25 flash status register */

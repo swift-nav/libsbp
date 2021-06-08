@@ -40,7 +40,10 @@ SBP_PACK_START
  *
  * The time-tagging mode should not change throughout a run.
  */
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define SBP_MSG_IMU_RAW 0x0900
+#endif
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
@@ -67,6 +70,8 @@ SBP_PACK_START
       << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));     \
   } while (0)
 
+#endif
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;   /**< Milliseconds since reference epoch and time status. */
   u8 tow_f;  /**< Milliseconds since reference epoch, fractional part [ms / 256]
@@ -85,7 +90,10 @@ typedef struct SBP_ATTR_PACKED {
  * always be consistent but the rest of the payload is device specific and
  * depends on the value of `imu_type`.
  */
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define SBP_MSG_IMU_AUX 0x0901
+#endif
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
@@ -98,6 +106,8 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_IMU_AUX_IMU_TYPE_BOSCH_BMI160 (0)
 #define SBP_IMU_AUX_IMU_TYPE_ST_MICROELECTRONICS_ASM330LLH (1)
+#endif
+#ifndef LIBSBP_NEW_IMU_MESSAGES_H
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_MASK (0xf)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT (4u)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags)      \
@@ -138,6 +148,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_8G (2)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_16G (3)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 imu_type; /**< IMU type */

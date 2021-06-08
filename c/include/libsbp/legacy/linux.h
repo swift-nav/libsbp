@@ -32,7 +32,9 @@ SBP_PACK_START
  * This message indicates the process state of the top 10 heaviest consumers
  * of CPU on the system.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A 0x7F00
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -48,7 +50,9 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of memory on the system.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A 0x7F01
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
@@ -63,7 +67,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * This presents a summary of CPU and memory utilization.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SYS_STATE_DEP_A 0x7F02
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 mem_total;      /**< total system memory */
@@ -80,7 +86,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of processes with high socket counts.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS 0x7F03
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;          /**< sequence of this status message, values from 0-9 */
@@ -102,7 +110,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of sockets with deep queues.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES 0x7F04
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;                    /**< sequence of this status message, values from
@@ -133,7 +143,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Summaries the socket usage across the system.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SOCKET_USAGE 0x7F05
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 avg_queue_depth;         /**< average socket queue depths across all
@@ -154,7 +166,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of processes with a large number of open file descriptors.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT 0x7F06
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -168,7 +182,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Summary of open file descriptors on the system.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY 0x7F07
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
@@ -186,7 +202,10 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of CPU on the system, including a timestamp.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_CPU_STATE 0x7F08
+#endif
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags)      \
@@ -200,6 +219,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -218,7 +238,10 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of memory on the system, including a timestamp.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_MEM_STATE 0x7F09
+#endif
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags)      \
@@ -232,6 +255,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
@@ -250,7 +274,10 @@ typedef struct SBP_ATTR_PACKED {
  * This presents a summary of CPU and memory utilization, including a
  * timestamp.
  */
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_MSG_LINUX_SYS_STATE 0x7F0A
+#endif
+#ifndef LIBSBP_NEW_LINUX_MESSAGES_H
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT (0u)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags)      \
@@ -264,6 +291,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 mem_total;      /**< total system memory, in MiB */

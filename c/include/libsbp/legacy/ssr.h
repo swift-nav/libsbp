@@ -169,49 +169,15 @@ lower 5 stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
 ] */
 } stec_residual_t;
 
-/** Correction data for a single grid point
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
- */
-
-typedef struct SBP_ATTR_PACKED {
-  u16 index; /**< Index of the grid point */
-  tropospheric_delay_correction_no_std_t
-      tropo_delay_correction;               /**< Wet
-                                                 and
-                                                 hydrostatic
-                                                 vertical
-                                                 delays */
-  stec_residual_no_std_t stec_residuals[0]; /**< STEC residuals for
-                                                 each satellite */
-} grid_element_no_std_t;
-
-/** Correction data for a single grid point
- *
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
- * stddev) for each satellite at the grid point.
- */
-
-typedef struct SBP_ATTR_PACKED {
-  u16 index; /**< Index of the grid point */
-  tropospheric_delay_correction_t tropo_delay_correction; /**< Wet and
-                                                               hydrostatic
-                                                               vertical
-                                                               delays
-                                                               (mean,
-                                                               stddev) */
-  stec_residual_t stec_residuals[0]; /**< STEC residuals for each
-                                          satellite (mean, stddev) */
-} grid_element_t;
-
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is to be applied as a delta
  * correction to broadcast ephemeris and is an equivalent to the 1060 /1066
  * RTCM message types.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;   /**< GNSS reference time of the
@@ -244,7 +210,9 @@ typedef struct SBP_ATTR_PACKED {
  * corresponding signal to get corrected pseudorange. It is an equivalent to
  * the 1059 / 1065 RTCM message types.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_CODE_BIASES 0x05E1
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;   /**< GNSS reference time of the
@@ -267,7 +235,9 @@ typedef struct SBP_ATTR_PACKED {
  * the phase wind-up correction. It is typically an equivalent to the 1265
  * RTCM message types.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;   /**< GNSS reference time of the
@@ -297,7 +267,9 @@ typedef struct SBP_ATTR_PACKED {
  *
  * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   stec_header_t header; /**< Header of a STEC polynomial coeffcient
@@ -313,13 +285,24 @@ typedef struct SBP_ATTR_PACKED {
  *
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
+#endif
 
 typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_t header; /**< Header of a gridded correction
+  gridded_correction_header_t header; /**< Header of a
+                                           gridded
+                                           correction
                                            message */
-  grid_element_t element; /**< Tropo and STEC residuals for the given grid
-                               point. */
+  u16 index;                          /**< Index of the grid point. */
+  tropospheric_delay_correction_t tropo_delay_correction; /**< Wet and
+                                                               hydrostatic
+                                                               vertical
+                                                               delays
+                                                               (mean,
+                                                               stddev). */
+  stec_residual_t stec_residuals[0]; /**< STEC residuals for each
+                                          satellite (mean, stddev). */
 } msg_ssr_gridded_correction_t;
 
 /** Definition of a SSR atmospheric correction tile.
@@ -333,7 +316,9 @@ typedef struct SBP_ATTR_PACKED {
  * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
  * correction points, not lists of points.
  */
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   u16 tile_set_id;   /**< Unique identifier of the tile set this tile
@@ -418,13 +403,17 @@ typedef struct SBP_ATTR_PACKED {
                    degree increments. [1 mm] */
 } satellite_apc_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_SATELLITE_APC 0x0604
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
 } msg_ssr_satellite_apc_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;   /**< GNSS reference time of the
@@ -507,7 +496,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 seq_num;             /**< Postion of this message in the dataset */
 } grid_definition_header_dep_a_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   stec_header_dep_a_t header;          /**< Header of a STEC message */
@@ -515,25 +506,49 @@ typedef struct SBP_ATTR_PACKED {
                                             space vehicle */
 } msg_ssr_stec_correction_dep_a_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+#endif
 
 typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_dep_a_t header; /**< Header of a Gridded
-                                                 Correction message */
-  grid_element_no_std_t element; /**< Tropo and STEC residuals for the
-                                      given grid point */
+  gridded_correction_header_dep_a_t header; /**< Header of
+                                                 a Gridded
+                                                 Correction
+                                                 message */
+  u16 index;                                /**< Index of the grid point */
+  tropospheric_delay_correction_no_std_t
+      tropo_delay_correction;               /**< Wet
+                                                 and
+                                                 hydrostatic
+                                                 vertical
+                                                 delays */
+  stec_residual_no_std_t stec_residuals[0]; /**< STEC residuals for
+                                                 each satellite */
 } msg_ssr_gridded_correction_no_std_dep_a_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
+#endif
 
 typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_dep_a_t header; /**< Header of a Gridded
-                                                 Correction message */
-  grid_element_t element; /**< Tropo and STEC residuals for the given grid
-                               point (mean and standard deviation) */
+  gridded_correction_header_dep_a_t header; /**< Header of
+                                                 a Gridded
+                                                 Correction
+                                                 message */
+  u16 index;                                /**< Index of the grid point */
+  tropospheric_delay_correction_t tropo_delay_correction; /**< Wet and
+                                                               hydrostatic
+                                                               vertical
+                                                               delays
+                                                               (mean,
+                                                               stddev) */
+  stec_residual_t stec_residuals[0]; /**< STEC residuals for each
+                                          satellite (mean, stddev) */
 } msg_ssr_gridded_correction_dep_a_t;
 
+#ifndef LIBSBP_NEW_SSR_MESSAGES_H
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
+#endif
 
 typedef struct SBP_ATTR_PACKED {
   grid_definition_header_dep_a_t header; /**< Header of a Gridded

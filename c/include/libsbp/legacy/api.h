@@ -17,7 +17,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 struct sbp_state;
 typedef struct sbp_state sbp_state_t;
