@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -49,8 +49,10 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
+/*
+ * Used to hold an individual sbp_msg struct so that the message can be used in
+ * all general purpose functions within this file.
+ */
 typedef union {
   sbp_msg_acq_result_t acq_result;
   sbp_msg_acq_result_dep_c_t acq_result_dep_c;
@@ -256,6 +258,18 @@ typedef union {
   sbp_msg_wheeltick_t wheeltick;
 } sbp_msg_t;
 
+/** Encodes a SBP message to the SBP wire format, writing it to the given
+ * buffer.
+ *
+ * \param buf         Buffer to write the resulting encoded data to
+ * \param len         The amount of bytes available in buf
+ * \param n_written   (out) Number of bytes written to buf
+ * \param msg_type    SBP message type
+ * \param msg         SBP message to encode
+ * \return `SBP_ENCODE_ERROR` (-7) if message was unable to be encoded
+ *         `SBP_OK` (0) if the message was successfully encoded and written to
+ * buf callback
+ */
 static inline s8 sbp_encode_msg(uint8_t *buf, uint8_t len, uint8_t *n_written,
                                 uint16_t msg_type, const sbp_msg_t *msg) {
   switch (msg_type) {
@@ -842,6 +856,17 @@ static inline s8 sbp_encode_msg(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return -1;
 }
 
+/** Decodes a SBP message from the SBP encoded wire format.
+ *
+ * \param buf         Buffer containing the encoded SBP message
+ * \param len         Number of bytes in buf
+ * \param n_read      (out) The number of bytes read when decoding
+ * \param msg_type    SBP message type to decode to
+ * \param msg         SBP message struct to fill in the details of
+ * \return `SBP_DECODE_ERROR` (-8) if message was unable to be decoded
+ *         `SBP_OK` (0) if the message was successfully decoded
+ *         callback
+ */
 static inline s8 sbp_decode_msg(const uint8_t *buf, uint8_t len,
                                 uint8_t *n_read, uint16_t msg_type,
                                 sbp_msg_t *msg) {
@@ -1416,6 +1441,13 @@ static inline s8 sbp_decode_msg(const uint8_t *buf, uint8_t len,
   return -1;
 }
 
+/** Returns the wire format size in bytes of a given SBP message.
+ *
+ * \param msg_type    SBP message type
+ * \param msg         SBP message
+ * \return            The Number of bytes that the given message would be on the
+ * wire
+ */
 static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
   switch (msg_type) {
     case SBP_MSG_ACQ_RESULT:
@@ -1899,6 +1931,15 @@ static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
   return 0;
 }
 
+/** Compares two SBP messages of equal type.
+ *
+ * \param msg_type    SBP message type
+ * \param a           The first message to compare
+ * \param b           The second message to compare
+ * \return            0 if the two messages have equal fields
+ *                    1 if, on the first non-equal field, a.field > b.field
+ *                    -1 if, on the first non-equal field, a.field < b.field
+ */
 static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a,
                               const sbp_msg_t *b) {
   switch (msg_type) {
