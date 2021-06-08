@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFCovGNSS) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0x234, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0x234, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x234, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0x234, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -149,7 +149,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFCovGNSS) {
     test_msg->x = -2694229.7079770807;
     test_msg->y = -4264073.427345817;
     test_msg->z = 3890655.013186158;
-    sbp_send_payload(&sbp_state, 0x234, 4096, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x234, 4096, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

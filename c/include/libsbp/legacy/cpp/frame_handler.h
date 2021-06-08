@@ -92,7 +92,7 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  */
 template<typename ...MsgTypes>
 class FrameHandler {
-    static constexpr size_t kMsgCount = sizeof...(MsgTypes);
+    static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
@@ -102,8 +102,8 @@ class FrameHandler {
     explicit FrameHandler(State *state) : state_(*state), callback_nodes_() {
         static constexpr std::array<uint16_t, kMsgCount> ids = { sbp::MessageTraits<MsgTypes>::id... };
 
-        for (size_t i = 0; i < kMsgCount; ++i) {
-            sbp_register_frame_callback(state_.get_state(),
+        for (std::size_t i = 0; i < kMsgCount; ++i) {
+            sbp_frame_callback_register(state_.get_state(),
                     ids[i],
                     &sbp_frame_cb_passthrough<FrameHandler>,
                     this,
@@ -164,14 +164,14 @@ class FrameHandler {
  * };
  *
  */
-class [[deprecated]] AllFrameHandler {
+class AllFrameHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 
   public:
 
     explicit AllFrameHandler(State *state) : state_(*state), callback_node_() {
-      sbp_register_all_payload_callback(state_.get_state(),
+      sbp_all_payload_callback_register(state_.get_state(),
               sbp_frame_cb_passthrough<AllFrameHandler>,
               this,
               &callback_node_);

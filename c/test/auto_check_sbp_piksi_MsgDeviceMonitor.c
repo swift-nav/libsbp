@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xb5, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb5, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb5, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xb5, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -138,7 +138,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     test_msg->cpu_vint = 987;
     test_msg->dev_vin = -9999;
     test_msg->fe_temperature = 4776;
-    sbp_send_payload(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -221,9 +221,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xb5, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb5, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb5, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xb5, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -243,7 +243,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     test_msg->cpu_vint = 987;
     test_msg->dev_vin = -9999;
     test_msg->fe_temperature = 4776;
-    sbp_send_payload(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -326,9 +326,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xb5, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb5, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb5, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xb5, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -348,7 +348,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     test_msg->cpu_vint = 987;
     test_msg->dev_vin = -9999;
     test_msg->fe_temperature = 4776;
-    sbp_send_payload(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -431,9 +431,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xb5, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb5, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb5, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xb5, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -453,7 +453,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     test_msg->cpu_vint = 986;
     test_msg->dev_vin = -9999;
     test_msg->fe_temperature = 4776;
-    sbp_send_payload(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -536,9 +536,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xb5, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb5, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb5, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xb5, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -558,7 +558,7 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     test_msg->cpu_vint = 988;
     test_msg->dev_vin = -9999;
     test_msg->fe_temperature = 4776;
-    sbp_send_payload(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb5, 16991, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

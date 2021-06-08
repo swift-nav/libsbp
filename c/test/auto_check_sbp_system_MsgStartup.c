@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_system_MsgStartup) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xff00, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xff00, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff00, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xff00, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -135,7 +135,7 @@ START_TEST(test_auto_check_sbp_system_MsgStartup) {
     test_msg->cause = 0;
     test_msg->reserved = 0;
     test_msg->startup_type = 0;
-    sbp_send_payload(&sbp_state, 0xff00, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xff00, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -211,9 +211,9 @@ START_TEST(test_auto_check_sbp_system_MsgStartup) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xff00, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xff00, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff00, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xff00, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -230,7 +230,7 @@ START_TEST(test_auto_check_sbp_system_MsgStartup) {
     test_msg->cause = 0;
     test_msg->reserved = 0;
     test_msg->startup_type = 0;
-    sbp_send_payload(&sbp_state, 0xff00, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xff00, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

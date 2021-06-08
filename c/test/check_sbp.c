@@ -191,13 +191,13 @@ START_TEST(test_sbp_process) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
-  sbp_register_payload_callback(&s, 0x2269, &logging_callback,
+  sbp_payload_callback_register(&s, 0x2269, &logging_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
   u8 test_data[] = {0x01, 0x02, 0x03, 0x04};
 
   dummy_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(test_data), test_data,
                    &dummy_write);
 
   while (dummy_rd < dummy_wr) {
@@ -214,7 +214,7 @@ START_TEST(test_sbp_process) {
   ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
                 "context pointer incorrectly passed");
 
-  sbp_register_payload_callback(&s, 0x2270, &logging_callback,
+  sbp_payload_callback_register(&s, 0x2270, &logging_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
   ck_assert_msg(sbp_find_callback(&s, 0x2270) != 0,
                 "second callback not found");
@@ -223,7 +223,7 @@ START_TEST(test_sbp_process) {
   ck_assert_msg(sbp_find_callback(&s, 0x2270) == 0, "callback not removed");
 
   logging_reset();
-  sbp_send_payload(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
+  sbp_payload_send(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
 
   ck_assert_msg(last_io_context == &DUMMY_MEMORY_FOR_IO,
                 "io context pointer incorrectly passed");
@@ -244,7 +244,7 @@ START_TEST(test_sbp_process) {
   ck_assert_msg(last_len == 0, "len decoded incorrectly (2)");
 
   logging_reset();
-  sbp_send_payload(&s, 0x22, 0x4243, 0, 0, &dummy_write);
+  sbp_payload_send(&s, 0x22, 0x4243, 0, 0, &dummy_write);
 
   s8 ret = 0;
   while (dummy_rd < dummy_wr) {
@@ -267,7 +267,7 @@ START_TEST(test_sbp_process) {
   memcpy(dummy_buff, awesome_message, sizeof(awesome_message));
 
   static sbp_msg_callbacks_node_t m;
-  sbp_register_payload_callback(&s, 0x2233, &logging_callback, 0, &m);
+  sbp_payload_callback_register(&s, 0x2233, &logging_callback, 0, &m);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -312,7 +312,7 @@ START_TEST(test_sbp_process) {
   memcpy(dummy_buff, awesome_message2, sizeof(awesome_message2));
 
   static sbp_msg_callbacks_node_t p;
-  sbp_register_payload_callback(&s, 0x2233, &logging_callback, 0, &p);
+  sbp_payload_callback_register(&s, 0x2233, &logging_callback, 0, &p);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
@@ -339,7 +339,7 @@ START_TEST(test_sbp_process) {
          sizeof(crappy_then_awesome_message));
 
   static sbp_msg_callbacks_node_t q;
-  sbp_register_payload_callback(&s, 0x2233, &logging_callback, 0, &q);
+  sbp_payload_callback_register(&s, 0x2233, &logging_callback, 0, &q);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
@@ -373,7 +373,7 @@ START_TEST(test_sbp_frame) {
                      0x01, 0x02, 0x03, 0x04, 0x3D, 0xF7};
 
   dummy_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(test_data), test_data,
                    &dummy_write);
 
   while (dummy_rd < dummy_wr) {
@@ -416,10 +416,10 @@ START_TEST(test_sbp_frame) {
   dummy_reset();
   sbp_clear_callbacks(&s);
 
-  sbp_register_payload_callback(&s, 0x2269, &logging_callback, 0, &n3);
+  sbp_payload_callback_register(&s, 0x2269, &logging_callback, 0, &n3);
   sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback,
                               &DUMMY_MEMORY_FOR_CALLBACKS, &n4);
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(test_data), test_data,
                    &dummy_write);
 
   while (dummy_rd < dummy_wr) {
@@ -436,7 +436,7 @@ START_TEST(test_sbp_frame) {
    * there */
   sbp_remove_callback(&s, &n4);
   dummy_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(test_data), test_data,
                    &dummy_write);
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
@@ -504,7 +504,7 @@ START_TEST(test_sbp_all_payload) {
 
   static sbp_msg_callbacks_node_t n;
 
-  sbp_register_all_payload_callback(&s, &frame_logging_callback,
+  sbp_all_payload_callback_register(&s, &frame_logging_callback,
                                     &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
   u8 msg_1[] = {0x01, 0x02, 0x03, 0x04};
@@ -512,8 +512,8 @@ START_TEST(test_sbp_all_payload) {
 
   dummy_reset();
   logging_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(msg_1), msg_1, &dummy_write);
-  sbp_send_payload(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(msg_1), msg_1, &dummy_write);
+  sbp_payload_send(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -543,7 +543,7 @@ START_TEST(test_sbp_big_msg) {
 
   sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback,
                               &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-  sbp_register_payload_callback(&s, 0x2269, &logging_callback,
+  sbp_payload_callback_register(&s, 0x2269, &logging_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
   u8 big_msg[SBP_MAX_PAYLOAD_LEN];
@@ -553,7 +553,7 @@ START_TEST(test_sbp_big_msg) {
 
   dummy_reset();
   logging_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(big_msg), big_msg, &dummy_write);
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(big_msg), big_msg, &dummy_write);
 
   s8 ret = SBP_OK;
   while (dummy_rd < dummy_wr) {
@@ -583,7 +583,7 @@ START_TEST(test_sbp_big_msg) {
 }
 END_TEST
 
-START_TEST(test_sbp_send_payload) {
+START_TEST(test_sbp_payload_send) {
   /* TODO: Tests with different write function behaviour. */
 
   sbp_state_t s;
@@ -592,35 +592,35 @@ START_TEST(test_sbp_send_payload) {
   u8 smsg[] = {0x22, 0x33};
 
   ck_assert_msg(
-      sbp_send_payload(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
-      "sbp_send_payload should return an error if write is NULL");
+      sbp_payload_send(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
+      "sbp_payload_send should return an error if write is NULL");
 
   dummy_reset();
-  ck_assert_msg(sbp_send_payload(&s, 0x2233, 0x4455, 1, 0, &dummy_write) ==
+  ck_assert_msg(sbp_payload_send(&s, 0x2233, 0x4455, 1, 0, &dummy_write) ==
                     SBP_NULL_ERROR,
-                "sbp_send_payload should return an error if payload is NULL "
+                "sbp_payload_send should return an error if payload is NULL "
                 "and len != 0");
 
   dummy_reset();
   ck_assert_msg(
-      sbp_send_payload(&s, 0x2233, 0x4455, 0, 0, &dummy_write) == SBP_OK,
-      "sbp_send_payload should return OK if payload is NULL and len == 0");
+      sbp_payload_send(&s, 0x2233, 0x4455, 0, 0, &dummy_write) == SBP_OK,
+      "sbp_payload_send should return OK if payload is NULL and len == 0");
 
   u8 zero_len_message[] = {0x55, 0x33, 0x22, 0x55, 0x44, 0x00, 0x2C, 0x4C};
 
   ck_assert_msg(
       memcmp(dummy_buff, zero_len_message, sizeof(zero_len_message)) == 0,
-      "sbp_send_payload encode error for len = 0");
+      "sbp_payload_send encode error for len = 0");
 
   dummy_reset();
-  sbp_send_payload(&s, 0x2233, 0x6677, sizeof(smsg), smsg, &dummy_write);
+  sbp_payload_send(&s, 0x2233, 0x6677, sizeof(smsg), smsg, &dummy_write);
 
   u8 awesome_message[] = {0x55, 0x33, 0x22, 0x77, 0x66,
                           0x02, 0x22, 0x33, 0x8A, 0x33};
 
   ck_assert_msg(
       memcmp(dummy_buff, awesome_message, sizeof(awesome_message)) == 0,
-      "sbp_send_payload encode error for test message");
+      "sbp_payload_send encode error for test message");
 }
 END_TEST
 
@@ -636,9 +636,9 @@ START_TEST(test_callbacks) {
       "sbp_find_callback should return NULL if no callbacks registered");
 
   ck_assert_msg(
-      sbp_register_payload_callback(&s, 0x2233, &test_callback, 0, 0) ==
+      sbp_payload_callback_register(&s, 0x2233, &test_callback, 0, 0) ==
           SBP_NULL_ERROR,
-      "sbp_register_payload_callback should return an error if node is NULL");
+      "sbp_payload_callback_register should return an error if node is NULL");
 
   /* Add a first callback. */
 
@@ -647,17 +647,17 @@ START_TEST(test_callbacks) {
   int NUMBER = 42;
 
   ck_assert_msg(
-      sbp_register_payload_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
-      "sbp_register_payload_callback should return an error if cb is NULL");
+      sbp_payload_callback_register(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
+      "sbp_payload_callback_register should return an error if cb is NULL");
 
-  ck_assert_msg(sbp_register_payload_callback(&s, 0x2233, &test_callback,
+  ck_assert_msg(sbp_payload_callback_register(&s, 0x2233, &test_callback,
                                               &NUMBER, &n) == SBP_OK,
-                "sbp_register_payload_callback should return success if "
+                "sbp_payload_callback_register should return success if "
                 "everything is groovy");
 
-  ck_assert_msg(sbp_register_payload_callback(&s, 0x2233, &test_callback, 0,
+  ck_assert_msg(sbp_payload_callback_register(&s, 0x2233, &test_callback, 0,
                                               &n) == SBP_CALLBACK_ERROR,
-                "sbp_register_payload_callback should return "
+                "sbp_payload_callback_register should return "
                 "SBP_CALLBACK_ERROR if a callback "
                 "of the same type is already registered");
 
@@ -678,9 +678,9 @@ START_TEST(test_callbacks) {
 
   int NUMBER2 = 84;
 
-  ck_assert_msg(sbp_register_payload_callback(&s, 0x1234, &test_callback2,
+  ck_assert_msg(sbp_payload_callback_register(&s, 0x1234, &test_callback2,
                                               &NUMBER2, &m) == SBP_OK,
-                "sbp_register_payload_callback should return success if "
+                "sbp_payload_callback_register should return success if "
                 "everything is groovy (2)");
 
   ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
@@ -697,9 +697,9 @@ START_TEST(test_callbacks) {
   ck_assert_msg(sbp_find_callback(&s, 0x1234)->context == &NUMBER2,
                 "sbp_find_callback didn't return the correct context pointer");
 
-  ck_assert_msg(sbp_register_payload_callback(&s, 0x1234, &test_callback, 0,
+  ck_assert_msg(sbp_payload_callback_register(&s, 0x1234, &test_callback, 0,
                                               &n) == SBP_CALLBACK_ERROR,
-                "sbp_register_payload_callback should return "
+                "sbp_payload_callback_register should return "
                 "SBP_CALLBACK_ERROR if a callback "
                 "of the same type is already registered (2)");
 
@@ -745,16 +745,16 @@ START_TEST(test_frame_callbacks) {
 
   ck_assert_msg(
       sbp_register_frame_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
-      "sbp_register_payload_callback should return an error if cb is NULL");
+      "sbp_payload_callback_register should return an error if cb is NULL");
 
   ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback,
                                             &NUMBER, &n) == SBP_OK,
-                "sbp_register_payload_callback should return success if "
+                "sbp_payload_callback_register should return success if "
                 "everything is groovy");
 
   ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, 0,
                                             &n) == SBP_CALLBACK_ERROR,
-                "sbp_register_payload_callback should return "
+                "sbp_payload_callback_register should return "
                 "SBP_CALLBACK_ERROR if a callback "
                 "of the same type is already registered");
 
@@ -777,7 +777,7 @@ START_TEST(test_frame_callbacks) {
 
   ck_assert_msg(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback2,
                                             &NUMBER2, &m) == SBP_OK,
-                "sbp_register_payload_callback should return success if "
+                "sbp_payload_callback_register should return success if "
                 "everything is groovy (2)");
 
   ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
@@ -796,7 +796,7 @@ START_TEST(test_frame_callbacks) {
 
   ck_assert_msg(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback, 0,
                                             &n) == SBP_CALLBACK_ERROR,
-                "sbp_register_payload_callback should return "
+                "sbp_payload_callback_register should return "
                 "SBP_CALLBACK_ERROR if a callback "
                 "of the same type is already registered (2)");
 
@@ -828,13 +828,13 @@ START_TEST(test_msg_buff_backwards_compatibility) {
 
   static sbp_msg_callbacks_node_t n;
 
-  sbp_register_payload_callback(&s, 0x2269, &test_callback,
+  sbp_payload_callback_register(&s, 0x2269, &test_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
   u8 test_data[] = {0x01, 0x02, 0x03, 0x04};
 
   dummy_reset();
-  sbp_send_payload(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+  sbp_payload_send(&s, 0x2269, 0x42, sizeof(test_data), test_data,
                    &dummy_write);
 
   while (dummy_rd < dummy_wr) {
@@ -859,7 +859,7 @@ Suite* sbp_suite(void) {
 
   tcase_add_test(tc_core, test_msg_buff_backwards_compatibility);
   tcase_add_test(tc_core, test_callbacks);
-  tcase_add_test(tc_core, test_sbp_send_payload);
+  tcase_add_test(tc_core, test_sbp_payload_send);
   tcase_add_test(tc_core, test_sbp_process);
   tcase_add_test(tc_core, test_sbp_frame);
   tcase_add_test(tc_core, test_frame_callbacks);

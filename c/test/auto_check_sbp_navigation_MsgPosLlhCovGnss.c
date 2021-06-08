@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLlhCovGnss) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0x231, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0x231, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x231, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0x231, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -149,7 +149,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLlhCovGnss) {
     test_msg->lon = -122.28650381011681;
     test_msg->n_sats = 18;
     test_msg->tow = 501867800;
-    sbp_send_payload(&sbp_state, 0x231, 4096, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x231, 4096, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

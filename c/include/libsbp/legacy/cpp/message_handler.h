@@ -77,7 +77,7 @@ class PayloadCallbackInterface : PayloadCallbackInterface<OtherTypes...> {
 
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_payload_callback(state,
+    sbp_payload_callback_register(state,
         sbp::MessageTraits<MsgType>::id,
         &sbp_payload_cb_passthrough<MsgType, PayloadCallbackInterface, &PayloadCallbackInterface::handle_sbp_msg>,
         this,
@@ -95,7 +95,7 @@ class PayloadCallbackInterface<MsgType> {
   virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_payload_callback(state,
+    sbp_payload_callback_register(state,
                           sbp::MessageTraits<MsgType>::id,
                           &sbp_payload_cb_passthrough<MsgType, PayloadCallbackInterface, &PayloadCallbackInterface::handle_sbp_msg>,
                           this,
@@ -143,8 +143,8 @@ class PayloadCallbackInterface<MsgType> {
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename... MsgTypes>
- class [[deprecated]] PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
-    static constexpr size_t kMsgCount = sizeof...(MsgTypes);
+ class PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
+    static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;

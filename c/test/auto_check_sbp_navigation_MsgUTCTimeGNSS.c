@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCTimeGNSS) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0x105, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0x105, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x105, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0x105, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -142,7 +142,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCTimeGNSS) {
     test_msg->seconds = 9;
     test_msg->tow = 501867800;
     test_msg->year = 2021;
-    sbp_send_payload(&sbp_state, 0x105, 789, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x105, 789, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

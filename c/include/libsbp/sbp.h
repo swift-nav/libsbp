@@ -15,6 +15,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/legacy/api.h>
+#include <libsbp/legacy/compat.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +75,7 @@ extern "C" {
 #define SBP_MSG_ALL 0
 
 typedef union {
-  sbp_payload_callback_t msg;
+  sbp_msg_callback_t msg;
   sbp_frame_callback_t frame;
 } sbp_callback_t;
 
@@ -85,7 +86,7 @@ typedef union {
  * to cast the callback function pointer stored within.
  */
 enum sbp_cb_type {
-  SBP_PAYLOAD_CALLBACK = 0,
+  SBP_MSG_CALLBACK = 0,
   SBP_FRAME_CALLBACK = 1,
   SBP_CALLBACK_TYPE_COUNT = 2,
 };

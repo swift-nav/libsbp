@@ -164,8 +164,8 @@ START_TEST( test_(((s.suite_name))) )
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, (((t.msg_type))), &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, (((t.msg_type))), &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_payload_callback_register(&sbp_state, (((t.msg_type))), &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, (((t.msg_type))), &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
 
@@ -179,7 +179,7 @@ START_TEST( test_(((s.suite_name))) )
     test_msg_len = sizeof(*test_msg);
     ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
     ((*- endif *))
-    sbp_send_payload(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), test_msg_len, test_msg_storage, &dummy_write);
+    sbp_payload_send(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

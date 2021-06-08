@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_system_MsgInsStatus) {
 
     logging_reset();
 
-    sbp_register_payload_callback(&sbp_state, 0xff03, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xff03, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff03, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xff03, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -133,7 +133,7 @@ START_TEST(test_auto_check_sbp_system_MsgInsStatus) {
     msg_ins_status_t *test_msg = (msg_ins_status_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 536870921;
-    sbp_send_payload(&sbp_state, 0xff03, 789, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xff03, 789, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

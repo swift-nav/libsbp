@@ -112,7 +112,7 @@
  * Sending
  * -------
  *
- * To send an SBP message simply call the sbp_send_payload() function,
+ * To send an SBP message simply call the sbp_payload_send() function,
  * providing a `write` function that writes data to your output.
  *
  * Often the data to be sent will simply be a struct cast to a `u8` buffer. As
@@ -122,7 +122,7 @@
  * ~~~
  * // Convenience macro for sending an SBP message.
  * #define SBP_MSG(sbp_state, msg_type, item) \
- *   sbp_send_payload(&sbp_state, msg_type, MY_SENDER_ID, \
+ *   sbp_payload_send(&sbp_state, msg_type, MY_SENDER_ID, \
  *       sizeof(item), (u8 *)&(item), &my_write)
  *
  * typedef struct {
@@ -147,7 +147,7 @@
  *
  *   my_awesome_struct payload = { 0x22, 0x33 };
  *
- *   sbp_send_payload(&s, SBP_MY_MSG_TYPE, MY_SENDER_ID,
+ *   sbp_payload_send(&s, SBP_MY_MSG_TYPE, MY_SENDER_ID,
  *                    sizeof(payload), (u8*)&payload, &my_write);
  *
  *   // or
@@ -169,7 +169,7 @@
  *                 for callbacks of type SBP_FRAME_CALLBACK.
  * \param cb       Pointer to message callback function
  * \param cb_type  sbp_cb_type indicating what kind of cb is in use.
- *                 (e.g SBP_PAYLOAD_CALLBACK or SBP_FRAME_CALLBACK)
+ *                 (e.g SBP_MSG_CALLBACK or SBP_FRAME_CALLBACK)
  * \param context  Pointer to context for callback function
  * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
@@ -181,7 +181,7 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         void *context,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
-  if ((cb_type == SBP_PAYLOAD_CALLBACK && cb.msg == 0) ||
+  if ((cb_type == SBP_MSG_CALLBACK && cb.msg == 0) ||
       (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0)) {
     return SBP_NULL_ERROR;
   }
@@ -197,7 +197,7 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
     }
     if ((n->msg_type == msg_type) && (n->context == context) &&
         (n->cb_type == cb_type)) {
-      if ((cb_type == SBP_PAYLOAD_CALLBACK) && (n->cb.msg == cb.msg)) {
+      if ((cb_type == SBP_MSG_CALLBACK) && (n->cb.msg == cb.msg)) {
         return SBP_CALLBACK_ERROR;
       }
       if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
@@ -210,7 +210,7 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
   node->msg_type = msg_type;
   node->context = context;
   node->cb_type = cb_type;
-  if (cb_type == SBP_PAYLOAD_CALLBACK) {
+  if (cb_type == SBP_MSG_CALLBACK) {
     node->cb.msg = cb.msg;
   } else if (cb_type == SBP_FRAME_CALLBACK) {
     node->cb.frame = cb.frame;
@@ -276,7 +276,7 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
+s8 sbp_frame_callback_register(sbp_state_t *s, u16 msg_type,
                                sbp_frame_callback_t cb, void *context,
                                sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
@@ -295,10 +295,10 @@ s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
 
-s8 sbp_register_all_payload_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context,
                                  sbp_msg_callbacks_node_t *node) {
-  return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
+  return sbp_frame_callback_register(s, SBP_MSG_ALL, cb, context, node);
 }
 
 /** Register a payload callback for a message type.
@@ -317,12 +317,12 @@ s8 sbp_register_all_payload_callback(sbp_state_t *s, sbp_frame_callback_t cb,
  *         `SBP_CALLBACK_ERROR` if the callback was already
  *         registered for that message type.
  */
-s8 sbp_register_payload_callback(sbp_state_t *s, u16 msg_type, sbp_payload_callback_t cb, void *context,
+s8 sbp_payload_callback_register(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
                          sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.msg = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
-                                       SBP_PAYLOAD_CALLBACK, context, node);
+                                       SBP_MSG_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.
@@ -357,7 +357,7 @@ void sbp_state_init(sbp_state_t *s)
 /** Set a context to pass to all function pointer calls made by sbp functions
  * This helper function sets a void* context pointer in sbp_state.
  * Whenever `sbp_process` calls the `read` function pointer, it passes this context.
- * Whenever `sbp_send_payload` calls the `write` function pointer, it passes this context.
+ * Whenever `sbp_payload_send` calls the `write` function pointer, it passes this context.
  * This allows C++ code to get a pointer to an object inside these functions.
  */
 void sbp_state_set_io_context(sbp_state_t *s, void *context)
@@ -573,10 +573,10 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
  *         callback.
  */
-s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
   return sbp_process_frame(s, sender_id, msg_type, msg_len, payload,
-                          0, 0, SBP_CALLBACK_FLAG(SBP_PAYLOAD_CALLBACK));
+                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK));
 }
 
 
@@ -616,7 +616,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                          frame, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
-        case SBP_PAYLOAD_CALLBACK:
+        case SBP_MSG_CALLBACK:
         {
           node->cb.msg(sender_id, payload_len, payload, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
@@ -648,10 +648,10 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * which to read the data to be written, and `context` is the arbitrary pointer
  * set by `sbp_state_set_io_context`. The function should return the number
  * of bytes successfully written which may be between 0 and `n`. Currently, if
- * the number of bytes written is different from `n` then `sbp_send_payload`
+ * the number of bytes written is different from `n` then `sbp_payload_send`
  * will immediately return with an error.
  *
- * Note that `sbp_send_payload` makes multiple calls to write and therefore if
+ * Note that `sbp_payload_send` makes multiple calls to write and therefore if
  * a `write` call fails then this may result in a partial message being written
  * to the output. This should be caught by the CRC check on the receiving end
  * but will result in lost messages.
@@ -662,7 +662,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-s8 sbp_send_payload(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     s32 (*write)(u8 *buff, u32 n, void *context))
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */

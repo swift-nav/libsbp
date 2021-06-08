@@ -25,27 +25,22 @@ struct sbp_msg_callbacks_node;
 typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 
 /** SBP callback function prototype definitions. */
-typedef void (*sbp_payload_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
+typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
 typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
                                      u8 payload_len, u8 payload[],
                                      u16 frame_len, u8 frame[], void *context);
 
-SWIFT_DEPRECATED
-s8 sbp_register_payload_callback(sbp_state_t* s, u16 msg_type, sbp_payload_callback_t cb, void* context,
+s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
-SWIFT_DEPRECATED
-s8 sbp_register_frame_callback(sbp_state_t* s, u16 msg_type,
+s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
                                sbp_frame_callback_t cb, void* context,
                                sbp_msg_callbacks_node_t *node);
-SWIFT_DEPRECATED
-s8 sbp_register_all_payload_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context, sbp_msg_callbacks_node_t *node);
 
-SWIFT_DEPRECATED
-s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     u8 payload[]);
-SWIFT_DEPRECATED
-s8 sbp_send_payload(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     s32 (*write)(u8 *buff, u32 n, void* context));
 
 #ifdef __cplusplus
