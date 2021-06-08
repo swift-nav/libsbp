@@ -165,129 +165,6 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
     }
 }
 
-/// Correction data for a single grid point
-///
-/// Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-/// stddev) for each satellite at the grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GridElement {
-    /// Index of the grid point
-    pub index: u16,
-    /// Wet and hydrostatic vertical delays (mean, stddev)
-    pub tropo_delay_correction: TroposphericDelayCorrection,
-    /// STEC residuals for each satellite (mean, stddev)
-    pub stec_residuals: Vec<STECResidual>,
-}
-
-impl GridElement {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, crate::Error> {
-        Ok( GridElement{
-            index: _buf.read_u16::<LittleEndian>()?,
-            tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
-            stec_residuals: STECResidual::parse_array(_buf)?,
-        } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GridElement::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GridElement>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GridElement::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GridElement {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.tropo_delay_correction.append_to_sbp_buffer(buf);
-        self.stec_residuals.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.tropo_delay_correction.sbp_size();
-        size += self.stec_residuals.sbp_size();
-        size
-    }
-}
-
-/// Correction data for a single grid point
-///
-/// Contains one tropo delay, plus STEC residuals for each satellite at the
-/// grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GridElementNoStd {
-    /// Index of the grid point
-    pub index: u16,
-    /// Wet and hydrostatic vertical delays
-    pub tropo_delay_correction: TroposphericDelayCorrectionNoStd,
-    /// STEC residuals for each satellite
-    pub stec_residuals: Vec<STECResidualNoStd>,
-}
-
-impl GridElementNoStd {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElementNoStd, crate::Error> {
-        Ok( GridElementNoStd{
-            index: _buf.read_u16::<LittleEndian>()?,
-            tropo_delay_correction: TroposphericDelayCorrectionNoStd::parse(_buf)?,
-            stec_residuals: STECResidualNoStd::parse_array(_buf)?,
-        } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElementNoStd>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GridElementNoStd::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GridElementNoStd>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GridElementNoStd::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GridElementNoStd {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.tropo_delay_correction.append_to_sbp_buffer(buf);
-        self.stec_residuals.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.tropo_delay_correction.sbp_size();
-        size += self.stec_residuals.sbp_size();
-        size
-    }
-}
-
 /// Header for the MSG_SSR_GRIDDED_CORRECTION message
 ///
 /// The LPP message contains nested variable length arrays which are not
@@ -560,8 +437,12 @@ pub struct MsgSsrGriddedCorrection {
     pub sender_id: Option<u16>,
     /// Header of a gridded correction message
     pub header: GriddedCorrectionHeader,
-    /// Tropo and STEC residuals for the given grid point.
-    pub element: GridElement,
+    /// Index of the grid point.
+    pub index: u16,
+    /// Wet and hydrostatic vertical delays (mean, stddev).
+    pub tropo_delay_correction: TroposphericDelayCorrection,
+    /// STEC residuals for each satellite (mean, stddev).
+    pub stec_residuals: Vec<STECResidual>,
 }
 
 impl MsgSsrGriddedCorrection {
@@ -570,7 +451,9 @@ impl MsgSsrGriddedCorrection {
         Ok( MsgSsrGriddedCorrection{
             sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
-            element: GridElement::parse(_buf)?,
+            index: _buf.read_u16::<LittleEndian>()?,
+            tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
+            stec_residuals: STECResidual::parse_array(_buf)?,
         } )
     }
 }
@@ -606,13 +489,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
-        self.element.append_to_sbp_buffer(buf);
+        self.index.append_to_sbp_buffer(buf);
+        self.tropo_delay_correction.append_to_sbp_buffer(buf);
+        self.stec_residuals.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.header.sbp_size();
-        size += self.element.sbp_size();
+        size += self.index.sbp_size();
+        size += self.tropo_delay_correction.sbp_size();
+        size += self.stec_residuals.sbp_size();
         size
     }
 }
@@ -625,9 +512,12 @@ pub struct MsgSsrGriddedCorrectionDepA {
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
-    /// Tropo and STEC residuals for the given grid point (mean and standard
-    /// deviation)
-    pub element: GridElement,
+    /// Index of the grid point
+    pub index: u16,
+    /// Wet and hydrostatic vertical delays (mean, stddev)
+    pub tropo_delay_correction: TroposphericDelayCorrection,
+    /// STEC residuals for each satellite (mean, stddev)
+    pub stec_residuals: Vec<STECResidual>,
 }
 
 impl MsgSsrGriddedCorrectionDepA {
@@ -636,7 +526,9 @@ impl MsgSsrGriddedCorrectionDepA {
         Ok( MsgSsrGriddedCorrectionDepA{
             sender_id: None,
             header: GriddedCorrectionHeaderDepA::parse(_buf)?,
-            element: GridElement::parse(_buf)?,
+            index: _buf.read_u16::<LittleEndian>()?,
+            tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
+            stec_residuals: STECResidual::parse_array(_buf)?,
         } )
     }
 }
@@ -672,13 +564,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
-        self.element.append_to_sbp_buffer(buf);
+        self.index.append_to_sbp_buffer(buf);
+        self.tropo_delay_correction.append_to_sbp_buffer(buf);
+        self.stec_residuals.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.header.sbp_size();
-        size += self.element.sbp_size();
+        size += self.index.sbp_size();
+        size += self.tropo_delay_correction.sbp_size();
+        size += self.stec_residuals.sbp_size();
         size
     }
 }
@@ -691,8 +587,12 @@ pub struct MsgSsrGriddedCorrectionNoStdDepA {
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
-    /// Tropo and STEC residuals for the given grid point
-    pub element: GridElementNoStd,
+    /// Index of the grid point
+    pub index: u16,
+    /// Wet and hydrostatic vertical delays
+    pub tropo_delay_correction: TroposphericDelayCorrectionNoStd,
+    /// STEC residuals for each satellite
+    pub stec_residuals: Vec<STECResidualNoStd>,
 }
 
 impl MsgSsrGriddedCorrectionNoStdDepA {
@@ -701,7 +601,9 @@ impl MsgSsrGriddedCorrectionNoStdDepA {
         Ok( MsgSsrGriddedCorrectionNoStdDepA{
             sender_id: None,
             header: GriddedCorrectionHeaderDepA::parse(_buf)?,
-            element: GridElementNoStd::parse(_buf)?,
+            index: _buf.read_u16::<LittleEndian>()?,
+            tropo_delay_correction: TroposphericDelayCorrectionNoStd::parse(_buf)?,
+            stec_residuals: STECResidualNoStd::parse_array(_buf)?,
         } )
     }
 }
@@ -737,13 +639,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStdDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
-        self.element.append_to_sbp_buffer(buf);
+        self.index.append_to_sbp_buffer(buf);
+        self.tropo_delay_correction.append_to_sbp_buffer(buf);
+        self.stec_residuals.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.header.sbp_size();
-        size += self.element.sbp_size();
+        size += self.index.sbp_size();
+        size += self.tropo_delay_correction.sbp_size();
+        size += self.stec_residuals.sbp_size();
         size
     }
 }

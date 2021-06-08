@@ -179,6 +179,13 @@ gen-c:
 		       -r $(SBP_VERSION) \
 	               --c
 
+	$(call announce-begin,"Generating C headers")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/c/src \
+		       -r $(SBP_VERSION) \
+	               --c-sources
+
 	$(call announce-begin,"Generating C tests")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \

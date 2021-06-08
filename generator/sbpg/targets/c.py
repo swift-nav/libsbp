@@ -14,53 +14,54 @@ Generator for c target.
 """
 
 import re
-
-from jinja2.environment import Environment
-from jinja2.utils import pass_environment
-
-from sbpg.targets.templating import JENV, indented_wordwrap
+from sbpg.targets.templating import *
+from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
-MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
-VERSION_TEMPLATE_NAME = "sbp_version_template.h"
-MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
+SBP_MESSAGES_TEMPLATE_NAME = "c/new/sbp_messages_template.h"
+SBP_PACKAGE_TEMPLATE_NAME = "c/new/sbp_package_template.h"
+SBP_MSG_TEMPLATE_NAME = "c/new/sbp_msg_template.h"
+VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
+MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
+SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
+SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
+SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
 
-
-@pass_environment
-def commentify(environment: Environment,
-               value: str):
-  """
-  Builds a comment.
-  """
-  return indented_wordwrap(environment, value, indent=" * ", first=True, blank=True, markdown=True)
-
-
-@pass_environment
-def commentify_field(environment: Environment,
-                     value: str,
-                     field, message):
-  """
-  Builds a comment.
-  """
-  if value is None:
-    return
-  f_size_len = len(mk_size(field).ljust(message.max_fid_len+4))
-  indent = len("  ") + f_size_len + len(" ") + len(mk_id(field)) + len(" /**< ")
-  return indented_wordwrap(environment, value, indent=" " * indent, first=False, blank=False)
-
-
-def extensions(includes):
-  """Formats a list of header files to include.
-  """
-  return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
-
-
-CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
-                      's64', 'float', 'double'])
+PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
+                      's64', 'float', 'double', 'char'])
+PRIMITIVE_SIZES = {
+        'u8' : 1,
+        'u16': 2,
+        'u32': 4,
+        'u64': 8,
+        's8' : 1,
+        's16': 2,
+        's32': 4,
+        's64': 8,
+        'float': 4,
+        'double': 8,
+        'char': 1
+        }
 
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
-def convert(value):
+def sanitise_path(value):
+    return re.sub('[->.\\[\\]]', '', value)
+
+def commentify(value):
+  """
+  Builds a comment.
+  """
+  value = markdown_links(value)
+  if value is None:
+    return
+  if len(value.split('\n')) == 1:
+    return "* " + value
+  else:
+    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+
+
+def convert_packed(value):
   """Converts to a C language appropriate identifier format.
 
   """
@@ -68,38 +69,19 @@ def convert(value):
   s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s0)
   return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
 
-def mk_id(field):
-  """Builds an identifier from a field.
-  """
-  name = field.type_id
-  if name == "string":
-    return "%s" % ("char")
-  elif name == "array" and field.size:
-    if field.options['fill'].value not in CONSTRUCT_CODE:
-      return "%s" % convert(field.options['fill'].value)
-    else:
-      return "%s" % field.options['fill'].value
-  elif name == "array":
-    return "%s" % convert(field.options['fill'].value)
-  elif name not in CONSTRUCT_CODE:
-    return convert(name)
-  else:
-    return name
+def convert_unpacked(value):
+  """Converts to a C language appropriate identifier format.
 
-def mk_size(field):
-  """Builds an identifier for a container type.
   """
-  name = field.type_id
-  if name == "string" and field.options.get('size', None):
-    return "%s[%d];" % (field.identifier, field.options.get('size').value)
-  elif name == "string":
-    return "%s[0];" % field.identifier
-  elif name == "array" and field.options.get('size', None):
-    return "%s[%d];" % (field.identifier, field.options.get('size').value)
-  elif name == "array":
-    return "%s[0];" % field.identifier
-  else:
-    return '%s;' % field.identifier
+  if value in PRIMITIVE_TYPES:
+      return value
+  return "sbp_" + convert_packed(value)
+
+def convert_unpacked_union(value):
+    """
+    """
+    return value.lower()[4:]
+
 
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get('desc', '').replace(" ", "_").upper()
@@ -134,38 +116,236 @@ def create_bitfield_macros(field, msg):
         value_description = re.sub('[ \-]+', '_', value_description.strip())
         value_description = re.sub('[^A-Za-z0-9_]+', '', value_description)
         if value_description and value_description.upper() != 'RESERVED':
-          # backwards compatibility
-          if base_string in ["SBP_IMU_AUX_GYROSCOPE_RANGE", "SBP_IMU_AUX_ACCELEROMETER_RANGE", "SBP_STARTUP", "SBP_PPS_TIME_TIME_UNCERTAINTY"]:
-            ret_list.append("#define {}_{} ({})".format(base_string, value_description,
-                                                        value_numerical))
-          base_string = re.sub('__+', '_', base_string).strip('_')
-          value_description = re.sub('__+', '_', value_description).strip('_')
           ret_list.append("#define {}_{} ({})".format(base_string, value_description,
                                                       value_numerical))
   return "\n".join(ret_list)
 
+def extensions(includes):
+    """Format a list of header files to include.
+    """
+    return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
+
+def get_type_packed_size(typename, package_specs):
+    """
+    """
+    if typename in PRIMITIVE_TYPES:
+        return PRIMITIVE_SIZES[typename]
+
+    packed_size = 0
+    for package in package_specs:
+        for msg in package.definitions:
+            if msg.identifier == typename:
+                for f in msg.fields:
+                    packed_size = packed_size + get_field_packed_size(f, package_specs)
+    return packed_size
+
+def get_field_packed_size(field, package_specs):
+    """
+    """
+    if field.type_id == "array":
+        if "size" in field.options:
+            return field.options['size'].value * get_type_packed_size(field.options['fill'].value, package_specs)
+        return 0
+    if field.type_id == "string":
+        if "size" in field.options:
+            return field.options['size'].value
+        return 0
+    return get_type_packed_size(field.type_id, package_specs)
+
+
+def get_max_possible_items(msg, field, basetype, package_specs):
+    """
+    """
+    used_space = 0
+    for f in msg.fields:
+        if f.identifier == field.identifier:
+            break
+        used_space = used_space + get_field_packed_size(f, package_specs)
+    available_space = 255 - used_space
+    return int(available_space / get_type_packed_size(basetype, package_specs))
+
+
+class FieldItem(object):
+    """FieldItem
+    """
+
+    def __init__(self, msg, package_specs, field):
+        self.name = field.identifier
+        #print("Creating field %s" % self.name)
+        type_id = field.type_id
+        
+        self.packed_size = 0
+        self.units = field.units
+        self.desc = field.desc
+        self.generate_as_nested = False
+
+        if type_id == "string" and "size" in field.options:
+            self.packing = "fixed-array"
+            self.basetype = "char"
+            self.max_items = field.options['size'].value
+            self.packed_size = field.options['size'].value
+            self.options = field.options
+        elif type_id == "string" or "encoding" in field.options:
+            self.packing = "packed-string"
+            self.basetype = "char"
+            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
+            self.packed_size = 0
+            self.options = field.options
+            self.encoding = field.options['encoding'].value
+            if self.encoding == "sequence":
+                self.terminator = field.options['terminator'].value
+        elif type_id == "array" and "size" in field.options:
+            self.packing = "fixed-array"
+            self.basetype = field.options['fill'].value
+            self.max_items = field.options['size'].value
+            self.packed_size = field.options['size'].value * get_type_packed_size(self.basetype, package_specs)
+            self.options = field.options
+        elif type_id == "array":
+            self.packing = "variable-array"
+            self.basetype = field.options['fill'].value
+            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
+            self.packed_size = 0
+            if 'size_fn' in field.options:
+                self.size_fn = field.options['size_fn'].value
+                self.generate_size_fn = False
+            else:
+                self.size_fn = 'n_' + self.name
+                self.generate_size_fn = True
+            self.options = field.options
+        else:
+            self.packing = "single"
+            self.basetype = type_id
+            self.max_items = 1
+            self.packed_size = get_type_packed_size(self.basetype, package_specs)
+            self.options = field.options
+
+
+def find_package(package_specs, type_id):
+    for p in package_specs:
+        for m in p.definitions:
+            if m.identifier == type_id:
+                return p.identifier.split('.', 2)[2]
+    raise Exception("Can't find package for type %s" % type_id)
+
+
+class MsgItem(object):
+    """MsgItem
+    """
+
+    def __init__(self, msg, package_specs):
+        self.name = msg.identifier
+        self.sbp_id = msg.sbp_id
+        self.desc = msg.desc
+        self.short_desc = msg.short_desc
+        self.fields = []
+        self.is_real_message = msg.is_real_message
+        self.sibling_include = []
+        #print("Creating message %s" % self.name)
+        for f in msg.fields:
+            new_field = FieldItem(msg, package_specs, f)
+            if new_field.packed_size == 0 and not self.is_real_message:
+                print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
+                raise "error"
+            self.fields.append(new_field)
+            if new_field.basetype not in PRIMITIVE_TYPES:
+                self.sibling_include.append(find_package(package_specs, new_field.basetype) + "/" + new_field.basetype)
+
+JENV.filters['convert_unpacked'] = convert_unpacked
+JENV.filters['convert_unpacked_union'] = convert_unpacked_union
 JENV.filters['commentify'] = commentify
-JENV.filters['commentify_field'] = commentify_field
-JENV.filters['mk_id'] = mk_id
-JENV.filters['mk_size'] = mk_size
-JENV.filters['convert'] = convert
+JENV.filters['sanitise_path'] = sanitise_path
 JENV.filters['create_bitfield_macros'] = create_bitfield_macros
 
-def render_source(output_dir, package_spec):
-  """
-  Render and output to a directory given a package specification.
-  """
-  path, name = package_spec.filepath
-  destination_filename = "%s/%s.h" % (output_dir, name)
-  py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
-  with open(destination_filename, 'w') as f:
-    f.write(py_template.render(msgs=package_spec.definitions,
-                               pkg_name=name,
-                               filepath="/".join(package_spec.filepath) + ".yaml",
-                               max_msgid_len=package_spec.max_msgid_len,
-                               description=package_spec.description,
-                               timestamp=package_spec.creation_timestamp,
-                               include=extensions(package_spec.includes)))
+
+def render_headers(include_dir, package_specs):
+    #print("new_c::render_unpacked_headers")
+    all_msgs = []
+    all_packages = []
+    msg_msgid_len =0
+    for package_spec in package_specs:
+        msgs = []
+        msg_msgid_len = package_spec.max_msgid_len
+        if not package_spec.render_source:
+            continue
+        name = package_spec.identifier.split('.', 2)[2]
+        if name == 'types' or name == 'base':
+            continue                                                                                          
+        all_packages.append(name)                                                                             
+        for m in package_spec.definitions:                                                                    
+            new_msg = MsgItem(m, package_specs)                                                           
+            msgs.append(new_msg)
+            if m.is_real_message:
+                all_msgs.append(new_msg.name)                                                                 
+            destination_filename = "%s/new/%s/%s.h" % (include_dir, name, new_msg.name)
+            py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
+            with open(destination_filename, 'w') as f:
+                f.write(py_template.render(m = new_msg,
+                    pkg_name = name,
+                    filepath="/".join(package_spec.filepath) + ".yaml",
+                    max_msgid_len=package_spec.max_msgid_len,
+                    include=extensions(package_spec.includes),
+                    sibling_include=new_msg.sibling_include))
+            #print("Adding %s" % new_msg.name)
+        destination_filename = "%s/new/%s.h" % (include_dir, name)
+        py_template = JENV.get_template(SBP_PACKAGE_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/%s_macros.h" % (include_dir, name)
+        py_template = JENV.get_template(SBP_MESSAGES_MACROS_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+    destination_filename = "%s/new/sbp_msg.h" % (include_dir)
+    py_template = JENV.get_template(SBP_MSG_TEMPLATE_NAME)
+    with open(destination_filename, 'w') as f:
+        f.write(py_template.render(msgs = all_msgs,
+            include=extensions(all_packages),
+            filepath="/".join(package_spec.filepath) + ".yaml",
+            max_msgid_len=msg_msgid_len))
+
+def render_sources(output_dir, package_specs):
+    all_msgs = []
+    all_packages = []
+    msg_msgid_len =0
+    for package_spec in package_specs:
+        msgs = []
+        msg_msgid_len = package_spec.max_msgid_len
+        if not package_spec.render_source:
+            continue
+        name = package_spec.identifier.split('.', 2)[2]
+        if name == 'types' or name == 'base':
+            continue                                                                                          
+        all_packages.append(name)                                                                             
+        for m in package_spec.definitions:                                                                    
+            new_msg = MsgItem(m, package_specs)                                                           
+            msgs.append(new_msg)
+            if m.is_real_message:
+                all_msgs.append(new_msg.name)                                                                 
+            #print("Adding %s" % new_msg.name)
+        destination_filename = "%s/new/%s.c" % (output_dir, name)
+        py_template = JENV.get_template(SBP_MESSAGES_SOURCE_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/include/libsbp/internal/new/%s.h" % (output_dir, name)
+        py_template = JENV.get_template(SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+
 
 def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/version.h" % output_dir
@@ -194,3 +374,4 @@ def render_traits(output_dir, package_specs):
     f.write(py_template.render(packages=package_specs,
                                msgs=sorted(msgs, key=lambda msg: msg.sbp_id),
                                includes=sorted(includes)))
+

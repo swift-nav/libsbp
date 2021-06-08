@@ -9,6 +9,12 @@ tests:
       text: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
+
+        '
+        packed_len: 43
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -28,6 +34,12 @@ tests:
       text: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
+
+        '
+        packed_len: 42
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -47,6 +59,12 @@ tests:
       text: 'INFO: Disabling channel 0 (PRN 11)
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: Disabling channel 0 (PRN 11)
+
+        '
+        packed_len: 35
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -66,6 +84,12 @@ tests:
       text: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
+
+        '
+        packed_len: 41
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -85,6 +109,12 @@ tests:
       text: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
+
+        '
+        packed_len: 42
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -104,6 +134,12 @@ tests:
       text: 'INFO: Disabling channel 1 (PRN 15)
 
         '
+    c_decoded_fields:
+      text: 
+        data: 'INFO: Disabling channel 1 (PRN 15)
+
+        '
+        packed_len: 35
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'

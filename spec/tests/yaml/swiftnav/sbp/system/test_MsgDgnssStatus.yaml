@@ -10,6 +10,10 @@ tests:
       latency: 50
       num_signals: 12
       source: Skylark
+    c_decoded_fields:
+      source: 
+        data: Skylark
+        packed_len: 7
     module: sbp.system
     name: MsgDgnssStatus
   msg_type: '0xff02'

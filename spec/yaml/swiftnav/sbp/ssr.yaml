@@ -209,40 +209,6 @@ definitions:
           stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
         desc: stddev
 
- - GridElementNoStd:
-    short_desc: Correction data for a single grid point
-    desc: >
-      Contains one tropo delay, plus STEC residuals for each satellite at the
-      grid point.
-    fields:
-    - index:
-        type: u16
-        desc: Index of the grid point
-    - tropo_delay_correction:
-        type: TroposphericDelayCorrectionNoStd
-        desc: Wet and hydrostatic vertical delays
-    - stec_residuals:
-        type: array
-        fill: STECResidualNoStd
-        desc: STEC residuals for each satellite
-
- - GridElement:
-    short_desc: Correction data for a single grid point
-    desc: >
-      Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-      stddev) for each satellite at the grid point.
-    fields:
-    - index:
-        type: u16
-        desc: Index of the grid point
-    - tropo_delay_correction:
-        type: TroposphericDelayCorrection
-        desc: Wet and hydrostatic vertical delays (mean, stddev)
-    - stec_residuals:
-        type: array
-        fill: STECResidual
-        desc: STEC residuals for each satellite (mean, stddev)
-
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
     short_desc: Precise orbit and clock correction
@@ -425,10 +391,16 @@ definitions:
         - header:
             type: GriddedCorrectionHeader
             desc: Header of a gridded correction message
-        - element:
-            type: GridElement
-            desc: >
-              Tropo and STEC residuals for the given grid point.
+        - index:
+            type: u16
+            desc: Index of the grid point.
+        - tropo_delay_correction:
+            type: TroposphericDelayCorrection
+            desc: Wet and hydrostatic vertical delays (mean, stddev).
+        - stec_residuals:
+            type: array
+            fill: STECResidual
+            desc: STEC residuals for each satellite (mean, stddev).
 
  - MSG_SSR_TILE_DEFINITION:
     id: 0x05F6
@@ -780,9 +752,16 @@ definitions:
         - header:
             type: GriddedCorrectionHeaderDepA
             desc: Header of a Gridded Correction message
-        - element:
-            type: GridElementNoStd
-            desc: Tropo and STEC residuals for the given grid point
+        - index:
+            type: u16
+            desc: Index of the grid point
+        - tropo_delay_correction:
+            type: TroposphericDelayCorrectionNoStd
+            desc: Wet and hydrostatic vertical delays
+        - stec_residuals:
+            type: array
+            fill: STECResidualNoStd
+            desc: STEC residuals for each satellite
 
  - MSG_SSR_GRIDDED_CORRECTION_DEP_A:
     id: 0x05FA
@@ -794,11 +773,16 @@ definitions:
         - header:
             type: GriddedCorrectionHeaderDepA
             desc: Header of a Gridded Correction message
-        - element:
-            type: GridElement
-            desc: >
-              Tropo and STEC residuals for the given grid point (mean
-              and standard deviation)
+        - index:
+            type: u16
+            desc: Index of the grid point
+        - tropo_delay_correction:
+            type: TroposphericDelayCorrection
+            desc: Wet and hydrostatic vertical delays (mean, stddev)
+        - stec_residuals:
+            type: array
+            fill: STECResidual
+            desc: STEC residuals for each satellite (mean, stddev)
 
  - MSG_SSR_GRID_DEFINITION_DEP_A:
     id: 0x05F5
