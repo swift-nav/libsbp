@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_LINUX_MACROS_H
-#define LIBSBP_NEW_LINUX_MACROS_H
+#ifndef LIBSBP_LINUX_MACROS_H
+#define LIBSBP_LINUX_MACROS_H
 
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A 0x7F00
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A 0x7F01

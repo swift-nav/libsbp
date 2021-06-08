@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -15,12 +15,12 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_(((pkg_name|upper)))_MACROS_H
-#define LIBSBP_NEW_(((pkg_name|upper)))_MACROS_H
+#ifndef LIBSBP_(((pkg_name|upper)))_MACROS_H
+#define LIBSBP_(((pkg_name|upper)))_MACROS_H
 
 ((* for m in msgs *))
 ((*- if m.is_real_message*))
-#define SBP_(((m.name.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
+#define SBP_(((m.name))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- for f in m.fields *))
 ((*- if f.options.fields *))
