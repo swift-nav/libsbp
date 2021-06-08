@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgGPSTimeDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -117,14 +117,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -211,14 +211,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -305,14 +305,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -399,14 +399,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -493,14 +493,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA5
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -588,14 +588,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA6
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -682,14 +682,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA7
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -777,14 +777,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA8
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -871,14 +871,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA9
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -966,14 +966,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA10
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),

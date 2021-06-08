@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgGPSTime0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_t> {
+      sbp::PayloadHandler<msg_gps_time_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTime0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_t>(this),
+        sbp::PayloadHandler<msg_gps_time_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -118,14 +118,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTime1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_t> {
+      sbp::PayloadHandler<msg_gps_time_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTime1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_t>(this),
+        sbp::PayloadHandler<msg_gps_time_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -213,14 +213,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTime2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_t> {
+      sbp::PayloadHandler<msg_gps_time_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTime2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_t>(this),
+        sbp::PayloadHandler<msg_gps_time_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -308,14 +308,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTime3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_t> {
+      sbp::PayloadHandler<msg_gps_time_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTime3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_t>(this),
+        sbp::PayloadHandler<msg_gps_time_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -403,14 +403,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTime4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_t> {
+      sbp::PayloadHandler<msg_gps_time_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTime4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_t>(this),
+        sbp::PayloadHandler<msg_gps_time_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_t *>(last_msg_storage_)),
         last_msg_len_(),

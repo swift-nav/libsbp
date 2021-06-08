@@ -15,7 +15,7 @@
 // modify by hand!
 
 #include <check.h>
-#include <logging.h>
+#include <libsbp/legacy/logging.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x0401, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x0401, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x0401, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x0401, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -151,7 +151,7 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0x0401, 2314, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x0401, 2314, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

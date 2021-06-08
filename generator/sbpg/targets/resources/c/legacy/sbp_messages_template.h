@@ -20,13 +20,13 @@
 (((description|commentify)))
  * \{ */
 
-#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
-#define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#ifndef LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
+#define LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
 
 ((*- for i in include *))
-#include "(((i)))"
+#include <libsbp/legacy/(((i)))>
 ((*- endfor *))
 
 SBP_PACK_START
@@ -66,4 +66,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H */

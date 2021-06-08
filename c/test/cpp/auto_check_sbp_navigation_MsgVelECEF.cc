@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgVelECEF0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ecef_t> {
+      sbp::PayloadHandler<msg_vel_ecef_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelECEF0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ecef_t>(this),
+        sbp::PayloadHandler<msg_vel_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -126,14 +126,14 @@ class Test_auto_check_sbp_navigation_MsgVelECEF1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ecef_t> {
+      sbp::PayloadHandler<msg_vel_ecef_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelECEF1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ecef_t>(this),
+        sbp::PayloadHandler<msg_vel_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -229,14 +229,14 @@ class Test_auto_check_sbp_navigation_MsgVelECEF2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ecef_t> {
+      sbp::PayloadHandler<msg_vel_ecef_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelECEF2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ecef_t>(this),
+        sbp::PayloadHandler<msg_vel_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -332,14 +332,14 @@ class Test_auto_check_sbp_navigation_MsgVelECEF3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ecef_t> {
+      sbp::PayloadHandler<msg_vel_ecef_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelECEF3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ecef_t>(this),
+        sbp::PayloadHandler<msg_vel_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -435,14 +435,14 @@ class Test_auto_check_sbp_navigation_MsgVelECEF4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ecef_t> {
+      sbp::PayloadHandler<msg_vel_ecef_t> {
  public:
   Test_auto_check_sbp_navigation_MsgVelECEF4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ecef_t>(this),
+        sbp::PayloadHandler<msg_vel_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),

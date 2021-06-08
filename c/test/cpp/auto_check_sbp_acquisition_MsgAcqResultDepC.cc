@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_acquisition_MsgAcqResultDepC0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
   Test_auto_check_sbp_acquisition_MsgAcqResultDepC0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -126,14 +126,14 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
   Test_auto_check_sbp_acquisition_MsgAcqResultDepC1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -230,14 +230,14 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
   Test_auto_check_sbp_acquisition_MsgAcqResultDepC2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -333,14 +333,14 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
   Test_auto_check_sbp_acquisition_MsgAcqResultDepC3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -436,14 +436,14 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
   Test_auto_check_sbp_acquisition_MsgAcqResultDepC4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),

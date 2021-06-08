@@ -15,10 +15,10 @@
 // Do not modify by hand!
 
 #include <check.h>
+#include <libsbp/legacy/system.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
-#include <system.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xff02, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff02, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0xff02, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0xff02, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -144,7 +144,7 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0xff02, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xff02, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

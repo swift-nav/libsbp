@@ -14,8 +14,8 @@
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+#include <libsbp/legacy/cpp/message_handler.h>
 
 ((*- for t in s.tests *))                                                     
 ((*- if t.fields *))
@@ -24,7 +24,7 @@ class Test_(((s.suite_name)))(((loop.index0))) :
   public sbp::State, 
   public sbp::IReader, 
   public sbp::IWriter, 
-  sbp::MessageHandler<(((t.msg_type_name|convert)))>
+  sbp::PayloadHandler<(((t.msg_type_name|convert)))>
 {
 public:
   Test_(((s.suite_name)))(((loop.index0)))() : 
@@ -32,7 +32,7 @@ public:
         sbp::State(), 
         sbp::IReader(), 
         sbp::IWriter(), 
-        sbp::MessageHandler<(((t.msg_type_name|convert)))>(this), 
+        sbp::PayloadHandler<(((t.msg_type_name|convert)))>(this), 
         last_msg_storage_(),
         last_msg_(reinterpret_cast<(((t.msg_type_name|convert)))*>(last_msg_storage_)),
         last_msg_len_(),

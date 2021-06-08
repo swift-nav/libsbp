@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_piksi_MsgUartStateDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -197,14 +197,14 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -371,14 +371,14 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -545,14 +545,14 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -719,14 +719,14 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -898,14 +898,14 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA5
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
   Test_auto_check_sbp_piksi_MsgUartStateDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),

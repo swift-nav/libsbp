@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
+#include <libsbp/legacy/settings.h>
 #include <sbp.h>
-#include <settings.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexDone) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa6, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xa6, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0xa6, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0xa6, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -130,7 +130,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexDone) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    sbp_send_message(&sbp_state, 0xa6, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xa6, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

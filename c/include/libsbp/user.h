@@ -15,31 +15,16 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-/** \defgroup user User
- *
- * Messages reserved for use by the user.
- * \{ */
-
 #ifndef LIBSBP_USER_MESSAGES_H
 #define LIBSBP_USER_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
 
-SBP_PACK_START
+SBP_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/user.h` instead. Access to legacy "
+    "types via `libsbp/user.h` will be removed in version 5.")
 
-/** User data
- *
- * This message can contain any application specific user data up to a maximum
- * length of 255 bytes per message.
- */
-#define SBP_MSG_USER_DATA 0x0800
-
-typedef struct SBP_ATTR_PACKED {
-  u8 contents[0]; /**< User data payload */
-} msg_user_data_t;
-
-/** \} */
-
-SBP_PACK_END
+#include <libsbp/legacy/user.h>
 
 #endif /* LIBSBP_USER_MESSAGES_H */

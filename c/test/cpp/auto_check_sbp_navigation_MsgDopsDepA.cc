@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgDopsDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -123,14 +123,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -223,14 +223,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -323,14 +323,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -423,14 +423,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -523,14 +523,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA5
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -623,14 +623,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA6
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -723,14 +723,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA7
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -823,14 +823,14 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA8
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
   Test_auto_check_sbp_navigation_MsgDopsDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),

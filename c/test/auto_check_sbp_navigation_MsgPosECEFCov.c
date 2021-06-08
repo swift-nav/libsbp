@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFCov) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x214, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x214, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x214, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x214, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -147,7 +147,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFCov) {
     test_msg->x = 6.0;
     test_msg->y = 1.0;
     test_msg->z = 4.0;
-    sbp_send_message(&sbp_state, 0x214, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x214, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

@@ -15,7 +15,7 @@
 // not modify by hand!
 
 #include <check.h>
-#include <observation.h>
+#include <libsbp/legacy/observation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_observation_MsgOsr) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x640, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x640, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x640, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x640, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -321,7 +321,7 @@ START_TEST(test_auto_check_sbp_observation_MsgOsr) {
     test_msg->obs[11].sid.code = 6;
     test_msg->obs[11].sid.sat = 15;
     test_msg->obs[11].tropo_std = 5;
-    sbp_send_message(&sbp_state, 0x640, 0, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x640, 0, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(

@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -118,14 +118,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -213,14 +213,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -308,14 +308,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -403,14 +403,14 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
   Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),

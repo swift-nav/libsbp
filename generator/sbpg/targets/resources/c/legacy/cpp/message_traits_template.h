@@ -14,7 +14,7 @@
 #define SBP_CPP_MESSAGE_TRAITS_H
 
 ((*- for i in includes *))
-#include <libsbp/(((i))).h>
+#include <libsbp/legacy/(((i))).h>
 ((*- endfor *))
 
 namespace sbp {

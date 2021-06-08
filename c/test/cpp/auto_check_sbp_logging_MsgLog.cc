@@ -15,21 +15,21 @@
 // modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 class Test_auto_check_sbp_logging_MsgLog0 : public ::testing::Test,
                                             public sbp::State,
                                             public sbp::IReader,
                                             public sbp::IWriter,
-                                            sbp::MessageHandler<msg_log_t> {
+                                            sbp::PayloadHandler<msg_log_t> {
  public:
   Test_auto_check_sbp_logging_MsgLog0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_log_t>(this),
+        sbp::PayloadHandler<msg_log_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_log_t *>(last_msg_storage_)),
         last_msg_len_(),
