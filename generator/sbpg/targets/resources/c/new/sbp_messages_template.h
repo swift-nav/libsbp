@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
-#define LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H
+#ifndef LIBSBP_NEW_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
+#define LIBSBP_NEW_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -35,6 +35,9 @@
 ((*- for i in include *))
 #include <libsbp/new/(((i)))>
 ((*- endfor *))
+((*- for i in sibling_include *))
+#include <libsbp/new/(((i))).h>
+((*- endfor *))
 
 #ifdef __cplusplus
   extern "C" {
@@ -43,13 +46,8 @@
 struct sbp_state;
 
 
-((* for m in msgs *))
 ((*- set msg_type = m.name|convert_unpacked *))
-/*
- *
- *
- *
- ******************************************************************************
+/******************************************************************************
  *
  * SBP_(((m.name|upper)))
  *
@@ -412,12 +410,9 @@ s8 sbp_send_(((msg_type)))(struct sbp_state  *s, u16 sender_id, const (((msg_typ
  */
 int sbp_cmp_(((msg_type)))(const (((msg_type))) *a, const (((msg_type))) *b);
 
-((* endfor *))
-
 #ifdef __cplusplus
   }
 
-((*- for m in msgs *))
 ((*- set msg_type = m.name|convert_unpacked *))
 static inline bool operator==(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
   return sbp_cmp_(((msg_type)))(&lhs, &rhs) == 0;
@@ -442,7 +437,6 @@ static inline bool operator>(const (((msg_type))) &lhs, const (((msg_type))) &rh
 static inline bool operator>=(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
   return sbp_cmp_(((msg_type)))(&lhs, &rhs) >= 0;
 }
-((*- endfor *))
 
 #endif
 
