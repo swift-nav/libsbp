@@ -14,8 +14,8 @@
  * Automatically generated with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef SBP_CPP_MESSAGE_TRAITS_H
-#define SBP_CPP_MESSAGE_TRAITS_H
+#ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
+#define LIBSBP_CPP_MESSAGE_TRAITS_H
 
 #include <libsbp/sbp.h>
 #include <libsbp/new/sbp_msg.h>
@@ -57,5 +57,5 @@ struct MessageTraits<(((msg_type)))> {
 
 } // namespace sbp
 
-#endif //SBP_CPP_MESSAGE_TRAITS_H
+#endif //LIBSBP_CPP_MESSAGE_TRAITS_H
 

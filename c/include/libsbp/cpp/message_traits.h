@@ -14,8 +14,8 @@
  * Automatically generated with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef SBP_CPP_MESSAGE_TRAITS_H
-#define SBP_CPP_MESSAGE_TRAITS_H
+#ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
+#define LIBSBP_CPP_MESSAGE_TRAITS_H
 
 #include <libsbp/new/acquisition.h>
 #include <libsbp/new/bootload.h>
@@ -3191,4 +3191,4 @@ struct MessageTraits<sbp_msg_heartbeat_t> {
 
 }  // namespace sbp
 
-#endif  // SBP_CPP_MESSAGE_TRAITS_H
+#endif  // LIBSBP_CPP_MESSAGE_TRAITS_H
