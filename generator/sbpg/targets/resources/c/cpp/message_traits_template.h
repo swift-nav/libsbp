@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -10,8 +10,12 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
-#define SBP_CPP_UNPACKED_MESSAGE_TRAITS_H
+/*****************************************************************************
+ * Automatically generated with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+#ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
+#define LIBSBP_CPP_MESSAGE_TRAITS_H
 
 #include <libsbp/sbp.h>
 #include <libsbp/new/sbp_msg.h>
@@ -32,18 +36,19 @@ struct MessageTraits;
 
 ((* for m in msgs *))
 ((*- if m.is_real_message *))
+((*- set msg_type = m.identifier|convert_unpacked *))
+((*- set member_name = m.identifier|convert_unpacked_union *))
 template<>
-struct MessageTraits<(((m.identifier|convert_unpacked)))> {
-  static constexpr u16 id = (((m.sbp_id)));
-  static constexpr bool is_unpacked = true;
-  static const (((m.identifier|convert_unpacked)))& get(const sbp_msg_t &msg) {
-    return msg.(((m.identifier|convert_unpacked_union)));
+struct MessageTraits<(((msg_type)))> {
+  static constexpr u16 id = SBP_(((m.identifier)));
+  static const (((msg_type)))& get(const sbp_msg_t &msg) {
+    return msg.(((member_name)));
   }
-  static (((m.identifier|convert_unpacked)))& get(sbp_msg_t &msg) {
-    return msg.(((m.identifier|convert_unpacked_union)));
+  static (((msg_type)))& get(sbp_msg_t &msg) {
+    return msg.(((member_name)));
   }
-  static s8 send(sbp_state_t *state, u16 sender_id, const (((m.identifier|convert_unpacked))) &msg, s32 (*write)(u8 *, u32, void *)) {
-    return sbp_send_(((m.identifier|convert_unpacked)))(state, sender_id, &msg, write);
+  static s8 send(sbp_state_t *state, u16 sender_id, const (((msg_type))) &msg, s32 (*write)(u8 *, u32, void *)) {
+    return sbp_send_(((msg_type)))(state, sender_id, &msg, write);
   }
 };
 ((* endif *))
@@ -52,5 +57,5 @@ struct MessageTraits<(((m.identifier|convert_unpacked)))> {
 
 } // namespace sbp
 
-#endif //SBP_CPP_MESSAGE_TRAITS_H
+#endif //LIBSBP_CPP_MESSAGE_TRAITS_H
 
