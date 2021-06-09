@@ -12,6 +12,7 @@ static const sbp_string_params_t params = {
   .init = sbp_null_terminated_string_init,
   .default_output = {0,},
   .default_output_len = 1,
+  .inject_missing_terminator = true,
 };
 
 static void maybe_init(sbp_string_t *s, size_t max_encoded_len)

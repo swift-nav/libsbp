@@ -193,7 +193,7 @@ bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
  * @return Requested section, or NULL
  */
 const char *sbp_double_null_terminated_string_get_section(
-    const sbp_string_t *s, size_t max_encoded_len, uint8_t section);
+    const sbp_string_t *s, size_t max_encoded_len, size_t section);
 
 /**
  * Get length of a section in a double null terminated string
@@ -210,9 +210,9 @@ const char *sbp_double_null_terminated_string_get_section(
  * @param section Section number
  * @return Length of section
  */
-uint8_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
+size_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
                                                          size_t max_encoded_len,
-                                                         uint8_t section);
+                                                         size_t section);
 
 /**
  * Encode a double null terminated string to a buffer

@@ -18,6 +18,7 @@ typedef struct {
   void (*init)(sbp_string_t *s, size_t max_encoded_len);
   const char default_output[2];
   size_t default_output_len;
+  bool inject_missing_terminator;
 } sbp_string_params_t;
 
 int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b, size_t max_encoded_len, const sbp_string_params_t *params);

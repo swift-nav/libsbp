@@ -72,6 +72,12 @@ bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len, sbp_decode_ctx_t
   if (available > max_encoded_len) return false;
   memcpy(s->data, ctx->buf + ctx->offset, available);
   s->encoded_len = available;
+  if (params->inject_missing_terminator) {
+    if (s->data[s->encoded_len-1] != 0) {
+      s->encoded_len ++;
+      s->data[s->encoded_len-1] = 0;
+    }
+  }
   if (!params->valid(s, max_encoded_len)) { params->init(s, max_encoded_len); return false; }
   ctx->offset += available;
   return true;
