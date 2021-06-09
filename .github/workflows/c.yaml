@@ -57,4 +57,4 @@ jobs:
           CC: mips-linux-gnu-gcc
           CXX: mips-linux-gnu-g++
 
-          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static"
+          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON

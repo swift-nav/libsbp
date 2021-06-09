@@ -439,7 +439,7 @@ static u16 sbp_u8_array_to_u16(u8 *array_start)
 }
 
 /** Helper to convert a u16 in the platform's representation
- *  to the a 2 byte array in network byte order without
+ *  to the a 2 byte array in little endian byte order without
  *  needing to use the word endian
  */
 static void sbp_u16_to_u8_array(const u16 v, u8 *array_start)

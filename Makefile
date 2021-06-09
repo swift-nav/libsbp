@@ -341,7 +341,7 @@ test-c-v4:
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
 	$(MAKE); \
-	$(MAKE) do-test-libsbp-v4
+	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp
 	$(call announce-end,"Finished running C tests")
 
 test-python:
