@@ -83,9 +83,8 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
  * @param max_encoded_len Maximum encoded length
  * @return Available space
  */
-size_t
-sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
-                                                  size_t max_encoded_len);
+size_t sbp_double_null_terminated_string_space_remaining(
+    const sbp_string_t *s, size_t max_encoded_len);
 
 /**
  * Count sections in a double null terminated string
@@ -112,7 +111,7 @@ size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
  */
 bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
                                                    size_t max_encoded_len,
-                                                   const char *new_str);
+                                                   const char *str);
 
 /**
  * Add a section to a double null terminated string with printf style formatting
@@ -211,8 +210,8 @@ const char *sbp_double_null_terminated_string_get_section(
  * @return Length of section
  */
 size_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
-                                                         size_t max_encoded_len,
-                                                         size_t section);
+                                                        size_t max_encoded_len,
+                                                        size_t section);
 
 /**
  * Encode a double null terminated string to a buffer
