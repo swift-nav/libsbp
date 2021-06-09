@@ -27,7 +27,6 @@ endif()
 
 swift_add_test(test-libsbp-legacy
   UNIT_TEST
-  POST_BUILD
   SRCS
     check_main_legacy.c
     check_edc.c
@@ -52,7 +51,6 @@ swift_set_compile_options(test-libsbp-legacy
 
 swift_add_test(test-libsbp-v4
   UNIT_TEST
-  POST_BUILD
   SRCS
     check_main.c
     check_edc.c

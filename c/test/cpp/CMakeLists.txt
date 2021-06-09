@@ -2,7 +2,6 @@ FILE(GLOB generated_cpp_sources auto*.cc)
 
 swift_add_test(test-libsbp-cpp-v4
     UNIT_TEST
-    POST_BUILD
     SRCS
         ${generated_cpp_sources}
     INCLUDE
