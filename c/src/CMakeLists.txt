@@ -4,9 +4,9 @@ set(libsbp_SRCS
   edc.c
   sbp.c
   v4/string/unterminated.c
-  v4/string/null_terminated.c
-  v4/string/multipart.c
-  v4/string/double_null_terminated.c
+  #v4/string/null_terminated.c
+  #v4/string/multipart.c
+  #v4/string/double_null_terminated.c
   ${generated_c_sources}
   )
 
