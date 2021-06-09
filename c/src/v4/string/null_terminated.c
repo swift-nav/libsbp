@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include <libsbp/internal/v4/string/null_terminated.h>
-#include <libsbp/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/sbp_strnlen.h>
 #include <libsbp/internal/v4/string/sbp_string.h>
 
@@ -116,14 +115,14 @@ const char *sbp_null_terminated_string_get(const sbp_string_t *s,
   return s->data;
 }
 
-bool sbp_null_terminated_string_pack(const sbp_string_t *s,
+bool sbp_null_terminated_string_encode(const sbp_string_t *s,
                                      size_t max_encoded_len,
                                      sbp_encode_ctx_t *ctx)
 {
   return sbp_string_encode(s, max_encoded_len, ctx, &params);
 }
 
-bool sbp_null_terminated_string_unpack(sbp_string_t *s,
+bool sbp_null_terminated_string_decode(sbp_string_t *s,
                                        size_t max_encoded_len,
                                        sbp_decode_ctx_t *ctx)
 {

@@ -106,19 +106,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   }
   test_msg.setting.encoded_len = 76;
 
-  test_msg.setting.lens[0] = 15;
-
-  test_msg.setting.lens[1] = 20;
-
-  test_msg.setting.lens[2] = 38;
-  test_msg.setting.n_sections = 3;
-
-  test_msg.setting.offsets[0] = 0;
-
-  test_msg.setting.offsets[1] = 16;
-
-  test_msg.setting.offsets[2] = 37;
-
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
@@ -157,27 +144,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   EXPECT_EQ(last_msg_.setting.encoded_len, 76)
       << "incorrect value for last_msg_.setting.encoded_len, expected 76, is "
       << last_msg_.setting.encoded_len;
-  EXPECT_EQ(last_msg_.setting.lens[0], 15)
-      << "incorrect value for last_msg_.setting.lens[0], expected 15, is "
-      << last_msg_.setting.lens[0];
-  EXPECT_EQ(last_msg_.setting.lens[1], 20)
-      << "incorrect value for last_msg_.setting.lens[1], expected 20, is "
-      << last_msg_.setting.lens[1];
-  EXPECT_EQ(last_msg_.setting.lens[2], 38)
-      << "incorrect value for last_msg_.setting.lens[2], expected 38, is "
-      << last_msg_.setting.lens[2];
-  EXPECT_EQ(last_msg_.setting.n_sections, 3)
-      << "incorrect value for last_msg_.setting.n_sections, expected 3, is "
-      << last_msg_.setting.n_sections;
-  EXPECT_EQ(last_msg_.setting.offsets[0], 0)
-      << "incorrect value for last_msg_.setting.offsets[0], expected 0, is "
-      << last_msg_.setting.offsets[0];
-  EXPECT_EQ(last_msg_.setting.offsets[1], 16)
-      << "incorrect value for last_msg_.setting.offsets[1], expected 16, is "
-      << last_msg_.setting.offsets[1];
-  EXPECT_EQ(last_msg_.setting.offsets[2], 37)
-      << "incorrect value for last_msg_.setting.offsets[2], expected 37, is "
-      << last_msg_.setting.offsets[2];
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
     : public ::testing::Test,
@@ -256,23 +222,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   }
   test_msg.setting.encoded_len = 33;
 
-  test_msg.setting.lens[0] = 9;
-
-  test_msg.setting.lens[1] = 4;
-
-  test_msg.setting.lens[2] = 3;
-
-  test_msg.setting.lens[3] = 13;
-  test_msg.setting.n_sections = 4;
-
-  test_msg.setting.offsets[0] = 0;
-
-  test_msg.setting.offsets[1] = 10;
-
-  test_msg.setting.offsets[2] = 15;
-
-  test_msg.setting.offsets[3] = 19;
-
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
@@ -304,33 +253,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   EXPECT_EQ(last_msg_.setting.encoded_len, 33)
       << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
       << last_msg_.setting.encoded_len;
-  EXPECT_EQ(last_msg_.setting.lens[0], 9)
-      << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
-      << last_msg_.setting.lens[0];
-  EXPECT_EQ(last_msg_.setting.lens[1], 4)
-      << "incorrect value for last_msg_.setting.lens[1], expected 4, is "
-      << last_msg_.setting.lens[1];
-  EXPECT_EQ(last_msg_.setting.lens[2], 3)
-      << "incorrect value for last_msg_.setting.lens[2], expected 3, is "
-      << last_msg_.setting.lens[2];
-  EXPECT_EQ(last_msg_.setting.lens[3], 13)
-      << "incorrect value for last_msg_.setting.lens[3], expected 13, is "
-      << last_msg_.setting.lens[3];
-  EXPECT_EQ(last_msg_.setting.n_sections, 4)
-      << "incorrect value for last_msg_.setting.n_sections, expected 4, is "
-      << last_msg_.setting.n_sections;
-  EXPECT_EQ(last_msg_.setting.offsets[0], 0)
-      << "incorrect value for last_msg_.setting.offsets[0], expected 0, is "
-      << last_msg_.setting.offsets[0];
-  EXPECT_EQ(last_msg_.setting.offsets[1], 10)
-      << "incorrect value for last_msg_.setting.offsets[1], expected 10, is "
-      << last_msg_.setting.offsets[1];
-  EXPECT_EQ(last_msg_.setting.offsets[2], 15)
-      << "incorrect value for last_msg_.setting.offsets[2], expected 15, is "
-      << last_msg_.setting.offsets[2];
-  EXPECT_EQ(last_msg_.setting.offsets[3], 19)
-      << "incorrect value for last_msg_.setting.offsets[3], expected 19, is "
-      << last_msg_.setting.offsets[3];
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
     : public ::testing::Test,
@@ -409,19 +331,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   }
   test_msg.setting.encoded_len = 33;
 
-  test_msg.setting.lens[0] = 9;
-
-  test_msg.setting.lens[1] = 16;
-
-  test_msg.setting.lens[2] = 5;
-  test_msg.setting.n_sections = 3;
-
-  test_msg.setting.offsets[0] = 0;
-
-  test_msg.setting.offsets[1] = 10;
-
-  test_msg.setting.offsets[2] = 27;
-
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
@@ -453,27 +362,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   EXPECT_EQ(last_msg_.setting.encoded_len, 33)
       << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
       << last_msg_.setting.encoded_len;
-  EXPECT_EQ(last_msg_.setting.lens[0], 9)
-      << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
-      << last_msg_.setting.lens[0];
-  EXPECT_EQ(last_msg_.setting.lens[1], 16)
-      << "incorrect value for last_msg_.setting.lens[1], expected 16, is "
-      << last_msg_.setting.lens[1];
-  EXPECT_EQ(last_msg_.setting.lens[2], 5)
-      << "incorrect value for last_msg_.setting.lens[2], expected 5, is "
-      << last_msg_.setting.lens[2];
-  EXPECT_EQ(last_msg_.setting.n_sections, 3)
-      << "incorrect value for last_msg_.setting.n_sections, expected 3, is "
-      << last_msg_.setting.n_sections;
-  EXPECT_EQ(last_msg_.setting.offsets[0], 0)
-      << "incorrect value for last_msg_.setting.offsets[0], expected 0, is "
-      << last_msg_.setting.offsets[0];
-  EXPECT_EQ(last_msg_.setting.offsets[1], 10)
-      << "incorrect value for last_msg_.setting.offsets[1], expected 10, is "
-      << last_msg_.setting.offsets[1];
-  EXPECT_EQ(last_msg_.setting.offsets[2], 27)
-      << "incorrect value for last_msg_.setting.offsets[2], expected 27, is "
-      << last_msg_.setting.offsets[2];
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
     : public ::testing::Test,
@@ -551,19 +439,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   }
   test_msg.setting.encoded_len = 27;
 
-  test_msg.setting.lens[0] = 9;
-
-  test_msg.setting.lens[1] = 8;
-
-  test_msg.setting.lens[2] = 7;
-  test_msg.setting.n_sections = 3;
-
-  test_msg.setting.offsets[0] = 0;
-
-  test_msg.setting.offsets[1] = 10;
-
-  test_msg.setting.offsets[2] = 19;
-
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
@@ -594,27 +469,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   EXPECT_EQ(last_msg_.setting.encoded_len, 27)
       << "incorrect value for last_msg_.setting.encoded_len, expected 27, is "
       << last_msg_.setting.encoded_len;
-  EXPECT_EQ(last_msg_.setting.lens[0], 9)
-      << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
-      << last_msg_.setting.lens[0];
-  EXPECT_EQ(last_msg_.setting.lens[1], 8)
-      << "incorrect value for last_msg_.setting.lens[1], expected 8, is "
-      << last_msg_.setting.lens[1];
-  EXPECT_EQ(last_msg_.setting.lens[2], 7)
-      << "incorrect value for last_msg_.setting.lens[2], expected 7, is "
-      << last_msg_.setting.lens[2];
-  EXPECT_EQ(last_msg_.setting.n_sections, 3)
-      << "incorrect value for last_msg_.setting.n_sections, expected 3, is "
-      << last_msg_.setting.n_sections;
-  EXPECT_EQ(last_msg_.setting.offsets[0], 0)
-      << "incorrect value for last_msg_.setting.offsets[0], expected 0, is "
-      << last_msg_.setting.offsets[0];
-  EXPECT_EQ(last_msg_.setting.offsets[1], 10)
-      << "incorrect value for last_msg_.setting.offsets[1], expected 10, is "
-      << last_msg_.setting.offsets[1];
-  EXPECT_EQ(last_msg_.setting.offsets[2], 19)
-      << "incorrect value for last_msg_.setting.offsets[2], expected 19, is "
-      << last_msg_.setting.offsets[2];
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
     : public ::testing::Test,
@@ -693,23 +547,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   }
   test_msg.setting.encoded_len = 34;
 
-  test_msg.setting.lens[0] = 10;
-
-  test_msg.setting.lens[1] = 4;
-
-  test_msg.setting.lens[2] = 3;
-
-  test_msg.setting.lens[3] = 13;
-  test_msg.setting.n_sections = 4;
-
-  test_msg.setting.offsets[0] = 0;
-
-  test_msg.setting.offsets[1] = 11;
-
-  test_msg.setting.offsets[2] = 16;
-
-  test_msg.setting.offsets[3] = 20;
-
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
@@ -741,31 +578,4 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   EXPECT_EQ(last_msg_.setting.encoded_len, 34)
       << "incorrect value for last_msg_.setting.encoded_len, expected 34, is "
       << last_msg_.setting.encoded_len;
-  EXPECT_EQ(last_msg_.setting.lens[0], 10)
-      << "incorrect value for last_msg_.setting.lens[0], expected 10, is "
-      << last_msg_.setting.lens[0];
-  EXPECT_EQ(last_msg_.setting.lens[1], 4)
-      << "incorrect value for last_msg_.setting.lens[1], expected 4, is "
-      << last_msg_.setting.lens[1];
-  EXPECT_EQ(last_msg_.setting.lens[2], 3)
-      << "incorrect value for last_msg_.setting.lens[2], expected 3, is "
-      << last_msg_.setting.lens[2];
-  EXPECT_EQ(last_msg_.setting.lens[3], 13)
-      << "incorrect value for last_msg_.setting.lens[3], expected 13, is "
-      << last_msg_.setting.lens[3];
-  EXPECT_EQ(last_msg_.setting.n_sections, 4)
-      << "incorrect value for last_msg_.setting.n_sections, expected 4, is "
-      << last_msg_.setting.n_sections;
-  EXPECT_EQ(last_msg_.setting.offsets[0], 0)
-      << "incorrect value for last_msg_.setting.offsets[0], expected 0, is "
-      << last_msg_.setting.offsets[0];
-  EXPECT_EQ(last_msg_.setting.offsets[1], 11)
-      << "incorrect value for last_msg_.setting.offsets[1], expected 11, is "
-      << last_msg_.setting.offsets[1];
-  EXPECT_EQ(last_msg_.setting.offsets[2], 16)
-      << "incorrect value for last_msg_.setting.offsets[2], expected 16, is "
-      << last_msg_.setting.offsets[2];
-  EXPECT_EQ(last_msg_.setting.offsets[3], 20)
-      << "incorrect value for last_msg_.setting.offsets[3], expected 20, is "
-      << last_msg_.setting.offsets[3];
 }

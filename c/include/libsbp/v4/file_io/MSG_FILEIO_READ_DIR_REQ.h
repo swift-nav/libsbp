@@ -20,6 +20,7 @@
 
 #include <endian.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -27,10 +28,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/file_io_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,7 +66,7 @@ typedef struct {
   /**
    * Name of the directory to list
    */
-  sbp_null_terminated_string_t dirname;
+  sbp_string_t dirname;
 } sbp_msg_fileio_read_dir_req_t;
 
 /**

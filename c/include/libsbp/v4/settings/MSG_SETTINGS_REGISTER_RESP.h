@@ -20,6 +20,7 @@
 
 #include <endian.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -27,10 +28,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/settings_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,7 +59,7 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
    * according to the status field.
    */
-  sbp_multipart_string_t setting;
+  sbp_string_t setting;
 } sbp_msg_settings_register_resp_t;
 
 /**

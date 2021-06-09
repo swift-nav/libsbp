@@ -20,6 +20,7 @@
 
 #include <endian.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -27,10 +28,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/linux_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,7 +80,7 @@ typedef struct {
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  sbp_unterminated_string_t cmdline;
+  sbp_string_t cmdline;
 } sbp_msg_linux_mem_state_t;
 
 /**

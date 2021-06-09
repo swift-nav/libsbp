@@ -20,6 +20,7 @@
 
 #include <endian.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -27,10 +28,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/linux_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +58,7 @@ typedef struct {
    * "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2 NULL
    * terminators in a row.
    */
-  sbp_double_null_terminated_string_t most_opened;
+  sbp_string_t most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 
 /**

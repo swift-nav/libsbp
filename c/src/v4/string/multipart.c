@@ -151,12 +151,12 @@ const char *sbp_multipart_string_get_section(const sbp_string_t *s,
   return s->data + offset;
 }
 
-bool sbp_multipart_string_pack(const sbp_string_t *s, size_t max_encoded_len, sbp_encode_ctx_t *ctx)
+bool sbp_multipart_string_encode(const sbp_string_t *s, size_t max_encoded_len, sbp_encode_ctx_t *ctx)
 {
   return sbp_string_encode(s, max_encoded_len, ctx, &params);
 }
 
-bool sbp_multipart_string_unpack(sbp_string_t *s, size_t max_encoded_len, sbp_decode_ctx_t *ctx)
+bool sbp_multipart_string_decode(sbp_string_t *s, size_t max_encoded_len, sbp_decode_ctx_t *ctx)
 {
   return sbp_string_decode(s, max_encoded_len, ctx, &params);
 }

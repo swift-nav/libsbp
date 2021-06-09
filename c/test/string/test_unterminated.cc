@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <libsbp/v4/string/unterminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 
 TEST(TestUnterminatedString, InitialState) {
@@ -368,7 +367,7 @@ TEST(TestUnterminatedString, Pack)
 
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, short_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, short_params), 0);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 0);
   for (uint8_t i = 0; i < 30; i++) EXPECT_EQ(payload[i], 0xCC); // Nothing modified
 
@@ -380,7 +379,7 @@ TEST(TestUnterminatedString, Pack)
   sbp_unterminated_string_init(&s, short_params);
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, short_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, short_params), 0);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 0);
   for (uint8_t i = 1; i < 30; i++) EXPECT_EQ(payload[i], 0xCC); // Nothing modified
 
@@ -392,7 +391,7 @@ TEST(TestUnterminatedString, Pack)
   EXPECT_TRUE(sbp_unterminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, long_params), 13);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 13);
   EXPECT_EQ(memcmp(payload, "Hello, World!", 13), 0);
   for (uint8_t i = 13; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -405,7 +404,7 @@ TEST(TestUnterminatedString, Pack)
   EXPECT_TRUE(sbp_unterminated_string_set(&s, long_params, "Hello, World!!!!!!!!"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, long_params), 20);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 20);
   EXPECT_EQ(memcmp(payload, "Hello, World!!!!!!!!", 20), 0);
   for (uint8_t i = 20; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -418,7 +417,7 @@ TEST(TestUnterminatedString, Pack)
   EXPECT_TRUE(sbp_unterminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, long_params), 13);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 13);
   EXPECT_EQ(memcmp(payload, "Hello, World!", 13), 0);
   for (uint8_t i = 13; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -431,7 +430,7 @@ TEST(TestUnterminatedString, Pack)
   EXPECT_TRUE(sbp_unterminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, long_params), 13);
-  EXPECT_FALSE(sbp_unterminated_string_pack(&s, long_params, &ctx));
+  EXPECT_FALSE(sbp_unterminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 0);
   for (uint8_t i = 0; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
 
@@ -444,7 +443,7 @@ TEST(TestUnterminatedString, Pack)
   EXPECT_TRUE(sbp_unterminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, long_params), 13);
-  EXPECT_TRUE(sbp_unterminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 23);
   for (uint8_t i = 0; i < 10; i++) EXPECT_EQ(payload[i], 0xCC);
   EXPECT_EQ(memcmp(payload + 10, "Hello, World!", 13), 0);
@@ -466,7 +465,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.buf_len = 4;
   ctx.offset = 0;
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 4);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 4);
@@ -479,7 +478,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 0;
   sbp_unterminated_string_init(&s, max_encoded_len);
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 4);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 4);
@@ -492,7 +491,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_unterminated_string_set(&s, max_encoded_len, "zzzzz"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 4);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 4);
@@ -505,7 +504,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_unterminated_string_set(&s, max_encoded_len, "zzzzz"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 2);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 2);
@@ -518,7 +517,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_unterminated_string_set(&s, max_encoded_len, "zzzzz"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_FALSE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_FALSE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 0);
@@ -531,7 +530,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 6;
   EXPECT_TRUE(sbp_unterminated_string_set(&s, max_encoded_len, "zzzzz"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 3);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 3);
@@ -544,7 +543,7 @@ TEST(TestUnterminatedString, Unpack)
   ctx.offset = 6;
   EXPECT_TRUE(sbp_unterminated_string_set(&s, max_encoded_len, "zzzzz"));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_unterminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, max_encoded_len), 3);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, max_encoded_len), 3);
@@ -555,6 +554,6 @@ TEST(TestUnterminatedString, Unpack)
   memcpy(payload, "one\0two\0", 8);
   ctx.buf_len = 8;
   ctx.offset = 0;
-  EXPECT_FALSE(sbp_unterminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_FALSE(sbp_unterminated_string_decode(&s, max_encoded_len, &ctx));
 }
 

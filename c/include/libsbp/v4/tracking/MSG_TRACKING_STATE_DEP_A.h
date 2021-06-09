@@ -20,6 +20,7 @@
 
 #include <endian.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -28,10 +29,7 @@
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
 #include <libsbp/v4/gnss.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/tracking/TrackingChannelStateDepA.h>
 
 #ifdef __cplusplus

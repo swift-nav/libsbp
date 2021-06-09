@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <libsbp/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 
 TEST(TestNullTerminatedString, InitialState) {
@@ -373,7 +372,7 @@ TEST(TestNullTerminatedString, Pack)
 
   EXPECT_FALSE(sbp_null_terminated_string_valid(&s, short_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, short_params), 1);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 1);
   EXPECT_EQ(payload[0], 0); // Should have written a single NULL in to the payload
   for (uint8_t i = 1; i < 30; i++) EXPECT_EQ(payload[i], 0xCC); // And nothing else modified
@@ -386,7 +385,7 @@ TEST(TestNullTerminatedString, Pack)
   sbp_null_terminated_string_init(&s, short_params);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, short_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, short_params), 1);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 1);
   EXPECT_EQ(payload[0], 0); // Should have written a single NULL in to the payload
   for (uint8_t i = 1; i < 30; i++) EXPECT_EQ(payload[i], 0xCC); // And nothing else modified
@@ -399,7 +398,7 @@ TEST(TestNullTerminatedString, Pack)
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 14);
   EXPECT_EQ(memcmp(payload, "Hello, World!", 14), 0);
   for (uint8_t i = 14; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -412,7 +411,7 @@ TEST(TestNullTerminatedString, Pack)
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, long_params, "Hello, World!!!!!!!"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 20);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 20);
   EXPECT_EQ(memcmp(payload, "Hello, World!!!!!!!", 20), 0);
   for (uint8_t i = 20; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -425,7 +424,7 @@ TEST(TestNullTerminatedString, Pack)
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 14);
   EXPECT_EQ(memcmp(payload, "Hello, World!", 14), 0);
   for (uint8_t i = 14; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
@@ -438,7 +437,7 @@ TEST(TestNullTerminatedString, Pack)
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
-  EXPECT_FALSE(sbp_null_terminated_string_pack(&s, long_params, &ctx));
+  EXPECT_FALSE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 0);
   for (uint8_t i = 0; i < 30; i++) EXPECT_EQ(payload[i], 0xCC);
 
@@ -451,7 +450,7 @@ TEST(TestNullTerminatedString, Pack)
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, long_params, "Hello, World!"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
-  EXPECT_TRUE(sbp_null_terminated_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 24);
   for (uint8_t i = 0; i < 10; i++) EXPECT_EQ(payload[i], 0xCC);
   EXPECT_EQ(memcmp(payload + 10, "Hello, World!", 14), 0);
@@ -473,7 +472,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.buf_len = 5;
   ctx.offset = 0;
   EXPECT_FALSE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
@@ -486,7 +485,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   sbp_null_terminated_string_init(&s, max_encoded_len);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
@@ -499,7 +498,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
@@ -512,7 +511,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
@@ -525,7 +524,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 3);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 2);
@@ -538,7 +537,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);
@@ -551,7 +550,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_FALSE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_FALSE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
@@ -564,7 +563,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.offset = 4;
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);

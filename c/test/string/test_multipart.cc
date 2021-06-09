@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <libsbp/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/multipart.h>
 
 TEST(TestMultipartString, InitialState) {
@@ -423,7 +422,7 @@ TEST(TestMultipartString, Pack)
   ctx.buf_len = 30;
 
   EXPECT_TRUE(sbp_multipart_string_valid(&s, short_params));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   // Should not have written anything
   EXPECT_EQ(ctx.offset, 0);
   for (const auto &b : payload) EXPECT_EQ(b, 0xCC);
@@ -435,7 +434,7 @@ TEST(TestMultipartString, Pack)
 
   sbp_multipart_string_init(&s, short_params);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, short_params));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   // Should not have written anything
   EXPECT_EQ(ctx.offset, 0);
   for (const auto &b : payload) EXPECT_EQ(b, 0xCC);
@@ -448,7 +447,7 @@ TEST(TestMultipartString, Pack)
   sbp_multipart_string_init(&s, long_params);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "Hello"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "World!"));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, long_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 13);
   EXPECT_STREQ((const char *)payload, "Hello");
   EXPECT_STREQ((const char *)payload + 6, "World!");
@@ -462,7 +461,7 @@ TEST(TestMultipartString, Pack)
   sbp_multipart_string_init(&s, short_params);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 10);
   EXPECT_STREQ((const char *)payload, "10");
   EXPECT_STREQ((const char *)payload + 3, "bytes.");
@@ -476,7 +475,7 @@ TEST(TestMultipartString, Pack)
   sbp_multipart_string_init(&s, short_params);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 10);
   EXPECT_STREQ((const char *)payload, "10");
   EXPECT_STREQ((const char *)payload + 3, "bytes.");
@@ -491,7 +490,7 @@ TEST(TestMultipartString, Pack)
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "long"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "string"));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, long_params));
-  EXPECT_FALSE(sbp_multipart_string_pack(&s, long_params, &ctx));
+  EXPECT_FALSE(sbp_multipart_string_encode(&s, long_params, &ctx));
   EXPECT_EQ(ctx.offset, 0);
   for (const auto &b : payload) EXPECT_EQ(b, 0xCC);
 
@@ -504,7 +503,7 @@ TEST(TestMultipartString, Pack)
   sbp_multipart_string_init(&s, short_params);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
-  EXPECT_TRUE(sbp_multipart_string_pack(&s, short_params, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   EXPECT_EQ(ctx.offset, 15);
   for (uint8_t i = 0; i < 5; i++) EXPECT_EQ(payload[i], 0xCC);
   EXPECT_STREQ((const char *)payload + 5, "10");
@@ -528,7 +527,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
@@ -545,7 +544,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
@@ -564,7 +563,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 9);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
@@ -581,7 +580,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
@@ -598,7 +597,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 6);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
@@ -615,7 +614,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 0;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_FALSE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_FALSE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
   EXPECT_EQ(ctx.offset, 0);
@@ -628,7 +627,7 @@ TEST(TestMultipartString, Unpack)
   ctx.offset = 5;
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_unpack(&s, max_encoded_len, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);

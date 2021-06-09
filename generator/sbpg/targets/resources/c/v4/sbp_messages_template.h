@@ -20,16 +20,14 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdarg.h>
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
-#include <libsbp/v4/string/null_terminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/(((pkg_name)))_macros.h>
 
 ((*- for i in include *))
@@ -67,7 +65,7 @@ typedef struct {
    */
   ((*- endif *))
   ((*- if f.packing == "packed-string" *))
-  sbp_(((f.options.encoding.value)))_string_t (((f.name)));
+  sbp_string_t (((f.name)));
   ((*- elif f.packing == "single" *))
   (((f.basetype|convert_unpacked))) (((f.name)));
   ((*- else *))

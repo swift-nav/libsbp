@@ -41,10 +41,10 @@ bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
                                         va_list);
 const char *sbp_unterminated_string_get(const sbp_string_t *s,
                                            size_t max_encoded_len);
-bool sbp_unterminated_string_pack(const sbp_string_t *s,
+bool sbp_unterminated_string_encode(const sbp_string_t *s,
                                   size_t max_encoded_len,
                                   sbp_encode_ctx_t *ctx);
-bool sbp_unterminated_string_unpack(sbp_string_t *s,
+bool sbp_unterminated_string_decode(sbp_string_t *s,
                                     size_t max_encoded_len,
                                     sbp_decode_ctx_t *ctx);
 

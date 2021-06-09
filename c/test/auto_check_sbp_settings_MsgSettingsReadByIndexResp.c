@@ -131,20 +131,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.setting.encoded_len = 76;
 
-    test_msg.settings_read_by_index_resp.setting.lens[0] = 15;
-
-    test_msg.settings_read_by_index_resp.setting.lens[1] = 20;
-
-    test_msg.settings_read_by_index_resp.setting.lens[2] = 38;
-
-    test_msg.settings_read_by_index_resp.setting.n_sections = 3;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[0] = 0;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[1] = 16;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[2] = 37;
-
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
 
@@ -203,51 +189,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
         "expected 76, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 15,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[0], expected "
-        "15, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[1] == 20,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[1], expected "
-        "20, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[2] == 38,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[2], expected "
-        "38, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections == 3,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.n_sections, expected "
-        "3, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[0], expected "
-        "0, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1] == 16,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[1], expected "
-        "16, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2] == 37,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
-        "37, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
   }
   // Test successful parsing of a message
   {
@@ -290,24 +231,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     }
 
     test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
-
-    test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
-
-    test_msg.settings_read_by_index_resp.setting.lens[1] = 4;
-
-    test_msg.settings_read_by_index_resp.setting.lens[2] = 3;
-
-    test_msg.settings_read_by_index_resp.setting.lens[3] = 13;
-
-    test_msg.settings_read_by_index_resp.setting.n_sections = 4;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[0] = 0;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[1] = 10;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[2] = 15;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[3] = 19;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -360,60 +283,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
         "expected 33, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
-
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[0], "
-                  "expected 9, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[0]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[1] == 4,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[1], "
-                  "expected 4, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[1]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[2] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[2], "
-                  "expected 3, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[2]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[3] == 13,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[3], expected "
-        "13, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[3]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections == 4,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.n_sections, expected "
-        "4, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[0], expected "
-        "0, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1] == 10,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[1], expected "
-        "10, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2] == 15,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
-        "15, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[3] == 19,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[3], expected "
-        "19, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[3]);
   }
   // Test successful parsing of a message
   {
@@ -457,20 +326,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     }
 
     test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
-
-    test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
-
-    test_msg.settings_read_by_index_resp.setting.lens[1] = 16;
-
-    test_msg.settings_read_by_index_resp.setting.lens[2] = 5;
-
-    test_msg.settings_read_by_index_resp.setting.n_sections = 3;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[0] = 0;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[1] = 10;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[2] = 27;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -523,49 +378,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
         "expected 33, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
-
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[0], "
-                  "expected 9, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[1] == 16,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[1], expected "
-        "16, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[1]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[2] == 5,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[2], "
-                  "expected 5, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections == 3,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.n_sections, expected "
-        "3, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[0], expected "
-        "0, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1] == 10,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[1], expected "
-        "10, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2] == 27,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
-        "27, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
   }
   // Test successful parsing of a message
   {
@@ -607,20 +419,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     }
 
     test_msg.settings_read_by_index_resp.setting.encoded_len = 27;
-
-    test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
-
-    test_msg.settings_read_by_index_resp.setting.lens[1] = 8;
-
-    test_msg.settings_read_by_index_resp.setting.lens[2] = 7;
-
-    test_msg.settings_read_by_index_resp.setting.n_sections = 3;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[0] = 0;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[1] = 10;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[2] = 19;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -672,48 +470,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
         "expected 27, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
-
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[0], "
-                  "expected 9, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[0]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[1] == 8,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[1], "
-                  "expected 8, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[1]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[2] == 7,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[2], "
-                  "expected 7, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections == 3,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.n_sections, expected "
-        "3, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[0], expected "
-        "0, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1] == 10,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[1], expected "
-        "10, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2] == 19,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
-        "19, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
   }
   // Test successful parsing of a message
   {
@@ -756,24 +512,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     }
 
     test_msg.settings_read_by_index_resp.setting.encoded_len = 34;
-
-    test_msg.settings_read_by_index_resp.setting.lens[0] = 10;
-
-    test_msg.settings_read_by_index_resp.setting.lens[1] = 4;
-
-    test_msg.settings_read_by_index_resp.setting.lens[2] = 3;
-
-    test_msg.settings_read_by_index_resp.setting.lens[3] = 13;
-
-    test_msg.settings_read_by_index_resp.setting.n_sections = 4;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[0] = 0;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[1] = 11;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[2] = 16;
-
-    test_msg.settings_read_by_index_resp.setting.offsets[3] = 20;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -826,61 +564,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
         "expected 34, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 10,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[0], expected "
-        "10, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[0]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[1] == 4,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[1], "
-                  "expected 4, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[1]);
-    ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[2] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.settings_read_by_index_resp.setting.lens[2], "
-                  "expected 3, is %d",
-                  last_msg.msg.settings_read_by_index_resp.setting.lens[2]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.lens[3] == 13,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.lens[3], expected "
-        "13, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.lens[3]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections == 4,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.n_sections, expected "
-        "4, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.n_sections);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[0], expected "
-        "0, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[0]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1] == 11,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[1], expected "
-        "11, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[1]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2] == 16,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
-        "16, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[3] == 20,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.offsets[3], expected "
-        "20, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.offsets[3]);
   }
 }
 END_TEST
