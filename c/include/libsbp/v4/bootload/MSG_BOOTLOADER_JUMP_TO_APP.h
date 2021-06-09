@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_MESSAGES_H
-#define LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_MESSAGES_H
+#ifndef LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_H
+#define LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_H
 
 #include <endian.h>
 #include <math.h>
@@ -181,4 +181,4 @@ static inline bool operator>=(const sbp_msg_bootloader_jump_to_app_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_H */

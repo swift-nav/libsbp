@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_MESSAGES_H
-#define LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_MESSAGES_H
+#ifndef LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_H
+#define LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_H
 
 #include <endian.h>
 #include <math.h>
@@ -201,4 +201,4 @@ static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_SSR_MESSAGES_H */
+#endif /* LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_MSG_BASE_POS_LLH_MESSAGES_H
-#define LIBSBP_V4_OBSERVATION_MSG_BASE_POS_LLH_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_MSG_BASE_POS_LLH_H
+#define LIBSBP_V4_OBSERVATION_MSG_BASE_POS_LLH_H
 
 #include <endian.h>
 #include <math.h>
@@ -188,4 +188,4 @@ static inline bool operator>=(const sbp_msg_base_pos_llh_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_MSG_BASE_POS_LLH_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_SVAZEL_MESSAGES_H
-#define LIBSBP_V4_OBSERVATION_SVAZEL_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_SVAZEL_H
+#define LIBSBP_V4_OBSERVATION_SVAZEL_H
 
 #include <endian.h>
 #include <math.h>
@@ -166,4 +166,4 @@ static inline bool operator>=(const sbp_sv_az_el_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_SVAZEL_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_MESSAGES_H
-#define LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_MESSAGES_H
+#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H
+#define LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H
 
 #include <endian.h>
 #include <math.h>
@@ -326,4 +326,4 @@ static inline bool operator>=(const sbp_msg_fileio_remove_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H */

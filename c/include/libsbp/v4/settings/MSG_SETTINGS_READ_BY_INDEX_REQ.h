@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_MESSAGES_H
-#define LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_MESSAGES_H
+#ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_H
+#define LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_H
 
 #include <endian.h>
 #include <math.h>
@@ -185,4 +185,4 @@ static inline bool operator>=(const sbp_msg_settings_read_by_index_req_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_SETTINGS_MESSAGES_H */
+#endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_MESSAGES_H
-#define LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_MESSAGES_H
+#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_H
+#define LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_H
 
 #include <endian.h>
 #include <math.h>
@@ -389,4 +389,4 @@ static inline bool operator>=(const sbp_msg_fileio_read_dir_resp_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_H */

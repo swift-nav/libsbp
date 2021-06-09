@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
-#define LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
+#ifndef LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
+#define LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -436,5 +436,5 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
 
 #endif
 
-#endif /* LIBSBP_V4_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
 

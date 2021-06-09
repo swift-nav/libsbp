@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_USER_PACKAGE_H
-#define LIBSBP_V4_USER_PACKAGE_H
+#ifndef LIBSBP_V4_USER_MESSAGES_H
+#define LIBSBP_V4_USER_MESSAGES_H
 #include <libsbp/v4/user/MSG_USER_DATA.h>
 
-#endif /* LIBSBP_V4_USER_PACKAGE_H */
+#endif /* LIBSBP_V4_USER_MESSAGES_H */

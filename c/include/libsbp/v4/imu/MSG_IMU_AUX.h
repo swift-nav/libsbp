@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_IMU_MSG_IMU_AUX_MESSAGES_H
-#define LIBSBP_V4_IMU_MSG_IMU_AUX_MESSAGES_H
+#ifndef LIBSBP_V4_IMU_MSG_IMU_AUX_H
+#define LIBSBP_V4_IMU_MSG_IMU_AUX_H
 
 #include <endian.h>
 #include <math.h>
@@ -184,4 +184,4 @@ static inline bool operator>=(const sbp_msg_imu_aux_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_IMU_MESSAGES_H */
+#endif /* LIBSBP_V4_IMU_MSG_IMU_AUX_H */

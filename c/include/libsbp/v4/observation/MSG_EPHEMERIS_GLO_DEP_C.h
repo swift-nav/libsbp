@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_DEP_C_MESSAGES_H
-#define LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_DEP_C_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_DEP_C_H
+#define LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_DEP_C_H
 
 #include <endian.h>
 #include <math.h>
@@ -218,4 +218,4 @@ static inline bool operator>=(const sbp_msg_ephemeris_glo_dep_c_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_DEP_C_H */

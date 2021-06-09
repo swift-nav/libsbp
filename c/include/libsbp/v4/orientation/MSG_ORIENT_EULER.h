@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_ORIENTATION_MSG_ORIENT_EULER_MESSAGES_H
-#define LIBSBP_V4_ORIENTATION_MSG_ORIENT_EULER_MESSAGES_H
+#ifndef LIBSBP_V4_ORIENTATION_MSG_ORIENT_EULER_H
+#define LIBSBP_V4_ORIENTATION_MSG_ORIENT_EULER_H
 
 #include <endian.h>
 #include <math.h>
@@ -214,4 +214,4 @@ static inline bool operator>=(const sbp_msg_orient_euler_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_ORIENTATION_MESSAGES_H */
+#endif /* LIBSBP_V4_ORIENTATION_MSG_ORIENT_EULER_H */

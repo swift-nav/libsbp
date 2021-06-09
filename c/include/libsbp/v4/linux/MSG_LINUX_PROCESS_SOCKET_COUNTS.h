@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_COUNTS_MESSAGES_H
-#define LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_COUNTS_MESSAGES_H
+#ifndef LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_COUNTS_H
+#define LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_COUNTS_H
 
 #include <endian.h>
 #include <math.h>
@@ -374,4 +374,4 @@ static inline bool operator>=(
 
 #endif
 
-#endif /* LIBSBP_V4_LINUX_MESSAGES_H */
+#endif /* LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_COUNTS_H */

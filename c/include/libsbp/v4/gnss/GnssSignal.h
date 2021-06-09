@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_GNSSSIGNAL_MESSAGES_H
-#define LIBSBP_V4_GNSS_GNSSSIGNAL_MESSAGES_H
+#ifndef LIBSBP_V4_GNSS_GNSSSIGNAL_H
+#define LIBSBP_V4_GNSS_GNSSSIGNAL_H
 
 #include <endian.h>
 #include <math.h>
@@ -161,4 +161,4 @@ static inline bool operator>=(const sbp_sbp_gnss_signal_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_GNSS_MESSAGES_H */
+#endif /* LIBSBP_V4_GNSS_GNSSSIGNAL_H */

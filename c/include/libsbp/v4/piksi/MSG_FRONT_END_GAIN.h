@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_MESSAGES_H
-#define LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H
+#define LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H
 
 #include <endian.h>
 #include <math.h>
@@ -187,4 +187,4 @@ static inline bool operator>=(const sbp_msg_front_end_gain_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H */

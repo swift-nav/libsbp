@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_PACKAGE_H
-#define LIBSBP_V4_NAVIGATION_PACKAGE_H
+#ifndef LIBSBP_V4_NAVIGATION_MESSAGES_H
+#define LIBSBP_V4_NAVIGATION_MESSAGES_H
 #include <libsbp/v4/navigation/MSG_AGE_CORRECTIONS.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_ECEF.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_ECEF_DEP_A.h>
@@ -54,4 +54,4 @@
 #include <libsbp/v4/navigation/MSG_VEL_NED_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_VEL_NED_GNSS.h>
 
-#endif /* LIBSBP_V4_NAVIGATION_PACKAGE_H */
+#endif /* LIBSBP_V4_NAVIGATION_MESSAGES_H */

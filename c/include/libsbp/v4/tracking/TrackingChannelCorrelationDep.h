@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_MESSAGES_H
-#define LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_MESSAGES_H
+#ifndef LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_H
+#define LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_H
 
 #include <endian.h>
 #include <math.h>
@@ -175,4 +175,4 @@ static inline bool operator>=(
 
 #endif
 
-#endif /* LIBSBP_V4_TRACKING_MESSAGES_H */
+#endif /* LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_VEL_ECEF_DEP_A_MESSAGES_H
-#define LIBSBP_V4_NAVIGATION_MSG_VEL_ECEF_DEP_A_MESSAGES_H
+#ifndef LIBSBP_V4_NAVIGATION_MSG_VEL_ECEF_DEP_A_H
+#define LIBSBP_V4_NAVIGATION_MSG_VEL_ECEF_DEP_A_H
 
 #include <endian.h>
 #include <math.h>
@@ -207,4 +207,4 @@ static inline bool operator>=(const sbp_msg_vel_ecef_dep_a_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_NAVIGATION_MESSAGES_H */
+#endif /* LIBSBP_V4_NAVIGATION_MSG_VEL_ECEF_DEP_A_H */

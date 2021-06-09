@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_UARTCHANNEL_MESSAGES_H
-#define LIBSBP_V4_PIKSI_UARTCHANNEL_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_UARTCHANNEL_H
+#define LIBSBP_V4_PIKSI_UARTCHANNEL_H
 
 #include <endian.h>
 #include <math.h>
@@ -182,4 +182,4 @@ static inline bool operator>=(const sbp_uart_channel_t &lhs,
 
 #endif
 
-#endif /* LIBSBP_V4_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V4_PIKSI_UARTCHANNEL_H */
