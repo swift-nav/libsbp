@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SSR_STECSATELEMENT_MESSAGES_H
-#define LIBSBP_NEW_SSR_STECSATELEMENT_MESSAGES_H
+#ifndef LIBSBP_V4_SSR_STECSATELEMENT_MESSAGES_H
+#define LIBSBP_V4_SSR_STECSATELEMENT_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_STECSATELEMENT
@@ -73,8 +74,7 @@ typedef struct {
  * @param msg sbp_stec_sat_element_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_stec_sat_element_t(
-    const sbp_stec_sat_element_t *msg);
+size_t sbp_stec_sat_element_encoded_len(const sbp_stec_sat_element_t *msg);
 
 /**
  * Encode an instance of sbp_stec_sat_element_t to wire representation
@@ -95,9 +95,8 @@ size_t sbp_packed_size_sbp_stec_sat_element_t(
  * @param msg Instance of sbp_stec_sat_element_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len,
-                                     uint8_t *n_written,
-                                     const sbp_stec_sat_element_t *msg);
+s8 sbp_stec_sat_element_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                               const sbp_stec_sat_element_t *msg);
 
 /**
  * Decode an instance of sbp_stec_sat_element_t from wire representation
@@ -114,9 +113,8 @@ s8 sbp_encode_sbp_stec_sat_element_t(uint8_t *buf, uint8_t len,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len,
-                                     uint8_t *n_read,
-                                     sbp_stec_sat_element_t *msg);
+s8 sbp_stec_sat_element_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                               sbp_stec_sat_element_t *msg);
 
 /**
  * Compare two instances of sbp_stec_sat_element_t
@@ -133,41 +131,42 @@ s8 sbp_decode_sbp_stec_sat_element_t(const uint8_t *buf, uint8_t len,
  * @param b sbp_stec_sat_element_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_stec_sat_element_t(const sbp_stec_sat_element_t *a,
-                                   const sbp_stec_sat_element_t *b);
+int sbp_stec_sat_element_cmp(const sbp_stec_sat_element_t *a,
+                             const sbp_stec_sat_element_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_stec_sat_element_t &lhs,
                               const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) == 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_stec_sat_element_t &lhs,
                               const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) != 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_stec_sat_element_t &lhs,
                              const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) < 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_stec_sat_element_t &lhs,
                               const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) <= 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_stec_sat_element_t &lhs,
                              const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) > 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_stec_sat_element_t &lhs,
                               const sbp_stec_sat_element_t &rhs) {
-  return sbp_cmp_sbp_stec_sat_element_t(&lhs, &rhs) >= 0;
+  return sbp_stec_sat_element_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_SSR_MESSAGES_H */
+#endif /* LIBSBP_V4_SSR_MESSAGES_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_NEW_LINUX_H
-#define LIBSBP_INTERNAL_NEW_LINUX_H
+#ifndef LIBSBP_INTERNAL_V4_LINUX_H
+#define LIBSBP_INTERNAL_V4_LINUX_H
 
 #include <stdbool.h>
 
@@ -34,7 +34,7 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_cpu_state_dep_a_t(
+bool sbp_msg_linux_cpu_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_cpu_state_dep_a_t *msg);
 
 /**
@@ -44,7 +44,7 @@ bool encode_sbp_msg_linux_cpu_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_cpu_state_dep_a_t(
+bool sbp_msg_linux_cpu_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_cpu_state_dep_a_t *msg);
 
 /**
@@ -54,7 +54,7 @@ bool decode_sbp_msg_linux_cpu_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_mem_state_dep_a_t(
+bool sbp_msg_linux_mem_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_dep_a_t *msg);
 
 /**
@@ -64,7 +64,7 @@ bool encode_sbp_msg_linux_mem_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_mem_state_dep_a_t(
+bool sbp_msg_linux_mem_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_mem_state_dep_a_t *msg);
 
 /**
@@ -74,7 +74,7 @@ bool decode_sbp_msg_linux_mem_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_sys_state_dep_a_t(
+bool sbp_msg_linux_sys_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_sys_state_dep_a_t *msg);
 
 /**
@@ -84,7 +84,7 @@ bool encode_sbp_msg_linux_sys_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_sys_state_dep_a_t(
+bool sbp_msg_linux_sys_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_sys_state_dep_a_t *msg);
 
 /**
@@ -94,7 +94,7 @@ bool decode_sbp_msg_linux_sys_state_dep_a_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_process_socket_counts_t(
+bool sbp_msg_linux_process_socket_counts_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_counts_t *msg);
 
 /**
@@ -104,7 +104,7 @@ bool encode_sbp_msg_linux_process_socket_counts_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_process_socket_counts_t(
+bool sbp_msg_linux_process_socket_counts_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_socket_counts_t *msg);
 
 /**
@@ -114,7 +114,7 @@ bool decode_sbp_msg_linux_process_socket_counts_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_process_socket_queues_t(
+bool sbp_msg_linux_process_socket_queues_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -124,7 +124,7 @@ bool encode_sbp_msg_linux_process_socket_queues_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_process_socket_queues_t(
+bool sbp_msg_linux_process_socket_queues_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -134,7 +134,7 @@ bool decode_sbp_msg_linux_process_socket_queues_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_socket_usage_t(
+bool sbp_msg_linux_socket_usage_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_socket_usage_t *msg);
 
 /**
@@ -144,8 +144,8 @@ bool encode_sbp_msg_linux_socket_usage_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_socket_usage_t(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_linux_socket_usage_t *msg);
+bool sbp_msg_linux_socket_usage_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_linux_socket_usage_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -154,7 +154,7 @@ bool decode_sbp_msg_linux_socket_usage_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_process_fd_count_t(
+bool sbp_msg_linux_process_fd_count_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_fd_count_t *msg);
 
 /**
@@ -164,7 +164,7 @@ bool encode_sbp_msg_linux_process_fd_count_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_process_fd_count_t(
+bool sbp_msg_linux_process_fd_count_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_fd_count_t *msg);
 
 /**
@@ -174,7 +174,7 @@ bool decode_sbp_msg_linux_process_fd_count_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_process_fd_summary_t(
+bool sbp_msg_linux_process_fd_summary_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
@@ -184,7 +184,7 @@ bool encode_sbp_msg_linux_process_fd_summary_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_process_fd_summary_t(
+bool sbp_msg_linux_process_fd_summary_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
@@ -194,8 +194,8 @@ bool decode_sbp_msg_linux_process_fd_summary_t(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_cpu_state_t *msg);
+bool sbp_msg_linux_cpu_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_cpu_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -204,8 +204,8 @@ bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_cpu_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_cpu_state_t *msg);
+bool sbp_msg_linux_cpu_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_cpu_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -214,8 +214,8 @@ bool decode_sbp_msg_linux_cpu_state_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_mem_state_t *msg);
+bool sbp_msg_linux_mem_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -224,8 +224,8 @@ bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_mem_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_mem_state_t *msg);
+bool sbp_msg_linux_mem_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -234,8 +234,8 @@ bool decode_sbp_msg_linux_mem_state_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_linux_sys_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_sys_state_t *msg);
+bool sbp_msg_linux_sys_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_sys_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -244,11 +244,11 @@ bool encode_sbp_msg_linux_sys_state_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_linux_sys_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_sys_state_t *msg);
+bool sbp_msg_linux_sys_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_sys_state_t *msg);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* LIBSBP_INTERNAL_V4_LINUX_H */

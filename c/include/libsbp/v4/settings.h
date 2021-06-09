@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SETTINGS_MESSAGES_H
-#define LIBSBP_NEW_SETTINGS_MESSAGES_H
+#ifndef LIBSBP_V4_SETTINGS_PACKAGE_H
+#define LIBSBP_V4_SETTINGS_PACKAGE_H
 #include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
@@ -28,4 +28,4 @@
 #include <libsbp/v4/settings/MSG_SETTINGS_WRITE.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_WRITE_RESP.h>
 
-#endif
+#endif /* LIBSBP_V4_SETTINGS_PACKAGE_H */

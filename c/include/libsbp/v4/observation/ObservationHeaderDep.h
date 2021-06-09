@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_OBSERVATION_OBSERVATIONHEADERDEP_MESSAGES_H
-#define LIBSBP_NEW_OBSERVATION_OBSERVATIONHEADERDEP_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_OBSERVATIONHEADERDEP_MESSAGES_H
+#define LIBSBP_V4_OBSERVATION_OBSERVATIONHEADERDEP_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_OBSERVATIONHEADERDEP
@@ -67,7 +68,7 @@ typedef struct {
  * @param msg sbp_observation_header_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_observation_header_dep_t(
+size_t sbp_observation_header_dep_encoded_len(
     const sbp_observation_header_dep_t *msg);
 
 /**
@@ -89,9 +90,9 @@ size_t sbp_packed_size_sbp_observation_header_dep_t(
  * @param msg Instance of sbp_observation_header_dep_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_observation_header_dep_t(
-    uint8_t *buf, uint8_t len, uint8_t *n_written,
-    const sbp_observation_header_dep_t *msg);
+s8 sbp_observation_header_dep_encode(uint8_t *buf, uint8_t len,
+                                     uint8_t *n_written,
+                                     const sbp_observation_header_dep_t *msg);
 
 /**
  * Decode an instance of sbp_observation_header_dep_t from wire representation
@@ -108,9 +109,9 @@ s8 sbp_encode_sbp_observation_header_dep_t(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_observation_header_dep_t(const uint8_t *buf, uint8_t len,
-                                           uint8_t *n_read,
-                                           sbp_observation_header_dep_t *msg);
+s8 sbp_observation_header_dep_decode(const uint8_t *buf, uint8_t len,
+                                     uint8_t *n_read,
+                                     sbp_observation_header_dep_t *msg);
 
 /**
  * Compare two instances of sbp_observation_header_dep_t
@@ -127,41 +128,42 @@ s8 sbp_decode_sbp_observation_header_dep_t(const uint8_t *buf, uint8_t len,
  * @param b sbp_observation_header_dep_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_observation_header_dep_t(const sbp_observation_header_dep_t *a,
-                                         const sbp_observation_header_dep_t *b);
+int sbp_observation_header_dep_cmp(const sbp_observation_header_dep_t *a,
+                                   const sbp_observation_header_dep_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_observation_header_dep_t &lhs,
                               const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) == 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_observation_header_dep_t &lhs,
                               const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) != 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_observation_header_dep_t &lhs,
                              const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) < 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_observation_header_dep_t &lhs,
                               const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) <= 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_observation_header_dep_t &lhs,
                              const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) > 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_observation_header_dep_t &lhs,
                               const sbp_observation_header_dep_t &rhs) {
-  return sbp_cmp_sbp_observation_header_dep_t(&lhs, &rhs) >= 0;
+  return sbp_observation_header_dep_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */

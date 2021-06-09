@@ -133,9 +133,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepB) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_b.cf * 100 - 4995.1171875 * 100) < 0.05,
@@ -225,9 +225,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepB) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_b.cf * 100 - -8241.94335938 * 100) < 0.05,
@@ -317,9 +317,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepB) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_b.cf * 100 - 4745.36132812 * 100) < 0.05,
@@ -409,9 +409,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepB) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_b.cf * 100 - 2497.55859375 * 100) < 0.05,
@@ -501,9 +501,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepB) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ACQ_RESULT_DEP_B, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_b.cf * 100 - -499.511749268 * 100) < 0.05,

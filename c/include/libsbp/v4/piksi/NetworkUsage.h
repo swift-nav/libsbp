@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_PIKSI_NETWORKUSAGE_MESSAGES_H
-#define LIBSBP_NEW_PIKSI_NETWORKUSAGE_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_NETWORKUSAGE_MESSAGES_H
+#define LIBSBP_V4_PIKSI_NETWORKUSAGE_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -38,6 +38,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_NETWORKUSAGE
@@ -84,7 +85,7 @@ typedef struct {
  * @param msg sbp_network_usage_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_network_usage_t(const sbp_network_usage_t *msg);
+size_t sbp_network_usage_encoded_len(const sbp_network_usage_t *msg);
 
 /**
  * Encode an instance of sbp_network_usage_t to wire representation
@@ -105,8 +106,8 @@ size_t sbp_packed_size_sbp_network_usage_t(const sbp_network_usage_t *msg);
  * @param msg Instance of sbp_network_usage_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_network_usage_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_network_usage_t *msg);
+s8 sbp_network_usage_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                            const sbp_network_usage_t *msg);
 
 /**
  * Decode an instance of sbp_network_usage_t from wire representation
@@ -123,8 +124,8 @@ s8 sbp_encode_sbp_network_usage_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_network_usage_t(const uint8_t *buf, uint8_t len,
-                                  uint8_t *n_read, sbp_network_usage_t *msg);
+s8 sbp_network_usage_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                            sbp_network_usage_t *msg);
 
 /**
  * Compare two instances of sbp_network_usage_t
@@ -141,41 +142,42 @@ s8 sbp_decode_sbp_network_usage_t(const uint8_t *buf, uint8_t len,
  * @param b sbp_network_usage_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_network_usage_t(const sbp_network_usage_t *a,
-                                const sbp_network_usage_t *b);
+int sbp_network_usage_cmp(const sbp_network_usage_t *a,
+                          const sbp_network_usage_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_network_usage_t &lhs,
                               const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) == 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_network_usage_t &lhs,
                               const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) != 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_network_usage_t &lhs,
                              const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) < 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_network_usage_t &lhs,
                               const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) <= 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_network_usage_t &lhs,
                              const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) > 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_network_usage_t &lhs,
                               const sbp_network_usage_t &rhs) {
-  return sbp_cmp_sbp_network_usage_t(&lhs, &rhs) >= 0;
+  return sbp_network_usage_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V4_PIKSI_MESSAGES_H */

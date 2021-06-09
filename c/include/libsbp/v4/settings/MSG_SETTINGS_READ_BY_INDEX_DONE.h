@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_MESSAGES_H
-#define LIBSBP_NEW_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_MESSAGES_H
+#ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_MESSAGES_H
+#define LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_SETTINGS_READ_BY_INDEX_DONE
@@ -60,7 +61,7 @@ typedef struct {
  * @param msg sbp_msg_settings_read_by_index_done_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_settings_read_by_index_done_t(
+size_t sbp_msg_settings_read_by_index_done_encoded_len(
     const sbp_msg_settings_read_by_index_done_t *msg);
 
 /**
@@ -83,7 +84,7 @@ size_t sbp_packed_size_sbp_msg_settings_read_by_index_done_t(
  * @param msg Instance of sbp_msg_settings_read_by_index_done_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_settings_read_by_index_done_t(
+s8 sbp_msg_settings_read_by_index_done_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_settings_read_by_index_done_t *msg);
 
@@ -105,7 +106,7 @@ s8 sbp_encode_sbp_msg_settings_read_by_index_done_t(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_settings_read_by_index_done_t(
+s8 sbp_msg_settings_read_by_index_done_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_settings_read_by_index_done_t *msg);
 /**
@@ -125,7 +126,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_done_t(
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_settings_read_by_index_done_t(
+s8 sbp_msg_settings_read_by_index_done_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_settings_read_by_index_done_t *msg, sbp_write_fn_t write);
 
@@ -144,46 +145,47 @@ s8 sbp_send_sbp_msg_settings_read_by_index_done_t(
  * @param b sbp_msg_settings_read_by_index_done_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_settings_read_by_index_done_t(
+int sbp_msg_settings_read_by_index_done_cmp(
     const sbp_msg_settings_read_by_index_done_t *a,
     const sbp_msg_settings_read_by_index_done_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(
     const sbp_msg_settings_read_by_index_done_t &lhs,
     const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) == 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(
     const sbp_msg_settings_read_by_index_done_t &lhs,
     const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) != 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_settings_read_by_index_done_t &lhs,
                              const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) < 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(
     const sbp_msg_settings_read_by_index_done_t &lhs,
     const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) <= 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_settings_read_by_index_done_t &lhs,
                              const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) > 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(
     const sbp_msg_settings_read_by_index_done_t &lhs,
     const sbp_msg_settings_read_by_index_done_t &rhs) {
-  return sbp_cmp_sbp_msg_settings_read_by_index_done_t(&lhs, &rhs) >= 0;
+  return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_SETTINGS_MESSAGES_H */
+#endif /* LIBSBP_V4_SETTINGS_MESSAGES_H */

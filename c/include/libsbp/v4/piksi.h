@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_PIKSI_MESSAGES_H
-#define LIBSBP_NEW_PIKSI_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_PACKAGE_H
+#define LIBSBP_V4_PIKSI_PACKAGE_H
 #include <libsbp/v4/piksi/Latency.h>
 #include <libsbp/v4/piksi/MSG_ALMANAC.h>
 #include <libsbp/v4/piksi/MSG_CELL_MODEM_STATUS.h>
@@ -47,4 +47,4 @@
 #include <libsbp/v4/piksi/Period.h>
 #include <libsbp/v4/piksi/UARTChannel.h>
 
-#endif
+#endif /* LIBSBP_V4_PIKSI_PACKAGE_H */

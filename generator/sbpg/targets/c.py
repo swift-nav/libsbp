@@ -83,6 +83,11 @@ def convert_unpacked_union(value):
     return value.lower()[4:]
 
 
+def snake_case(value):
+    """
+    """
+    return convert_unpacked(value)[:-2]
+
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get('desc', '').replace(" ", "_").upper()
     base_string = "SBP_{}_{}".format(msg.upper().replace('MSG_', ''), bitfield_name)
@@ -165,6 +170,38 @@ def get_max_possible_items(msg, field, basetype, package_specs):
     return int(available_space / get_type_packed_size(basetype, package_specs))
 
 
+def get_basetype_encode(value):
+    """
+    """
+    if value in PRIMITIVE_TYPES:
+        return "sbp_" + value + "_encode"
+    return convert_unpacked(value)[:-2] + "_encode_internal"
+
+
+def get_basetype_decode(value):
+    """
+    """
+    if value in PRIMITIVE_TYPES:
+        return "sbp_" + value + "_decode"
+    return convert_unpacked(value)[:-2] + "_decode_internal"
+
+
+def get_basetype_encoded_len(value):
+    """
+    """
+    if value in PRIMITIVE_TYPES:
+        return "sbp_" + value + "_encoded_len"
+    return convert_unpacked(value)[:-2] + "_encoded_len"
+
+
+def get_basetype_cmp(value):
+    """
+    """
+    if value in PRIMITIVE_TYPES:
+        return "sbp_" + value + "_cmp"
+    return convert_unpacked(value)[:-2] + "_cmp"
+
+
 class FieldItem(object):
     """FieldItem
     """
@@ -182,6 +219,10 @@ class FieldItem(object):
         if type_id == "string" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype = "char"
+            self.basetype_encode = get_basetype_encode(self.basetype)
+            self.basetype_decode = get_basetype_decode(self.basetype)
+            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value
             self.options = field.options
@@ -197,12 +238,20 @@ class FieldItem(object):
         elif type_id == "array" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype = field.options['fill'].value
+            self.basetype_encode = get_basetype_encode(self.basetype)
+            self.basetype_decode = get_basetype_decode(self.basetype)
+            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value * get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
         elif type_id == "array":
             self.packing = "variable-array"
             self.basetype = field.options['fill'].value
+            self.basetype_encode = get_basetype_encode(self.basetype)
+            self.basetype_decode = get_basetype_decode(self.basetype)
+            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
             self.packed_size = 0
             if 'size_fn' in field.options:
@@ -215,6 +264,10 @@ class FieldItem(object):
         else:
             self.packing = "single"
             self.basetype = type_id
+            self.basetype_encode = get_basetype_encode(self.basetype)
+            self.basetype_decode = get_basetype_decode(self.basetype)
+            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = 1
             self.packed_size = get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
@@ -234,6 +287,9 @@ class MsgItem(object):
 
     def __init__(self, msg, package_specs):
         self.name = msg.identifier
+        self.prefix = snake_case(self.name)
+        self.type_name = self.prefix + "_t"
+        self.short_name = self.prefix[8:]
         self.sbp_id = msg.sbp_id
         self.desc = msg.desc
         self.short_desc = msg.short_desc
@@ -275,7 +331,7 @@ def render_headers(include_dir, package_specs):
             new_msg = MsgItem(m, package_specs)                                                           
             msgs.append(new_msg)
             if m.is_real_message:
-                all_msgs.append(new_msg.name)                                                                 
+                all_msgs.append(new_msg)                                                                 
             destination_filename = "%s/v4/%s/%s.h" % (include_dir, name, new_msg.name)
             py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
             with open(destination_filename, 'w') as f:
@@ -309,6 +365,12 @@ def render_headers(include_dir, package_specs):
             include=extensions(all_packages),
             filepath="/".join(package_spec.filepath) + ".yaml",
             max_msgid_len=msg_msgid_len))
+    destination_filename = "%s/cpp/message_traits.h" % include_dir
+    py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
+    with open(destination_filename, 'w') as f:
+        f.write(py_template.render(packages=package_specs,
+                               msgs=all_msgs,
+                               includes=extensions(all_packages)))
 
 def render_sources(output_dir, package_specs):
     all_msgs = []
@@ -355,23 +417,4 @@ def render_version(output_dir, release: ReleaseVersion):
                                          minor=release.minor,
                                          patch=release.patch,
                                          full_version=release.full_version))
-
-def render_traits(output_dir, package_specs):
-  msgs = []
-  includes = []
-  for package_spec in package_specs:
-    if not package_spec.render_source:
-      continue
-    name = package_spec.identifier.split('.', 2)[2]
-    if name != 'types' and name != 'base':
-      includes.append(name)
-    for m in package_spec.definitions:
-      if m.is_real_message:
-        msgs.append(m)
-  destination_filename = "%s/cpp/message_traits.h" % output_dir
-  py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
-  with open(destination_filename, 'w') as f:
-    f.write(py_template.render(packages=package_specs,
-                               msgs=sorted(msgs, key=lambda msg: msg.sbp_id),
-                               includes=sorted(includes)))
 

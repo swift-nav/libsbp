@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_MESSAGES_H
-#define LIBSBP_NEW_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_MESSAGES_H
+#ifndef LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_MESSAGES_H
+#define LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A
@@ -58,7 +59,7 @@ typedef struct {
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  */
-void sbp_msg_bootloader_handshake_dep_a_t_handshake_init(
+void sbp_msg_bootloader_handshake_dep_a_handshake_init(
     sbp_unterminated_string_t *s);
 
 /**
@@ -68,7 +69,7 @@ void sbp_msg_bootloader_handshake_dep_a_t_handshake_init(
  * @return true is sbp_msg_bootloader_handshake_dep_a_t::handshake is valid for
  * encoding purposes, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_valid(
     const sbp_unterminated_string_t *s);
 
 /**
@@ -82,7 +83,7 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_valid(
  * @param b sbp_msg_bootloader_handshake_dep_a_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(
+int sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
 
 /**
@@ -92,7 +93,7 @@ int sbp_msg_bootloader_handshake_dep_a_t_handshake_strcmp(
  * @return Size of sbp_msg_bootloader_handshake_dep_a_t::handshake in wire
  * representation
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(
+uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
     const sbp_unterminated_string_t *s);
 
 /**
@@ -105,7 +106,7 @@ uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_packed_len(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_space_remaining(
+uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
     const sbp_unterminated_string_t *s);
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake
@@ -120,7 +121,7 @@ uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_set(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
     sbp_unterminated_string_t *s, const char *new_str);
 
 /**
@@ -138,14 +139,14 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_set(
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
  * formatting
  *
- * Identical to #sbp_msg_bootloader_handshake_dep_a_t_handshake_printf except it
+ * Identical to #sbp_msg_bootloader_handshake_dep_a_handshake_printf except it
  * takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
@@ -153,7 +154,7 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_printf(
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
 
 /**
@@ -169,14 +170,14 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_vprintf(
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
  * formatting
  *
- * Identical to #sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf
+ * Identical to #sbp_msg_bootloader_handshake_dep_a_handshake_append_printf
  * except it takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
@@ -185,7 +186,7 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_printf(
  * @return true on success, false otherwise
  *
  */
-bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_vprintf(
+bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
 
 /**
@@ -194,7 +195,7 @@ bool sbp_msg_bootloader_handshake_dep_a_t_handshake_append_vprintf(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return String contents
  */
-const char *sbp_msg_bootloader_handshake_dep_a_t_handshake_get(
+const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
     const sbp_unterminated_string_t *s);
 
 /**
@@ -205,7 +206,7 @@ const char *sbp_msg_bootloader_handshake_dep_a_t_handshake_get(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_section_strlen(
+uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_section_strlen(
     const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
@@ -214,7 +215,7 @@ uint8_t sbp_msg_bootloader_handshake_dep_a_t_handshake_section_strlen(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(
+size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg);
 
 /**
@@ -237,7 +238,7 @@ size_t sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(
  * @param msg Instance of sbp_msg_bootloader_handshake_dep_a_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(
+s8 sbp_msg_bootloader_handshake_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_bootloader_handshake_dep_a_t *msg);
 
@@ -259,7 +260,7 @@ s8 sbp_encode_sbp_msg_bootloader_handshake_dep_a_t(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_bootloader_handshake_dep_a_t(
+s8 sbp_msg_bootloader_handshake_dep_a_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_bootloader_handshake_dep_a_t *msg);
 /**
@@ -279,7 +280,7 @@ s8 sbp_decode_sbp_msg_bootloader_handshake_dep_a_t(
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(
+s8 sbp_msg_bootloader_handshake_dep_a_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_bootloader_handshake_dep_a_t *msg, sbp_write_fn_t write);
 
@@ -298,42 +299,43 @@ s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(
  * @param b sbp_msg_bootloader_handshake_dep_a_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(
+int sbp_msg_bootloader_handshake_dep_a_cmp(
     const sbp_msg_bootloader_handshake_dep_a_t *a,
     const sbp_msg_bootloader_handshake_dep_a_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                               const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) == 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                               const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) != 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                              const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) < 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                               const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) <= 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                              const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) > 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
                               const sbp_msg_bootloader_handshake_dep_a_t &rhs) {
-  return sbp_cmp_sbp_msg_bootloader_handshake_dep_a_t(&lhs, &rhs) >= 0;
+  return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */

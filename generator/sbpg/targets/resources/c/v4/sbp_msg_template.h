@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef NEW_MESSAGES_UNION_H
-#define NEW_MESSAGES_UNION_H
+#ifndef LIBSBP_V4_SBP_MSG_H
+#define LIBSBP_V4_SBP_MSG_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -37,7 +37,7 @@
  */
 typedef union {
 ((*- for m in msgs *))
-  (((m|convert_unpacked))) (((m|convert_unpacked_union)));
+  (((m.type_name))) (((m.short_name)));
 ((*- endfor *))
 } sbp_msg_t;
 
@@ -53,11 +53,11 @@ typedef union {
  *         `SBP_OK` (0) if the message was successfully encoded and written to buf
  *         callback
  */
-static inline s8 sbp_encode_msg(uint8_t *buf, uint8_t len, uint8_t *n_written, uint16_t msg_type, const sbp_msg_t *msg) {
+static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, uint16_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m))):
-      return sbp_encode_(((m|convert_unpacked)))(buf, len, n_written, &msg->(((m|convert_unpacked_union))));
+    case SBP_(((m.name))):
+      return (((m.prefix)))_encode(buf, len, n_written, &msg->(((m.short_name))));
 ((*- endfor *))
     default:
       break;
@@ -76,11 +76,11 @@ static inline s8 sbp_encode_msg(uint8_t *buf, uint8_t len, uint8_t *n_written, u
  *         `SBP_OK` (0) if the message was successfully decoded
  *         callback
  */
-static inline s8 sbp_decode_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
+static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m))):
-      return sbp_decode_(((m|convert_unpacked)))(buf, len, n_read, &msg->(((m|convert_unpacked_union))));
+    case SBP_(((m.name))):
+      return (((m.prefix)))_decode(buf, len, n_read, &msg->(((m.short_name))));
 ((*- endfor *))
     default:
       break;
@@ -94,11 +94,11 @@ static inline s8 sbp_decode_msg(const uint8_t *buf, uint8_t len, uint8_t *n_read
  * \param msg         SBP message
  * \return            The Number of bytes that the given message would be on the wire
  */
-static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
+static inline size_t sbp_message_encoded_len(uint16_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m))):
-      return sbp_packed_size_(((m|convert_unpacked)))(&msg->(((m|convert_unpacked_union))));
+    case SBP_(((m.name))):
+      return (((m.prefix)))_encoded_len(&msg->(((m.short_name))));
 ((*- endfor *))
     default:
       break;
@@ -115,11 +115,11 @@ static inline size_t sbp_packed_size(uint16_t msg_type, const sbp_msg_t *msg) {
  *                    1 if, on the first non-equal field, a.field > b.field
  *                    -1 if, on the first non-equal field, a.field < b.field
  */
-static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
+static inline int sbp_message_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
   switch(msg_type) {
     ((*- for m in msgs *))
-    case SBP_(((m))):
-      return sbp_cmp_(((m|convert_unpacked)))(&a->(((m|convert_unpacked_union))), &b->(((m|convert_unpacked_union))));
+    case SBP_(((m.name))):
+      return (((m.prefix)))_cmp(&a->(((m.short_name))), &b->(((m.short_name))));
     ((*- endfor *))
     default:
       break;
@@ -131,5 +131,5 @@ static inline int sbp_msg_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_m
 }
 #endif
 
-#endif
+#endif /* LIBSBP_V4_SBP_MSG_H */
 

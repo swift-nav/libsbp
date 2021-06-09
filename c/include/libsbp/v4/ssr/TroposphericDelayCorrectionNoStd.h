@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_MESSAGES_H
-#define LIBSBP_NEW_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_MESSAGES_H
+#ifndef LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_MESSAGES_H
+#define LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -38,6 +38,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_TROPOSPHERICDELAYCORRECTIONNOSTD
@@ -66,7 +67,7 @@ typedef struct {
  * @param msg sbp_tropospheric_delay_correction_no_std_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_tropospheric_delay_correction_no_std_t(
+size_t sbp_tropospheric_delay_correction_no_std_encoded_len(
     const sbp_tropospheric_delay_correction_no_std_t *msg);
 
 /**
@@ -89,7 +90,7 @@ size_t sbp_packed_size_sbp_tropospheric_delay_correction_no_std_t(
  * @param msg Instance of sbp_tropospheric_delay_correction_no_std_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_tropospheric_delay_correction_no_std_t(
+s8 sbp_tropospheric_delay_correction_no_std_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_tropospheric_delay_correction_no_std_t *msg);
 
@@ -111,7 +112,7 @@ s8 sbp_encode_sbp_tropospheric_delay_correction_no_std_t(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_tropospheric_delay_correction_no_std_t(
+s8 sbp_tropospheric_delay_correction_no_std_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_tropospheric_delay_correction_no_std_t *msg);
 
@@ -130,48 +131,49 @@ s8 sbp_decode_sbp_tropospheric_delay_correction_no_std_t(
  * @param b sbp_tropospheric_delay_correction_no_std_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(
+int sbp_tropospheric_delay_correction_no_std_cmp(
     const sbp_tropospheric_delay_correction_no_std_t *a,
     const sbp_tropospheric_delay_correction_no_std_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) == 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) != 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) < 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) <= 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) > 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(
     const sbp_tropospheric_delay_correction_no_std_t &lhs,
     const sbp_tropospheric_delay_correction_no_std_t &rhs) {
-  return sbp_cmp_sbp_tropospheric_delay_correction_no_std_t(&lhs, &rhs) >= 0;
+  return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_SSR_MESSAGES_H */
+#endif /* LIBSBP_V4_SSR_MESSAGES_H */

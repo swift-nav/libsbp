@@ -16,43 +16,43 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/ext_events.h>
 
-size_t sbp_packed_size_sbp_msg_ext_event_t(const sbp_msg_ext_event_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u16(&msg->wn);
-  packed_size += sbp_packed_size_u32(&msg->tow);
-  packed_size += sbp_packed_size_s32(&msg->ns_residual);
-  packed_size += sbp_packed_size_u8(&msg->flags);
-  packed_size += sbp_packed_size_u8(&msg->pin);
-  return packed_size;
+size_t sbp_msg_ext_event_encoded_len(const sbp_msg_ext_event_t *msg) {
+  size_t encoded_len = 0;
+  encoded_len += sbp_u16_encoded_len(&msg->wn);
+  encoded_len += sbp_u32_encoded_len(&msg->tow);
+  encoded_len += sbp_s32_encoded_len(&msg->ns_residual);
+  encoded_len += sbp_u8_encoded_len(&msg->flags);
+  encoded_len += sbp_u8_encoded_len(&msg->pin);
+  return encoded_len;
 }
 
-bool encode_sbp_msg_ext_event_t(sbp_encode_ctx_t *ctx,
-                                const sbp_msg_ext_event_t *msg) {
-  if (!encode_u16(ctx, &msg->wn)) {
+bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx,
+                                       const sbp_msg_ext_event_t *msg) {
+  if (!sbp_u16_encode(ctx, &msg->wn)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->tow)) {
+  if (!sbp_u32_encode(ctx, &msg->tow)) {
     return false;
   }
-  if (!encode_s32(ctx, &msg->ns_residual)) {
+  if (!sbp_s32_encode(ctx, &msg->ns_residual)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pin)) {
+  if (!sbp_u8_encode(ctx, &msg->pin)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_encode_sbp_msg_ext_event_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_msg_ext_event_t *msg) {
+s8 sbp_msg_ext_event_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                            const sbp_msg_ext_event_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_ext_event_t(&ctx, msg)) {
+  if (!sbp_msg_ext_event_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -61,33 +61,33 @@ s8 sbp_encode_sbp_msg_ext_event_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool decode_sbp_msg_ext_event_t(sbp_decode_ctx_t *ctx,
-                                sbp_msg_ext_event_t *msg) {
-  if (!decode_u16(ctx, &msg->wn)) {
+bool sbp_msg_ext_event_decode_internal(sbp_decode_ctx_t *ctx,
+                                       sbp_msg_ext_event_t *msg) {
+  if (!sbp_u16_decode(ctx, &msg->wn)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->tow)) {
+  if (!sbp_u32_decode(ctx, &msg->tow)) {
     return false;
   }
-  if (!decode_s32(ctx, &msg->ns_residual)) {
+  if (!sbp_s32_decode(ctx, &msg->ns_residual)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pin)) {
+  if (!sbp_u8_decode(ctx, &msg->pin)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_decode_sbp_msg_ext_event_t(const uint8_t *buf, uint8_t len,
-                                  uint8_t *n_read, sbp_msg_ext_event_t *msg) {
+s8 sbp_msg_ext_event_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                            sbp_msg_ext_event_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_ext_event_t(&ctx, msg)) {
+  if (!sbp_msg_ext_event_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -96,13 +96,13 @@ s8 sbp_decode_sbp_msg_ext_event_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_ext_event_t(struct sbp_state *s, u16 sender_id,
-                                const sbp_msg_ext_event_t *msg,
-                                sbp_write_fn_t write) {
+s8 sbp_msg_ext_event_send(struct sbp_state *s, u16 sender_id,
+                          const sbp_msg_ext_event_t *msg,
+                          sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_ext_event_t(payload, sizeof(payload),
-                                          &payload_len, msg);
+  s8 ret =
+      sbp_msg_ext_event_encode(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -110,31 +110,31 @@ s8 sbp_send_sbp_msg_ext_event_t(struct sbp_state *s, u16 sender_id,
                           write);
 }
 
-int sbp_cmp_sbp_msg_ext_event_t(const sbp_msg_ext_event_t *a,
-                                const sbp_msg_ext_event_t *b) {
+int sbp_msg_ext_event_cmp(const sbp_msg_ext_event_t *a,
+                          const sbp_msg_ext_event_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u16(&a->wn, &b->wn);
+  ret = sbp_u16_cmp(&a->wn, &b->wn);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_s32(&a->ns_residual, &b->ns_residual);
+  ret = sbp_s32_cmp(&a->ns_residual, &b->ns_residual);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  ret = sbp_u8_cmp(&a->flags, &b->flags);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pin, &b->pin);
+  ret = sbp_u8_cmp(&a->pin, &b->pin);
   if (ret != 0) {
     return ret;
   }

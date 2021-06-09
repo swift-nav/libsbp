@@ -126,8 +126,9 @@ START_TEST(test_auto_check_sbp_imu_MsgImuAux) {
     ck_assert_msg(last_msg.sender_id == 4660,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IMU_AUX, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IMU_AUX, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(
         last_msg.msg.imu_aux.imu_conf == 66,

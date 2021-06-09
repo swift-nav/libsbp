@@ -20,7 +20,7 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/sbp_msg.h>
 ((*- for i in includes *))
-#include <libsbp/v4/(((i))).h>
+#include <libsbp/v4/(((i)))>
 ((*- endfor *))
 
 namespace sbp {
@@ -36,19 +36,17 @@ struct MessageTraits;
 
 ((* for m in msgs *))
 ((*- if m.is_real_message *))
-((*- set msg_type = m.identifier|convert_unpacked *))
-((*- set member_name = m.identifier|convert_unpacked_union *))
 template<>
-struct MessageTraits<(((msg_type)))> {
-  static constexpr u16 id = SBP_(((m.identifier)));
-  static const (((msg_type)))& get(const sbp_msg_t &msg) {
-    return msg.(((member_name)));
+struct MessageTraits<(((m.type_name)))> {
+  static constexpr u16 id = SBP_(((m.name)));
+  static const (((m.type_name)))& get(const sbp_msg_t &msg) {
+    return msg.(((m.short_name)));
   }
-  static (((msg_type)))& get(sbp_msg_t &msg) {
-    return msg.(((member_name)));
+  static (((m.type_name)))& get(sbp_msg_t &msg) {
+    return msg.(((m.short_name)));
   }
-  static s8 send(sbp_state_t *state, u16 sender_id, const (((msg_type))) &msg, sbp_write_fn_t write) {
-    return sbp_send_(((msg_type)))(state, sender_id, &msg, write);
+  static s8 send(sbp_state_t *state, u16 sender_id, const (((m.type_name))) &msg, sbp_write_fn_t write) {
+    return (((m.prefix)))_send(state, sender_id, &msg, write);
   }
 };
 ((* endif *))

@@ -18,43 +18,42 @@
 static const sbp_unterminated_string_params_t
     sbp_msg_linux_cpu_state_dep_a_tcmdline_params = {.max_packed_len = 236};
 
-void sbp_msg_linux_cpu_state_dep_a_t_cmdline_init(
-    sbp_unterminated_string_t *s) {
+void sbp_msg_linux_cpu_state_dep_a_cmdline_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s,
                                &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
 
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_valid(
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_valid(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
 
-int sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(
+int sbp_msg_linux_cpu_state_dep_a_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_cpu_state_dep_a_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_cpu_state_dep_a_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_cpu_state_dep_a_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s,
-                                                 const char *new_str) {
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_set(sbp_unterminated_string_t *s,
+                                               const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) {
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_printf(sbp_unterminated_string_t *s,
+                                                  const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -63,13 +62,14 @@ bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_printf(
   return ret;
 }
 
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_vprintf(
-    sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_vprintf(sbp_unterminated_string_t *s,
+                                                   const char *fmt,
+                                                   va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_printf(
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -79,43 +79,43 @@ bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_cpu_state_dep_a_t_cmdline_append_vprintf(
+bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_cpu_state_dep_a_t_cmdline_get(
+const char *sbp_msg_linux_cpu_state_dep_a_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(
       s, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(
+size_t sbp_msg_linux_cpu_state_dep_a_encoded_len(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u8(&msg->pcpu);
-  packed_size += (15 * sbp_packed_size_char(&msg->tname[0]));
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
+  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_cpu_state_dep_a_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_cpu_state_dep_a_t(
+bool sbp_msg_linux_cpu_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_encode(ctx, &msg->pcpu)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!encode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -126,14 +126,14 @@ bool encode_sbp_msg_linux_cpu_state_dep_a_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_cpu_state_dep_a_t(
+s8 sbp_msg_linux_cpu_state_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_cpu_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_cpu_state_dep_a_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -142,19 +142,19 @@ s8 sbp_encode_sbp_msg_linux_cpu_state_dep_a_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_cpu_state_dep_a_t(
+bool sbp_msg_linux_cpu_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_decode(ctx, &msg->pcpu)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!decode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -165,14 +165,14 @@ bool decode_sbp_msg_linux_cpu_state_dep_a_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_cpu_state_dep_a_t(
-    const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_linux_cpu_state_dep_a_t *msg) {
+s8 sbp_msg_linux_cpu_state_dep_a_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_linux_cpu_state_dep_a_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_cpu_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_cpu_state_dep_a_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -181,13 +181,13 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_dep_a_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_cpu_state_dep_a_t(
+s8 sbp_msg_linux_cpu_state_dep_a_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_cpu_state_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_cpu_state_dep_a_t(payload, sizeof(payload),
-                                                      &payload_len, msg);
+  s8 ret = sbp_msg_linux_cpu_state_dep_a_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -195,35 +195,34 @@ s8 sbp_send_sbp_msg_linux_cpu_state_dep_a_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_cpu_state_dep_a_t(
+int sbp_msg_linux_cpu_state_dep_a_cmp(
     const sbp_msg_linux_cpu_state_dep_a_t *a,
     const sbp_msg_linux_cpu_state_dep_a_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pcpu, &b->pcpu);
+  ret = sbp_u8_cmp(&a->pcpu, &b->pcpu);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 15; i++) {
-    ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
+    ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret =
-      sbp_msg_linux_cpu_state_dep_a_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
+  ret = sbp_msg_linux_cpu_state_dep_a_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -232,43 +231,42 @@ int sbp_cmp_sbp_msg_linux_cpu_state_dep_a_t(
 static const sbp_unterminated_string_params_t
     sbp_msg_linux_mem_state_dep_a_tcmdline_params = {.max_packed_len = 236};
 
-void sbp_msg_linux_mem_state_dep_a_t_cmdline_init(
-    sbp_unterminated_string_t *s) {
+void sbp_msg_linux_mem_state_dep_a_cmdline_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s,
                                &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
 
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_valid(
+bool sbp_msg_linux_mem_state_dep_a_cmdline_valid(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
 
-int sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(
+int sbp_msg_linux_mem_state_dep_a_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_mem_state_dep_a_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_mem_state_dep_a_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_mem_state_dep_a_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_set(sbp_unterminated_string_t *s,
-                                                 const char *new_str) {
+bool sbp_msg_linux_mem_state_dep_a_cmdline_set(sbp_unterminated_string_t *s,
+                                               const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) {
+bool sbp_msg_linux_mem_state_dep_a_cmdline_printf(sbp_unterminated_string_t *s,
+                                                  const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -277,13 +275,14 @@ bool sbp_msg_linux_mem_state_dep_a_t_cmdline_printf(
   return ret;
 }
 
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_vprintf(
-    sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
+bool sbp_msg_linux_mem_state_dep_a_cmdline_vprintf(sbp_unterminated_string_t *s,
+                                                   const char *fmt,
+                                                   va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_printf(
+bool sbp_msg_linux_mem_state_dep_a_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -293,43 +292,43 @@ bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_mem_state_dep_a_t_cmdline_append_vprintf(
+bool sbp_msg_linux_mem_state_dep_a_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_mem_state_dep_a_t_cmdline_get(
+const char *sbp_msg_linux_mem_state_dep_a_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(
       s, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(
+size_t sbp_msg_linux_mem_state_dep_a_encoded_len(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u8(&msg->pmem);
-  packed_size += (15 * sbp_packed_size_char(&msg->tname[0]));
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u8_encoded_len(&msg->pmem);
+  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_mem_state_dep_a_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_mem_state_dep_a_t(
+bool sbp_msg_linux_mem_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_encode(ctx, &msg->pmem)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!encode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -340,14 +339,14 @@ bool encode_sbp_msg_linux_mem_state_dep_a_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_mem_state_dep_a_t(
+s8 sbp_msg_linux_mem_state_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_mem_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_mem_state_dep_a_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -356,19 +355,19 @@ s8 sbp_encode_sbp_msg_linux_mem_state_dep_a_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_mem_state_dep_a_t(
+bool sbp_msg_linux_mem_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_mem_state_dep_a_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_decode(ctx, &msg->pmem)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!decode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -379,14 +378,14 @@ bool decode_sbp_msg_linux_mem_state_dep_a_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_mem_state_dep_a_t(
-    const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_linux_mem_state_dep_a_t *msg) {
+s8 sbp_msg_linux_mem_state_dep_a_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_linux_mem_state_dep_a_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_mem_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_mem_state_dep_a_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -395,13 +394,13 @@ s8 sbp_decode_sbp_msg_linux_mem_state_dep_a_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_mem_state_dep_a_t(
+s8 sbp_msg_linux_mem_state_dep_a_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_mem_state_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_mem_state_dep_a_t(payload, sizeof(payload),
-                                                      &payload_len, msg);
+  s8 ret = sbp_msg_linux_mem_state_dep_a_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -409,84 +408,83 @@ s8 sbp_send_sbp_msg_linux_mem_state_dep_a_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_mem_state_dep_a_t(
+int sbp_msg_linux_mem_state_dep_a_cmp(
     const sbp_msg_linux_mem_state_dep_a_t *a,
     const sbp_msg_linux_mem_state_dep_a_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pmem, &b->pmem);
+  ret = sbp_u8_cmp(&a->pmem, &b->pmem);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 15; i++) {
-    ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
+    ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret =
-      sbp_msg_linux_mem_state_dep_a_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
+  ret = sbp_msg_linux_mem_state_dep_a_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
   return ret;
 }
 
-size_t sbp_packed_size_sbp_msg_linux_sys_state_dep_a_t(
+size_t sbp_msg_linux_sys_state_dep_a_encoded_len(
     const sbp_msg_linux_sys_state_dep_a_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u16(&msg->mem_total);
-  packed_size += sbp_packed_size_u8(&msg->pcpu);
-  packed_size += sbp_packed_size_u8(&msg->pmem);
-  packed_size += sbp_packed_size_u16(&msg->procs_starting);
-  packed_size += sbp_packed_size_u16(&msg->procs_stopping);
-  packed_size += sbp_packed_size_u16(&msg->pid_count);
-  return packed_size;
+  size_t encoded_len = 0;
+  encoded_len += sbp_u16_encoded_len(&msg->mem_total);
+  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
+  encoded_len += sbp_u8_encoded_len(&msg->pmem);
+  encoded_len += sbp_u16_encoded_len(&msg->procs_starting);
+  encoded_len += sbp_u16_encoded_len(&msg->procs_stopping);
+  encoded_len += sbp_u16_encoded_len(&msg->pid_count);
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_sys_state_dep_a_t(
+bool sbp_msg_linux_sys_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_sys_state_dep_a_t *msg) {
-  if (!encode_u16(ctx, &msg->mem_total)) {
+  if (!sbp_u16_encode(ctx, &msg->mem_total)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_encode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_encode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->procs_starting)) {
+  if (!sbp_u16_encode(ctx, &msg->procs_starting)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->procs_stopping)) {
+  if (!sbp_u16_encode(ctx, &msg->procs_stopping)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid_count)) {
+  if (!sbp_u16_encode(ctx, &msg->pid_count)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_sys_state_dep_a_t(
+s8 sbp_msg_linux_sys_state_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_sys_state_dep_a_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_sys_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_sys_state_dep_a_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -495,37 +493,37 @@ s8 sbp_encode_sbp_msg_linux_sys_state_dep_a_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_sys_state_dep_a_t(
+bool sbp_msg_linux_sys_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_sys_state_dep_a_t *msg) {
-  if (!decode_u16(ctx, &msg->mem_total)) {
+  if (!sbp_u16_decode(ctx, &msg->mem_total)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_decode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_decode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->procs_starting)) {
+  if (!sbp_u16_decode(ctx, &msg->procs_starting)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->procs_stopping)) {
+  if (!sbp_u16_decode(ctx, &msg->procs_stopping)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid_count)) {
+  if (!sbp_u16_decode(ctx, &msg->pid_count)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_sys_state_dep_a_t(
-    const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_linux_sys_state_dep_a_t *msg) {
+s8 sbp_msg_linux_sys_state_dep_a_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_linux_sys_state_dep_a_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_sys_state_dep_a_t(&ctx, msg)) {
+  if (!sbp_msg_linux_sys_state_dep_a_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -534,13 +532,13 @@ s8 sbp_decode_sbp_msg_linux_sys_state_dep_a_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_sys_state_dep_a_t(
+s8 sbp_msg_linux_sys_state_dep_a_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_sys_state_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_sys_state_dep_a_t(payload, sizeof(payload),
-                                                      &payload_len, msg);
+  s8 ret = sbp_msg_linux_sys_state_dep_a_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -548,37 +546,37 @@ s8 sbp_send_sbp_msg_linux_sys_state_dep_a_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_sys_state_dep_a_t(
+int sbp_msg_linux_sys_state_dep_a_cmp(
     const sbp_msg_linux_sys_state_dep_a_t *a,
     const sbp_msg_linux_sys_state_dep_a_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u16(&a->mem_total, &b->mem_total);
+  ret = sbp_u16_cmp(&a->mem_total, &b->mem_total);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pcpu, &b->pcpu);
+  ret = sbp_u8_cmp(&a->pcpu, &b->pcpu);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pmem, &b->pmem);
+  ret = sbp_u8_cmp(&a->pmem, &b->pmem);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->procs_starting, &b->procs_starting);
+  ret = sbp_u16_cmp(&a->procs_starting, &b->procs_starting);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->procs_stopping, &b->procs_stopping);
+  ret = sbp_u16_cmp(&a->procs_stopping, &b->procs_stopping);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid_count, &b->pid_count);
+  ret = sbp_u16_cmp(&a->pid_count, &b->pid_count);
   if (ret != 0) {
     return ret;
   }
@@ -588,42 +586,42 @@ static const sbp_unterminated_string_params_t
     sbp_msg_linux_process_socket_counts_tcmdline_params = {.max_packed_len =
                                                                246};
 
-void sbp_msg_linux_process_socket_counts_t_cmdline_init(
+void sbp_msg_linux_process_socket_counts_cmdline_init(
     sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
 
-bool sbp_msg_linux_process_socket_counts_t_cmdline_valid(
+bool sbp_msg_linux_process_socket_counts_cmdline_valid(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
 
-int sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(
+int sbp_msg_linux_process_socket_counts_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_process_socket_counts_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_socket_counts_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_process_socket_counts_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
-bool sbp_msg_linux_process_socket_counts_t_cmdline_set(
+bool sbp_msg_linux_process_socket_counts_cmdline_set(
     sbp_unterminated_string_t *s, const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_process_socket_counts_t_cmdline_printf(
+bool sbp_msg_linux_process_socket_counts_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -633,13 +631,13 @@ bool sbp_msg_linux_process_socket_counts_t_cmdline_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_socket_counts_t_cmdline_vprintf(
+bool sbp_msg_linux_process_socket_counts_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_process_socket_counts_t_cmdline_append_printf(
+bool sbp_msg_linux_process_socket_counts_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -649,46 +647,46 @@ bool sbp_msg_linux_process_socket_counts_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_socket_counts_t_cmdline_append_vprintf(
+bool sbp_msg_linux_process_socket_counts_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_process_socket_counts_t_cmdline_get(
+const char *sbp_msg_linux_process_socket_counts_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(
       s, &sbp_msg_linux_process_socket_counts_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(
+size_t sbp_msg_linux_process_socket_counts_encoded_len(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u16(&msg->socket_count);
-  packed_size += sbp_packed_size_u16(&msg->socket_types);
-  packed_size += sbp_packed_size_u16(&msg->socket_states);
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u16_encoded_len(&msg->socket_count);
+  encoded_len += sbp_u16_encoded_len(&msg->socket_types);
+  encoded_len += sbp_u16_encoded_len(&msg->socket_states);
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_process_socket_counts_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_process_socket_counts_t(
+bool sbp_msg_linux_process_socket_counts_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_counts_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->socket_count)) {
+  if (!sbp_u16_encode(ctx, &msg->socket_count)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->socket_types)) {
+  if (!sbp_u16_encode(ctx, &msg->socket_types)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->socket_states)) {
+  if (!sbp_u16_encode(ctx, &msg->socket_states)) {
     return false;
   }
   if (!sbp_unterminated_string_pack(
@@ -699,14 +697,14 @@ bool encode_sbp_msg_linux_process_socket_counts_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_process_socket_counts_t(
+s8 sbp_msg_linux_process_socket_counts_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_process_socket_counts_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_process_socket_counts_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_socket_counts_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -715,21 +713,21 @@ s8 sbp_encode_sbp_msg_linux_process_socket_counts_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_process_socket_counts_t(
+bool sbp_msg_linux_process_socket_counts_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_socket_counts_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->socket_count)) {
+  if (!sbp_u16_decode(ctx, &msg->socket_count)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->socket_types)) {
+  if (!sbp_u16_decode(ctx, &msg->socket_types)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->socket_states)) {
+  if (!sbp_u16_decode(ctx, &msg->socket_states)) {
     return false;
   }
   if (!sbp_unterminated_string_unpack(
@@ -740,14 +738,14 @@ bool decode_sbp_msg_linux_process_socket_counts_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_process_socket_counts_t(
+s8 sbp_msg_linux_process_socket_counts_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_linux_process_socket_counts_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_process_socket_counts_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_socket_counts_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -756,13 +754,13 @@ s8 sbp_decode_sbp_msg_linux_process_socket_counts_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_process_socket_counts_t(
+s8 sbp_msg_linux_process_socket_counts_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_socket_counts_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_process_socket_counts_t(
-      payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_msg_linux_process_socket_counts_encode(payload, sizeof(payload),
+                                                      &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -770,38 +768,38 @@ s8 sbp_send_sbp_msg_linux_process_socket_counts_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_process_socket_counts_t(
+int sbp_msg_linux_process_socket_counts_cmp(
     const sbp_msg_linux_process_socket_counts_t *a,
     const sbp_msg_linux_process_socket_counts_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->socket_count, &b->socket_count);
+  ret = sbp_u16_cmp(&a->socket_count, &b->socket_count);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->socket_types, &b->socket_types);
+  ret = sbp_u16_cmp(&a->socket_types, &b->socket_types);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->socket_states, &b->socket_states);
+  ret = sbp_u16_cmp(&a->socket_states, &b->socket_states);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_msg_linux_process_socket_counts_t_cmdline_strcmp(&a->cmdline,
-                                                             &b->cmdline);
+  ret = sbp_msg_linux_process_socket_counts_cmdline_strcmp(&a->cmdline,
+                                                           &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -811,42 +809,42 @@ static const sbp_unterminated_string_params_t
     sbp_msg_linux_process_socket_queues_tcmdline_params = {.max_packed_len =
                                                                180};
 
-void sbp_msg_linux_process_socket_queues_t_cmdline_init(
+void sbp_msg_linux_process_socket_queues_cmdline_init(
     sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
 
-bool sbp_msg_linux_process_socket_queues_t_cmdline_valid(
+bool sbp_msg_linux_process_socket_queues_cmdline_valid(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
 
-int sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(
+int sbp_msg_linux_process_socket_queues_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_process_socket_queues_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_socket_queues_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
-bool sbp_msg_linux_process_socket_queues_t_cmdline_set(
+bool sbp_msg_linux_process_socket_queues_cmdline_set(
     sbp_unterminated_string_t *s, const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_process_socket_queues_t_cmdline_printf(
+bool sbp_msg_linux_process_socket_queues_cmdline_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -856,13 +854,13 @@ bool sbp_msg_linux_process_socket_queues_t_cmdline_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_socket_queues_t_cmdline_vprintf(
+bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_process_socket_queues_t_cmdline_append_printf(
+bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -872,55 +870,55 @@ bool sbp_msg_linux_process_socket_queues_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_socket_queues_t_cmdline_append_vprintf(
+bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_process_socket_queues_t_cmdline_get(
+const char *sbp_msg_linux_process_socket_queues_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(
       s, &sbp_msg_linux_process_socket_queues_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(
+size_t sbp_msg_linux_process_socket_queues_encoded_len(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u16(&msg->recv_queued);
-  packed_size += sbp_packed_size_u16(&msg->send_queued);
-  packed_size += sbp_packed_size_u16(&msg->socket_types);
-  packed_size += sbp_packed_size_u16(&msg->socket_states);
-  packed_size += (64 * sbp_packed_size_char(&msg->address_of_largest[0]));
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u16_encoded_len(&msg->recv_queued);
+  encoded_len += sbp_u16_encoded_len(&msg->send_queued);
+  encoded_len += sbp_u16_encoded_len(&msg->socket_types);
+  encoded_len += sbp_u16_encoded_len(&msg->socket_states);
+  encoded_len += (64 * sbp_char_encoded_len(&msg->address_of_largest[0]));
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_process_socket_queues_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_process_socket_queues_t(
+bool sbp_msg_linux_process_socket_queues_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_queues_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->recv_queued)) {
+  if (!sbp_u16_encode(ctx, &msg->recv_queued)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->send_queued)) {
+  if (!sbp_u16_encode(ctx, &msg->send_queued)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->socket_types)) {
+  if (!sbp_u16_encode(ctx, &msg->socket_types)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->socket_states)) {
+  if (!sbp_u16_encode(ctx, &msg->socket_states)) {
     return false;
   }
   for (uint8_t i = 0; i < 64; i++) {
-    if (!encode_char(ctx, &msg->address_of_largest[i])) {
+    if (!sbp_char_encode(ctx, &msg->address_of_largest[i])) {
       return false;
     }
   }
@@ -932,14 +930,14 @@ bool encode_sbp_msg_linux_process_socket_queues_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_process_socket_queues_t(
+s8 sbp_msg_linux_process_socket_queues_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_process_socket_queues_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_process_socket_queues_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_socket_queues_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -948,28 +946,28 @@ s8 sbp_encode_sbp_msg_linux_process_socket_queues_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_process_socket_queues_t(
+bool sbp_msg_linux_process_socket_queues_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_socket_queues_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->recv_queued)) {
+  if (!sbp_u16_decode(ctx, &msg->recv_queued)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->send_queued)) {
+  if (!sbp_u16_decode(ctx, &msg->send_queued)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->socket_types)) {
+  if (!sbp_u16_decode(ctx, &msg->socket_types)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->socket_states)) {
+  if (!sbp_u16_decode(ctx, &msg->socket_states)) {
     return false;
   }
   for (uint8_t i = 0; i < 64; i++) {
-    if (!decode_char(ctx, &msg->address_of_largest[i])) {
+    if (!sbp_char_decode(ctx, &msg->address_of_largest[i])) {
       return false;
     }
   }
@@ -981,14 +979,14 @@ bool decode_sbp_msg_linux_process_socket_queues_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_process_socket_queues_t(
+s8 sbp_msg_linux_process_socket_queues_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_linux_process_socket_queues_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_process_socket_queues_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_socket_queues_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -997,13 +995,13 @@ s8 sbp_decode_sbp_msg_linux_process_socket_queues_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_process_socket_queues_t(
+s8 sbp_msg_linux_process_socket_queues_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_socket_queues_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_process_socket_queues_t(
-      payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_msg_linux_process_socket_queues_encode(payload, sizeof(payload),
+                                                      &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -1011,95 +1009,95 @@ s8 sbp_send_sbp_msg_linux_process_socket_queues_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_process_socket_queues_t(
+int sbp_msg_linux_process_socket_queues_cmp(
     const sbp_msg_linux_process_socket_queues_t *a,
     const sbp_msg_linux_process_socket_queues_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->recv_queued, &b->recv_queued);
+  ret = sbp_u16_cmp(&a->recv_queued, &b->recv_queued);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->send_queued, &b->send_queued);
+  ret = sbp_u16_cmp(&a->send_queued, &b->send_queued);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->socket_types, &b->socket_types);
+  ret = sbp_u16_cmp(&a->socket_types, &b->socket_types);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->socket_states, &b->socket_states);
+  ret = sbp_u16_cmp(&a->socket_states, &b->socket_states);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 64; i++) {
-    ret = sbp_cmp_char(&a->address_of_largest[i], &b->address_of_largest[i]);
+    ret = sbp_char_cmp(&a->address_of_largest[i], &b->address_of_largest[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_msg_linux_process_socket_queues_t_cmdline_strcmp(&a->cmdline,
-                                                             &b->cmdline);
+  ret = sbp_msg_linux_process_socket_queues_cmdline_strcmp(&a->cmdline,
+                                                           &b->cmdline);
   if (ret != 0) {
     return ret;
   }
   return ret;
 }
 
-size_t sbp_packed_size_sbp_msg_linux_socket_usage_t(
+size_t sbp_msg_linux_socket_usage_encoded_len(
     const sbp_msg_linux_socket_usage_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u32(&msg->avg_queue_depth);
-  packed_size += sbp_packed_size_u32(&msg->max_queue_depth);
-  packed_size += (16 * sbp_packed_size_u16(&msg->socket_state_counts[0]));
-  packed_size += (16 * sbp_packed_size_u16(&msg->socket_type_counts[0]));
-  return packed_size;
+  size_t encoded_len = 0;
+  encoded_len += sbp_u32_encoded_len(&msg->avg_queue_depth);
+  encoded_len += sbp_u32_encoded_len(&msg->max_queue_depth);
+  encoded_len += (16 * sbp_u16_encoded_len(&msg->socket_state_counts[0]));
+  encoded_len += (16 * sbp_u16_encoded_len(&msg->socket_type_counts[0]));
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_socket_usage_t(
+bool sbp_msg_linux_socket_usage_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_socket_usage_t *msg) {
-  if (!encode_u32(ctx, &msg->avg_queue_depth)) {
+  if (!sbp_u32_encode(ctx, &msg->avg_queue_depth)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->max_queue_depth)) {
+  if (!sbp_u32_encode(ctx, &msg->max_queue_depth)) {
     return false;
   }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!encode_u16(ctx, &msg->socket_state_counts[i])) {
+    if (!sbp_u16_encode(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!encode_u16(ctx, &msg->socket_type_counts[i])) {
+    if (!sbp_u16_encode(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
   }
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_socket_usage_t(
-    uint8_t *buf, uint8_t len, uint8_t *n_written,
-    const sbp_msg_linux_socket_usage_t *msg) {
+s8 sbp_msg_linux_socket_usage_encode(uint8_t *buf, uint8_t len,
+                                     uint8_t *n_written,
+                                     const sbp_msg_linux_socket_usage_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_socket_usage_t(&ctx, msg)) {
+  if (!sbp_msg_linux_socket_usage_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -1108,35 +1106,35 @@ s8 sbp_encode_sbp_msg_linux_socket_usage_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_socket_usage_t(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_linux_socket_usage_t *msg) {
-  if (!decode_u32(ctx, &msg->avg_queue_depth)) {
+bool sbp_msg_linux_socket_usage_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_linux_socket_usage_t *msg) {
+  if (!sbp_u32_decode(ctx, &msg->avg_queue_depth)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->max_queue_depth)) {
+  if (!sbp_u32_decode(ctx, &msg->max_queue_depth)) {
     return false;
   }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!decode_u16(ctx, &msg->socket_state_counts[i])) {
+    if (!sbp_u16_decode(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
   for (uint8_t i = 0; i < 16; i++) {
-    if (!decode_u16(ctx, &msg->socket_type_counts[i])) {
+    if (!sbp_u16_decode(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
   }
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_socket_usage_t(const uint8_t *buf, uint8_t len,
-                                           uint8_t *n_read,
-                                           sbp_msg_linux_socket_usage_t *msg) {
+s8 sbp_msg_linux_socket_usage_decode(const uint8_t *buf, uint8_t len,
+                                     uint8_t *n_read,
+                                     sbp_msg_linux_socket_usage_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_socket_usage_t(&ctx, msg)) {
+  if (!sbp_msg_linux_socket_usage_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -1145,13 +1143,13 @@ s8 sbp_decode_sbp_msg_linux_socket_usage_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_socket_usage_t(
-    struct sbp_state *s, u16 sender_id, const sbp_msg_linux_socket_usage_t *msg,
-    sbp_write_fn_t write) {
+s8 sbp_msg_linux_socket_usage_send(struct sbp_state *s, u16 sender_id,
+                                   const sbp_msg_linux_socket_usage_t *msg,
+                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_socket_usage_t(payload, sizeof(payload),
-                                                   &payload_len, msg);
+  s8 ret = sbp_msg_linux_socket_usage_encode(payload, sizeof(payload),
+                                             &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -1159,30 +1157,29 @@ s8 sbp_send_sbp_msg_linux_socket_usage_t(
                           payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_socket_usage_t(
-    const sbp_msg_linux_socket_usage_t *a,
-    const sbp_msg_linux_socket_usage_t *b) {
+int sbp_msg_linux_socket_usage_cmp(const sbp_msg_linux_socket_usage_t *a,
+                                   const sbp_msg_linux_socket_usage_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u32(&a->avg_queue_depth, &b->avg_queue_depth);
+  ret = sbp_u32_cmp(&a->avg_queue_depth, &b->avg_queue_depth);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->max_queue_depth, &b->max_queue_depth);
-  if (ret != 0) {
-    return ret;
-  }
-
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
-    ret = sbp_cmp_u16(&a->socket_state_counts[i], &b->socket_state_counts[i]);
-  }
+  ret = sbp_u32_cmp(&a->max_queue_depth, &b->max_queue_depth);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 16; i++) {
-    ret = sbp_cmp_u16(&a->socket_type_counts[i], &b->socket_type_counts[i]);
+    ret = sbp_u16_cmp(&a->socket_state_counts[i], &b->socket_state_counts[i]);
+  }
+  if (ret != 0) {
+    return ret;
+  }
+
+  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+    ret = sbp_u16_cmp(&a->socket_type_counts[i], &b->socket_type_counts[i]);
   }
   if (ret != 0) {
     return ret;
@@ -1192,43 +1189,42 @@ int sbp_cmp_sbp_msg_linux_socket_usage_t(
 static const sbp_unterminated_string_params_t
     sbp_msg_linux_process_fd_count_tcmdline_params = {.max_packed_len = 250};
 
-void sbp_msg_linux_process_fd_count_t_cmdline_init(
-    sbp_unterminated_string_t *s) {
+void sbp_msg_linux_process_fd_count_cmdline_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s,
                                &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
 
-bool sbp_msg_linux_process_fd_count_t_cmdline_valid(
+bool sbp_msg_linux_process_fd_count_cmdline_valid(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
 
-int sbp_msg_linux_process_fd_count_t_cmdline_strcmp(
+int sbp_msg_linux_process_fd_count_cmdline_strcmp(
     const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_fd_count_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_process_fd_count_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_process_fd_count_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
-bool sbp_msg_linux_process_fd_count_t_cmdline_set(sbp_unterminated_string_t *s,
-                                                  const char *new_str) {
+bool sbp_msg_linux_process_fd_count_cmdline_set(sbp_unterminated_string_t *s,
+                                                const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_process_fd_count_t_cmdline_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) {
+bool sbp_msg_linux_process_fd_count_cmdline_printf(sbp_unterminated_string_t *s,
+                                                   const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -1237,13 +1233,13 @@ bool sbp_msg_linux_process_fd_count_t_cmdline_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_fd_count_t_cmdline_vprintf(
+bool sbp_msg_linux_process_fd_count_cmdline_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_process_fd_count_t_cmdline_append_printf(
+bool sbp_msg_linux_process_fd_count_cmdline_append_printf(
     sbp_unterminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -1253,38 +1249,38 @@ bool sbp_msg_linux_process_fd_count_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_fd_count_t_cmdline_append_vprintf(
+bool sbp_msg_linux_process_fd_count_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_process_fd_count_t_cmdline_get(
+const char *sbp_msg_linux_process_fd_count_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(
       s, &sbp_msg_linux_process_fd_count_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(
+size_t sbp_msg_linux_process_fd_count_encoded_len(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u16(&msg->fd_count);
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u16_encoded_len(&msg->fd_count);
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_process_fd_count_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_process_fd_count_t(
+bool sbp_msg_linux_process_fd_count_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_fd_count_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->fd_count)) {
+  if (!sbp_u16_encode(ctx, &msg->fd_count)) {
     return false;
   }
   if (!sbp_unterminated_string_pack(
@@ -1295,14 +1291,14 @@ bool encode_sbp_msg_linux_process_fd_count_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_process_fd_count_t(
+s8 sbp_msg_linux_process_fd_count_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_process_fd_count_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_process_fd_count_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_fd_count_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -1311,15 +1307,15 @@ s8 sbp_encode_sbp_msg_linux_process_fd_count_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_process_fd_count_t(
+bool sbp_msg_linux_process_fd_count_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_fd_count_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->fd_count)) {
+  if (!sbp_u16_decode(ctx, &msg->fd_count)) {
     return false;
   }
   if (!sbp_unterminated_string_unpack(
@@ -1330,14 +1326,14 @@ bool decode_sbp_msg_linux_process_fd_count_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_process_fd_count_t(
+s8 sbp_msg_linux_process_fd_count_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_linux_process_fd_count_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_process_fd_count_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_fd_count_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -1346,13 +1342,13 @@ s8 sbp_decode_sbp_msg_linux_process_fd_count_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_process_fd_count_t(
+s8 sbp_msg_linux_process_fd_count_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_fd_count_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_process_fd_count_t(payload, sizeof(payload),
-                                                       &payload_len, msg);
+  s8 ret = sbp_msg_linux_process_fd_count_encode(payload, sizeof(payload),
+                                                 &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -1360,28 +1356,27 @@ s8 sbp_send_sbp_msg_linux_process_fd_count_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_process_fd_count_t(
+int sbp_msg_linux_process_fd_count_cmp(
     const sbp_msg_linux_process_fd_count_t *a,
     const sbp_msg_linux_process_fd_count_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->fd_count, &b->fd_count);
+  ret = sbp_u16_cmp(&a->fd_count, &b->fd_count);
   if (ret != 0) {
     return ret;
   }
 
-  ret =
-      sbp_msg_linux_process_fd_count_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
+  ret = sbp_msg_linux_process_fd_count_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -1391,49 +1386,49 @@ static const sbp_double_null_terminated_string_params_t
     sbp_msg_linux_process_fd_summary_tmost_opened_params = {.max_packed_len =
                                                                 251};
 
-void sbp_msg_linux_process_fd_summary_t_most_opened_init(
+void sbp_msg_linux_process_fd_summary_most_opened_init(
     sbp_double_null_terminated_string_t *s) {
   sbp_double_null_terminated_string_init(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_valid(
+bool sbp_msg_linux_process_fd_summary_most_opened_valid(
     const sbp_double_null_terminated_string_t *s) {
   return sbp_double_null_terminated_string_valid(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
 
-int sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(
+int sbp_msg_linux_process_fd_summary_most_opened_strcmp(
     const sbp_double_null_terminated_string_t *a,
     const sbp_double_null_terminated_string_t *b) {
   return sbp_double_null_terminated_string_strcmp(
       a, b, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
 
-uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_packed_len(
+uint8_t sbp_msg_linux_process_fd_summary_most_opened_packed_len(
     const sbp_double_null_terminated_string_t *s) {
   return sbp_double_null_terminated_string_packed_len(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
 
-uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_space_remaining(
+uint8_t sbp_msg_linux_process_fd_summary_most_opened_space_remaining(
     const sbp_double_null_terminated_string_t *s) {
   return sbp_double_null_terminated_string_space_remaining(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
-uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_count_sections(
+uint8_t sbp_msg_linux_process_fd_summary_most_opened_count_sections(
     const sbp_double_null_terminated_string_t *s) {
   return sbp_double_null_terminated_string_count_sections(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section(
+bool sbp_msg_linux_process_fd_summary_most_opened_add_section(
     sbp_double_null_terminated_string_t *s, const char *new_str) {
   return sbp_double_null_terminated_string_add_section(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, new_str);
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(
+bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
     sbp_double_null_terminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -1443,19 +1438,19 @@ bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_add_section_vprintf(
+bool sbp_msg_linux_process_fd_summary_most_opened_add_section_vprintf(
     sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_double_null_terminated_string_add_section_vprintf(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, fmt, ap);
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_append(
+bool sbp_msg_linux_process_fd_summary_most_opened_append(
     sbp_double_null_terminated_string_t *s, const char *str) {
   return sbp_double_null_terminated_string_append(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, str);
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(
+bool sbp_msg_linux_process_fd_summary_most_opened_append_printf(
     sbp_double_null_terminated_string_t *s, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -1465,36 +1460,36 @@ bool sbp_msg_linux_process_fd_summary_t_most_opened_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_process_fd_summary_t_most_opened_append_vprintf(
+bool sbp_msg_linux_process_fd_summary_most_opened_append_vprintf(
     sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_double_null_terminated_string_append_vprintf(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_process_fd_summary_t_most_opened_get_section(
+const char *sbp_msg_linux_process_fd_summary_most_opened_get_section(
     const sbp_double_null_terminated_string_t *s, uint8_t section) {
   return sbp_double_null_terminated_string_get_section(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, section);
 }
 
-uint8_t sbp_msg_linux_process_fd_summary_t_most_opened_section_strlen(
+uint8_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
     const sbp_double_null_terminated_string_t *s, uint8_t section) {
   return sbp_double_null_terminated_string_section_strlen(
       s, &sbp_msg_linux_process_fd_summary_tmost_opened_params, section);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(
+size_t sbp_msg_linux_process_fd_summary_encoded_len(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u32(&msg->sys_fd_count);
-  packed_size += sbp_double_null_terminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u32_encoded_len(&msg->sys_fd_count);
+  encoded_len += sbp_double_null_terminated_string_packed_len(
       &msg->most_opened, &sbp_msg_linux_process_fd_summary_tmost_opened_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_process_fd_summary_t(
+bool sbp_msg_linux_process_fd_summary_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_fd_summary_t *msg) {
-  if (!encode_u32(ctx, &msg->sys_fd_count)) {
+  if (!sbp_u32_encode(ctx, &msg->sys_fd_count)) {
     return false;
   }
   if (!sbp_double_null_terminated_string_pack(
@@ -1505,14 +1500,14 @@ bool encode_sbp_msg_linux_process_fd_summary_t(
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_process_fd_summary_t(
+s8 sbp_msg_linux_process_fd_summary_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_process_fd_summary_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_process_fd_summary_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_fd_summary_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -1521,9 +1516,9 @@ s8 sbp_encode_sbp_msg_linux_process_fd_summary_t(
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_process_fd_summary_t(
+bool sbp_msg_linux_process_fd_summary_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_linux_process_fd_summary_t *msg) {
-  if (!decode_u32(ctx, &msg->sys_fd_count)) {
+  if (!sbp_u32_decode(ctx, &msg->sys_fd_count)) {
     return false;
   }
   if (!sbp_double_null_terminated_string_unpack(
@@ -1534,14 +1529,14 @@ bool decode_sbp_msg_linux_process_fd_summary_t(
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_process_fd_summary_t(
+s8 sbp_msg_linux_process_fd_summary_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_linux_process_fd_summary_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_process_fd_summary_t(&ctx, msg)) {
+  if (!sbp_msg_linux_process_fd_summary_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -1550,13 +1545,13 @@ s8 sbp_decode_sbp_msg_linux_process_fd_summary_t(
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_process_fd_summary_t(
+s8 sbp_msg_linux_process_fd_summary_send(
     struct sbp_state *s, u16 sender_id,
     const sbp_msg_linux_process_fd_summary_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_process_fd_summary_t(
-      payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_msg_linux_process_fd_summary_encode(payload, sizeof(payload),
+                                                   &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -1564,18 +1559,18 @@ s8 sbp_send_sbp_msg_linux_process_fd_summary_t(
                           payload_len, payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_process_fd_summary_t(
+int sbp_msg_linux_process_fd_summary_cmp(
     const sbp_msg_linux_process_fd_summary_t *a,
     const sbp_msg_linux_process_fd_summary_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u32(&a->sys_fd_count, &b->sys_fd_count);
+  ret = sbp_u32_cmp(&a->sys_fd_count, &b->sys_fd_count);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_msg_linux_process_fd_summary_t_most_opened_strcmp(&a->most_opened,
-                                                              &b->most_opened);
+  ret = sbp_msg_linux_process_fd_summary_most_opened_strcmp(&a->most_opened,
+                                                            &b->most_opened);
   if (ret != 0) {
     return ret;
   }
@@ -1584,41 +1579,40 @@ int sbp_cmp_sbp_msg_linux_process_fd_summary_t(
 static const sbp_unterminated_string_params_t
     sbp_msg_linux_cpu_state_tcmdline_params = {.max_packed_len = 231};
 
-void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t *s) {
+void sbp_msg_linux_cpu_state_cmdline_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s, &sbp_msg_linux_cpu_state_tcmdline_params);
 }
 
-bool sbp_msg_linux_cpu_state_t_cmdline_valid(
-    const sbp_unterminated_string_t *s) {
+bool sbp_msg_linux_cpu_state_cmdline_valid(const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_cpu_state_tcmdline_params);
 }
 
-int sbp_msg_linux_cpu_state_t_cmdline_strcmp(
-    const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
+int sbp_msg_linux_cpu_state_cmdline_strcmp(const sbp_unterminated_string_t *a,
+                                           const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_cpu_state_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_cpu_state_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_cpu_state_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_cpu_state_tcmdline_params);
 }
-bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t *s,
-                                           const char *new_str) {
+bool sbp_msg_linux_cpu_state_cmdline_set(sbp_unterminated_string_t *s,
+                                         const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_cpu_state_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s,
-                                              const char *fmt, ...) {
+bool sbp_msg_linux_cpu_state_cmdline_printf(sbp_unterminated_string_t *s,
+                                            const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -1627,14 +1621,14 @@ bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s,
   return ret;
 }
 
-bool sbp_msg_linux_cpu_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
-                                               const char *fmt, va_list ap) {
+bool sbp_msg_linux_cpu_state_cmdline_vprintf(sbp_unterminated_string_t *s,
+                                             const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_cpu_state_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) {
+bool sbp_msg_linux_cpu_state_cmdline_append_printf(sbp_unterminated_string_t *s,
+                                                   const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -1643,51 +1637,51 @@ bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_cpu_state_t_cmdline_append_vprintf(
+bool sbp_msg_linux_cpu_state_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_cpu_state_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_cpu_state_t_cmdline_get(
+const char *sbp_msg_linux_cpu_state_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(s,
                                      &sbp_msg_linux_cpu_state_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(
+size_t sbp_msg_linux_cpu_state_encoded_len(
     const sbp_msg_linux_cpu_state_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u8(&msg->pcpu);
-  packed_size += sbp_packed_size_u32(&msg->time);
-  packed_size += sbp_packed_size_u8(&msg->flags);
-  packed_size += (15 * sbp_packed_size_char(&msg->tname[0]));
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
+  encoded_len += sbp_u32_encoded_len(&msg->time);
+  encoded_len += sbp_u8_encoded_len(&msg->flags);
+  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_cpu_state_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_cpu_state_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+bool sbp_msg_linux_cpu_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_cpu_state_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_encode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_encode(ctx, &msg->time)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!encode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -1698,14 +1692,13 @@ bool encode_sbp_msg_linux_cpu_state_t(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_msg_linux_cpu_state_t *msg) {
+s8 sbp_msg_linux_cpu_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_linux_cpu_state_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_cpu_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_cpu_state_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -1714,25 +1707,25 @@ s8 sbp_encode_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_cpu_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_cpu_state_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+bool sbp_msg_linux_cpu_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_cpu_state_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_decode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_decode(ctx, &msg->time)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!decode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -1743,14 +1736,14 @@ bool decode_sbp_msg_linux_cpu_state_t(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_msg_linux_cpu_state_t *msg) {
+s8 sbp_msg_linux_cpu_state_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_linux_cpu_state_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_cpu_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_cpu_state_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -1759,13 +1752,13 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
-                                      const sbp_msg_linux_cpu_state_t *msg,
-                                      sbp_write_fn_t write) {
+s8 sbp_msg_linux_cpu_state_send(struct sbp_state *s, u16 sender_id,
+                                const sbp_msg_linux_cpu_state_t *msg,
+                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_cpu_state_t(payload, sizeof(payload),
-                                                &payload_len, msg);
+  s8 ret = sbp_msg_linux_cpu_state_encode(payload, sizeof(payload),
+                                          &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -1773,43 +1766,43 @@ s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
                           payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a,
-                                      const sbp_msg_linux_cpu_state_t *b) {
+int sbp_msg_linux_cpu_state_cmp(const sbp_msg_linux_cpu_state_t *a,
+                                const sbp_msg_linux_cpu_state_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pcpu, &b->pcpu);
+  ret = sbp_u8_cmp(&a->pcpu, &b->pcpu);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->time, &b->time);
+  ret = sbp_u32_cmp(&a->time, &b->time);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  ret = sbp_u8_cmp(&a->flags, &b->flags);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 15; i++) {
-    ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
+    ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_msg_linux_cpu_state_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
+  ret = sbp_msg_linux_cpu_state_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
@@ -1818,41 +1811,40 @@ int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a,
 static const sbp_unterminated_string_params_t
     sbp_msg_linux_mem_state_tcmdline_params = {.max_packed_len = 231};
 
-void sbp_msg_linux_mem_state_t_cmdline_init(sbp_unterminated_string_t *s) {
+void sbp_msg_linux_mem_state_cmdline_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s, &sbp_msg_linux_mem_state_tcmdline_params);
 }
 
-bool sbp_msg_linux_mem_state_t_cmdline_valid(
-    const sbp_unterminated_string_t *s) {
+bool sbp_msg_linux_mem_state_cmdline_valid(const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_valid(
       s, &sbp_msg_linux_mem_state_tcmdline_params);
 }
 
-int sbp_msg_linux_mem_state_t_cmdline_strcmp(
-    const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b) {
+int sbp_msg_linux_mem_state_cmdline_strcmp(const sbp_unterminated_string_t *a,
+                                           const sbp_unterminated_string_t *b) {
   return sbp_unterminated_string_strcmp(
       a, b, &sbp_msg_linux_mem_state_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_mem_state_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_mem_state_cmdline_packed_len(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_packed_len(
       s, &sbp_msg_linux_mem_state_tcmdline_params);
 }
 
-uint8_t sbp_msg_linux_mem_state_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_mem_state_cmdline_space_remaining(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_space_remaining(
       s, &sbp_msg_linux_mem_state_tcmdline_params);
 }
-bool sbp_msg_linux_mem_state_t_cmdline_set(sbp_unterminated_string_t *s,
-                                           const char *new_str) {
+bool sbp_msg_linux_mem_state_cmdline_set(sbp_unterminated_string_t *s,
+                                         const char *new_str) {
   return sbp_unterminated_string_set(
       s, &sbp_msg_linux_mem_state_tcmdline_params, new_str);
 }
 
-bool sbp_msg_linux_mem_state_t_cmdline_printf(sbp_unterminated_string_t *s,
-                                              const char *fmt, ...) {
+bool sbp_msg_linux_mem_state_cmdline_printf(sbp_unterminated_string_t *s,
+                                            const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -1861,14 +1853,14 @@ bool sbp_msg_linux_mem_state_t_cmdline_printf(sbp_unterminated_string_t *s,
   return ret;
 }
 
-bool sbp_msg_linux_mem_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
-                                               const char *fmt, va_list ap) {
+bool sbp_msg_linux_mem_state_cmdline_vprintf(sbp_unterminated_string_t *s,
+                                             const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       s, &sbp_msg_linux_mem_state_tcmdline_params, fmt, ap);
 }
 
-bool sbp_msg_linux_mem_state_t_cmdline_append_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) {
+bool sbp_msg_linux_mem_state_cmdline_append_printf(sbp_unterminated_string_t *s,
+                                                   const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -1877,51 +1869,51 @@ bool sbp_msg_linux_mem_state_t_cmdline_append_printf(
   return ret;
 }
 
-bool sbp_msg_linux_mem_state_t_cmdline_append_vprintf(
+bool sbp_msg_linux_mem_state_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       s, &sbp_msg_linux_mem_state_tcmdline_params, fmt, ap);
 }
 
-const char *sbp_msg_linux_mem_state_t_cmdline_get(
+const char *sbp_msg_linux_mem_state_cmdline_get(
     const sbp_unterminated_string_t *s) {
   return sbp_unterminated_string_get(s,
                                      &sbp_msg_linux_mem_state_tcmdline_params);
 }
 
-size_t sbp_packed_size_sbp_msg_linux_mem_state_t(
+size_t sbp_msg_linux_mem_state_encoded_len(
     const sbp_msg_linux_mem_state_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u8(&msg->index);
-  packed_size += sbp_packed_size_u16(&msg->pid);
-  packed_size += sbp_packed_size_u8(&msg->pmem);
-  packed_size += sbp_packed_size_u32(&msg->time);
-  packed_size += sbp_packed_size_u8(&msg->flags);
-  packed_size += (15 * sbp_packed_size_char(&msg->tname[0]));
-  packed_size += sbp_unterminated_string_packed_len(
+  size_t encoded_len = 0;
+  encoded_len += sbp_u8_encoded_len(&msg->index);
+  encoded_len += sbp_u16_encoded_len(&msg->pid);
+  encoded_len += sbp_u8_encoded_len(&msg->pmem);
+  encoded_len += sbp_u32_encoded_len(&msg->time);
+  encoded_len += sbp_u8_encoded_len(&msg->flags);
+  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
+  encoded_len += sbp_unterminated_string_packed_len(
       &msg->cmdline, &sbp_msg_linux_mem_state_tcmdline_params);
-  return packed_size;
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_mem_state_t *msg) {
-  if (!encode_u8(ctx, &msg->index)) {
+bool sbp_msg_linux_mem_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->index)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_encode(ctx, &msg->pid)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_encode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_encode(ctx, &msg->time)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!encode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -1932,14 +1924,13 @@ bool encode_sbp_msg_linux_mem_state_t(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_mem_state_t(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_msg_linux_mem_state_t *msg) {
+s8 sbp_msg_linux_mem_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_linux_mem_state_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_mem_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_mem_state_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -1948,25 +1939,25 @@ s8 sbp_encode_sbp_msg_linux_mem_state_t(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_mem_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_mem_state_t *msg) {
-  if (!decode_u8(ctx, &msg->index)) {
+bool sbp_msg_linux_mem_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_mem_state_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->index)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid)) {
+  if (!sbp_u16_decode(ctx, &msg->pid)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_decode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_decode(ctx, &msg->time)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
   for (uint8_t i = 0; i < 15; i++) {
-    if (!decode_char(ctx, &msg->tname[i])) {
+    if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
@@ -1977,14 +1968,14 @@ bool decode_sbp_msg_linux_mem_state_t(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_mem_state_t(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_msg_linux_mem_state_t *msg) {
+s8 sbp_msg_linux_mem_state_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_linux_mem_state_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_mem_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_mem_state_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -1993,13 +1984,13 @@ s8 sbp_decode_sbp_msg_linux_mem_state_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id,
-                                      const sbp_msg_linux_mem_state_t *msg,
-                                      sbp_write_fn_t write) {
+s8 sbp_msg_linux_mem_state_send(struct sbp_state *s, u16 sender_id,
+                                const sbp_msg_linux_mem_state_t *msg,
+                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_mem_state_t(payload, sizeof(payload),
-                                                &payload_len, msg);
+  s8 ret = sbp_msg_linux_mem_state_encode(payload, sizeof(payload),
+                                          &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -2007,100 +1998,99 @@ s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id,
                           payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *a,
-                                      const sbp_msg_linux_mem_state_t *b) {
+int sbp_msg_linux_mem_state_cmp(const sbp_msg_linux_mem_state_t *a,
+                                const sbp_msg_linux_mem_state_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u8(&a->index, &b->index);
+  ret = sbp_u8_cmp(&a->index, &b->index);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid, &b->pid);
+  ret = sbp_u16_cmp(&a->pid, &b->pid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pmem, &b->pmem);
+  ret = sbp_u8_cmp(&a->pmem, &b->pmem);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->time, &b->time);
+  ret = sbp_u32_cmp(&a->time, &b->time);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  ret = sbp_u8_cmp(&a->flags, &b->flags);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 15; i++) {
-    ret = sbp_cmp_char(&a->tname[i], &b->tname[i]);
+    ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_msg_linux_mem_state_t_cmdline_strcmp(&a->cmdline, &b->cmdline);
+  ret = sbp_msg_linux_mem_state_cmdline_strcmp(&a->cmdline, &b->cmdline);
   if (ret != 0) {
     return ret;
   }
   return ret;
 }
 
-size_t sbp_packed_size_sbp_msg_linux_sys_state_t(
+size_t sbp_msg_linux_sys_state_encoded_len(
     const sbp_msg_linux_sys_state_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_u16(&msg->mem_total);
-  packed_size += sbp_packed_size_u8(&msg->pcpu);
-  packed_size += sbp_packed_size_u8(&msg->pmem);
-  packed_size += sbp_packed_size_u16(&msg->procs_starting);
-  packed_size += sbp_packed_size_u16(&msg->procs_stopping);
-  packed_size += sbp_packed_size_u16(&msg->pid_count);
-  packed_size += sbp_packed_size_u32(&msg->time);
-  packed_size += sbp_packed_size_u8(&msg->flags);
-  return packed_size;
+  size_t encoded_len = 0;
+  encoded_len += sbp_u16_encoded_len(&msg->mem_total);
+  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
+  encoded_len += sbp_u8_encoded_len(&msg->pmem);
+  encoded_len += sbp_u16_encoded_len(&msg->procs_starting);
+  encoded_len += sbp_u16_encoded_len(&msg->procs_stopping);
+  encoded_len += sbp_u16_encoded_len(&msg->pid_count);
+  encoded_len += sbp_u32_encoded_len(&msg->time);
+  encoded_len += sbp_u8_encoded_len(&msg->flags);
+  return encoded_len;
 }
 
-bool encode_sbp_msg_linux_sys_state_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_linux_sys_state_t *msg) {
-  if (!encode_u16(ctx, &msg->mem_total)) {
+bool sbp_msg_linux_sys_state_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_linux_sys_state_t *msg) {
+  if (!sbp_u16_encode(ctx, &msg->mem_total)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_encode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_encode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->procs_starting)) {
+  if (!sbp_u16_encode(ctx, &msg->procs_starting)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->procs_stopping)) {
+  if (!sbp_u16_encode(ctx, &msg->procs_stopping)) {
     return false;
   }
-  if (!encode_u16(ctx, &msg->pid_count)) {
+  if (!sbp_u16_encode(ctx, &msg->pid_count)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_encode(ctx, &msg->time)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_encode_sbp_msg_linux_sys_state_t(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_msg_linux_sys_state_t *msg) {
+s8 sbp_msg_linux_sys_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_linux_sys_state_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_linux_sys_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_sys_state_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -2109,43 +2099,43 @@ s8 sbp_encode_sbp_msg_linux_sys_state_t(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool decode_sbp_msg_linux_sys_state_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_linux_sys_state_t *msg) {
-  if (!decode_u16(ctx, &msg->mem_total)) {
+bool sbp_msg_linux_sys_state_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_linux_sys_state_t *msg) {
+  if (!sbp_u16_decode(ctx, &msg->mem_total)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pcpu)) {
+  if (!sbp_u8_decode(ctx, &msg->pcpu)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->pmem)) {
+  if (!sbp_u8_decode(ctx, &msg->pmem)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->procs_starting)) {
+  if (!sbp_u16_decode(ctx, &msg->procs_starting)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->procs_stopping)) {
+  if (!sbp_u16_decode(ctx, &msg->procs_stopping)) {
     return false;
   }
-  if (!decode_u16(ctx, &msg->pid_count)) {
+  if (!sbp_u16_decode(ctx, &msg->pid_count)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->time)) {
+  if (!sbp_u32_decode(ctx, &msg->time)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->flags)) {
+  if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
   return true;
 }
 
-s8 sbp_decode_sbp_msg_linux_sys_state_t(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_msg_linux_sys_state_t *msg) {
+s8 sbp_msg_linux_sys_state_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_linux_sys_state_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_linux_sys_state_t(&ctx, msg)) {
+  if (!sbp_msg_linux_sys_state_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -2154,13 +2144,13 @@ s8 sbp_decode_sbp_msg_linux_sys_state_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_linux_sys_state_t(struct sbp_state *s, u16 sender_id,
-                                      const sbp_msg_linux_sys_state_t *msg,
-                                      sbp_write_fn_t write) {
+s8 sbp_msg_linux_sys_state_send(struct sbp_state *s, u16 sender_id,
+                                const sbp_msg_linux_sys_state_t *msg,
+                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_linux_sys_state_t(payload, sizeof(payload),
-                                                &payload_len, msg);
+  s8 ret = sbp_msg_linux_sys_state_encode(payload, sizeof(payload),
+                                          &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -2168,46 +2158,46 @@ s8 sbp_send_sbp_msg_linux_sys_state_t(struct sbp_state *s, u16 sender_id,
                           payload, write);
 }
 
-int sbp_cmp_sbp_msg_linux_sys_state_t(const sbp_msg_linux_sys_state_t *a,
-                                      const sbp_msg_linux_sys_state_t *b) {
+int sbp_msg_linux_sys_state_cmp(const sbp_msg_linux_sys_state_t *a,
+                                const sbp_msg_linux_sys_state_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_u16(&a->mem_total, &b->mem_total);
+  ret = sbp_u16_cmp(&a->mem_total, &b->mem_total);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pcpu, &b->pcpu);
+  ret = sbp_u8_cmp(&a->pcpu, &b->pcpu);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->pmem, &b->pmem);
+  ret = sbp_u8_cmp(&a->pmem, &b->pmem);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->procs_starting, &b->procs_starting);
+  ret = sbp_u16_cmp(&a->procs_starting, &b->procs_starting);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->procs_stopping, &b->procs_stopping);
+  ret = sbp_u16_cmp(&a->procs_stopping, &b->procs_stopping);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u16(&a->pid_count, &b->pid_count);
+  ret = sbp_u16_cmp(&a->pid_count, &b->pid_count);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->time, &b->time);
+  ret = sbp_u32_cmp(&a->time, &b->time);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->flags, &b->flags);
+  ret = sbp_u8_cmp(&a->flags, &b->flags);
   if (ret != 0) {
     return ret;
   }

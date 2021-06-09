@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_PIKSI_MSG_SPECAN_MESSAGES_H
-#define LIBSBP_NEW_PIKSI_MSG_SPECAN_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_MSG_SPECAN_MESSAGES_H
+#define LIBSBP_V4_PIKSI_MSG_SPECAN_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_SPECAN
@@ -102,7 +103,7 @@ typedef struct {
  * @param msg sbp_msg_specan_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_specan_t(const sbp_msg_specan_t *msg);
+size_t sbp_msg_specan_encoded_len(const sbp_msg_specan_t *msg);
 
 /**
  * Encode an instance of sbp_msg_specan_t to wire representation
@@ -123,8 +124,8 @@ size_t sbp_packed_size_sbp_msg_specan_t(const sbp_msg_specan_t *msg);
  * @param msg Instance of sbp_msg_specan_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_specan_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                               const sbp_msg_specan_t *msg);
+s8 sbp_msg_specan_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                         const sbp_msg_specan_t *msg);
 
 /**
  * Decode an instance of sbp_msg_specan_t from wire representation
@@ -141,8 +142,8 @@ s8 sbp_encode_sbp_msg_specan_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_specan_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                               sbp_msg_specan_t *msg);
+s8 sbp_msg_specan_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                         sbp_msg_specan_t *msg);
 /**
  * Send an instance of sbp_msg_specan_t with the given write function
  *
@@ -159,8 +160,8 @@ s8 sbp_decode_sbp_msg_specan_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_specan_t(struct sbp_state *s, u16 sender_id,
-                             const sbp_msg_specan_t *msg, sbp_write_fn_t write);
+s8 sbp_msg_specan_send(struct sbp_state *s, u16 sender_id,
+                       const sbp_msg_specan_t *msg, sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_specan_t
@@ -177,41 +178,41 @@ s8 sbp_send_sbp_msg_specan_t(struct sbp_state *s, u16 sender_id,
  * @param b sbp_msg_specan_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_specan_t(const sbp_msg_specan_t *a,
-                             const sbp_msg_specan_t *b);
+int sbp_msg_specan_cmp(const sbp_msg_specan_t *a, const sbp_msg_specan_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_msg_specan_t &lhs,
                               const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) == 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_specan_t &lhs,
                               const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) != 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_specan_t &lhs,
                              const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) < 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_msg_specan_t &lhs,
                               const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) <= 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_specan_t &lhs,
                              const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) > 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_msg_specan_t &lhs,
                               const sbp_msg_specan_t &rhs) {
-  return sbp_cmp_sbp_msg_specan_t(&lhs, &rhs) >= 0;
+  return sbp_msg_specan_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V4_PIKSI_MESSAGES_H */

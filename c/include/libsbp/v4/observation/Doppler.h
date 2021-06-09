@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_OBSERVATION_DOPPLER_MESSAGES_H
-#define LIBSBP_NEW_OBSERVATION_DOPPLER_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_DOPPLER_MESSAGES_H
+#define LIBSBP_V4_OBSERVATION_DOPPLER_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -38,6 +38,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_DOPPLER
@@ -67,7 +68,7 @@ typedef struct {
  * @param msg sbp_doppler_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_doppler_t(const sbp_doppler_t *msg);
+size_t sbp_doppler_encoded_len(const sbp_doppler_t *msg);
 
 /**
  * Encode an instance of sbp_doppler_t to wire representation
@@ -88,8 +89,8 @@ size_t sbp_packed_size_sbp_doppler_t(const sbp_doppler_t *msg);
  * @param msg Instance of sbp_doppler_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_doppler_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                            const sbp_doppler_t *msg);
+s8 sbp_doppler_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                      const sbp_doppler_t *msg);
 
 /**
  * Decode an instance of sbp_doppler_t from wire representation
@@ -106,8 +107,8 @@ s8 sbp_encode_sbp_doppler_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                            sbp_doppler_t *msg);
+s8 sbp_doppler_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                      sbp_doppler_t *msg);
 
 /**
  * Compare two instances of sbp_doppler_t
@@ -124,40 +125,41 @@ s8 sbp_decode_sbp_doppler_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_doppler_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_doppler_t(const sbp_doppler_t *a, const sbp_doppler_t *b);
+int sbp_doppler_cmp(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_doppler_t &lhs,
                               const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) == 0;
+  return sbp_doppler_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_doppler_t &lhs,
                               const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) != 0;
+  return sbp_doppler_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_doppler_t &lhs,
                              const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) < 0;
+  return sbp_doppler_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_doppler_t &lhs,
                               const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) <= 0;
+  return sbp_doppler_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_doppler_t &lhs,
                              const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) > 0;
+  return sbp_doppler_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_doppler_t &lhs,
                               const sbp_doppler_t &rhs) {
-  return sbp_cmp_sbp_doppler_t(&lhs, &rhs) >= 0;
+  return sbp_doppler_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */

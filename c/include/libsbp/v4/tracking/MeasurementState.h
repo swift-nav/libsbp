@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_TRACKING_MEASUREMENTSTATE_MESSAGES_H
-#define LIBSBP_NEW_TRACKING_MEASUREMENTSTATE_MESSAGES_H
+#ifndef LIBSBP_V4_TRACKING_MEASUREMENTSTATE_MESSAGES_H
+#define LIBSBP_V4_TRACKING_MEASUREMENTSTATE_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MEASUREMENTSTATE
@@ -69,8 +70,7 @@ typedef struct {
  * @param msg sbp_measurement_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_measurement_state_t(
-    const sbp_measurement_state_t *msg);
+size_t sbp_measurement_state_encoded_len(const sbp_measurement_state_t *msg);
 
 /**
  * Encode an instance of sbp_measurement_state_t to wire representation
@@ -91,9 +91,8 @@ size_t sbp_packed_size_sbp_measurement_state_t(
  * @param msg Instance of sbp_measurement_state_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_measurement_state_t(uint8_t *buf, uint8_t len,
-                                      uint8_t *n_written,
-                                      const sbp_measurement_state_t *msg);
+s8 sbp_measurement_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                const sbp_measurement_state_t *msg);
 
 /**
  * Decode an instance of sbp_measurement_state_t from wire representation
@@ -110,9 +109,8 @@ s8 sbp_encode_sbp_measurement_state_t(uint8_t *buf, uint8_t len,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_measurement_state_t(const uint8_t *buf, uint8_t len,
-                                      uint8_t *n_read,
-                                      sbp_measurement_state_t *msg);
+s8 sbp_measurement_state_decode(const uint8_t *buf, uint8_t len,
+                                uint8_t *n_read, sbp_measurement_state_t *msg);
 
 /**
  * Compare two instances of sbp_measurement_state_t
@@ -129,41 +127,42 @@ s8 sbp_decode_sbp_measurement_state_t(const uint8_t *buf, uint8_t len,
  * @param b sbp_measurement_state_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_measurement_state_t(const sbp_measurement_state_t *a,
-                                    const sbp_measurement_state_t *b);
+int sbp_measurement_state_cmp(const sbp_measurement_state_t *a,
+                              const sbp_measurement_state_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_measurement_state_t &lhs,
                               const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) == 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_measurement_state_t &lhs,
                               const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) != 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_measurement_state_t &lhs,
                              const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) < 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_measurement_state_t &lhs,
                               const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) <= 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_measurement_state_t &lhs,
                              const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) > 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_measurement_state_t &lhs,
                               const sbp_measurement_state_t &rhs) {
-  return sbp_cmp_sbp_measurement_state_t(&lhs, &rhs) >= 0;
+  return sbp_measurement_state_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_TRACKING_MESSAGES_H */
+#endif /* LIBSBP_V4_TRACKING_MESSAGES_H */

@@ -16,41 +16,41 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/sbas.h>
 
-size_t sbp_packed_size_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *msg) {
-  size_t packed_size = 0;
-  packed_size += sbp_packed_size_sbp_sbp_gnss_signal_t(&msg->sid);
-  packed_size += sbp_packed_size_u32(&msg->tow);
-  packed_size += sbp_packed_size_u8(&msg->message_type);
-  packed_size += (27 * sbp_packed_size_u8(&msg->data[0]));
-  return packed_size;
+size_t sbp_msg_sbas_raw_encoded_len(const sbp_msg_sbas_raw_t *msg) {
+  size_t encoded_len = 0;
+  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
+  encoded_len += sbp_u32_encoded_len(&msg->tow);
+  encoded_len += sbp_u8_encoded_len(&msg->message_type);
+  encoded_len += (27 * sbp_u8_encoded_len(&msg->data[0]));
+  return encoded_len;
 }
 
-bool encode_sbp_msg_sbas_raw_t(sbp_encode_ctx_t *ctx,
-                               const sbp_msg_sbas_raw_t *msg) {
-  if (!encode_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) {
+bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
+                                      const sbp_msg_sbas_raw_t *msg) {
+  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
-  if (!encode_u32(ctx, &msg->tow)) {
+  if (!sbp_u32_encode(ctx, &msg->tow)) {
     return false;
   }
-  if (!encode_u8(ctx, &msg->message_type)) {
+  if (!sbp_u8_encode(ctx, &msg->message_type)) {
     return false;
   }
   for (uint8_t i = 0; i < 27; i++) {
-    if (!encode_u8(ctx, &msg->data[i])) {
+    if (!sbp_u8_encode(ctx, &msg->data[i])) {
       return false;
     }
   }
   return true;
 }
 
-s8 sbp_encode_sbp_msg_sbas_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                 const sbp_msg_sbas_raw_t *msg) {
+s8 sbp_msg_sbas_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                           const sbp_msg_sbas_raw_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!encode_sbp_msg_sbas_raw_t(&ctx, msg)) {
+  if (!sbp_msg_sbas_raw_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -59,31 +59,32 @@ s8 sbp_encode_sbp_msg_sbas_raw_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool decode_sbp_msg_sbas_raw_t(sbp_decode_ctx_t *ctx, sbp_msg_sbas_raw_t *msg) {
-  if (!decode_sbp_sbp_gnss_signal_t(ctx, &msg->sid)) {
+bool sbp_msg_sbas_raw_decode_internal(sbp_decode_ctx_t *ctx,
+                                      sbp_msg_sbas_raw_t *msg) {
+  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
-  if (!decode_u32(ctx, &msg->tow)) {
+  if (!sbp_u32_decode(ctx, &msg->tow)) {
     return false;
   }
-  if (!decode_u8(ctx, &msg->message_type)) {
+  if (!sbp_u8_decode(ctx, &msg->message_type)) {
     return false;
   }
   for (uint8_t i = 0; i < 27; i++) {
-    if (!decode_u8(ctx, &msg->data[i])) {
+    if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;
     }
   }
   return true;
 }
 
-s8 sbp_decode_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len,
-                                 uint8_t *n_read, sbp_msg_sbas_raw_t *msg) {
+s8 sbp_msg_sbas_raw_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                           sbp_msg_sbas_raw_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!decode_sbp_msg_sbas_raw_t(&ctx, msg)) {
+  if (!sbp_msg_sbas_raw_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -92,13 +93,11 @@ s8 sbp_decode_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_send_sbp_msg_sbas_raw_t(struct sbp_state *s, u16 sender_id,
-                               const sbp_msg_sbas_raw_t *msg,
-                               sbp_write_fn_t write) {
+s8 sbp_msg_sbas_raw_send(struct sbp_state *s, u16 sender_id,
+                         const sbp_msg_sbas_raw_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_sbp_msg_sbas_raw_t(payload, sizeof(payload), &payload_len,
-                                         msg);
+  s8 ret = sbp_msg_sbas_raw_encode(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
@@ -106,27 +105,27 @@ s8 sbp_send_sbp_msg_sbas_raw_t(struct sbp_state *s, u16 sender_id,
                           write);
 }
 
-int sbp_cmp_sbp_msg_sbas_raw_t(const sbp_msg_sbas_raw_t *a,
-                               const sbp_msg_sbas_raw_t *b) {
+int sbp_msg_sbas_raw_cmp(const sbp_msg_sbas_raw_t *a,
+                         const sbp_msg_sbas_raw_t *b) {
   int ret = 0;
 
-  ret = sbp_cmp_sbp_sbp_gnss_signal_t(&a->sid, &b->sid);
+  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u32(&a->tow, &b->tow);
+  ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_cmp_u8(&a->message_type, &b->message_type);
+  ret = sbp_u8_cmp(&a->message_type, &b->message_type);
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0; ret == 0 && i < 27; i++) {
-    ret = sbp_cmp_u8(&a->data[i], &b->data[i]);
+    ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {
     return ret;

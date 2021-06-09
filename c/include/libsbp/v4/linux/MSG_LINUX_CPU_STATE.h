@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_LINUX_MSG_LINUX_CPU_STATE_MESSAGES_H
-#define LIBSBP_NEW_LINUX_MSG_LINUX_CPU_STATE_MESSAGES_H
+#ifndef LIBSBP_V4_LINUX_MSG_LINUX_CPU_STATE_MESSAGES_H
+#define LIBSBP_V4_LINUX_MSG_LINUX_CPU_STATE_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_LINUX_CPU_STATE
@@ -89,7 +90,7 @@ typedef struct {
  *
  * @param msg sbp_msg_linux_cpu_state_t instance
  */
-void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t *s);
+void sbp_msg_linux_cpu_state_cmdline_init(sbp_unterminated_string_t *s);
 
 /**
  * Test sbp_msg_linux_cpu_state_t::cmdline for validity
@@ -98,8 +99,7 @@ void sbp_msg_linux_cpu_state_t_cmdline_init(sbp_unterminated_string_t *s);
  * @return true is sbp_msg_linux_cpu_state_t::cmdline is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_valid(
-    const sbp_unterminated_string_t *s);
+bool sbp_msg_linux_cpu_state_cmdline_valid(const sbp_unterminated_string_t *s);
 
 /**
  * Tests 2 instances of sbp_msg_linux_cpu_state_t::cmdline for equality
@@ -111,8 +111,8 @@ bool sbp_msg_linux_cpu_state_t_cmdline_valid(
  * @param b sbp_msg_linux_cpu_state_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_linux_cpu_state_t_cmdline_strcmp(
-    const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+int sbp_msg_linux_cpu_state_cmdline_strcmp(const sbp_unterminated_string_t *a,
+                                           const sbp_unterminated_string_t *b);
 
 /**
  * Get the encoded size of sbp_msg_linux_cpu_state_t::cmdline
@@ -120,7 +120,7 @@ int sbp_msg_linux_cpu_state_t_cmdline_strcmp(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Size of sbp_msg_linux_cpu_state_t::cmdline in wire representation
  */
-uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(
+uint8_t sbp_msg_linux_cpu_state_cmdline_encoded_len(
     const sbp_unterminated_string_t *s);
 
 /**
@@ -133,7 +133,7 @@ uint8_t sbp_msg_linux_cpu_state_t_cmdline_packed_len(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(
+uint8_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
     const sbp_unterminated_string_t *s);
 /**
  * Set sbp_msg_linux_cpu_state_t::cmdline
@@ -148,8 +148,8 @@ uint8_t sbp_msg_linux_cpu_state_t_cmdline_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t *s,
-                                           const char *new_str);
+bool sbp_msg_linux_cpu_state_cmdline_set(sbp_unterminated_string_t *s,
+                                         const char *new_str);
 
 /**
  * Set sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
@@ -165,14 +165,14 @@ bool sbp_msg_linux_cpu_state_t_cmdline_set(sbp_unterminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s,
-                                              const char *fmt, ...)
+bool sbp_msg_linux_cpu_state_cmdline_printf(sbp_unterminated_string_t *s,
+                                            const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Set sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
  *
- * Identical to #sbp_msg_linux_cpu_state_t_cmdline_printf except it takes a
+ * Identical to #sbp_msg_linux_cpu_state_cmdline_printf except it takes a
  * va_list argument
  *
  * @param msg sbp_msg_linux_cpu_state_t instance
@@ -180,8 +180,8 @@ bool sbp_msg_linux_cpu_state_t_cmdline_printf(sbp_unterminated_string_t *s,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
-                                               const char *fmt, va_list ap);
+bool sbp_msg_linux_cpu_state_cmdline_vprintf(sbp_unterminated_string_t *s,
+                                             const char *fmt, va_list ap);
 
 /**
  * Append sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
@@ -195,14 +195,15 @@ bool sbp_msg_linux_cpu_state_t_cmdline_vprintf(sbp_unterminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+bool sbp_msg_linux_cpu_state_cmdline_append_printf(sbp_unterminated_string_t *s,
+                                                   const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append sbp_msg_linux_cpu_state_t::cmdline with printf style formatting
  *
- * Identical to #sbp_msg_linux_cpu_state_t_cmdline_append_printf except it takes
- * a va_list argument
+ * Identical to #sbp_msg_linux_cpu_state_cmdline_append_printf except it takes a
+ * va_list argument
  *
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @param fmt printf style format string
@@ -210,7 +211,7 @@ bool sbp_msg_linux_cpu_state_t_cmdline_append_printf(
  * @return true on success, false otherwise
  *
  */
-bool sbp_msg_linux_cpu_state_t_cmdline_append_vprintf(
+bool sbp_msg_linux_cpu_state_cmdline_append_vprintf(
     sbp_unterminated_string_t *s, const char *fmt, va_list ap);
 
 /**
@@ -219,7 +220,7 @@ bool sbp_msg_linux_cpu_state_t_cmdline_append_vprintf(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return String contents
  */
-const char *sbp_msg_linux_cpu_state_t_cmdline_get(
+const char *sbp_msg_linux_cpu_state_cmdline_get(
     const sbp_unterminated_string_t *s);
 
 /**
@@ -230,7 +231,7 @@ const char *sbp_msg_linux_cpu_state_t_cmdline_get(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_linux_cpu_state_t_cmdline_section_strlen(
+uint8_t sbp_msg_linux_cpu_state_cmdline_section_strlen(
     const sbp_unterminated_string_t *s, uint8_t section);
 
 /**
@@ -239,7 +240,7 @@ uint8_t sbp_msg_linux_cpu_state_t_cmdline_section_strlen(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(
+size_t sbp_msg_linux_cpu_state_encoded_len(
     const sbp_msg_linux_cpu_state_t *msg);
 
 /**
@@ -261,9 +262,8 @@ size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(
  * @param msg Instance of sbp_msg_linux_cpu_state_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_msg_linux_cpu_state_t *msg);
+s8 sbp_msg_linux_cpu_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_linux_cpu_state_t *msg);
 
 /**
  * Decode an instance of sbp_msg_linux_cpu_state_t from wire representation
@@ -280,9 +280,9 @@ s8 sbp_encode_sbp_msg_linux_cpu_state_t(uint8_t *buf, uint8_t len,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_msg_linux_cpu_state_t *msg);
+s8 sbp_msg_linux_cpu_state_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_linux_cpu_state_t *msg);
 /**
  * Send an instance of sbp_msg_linux_cpu_state_t with the given write function
  *
@@ -299,9 +299,9 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
-                                      const sbp_msg_linux_cpu_state_t *msg,
-                                      sbp_write_fn_t write);
+s8 sbp_msg_linux_cpu_state_send(struct sbp_state *s, u16 sender_id,
+                                const sbp_msg_linux_cpu_state_t *msg,
+                                sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_linux_cpu_state_t
@@ -318,41 +318,42 @@ s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id,
  * @param b sbp_msg_linux_cpu_state_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *a,
-                                      const sbp_msg_linux_cpu_state_t *b);
+int sbp_msg_linux_cpu_state_cmp(const sbp_msg_linux_cpu_state_t *a,
+                                const sbp_msg_linux_cpu_state_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_msg_linux_cpu_state_t &lhs,
                               const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) == 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_linux_cpu_state_t &lhs,
                               const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) != 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_linux_cpu_state_t &lhs,
                              const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) < 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_msg_linux_cpu_state_t &lhs,
                               const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) <= 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_linux_cpu_state_t &lhs,
                              const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) > 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_msg_linux_cpu_state_t &lhs,
                               const sbp_msg_linux_cpu_state_t &rhs) {
-  return sbp_cmp_sbp_msg_linux_cpu_state_t(&lhs, &rhs) >= 0;
+  return sbp_msg_linux_cpu_state_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_LINUX_MESSAGES_H */
+#endif /* LIBSBP_V4_LINUX_MESSAGES_H */

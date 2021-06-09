@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SSR_SATELLITEAPC_MESSAGES_H
-#define LIBSBP_NEW_SSR_SATELLITEAPC_MESSAGES_H
+#ifndef LIBSBP_V4_SSR_SATELLITEAPC_MESSAGES_H
+#define LIBSBP_V4_SSR_SATELLITEAPC_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_SATELLITEAPC
@@ -85,7 +86,7 @@ typedef struct {
  * @param msg sbp_satellite_apc_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_satellite_apc_t(const sbp_satellite_apc_t *msg);
+size_t sbp_satellite_apc_encoded_len(const sbp_satellite_apc_t *msg);
 
 /**
  * Encode an instance of sbp_satellite_apc_t to wire representation
@@ -106,8 +107,8 @@ size_t sbp_packed_size_sbp_satellite_apc_t(const sbp_satellite_apc_t *msg);
  * @param msg Instance of sbp_satellite_apc_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_satellite_apc_t *msg);
+s8 sbp_satellite_apc_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                            const sbp_satellite_apc_t *msg);
 
 /**
  * Decode an instance of sbp_satellite_apc_t from wire representation
@@ -124,8 +125,8 @@ s8 sbp_encode_sbp_satellite_apc_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len,
-                                  uint8_t *n_read, sbp_satellite_apc_t *msg);
+s8 sbp_satellite_apc_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                            sbp_satellite_apc_t *msg);
 
 /**
  * Compare two instances of sbp_satellite_apc_t
@@ -142,41 +143,42 @@ s8 sbp_decode_sbp_satellite_apc_t(const uint8_t *buf, uint8_t len,
  * @param b sbp_satellite_apc_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_satellite_apc_t(const sbp_satellite_apc_t *a,
-                                const sbp_satellite_apc_t *b);
+int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
+                          const sbp_satellite_apc_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_satellite_apc_t &lhs,
                               const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) == 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_satellite_apc_t &lhs,
                               const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) != 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_satellite_apc_t &lhs,
                              const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) < 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_satellite_apc_t &lhs,
                               const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) <= 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_satellite_apc_t &lhs,
                              const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) > 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_satellite_apc_t &lhs,
                               const sbp_satellite_apc_t &rhs) {
-  return sbp_cmp_sbp_satellite_apc_t(&lhs, &rhs) >= 0;
+  return sbp_satellite_apc_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_SSR_MESSAGES_H */
+#endif /* LIBSBP_V4_SSR_MESSAGES_H */

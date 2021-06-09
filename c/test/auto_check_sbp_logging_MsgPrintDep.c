@@ -139,8 +139,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {
@@ -224,8 +225,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {
@@ -306,8 +308,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {
@@ -389,8 +392,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {
@@ -473,8 +477,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {
@@ -555,8 +560,9 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(last_msg.sender_id == 8738,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     {
       const char check_string[] = {

@@ -122,8 +122,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 1,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -174,8 +175,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 0,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -226,8 +228,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 1,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -278,8 +281,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 729,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -330,8 +334,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 728,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -382,8 +387,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 727,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "
@@ -434,8 +440,9 @@ START_TEST(test_auto_check_sbp_piksi_MsgIarState) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
-                  "Sent and received messages did not compare equal");
+    ck_assert_msg(
+        sbp_message_cmp(SBP_MSG_IAR_STATE, &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.iar_state.num_hyps == 723,
                   "incorrect value for last_msg.msg.iar_state.num_hyps, "

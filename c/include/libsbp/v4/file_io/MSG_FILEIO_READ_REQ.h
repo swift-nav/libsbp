@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_FILE_IO_MSG_FILEIO_READ_REQ_MESSAGES_H
-#define LIBSBP_NEW_FILE_IO_MSG_FILEIO_READ_REQ_MESSAGES_H
+#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_REQ_MESSAGES_H
+#define LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_REQ_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_FILEIO_READ_REQ
@@ -79,7 +80,7 @@ typedef struct {
  *
  * @param msg sbp_msg_fileio_read_req_t instance
  */
-void sbp_msg_fileio_read_req_t_filename_init(sbp_null_terminated_string_t *s);
+void sbp_msg_fileio_read_req_filename_init(sbp_null_terminated_string_t *s);
 
 /**
  * Test sbp_msg_fileio_read_req_t::filename for validity
@@ -88,7 +89,7 @@ void sbp_msg_fileio_read_req_t_filename_init(sbp_null_terminated_string_t *s);
  * @return true is sbp_msg_fileio_read_req_t::filename is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_fileio_read_req_t_filename_valid(
+bool sbp_msg_fileio_read_req_filename_valid(
     const sbp_null_terminated_string_t *s);
 
 /**
@@ -101,7 +102,7 @@ bool sbp_msg_fileio_read_req_t_filename_valid(
  * @param b sbp_msg_fileio_read_req_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_fileio_read_req_t_filename_strcmp(
+int sbp_msg_fileio_read_req_filename_strcmp(
     const sbp_null_terminated_string_t *a,
     const sbp_null_terminated_string_t *b);
 
@@ -111,7 +112,7 @@ int sbp_msg_fileio_read_req_t_filename_strcmp(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return Size of sbp_msg_fileio_read_req_t::filename in wire representation
  */
-uint8_t sbp_msg_fileio_read_req_t_filename_packed_len(
+uint8_t sbp_msg_fileio_read_req_filename_encoded_len(
     const sbp_null_terminated_string_t *s);
 
 /**
@@ -124,7 +125,7 @@ uint8_t sbp_msg_fileio_read_req_t_filename_packed_len(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_fileio_read_req_t_filename_space_remaining(
+uint8_t sbp_msg_fileio_read_req_filename_space_remaining(
     const sbp_null_terminated_string_t *s);
 /**
  * Set sbp_msg_fileio_read_req_t::filename
@@ -139,8 +140,8 @@ uint8_t sbp_msg_fileio_read_req_t_filename_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_t_filename_set(sbp_null_terminated_string_t *s,
-                                            const char *new_str);
+bool sbp_msg_fileio_read_req_filename_set(sbp_null_terminated_string_t *s,
+                                          const char *new_str);
 
 /**
  * Set sbp_msg_fileio_read_req_t::filename with printf style formatting
@@ -156,14 +157,14 @@ bool sbp_msg_fileio_read_req_t_filename_set(sbp_null_terminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_t_filename_printf(sbp_null_terminated_string_t *s,
-                                               const char *fmt, ...)
+bool sbp_msg_fileio_read_req_filename_printf(sbp_null_terminated_string_t *s,
+                                             const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Set sbp_msg_fileio_read_req_t::filename with printf style formatting
  *
- * Identical to #sbp_msg_fileio_read_req_t_filename_printf except it takes a
+ * Identical to #sbp_msg_fileio_read_req_filename_printf except it takes a
  * va_list argument
  *
  * @param msg sbp_msg_fileio_read_req_t instance
@@ -171,8 +172,8 @@ bool sbp_msg_fileio_read_req_t_filename_printf(sbp_null_terminated_string_t *s,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_t_filename_vprintf(sbp_null_terminated_string_t *s,
-                                                const char *fmt, va_list ap);
+bool sbp_msg_fileio_read_req_filename_vprintf(sbp_null_terminated_string_t *s,
+                                              const char *fmt, va_list ap);
 
 /**
  * Append sbp_msg_fileio_read_req_t::filename with printf style formatting
@@ -186,15 +187,15 @@ bool sbp_msg_fileio_read_req_t_filename_vprintf(sbp_null_terminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_t_filename_append_printf(
+bool sbp_msg_fileio_read_req_filename_append_printf(
     sbp_null_terminated_string_t *s, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append sbp_msg_fileio_read_req_t::filename with printf style formatting
  *
- * Identical to #sbp_msg_fileio_read_req_t_filename_append_printf except it
- * takes a va_list argument
+ * Identical to #sbp_msg_fileio_read_req_filename_append_printf except it takes
+ * a va_list argument
  *
  * @param msg sbp_msg_fileio_read_req_t instance
  * @param fmt printf style format string
@@ -202,7 +203,7 @@ bool sbp_msg_fileio_read_req_t_filename_append_printf(
  * @return true on success, false otherwise
  *
  */
-bool sbp_msg_fileio_read_req_t_filename_append_vprintf(
+bool sbp_msg_fileio_read_req_filename_append_vprintf(
     sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
 
 /**
@@ -211,7 +212,7 @@ bool sbp_msg_fileio_read_req_t_filename_append_vprintf(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return String contents
  */
-const char *sbp_msg_fileio_read_req_t_filename_get(
+const char *sbp_msg_fileio_read_req_filename_get(
     const sbp_null_terminated_string_t *s);
 
 /**
@@ -222,7 +223,7 @@ const char *sbp_msg_fileio_read_req_t_filename_get(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_fileio_read_req_t_filename_section_strlen(
+uint8_t sbp_msg_fileio_read_req_filename_section_strlen(
     const sbp_null_terminated_string_t *s, uint8_t section);
 
 /**
@@ -231,7 +232,7 @@ uint8_t sbp_msg_fileio_read_req_t_filename_section_strlen(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_fileio_read_req_t(
+size_t sbp_msg_fileio_read_req_encoded_len(
     const sbp_msg_fileio_read_req_t *msg);
 
 /**
@@ -253,9 +254,8 @@ size_t sbp_packed_size_sbp_msg_fileio_read_req_t(
  * @param msg Instance of sbp_msg_fileio_read_req_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_msg_fileio_read_req_t *msg);
+s8 sbp_msg_fileio_read_req_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_fileio_read_req_t *msg);
 
 /**
  * Decode an instance of sbp_msg_fileio_read_req_t from wire representation
@@ -272,9 +272,9 @@ s8 sbp_encode_sbp_msg_fileio_read_req_t(uint8_t *buf, uint8_t len,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_msg_fileio_read_req_t *msg);
+s8 sbp_msg_fileio_read_req_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_fileio_read_req_t *msg);
 /**
  * Send an instance of sbp_msg_fileio_read_req_t with the given write function
  *
@@ -291,9 +291,9 @@ s8 sbp_decode_sbp_msg_fileio_read_req_t(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state *s, u16 sender_id,
-                                      const sbp_msg_fileio_read_req_t *msg,
-                                      sbp_write_fn_t write);
+s8 sbp_msg_fileio_read_req_send(struct sbp_state *s, u16 sender_id,
+                                const sbp_msg_fileio_read_req_t *msg,
+                                sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_fileio_read_req_t
@@ -310,41 +310,42 @@ s8 sbp_send_sbp_msg_fileio_read_req_t(struct sbp_state *s, u16 sender_id,
  * @param b sbp_msg_fileio_read_req_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *a,
-                                      const sbp_msg_fileio_read_req_t *b);
+int sbp_msg_fileio_read_req_cmp(const sbp_msg_fileio_read_req_t *a,
+                                const sbp_msg_fileio_read_req_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_msg_fileio_read_req_t &lhs,
                               const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) == 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_fileio_read_req_t &lhs,
                               const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) != 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_fileio_read_req_t &lhs,
                              const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) < 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_msg_fileio_read_req_t &lhs,
                               const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) <= 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_fileio_read_req_t &lhs,
                              const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) > 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_msg_fileio_read_req_t &lhs,
                               const sbp_msg_fileio_read_req_t &rhs) {
-  return sbp_cmp_sbp_msg_fileio_read_req_t(&lhs, &rhs) >= 0;
+  return sbp_msg_fileio_read_req_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */

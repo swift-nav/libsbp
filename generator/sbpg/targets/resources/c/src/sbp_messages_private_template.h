@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_NEW_(((pkg_name|upper)))_H
-#define LIBSBP_INTERNAL_NEW_(((pkg_name|upper)))_H
+#ifndef LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
+#define LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
 
 #include <stdbool.h>
 
@@ -39,7 +39,7 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_(((m.name|convert_unpacked)))(sbp_encode_ctx_t *ctx, const (((m.name|convert_unpacked))) *msg);
+bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -48,7 +48,7 @@ bool encode_(((m.name|convert_unpacked)))(sbp_encode_ctx_t *ctx, const (((m.name
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_(((m.name|convert_unpacked)))(sbp_decode_ctx_t *ctx, (((m.name|convert_unpacked))) *msg);
+bool (((m.prefix)))_decode_internal(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
 
 ((*- endfor *))
 
@@ -56,5 +56,5 @@ bool decode_(((m.name|convert_unpacked)))(sbp_decode_ctx_t *ctx, (((m.name|conve
   }
 #endif
 
-#endif
+#endif /* LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H */
 

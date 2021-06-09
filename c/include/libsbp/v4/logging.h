@@ -15,10 +15,10 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_LOGGING_MESSAGES_H
-#define LIBSBP_NEW_LOGGING_MESSAGES_H
+#ifndef LIBSBP_V4_LOGGING_PACKAGE_H
+#define LIBSBP_V4_LOGGING_PACKAGE_H
 #include <libsbp/v4/logging/MSG_FWD.h>
 #include <libsbp/v4/logging/MSG_LOG.h>
 #include <libsbp/v4/logging/MSG_PRINT_DEP.h>
 
-#endif
+#endif /* LIBSBP_V4_LOGGING_PACKAGE_H */

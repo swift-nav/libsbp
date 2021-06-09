@@ -147,9 +147,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNedCovGnss) {
     ck_assert_msg(last_msg.sender_id == 4096,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_VEL_NED_COV_GNSS, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_VEL_NED_COV_GNSS, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_d_d * 100 -
                    0.00788295920938 * 100) < 0.05,

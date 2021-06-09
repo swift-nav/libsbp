@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SYSTEM_MESSAGES_H
-#define LIBSBP_NEW_SYSTEM_MESSAGES_H
+#ifndef LIBSBP_V4_SYSTEM_PACKAGE_H
+#define LIBSBP_V4_SYSTEM_PACKAGE_H
 #include <libsbp/v4/system/MSG_CSAC_TELEMETRY.h>
 #include <libsbp/v4/system/MSG_CSAC_TELEMETRY_LABELS.h>
 #include <libsbp/v4/system/MSG_DGNSS_STATUS.h>
@@ -30,4 +30,4 @@
 #include <libsbp/v4/system/MSG_STATUS_REPORT.h>
 #include <libsbp/v4/system/SubSystemReport.h>
 
-#endif
+#endif /* LIBSBP_V4_SYSTEM_PACKAGE_H */

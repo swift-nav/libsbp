@@ -15,11 +15,11 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_ORIENTATION_MESSAGES_H
-#define LIBSBP_NEW_ORIENTATION_MESSAGES_H
+#ifndef LIBSBP_V4_ORIENTATION_PACKAGE_H
+#define LIBSBP_V4_ORIENTATION_PACKAGE_H
 #include <libsbp/v4/orientation/MSG_ANGULAR_RATE.h>
 #include <libsbp/v4/orientation/MSG_BASELINE_HEADING.h>
 #include <libsbp/v4/orientation/MSG_ORIENT_EULER.h>
 #include <libsbp/v4/orientation/MSG_ORIENT_QUAT.h>
 
-#endif
+#endif /* LIBSBP_V4_ORIENTATION_PACKAGE_H */

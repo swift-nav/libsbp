@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_OBSERVATION_PACKEDOBSCONTENTDEPB_MESSAGES_H
-#define LIBSBP_NEW_OBSERVATION_PACKEDOBSCONTENTDEPB_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENTDEPB_MESSAGES_H
+#define LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENTDEPB_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -40,6 +40,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_PACKEDOBSCONTENTDEPB
@@ -85,7 +86,7 @@ typedef struct {
  * @param msg sbp_packed_obs_content_dep_b_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_packed_obs_content_dep_b_t(
+size_t sbp_packed_obs_content_dep_b_encoded_len(
     const sbp_packed_obs_content_dep_b_t *msg);
 
 /**
@@ -107,7 +108,7 @@ size_t sbp_packed_size_sbp_packed_obs_content_dep_b_t(
  * @param msg Instance of sbp_packed_obs_content_dep_b_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_packed_obs_content_dep_b_t(
+s8 sbp_packed_obs_content_dep_b_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_packed_obs_content_dep_b_t *msg);
 
@@ -126,9 +127,9 @@ s8 sbp_encode_sbp_packed_obs_content_dep_b_t(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_packed_obs_content_dep_b_t(
-    const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_packed_obs_content_dep_b_t *msg);
+s8 sbp_packed_obs_content_dep_b_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_packed_obs_content_dep_b_t *msg);
 
 /**
  * Compare two instances of sbp_packed_obs_content_dep_b_t
@@ -145,42 +146,42 @@ s8 sbp_decode_sbp_packed_obs_content_dep_b_t(
  * @param b sbp_packed_obs_content_dep_b_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_packed_obs_content_dep_b_t(
-    const sbp_packed_obs_content_dep_b_t *a,
-    const sbp_packed_obs_content_dep_b_t *b);
+int sbp_packed_obs_content_dep_b_cmp(const sbp_packed_obs_content_dep_b_t *a,
+                                     const sbp_packed_obs_content_dep_b_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_packed_obs_content_dep_b_t &lhs,
                               const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) == 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_packed_obs_content_dep_b_t &lhs,
                               const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) != 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_packed_obs_content_dep_b_t &lhs,
                              const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) < 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_packed_obs_content_dep_b_t &lhs,
                               const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) <= 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_packed_obs_content_dep_b_t &lhs,
                              const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) > 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_packed_obs_content_dep_b_t &lhs,
                               const sbp_packed_obs_content_dep_b_t &rhs) {
-  return sbp_cmp_sbp_packed_obs_content_dep_b_t(&lhs, &rhs) >= 0;
+  return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V4_OBSERVATION_MESSAGES_H */

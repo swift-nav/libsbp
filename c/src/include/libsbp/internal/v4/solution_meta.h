@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_NEW_SOLUTION_META_H
-#define LIBSBP_INTERNAL_NEW_SOLUTION_META_H
+#ifndef LIBSBP_INTERNAL_V4_SOLUTION_META_H
+#define LIBSBP_INTERNAL_V4_SOLUTION_META_H
 
 #include <stdbool.h>
 
@@ -34,8 +34,8 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_solution_input_type_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_solution_input_type_t *msg);
+bool sbp_solution_input_type_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_solution_input_type_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -44,8 +44,8 @@ bool encode_sbp_solution_input_type_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_solution_input_type_t(sbp_decode_ctx_t *ctx,
-                                      sbp_solution_input_type_t *msg);
+bool sbp_solution_input_type_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_solution_input_type_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -54,8 +54,8 @@ bool decode_sbp_solution_input_type_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_soln_meta_dep_a_t(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_soln_meta_dep_a_t *msg);
+bool sbp_msg_soln_meta_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_soln_meta_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -64,8 +64,8 @@ bool encode_sbp_msg_soln_meta_dep_a_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_soln_meta_dep_a_t(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_soln_meta_dep_a_t *msg);
+bool sbp_msg_soln_meta_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_soln_meta_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -74,8 +74,8 @@ bool decode_sbp_msg_soln_meta_dep_a_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_soln_meta_t(sbp_encode_ctx_t *ctx,
-                                const sbp_msg_soln_meta_t *msg);
+bool sbp_msg_soln_meta_encode_internal(sbp_encode_ctx_t *ctx,
+                                       const sbp_msg_soln_meta_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -84,8 +84,8 @@ bool encode_sbp_msg_soln_meta_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_soln_meta_t(sbp_decode_ctx_t *ctx,
-                                sbp_msg_soln_meta_t *msg);
+bool sbp_msg_soln_meta_decode_internal(sbp_decode_ctx_t *ctx,
+                                       sbp_msg_soln_meta_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -94,8 +94,8 @@ bool decode_sbp_msg_soln_meta_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_gnss_input_type_t(sbp_encode_ctx_t *ctx,
-                                  const sbp_gnss_input_type_t *msg);
+bool sbp_gnss_input_type_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_gnss_input_type_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -104,8 +104,8 @@ bool encode_sbp_gnss_input_type_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_gnss_input_type_t(sbp_decode_ctx_t *ctx,
-                                  sbp_gnss_input_type_t *msg);
+bool sbp_gnss_input_type_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_gnss_input_type_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -114,8 +114,8 @@ bool decode_sbp_gnss_input_type_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_imu_input_type_t(sbp_encode_ctx_t *ctx,
-                                 const sbp_imu_input_type_t *msg);
+bool sbp_imu_input_type_encode_internal(sbp_encode_ctx_t *ctx,
+                                        const sbp_imu_input_type_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -124,8 +124,8 @@ bool encode_sbp_imu_input_type_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_imu_input_type_t(sbp_decode_ctx_t *ctx,
-                                 sbp_imu_input_type_t *msg);
+bool sbp_imu_input_type_decode_internal(sbp_decode_ctx_t *ctx,
+                                        sbp_imu_input_type_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -134,8 +134,8 @@ bool decode_sbp_imu_input_type_t(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_odo_input_type_t(sbp_encode_ctx_t *ctx,
-                                 const sbp_odo_input_type_t *msg);
+bool sbp_odo_input_type_encode_internal(sbp_encode_ctx_t *ctx,
+                                        const sbp_odo_input_type_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -144,11 +144,11 @@ bool encode_sbp_odo_input_type_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_odo_input_type_t(sbp_decode_ctx_t *ctx,
-                                 sbp_odo_input_type_t *msg);
+bool sbp_odo_input_type_decode_internal(sbp_decode_ctx_t *ctx,
+                                        sbp_odo_input_type_t *msg);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* LIBSBP_INTERNAL_V4_SOLUTION_META_H */

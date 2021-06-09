@@ -130,7 +130,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.gps_time_gnss.flags == 0,
@@ -205,7 +205,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.gps_time_gnss.flags == 0,
@@ -280,7 +280,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.gps_time_gnss.flags == 0,
@@ -355,7 +355,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.gps_time_gnss.flags == 0,
@@ -430,7 +430,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeGNSS) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_GPS_TIME_GNSS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.gps_time_gnss.flags == 0,

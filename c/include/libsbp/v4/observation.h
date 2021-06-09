@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_OBSERVATION_MESSAGES_H
-#define LIBSBP_NEW_OBSERVATION_MESSAGES_H
+#ifndef LIBSBP_V4_OBSERVATION_PACKAGE_H
+#define LIBSBP_V4_OBSERVATION_PACKAGE_H
 #include <libsbp/v4/observation/AlmanacCommonContent.h>
 #include <libsbp/v4/observation/AlmanacCommonContentDep.h>
 #include <libsbp/v4/observation/CarrierPhaseDepA.h>
@@ -72,4 +72,4 @@
 #include <libsbp/v4/observation/PackedOsrContent.h>
 #include <libsbp/v4/observation/SvAzEl.h>
 
-#endif
+#endif /* LIBSBP_V4_OBSERVATION_PACKAGE_H */

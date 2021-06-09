@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_MAG_MESSAGES_H
-#define LIBSBP_NEW_MAG_MESSAGES_H
+#ifndef LIBSBP_V4_MAG_PACKAGE_H
+#define LIBSBP_V4_MAG_PACKAGE_H
 #include <libsbp/v4/mag/MSG_MAG_RAW.h>
 
-#endif
+#endif /* LIBSBP_V4_MAG_PACKAGE_H */

@@ -137,9 +137,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == 0,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -242,9 +242,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == 0,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -347,9 +347,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == 0,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -452,9 +452,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == 0,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -557,9 +557,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == 0,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -662,9 +662,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -15325,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -767,9 +767,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -15325,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -872,9 +872,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -24263,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -977,9 +977,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -24266,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -1082,9 +1082,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -22880,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "
@@ -1187,9 +1187,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNEDDepA) {
     ck_assert_msg(last_msg.sender_id == 1219,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_BASELINE_NED_DEP_A, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned_dep_a.d == -22880,
                   "incorrect value for last_msg.msg.baseline_ned_dep_a.d, "

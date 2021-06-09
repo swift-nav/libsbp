@@ -635,7 +635,7 @@ s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type,
           {
             if (need_pack) {
               need_pack = false;
-              if (sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
+              if (sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
                 packed_successfully = true;
               }
               else { ret = SBP_ENCODE_ERROR; }
@@ -710,7 +710,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
         case SBP_DECODED_CALLBACK: {
                                  if (need_unpack) {
                                    need_unpack = false;
-                                   if (sbp_decode_msg(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
+                                   if (sbp_message_decode(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
                                      unpacked_successfully = true;
                                    }
                                    else { ret = SBP_DECODE_ERROR; }
@@ -843,7 +843,7 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
 s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg);
+  s8 ret = sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_payload_send(s, msg_type, sender_id, payload_len, payload, write);
 }

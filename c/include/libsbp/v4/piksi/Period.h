@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_PIKSI_PERIOD_MESSAGES_H
-#define LIBSBP_NEW_PIKSI_PERIOD_MESSAGES_H
+#ifndef LIBSBP_V4_PIKSI_PERIOD_MESSAGES_H
+#define LIBSBP_V4_PIKSI_PERIOD_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -38,6 +38,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_PERIOD
@@ -79,7 +80,7 @@ typedef struct {
  * @param msg sbp_period_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_period_t(const sbp_period_t *msg);
+size_t sbp_period_encoded_len(const sbp_period_t *msg);
 
 /**
  * Encode an instance of sbp_period_t to wire representation
@@ -100,8 +101,8 @@ size_t sbp_packed_size_sbp_period_t(const sbp_period_t *msg);
  * @param msg Instance of sbp_period_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_period_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                           const sbp_period_t *msg);
+s8 sbp_period_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                     const sbp_period_t *msg);
 
 /**
  * Decode an instance of sbp_period_t from wire representation
@@ -118,8 +119,8 @@ s8 sbp_encode_sbp_period_t(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_period_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                           sbp_period_t *msg);
+s8 sbp_period_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                     sbp_period_t *msg);
 
 /**
  * Compare two instances of sbp_period_t
@@ -136,38 +137,39 @@ s8 sbp_decode_sbp_period_t(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_period_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_period_t(const sbp_period_t *a, const sbp_period_t *b);
+int sbp_period_cmp(const sbp_period_t *a, const sbp_period_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_period_t &lhs,
                               const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) == 0;
+  return sbp_period_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_period_t &lhs,
                               const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) != 0;
+  return sbp_period_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_period_t &lhs, const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) < 0;
+  return sbp_period_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_period_t &lhs,
                               const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) <= 0;
+  return sbp_period_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_period_t &lhs, const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) > 0;
+  return sbp_period_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_period_t &lhs,
                               const sbp_period_t &rhs) {
-  return sbp_cmp_sbp_period_t(&lhs, &rhs) >= 0;
+  return sbp_period_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V4_PIKSI_MESSAGES_H */

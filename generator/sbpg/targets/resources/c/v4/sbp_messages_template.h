@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
-#define LIBSBP_NEW_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
+#ifndef LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
+#define LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_MESSAGES_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -45,8 +45,6 @@
 
 struct sbp_state;
 
-
-((*- set msg_type = m.name|convert_unpacked *))
 /******************************************************************************
  *
  * SBP_(((m.name|upper)))
@@ -92,25 +90,25 @@ typedef struct {
    */
   char DO_NOT_USE_dummy_field_to_prevent_empty_struct;
   ((*- endif *))
-} (((msg_type)));
+} (((m.type_name)));
 
 ((* for f in m.fields *))
   ((*- if f.packing == "packed-string" *))
-  ((*- set prefix = msg_type + "_" + f.name *))
+  ((*- set prefix = m.prefix + "_" + f.name *))
   ((*- set string_type = "sbp_" + f.encoding + "_string_t" *))
-  ((*- set comment_name = msg_type + "::" + f.name *))
+  ((*- set comment_name = m.type_name + "::" + f.name *))
   ((*- if f.packing == "packed-string" *))
   /**
    * Initialise (((comment_name))) to empty
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    */
   void (((prefix)))_init( (((-string_type))) *s);
 
   /**
    * Test (((comment_name))) for validity
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return true is (((comment_name))) is valid for encoding purposes, false otherwise
    */
   bool (((prefix)))_valid(const (((string_type))) *s);
@@ -120,8 +118,8 @@ typedef struct {
    *
    * Returns a value with the same definitions as #strcmp from the C standard library
    *
-   * @param a (((msg_type))) instance
-   * @param b (((msg_type))) instance
+   * @param a (((m.type_name))) instance
+   * @param b (((m.type_name))) instance
    * @return 0 if equal, <0 if a<b, >0 if a>b
    */
   int (((prefix)))_strcmp(const (((string_type))) *a, const (((string_type))) *b);
@@ -129,17 +127,17 @@ typedef struct {
   /**
    * Get the encoded size of (((comment_name)))
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return Size of (((comment_name))) in wire representation
    */
-  uint8_t (((prefix)))_packed_len(const (((string_type))) *s);
+  uint8_t (((prefix)))_encoded_len(const (((string_type))) *s);
 
   /**
    * Query (((comment_name))) for remaining space
    *
    * Returns the number of bytes (not including NULL terminator) which can be added to (((comment_name))) before it exceeds the maximum size of the field in wire representation
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return Maximum number of bytes that can be appended to the existing string
    */
   uint8_t (((prefix)))_space_remaining(const (((string_type))) *s);
@@ -152,7 +150,7 @@ typedef struct {
    *
    * This function will return true if the new string was successfully applied. If the specified string is longer than can be represented in wire encoding this function will return false
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param new_str New string
    * @return true on success, false otherwise
    */
@@ -165,7 +163,7 @@ typedef struct {
    *
    * This function will return true if the new string was successfully applied. If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be erased and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
@@ -176,7 +174,7 @@ typedef struct {
    *
    * Identical to #(((prefix)))_printf except it takes a va_list argument
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
@@ -188,7 +186,7 @@ typedef struct {
    *
    * The new string will be appended to the existing contents of the string (if any). If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
@@ -199,7 +197,7 @@ typedef struct {
    *
    * Identical to #(((prefix)))_append_printf except it takes a va_list argument
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
@@ -210,7 +208,7 @@ typedef struct {
   /**
    * Obtain the string value from (((comment_name)))
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return String contents
    */
   const char *(((prefix)))_get(const (((string_type))) *s);
@@ -220,7 +218,7 @@ typedef struct {
    *
    * The returned value does not include the NULL terminator.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return Length of section
    */
   uint8_t (((prefix)))_section_strlen(const (((string_type))) *s, uint8_t section);
@@ -228,7 +226,7 @@ typedef struct {
   /**
    * Return the number of sections in (((comment_name)))
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @return Number of sections in string
    */
   uint8_t (((prefix)))_count_sections(const (((string_type))) *s);
@@ -238,7 +236,7 @@ typedef struct {
    *
    * The specified string will be appended to the field as a new section. If the new section would end up overflowing the maximum encoded length of this field the string will not be changed and this function will return false
    *
-   * @param msg (((msg_type))) instance 
+   * @param msg (((m.type_name))) instance 
    * @param new_str New string
    * @return true on success, false otherwise
    */
@@ -249,7 +247,7 @@ typedef struct {
    *
    * A new section will be added to the field according to the specified printf style format string and arguments. If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
@@ -260,7 +258,7 @@ typedef struct {
    *
    * Identical to #(((prefix)))_add_section_printf except it takes a va_list argument
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
@@ -276,7 +274,7 @@ typedef struct {
    *
    * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param str New string
    * @return true on success, false otherwise
    */
@@ -291,7 +289,7 @@ typedef struct {
    *
    * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
@@ -306,7 +304,7 @@ typedef struct {
    *
    * If the operation would end overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
@@ -318,7 +316,7 @@ typedef struct {
    *
    * Returns a pointer to the given subsection in the field. Sections are 0-indexed, the \p section parameters must be less than the value returned from #(((prefix)))_count_sections.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param section Section number
    * @return Pointer to C string, NULL on error
    */
@@ -331,7 +329,7 @@ typedef struct {
    *
    * If the given section does not exist 0 is returned.
    *
-   * @param msg (((msg_type))) instance
+   * @param msg (((m.type_name))) instance
    * @param section Section number
    * @return Length of section
    */
@@ -344,15 +342,15 @@ typedef struct {
 ((*- endfor *))
 
 /**
- * Get encoded size of an instance of (((msg_type)))
+ * Get encoded size of an instance of (((m.type_name)))
  *
- * @param msg (((msg_type))) instance
+ * @param msg (((m.type_name))) instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_(((msg_type)))(const (((msg_type))) *msg);
+size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg);
 
 /**
- * Encode an instance of (((msg_type))) to wire representation
+ * Encode an instance of (((m.type_name))) to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The buffer provided to this function must be large enough to store the encoded message otherwise it will return SBP_ENCODE_ERROR without writing anything to the buffer.
  *
@@ -361,28 +359,28 @@ size_t sbp_packed_size_(((msg_type)))(const (((msg_type))) *msg);
  * @param buf Destination buffer
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes written to \p buf
- * @param msg Instance of (((msg_type))) to encode
+ * @param msg Instance of (((m.type_name))) to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_(((msg_type)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((msg_type))) *msg);
+s8 (((m.prefix)))_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.type_name))) *msg);
 
 /**
- * Decode an instance of (((msg_type))) from wire representation
+ * Decode an instance of (((m.type_name))) from wire representation
  *
- * This function decodes the wire representation of a (((msg_type))) message to the given instance. The caller must specify the length of the buffer in the \p len parameter. If non-null the number of bytes read from the buffer will be returned in \p n_read.
+ * This function decodes the wire representation of a (((m.type_name))) message to the given instance. The caller must specify the length of the buffer in the \p len parameter. If non-null the number of bytes read from the buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the (((msg_type))) instance
+ * @param buf Wire representation of the (((m.type_name))) instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_(((msg_type)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((msg_type))) *msg);
+s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.type_name))) *msg);
 ((*- if m.is_real_message *))
 /**
- * Send an instance of (((msg_type))) with the given write function
+ * Send an instance of (((m.type_name))) with the given write function
  *
- * An equivalent of #sbp_send_message which operates specifically on (((msg_type)))
+ * An equivalent of #sbp_send_message which operates specifically on (((m.type_name)))
  *
  * The given message will be encoded to wire representation and passed in to the given write function callback. The write callback will be called several times for each invocation of this function.
  *
@@ -392,11 +390,11 @@ s8 sbp_decode_(((msg_type)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_(((msg_type)))(struct sbp_state  *s, u16 sender_id, const (((msg_type))) *msg, sbp_write_fn_t write);
+s8 (((m.prefix)))_send(struct sbp_state  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
 ((*- endif *))
 
 /**
- * Compare two instances of (((msg_type)))
+ * Compare two instances of (((m.type_name)))
  *
  * The two instances will be compared and a value returned consistent with the return codes of comparison functions from the C standard library
  *
@@ -404,41 +402,40 @@ s8 sbp_send_(((msg_type)))(struct sbp_state  *s, u16 sender_id, const (((msg_typ
  * A value less than 0 will be returned if \p a is considered to be less than \p b
  * A value greater than 0 will be returned if \p b is considered to be greater than \p b
  *
- * @param a (((msg_type))) instance
- * @param b (((msg_type))) instance
+ * @param a (((m.type_name))) instance
+ * @param b (((m.type_name))) instance
  * @return 0, <0, >0
  */
-int sbp_cmp_(((msg_type)))(const (((msg_type))) *a, const (((msg_type))) *b);
+int (((m.prefix)))_cmp(const (((m.type_name))) *a, const (((m.type_name))) *b);
 
 #ifdef __cplusplus
   }
 
-((*- set msg_type = m.name|convert_unpacked *))
-static inline bool operator==(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) == 0;
+static inline bool operator==(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) != 0;
+static inline bool operator!=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) < 0;
+static inline bool operator<(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) <= 0;
+static inline bool operator<=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) > 0;
+static inline bool operator>(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const (((msg_type))) &lhs, const (((msg_type))) &rhs) {
-  return sbp_cmp_(((msg_type)))(&lhs, &rhs) >= 0;
+static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
+  return (((m.prefix)))_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_V4_(((pkg_name|upper)))_MESSAGES_H */
 

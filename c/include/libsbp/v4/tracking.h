@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_TRACKING_MESSAGES_H
-#define LIBSBP_NEW_TRACKING_MESSAGES_H
+#ifndef LIBSBP_V4_TRACKING_PACKAGE_H
+#define LIBSBP_V4_TRACKING_PACKAGE_H
 #include <libsbp/v4/tracking/MSG_MEASUREMENT_STATE.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_IQ.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_IQ_DEP_A.h>
@@ -33,4 +33,4 @@
 #include <libsbp/v4/tracking/TrackingChannelStateDepA.h>
 #include <libsbp/v4/tracking/TrackingChannelStateDepB.h>
 
-#endif
+#endif /* LIBSBP_V4_TRACKING_PACKAGE_H */

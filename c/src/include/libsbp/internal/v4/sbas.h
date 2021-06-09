@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_NEW_SBAS_H
-#define LIBSBP_INTERNAL_NEW_SBAS_H
+#ifndef LIBSBP_INTERNAL_V4_SBAS_H
+#define LIBSBP_INTERNAL_V4_SBAS_H
 
 #include <stdbool.h>
 
@@ -35,8 +35,8 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool encode_sbp_msg_sbas_raw_t(sbp_encode_ctx_t *ctx,
-                               const sbp_msg_sbas_raw_t *msg);
+bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
+                                      const sbp_msg_sbas_raw_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -45,10 +45,11 @@ bool encode_sbp_msg_sbas_raw_t(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool decode_sbp_msg_sbas_raw_t(sbp_decode_ctx_t *ctx, sbp_msg_sbas_raw_t *msg);
+bool sbp_msg_sbas_raw_decode_internal(sbp_decode_ctx_t *ctx,
+                                      sbp_msg_sbas_raw_t *msg);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* LIBSBP_INTERNAL_V4_SBAS_H */

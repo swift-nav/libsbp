@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NEW_SYSTEM_MSG_GNSS_TIME_OFFSET_MESSAGES_H
-#define LIBSBP_NEW_SYSTEM_MSG_GNSS_TIME_OFFSET_MESSAGES_H
+#ifndef LIBSBP_V4_SYSTEM_MSG_GNSS_TIME_OFFSET_MESSAGES_H
+#define LIBSBP_V4_SYSTEM_MSG_GNSS_TIME_OFFSET_MESSAGES_H
 
 #include <endian.h>
 #include <math.h>
@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 struct sbp_state;
+
 /******************************************************************************
  *
  * SBP_MSG_GNSS_TIME_OFFSET
@@ -76,7 +77,7 @@ typedef struct {
  * @param msg sbp_msg_gnss_time_offset_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_size_sbp_msg_gnss_time_offset_t(
+size_t sbp_msg_gnss_time_offset_encoded_len(
     const sbp_msg_gnss_time_offset_t *msg);
 
 /**
@@ -98,9 +99,9 @@ size_t sbp_packed_size_sbp_msg_gnss_time_offset_t(
  * @param msg Instance of sbp_msg_gnss_time_offset_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_encode_sbp_msg_gnss_time_offset_t(uint8_t *buf, uint8_t len,
-                                         uint8_t *n_written,
-                                         const sbp_msg_gnss_time_offset_t *msg);
+s8 sbp_msg_gnss_time_offset_encode(uint8_t *buf, uint8_t len,
+                                   uint8_t *n_written,
+                                   const sbp_msg_gnss_time_offset_t *msg);
 
 /**
  * Decode an instance of sbp_msg_gnss_time_offset_t from wire representation
@@ -117,9 +118,9 @@ s8 sbp_encode_sbp_msg_gnss_time_offset_t(uint8_t *buf, uint8_t len,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_decode_sbp_msg_gnss_time_offset_t(const uint8_t *buf, uint8_t len,
-                                         uint8_t *n_read,
-                                         sbp_msg_gnss_time_offset_t *msg);
+s8 sbp_msg_gnss_time_offset_decode(const uint8_t *buf, uint8_t len,
+                                   uint8_t *n_read,
+                                   sbp_msg_gnss_time_offset_t *msg);
 /**
  * Send an instance of sbp_msg_gnss_time_offset_t with the given write function
  *
@@ -136,9 +137,9 @@ s8 sbp_decode_sbp_msg_gnss_time_offset_t(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_send_sbp_msg_gnss_time_offset_t(struct sbp_state *s, u16 sender_id,
-                                       const sbp_msg_gnss_time_offset_t *msg,
-                                       sbp_write_fn_t write);
+s8 sbp_msg_gnss_time_offset_send(struct sbp_state *s, u16 sender_id,
+                                 const sbp_msg_gnss_time_offset_t *msg,
+                                 sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_gnss_time_offset_t
@@ -155,41 +156,42 @@ s8 sbp_send_sbp_msg_gnss_time_offset_t(struct sbp_state *s, u16 sender_id,
  * @param b sbp_msg_gnss_time_offset_t instance
  * @return 0, <0, >0
  */
-int sbp_cmp_sbp_msg_gnss_time_offset_t(const sbp_msg_gnss_time_offset_t *a,
-                                       const sbp_msg_gnss_time_offset_t *b);
+int sbp_msg_gnss_time_offset_cmp(const sbp_msg_gnss_time_offset_t *a,
+                                 const sbp_msg_gnss_time_offset_t *b);
 
 #ifdef __cplusplus
 }
+
 static inline bool operator==(const sbp_msg_gnss_time_offset_t &lhs,
                               const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) == 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const sbp_msg_gnss_time_offset_t &lhs,
                               const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) != 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const sbp_msg_gnss_time_offset_t &lhs,
                              const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) < 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const sbp_msg_gnss_time_offset_t &lhs,
                               const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) <= 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const sbp_msg_gnss_time_offset_t &lhs,
                              const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) > 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const sbp_msg_gnss_time_offset_t &lhs,
                               const sbp_msg_gnss_time_offset_t &rhs) {
-  return sbp_cmp_sbp_msg_gnss_time_offset_t(&lhs, &rhs) >= 0;
+  return sbp_msg_gnss_time_offset_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif
 
-#endif /* LIBSBP_NEW_SYSTEM_MESSAGES_H */
+#endif /* LIBSBP_V4_SYSTEM_MESSAGES_H */

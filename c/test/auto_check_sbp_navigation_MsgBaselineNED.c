@@ -138,7 +138,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned.d == 32153,
@@ -241,7 +241,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned.d == 32622,
@@ -344,7 +344,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned.d == 32750,
@@ -447,7 +447,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned.d == 32559,
@@ -550,7 +550,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_BASELINE_NED, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.baseline_ned.d == 32421,

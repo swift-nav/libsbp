@@ -158,7 +158,7 @@ START_TEST(test_auto_check_sbp_logging_MsgFwd) {
     ck_assert_msg(last_msg.sender_id == 66,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_FWD, &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_FWD, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[0] == 86,

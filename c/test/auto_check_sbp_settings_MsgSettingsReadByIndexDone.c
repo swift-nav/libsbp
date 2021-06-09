@@ -120,8 +120,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexDone) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_DONE,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_DONE,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
   }
 }

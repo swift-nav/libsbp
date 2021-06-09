@@ -612,9 +612,9 @@ START_TEST(test_auto_check_sbp_tracking_MsgMeasurementState) {
     ck_assert_msg(last_msg.sender_id == 31183,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_MEASUREMENT_STATE, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_MEASUREMENT_STATE, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.measurement_state.n_states == 79,
                   "incorrect value for "
