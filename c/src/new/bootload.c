@@ -57,7 +57,7 @@ s8 sbp_decode_sbp_msg_bootloader_handshake_req_t(const uint8_t *buf, uint8_t len
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_bootloader_handshake_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_bootloader_handshake_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_req_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -187,7 +187,7 @@ s8 sbp_decode_sbp_msg_bootloader_handshake_resp_t(const uint8_t *buf, uint8_t le
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_bootloader_handshake_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_bootloader_handshake_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -252,7 +252,7 @@ s8 sbp_decode_sbp_msg_bootloader_jump_to_app_t(const uint8_t *buf, uint8_t len, 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_bootloader_jump_to_app_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_jump_to_app_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_bootloader_jump_to_app_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_jump_to_app_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -315,7 +315,7 @@ s8 sbp_decode_sbp_msg_nap_device_dna_req_t(const uint8_t *buf, uint8_t len, uint
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_nap_device_dna_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_nap_device_dna_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_nap_device_dna_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_nap_device_dna_req_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -381,7 +381,7 @@ s8 sbp_decode_sbp_msg_nap_device_dna_resp_t(const uint8_t *buf, uint8_t len, uin
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_nap_device_dna_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_nap_device_dna_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_nap_device_dna_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_nap_device_dna_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -512,7 +512,7 @@ s8 sbp_decode_sbp_msg_bootloader_handshake_dep_a_t(const uint8_t *buf, uint8_t l
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_bootloader_handshake_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_bootloader_handshake_dep_a_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

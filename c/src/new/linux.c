@@ -139,7 +139,7 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_cpu_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_cpu_state_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_cpu_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_cpu_state_dep_a_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -299,7 +299,7 @@ s8 sbp_decode_sbp_msg_linux_mem_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_mem_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_mem_state_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_mem_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_mem_state_dep_a_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -391,7 +391,7 @@ s8 sbp_decode_sbp_msg_linux_sys_state_dep_a_t(const uint8_t *buf, uint8_t len, u
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_sys_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_sys_state_dep_a_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_sys_state_dep_a_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_sys_state_dep_a_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -549,7 +549,7 @@ s8 sbp_decode_sbp_msg_linux_process_socket_counts_t(const uint8_t *buf, uint8_t 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_process_socket_counts_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_socket_counts_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_process_socket_counts_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_socket_counts_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -718,7 +718,7 @@ s8 sbp_decode_sbp_msg_linux_process_socket_queues_t(const uint8_t *buf, uint8_t 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_process_socket_queues_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_socket_queues_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_process_socket_queues_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_socket_queues_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -823,7 +823,7 @@ s8 sbp_decode_sbp_msg_linux_socket_usage_t(const uint8_t *buf, uint8_t len, uint
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_socket_usage_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_socket_usage_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_socket_usage_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_socket_usage_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -975,7 +975,7 @@ s8 sbp_decode_sbp_msg_linux_process_fd_count_t(const uint8_t *buf, uint8_t len, 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_process_fd_count_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_fd_count_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_process_fd_count_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_fd_count_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1130,7 +1130,7 @@ s8 sbp_decode_sbp_msg_linux_process_fd_summary_t(const uint8_t *buf, uint8_t len
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_process_fd_summary_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_fd_summary_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_process_fd_summary_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_process_fd_summary_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1284,7 +1284,7 @@ s8 sbp_decode_sbp_msg_linux_cpu_state_t(const uint8_t *buf, uint8_t len, uint8_t
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_cpu_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_cpu_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_cpu_state_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1456,7 +1456,7 @@ s8 sbp_decode_sbp_msg_linux_mem_state_t(const uint8_t *buf, uint8_t len, uint8_t
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_mem_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_mem_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_mem_state_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1560,7 +1560,7 @@ s8 sbp_decode_sbp_msg_linux_sys_state_t(const uint8_t *buf, uint8_t len, uint8_t
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_linux_sys_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_sys_state_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_linux_sys_state_t(struct sbp_state *s, u16 sender_id, const sbp_msg_linux_sys_state_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

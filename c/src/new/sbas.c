@@ -70,7 +70,7 @@ s8 sbp_decode_sbp_msg_sbas_raw_t(const uint8_t *buf, uint8_t len, uint8_t *n_rea
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_sbas_raw_t(struct sbp_state *s, u16 sender_id, const sbp_msg_sbas_raw_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_sbas_raw_t(struct sbp_state *s, u16 sender_id, const sbp_msg_sbas_raw_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

@@ -47,7 +47,7 @@ struct MessageTraits<(((msg_type)))> {
   static (((msg_type)))& get(sbp_msg_t &msg) {
     return msg.(((member_name)));
   }
-  static s8 send(sbp_state_t *state, u16 sender_id, const (((msg_type))) &msg, s32 (*write)(u8 *, u32, void *)) {
+  static s8 send(sbp_state_t *state, u16 sender_id, const (((msg_type))) &msg, sbp_write_fn_t write) {
     return sbp_send_(((msg_type)))(state, sender_id, &msg, write);
   }
 };

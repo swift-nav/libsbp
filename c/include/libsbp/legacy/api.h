@@ -41,7 +41,7 @@ s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
 s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     u8 payload[]);
 s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    s32 (*write)(u8 *buff, u32 n, void* context));
+                    sbp_write_fn_t write);
 
 #ifdef __cplusplus
 }

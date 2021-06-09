@@ -246,7 +246,7 @@ s8 sbp_decode_(((m.name|convert_unpacked)))(const uint8_t *buf, uint8_t len, uin
 }
 
 ((*- if m.is_real_message *))
-s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state *s, u16 sender_id, const (((m.name|convert_unpacked))) *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_(((m.name|convert_unpacked)))(struct sbp_state *s, u16 sender_id, const (((m.name|convert_unpacked))) *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

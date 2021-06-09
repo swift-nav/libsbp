@@ -748,7 +748,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  *         not be sent or was only partially sent.
  */
 s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    s32 (*write)(u8 *buff, u32 n, void *context))
+                    sbp_write_fn_t write)
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */
   if (len != 0 && payload == 0) {
@@ -822,7 +822,7 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   return SBP_OK;
 }
 
-s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, s32 (*write)(u8 *buff, u32 n, void *context)) {
+s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg);

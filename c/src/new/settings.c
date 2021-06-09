@@ -57,7 +57,7 @@ s8 sbp_decode_sbp_msg_settings_save_t(const uint8_t *buf, uint8_t len, uint8_t *
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_save_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_save_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_save_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_save_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -199,7 +199,7 @@ s8 sbp_decode_sbp_msg_settings_write_t(const uint8_t *buf, uint8_t len, uint8_t 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_write_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_write_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_write_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_write_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -345,7 +345,7 @@ s8 sbp_decode_sbp_msg_settings_write_resp_t(const uint8_t *buf, uint8_t len, uin
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_write_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_write_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_write_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_write_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -491,7 +491,7 @@ s8 sbp_decode_sbp_msg_settings_read_req_t(const uint8_t *buf, uint8_t len, uint8
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_read_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_read_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_req_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -634,7 +634,7 @@ s8 sbp_decode_sbp_msg_settings_read_resp_t(const uint8_t *buf, uint8_t len, uint
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_read_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_read_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -696,7 +696,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_req_t(const uint8_t *buf, uint8_t l
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_read_by_index_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_req_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_read_by_index_req_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_req_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -842,7 +842,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_resp_t(const uint8_t *buf, uint8_t 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_read_by_index_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_read_by_index_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -908,7 +908,7 @@ s8 sbp_decode_sbp_msg_settings_read_by_index_done_t(const uint8_t *buf, uint8_t 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_read_by_index_done_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_done_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_read_by_index_done_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_read_by_index_done_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1050,7 +1050,7 @@ s8 sbp_decode_sbp_msg_settings_register_t(const uint8_t *buf, uint8_t len, uint8
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_register_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_register_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_register_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_register_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1196,7 +1196,7 @@ s8 sbp_decode_sbp_msg_settings_register_resp_t(const uint8_t *buf, uint8_t len, 
   }
   return SBP_OK;
 }
-s8 sbp_send_sbp_msg_settings_register_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_register_resp_t *msg, s32 (*write)(u8 *buff, u32 n, void *context))
+s8 sbp_send_sbp_msg_settings_register_resp_t(struct sbp_state *s, u16 sender_id, const sbp_msg_settings_register_resp_t *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
