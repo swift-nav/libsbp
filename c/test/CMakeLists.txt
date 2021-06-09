@@ -50,3 +50,5 @@ swift_set_compile_options(test-libsbp
 
 add_subdirectory(cpp)
 add_subdirectory(legacy/cpp)
+
+add_executable(build-error build-error.c)
