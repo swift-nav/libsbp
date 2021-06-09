@@ -108,7 +108,7 @@ s8 sbp_msg_nap_device_dna_req_decode(const uint8_t *buf, uint8_t len,
  * Send an instance of sbp_msg_nap_device_dna_req_t with the given write
  * function
  *
- * An equivalent of #sbp_send_message which operates specifically on
+ * An equivalent of #sbp_message_send which operates specifically on
  * sbp_msg_nap_device_dna_req_t
  *
  * The given message will be encoded to wire representation and passed in to the

@@ -242,7 +242,6 @@ const char *sbp_msg_linux_process_socket_queues_cmdline_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_linux_process_socket_queues_t instance
- * @param msg sbp_msg_linux_process_socket_queues_t instance
  * @param section Section number
  * @return Length of section
  */
@@ -307,7 +306,7 @@ s8 sbp_msg_linux_process_socket_queues_decode(
  * Send an instance of sbp_msg_linux_process_socket_queues_t with the given
  * write function
  *
- * An equivalent of #sbp_send_message which operates specifically on
+ * An equivalent of #sbp_message_send which operates specifically on
  * sbp_msg_linux_process_socket_queues_t
  *
  * The given message will be encoded to wire representation and passed in to the
