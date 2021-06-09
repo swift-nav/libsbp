@@ -16,7 +16,7 @@
 #include <libsbp/common.h>
 #include <libsbp/legacy/api.h>
 #include <libsbp/legacy/compat.h>
-#include <libsbp/new/sbp_msg.h>
+#include <libsbp/v4/sbp_msg.h>
 
 #ifdef __cplusplus
 extern "C" {

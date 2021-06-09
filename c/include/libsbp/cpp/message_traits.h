@@ -17,31 +17,31 @@
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
 
-#include <libsbp/new/acquisition.h>
-#include <libsbp/new/bootload.h>
-#include <libsbp/new/ext_events.h>
-#include <libsbp/new/file_io.h>
-#include <libsbp/new/flash.h>
-#include <libsbp/new/gnss.h>
-#include <libsbp/new/imu.h>
-#include <libsbp/new/linux.h>
-#include <libsbp/new/logging.h>
-#include <libsbp/new/mag.h>
-#include <libsbp/new/navigation.h>
-#include <libsbp/new/ndb.h>
-#include <libsbp/new/observation.h>
-#include <libsbp/new/orientation.h>
-#include <libsbp/new/piksi.h>
-#include <libsbp/new/sbas.h>
-#include <libsbp/new/sbp_msg.h>
-#include <libsbp/new/settings.h>
-#include <libsbp/new/solution_meta.h>
-#include <libsbp/new/ssr.h>
-#include <libsbp/new/system.h>
-#include <libsbp/new/tracking.h>
-#include <libsbp/new/user.h>
-#include <libsbp/new/vehicle.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/acquisition.h>
+#include <libsbp/v4/bootload.h>
+#include <libsbp/v4/ext_events.h>
+#include <libsbp/v4/file_io.h>
+#include <libsbp/v4/flash.h>
+#include <libsbp/v4/gnss.h>
+#include <libsbp/v4/imu.h>
+#include <libsbp/v4/linux.h>
+#include <libsbp/v4/logging.h>
+#include <libsbp/v4/mag.h>
+#include <libsbp/v4/navigation.h>
+#include <libsbp/v4/ndb.h>
+#include <libsbp/v4/observation.h>
+#include <libsbp/v4/orientation.h>
+#include <libsbp/v4/piksi.h>
+#include <libsbp/v4/sbas.h>
+#include <libsbp/v4/sbp_msg.h>
+#include <libsbp/v4/settings.h>
+#include <libsbp/v4/solution_meta.h>
+#include <libsbp/v4/ssr.h>
+#include <libsbp/v4/system.h>
+#include <libsbp/v4/tracking.h>
+#include <libsbp/v4/user.h>
+#include <libsbp/v4/vehicle.h>
 
 namespace sbp {
 

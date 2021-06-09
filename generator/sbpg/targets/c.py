@@ -18,9 +18,9 @@ from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
-SBP_MESSAGES_TEMPLATE_NAME = "c/new/sbp_messages_template.h"
-SBP_PACKAGE_TEMPLATE_NAME = "c/new/sbp_package_template.h"
-SBP_MSG_TEMPLATE_NAME = "c/new/sbp_msg_template.h"
+SBP_MESSAGES_TEMPLATE_NAME = "c/v4/sbp_messages_template.h"
+SBP_PACKAGE_TEMPLATE_NAME = "c/v4/sbp_package_template.h"
+SBP_MSG_TEMPLATE_NAME = "c/v4/sbp_msg_template.h"
 VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
@@ -276,7 +276,7 @@ def render_headers(include_dir, package_specs):
             msgs.append(new_msg)
             if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
-            destination_filename = "%s/new/%s/%s.h" % (include_dir, name, new_msg.name)
+            destination_filename = "%s/v4/%s/%s.h" % (include_dir, name, new_msg.name)
             py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
             with open(destination_filename, 'w') as f:
                 f.write(py_template.render(m = new_msg,
@@ -286,7 +286,7 @@ def render_headers(include_dir, package_specs):
                     include=extensions(package_spec.includes),
                     sibling_include=new_msg.sibling_include))
             #print("Adding %s" % new_msg.name)
-        destination_filename = "%s/new/%s.h" % (include_dir, name)
+        destination_filename = "%s/v4/%s.h" % (include_dir, name)
         py_template = JENV.get_template(SBP_PACKAGE_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,
@@ -302,7 +302,7 @@ def render_headers(include_dir, package_specs):
                 filepath="/".join(package_spec.filepath) + ".yaml",
                 max_msgid_len=package_spec.max_msgid_len,
                 include=extensions(package_spec.includes)))
-    destination_filename = "%s/new/sbp_msg.h" % (include_dir)
+    destination_filename = "%s/v4/sbp_msg.h" % (include_dir)
     py_template = JENV.get_template(SBP_MSG_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
         f.write(py_template.render(msgs = all_msgs,
@@ -329,7 +329,7 @@ def render_sources(output_dir, package_specs):
             if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
             #print("Adding %s" % new_msg.name)
-        destination_filename = "%s/new/%s.c" % (output_dir, name)
+        destination_filename = "%s/v4/%s.c" % (output_dir, name)
         py_template = JENV.get_template(SBP_MESSAGES_SOURCE_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,
@@ -337,7 +337,7 @@ def render_sources(output_dir, package_specs):
                 filepath="/".join(package_spec.filepath) + ".yaml",
                 max_msgid_len=package_spec.max_msgid_len,
                 include=extensions(package_spec.includes)))
-        destination_filename = "%s/include/libsbp/internal/new/%s.h" % (output_dir, name)
+        destination_filename = "%s/include/libsbp/internal/v4/%s.h" % (output_dir, name)
         py_template = JENV.get_template(SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,

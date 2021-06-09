@@ -8,13 +8,13 @@
 #include <stdbool.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/internal/new/common.h>
-#include <libsbp/new/(((pkg_name))).h>
-#include <libsbp/internal/new/(((pkg_name))).h>
-#include <libsbp/internal/new/string/multipart.h>
-#include <libsbp/internal/new/string/null_terminated.h>
-#include <libsbp/internal/new/string/double_null_terminated.h>
-#include <libsbp/internal/new/string/unterminated.h>
+#include <libsbp/internal/v4/common.h>
+#include <libsbp/v4/(((pkg_name))).h>
+#include <libsbp/internal/v4/(((pkg_name))).h>
+#include <libsbp/internal/v4/string/multipart.h>
+#include <libsbp/internal/v4/string/null_terminated.h>
+#include <libsbp/internal/v4/string/double_null_terminated.h>
+#include <libsbp/internal/v4/string/unterminated.h>
 
 ((*- for m in msgs *))
 ((*- set msg_type = m.name|convert_unpacked *))

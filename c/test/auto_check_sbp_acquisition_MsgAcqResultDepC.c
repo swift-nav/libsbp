@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <libsbp/new/acquisition.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/acquisition.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

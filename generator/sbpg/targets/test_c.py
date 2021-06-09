@@ -19,8 +19,8 @@ from sbpg.targets.legacy_c import mk_id as mk_packed_id
 from sbpg.targets.legacy_c import mk_size
 from sbpg.targets.common import *
 
-TEST_TEMPLATE_NAME = "c/test/new/sbp_c_test.c.j2"
-CPP_TEST_TEMPLATE_NAME = "c/test/new/sbp_cpp_test.cc.j2"
+TEST_TEMPLATE_NAME = "c/test/v4/sbp_c_test.c.j2"
+CPP_TEST_TEMPLATE_NAME = "c/test/v4/sbp_cpp_test.cc.j2"
 CHECK_SUITES_TEMPLATE_NAME = "c/test/sbp_c_suites.h.j2"
 CHECK_MAIN_TEMPLATE_NAME = "c/test/sbp_c_main.c.j2"
 

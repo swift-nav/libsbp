@@ -20,10 +20,10 @@
 
 #include <stdbool.h>
 
-#include <libsbp/new/(((pkg_name))).h>
-#include <libsbp/internal/new/common.h>
+#include <libsbp/v4/(((pkg_name))).h>
+#include <libsbp/internal/v4/common.h>
 ((*- for i in include *))
-#include <libsbp/internal/new/(((i)))>
+#include <libsbp/internal/v4/(((i)))>
 ((*- endfor *))
 
 #ifdef __cplusplus

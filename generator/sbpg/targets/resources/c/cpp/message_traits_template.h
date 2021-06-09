@@ -18,9 +18,9 @@
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
 
 #include <libsbp/sbp.h>
-#include <libsbp/new/sbp_msg.h>
+#include <libsbp/v4/sbp_msg.h>
 ((*- for i in includes *))
-#include <libsbp/new/(((i))).h>
+#include <libsbp/v4/(((i))).h>
 ((*- endfor *))
 
 namespace sbp {
