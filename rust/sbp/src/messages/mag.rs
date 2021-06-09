@@ -100,6 +100,20 @@ impl super::SBPMessage for MsgMagRaw {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::ConcreteMessage for MsgMagRaw {
+    const MESSAGE_TYPE: u16 = 2306;
+    const MESSAGE_NAME: &'static str = "MSG_MAG_RAW";
+}
+impl TryFrom<super::SBP> for MsgMagRaw {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgMagRaw(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgMagRaw {
     #[allow(unused_variables)]

@@ -120,6 +120,26 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
 }
 ((*- endif *))
 
+((*- if m.is_real_message *))
+impl super::ConcreteMessage for (((m.identifier|camel_case))) {
+    const MESSAGE_TYPE: u16 = (((m.sbp_id)));
+    const MESSAGE_NAME: &'static str = "(((m.identifier)))";
+}
+((*- endif *))
+
+((*- if m.is_real_message *))
+impl TryFrom<super::SBP> for (((m.identifier|camel_case))) {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::(((m.identifier|camel_case)))(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
+((*- endif *))
+
 impl crate::serialize::SbpSerialize for (((m.identifier|camel_case))) {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {

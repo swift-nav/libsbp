@@ -301,6 +301,20 @@ impl super::SBPMessage for MsgAcqResult {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgAcqResult {
+    const MESSAGE_TYPE: u16 = 47;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT";
+}
+impl TryFrom<super::SBP> for MsgAcqResult {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResult(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAcqResult {
     #[allow(unused_variables)]
@@ -380,6 +394,20 @@ impl super::SBPMessage for MsgAcqResultDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgAcqResultDepA {
+    const MESSAGE_TYPE: u16 = 21;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -462,6 +490,20 @@ impl super::SBPMessage for MsgAcqResultDepB {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgAcqResultDepB {
+    const MESSAGE_TYPE: u16 = 20;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_B";
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepB {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepB(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
     #[allow(unused_variables)]
@@ -541,6 +583,20 @@ impl super::SBPMessage for MsgAcqResultDepC {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgAcqResultDepC {
+    const MESSAGE_TYPE: u16 = 31;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_C";
+}
+impl TryFrom<super::SBP> for MsgAcqResultDepC {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqResultDepC(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
     #[allow(unused_variables)]
@@ -612,6 +668,20 @@ impl super::SBPMessage for MsgAcqSvProfile {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgAcqSvProfile {
+    const MESSAGE_TYPE: u16 = 46;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE";
+}
+impl TryFrom<super::SBP> for MsgAcqSvProfile {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqSvProfile(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
     #[allow(unused_variables)]
@@ -674,6 +744,20 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgAcqSvProfileDep {
+    const MESSAGE_TYPE: u16 = 30;
+    const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE_DEP";
+}
+impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAcqSvProfileDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
