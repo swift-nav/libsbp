@@ -1,5 +1,5 @@
-#ifndef LIBSBP_UNPACKED_STRING_MULTIPART_H
-#define LIBSBP_UNPACKED_STRING_MULTIPART_H
+#ifndef LIBSBP_V4_STRING_MULTIPART_H
+#define LIBSBP_V4_STRING_MULTIPART_H
 
 #include <stdarg.h>
 #include <stdbool.h>
@@ -20,12 +20,12 @@ extern "C"
     uint8_t n_sections;
     uint8_t offsets[SBP_MULTIPART_STRING_MAX_SECTIONS];
     uint8_t lens[SBP_MULTIPART_STRING_MAX_SECTIONS];
-    uint8_t packed_len;
+    uint8_t encoded_len;
   } sbp_multipart_string_t;
 
   typedef struct
   {
-    uint8_t max_packed_len;
+    uint8_t max_encoded_len;
   } sbp_multipart_string_params_t;
 
   void sbp_multipart_string_init(sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params);
@@ -33,7 +33,7 @@ extern "C"
   int sbp_multipart_string_strcmp(const sbp_multipart_string_t *a,
                                   const sbp_multipart_string_t *b,
                                   const sbp_multipart_string_params_t *params);
-  uint8_t sbp_multipart_string_packed_len(const sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params);
+  uint8_t sbp_multipart_string_encoded_len(const sbp_multipart_string_t *s, const sbp_multipart_string_params_t *params);
   uint8_t sbp_multipart_string_space_remaining(const sbp_multipart_string_t *s,
                                                const sbp_multipart_string_params_t *params);
   uint8_t sbp_multipart_string_count_sections(const sbp_multipart_string_t *s,

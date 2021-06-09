@@ -116,7 +116,7 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
              sizeof(assign_string));
     }
 
-    test_msg.dgnss_status.source.packed_len = 7;
+    test_msg.dgnss_status.source.encoded_len = 7;
 
     sbp_message_send(&sbp_state, SBP_MSG_DGNSS_STATUS, 66, &test_msg,
                      &dummy_write);
@@ -167,10 +167,10 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
     }
 
     ck_assert_msg(
-        last_msg.msg.dgnss_status.source.packed_len == 7,
-        "incorrect value for last_msg.msg.dgnss_status.source.packed_len, "
+        last_msg.msg.dgnss_status.source.encoded_len == 7,
+        "incorrect value for last_msg.msg.dgnss_status.source.encoded_len, "
         "expected 7, is %d",
-        last_msg.msg.dgnss_status.source.packed_len);
+        last_msg.msg.dgnss_status.source.encoded_len);
   }
 }
 END_TEST

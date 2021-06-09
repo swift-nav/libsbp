@@ -111,7 +111,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
              sizeof(assign_string));
     }
 
-    test_msg.bootloader_handshake_resp.version.packed_len = 5;
+    test_msg.bootloader_handshake_resp.version.encoded_len = 5;
 
     sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0,
                      &test_msg, &dummy_write);
@@ -154,11 +154,11 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     }
 
     ck_assert_msg(
-        last_msg.msg.bootloader_handshake_resp.version.packed_len == 5,
+        last_msg.msg.bootloader_handshake_resp.version.encoded_len == 5,
         "incorrect value for "
-        "last_msg.msg.bootloader_handshake_resp.version.packed_len, expected "
+        "last_msg.msg.bootloader_handshake_resp.version.encoded_len, expected "
         "5, is %d",
-        last_msg.msg.bootloader_handshake_resp.version.packed_len);
+        last_msg.msg.bootloader_handshake_resp.version.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -192,7 +192,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     test_msg.bootloader_handshake_dep_a.handshake.data[3] = 50;
 
-    test_msg.bootloader_handshake_dep_a.handshake.packed_len = 4;
+    test_msg.bootloader_handshake_dep_a.handshake.encoded_len = 4;
 
     sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219,
                      &test_msg, &dummy_write);
@@ -242,11 +242,11 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
         last_msg.msg.bootloader_handshake_dep_a.handshake.data[3]);
 
     ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.packed_len == 4,
+        last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len == 4,
         "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.packed_len, "
+        "last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len, "
         "expected 4, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.packed_len);
+        last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len);
   }
 }
 END_TEST

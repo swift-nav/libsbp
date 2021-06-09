@@ -119,7 +119,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 43;
+    test_msg.print_dep.text.encoded_len = 43;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -160,10 +160,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 43,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 43, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 43,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 43, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -205,7 +205,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 42;
+    test_msg.print_dep.text.encoded_len = 42;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -245,10 +245,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 42,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 42, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 42,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 42, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -288,7 +288,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 35;
+    test_msg.print_dep.text.encoded_len = 35;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -327,10 +327,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 35,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 35, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 35,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 35, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -372,7 +372,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 41;
+    test_msg.print_dep.text.encoded_len = 41;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -412,10 +412,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 41,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 41, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 41,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 41, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -457,7 +457,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 42;
+    test_msg.print_dep.text.encoded_len = 42;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -497,10 +497,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 42,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 42, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 42,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 42, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
   // Test successful parsing of a message
   {
@@ -540,7 +540,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
              sizeof(assign_string));
     }
 
-    test_msg.print_dep.text.packed_len = 35;
+    test_msg.print_dep.text.encoded_len = 35;
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -579,10 +579,10 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
                     check_string, last_msg.msg.print_dep.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.print_dep.text.packed_len == 35,
-                  "incorrect value for last_msg.msg.print_dep.text.packed_len, "
-                  "expected 35, is %d",
-                  last_msg.msg.print_dep.text.packed_len);
+    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 35,
+                  "incorrect value for "
+                  "last_msg.msg.print_dep.text.encoded_len, expected 35, is %d",
+                  last_msg.msg.print_dep.text.encoded_len);
   }
 }
 END_TEST

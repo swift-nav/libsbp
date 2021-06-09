@@ -16,7 +16,7 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/logging.h>
 static const sbp_unterminated_string_params_t sbp_msg_log_ttext_params = {
-    .max_packed_len = 254};
+    .max_encoded_len = 254};
 
 void sbp_msg_log_text_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s, &sbp_msg_log_ttext_params);
@@ -31,8 +31,8 @@ int sbp_msg_log_text_strcmp(const sbp_unterminated_string_t *a,
   return sbp_unterminated_string_strcmp(a, b, &sbp_msg_log_ttext_params);
 }
 
-uint8_t sbp_msg_log_text_packed_len(const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_packed_len(s, &sbp_msg_log_ttext_params);
+uint8_t sbp_msg_log_text_encoded_len(const sbp_unterminated_string_t *s) {
+  return sbp_unterminated_string_encoded_len(s, &sbp_msg_log_ttext_params);
 }
 
 uint8_t sbp_msg_log_text_space_remaining(const sbp_unterminated_string_t *s) {
@@ -80,8 +80,8 @@ const char *sbp_msg_log_text_get(const sbp_unterminated_string_t *s) {
 size_t sbp_msg_log_encoded_len(const sbp_msg_log_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u8_encoded_len(&msg->level);
-  encoded_len +=
-      sbp_unterminated_string_packed_len(&msg->text, &sbp_msg_log_ttext_params);
+  encoded_len += sbp_unterminated_string_encoded_len(&msg->text,
+                                                     &sbp_msg_log_ttext_params);
   return encoded_len;
 }
 
@@ -272,7 +272,7 @@ int sbp_msg_fwd_cmp(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
   return ret;
 }
 static const sbp_unterminated_string_params_t sbp_msg_print_dep_ttext_params = {
-    .max_packed_len = 255};
+    .max_encoded_len = 255};
 
 void sbp_msg_print_dep_text_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s, &sbp_msg_print_dep_ttext_params);
@@ -287,8 +287,9 @@ int sbp_msg_print_dep_text_strcmp(const sbp_unterminated_string_t *a,
   return sbp_unterminated_string_strcmp(a, b, &sbp_msg_print_dep_ttext_params);
 }
 
-uint8_t sbp_msg_print_dep_text_packed_len(const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_packed_len(s, &sbp_msg_print_dep_ttext_params);
+uint8_t sbp_msg_print_dep_text_encoded_len(const sbp_unterminated_string_t *s) {
+  return sbp_unterminated_string_encoded_len(s,
+                                             &sbp_msg_print_dep_ttext_params);
 }
 
 uint8_t sbp_msg_print_dep_text_space_remaining(
@@ -340,7 +341,7 @@ const char *sbp_msg_print_dep_text_get(const sbp_unterminated_string_t *s) {
 
 size_t sbp_msg_print_dep_encoded_len(const sbp_msg_print_dep_t *msg) {
   size_t encoded_len = 0;
-  encoded_len += sbp_unterminated_string_packed_len(
+  encoded_len += sbp_unterminated_string_encoded_len(
       &msg->text, &sbp_msg_print_dep_ttext_params);
   return encoded_len;
 }

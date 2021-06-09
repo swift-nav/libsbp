@@ -1636,7 +1636,7 @@ int sbp_msg_device_monitor_cmp(const sbp_msg_device_monitor_t *a,
   return ret;
 }
 static const sbp_null_terminated_string_params_t
-    sbp_msg_command_req_tcommand_params = {.max_packed_len = 251};
+    sbp_msg_command_req_tcommand_params = {.max_encoded_len = 251};
 
 void sbp_msg_command_req_command_init(sbp_null_terminated_string_t *s) {
   sbp_null_terminated_string_init(s, &sbp_msg_command_req_tcommand_params);
@@ -1653,9 +1653,9 @@ int sbp_msg_command_req_command_strcmp(const sbp_null_terminated_string_t *a,
       a, b, &sbp_msg_command_req_tcommand_params);
 }
 
-uint8_t sbp_msg_command_req_command_packed_len(
+uint8_t sbp_msg_command_req_command_encoded_len(
     const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_packed_len(
+  return sbp_null_terminated_string_encoded_len(
       s, &sbp_msg_command_req_tcommand_params);
 }
 
@@ -1711,7 +1711,7 @@ const char *sbp_msg_command_req_command_get(
 size_t sbp_msg_command_req_encoded_len(const sbp_msg_command_req_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_null_terminated_string_packed_len(
+  encoded_len += sbp_null_terminated_string_encoded_len(
       &msg->command, &sbp_msg_command_req_tcommand_params);
   return encoded_len;
 }
@@ -1889,7 +1889,7 @@ int sbp_msg_command_resp_cmp(const sbp_msg_command_resp_t *a,
   return ret;
 }
 static const sbp_unterminated_string_params_t
-    sbp_msg_command_output_tline_params = {.max_packed_len = 251};
+    sbp_msg_command_output_tline_params = {.max_encoded_len = 251};
 
 void sbp_msg_command_output_line_init(sbp_unterminated_string_t *s) {
   sbp_unterminated_string_init(s, &sbp_msg_command_output_tline_params);
@@ -1905,9 +1905,9 @@ int sbp_msg_command_output_line_strcmp(const sbp_unterminated_string_t *a,
                                         &sbp_msg_command_output_tline_params);
 }
 
-uint8_t sbp_msg_command_output_line_packed_len(
+uint8_t sbp_msg_command_output_line_encoded_len(
     const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_packed_len(
+  return sbp_unterminated_string_encoded_len(
       s, &sbp_msg_command_output_tline_params);
 }
 
@@ -1962,7 +1962,7 @@ const char *sbp_msg_command_output_line_get(
 size_t sbp_msg_command_output_encoded_len(const sbp_msg_command_output_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_unterminated_string_packed_len(
+  encoded_len += sbp_unterminated_string_encoded_len(
       &msg->line, &sbp_msg_command_output_tline_params);
   return encoded_len;
 }

@@ -91,7 +91,8 @@ int sbp_msg_bootloader_handshake_req_cmp(
   return ret;
 }
 static const sbp_unterminated_string_params_t
-    sbp_msg_bootloader_handshake_resp_tversion_params = {.max_packed_len = 251};
+    sbp_msg_bootloader_handshake_resp_tversion_params = {.max_encoded_len =
+                                                             251};
 
 void sbp_msg_bootloader_handshake_resp_version_init(
     sbp_unterminated_string_t *s) {
@@ -111,9 +112,9 @@ int sbp_msg_bootloader_handshake_resp_version_strcmp(
       a, b, &sbp_msg_bootloader_handshake_resp_tversion_params);
 }
 
-uint8_t sbp_msg_bootloader_handshake_resp_version_packed_len(
+uint8_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
     const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_packed_len(
+  return sbp_unterminated_string_encoded_len(
       s, &sbp_msg_bootloader_handshake_resp_tversion_params);
 }
 
@@ -170,7 +171,7 @@ size_t sbp_msg_bootloader_handshake_resp_encoded_len(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->flags);
-  encoded_len += sbp_unterminated_string_packed_len(
+  encoded_len += sbp_unterminated_string_encoded_len(
       &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
   return encoded_len;
 }
@@ -506,7 +507,7 @@ int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
   return ret;
 }
 static const sbp_unterminated_string_params_t
-    sbp_msg_bootloader_handshake_dep_a_thandshake_params = {.max_packed_len =
+    sbp_msg_bootloader_handshake_dep_a_thandshake_params = {.max_encoded_len =
                                                                 255};
 
 void sbp_msg_bootloader_handshake_dep_a_handshake_init(
@@ -527,9 +528,9 @@ int sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(
       a, b, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
 }
 
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_packed_len(
+uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
     const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_packed_len(
+  return sbp_unterminated_string_encoded_len(
       s, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
 }
 
@@ -585,7 +586,7 @@ const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
 size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   size_t encoded_len = 0;
-  encoded_len += sbp_unterminated_string_packed_len(
+  encoded_len += sbp_unterminated_string_encoded_len(
       &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
   return encoded_len;
 }

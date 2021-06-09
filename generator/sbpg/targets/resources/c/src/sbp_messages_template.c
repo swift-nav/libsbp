@@ -26,7 +26,7 @@
 ((*- set field_prefix = m.prefix + "_" + f.name *))
 static const (((string_prefix)))_params_t (((params))) = 
 {
-  .max_packed_len = (((f.max_items)))
+  .max_encoded_len = (((f.max_items)))
 };
 
 void (((field_prefix)))_init( (((-string_type))) *s)
@@ -44,9 +44,9 @@ int (((field_prefix)))_strcmp(const (((string_type))) *a, const (((string_type))
   return (((string_prefix)))_strcmp(a, b, &(((params))));
 }
 
-uint8_t (((field_prefix)))_packed_len(const (((string_type))) *s)
+uint8_t (((field_prefix)))_encoded_len(const (((string_type))) *s)
 {
-  return (((string_prefix)))_packed_len(s, &(((params))));
+  return (((string_prefix)))_encoded_len(s, &(((params))));
 }
 
 uint8_t (((field_prefix)))_space_remaining(const (((string_type))) *s)
@@ -162,7 +162,7 @@ size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg) {
   ((*- for f in m.fields *))
   ((*- set field = "msg->" + f.name *))
   ((*- if f.packing == "packed-string" *))
-  encoded_len += sbp_(((f.encoding)))_string_packed_len(&(((field))), &(((m.type_name)))(((f.name)))_params);
+  encoded_len += sbp_(((f.encoding)))_string_encoded_len(&(((field))), &(((m.type_name)))(((f.name)))_params);
   ((*- elif f.packing == "single" *))
   encoded_len += (((f.basetype_encoded_len)))(&(((field))));
   ((*- elif f.packing == "fixed-array" *))

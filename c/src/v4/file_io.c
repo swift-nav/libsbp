@@ -16,7 +16,7 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/file_io.h>
 static const sbp_null_terminated_string_params_t
-    sbp_msg_fileio_read_req_tfilename_params = {.max_packed_len = 246};
+    sbp_msg_fileio_read_req_tfilename_params = {.max_encoded_len = 246};
 
 void sbp_msg_fileio_read_req_filename_init(sbp_null_terminated_string_t *s) {
   sbp_null_terminated_string_init(s, &sbp_msg_fileio_read_req_tfilename_params);
@@ -35,9 +35,9 @@ int sbp_msg_fileio_read_req_filename_strcmp(
       a, b, &sbp_msg_fileio_read_req_tfilename_params);
 }
 
-uint8_t sbp_msg_fileio_read_req_filename_packed_len(
+uint8_t sbp_msg_fileio_read_req_filename_encoded_len(
     const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_packed_len(
+  return sbp_null_terminated_string_encoded_len(
       s, &sbp_msg_fileio_read_req_tfilename_params);
 }
 
@@ -96,7 +96,7 @@ size_t sbp_msg_fileio_read_req_encoded_len(
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
   encoded_len += sbp_u32_encoded_len(&msg->offset);
   encoded_len += sbp_u8_encoded_len(&msg->chunk_size);
-  encoded_len += sbp_null_terminated_string_packed_len(
+  encoded_len += sbp_null_terminated_string_encoded_len(
       &msg->filename, &sbp_msg_fileio_read_req_tfilename_params);
   return encoded_len;
 }
@@ -309,7 +309,7 @@ int sbp_msg_fileio_read_resp_cmp(const sbp_msg_fileio_read_resp_t *a,
   return ret;
 }
 static const sbp_null_terminated_string_params_t
-    sbp_msg_fileio_read_dir_req_tdirname_params = {.max_packed_len = 247};
+    sbp_msg_fileio_read_dir_req_tdirname_params = {.max_encoded_len = 247};
 
 void sbp_msg_fileio_read_dir_req_dirname_init(sbp_null_terminated_string_t *s) {
   sbp_null_terminated_string_init(s,
@@ -329,9 +329,9 @@ int sbp_msg_fileio_read_dir_req_dirname_strcmp(
       a, b, &sbp_msg_fileio_read_dir_req_tdirname_params);
 }
 
-uint8_t sbp_msg_fileio_read_dir_req_dirname_packed_len(
+uint8_t sbp_msg_fileio_read_dir_req_dirname_encoded_len(
     const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_packed_len(
+  return sbp_null_terminated_string_encoded_len(
       s, &sbp_msg_fileio_read_dir_req_tdirname_params);
 }
 
@@ -389,7 +389,7 @@ size_t sbp_msg_fileio_read_dir_req_encoded_len(
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
   encoded_len += sbp_u32_encoded_len(&msg->offset);
-  encoded_len += sbp_null_terminated_string_packed_len(
+  encoded_len += sbp_null_terminated_string_encoded_len(
       &msg->dirname, &sbp_msg_fileio_read_dir_req_tdirname_params);
   return encoded_len;
 }
@@ -491,7 +491,7 @@ int sbp_msg_fileio_read_dir_req_cmp(const sbp_msg_fileio_read_dir_req_t *a,
   return ret;
 }
 static const sbp_multipart_string_params_t
-    sbp_msg_fileio_read_dir_resp_tcontents_params = {.max_packed_len = 251};
+    sbp_msg_fileio_read_dir_resp_tcontents_params = {.max_encoded_len = 251};
 
 void sbp_msg_fileio_read_dir_resp_contents_init(sbp_multipart_string_t *s) {
   sbp_multipart_string_init(s, &sbp_msg_fileio_read_dir_resp_tcontents_params);
@@ -509,9 +509,9 @@ int sbp_msg_fileio_read_dir_resp_contents_strcmp(
       a, b, &sbp_msg_fileio_read_dir_resp_tcontents_params);
 }
 
-uint8_t sbp_msg_fileio_read_dir_resp_contents_packed_len(
+uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
     const sbp_multipart_string_t *s) {
-  return sbp_multipart_string_packed_len(
+  return sbp_multipart_string_encoded_len(
       s, &sbp_msg_fileio_read_dir_resp_tcontents_params);
 }
 
@@ -586,7 +586,7 @@ size_t sbp_msg_fileio_read_dir_resp_encoded_len(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_multipart_string_packed_len(
+  encoded_len += sbp_multipart_string_encoded_len(
       &msg->contents, &sbp_msg_fileio_read_dir_resp_tcontents_params);
   return encoded_len;
 }
@@ -680,7 +680,7 @@ int sbp_msg_fileio_read_dir_resp_cmp(const sbp_msg_fileio_read_dir_resp_t *a,
   return ret;
 }
 static const sbp_null_terminated_string_params_t
-    sbp_msg_fileio_remove_tfilename_params = {.max_packed_len = 255};
+    sbp_msg_fileio_remove_tfilename_params = {.max_encoded_len = 255};
 
 void sbp_msg_fileio_remove_filename_init(sbp_null_terminated_string_t *s) {
   sbp_null_terminated_string_init(s, &sbp_msg_fileio_remove_tfilename_params);
@@ -699,9 +699,9 @@ int sbp_msg_fileio_remove_filename_strcmp(
       a, b, &sbp_msg_fileio_remove_tfilename_params);
 }
 
-uint8_t sbp_msg_fileio_remove_filename_packed_len(
+uint8_t sbp_msg_fileio_remove_filename_encoded_len(
     const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_packed_len(
+  return sbp_null_terminated_string_encoded_len(
       s, &sbp_msg_fileio_remove_tfilename_params);
 }
 
@@ -756,7 +756,7 @@ const char *sbp_msg_fileio_remove_filename_get(
 
 size_t sbp_msg_fileio_remove_encoded_len(const sbp_msg_fileio_remove_t *msg) {
   size_t encoded_len = 0;
-  encoded_len += sbp_null_terminated_string_packed_len(
+  encoded_len += sbp_null_terminated_string_encoded_len(
       &msg->filename, &sbp_msg_fileio_remove_tfilename_params);
   return encoded_len;
 }
@@ -834,7 +834,7 @@ int sbp_msg_fileio_remove_cmp(const sbp_msg_fileio_remove_t *a,
   return ret;
 }
 static const sbp_null_terminated_string_params_t
-    sbp_msg_fileio_write_req_tfilename_params = {.max_packed_len = 247};
+    sbp_msg_fileio_write_req_tfilename_params = {.max_encoded_len = 247};
 
 void sbp_msg_fileio_write_req_filename_init(sbp_null_terminated_string_t *s) {
   sbp_null_terminated_string_init(s,
@@ -854,9 +854,9 @@ int sbp_msg_fileio_write_req_filename_strcmp(
       a, b, &sbp_msg_fileio_write_req_tfilename_params);
 }
 
-uint8_t sbp_msg_fileio_write_req_filename_packed_len(
+uint8_t sbp_msg_fileio_write_req_filename_encoded_len(
     const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_packed_len(
+  return sbp_null_terminated_string_encoded_len(
       s, &sbp_msg_fileio_write_req_tfilename_params);
 }
 
@@ -914,7 +914,7 @@ size_t sbp_msg_fileio_write_req_encoded_len(
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
   encoded_len += sbp_u32_encoded_len(&msg->offset);
-  encoded_len += sbp_null_terminated_string_packed_len(
+  encoded_len += sbp_null_terminated_string_encoded_len(
       &msg->filename, &sbp_msg_fileio_write_req_tfilename_params);
   encoded_len += (msg->n_data * sbp_u8_encoded_len(&msg->data[0]));
   return encoded_len;
