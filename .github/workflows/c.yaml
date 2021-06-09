@@ -36,3 +36,25 @@ jobs:
       - name: Upload coverage to codecov.io
         run: |
           bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
+
+  big-endian:
+    name: Test Big Endian
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user g++-mips-linux-gnu
+
+      - name: Run big endian tests
+        run: make test-c-v4
+        env:
+          CC: mips-linux-gnu-gcc
+          CXX: mips-linux-gnu-g++
+
+          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON

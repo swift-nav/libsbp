@@ -438,6 +438,16 @@ static u16 sbp_u8_array_to_u16(u8 *array_start)
   return (u16) array_start[0] + ((u16) array_start[1] << 8);
 }
 
+/** Helper to convert a u16 in the platform's representation
+ *  to the a 2 byte array in little endian byte order without
+ *  needing to use the word endian
+ */
+static void sbp_u16_to_u8_array(const u16 v, u8 *array_start)
+{
+  array_start[0] = (u8)((v & 0x00ff) >> 0);
+  array_start[1] = (u8)((v & 0xff00) >> 8);
+}
+
 /** Read and process SBP messages.
  * Reads bytes from an input source using the provided `read` function, decodes
  * the SBP framing and performs a CRC check on the message.
@@ -488,6 +498,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   u16 crc;
   s32 rd = 0;
   s8 ret = SBP_OK;
+  u8 buf[2] = {0};
 
   switch (s->state) {
   case WAITING:
@@ -562,8 +573,11 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     if (s->n_read >= SBP_CRC_LEN) {
       s->state = WAITING;
       s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
-      crc = crc16_ccitt((u8*)&(s->msg_type), sizeof(s->msg_type), 0);
-      crc = crc16_ccitt((u8*)&(s->sender_id), sizeof(s->sender_id), crc);
+
+      sbp_u16_to_u8_array(s->msg_type, (u8*)&buf);
+      crc = crc16_ccitt((u8*)&(buf), 2, 0);
+      sbp_u16_to_u8_array(s->sender_id, (u8*)&buf);
+      crc = crc16_ccitt((u8*)&(buf), 2, crc);
       crc = crc16_ccitt(&(s->msg_len), sizeof(s->msg_len), crc);
       crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
       if (s->crc == crc) {
@@ -760,6 +774,7 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
     return SBP_NULL_ERROR;
   }
 
+  u8 buf[2];
   u16 crc;
   s32 wr = 0;
 
@@ -772,7 +787,9 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
     return SBP_SEND_ERROR;
   }
 
-  wr = (*write)((u8*)&msg_type, 2, s->io_context);
+  sbp_u16_to_u8_array(msg_type, (u8*)&buf);
+  crc = crc16_ccitt((u8*)&(buf), 2, 0);
+  wr = (*write)((u8*)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
@@ -780,7 +797,9 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
     return SBP_SEND_ERROR;
   }
 
-  wr = (*write)((u8*)&sender_id, 2, s->io_context);
+  sbp_u16_to_u8_array(sender_id, (u8*)&buf);
+  crc = crc16_ccitt((u8*)&(buf), 2, crc);
+  wr = (*write)((u8*)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
@@ -806,12 +825,11 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
     }
   }
 
-  crc = crc16_ccitt((u8*)&(msg_type), 2, 0);
-  crc = crc16_ccitt((u8*)&(sender_id), 2, crc);
   crc = crc16_ccitt(&(len), 1, crc);
   crc = crc16_ccitt(payload, len, crc);
 
-  wr = (*write)((u8*)&crc, 2, s->io_context);
+  sbp_u16_to_u8_array(crc, (u8*)&buf);
+  wr = (*write)((u8*)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
