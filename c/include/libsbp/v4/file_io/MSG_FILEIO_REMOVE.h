@@ -62,7 +62,7 @@ typedef struct {
  *
  * @param msg sbp_msg_fileio_remove_t instance
  */
-void sbp_msg_fileio_remove_filename_init(sbp_null_terminated_string_t *s);
+void sbp_msg_fileio_remove_filename_init(sbp_msg_fileio_remove_t *msg);
 
 /**
  * Test sbp_msg_fileio_remove_t::filename for validity
@@ -71,8 +71,7 @@ void sbp_msg_fileio_remove_filename_init(sbp_null_terminated_string_t *s);
  * @return true is sbp_msg_fileio_remove_t::filename is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_fileio_remove_filename_valid(
-    const sbp_null_terminated_string_t *s);
+bool sbp_msg_fileio_remove_filename_valid(const sbp_msg_fileio_remove_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_fileio_remove_t::filename for equality
@@ -84,9 +83,8 @@ bool sbp_msg_fileio_remove_filename_valid(
  * @param b sbp_msg_fileio_remove_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_fileio_remove_filename_strcmp(
-    const sbp_null_terminated_string_t *a,
-    const sbp_null_terminated_string_t *b);
+int sbp_msg_fileio_remove_filename_strcmp(const sbp_msg_fileio_remove_t *a,
+                                          const sbp_msg_fileio_remove_t *b);
 
 /**
  * Get the encoded size of sbp_msg_fileio_remove_t::filename
@@ -95,7 +93,7 @@ int sbp_msg_fileio_remove_filename_strcmp(
  * @return Size of sbp_msg_fileio_remove_t::filename in wire representation
  */
 uint8_t sbp_msg_fileio_remove_filename_encoded_len(
-    const sbp_null_terminated_string_t *s);
+    const sbp_msg_fileio_remove_t *msg);
 
 /**
  * Query sbp_msg_fileio_remove_t::filename for remaining space
@@ -108,7 +106,7 @@ uint8_t sbp_msg_fileio_remove_filename_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_fileio_remove_filename_space_remaining(
-    const sbp_null_terminated_string_t *s);
+    const sbp_msg_fileio_remove_t *msg);
 /**
  * Set sbp_msg_fileio_remove_t::filename
  *
@@ -122,7 +120,7 @@ uint8_t sbp_msg_fileio_remove_filename_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_filename_set(sbp_null_terminated_string_t *s,
+bool sbp_msg_fileio_remove_filename_set(sbp_msg_fileio_remove_t *msg,
                                         const char *new_str);
 
 /**
@@ -139,7 +137,7 @@ bool sbp_msg_fileio_remove_filename_set(sbp_null_terminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_filename_printf(sbp_null_terminated_string_t *s,
+bool sbp_msg_fileio_remove_filename_printf(sbp_msg_fileio_remove_t *msg,
                                            const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
@@ -154,7 +152,7 @@ bool sbp_msg_fileio_remove_filename_printf(sbp_null_terminated_string_t *s,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_filename_vprintf(sbp_null_terminated_string_t *s,
+bool sbp_msg_fileio_remove_filename_vprintf(sbp_msg_fileio_remove_t *msg,
                                             const char *fmt, va_list ap);
 
 /**
@@ -169,8 +167,8 @@ bool sbp_msg_fileio_remove_filename_vprintf(sbp_null_terminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_filename_append_printf(
-    sbp_null_terminated_string_t *s, const char *fmt, ...)
+bool sbp_msg_fileio_remove_filename_append_printf(sbp_msg_fileio_remove_t *msg,
+                                                  const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
@@ -185,8 +183,8 @@ bool sbp_msg_fileio_remove_filename_append_printf(
  * @return true on success, false otherwise
  *
  */
-bool sbp_msg_fileio_remove_filename_append_vprintf(
-    sbp_null_terminated_string_t *s, const char *fmt, va_list ap);
+bool sbp_msg_fileio_remove_filename_append_vprintf(sbp_msg_fileio_remove_t *msg,
+                                                   const char *fmt, va_list ap);
 
 /**
  * Obtain the string value from sbp_msg_fileio_remove_t::filename
@@ -195,7 +193,7 @@ bool sbp_msg_fileio_remove_filename_append_vprintf(
  * @return String contents
  */
 const char *sbp_msg_fileio_remove_filename_get(
-    const sbp_null_terminated_string_t *s);
+    const sbp_msg_fileio_remove_t *msg);
 
 /**
  * Obtain the length of sbp_msg_fileio_remove_t::filename
@@ -206,7 +204,7 @@ const char *sbp_msg_fileio_remove_filename_get(
  * @return Length of section
  */
 uint8_t sbp_msg_fileio_remove_filename_section_strlen(
-    const sbp_null_terminated_string_t *s, uint8_t section);
+    const sbp_msg_fileio_remove_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_remove_t

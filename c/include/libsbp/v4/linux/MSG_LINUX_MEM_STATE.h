@@ -90,7 +90,7 @@ typedef struct {
  *
  * @param msg sbp_msg_linux_mem_state_t instance
  */
-void sbp_msg_linux_mem_state_cmdline_init(sbp_unterminated_string_t *s);
+void sbp_msg_linux_mem_state_cmdline_init(sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Test sbp_msg_linux_mem_state_t::cmdline for validity
@@ -99,7 +99,8 @@ void sbp_msg_linux_mem_state_cmdline_init(sbp_unterminated_string_t *s);
  * @return true is sbp_msg_linux_mem_state_t::cmdline is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_valid(const sbp_unterminated_string_t *s);
+bool sbp_msg_linux_mem_state_cmdline_valid(
+    const sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_linux_mem_state_t::cmdline for equality
@@ -111,8 +112,8 @@ bool sbp_msg_linux_mem_state_cmdline_valid(const sbp_unterminated_string_t *s);
  * @param b sbp_msg_linux_mem_state_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_linux_mem_state_cmdline_strcmp(const sbp_unterminated_string_t *a,
-                                           const sbp_unterminated_string_t *b);
+int sbp_msg_linux_mem_state_cmdline_strcmp(const sbp_msg_linux_mem_state_t *a,
+                                           const sbp_msg_linux_mem_state_t *b);
 
 /**
  * Get the encoded size of sbp_msg_linux_mem_state_t::cmdline
@@ -121,7 +122,7 @@ int sbp_msg_linux_mem_state_cmdline_strcmp(const sbp_unterminated_string_t *a,
  * @return Size of sbp_msg_linux_mem_state_t::cmdline in wire representation
  */
 uint8_t sbp_msg_linux_mem_state_cmdline_encoded_len(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Query sbp_msg_linux_mem_state_t::cmdline for remaining space
@@ -134,7 +135,7 @@ uint8_t sbp_msg_linux_mem_state_cmdline_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_linux_mem_state_cmdline_space_remaining(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_linux_mem_state_t *msg);
 /**
  * Set sbp_msg_linux_mem_state_t::cmdline
  *
@@ -148,7 +149,7 @@ uint8_t sbp_msg_linux_mem_state_cmdline_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_set(sbp_unterminated_string_t *s,
+bool sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
                                          const char *new_str);
 
 /**
@@ -165,7 +166,7 @@ bool sbp_msg_linux_mem_state_cmdline_set(sbp_unterminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_printf(sbp_unterminated_string_t *s,
+bool sbp_msg_linux_mem_state_cmdline_printf(sbp_msg_linux_mem_state_t *msg,
                                             const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
@@ -180,7 +181,7 @@ bool sbp_msg_linux_mem_state_cmdline_printf(sbp_unterminated_string_t *s,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_vprintf(sbp_unterminated_string_t *s,
+bool sbp_msg_linux_mem_state_cmdline_vprintf(sbp_msg_linux_mem_state_t *msg,
                                              const char *fmt, va_list ap);
 
 /**
@@ -195,9 +196,8 @@ bool sbp_msg_linux_mem_state_cmdline_vprintf(sbp_unterminated_string_t *s,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_append_printf(sbp_unterminated_string_t *s,
-                                                   const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+bool sbp_msg_linux_mem_state_cmdline_append_printf(
+    sbp_msg_linux_mem_state_t *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append sbp_msg_linux_mem_state_t::cmdline with printf style formatting
@@ -212,7 +212,7 @@ bool sbp_msg_linux_mem_state_cmdline_append_printf(sbp_unterminated_string_t *s,
  *
  */
 bool sbp_msg_linux_mem_state_cmdline_append_vprintf(
-    sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_linux_mem_state_t *msg, const char *fmt, va_list ap);
 
 /**
  * Obtain the string value from sbp_msg_linux_mem_state_t::cmdline
@@ -221,7 +221,7 @@ bool sbp_msg_linux_mem_state_cmdline_append_vprintf(
  * @return String contents
  */
 const char *sbp_msg_linux_mem_state_cmdline_get(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_linux_mem_state_t *msg);
 
 /**
  * Obtain the length of sbp_msg_linux_mem_state_t::cmdline
@@ -232,7 +232,7 @@ const char *sbp_msg_linux_mem_state_cmdline_get(
  * @return Length of section
  */
 uint8_t sbp_msg_linux_mem_state_cmdline_section_strlen(
-    const sbp_unterminated_string_t *s, uint8_t section);
+    const sbp_msg_linux_mem_state_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_mem_state_t

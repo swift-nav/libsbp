@@ -69,7 +69,7 @@ typedef struct {
  * @param msg sbp_msg_linux_process_fd_summary_t instance
  */
 void sbp_msg_linux_process_fd_summary_most_opened_init(
-    sbp_double_null_terminated_string_t *s);
+    sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
  * Test sbp_msg_linux_process_fd_summary_t::most_opened for validity
@@ -79,7 +79,7 @@ void sbp_msg_linux_process_fd_summary_most_opened_init(
  * encoding purposes, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_valid(
-    const sbp_double_null_terminated_string_t *s);
+    const sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_linux_process_fd_summary_t::most_opened for
@@ -93,8 +93,8 @@ bool sbp_msg_linux_process_fd_summary_most_opened_valid(
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
 int sbp_msg_linux_process_fd_summary_most_opened_strcmp(
-    const sbp_double_null_terminated_string_t *a,
-    const sbp_double_null_terminated_string_t *b);
+    const sbp_msg_linux_process_fd_summary_t *a,
+    const sbp_msg_linux_process_fd_summary_t *b);
 
 /**
  * Get the encoded size of sbp_msg_linux_process_fd_summary_t::most_opened
@@ -104,7 +104,7 @@ int sbp_msg_linux_process_fd_summary_most_opened_strcmp(
  * representation
  */
 uint8_t sbp_msg_linux_process_fd_summary_most_opened_encoded_len(
-    const sbp_double_null_terminated_string_t *s);
+    const sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
  * Query sbp_msg_linux_process_fd_summary_t::most_opened for remaining space
@@ -117,7 +117,7 @@ uint8_t sbp_msg_linux_process_fd_summary_most_opened_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_linux_process_fd_summary_most_opened_space_remaining(
-    const sbp_double_null_terminated_string_t *s);
+    const sbp_msg_linux_process_fd_summary_t *msg);
 /**
  * Return the number of sections in
  * sbp_msg_linux_process_fd_summary_t::most_opened
@@ -126,7 +126,7 @@ uint8_t sbp_msg_linux_process_fd_summary_most_opened_space_remaining(
  * @return Number of sections in string
  */
 uint8_t sbp_msg_linux_process_fd_summary_most_opened_count_sections(
-    const sbp_double_null_terminated_string_t *s);
+    const sbp_msg_linux_process_fd_summary_t *msg);
 
 /**
  * Add a section to sbp_msg_linux_process_fd_summary_t::most_opened
@@ -140,7 +140,7 @@ uint8_t sbp_msg_linux_process_fd_summary_most_opened_count_sections(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section(
-    sbp_double_null_terminated_string_t *s, const char *new_str);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *new_str);
 
 /**
  * Add a section to sbp_msg_linux_process_fd_summary_t::most_opened with printf
@@ -156,7 +156,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
-    sbp_double_null_terminated_string_t *s, const char *fmt, ...)
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
@@ -172,7 +172,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section_vprintf(
-    sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap);
 
 /**
  * Append a string to the last section in
@@ -193,7 +193,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section_vprintf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_append(
-    sbp_double_null_terminated_string_t *s, const char *str);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *str);
 
 /**
  * Append a string to the last section in
@@ -214,7 +214,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_append(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_append_printf(
-    sbp_double_null_terminated_string_t *s, const char *fmt, ...)
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
 /**
@@ -237,7 +237,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_append_vprintf(
-    sbp_double_null_terminated_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap);
 
 /**
  * Obtain a section from sbp_msg_linux_process_fd_summary_t::most_opened
@@ -251,7 +251,7 @@ bool sbp_msg_linux_process_fd_summary_most_opened_append_vprintf(
  * @return Pointer to C string, NULL on error
  */
 const char *sbp_msg_linux_process_fd_summary_most_opened_get_section(
-    const sbp_double_null_terminated_string_t *s, uint8_t section);
+    const sbp_msg_linux_process_fd_summary_t *msg, uint8_t section);
 
 /**
  * Obtain the length of a section in
@@ -266,7 +266,7 @@ const char *sbp_msg_linux_process_fd_summary_most_opened_get_section(
  * @return Length of section
  */
 uint8_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
-    const sbp_double_null_terminated_string_t *s, uint8_t section);
+    const sbp_msg_linux_process_fd_summary_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_fd_summary_t

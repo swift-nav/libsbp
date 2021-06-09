@@ -68,7 +68,7 @@ typedef struct {
  * @param msg sbp_msg_settings_read_by_index_resp_t instance
  */
 void sbp_msg_settings_read_by_index_resp_setting_init(
-    sbp_multipart_string_t *s);
+    sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
  * Test sbp_msg_settings_read_by_index_resp_t::setting for validity
@@ -78,7 +78,7 @@ void sbp_msg_settings_read_by_index_resp_setting_init(
  * encoding purposes, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_valid(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_settings_read_by_index_resp_t::setting for
@@ -92,7 +92,8 @@ bool sbp_msg_settings_read_by_index_resp_setting_valid(
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
 int sbp_msg_settings_read_by_index_resp_setting_strcmp(
-    const sbp_multipart_string_t *a, const sbp_multipart_string_t *b);
+    const sbp_msg_settings_read_by_index_resp_t *a,
+    const sbp_msg_settings_read_by_index_resp_t *b);
 
 /**
  * Get the encoded size of sbp_msg_settings_read_by_index_resp_t::setting
@@ -102,7 +103,7 @@ int sbp_msg_settings_read_by_index_resp_setting_strcmp(
  * representation
  */
 uint8_t sbp_msg_settings_read_by_index_resp_setting_encoded_len(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
  * Query sbp_msg_settings_read_by_index_resp_t::setting for remaining space
@@ -115,7 +116,7 @@ uint8_t sbp_msg_settings_read_by_index_resp_setting_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_settings_read_by_index_resp_setting_space_remaining(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_settings_read_by_index_resp_t *msg);
 /**
  * Return the number of sections in
  * sbp_msg_settings_read_by_index_resp_t::setting
@@ -124,7 +125,7 @@ uint8_t sbp_msg_settings_read_by_index_resp_setting_space_remaining(
  * @return Number of sections in string
  */
 uint8_t sbp_msg_settings_read_by_index_resp_setting_count_sections(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
  * Add a section to sbp_msg_settings_read_by_index_resp_t::setting
@@ -138,7 +139,7 @@ uint8_t sbp_msg_settings_read_by_index_resp_setting_count_sections(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_add_section(
-    sbp_multipart_string_t *s, const char *new_str);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *new_str);
 
 /**
  * Add a section to sbp_msg_settings_read_by_index_resp_t::setting with printf
@@ -154,7 +155,8 @@ bool sbp_msg_settings_read_by_index_resp_setting_add_section(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_add_section_printf(
-    sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Add a section to sbp_msg_settings_read_by_index_resp_t::setting with printf
@@ -169,7 +171,7 @@ bool sbp_msg_settings_read_by_index_resp_setting_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_add_section_vprintf(
-    sbp_multipart_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Append a string to the last section in
@@ -190,7 +192,7 @@ bool sbp_msg_settings_read_by_index_resp_setting_add_section_vprintf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_append(
-    sbp_multipart_string_t *s, const char *str);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *str);
 
 /**
  * Append a string to the last section in
@@ -211,7 +213,8 @@ bool sbp_msg_settings_read_by_index_resp_setting_append(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_append_printf(
-    sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append a string to the last section in
@@ -233,7 +236,7 @@ bool sbp_msg_settings_read_by_index_resp_setting_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_by_index_resp_setting_append_vprintf(
-    sbp_multipart_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Obtain a section from sbp_msg_settings_read_by_index_resp_t::setting
@@ -247,7 +250,7 @@ bool sbp_msg_settings_read_by_index_resp_setting_append_vprintf(
  * @return Pointer to C string, NULL on error
  */
 const char *sbp_msg_settings_read_by_index_resp_setting_get_section(
-    const sbp_multipart_string_t *s, uint8_t section);
+    const sbp_msg_settings_read_by_index_resp_t *msg, uint8_t section);
 
 /**
  * Obtain the length of a section in
@@ -262,7 +265,7 @@ const char *sbp_msg_settings_read_by_index_resp_setting_get_section(
  * @return Length of section
  */
 uint8_t sbp_msg_settings_read_by_index_resp_setting_section_strlen(
-    const sbp_multipart_string_t *s, uint8_t section);
+    const sbp_msg_settings_read_by_index_resp_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_settings_read_by_index_resp_t

@@ -22,129 +22,128 @@
 ((*- if f.packing == "packed-string" *))
 ((*- set params = m.name|convert_unpacked + f.name + "_params" *))
 ((*- set string_prefix = "sbp_" + f.encoding + "_string" *))
-((*- set string_type = string_prefix + "_t" *))
 ((*- set field_prefix = m.prefix + "_" + f.name *))
 static const (((string_prefix)))_params_t (((params))) = 
 {
   .max_encoded_len = (((f.max_items)))
 };
 
-void (((field_prefix)))_init( (((-string_type))) *s)
+void (((field_prefix)))_init( (((-m.type_name))) *msg)
 {
-  (((string_prefix)))_init(s, &(((params))));
+  (((string_prefix)))_init(&msg->(((f.name))), &(((params))));
 }
 
-bool (((field_prefix)))_valid(const (((string_type))) *s)
+bool (((field_prefix)))_valid(const (((m.type_name))) *msg)
 {
-  return (((string_prefix)))_valid(s, &(((params))));
+  return (((string_prefix)))_valid(&msg->(((f.name))), &(((params))));
 }
 
-int (((field_prefix)))_strcmp(const (((string_type))) *a, const (((string_type))) *b)
+int (((field_prefix)))_strcmp(const (((m.type_name))) *a, const (((m.type_name))) *b)
 {
-  return (((string_prefix)))_strcmp(a, b, &(((params))));
+  return (((string_prefix)))_strcmp(&a->(((f.name))), &b->(((f.name))), &(((params))));
 }
 
-uint8_t (((field_prefix)))_encoded_len(const (((string_type))) *s)
+uint8_t (((field_prefix)))_encoded_len(const (((m.type_name))) *msg)
 {
-  return (((string_prefix)))_encoded_len(s, &(((params))));
+  return (((string_prefix)))_encoded_len(&msg->(((f.name))), &(((params))));
 }
 
-uint8_t (((field_prefix)))_space_remaining(const (((string_type))) *s)
+uint8_t (((field_prefix)))_space_remaining(const (((m.type_name))) *msg)
 {
-  return (((string_prefix)))_space_remaining(s, &(((params))));
+  return (((string_prefix)))_space_remaining(&msg->(((f.name))), &(((params))));
 }
 
 ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
- bool (((field_prefix)))_set( (((-string_type))) *s, const char *new_str)
+ bool (((field_prefix)))_set( (((-m.type_name))) *msg, const char *new_str)
 {
-  return (((string_prefix)))_set(s, &(((params))), new_str);
+  return (((string_prefix)))_set(&msg->(((f.name))), &(((params))), new_str);
 }
 
-bool (((field_prefix)))_printf( (((-string_type))) *s, const char *fmt, ...) 
+bool (((field_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_vprintf(s, &(((params))), fmt, ap);
+  bool ret = (((string_prefix)))_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
   va_end(ap);
   return ret;
 }
 
- bool (((field_prefix)))_vprintf( (((-string_type))) *s, const char *fmt, va_list ap)
+ bool (((field_prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_vprintf(s, &(((params))), fmt, ap);
+  return (((string_prefix)))_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
 }
 
-bool (((field_prefix)))_append_printf( (((-string_type))) *s, const char *fmt, ...) 
+bool (((field_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_append_vprintf(s, &(((params))), fmt, ap);
+  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
   va_end(ap);
   return ret;
 }
 
-  bool (((field_prefix)))_append_vprintf( (((-string_type))) *s, const char *fmt, va_list ap)
+  bool (((field_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_append_vprintf(s, &(((params))), fmt, ap);
+  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
 }
 
-const char *(((field_prefix)))_get(const (((string_type))) *s)
+const char *(((field_prefix)))_get(const (((m.type_name))) *msg)
 {
-  return (((string_prefix)))_get(s, &(((params))));
+  return (((string_prefix)))_get(&msg->(((f.name))), &(((params))));
 }
 
 ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
-uint8_t (((field_prefix)))_count_sections(const (((string_type))) *s)
+uint8_t (((field_prefix)))_count_sections(const (((m.type_name))) *msg)
 {
-  return (((string_prefix)))_count_sections(s, &(((params))));
+  return (((string_prefix)))_count_sections(&msg->(((f.name))), &(((params))));
 }
 
-bool (((field_prefix)))_add_section( (((-string_type))) *s, const char *new_str)
+bool (((field_prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str)
 {
-  return (((string_prefix)))_add_section(s, &(((params))), new_str);
+  return (((string_prefix)))_add_section(&msg->(((f.name))), &(((params))), new_str);
 }
 
-bool (((field_prefix)))_add_section_printf( (((-string_type))) *s, const char *fmt, ...) 
+bool (((field_prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_add_section_vprintf(s, &(((params))), fmt, ap);
+  bool ret = (((string_prefix)))_add_section_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool (((field_prefix)))_add_section_vprintf( (((-string_type))) *s, const char *fmt, va_list ap)
+bool (((field_prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_add_section_vprintf(s, &(((params))), fmt, ap);
+  return (((string_prefix)))_add_section_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
 }
 
-bool (((field_prefix)))_append( (((-string_type))) *s, const char *str)
+bool (((field_prefix)))_append( (((-m.type_name))) *msg, const char *str)
 {
-  return (((string_prefix)))_append(s, &(((params))), str);
+  return (((string_prefix)))_append(&msg->(((f.name))), &(((params))), str);
 }
 
-bool (((field_prefix)))_append_printf( (((-string_type))) *s, const char *fmt, ...) 
+bool (((field_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_append_vprintf(s, &(((params))), fmt, ap);
+  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool (((field_prefix)))_append_vprintf( (((-string_type))) *s, const char *fmt, va_list ap)
+bool (((field_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_append_vprintf(s, &(((params))), fmt, ap);
+  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), &(((params))), fmt, ap);
 }
 
-const char *(((field_prefix)))_get_section(const (((string_type))) *s, uint8_t section)
+const char *(((field_prefix)))_get_section(const (((m.type_name))) *msg, uint8_t section)
 {
-  return (((string_prefix)))_get_section(s, &(((params))), section);
+  return (((string_prefix)))_get_section(&msg->(((f.name))), &(((params))), section);
 }
 
-uint8_t (((field_prefix)))_section_strlen(const (((string_type))) *s, uint8_t section)
+uint8_t (((field_prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section)
 {
-  return (((string_prefix)))_section_strlen(s, &(((params))), section);
+  return (((string_prefix)))_section_strlen(&msg->(((f.name))), &(((params))), section);
 }
 
 ((*- else *))
@@ -280,7 +279,7 @@ int (((m.prefix)))_cmp(const (((m.type_name))) *a, const (((m.type_name))) *b) {
   ((*- for f in m.fields *))
   ((*- set basetype = f.basetype|convert_unpacked *))
   ((* if f.packing == "packed-string" *))
-  ret = (((m.prefix)))_(((f.name)))_strcmp(&a->(((f.name))), &b->(((f.name))));
+  ret = (((m.prefix)))_(((f.name)))_strcmp(a, b);
   ((*- elif f.packing == "single" *))
   ret = (((f.basetype_cmp)))(&a->(((f.name))), &b->(((f.name))));
   ((*- else *))

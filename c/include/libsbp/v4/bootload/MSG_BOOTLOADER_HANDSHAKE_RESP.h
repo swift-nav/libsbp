@@ -68,7 +68,7 @@ typedef struct {
  * @param msg sbp_msg_bootloader_handshake_resp_t instance
  */
 void sbp_msg_bootloader_handshake_resp_version_init(
-    sbp_unterminated_string_t *s);
+    sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Test sbp_msg_bootloader_handshake_resp_t::version for validity
@@ -78,7 +78,7 @@ void sbp_msg_bootloader_handshake_resp_version_init(
  * encoding purposes, false otherwise
  */
 bool sbp_msg_bootloader_handshake_resp_version_valid(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_bootloader_handshake_resp_t::version for
@@ -92,7 +92,8 @@ bool sbp_msg_bootloader_handshake_resp_version_valid(
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
 int sbp_msg_bootloader_handshake_resp_version_strcmp(
-    const sbp_unterminated_string_t *a, const sbp_unterminated_string_t *b);
+    const sbp_msg_bootloader_handshake_resp_t *a,
+    const sbp_msg_bootloader_handshake_resp_t *b);
 
 /**
  * Get the encoded size of sbp_msg_bootloader_handshake_resp_t::version
@@ -102,7 +103,7 @@ int sbp_msg_bootloader_handshake_resp_version_strcmp(
  * representation
  */
 uint8_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Query sbp_msg_bootloader_handshake_resp_t::version for remaining space
@@ -115,7 +116,7 @@ uint8_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_bootloader_handshake_resp_t *msg);
 /**
  * Set sbp_msg_bootloader_handshake_resp_t::version
  *
@@ -129,8 +130,8 @@ uint8_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_resp_version_set(sbp_unterminated_string_t *s,
-                                                   const char *new_str);
+bool sbp_msg_bootloader_handshake_resp_version_set(
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *new_str);
 
 /**
  * Set sbp_msg_bootloader_handshake_resp_t::version with printf style formatting
@@ -147,7 +148,8 @@ bool sbp_msg_bootloader_handshake_resp_version_set(sbp_unterminated_string_t *s,
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_resp_version_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Set sbp_msg_bootloader_handshake_resp_t::version with printf style formatting
@@ -161,7 +163,7 @@ bool sbp_msg_bootloader_handshake_resp_version_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_resp_version_vprintf(
-    sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Append sbp_msg_bootloader_handshake_resp_t::version with printf style
@@ -177,7 +179,8 @@ bool sbp_msg_bootloader_handshake_resp_version_vprintf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_resp_version_append_printf(
-    sbp_unterminated_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append sbp_msg_bootloader_handshake_resp_t::version with printf style
@@ -193,7 +196,7 @@ bool sbp_msg_bootloader_handshake_resp_version_append_printf(
  *
  */
 bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
-    sbp_unterminated_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Obtain the string value from sbp_msg_bootloader_handshake_resp_t::version
@@ -202,7 +205,7 @@ bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
  * @return String contents
  */
 const char *sbp_msg_bootloader_handshake_resp_version_get(
-    const sbp_unterminated_string_t *s);
+    const sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Obtain the length of sbp_msg_bootloader_handshake_resp_t::version
@@ -213,7 +216,7 @@ const char *sbp_msg_bootloader_handshake_resp_version_get(
  * @return Length of section
  */
 uint8_t sbp_msg_bootloader_handshake_resp_version_section_strlen(
-    const sbp_unterminated_string_t *s, uint8_t section);
+    const sbp_msg_bootloader_handshake_resp_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_bootloader_handshake_resp_t

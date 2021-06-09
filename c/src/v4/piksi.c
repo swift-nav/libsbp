@@ -1638,73 +1638,73 @@ int sbp_msg_device_monitor_cmp(const sbp_msg_device_monitor_t *a,
 static const sbp_null_terminated_string_params_t
     sbp_msg_command_req_tcommand_params = {.max_encoded_len = 251};
 
-void sbp_msg_command_req_command_init(sbp_null_terminated_string_t *s) {
-  sbp_null_terminated_string_init(s, &sbp_msg_command_req_tcommand_params);
+void sbp_msg_command_req_command_init(sbp_msg_command_req_t *msg) {
+  sbp_null_terminated_string_init(&msg->command,
+                                  &sbp_msg_command_req_tcommand_params);
 }
 
-bool sbp_msg_command_req_command_valid(const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_valid(s,
+bool sbp_msg_command_req_command_valid(const sbp_msg_command_req_t *msg) {
+  return sbp_null_terminated_string_valid(&msg->command,
                                           &sbp_msg_command_req_tcommand_params);
 }
 
-int sbp_msg_command_req_command_strcmp(const sbp_null_terminated_string_t *a,
-                                       const sbp_null_terminated_string_t *b) {
+int sbp_msg_command_req_command_strcmp(const sbp_msg_command_req_t *a,
+                                       const sbp_msg_command_req_t *b) {
   return sbp_null_terminated_string_strcmp(
-      a, b, &sbp_msg_command_req_tcommand_params);
+      &a->command, &b->command, &sbp_msg_command_req_tcommand_params);
 }
 
 uint8_t sbp_msg_command_req_command_encoded_len(
-    const sbp_null_terminated_string_t *s) {
+    const sbp_msg_command_req_t *msg) {
   return sbp_null_terminated_string_encoded_len(
-      s, &sbp_msg_command_req_tcommand_params);
+      &msg->command, &sbp_msg_command_req_tcommand_params);
 }
 
 uint8_t sbp_msg_command_req_command_space_remaining(
-    const sbp_null_terminated_string_t *s) {
+    const sbp_msg_command_req_t *msg) {
   return sbp_null_terminated_string_space_remaining(
-      s, &sbp_msg_command_req_tcommand_params);
+      &msg->command, &sbp_msg_command_req_tcommand_params);
 }
-bool sbp_msg_command_req_command_set(sbp_null_terminated_string_t *s,
+bool sbp_msg_command_req_command_set(sbp_msg_command_req_t *msg,
                                      const char *new_str) {
-  return sbp_null_terminated_string_set(s, &sbp_msg_command_req_tcommand_params,
-                                        new_str);
+  return sbp_null_terminated_string_set(
+      &msg->command, &sbp_msg_command_req_tcommand_params, new_str);
 }
 
-bool sbp_msg_command_req_command_printf(sbp_null_terminated_string_t *s,
+bool sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
                                         const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
-      s, &sbp_msg_command_req_tcommand_params, fmt, ap);
+      &msg->command, &sbp_msg_command_req_tcommand_params, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_command_req_command_vprintf(sbp_null_terminated_string_t *s,
+bool sbp_msg_command_req_command_vprintf(sbp_msg_command_req_t *msg,
                                          const char *fmt, va_list ap) {
   return sbp_null_terminated_string_vprintf(
-      s, &sbp_msg_command_req_tcommand_params, fmt, ap);
+      &msg->command, &sbp_msg_command_req_tcommand_params, fmt, ap);
 }
 
-bool sbp_msg_command_req_command_append_printf(sbp_null_terminated_string_t *s,
+bool sbp_msg_command_req_command_append_printf(sbp_msg_command_req_t *msg,
                                                const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
-      s, &sbp_msg_command_req_tcommand_params, fmt, ap);
+      &msg->command, &sbp_msg_command_req_tcommand_params, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_command_req_command_append_vprintf(sbp_null_terminated_string_t *s,
+bool sbp_msg_command_req_command_append_vprintf(sbp_msg_command_req_t *msg,
                                                 const char *fmt, va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
-      s, &sbp_msg_command_req_tcommand_params, fmt, ap);
+      &msg->command, &sbp_msg_command_req_tcommand_params, fmt, ap);
 }
 
-const char *sbp_msg_command_req_command_get(
-    const sbp_null_terminated_string_t *s) {
-  return sbp_null_terminated_string_get(s,
+const char *sbp_msg_command_req_command_get(const sbp_msg_command_req_t *msg) {
+  return sbp_null_terminated_string_get(&msg->command,
                                         &sbp_msg_command_req_tcommand_params);
 }
 
@@ -1793,7 +1793,7 @@ int sbp_msg_command_req_cmp(const sbp_msg_command_req_t *a,
     return ret;
   }
 
-  ret = sbp_msg_command_req_command_strcmp(&a->command, &b->command);
+  ret = sbp_msg_command_req_command_strcmp(a, b);
   if (ret != 0) {
     return ret;
   }
@@ -1891,72 +1891,75 @@ int sbp_msg_command_resp_cmp(const sbp_msg_command_resp_t *a,
 static const sbp_unterminated_string_params_t
     sbp_msg_command_output_tline_params = {.max_encoded_len = 251};
 
-void sbp_msg_command_output_line_init(sbp_unterminated_string_t *s) {
-  sbp_unterminated_string_init(s, &sbp_msg_command_output_tline_params);
+void sbp_msg_command_output_line_init(sbp_msg_command_output_t *msg) {
+  sbp_unterminated_string_init(&msg->line,
+                               &sbp_msg_command_output_tline_params);
 }
 
-bool sbp_msg_command_output_line_valid(const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_valid(s, &sbp_msg_command_output_tline_params);
+bool sbp_msg_command_output_line_valid(const sbp_msg_command_output_t *msg) {
+  return sbp_unterminated_string_valid(&msg->line,
+                                       &sbp_msg_command_output_tline_params);
 }
 
-int sbp_msg_command_output_line_strcmp(const sbp_unterminated_string_t *a,
-                                       const sbp_unterminated_string_t *b) {
-  return sbp_unterminated_string_strcmp(a, b,
+int sbp_msg_command_output_line_strcmp(const sbp_msg_command_output_t *a,
+                                       const sbp_msg_command_output_t *b) {
+  return sbp_unterminated_string_strcmp(&a->line, &b->line,
                                         &sbp_msg_command_output_tline_params);
 }
 
 uint8_t sbp_msg_command_output_line_encoded_len(
-    const sbp_unterminated_string_t *s) {
+    const sbp_msg_command_output_t *msg) {
   return sbp_unterminated_string_encoded_len(
-      s, &sbp_msg_command_output_tline_params);
+      &msg->line, &sbp_msg_command_output_tline_params);
 }
 
 uint8_t sbp_msg_command_output_line_space_remaining(
-    const sbp_unterminated_string_t *s) {
+    const sbp_msg_command_output_t *msg) {
   return sbp_unterminated_string_space_remaining(
-      s, &sbp_msg_command_output_tline_params);
+      &msg->line, &sbp_msg_command_output_tline_params);
 }
-bool sbp_msg_command_output_line_set(sbp_unterminated_string_t *s,
+bool sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
                                      const char *new_str) {
-  return sbp_unterminated_string_set(s, &sbp_msg_command_output_tline_params,
-                                     new_str);
+  return sbp_unterminated_string_set(
+      &msg->line, &sbp_msg_command_output_tline_params, new_str);
 }
 
-bool sbp_msg_command_output_line_printf(sbp_unterminated_string_t *s,
+bool sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
                                         const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
-      s, &sbp_msg_command_output_tline_params, fmt, ap);
+      &msg->line, &sbp_msg_command_output_tline_params, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_command_output_line_vprintf(sbp_unterminated_string_t *s,
+bool sbp_msg_command_output_line_vprintf(sbp_msg_command_output_t *msg,
                                          const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
-      s, &sbp_msg_command_output_tline_params, fmt, ap);
+      &msg->line, &sbp_msg_command_output_tline_params, fmt, ap);
 }
 
-bool sbp_msg_command_output_line_append_printf(sbp_unterminated_string_t *s,
+bool sbp_msg_command_output_line_append_printf(sbp_msg_command_output_t *msg,
                                                const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
-      s, &sbp_msg_command_output_tline_params, fmt, ap);
+      &msg->line, &sbp_msg_command_output_tline_params, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_command_output_line_append_vprintf(sbp_unterminated_string_t *s,
+bool sbp_msg_command_output_line_append_vprintf(sbp_msg_command_output_t *msg,
                                                 const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
-      s, &sbp_msg_command_output_tline_params, fmt, ap);
+      &msg->line, &sbp_msg_command_output_tline_params, fmt, ap);
 }
 
 const char *sbp_msg_command_output_line_get(
-    const sbp_unterminated_string_t *s) {
-  return sbp_unterminated_string_get(s, &sbp_msg_command_output_tline_params);
+    const sbp_msg_command_output_t *msg) {
+  return sbp_unterminated_string_get(&msg->line,
+                                     &sbp_msg_command_output_tline_params);
 }
 
 size_t sbp_msg_command_output_encoded_len(const sbp_msg_command_output_t *msg) {
@@ -2045,7 +2048,7 @@ int sbp_msg_command_output_cmp(const sbp_msg_command_output_t *a,
     return ret;
   }
 
-  ret = sbp_msg_command_output_line_strcmp(&a->line, &b->line);
+  ret = sbp_msg_command_output_line_strcmp(a, b);
   if (ret != 0) {
     return ret;
   }

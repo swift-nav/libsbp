@@ -68,7 +68,8 @@ typedef struct {
  *
  * @param msg sbp_msg_fileio_read_dir_resp_t instance
  */
-void sbp_msg_fileio_read_dir_resp_contents_init(sbp_multipart_string_t *s);
+void sbp_msg_fileio_read_dir_resp_contents_init(
+    sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Test sbp_msg_fileio_read_dir_resp_t::contents for validity
@@ -78,7 +79,7 @@ void sbp_msg_fileio_read_dir_resp_contents_init(sbp_multipart_string_t *s);
  * encoding purposes, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_valid(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_fileio_read_dir_resp_t::contents for equality
@@ -91,7 +92,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_valid(
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
 int sbp_msg_fileio_read_dir_resp_contents_strcmp(
-    const sbp_multipart_string_t *a, const sbp_multipart_string_t *b);
+    const sbp_msg_fileio_read_dir_resp_t *a,
+    const sbp_msg_fileio_read_dir_resp_t *b);
 
 /**
  * Get the encoded size of sbp_msg_fileio_read_dir_resp_t::contents
@@ -101,7 +103,7 @@ int sbp_msg_fileio_read_dir_resp_contents_strcmp(
  * representation
  */
 uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Query sbp_msg_fileio_read_dir_resp_t::contents for remaining space
@@ -114,7 +116,7 @@ uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
  * @return Maximum number of bytes that can be appended to the existing string
  */
 uint8_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_fileio_read_dir_resp_t *msg);
 /**
  * Return the number of sections in sbp_msg_fileio_read_dir_resp_t::contents
  *
@@ -122,7 +124,7 @@ uint8_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
  * @return Number of sections in string
  */
 uint8_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
-    const sbp_multipart_string_t *s);
+    const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Add a section to sbp_msg_fileio_read_dir_resp_t::contents
@@ -136,7 +138,7 @@ uint8_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_add_section(
-    sbp_multipart_string_t *s, const char *new_str);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *new_str);
 
 /**
  * Add a section to sbp_msg_fileio_read_dir_resp_t::contents with printf style
@@ -152,7 +154,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_add_section(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_add_section_printf(
-    sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Add a section to sbp_msg_fileio_read_dir_resp_t::contents with printf style
@@ -167,7 +170,7 @@ bool sbp_msg_fileio_read_dir_resp_contents_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_add_section_vprintf(
-    sbp_multipart_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Append a string to the last section in
@@ -187,8 +190,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_add_section_vprintf(
  * @param str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_dir_resp_contents_append(sbp_multipart_string_t *s,
-                                                  const char *str);
+bool sbp_msg_fileio_read_dir_resp_contents_append(
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *str);
 
 /**
  * Append a string to the last section in
@@ -209,7 +212,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_append(sbp_multipart_string_t *s,
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_append_printf(
-    sbp_multipart_string_t *s, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, ...)
+    SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append a string to the last section in
@@ -231,7 +235,7 @@ bool sbp_msg_fileio_read_dir_resp_contents_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_append_vprintf(
-    sbp_multipart_string_t *s, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap);
 
 /**
  * Obtain a section from sbp_msg_fileio_read_dir_resp_t::contents
@@ -245,7 +249,7 @@ bool sbp_msg_fileio_read_dir_resp_contents_append_vprintf(
  * @return Pointer to C string, NULL on error
  */
 const char *sbp_msg_fileio_read_dir_resp_contents_get_section(
-    const sbp_multipart_string_t *s, uint8_t section);
+    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section);
 
 /**
  * Obtain the length of a section in sbp_msg_fileio_read_dir_resp_t::contents
@@ -259,7 +263,7 @@ const char *sbp_msg_fileio_read_dir_resp_contents_get_section(
  * @return Length of section
  */
 uint8_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
-    const sbp_multipart_string_t *s, uint8_t section);
+    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_read_dir_resp_t

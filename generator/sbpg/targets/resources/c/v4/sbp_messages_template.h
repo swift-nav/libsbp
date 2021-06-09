@@ -95,7 +95,6 @@ typedef struct {
 ((* for f in m.fields *))
   ((*- if f.packing == "packed-string" *))
   ((*- set prefix = m.prefix + "_" + f.name *))
-  ((*- set string_type = "sbp_" + f.encoding + "_string_t" *))
   ((*- set comment_name = m.type_name + "::" + f.name *))
   ((*- if f.packing == "packed-string" *))
   /**
@@ -103,7 +102,7 @@ typedef struct {
    *
    * @param msg (((m.type_name))) instance
    */
-  void (((prefix)))_init( (((-string_type))) *s);
+  void (((prefix)))_init( (((-m.type_name))) *msg);
 
   /**
    * Test (((comment_name))) for validity
@@ -111,7 +110,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return true is (((comment_name))) is valid for encoding purposes, false otherwise
    */
-  bool (((prefix)))_valid(const (((string_type))) *s);
+  bool (((prefix)))_valid(const (((m.type_name))) *msg);
 
   /**
    * Tests 2 instances of (((comment_name))) for equality
@@ -122,7 +121,7 @@ typedef struct {
    * @param b (((m.type_name))) instance
    * @return 0 if equal, <0 if a<b, >0 if a>b
    */
-  int (((prefix)))_strcmp(const (((string_type))) *a, const (((string_type))) *b);
+  int (((prefix)))_strcmp(const (((m.type_name))) *a, const (((m.type_name))) *b);
 
   /**
    * Get the encoded size of (((comment_name)))
@@ -130,7 +129,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Size of (((comment_name))) in wire representation
    */
-  uint8_t (((prefix)))_encoded_len(const (((string_type))) *s);
+  uint8_t (((prefix)))_encoded_len(const (((m.type_name))) *msg);
 
   /**
    * Query (((comment_name))) for remaining space
@@ -140,7 +139,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Maximum number of bytes that can be appended to the existing string
    */
-  uint8_t (((prefix)))_space_remaining(const (((string_type))) *s);
+  uint8_t (((prefix)))_space_remaining(const (((m.type_name))) *msg);
 
   ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
   /**
@@ -154,7 +153,7 @@ typedef struct {
    * @param new_str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_set( (((-string_type))) *s, const char *new_str);
+  bool (((prefix)))_set( (((-m.type_name))) *msg, const char *new_str);
 
   /**
    * Set (((comment_name))) with printf style formatting
@@ -167,7 +166,7 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_printf( (((-string_type))) *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Set (((comment_name))) with printf style formatting
@@ -179,7 +178,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_vprintf( (((-string_type))) *s, const char *fmt, va_list ap);
+  bool (((prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -190,7 +189,7 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_printf( (((-string_type))) *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -203,7 +202,7 @@ typedef struct {
    * @return true on success, false otherwise
    *
    */
-  bool (((prefix)))_append_vprintf( (((-string_type))) *s, const char *fmt, va_list ap);
+  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
 
   /**
    * Obtain the string value from (((comment_name)))
@@ -211,7 +210,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return String contents
    */
-  const char *(((prefix)))_get(const (((string_type))) *s);
+  const char *(((prefix)))_get(const (((m.type_name))) *msg);
 
   /**
    * Obtain the length of (((comment_name)))
@@ -221,7 +220,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Length of section
    */
-  uint8_t (((prefix)))_section_strlen(const (((string_type))) *s, uint8_t section);
+  uint8_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   /**
    * Return the number of sections in (((comment_name)))
@@ -229,7 +228,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Number of sections in string
    */
-  uint8_t (((prefix)))_count_sections(const (((string_type))) *s);
+  uint8_t (((prefix)))_count_sections(const (((m.type_name))) *msg);
 
   /**
    * Add a section to (((comment_name)))
@@ -240,7 +239,7 @@ typedef struct {
    * @param new_str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section( (((-string_type))) *s, const char *new_str);
+  bool (((prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
@@ -251,7 +250,7 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section_printf( (((-string_type))) *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
@@ -263,7 +262,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section_vprintf( (((-string_type))) *s, const char *fmt, va_list ap);
+  bool (((prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
 
   /**
    * Append a string to the last section in (((comment_name)))
@@ -278,7 +277,7 @@ typedef struct {
    * @param str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append( (((-string_type))) *s, const char *str);
+  bool (((prefix)))_append( (((-m.type_name))) *msg, const char *str);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
@@ -293,7 +292,7 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_printf( (((-string_type))) *s, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
@@ -309,7 +308,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_vprintf( (((-string_type))) *s, const char *fmt, va_list ap);
+  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
 
   /**
    * Obtain a section from (((comment_name)))
@@ -320,7 +319,7 @@ typedef struct {
    * @param section Section number
    * @return Pointer to C string, NULL on error
    */
-  const char *(((prefix)))_get_section(const (((string_type))) *s, uint8_t section);
+  const char *(((prefix)))_get_section(const (((m.type_name))) *msg, uint8_t section);
 
   /**
    * Obtain the length of a section in (((comment_name)))
@@ -333,7 +332,7 @@ typedef struct {
    * @param section Section number
    * @return Length of section
    */
-  uint8_t (((prefix)))_section_strlen(const (((string_type))) *s, uint8_t section);
+  uint8_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section);
   ((*- else *))
   **** INVALID STRING ENCODING : (((f.encoding))) ****
   ((* endif *))
