@@ -89,6 +89,10 @@ class State {
   s8 send_message(u16 sender_id, const T &msg) {
     return sbp::MessageTraits<T>::send(&state_, sender_id, msg, &write_func);
   }
+
+  s8 send_message(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t &msg) {
+    return sbp_message_send(&state_, msg_type, sender_id, &msg, &write_func);
+  }
 };
 
 } // namespace sbp

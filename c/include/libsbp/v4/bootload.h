@@ -17,11 +17,11 @@
 
 #ifndef LIBSBP_V4_BOOTLOAD_MESSAGES_H
 #define LIBSBP_V4_BOOTLOAD_MESSAGES_H
+#include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_DEP_A.h>
 #include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_REQ.h>
 #include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_RESP.h>
 #include <libsbp/v4/bootload/MSG_BOOTLOADER_JUMP_TO_APP.h>
 #include <libsbp/v4/bootload/MSG_NAP_DEVICE_DNA_REQ.h>
 #include <libsbp/v4/bootload/MSG_NAP_DEVICE_DNA_RESP.h>
-#include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_DEP_A.h>
 
 #endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */

@@ -17,20 +17,20 @@
 
 #ifndef LIBSBP_V4_TRACKING_MESSAGES_H
 #define LIBSBP_V4_TRACKING_MESSAGES_H
-#include <libsbp/v4/tracking/MSG_TRACKING_STATE_DETAILED_DEP_A.h>
-#include <libsbp/v4/tracking/MSG_TRACKING_STATE_DETAILED_DEP.h>
-#include <libsbp/v4/tracking/TrackingChannelState.h>
-#include <libsbp/v4/tracking/MSG_TRACKING_STATE.h>
-#include <libsbp/v4/tracking/MeasurementState.h>
 #include <libsbp/v4/tracking/MSG_MEASUREMENT_STATE.h>
-#include <libsbp/v4/tracking/TrackingChannelCorrelation.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_IQ.h>
-#include <libsbp/v4/tracking/TrackingChannelCorrelationDep.h>
-#include <libsbp/v4/tracking/MSG_TRACKING_IQ_DEP_B.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_IQ_DEP_A.h>
-#include <libsbp/v4/tracking/TrackingChannelStateDepA.h>
+#include <libsbp/v4/tracking/MSG_TRACKING_IQ_DEP_B.h>
+#include <libsbp/v4/tracking/MSG_TRACKING_STATE.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_STATE_DEP_A.h>
-#include <libsbp/v4/tracking/TrackingChannelStateDepB.h>
 #include <libsbp/v4/tracking/MSG_TRACKING_STATE_DEP_B.h>
+#include <libsbp/v4/tracking/MSG_TRACKING_STATE_DETAILED_DEP.h>
+#include <libsbp/v4/tracking/MSG_TRACKING_STATE_DETAILED_DEP_A.h>
+#include <libsbp/v4/tracking/MeasurementState.h>
+#include <libsbp/v4/tracking/TrackingChannelCorrelation.h>
+#include <libsbp/v4/tracking/TrackingChannelCorrelationDep.h>
+#include <libsbp/v4/tracking/TrackingChannelState.h>
+#include <libsbp/v4/tracking/TrackingChannelStateDepA.h>
+#include <libsbp/v4/tracking/TrackingChannelStateDepB.h>
 
 #endif /* LIBSBP_V4_TRACKING_MESSAGES_H */

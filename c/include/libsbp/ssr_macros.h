@@ -18,7 +18,6 @@
 #ifndef LIBSBP_SSR_MACROS_H
 #define LIBSBP_SSR_MACROS_H
 
-
 #define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
 #define SBP_MSG_SSR_CODE_BIASES 0x05E1
 #define SBP_MSG_SSR_PHASE_BIASES 0x05E6
@@ -27,14 +26,14 @@
 #define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
-#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags) \
-                             (((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) \
-                             & SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)
-#define SBP_SATELLITEAPC_SATELLITE_TYPE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)) \
-                             << (SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT)));} while(0)
-                             
+#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags)      \
+  (((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) & \
+   SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)
+#define SBP_SATELLITEAPC_SATELLITE_TYPE_SET(flags, val)           \
+  do {                                                            \
+    ((flags) |= (((val) & (SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)) \
+                 << (SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT)));    \
+  } while (0)
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_UNKNOWN_TYPE (0)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_GPS_I (1)

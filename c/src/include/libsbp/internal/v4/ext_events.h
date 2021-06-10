@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/v4/ext_events.h>
 #include <libsbp/internal/v4/common.h>
+#include <libsbp/v4/ext_events.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /**
@@ -34,7 +34,8 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_ext_event_t *msg);
+bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx,
+                                       const sbp_msg_ext_event_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -43,10 +44,11 @@ bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_ext_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ext_event_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_ext_event_t *msg);
+bool sbp_msg_ext_event_decode_internal(sbp_decode_ctx_t *ctx,
+                                       sbp_msg_ext_event_t *msg);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_EXT_EVENTS_H */

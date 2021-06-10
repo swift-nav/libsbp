@@ -18,19 +18,19 @@
 #ifndef LIBSBP_V4_GNSS_CARRIERPHASE_H
 #define LIBSBP_V4_GNSS_CARRIERPHASE_H
 
+#include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdarg.h>
-#include <string.h>
 #include <stdint.h>
-#include <math.h>
+#include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/gnss_macros.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 struct sbp_state;
@@ -42,24 +42,21 @@ struct sbp_state;
  *****************************************************************************/
 /** GNSS carrier phase measurement
  *
-* Carrier phase measurement in cycles represented as a 40-bit fixed point number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of fractional cycles. This phase has the same sign as the pseudorange.
+ * Carrier phase measurement in cycles represented as a 40-bit fixed point
+ * number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+ * fractional cycles. This phase has the same sign as the pseudorange.
  */
 typedef struct {
-
-  
   /**
-* Carrier phase whole cycles [cycles]
+   * Carrier phase whole cycles [cycles]
    */
   s32 i;
 
-  
   /**
-* Carrier phase fractional part [cycles / 256]
+   * Carrier phase fractional part [cycles / 256]
    */
   u8 f;
 } sbp_carrier_phase_t;
-
-
 
 /**
  * Get encoded size of an instance of sbp_carrier_phase_t
@@ -72,70 +69,91 @@ size_t sbp_carrier_phase_encoded_len(const sbp_carrier_phase_t *msg);
 /**
  * Encode an instance of sbp_carrier_phase_t to wire representation
  *
- * This function encodes the given instance in to the user provided buffer. The buffer provided to this function must be large enough to store the encoded message otherwise it will return SBP_ENCODE_ERROR without writing anything to the buffer.
+ * This function encodes the given instance in to the user provided buffer. The
+ * buffer provided to this function must be large enough to store the encoded
+ * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
+ * the buffer.
  *
- * Specify the length of the destination buffer in the \p len parameter. If non-null the number of bytes written to the buffer will be returned in \p n_written.
+ * Specify the length of the destination buffer in the \p len parameter. If
+ * non-null the number of bytes written to the buffer will be returned in \p
+ * n_written.
  *
  * @param buf Destination buffer
  * @param len Length of \p buf
- * @param n_written If not null, on success will be set to the number of bytes written to \p buf
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to \p buf
  * @param msg Instance of sbp_carrier_phase_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_carrier_phase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_carrier_phase_t *msg);
+s8 sbp_carrier_phase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                            const sbp_carrier_phase_t *msg);
 
 /**
  * Decode an instance of sbp_carrier_phase_t from wire representation
  *
- * This function decodes the wire representation of a sbp_carrier_phase_t message to the given instance. The caller must specify the length of the buffer in the \p len parameter. If non-null the number of bytes read from the buffer will be returned in \p n_read.
+ * This function decodes the wire representation of a sbp_carrier_phase_t
+ * message to the given instance. The caller must specify the length of the
+ * buffer in the \p len parameter. If non-null the number of bytes read from the
+ * buffer will be returned in \p n_read.
  *
  * @param buf Wire representation of the sbp_carrier_phase_t instance
  * @param len Length of \p buf
- * @param n_read If not null, on success will be set to the number of bytes read from \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read
+ * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_carrier_phase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_carrier_phase_t *msg);
+s8 sbp_carrier_phase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                            sbp_carrier_phase_t *msg);
 
 /**
  * Compare two instances of sbp_carrier_phase_t
  *
- * The two instances will be compared and a value returned consistent with the return codes of comparison functions from the C standard library
+ * The two instances will be compared and a value returned consistent with the
+ * return codes of comparison functions from the C standard library
  *
  * 0 will be returned if \p a and \p b are considered equal
- * A value less than 0 will be returned if \p a is considered to be less than \p b
- * A value greater than 0 will be returned if \p b is considered to be greater than \p b
+ * A value less than 0 will be returned if \p a is considered to be less than \p
+ * b A value greater than 0 will be returned if \p b is considered to be greater
+ * than \p b
  *
  * @param a sbp_carrier_phase_t instance
  * @param b sbp_carrier_phase_t instance
  * @return 0, <0, >0
  */
-int sbp_carrier_phase_cmp(const sbp_carrier_phase_t *a, const sbp_carrier_phase_t *b);
+int sbp_carrier_phase_cmp(const sbp_carrier_phase_t *a,
+                          const sbp_carrier_phase_t *b);
 
 #ifdef __cplusplus
-  }
+}
 
-static inline bool operator==(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator==(const sbp_carrier_phase_t &lhs,
+                              const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator!=(const sbp_carrier_phase_t &lhs,
+                              const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator<(const sbp_carrier_phase_t &lhs,
+                             const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator<=(const sbp_carrier_phase_t &lhs,
+                              const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator>(const sbp_carrier_phase_t &lhs,
+                             const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_carrier_phase_t &lhs, const sbp_carrier_phase_t &rhs) {
+static inline bool operator>=(const sbp_carrier_phase_t &lhs,
+                              const sbp_carrier_phase_t &rhs) {
   return sbp_carrier_phase_cmp(&lhs, &rhs) >= 0;
 }
 

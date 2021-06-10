@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/v4/orientation.h>
 #include <libsbp/internal/v4/common.h>
+#include <libsbp/v4/orientation.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /**
@@ -34,7 +34,8 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_baseline_heading_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_baseline_heading_t *msg);
+bool sbp_msg_baseline_heading_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_baseline_heading_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -43,7 +44,8 @@ bool sbp_msg_baseline_heading_encode_internal(sbp_encode_ctx_t *ctx, const sbp_m
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_baseline_heading_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_baseline_heading_t *msg);
+bool sbp_msg_baseline_heading_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_baseline_heading_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -52,7 +54,8 @@ bool sbp_msg_baseline_heading_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_bas
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_orient_quat_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_orient_quat_t *msg);
+bool sbp_msg_orient_quat_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_orient_quat_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -61,7 +64,8 @@ bool sbp_msg_orient_quat_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_or
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_orient_quat_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_orient_quat_t *msg);
+bool sbp_msg_orient_quat_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_orient_quat_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -70,7 +74,8 @@ bool sbp_msg_orient_quat_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_orient_q
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_orient_euler_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_orient_euler_t *msg);
+bool sbp_msg_orient_euler_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_orient_euler_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -79,7 +84,8 @@ bool sbp_msg_orient_euler_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_o
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_orient_euler_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_orient_euler_t *msg);
+bool sbp_msg_orient_euler_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_orient_euler_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -88,7 +94,8 @@ bool sbp_msg_orient_euler_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_orient_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_angular_rate_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_angular_rate_t *msg);
+bool sbp_msg_angular_rate_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_angular_rate_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -97,10 +104,11 @@ bool sbp_msg_angular_rate_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_a
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_angular_rate_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_angular_rate_t *msg);
+bool sbp_msg_angular_rate_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_angular_rate_t *msg);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_ORIENTATION_H */

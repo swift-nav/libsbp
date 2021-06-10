@@ -20,7 +20,10 @@
 
 #include <libsbp/common.h>
 
-SBP_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/vehicle.h` instead. Access to legacy types via `libsbp/vehicle.h` will be removed in version 5.")
+SBP_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/vehicle.h` instead. Access to legacy "
+    "types via `libsbp/vehicle.h` will be removed in version 5.")
 
 #include <libsbp/legacy/vehicle.h>
 

@@ -18,7 +18,6 @@
 #ifndef LIBSBP_MAG_MACROS_H
 #define LIBSBP_MAG_MACROS_H
 
-
 #define SBP_MSG_MAG_RAW 0x0902
 
 #endif

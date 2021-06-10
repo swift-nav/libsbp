@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/v4/flash.h>
 #include <libsbp/internal/v4/common.h>
+#include <libsbp/v4/flash.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /**
@@ -34,7 +34,8 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_program_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_flash_program_t *msg);
+bool sbp_msg_flash_program_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_flash_program_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -43,7 +44,8 @@ bool sbp_msg_flash_program_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_program_t *msg);
+bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_flash_program_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -52,7 +54,8 @@ bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_done_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_flash_done_t *msg);
+bool sbp_msg_flash_done_encode_internal(sbp_encode_ctx_t *ctx,
+                                        const sbp_msg_flash_done_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -61,7 +64,8 @@ bool sbp_msg_flash_done_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fla
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_done_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_done_t *msg);
+bool sbp_msg_flash_done_decode_internal(sbp_decode_ctx_t *ctx,
+                                        sbp_msg_flash_done_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -70,7 +74,8 @@ bool sbp_msg_flash_done_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_don
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_read_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_req_t *msg);
+bool sbp_msg_flash_read_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -79,7 +84,8 @@ bool sbp_msg_flash_read_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_read_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_read_req_t *msg);
+bool sbp_msg_flash_read_req_decode_internal(sbp_decode_ctx_t *ctx,
+                                            sbp_msg_flash_read_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -88,7 +94,8 @@ bool sbp_msg_flash_read_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_read_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_resp_t *msg);
+bool sbp_msg_flash_read_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -97,7 +104,8 @@ bool sbp_msg_flash_read_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_ms
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_read_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_read_resp_t *msg);
+bool sbp_msg_flash_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_flash_read_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -106,7 +114,8 @@ bool sbp_msg_flash_read_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flas
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_erase_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_flash_erase_t *msg);
+bool sbp_msg_flash_erase_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_flash_erase_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -115,7 +124,8 @@ bool sbp_msg_flash_erase_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fl
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_flash_erase_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_erase_t *msg);
+bool sbp_msg_flash_erase_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_flash_erase_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -124,7 +134,8 @@ bool sbp_msg_flash_erase_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_flash_er
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_flash_lock_sector_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_stm_flash_lock_sector_t *msg);
+bool sbp_msg_stm_flash_lock_sector_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_stm_flash_lock_sector_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -133,7 +144,8 @@ bool sbp_msg_stm_flash_lock_sector_encode_internal(sbp_encode_ctx_t *ctx, const 
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_flash_lock_sector_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_stm_flash_lock_sector_t *msg);
+bool sbp_msg_stm_flash_lock_sector_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_stm_flash_lock_sector_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -142,7 +154,8 @@ bool sbp_msg_stm_flash_lock_sector_decode_internal(sbp_decode_ctx_t *ctx, sbp_ms
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_flash_unlock_sector_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_stm_flash_unlock_sector_t *msg);
+bool sbp_msg_stm_flash_unlock_sector_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_stm_flash_unlock_sector_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -151,7 +164,8 @@ bool sbp_msg_stm_flash_unlock_sector_encode_internal(sbp_encode_ctx_t *ctx, cons
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_flash_unlock_sector_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_stm_flash_unlock_sector_t *msg);
+bool sbp_msg_stm_flash_unlock_sector_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_stm_flash_unlock_sector_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -160,7 +174,8 @@ bool sbp_msg_stm_flash_unlock_sector_decode_internal(sbp_decode_ctx_t *ctx, sbp_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_unique_id_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_req_t *msg);
+bool sbp_msg_stm_unique_id_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -169,7 +184,8 @@ bool sbp_msg_stm_unique_id_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_unique_id_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_stm_unique_id_req_t *msg);
+bool sbp_msg_stm_unique_id_req_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_stm_unique_id_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -178,7 +194,8 @@ bool sbp_msg_stm_unique_id_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_st
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_unique_id_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_resp_t *msg);
+bool sbp_msg_stm_unique_id_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -187,7 +204,8 @@ bool sbp_msg_stm_unique_id_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_stm_unique_id_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_stm_unique_id_resp_t *msg);
+bool sbp_msg_stm_unique_id_resp_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_stm_unique_id_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -196,7 +214,8 @@ bool sbp_msg_stm_unique_id_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_s
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_m25_flash_write_status_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_m25_flash_write_status_t *msg);
+bool sbp_msg_m25_flash_write_status_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_m25_flash_write_status_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -205,10 +224,11 @@ bool sbp_msg_m25_flash_write_status_encode_internal(sbp_encode_ctx_t *ctx, const
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_m25_flash_write_status_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_m25_flash_write_status_t *msg);
+bool sbp_msg_m25_flash_write_status_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_m25_flash_write_status_t *msg);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_FLASH_H */

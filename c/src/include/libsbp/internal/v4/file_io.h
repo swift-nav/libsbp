@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/v4/file_io.h>
 #include <libsbp/internal/v4/common.h>
+#include <libsbp/v4/file_io.h>
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /**
@@ -34,7 +34,8 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg);
+bool sbp_msg_fileio_read_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -43,7 +44,8 @@ bool sbp_msg_fileio_read_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_ms
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_req_t *msg);
+bool sbp_msg_fileio_read_req_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_fileio_read_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -52,7 +54,8 @@ bool sbp_msg_fileio_read_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_file
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg);
+bool sbp_msg_fileio_read_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -61,7 +64,8 @@ bool sbp_msg_fileio_read_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_m
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_resp_t *msg);
+bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_fileio_read_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -70,7 +74,8 @@ bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fil
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_dir_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_req_t *msg);
+bool sbp_msg_fileio_read_dir_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -79,7 +84,8 @@ bool sbp_msg_fileio_read_dir_req_encode_internal(sbp_encode_ctx_t *ctx, const sb
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_dir_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_req_t *msg);
+bool sbp_msg_fileio_read_dir_req_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -88,7 +94,8 @@ bool sbp_msg_fileio_read_dir_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_dir_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg);
+bool sbp_msg_fileio_read_dir_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -97,7 +104,8 @@ bool sbp_msg_fileio_read_dir_resp_encode_internal(sbp_encode_ctx_t *ctx, const s
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_dir_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_resp_t *msg);
+bool sbp_msg_fileio_read_dir_resp_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -106,7 +114,8 @@ bool sbp_msg_fileio_read_dir_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_remove_t *msg);
+bool sbp_msg_fileio_remove_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_fileio_remove_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -115,7 +124,8 @@ bool sbp_msg_fileio_remove_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_remove_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_remove_t *msg);
+bool sbp_msg_fileio_remove_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_fileio_remove_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -124,7 +134,8 @@ bool sbp_msg_fileio_remove_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_write_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg);
+bool sbp_msg_fileio_write_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -133,7 +144,8 @@ bool sbp_msg_fileio_write_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_m
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_req_t *msg);
+bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_fileio_write_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -142,7 +154,8 @@ bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fil
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_write_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_resp_t *msg);
+bool sbp_msg_fileio_write_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -151,7 +164,8 @@ bool sbp_msg_fileio_write_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_write_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_resp_t *msg);
+bool sbp_msg_fileio_write_resp_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -160,7 +174,8 @@ bool sbp_msg_fileio_write_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fi
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_config_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg);
+bool sbp_msg_fileio_config_req_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -169,7 +184,8 @@ bool sbp_msg_fileio_config_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_config_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_req_t *msg);
+bool sbp_msg_fileio_config_req_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -178,7 +194,8 @@ bool sbp_msg_fileio_config_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fi
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_config_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_resp_t *msg);
+bool sbp_msg_fileio_config_resp_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -187,10 +204,11 @@ bool sbp_msg_fileio_config_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_config_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_resp_t *msg);
+bool sbp_msg_fileio_config_resp_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_resp_t *msg);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_FILE_IO_H */

@@ -20,7 +20,10 @@
 
 #include <libsbp/common.h>
 
-SBP_MESSAGE("Legacy SBP definitions have moved. To continue using legacy message definitions include `libsbp/legacy/logging.h` instead. Access to legacy types via `libsbp/logging.h` will be removed in version 5.")
+SBP_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/logging.h` instead. Access to legacy "
+    "types via `libsbp/logging.h` will be removed in version 5.")
 
 #include <libsbp/legacy/logging.h>
 

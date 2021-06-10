@@ -18,18 +18,16 @@
 #ifndef LIBSBP_LOGGING_MACROS_H
 #define LIBSBP_LOGGING_MACROS_H
 
-
 #define SBP_MSG_LOG 0x0401
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
-                             (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) \
-                             & SBP_LOG_LOGGING_LEVEL_MASK)
-#define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
-                             << (SBP_LOG_LOGGING_LEVEL_SHIFT)));} while(0)
-                             
+  (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) & SBP_LOG_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LOGGING_LEVEL_SET(flags, val)           \
+  do {                                                  \
+    ((flags) |= (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
+                 << (SBP_LOG_LOGGING_LEVEL_SHIFT)));    \
+  } while (0)
 
 #define SBP_LOG_LOGGING_LEVEL_EMERG (0)
 #define SBP_LOG_LOGGING_LEVEL_ALERT (1)

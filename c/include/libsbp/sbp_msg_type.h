@@ -18,7 +18,6 @@
 #ifndef LIBSBP_SBP_MSG_TYPE_H
 #define LIBSBP_SBP_MSG_TYPE_H
 
-
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/bootload_macros.h>
 #include <libsbp/ext_events_macros.h>
@@ -206,7 +205,8 @@ typedef enum {
   SbpMsgSsrCodeBiases = SBP_MSG_SSR_CODE_BIASES,
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,
-  SbpMsgSsrGriddedCorrectionNoStdDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
+  SbpMsgSsrGriddedCorrectionNoStdDepA =
+      SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
   SbpMsgSsrGriddedCorrection = SBP_MSG_SSR_GRIDDED_CORRECTION,
   SbpMsgSsrOrbitClockDepA = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A,
   SbpMsgSsrOrbitClock = SBP_MSG_SSR_ORBIT_CLOCK,

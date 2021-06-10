@@ -17,12 +17,12 @@
 
 #ifndef LIBSBP_V4_ACQUISITION_MESSAGES_H
 #define LIBSBP_V4_ACQUISITION_MESSAGES_H
-#include <libsbp/v4/acquisition/MSG_ACQ_RESULT.h>
-#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_C.h>
-#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_B.h>
-#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_A.h>
 #include <libsbp/v4/acquisition/AcqSvProfile.h>
 #include <libsbp/v4/acquisition/AcqSvProfileDep.h>
+#include <libsbp/v4/acquisition/MSG_ACQ_RESULT.h>
+#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_A.h>
+#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_B.h>
+#include <libsbp/v4/acquisition/MSG_ACQ_RESULT_DEP_C.h>
 #include <libsbp/v4/acquisition/MSG_ACQ_SV_PROFILE.h>
 #include <libsbp/v4/acquisition/MSG_ACQ_SV_PROFILE_DEP.h>
 
