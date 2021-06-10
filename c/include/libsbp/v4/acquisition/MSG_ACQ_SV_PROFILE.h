@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_H
 #define LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

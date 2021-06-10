@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H
 #define LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

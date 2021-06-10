@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_REGISTER_RESP_H
 #define LIBSBP_V4_SETTINGS_MSG_SETTINGS_REGISTER_RESP_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

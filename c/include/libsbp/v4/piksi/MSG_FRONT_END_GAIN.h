@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H
 #define LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_FLASH_MSG_FLASH_READ_RESP_H
 #define LIBSBP_V4_FLASH_MSG_FLASH_READ_RESP_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

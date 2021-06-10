@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_GNSS_SVID_H
 #define LIBSBP_V4_GNSS_SVID_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

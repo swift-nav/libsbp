@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_EXT_EVENTS_MSG_EXT_EVENT_H
 #define LIBSBP_V4_EXT_EVENTS_MSG_EXT_EVENT_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

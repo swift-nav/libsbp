@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_H
 #define LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

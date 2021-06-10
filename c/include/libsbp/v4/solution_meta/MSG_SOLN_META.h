@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_H
 #define LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

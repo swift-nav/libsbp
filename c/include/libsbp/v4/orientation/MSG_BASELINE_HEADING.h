@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_ORIENTATION_MSG_BASELINE_HEADING_H
 #define LIBSBP_V4_ORIENTATION_MSG_BASELINE_HEADING_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

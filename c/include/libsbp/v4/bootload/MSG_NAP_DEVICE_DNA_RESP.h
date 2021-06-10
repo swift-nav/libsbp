@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_BOOTLOAD_MSG_NAP_DEVICE_DNA_RESP_H
 #define LIBSBP_V4_BOOTLOAD_MSG_NAP_DEVICE_DNA_RESP_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

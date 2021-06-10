@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_OBSERVATION_MSG_GNSS_CAPB_H
 #define LIBSBP_V4_OBSERVATION_MSG_GNSS_CAPB_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
