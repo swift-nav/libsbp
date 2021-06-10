@@ -96,7 +96,7 @@ int sbp_msg_csac_telemetry_telemetry_strcmp(const sbp_msg_csac_telemetry_t *a,
  * @param msg sbp_msg_csac_telemetry_t instance
  * @return Size of sbp_msg_csac_telemetry_t::telemetry in wire representation
  */
-uint8_t sbp_msg_csac_telemetry_telemetry_encoded_len(
+size_t sbp_msg_csac_telemetry_telemetry_encoded_len(
     const sbp_msg_csac_telemetry_t *msg);
 
 /**
@@ -109,7 +109,7 @@ uint8_t sbp_msg_csac_telemetry_telemetry_encoded_len(
  * @param msg sbp_msg_csac_telemetry_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_csac_telemetry_telemetry_space_remaining(
+size_t sbp_msg_csac_telemetry_telemetry_space_remaining(
     const sbp_msg_csac_telemetry_t *msg);
 /**
  * Set sbp_msg_csac_telemetry_t::telemetry
@@ -206,8 +206,8 @@ const char *sbp_msg_csac_telemetry_telemetry_get(
  * @param msg sbp_msg_csac_telemetry_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_csac_telemetry_telemetry_section_strlen(
-    const sbp_msg_csac_telemetry_t *msg, uint8_t section);
+size_t sbp_msg_csac_telemetry_telemetry_section_strlen(
+    const sbp_msg_csac_telemetry_t *msg, size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_csac_telemetry_t

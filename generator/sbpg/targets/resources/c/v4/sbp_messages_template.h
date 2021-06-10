@@ -127,7 +127,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Size of (((comment_name))) in wire representation
    */
-  uint8_t (((prefix)))_encoded_len(const (((m.type_name))) *msg);
+  size_t (((prefix)))_encoded_len(const (((m.type_name))) *msg);
 
   /**
    * Query (((comment_name))) for remaining space
@@ -137,7 +137,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Maximum number of bytes that can be appended to the existing string
    */
-  uint8_t (((prefix)))_space_remaining(const (((m.type_name))) *msg);
+  size_t (((prefix)))_space_remaining(const (((m.type_name))) *msg);
 
   ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
   /**
@@ -218,7 +218,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Length of section
    */
-  uint8_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section);
+  size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   /**
    * Return the number of sections in (((comment_name)))
@@ -226,7 +226,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Number of sections in string
    */
-  uint8_t (((prefix)))_count_sections(const (((m.type_name))) *msg);
+  size_t (((prefix)))_count_sections(const (((m.type_name))) *msg);
 
   /**
    * Add a section to (((comment_name)))
@@ -317,7 +317,7 @@ typedef struct {
    * @param section Section number
    * @return Pointer to C string, NULL on error
    */
-  const char *(((prefix)))_get_section(const (((m.type_name))) *msg, uint8_t section);
+  const char *(((prefix)))_get_section(const (((m.type_name))) *msg, size_t section);
 
   /**
    * Obtain the length of a section in (((comment_name)))
@@ -330,7 +330,7 @@ typedef struct {
    * @param section Section number
    * @return Length of section
    */
-  uint8_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section);
+  size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
   ((*- else *))
   **** INVALID STRING ENCODING : (((f.encoding))) ****
   ((* endif *))

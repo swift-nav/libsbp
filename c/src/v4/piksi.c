@@ -597,7 +597,7 @@ size_t sbp_msg_thread_state_encoded_len(const sbp_msg_thread_state_t *msg) {
 
 bool sbp_msg_thread_state_encode_internal(sbp_encode_ctx_t *ctx,
                                           const sbp_msg_thread_state_t *msg) {
-  for (uint8_t i = 0; i < 20; i++) {
+  for (size_t i = 0; i < 20; i++) {
     if (!sbp_char_encode(ctx, &msg->name[i])) {
       return false;
     }
@@ -1649,12 +1649,12 @@ int sbp_msg_command_req_command_strcmp(const sbp_msg_command_req_t *a,
   return sbp_null_terminated_string_strcmp(&a->command, &b->command, 251);
 }
 
-uint8_t sbp_msg_command_req_command_encoded_len(
+size_t sbp_msg_command_req_command_encoded_len(
     const sbp_msg_command_req_t *msg) {
   return sbp_null_terminated_string_encoded_len(&msg->command, 251);
 }
 
-uint8_t sbp_msg_command_req_command_space_remaining(
+size_t sbp_msg_command_req_command_space_remaining(
     const sbp_msg_command_req_t *msg) {
   return sbp_null_terminated_string_space_remaining(&msg->command, 251);
 }
@@ -1887,12 +1887,12 @@ int sbp_msg_command_output_line_strcmp(const sbp_msg_command_output_t *a,
   return sbp_unterminated_string_strcmp(&a->line, &b->line, 251);
 }
 
-uint8_t sbp_msg_command_output_line_encoded_len(
+size_t sbp_msg_command_output_line_encoded_len(
     const sbp_msg_command_output_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->line, 251);
 }
 
-uint8_t sbp_msg_command_output_line_space_remaining(
+size_t sbp_msg_command_output_line_space_remaining(
     const sbp_msg_command_output_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->line, 251);
 }
@@ -2114,7 +2114,7 @@ size_t sbp_msg_network_state_resp_encoded_len(
 
 bool sbp_msg_network_state_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_network_state_resp_t *msg) {
-  for (uint8_t i = 0; i < 4; i++) {
+  for (size_t i = 0; i < 4; i++) {
     if (!sbp_u8_encode(ctx, &msg->ipv4_address[i])) {
       return false;
     }
@@ -2122,7 +2122,7 @@ bool sbp_msg_network_state_resp_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->ipv4_mask_size)) {
     return false;
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (size_t i = 0; i < 16; i++) {
     if (!sbp_u8_encode(ctx, &msg->ipv6_address[i])) {
       return false;
     }
@@ -2136,7 +2136,7 @@ bool sbp_msg_network_state_resp_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->tx_bytes)) {
     return false;
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (size_t i = 0; i < 16; i++) {
     if (!sbp_char_encode(ctx, &msg->interface_name[i])) {
       return false;
     }
@@ -2304,7 +2304,7 @@ bool sbp_network_usage_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u32_encode(ctx, &msg->tx_bytes)) {
     return false;
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (size_t i = 0; i < 16; i++) {
     if (!sbp_char_encode(ctx, &msg->interface_name[i])) {
       return false;
     }
@@ -2407,7 +2407,7 @@ size_t sbp_msg_network_bandwidth_usage_encoded_len(
 
 bool sbp_msg_network_bandwidth_usage_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_network_bandwidth_usage_t *msg) {
-  for (uint8_t i = 0; i < msg->n_interfaces; i++) {
+  for (size_t i = 0; i < msg->n_interfaces; i++) {
     if (!sbp_network_usage_encode_internal(ctx, &msg->interfaces[i])) {
       return false;
     }
@@ -2506,7 +2506,7 @@ bool sbp_msg_cell_modem_status_encode_internal(
   if (!sbp_float_encode(ctx, &msg->signal_error_rate)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_reserved; i++) {
+  for (size_t i = 0; i < msg->n_reserved; i++) {
     if (!sbp_u8_encode(ctx, &msg->reserved[i])) {
       return false;
     }
@@ -2635,7 +2635,7 @@ bool sbp_msg_specan_dep_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_float_encode(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
+  for (size_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!sbp_u8_encode(ctx, &msg->amplitude_value[i])) {
       return false;
     }
@@ -2795,7 +2795,7 @@ bool sbp_msg_specan_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_float_encode(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
+  for (size_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!sbp_u8_encode(ctx, &msg->amplitude_value[i])) {
       return false;
     }
@@ -2928,12 +2928,12 @@ size_t sbp_msg_front_end_gain_encoded_len(const sbp_msg_front_end_gain_t *msg) {
 
 bool sbp_msg_front_end_gain_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_front_end_gain_t *msg) {
-  for (uint8_t i = 0; i < 8; i++) {
+  for (size_t i = 0; i < 8; i++) {
     if (!sbp_s8_encode(ctx, &msg->rf_gain[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 8; i++) {
+  for (size_t i = 0; i < 8; i++) {
     if (!sbp_s8_encode(ctx, &msg->if_gain[i])) {
       return false;
     }

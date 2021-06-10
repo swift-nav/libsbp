@@ -38,12 +38,12 @@ int (((field_prefix)))_strcmp(const (((m.type_name))) *a, const (((m.type_name))
   return (((string_prefix)))_strcmp(&a->(((f.name))), &b->(((f.name))), (((f.max_items))));
 }
 
-uint8_t (((field_prefix)))_encoded_len(const (((m.type_name))) *msg)
+size_t (((field_prefix)))_encoded_len(const (((m.type_name))) *msg)
 {
   return (((string_prefix)))_encoded_len(&msg->(((f.name))), (((f.max_items))));
 }
 
-uint8_t (((field_prefix)))_space_remaining(const (((m.type_name))) *msg)
+size_t (((field_prefix)))_space_remaining(const (((m.type_name))) *msg)
 {
   return (((string_prefix)))_space_remaining(&msg->(((f.name))), (((f.max_items))));
 }
@@ -88,7 +88,7 @@ const char *(((field_prefix)))_get(const (((m.type_name))) *msg)
 }
 
 ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
-uint8_t (((field_prefix)))_count_sections(const (((m.type_name))) *msg)
+size_t (((field_prefix)))_count_sections(const (((m.type_name))) *msg)
 {
   return (((string_prefix)))_count_sections(&msg->(((f.name))), (((f.max_items))));
 }
@@ -131,12 +131,12 @@ bool (((field_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt
   return (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items))), fmt, ap);
 }
 
-const char *(((field_prefix)))_get_section(const (((m.type_name))) *msg, uint8_t section)
+const char *(((field_prefix)))_get_section(const (((m.type_name))) *msg, size_t section)
 {
   return (((string_prefix)))_get_section(&msg->(((f.name))), (((f.max_items))), section);
 }
 
-uint8_t (((field_prefix)))_section_strlen(const (((m.type_name))) *msg, uint8_t section)
+size_t (((field_prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section)
 {
   return (((string_prefix)))_section_strlen(&msg->(((f.name))), (((f.max_items))), section);
 }
@@ -188,7 +188,7 @@ bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name)
   ((*- else *))
   ((*- set max_loop = "msg->" + f.size_fn *))
   ((*- endif *))
-  for (uint8_t i = 0; i < (((max_loop))); i++)
+  for (size_t i = 0; i < (((max_loop))); i++)
   {
     if (!(((f.basetype_encode)))(ctx, &(((field)))[i])) { return false; }
   }

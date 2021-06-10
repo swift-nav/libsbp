@@ -106,7 +106,7 @@ int sbp_msg_linux_process_fd_count_cmdline_strcmp(
  * @return Size of sbp_msg_linux_process_fd_count_t::cmdline in wire
  * representation
  */
-uint8_t sbp_msg_linux_process_fd_count_cmdline_encoded_len(
+size_t sbp_msg_linux_process_fd_count_cmdline_encoded_len(
     const sbp_msg_linux_process_fd_count_t *msg);
 
 /**
@@ -119,7 +119,7 @@ uint8_t sbp_msg_linux_process_fd_count_cmdline_encoded_len(
  * @param msg sbp_msg_linux_process_fd_count_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
+size_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
     const sbp_msg_linux_process_fd_count_t *msg);
 /**
  * Set sbp_msg_linux_process_fd_count_t::cmdline
@@ -217,8 +217,8 @@ const char *sbp_msg_linux_process_fd_count_cmdline_get(
  * @param msg sbp_msg_linux_process_fd_count_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_linux_process_fd_count_cmdline_section_strlen(
-    const sbp_msg_linux_process_fd_count_t *msg, uint8_t section);
+size_t sbp_msg_linux_process_fd_count_cmdline_section_strlen(
+    const sbp_msg_linux_process_fd_count_t *msg, size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_fd_count_t

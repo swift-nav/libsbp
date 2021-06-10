@@ -28,11 +28,11 @@ int sbp_msg_log_text_strcmp(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
   return sbp_unterminated_string_strcmp(&a->text, &b->text, 254);
 }
 
-uint8_t sbp_msg_log_text_encoded_len(const sbp_msg_log_t *msg) {
+size_t sbp_msg_log_text_encoded_len(const sbp_msg_log_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->text, 254);
 }
 
-uint8_t sbp_msg_log_text_space_remaining(const sbp_msg_log_t *msg) {
+size_t sbp_msg_log_text_space_remaining(const sbp_msg_log_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->text, 254);
 }
 bool sbp_msg_log_text_set(sbp_msg_log_t *msg, const char *new_str) {
@@ -170,7 +170,7 @@ bool sbp_msg_fwd_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->protocol)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
+  for (size_t i = 0; i < msg->n_fwd_payload; i++) {
     if (!sbp_u8_encode(ctx, &msg->fwd_payload[i])) {
       return false;
     }
@@ -273,11 +273,11 @@ int sbp_msg_print_dep_text_strcmp(const sbp_msg_print_dep_t *a,
   return sbp_unterminated_string_strcmp(&a->text, &b->text, 255);
 }
 
-uint8_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg) {
+size_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->text, 255);
 }
 
-uint8_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg) {
+size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->text, 255);
 }
 bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str) {

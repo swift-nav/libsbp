@@ -107,12 +107,12 @@ int sbp_msg_bootloader_handshake_resp_version_strcmp(
   return sbp_unterminated_string_strcmp(&a->version, &b->version, 251);
 }
 
-uint8_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
+size_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->version, 251);
 }
 
-uint8_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
+size_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->version, 251);
 }
@@ -412,7 +412,7 @@ size_t sbp_msg_nap_device_dna_resp_encoded_len(
 
 bool sbp_msg_nap_device_dna_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg) {
-  for (uint8_t i = 0; i < 8; i++) {
+  for (size_t i = 0; i < 8; i++) {
     if (!sbp_u8_encode(ctx, &msg->dna[i])) {
       return false;
     }
@@ -505,12 +505,12 @@ int sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(
   return sbp_unterminated_string_strcmp(&a->handshake, &b->handshake, 255);
 }
 
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->handshake, 255);
 }
 
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->handshake, 255);
 }

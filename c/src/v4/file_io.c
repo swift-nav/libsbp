@@ -30,12 +30,12 @@ int sbp_msg_fileio_read_req_filename_strcmp(
   return sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 246);
 }
 
-uint8_t sbp_msg_fileio_read_req_filename_encoded_len(
+size_t sbp_msg_fileio_read_req_filename_encoded_len(
     const sbp_msg_fileio_read_req_t *msg) {
   return sbp_null_terminated_string_encoded_len(&msg->filename, 246);
 }
 
-uint8_t sbp_msg_fileio_read_req_filename_space_remaining(
+size_t sbp_msg_fileio_read_req_filename_space_remaining(
     const sbp_msg_fileio_read_req_t *msg) {
   return sbp_null_terminated_string_space_remaining(&msg->filename, 246);
 }
@@ -207,7 +207,7 @@ bool sbp_msg_fileio_read_resp_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_contents; i++) {
+  for (size_t i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_encode(ctx, &msg->contents[i])) {
       return false;
     }
@@ -311,12 +311,12 @@ int sbp_msg_fileio_read_dir_req_dirname_strcmp(
   return sbp_null_terminated_string_strcmp(&a->dirname, &b->dirname, 247);
 }
 
-uint8_t sbp_msg_fileio_read_dir_req_dirname_encoded_len(
+size_t sbp_msg_fileio_read_dir_req_dirname_encoded_len(
     const sbp_msg_fileio_read_dir_req_t *msg) {
   return sbp_null_terminated_string_encoded_len(&msg->dirname, 247);
 }
 
-uint8_t sbp_msg_fileio_read_dir_req_dirname_space_remaining(
+size_t sbp_msg_fileio_read_dir_req_dirname_space_remaining(
     const sbp_msg_fileio_read_dir_req_t *msg) {
   return sbp_null_terminated_string_space_remaining(&msg->dirname, 247);
 }
@@ -479,16 +479,16 @@ int sbp_msg_fileio_read_dir_resp_contents_strcmp(
   return sbp_multipart_string_strcmp(&a->contents, &b->contents, 251);
 }
 
-uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
+size_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
   return sbp_multipart_string_encoded_len(&msg->contents, 251);
 }
 
-uint8_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
+size_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
   return sbp_multipart_string_space_remaining(&msg->contents, 251);
 }
-uint8_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
+size_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
   return sbp_multipart_string_count_sections(&msg->contents, 251);
 }
@@ -533,12 +533,12 @@ bool sbp_msg_fileio_read_dir_resp_contents_append_vprintf(
 }
 
 const char *sbp_msg_fileio_read_dir_resp_contents_get_section(
-    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section) {
+    const sbp_msg_fileio_read_dir_resp_t *msg, size_t section) {
   return sbp_multipart_string_get_section(&msg->contents, 251, section);
 }
 
-uint8_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
-    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section) {
+size_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
+    const sbp_msg_fileio_read_dir_resp_t *msg, size_t section) {
   return sbp_multipart_string_section_strlen(&msg->contents, 251, section);
 }
 
@@ -647,12 +647,12 @@ int sbp_msg_fileio_remove_filename_strcmp(const sbp_msg_fileio_remove_t *a,
   return sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 255);
 }
 
-uint8_t sbp_msg_fileio_remove_filename_encoded_len(
+size_t sbp_msg_fileio_remove_filename_encoded_len(
     const sbp_msg_fileio_remove_t *msg) {
   return sbp_null_terminated_string_encoded_len(&msg->filename, 255);
 }
 
-uint8_t sbp_msg_fileio_remove_filename_space_remaining(
+size_t sbp_msg_fileio_remove_filename_space_remaining(
     const sbp_msg_fileio_remove_t *msg) {
   return sbp_null_terminated_string_space_remaining(&msg->filename, 255);
 }
@@ -788,12 +788,12 @@ int sbp_msg_fileio_write_req_filename_strcmp(
   return sbp_null_terminated_string_strcmp(&a->filename, &b->filename, 247);
 }
 
-uint8_t sbp_msg_fileio_write_req_filename_encoded_len(
+size_t sbp_msg_fileio_write_req_filename_encoded_len(
     const sbp_msg_fileio_write_req_t *msg) {
   return sbp_null_terminated_string_encoded_len(&msg->filename, 247);
 }
 
-uint8_t sbp_msg_fileio_write_req_filename_space_remaining(
+size_t sbp_msg_fileio_write_req_filename_space_remaining(
     const sbp_msg_fileio_write_req_t *msg) {
   return sbp_null_terminated_string_space_remaining(&msg->filename, 247);
 }
@@ -858,7 +858,7 @@ bool sbp_msg_fileio_write_req_encode_internal(
   if (!sbp_null_terminated_string_encode(&msg->filename, 247, ctx)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_data; i++) {
+  for (size_t i = 0; i < msg->n_data; i++) {
     if (!sbp_u8_encode(ctx, &msg->data[i])) {
       return false;
     }

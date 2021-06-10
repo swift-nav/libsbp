@@ -100,7 +100,7 @@ int sbp_msg_fileio_read_dir_resp_contents_strcmp(
  * @return Size of sbp_msg_fileio_read_dir_resp_t::contents in wire
  * representation
  */
-uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
+size_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
     const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
@@ -113,7 +113,7 @@ uint8_t sbp_msg_fileio_read_dir_resp_contents_encoded_len(
  * @param msg sbp_msg_fileio_read_dir_resp_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
+size_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
     const sbp_msg_fileio_read_dir_resp_t *msg);
 /**
  * Return the number of sections in sbp_msg_fileio_read_dir_resp_t::contents
@@ -121,7 +121,7 @@ uint8_t sbp_msg_fileio_read_dir_resp_contents_space_remaining(
  * @param msg sbp_msg_fileio_read_dir_resp_t instance
  * @return Number of sections in string
  */
-uint8_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
+size_t sbp_msg_fileio_read_dir_resp_contents_count_sections(
     const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
@@ -247,7 +247,7 @@ bool sbp_msg_fileio_read_dir_resp_contents_append_vprintf(
  * @return Pointer to C string, NULL on error
  */
 const char *sbp_msg_fileio_read_dir_resp_contents_get_section(
-    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section);
+    const sbp_msg_fileio_read_dir_resp_t *msg, size_t section);
 
 /**
  * Obtain the length of a section in sbp_msg_fileio_read_dir_resp_t::contents
@@ -260,8 +260,8 @@ const char *sbp_msg_fileio_read_dir_resp_contents_get_section(
  * @param section Section number
  * @return Length of section
  */
-uint8_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
-    const sbp_msg_fileio_read_dir_resp_t *msg, uint8_t section);
+size_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
+    const sbp_msg_fileio_read_dir_resp_t *msg, size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_fileio_read_dir_resp_t

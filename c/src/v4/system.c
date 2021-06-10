@@ -128,12 +128,12 @@ int sbp_msg_dgnss_status_source_strcmp(const sbp_msg_dgnss_status_t *a,
   return sbp_unterminated_string_strcmp(&a->source, &b->source, 251);
 }
 
-uint8_t sbp_msg_dgnss_status_source_encoded_len(
+size_t sbp_msg_dgnss_status_source_encoded_len(
     const sbp_msg_dgnss_status_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->source, 251);
 }
 
-uint8_t sbp_msg_dgnss_status_source_space_remaining(
+size_t sbp_msg_dgnss_status_source_space_remaining(
     const sbp_msg_dgnss_status_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->source, 251);
 }
@@ -476,7 +476,7 @@ bool sbp_msg_status_report_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u32_encode(ctx, &msg->uptime)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_status; i++) {
+  for (size_t i = 0; i < msg->n_status; i++) {
     if (!sbp_sub_system_report_encode_internal(ctx, &msg->status[i])) {
       return false;
     }
@@ -677,12 +677,12 @@ int sbp_msg_csac_telemetry_telemetry_strcmp(const sbp_msg_csac_telemetry_t *a,
   return sbp_unterminated_string_strcmp(&a->telemetry, &b->telemetry, 254);
 }
 
-uint8_t sbp_msg_csac_telemetry_telemetry_encoded_len(
+size_t sbp_msg_csac_telemetry_telemetry_encoded_len(
     const sbp_msg_csac_telemetry_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->telemetry, 254);
 }
 
-uint8_t sbp_msg_csac_telemetry_telemetry_space_remaining(
+size_t sbp_msg_csac_telemetry_telemetry_space_remaining(
     const sbp_msg_csac_telemetry_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->telemetry, 254);
 }
@@ -832,12 +832,12 @@ int sbp_msg_csac_telemetry_labels_telemetry_labels_strcmp(
                                         &b->telemetry_labels, 254);
 }
 
-uint8_t sbp_msg_csac_telemetry_labels_telemetry_labels_encoded_len(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_encoded_len(
     const sbp_msg_csac_telemetry_labels_t *msg) {
   return sbp_unterminated_string_encoded_len(&msg->telemetry_labels, 254);
 }
 
-uint8_t sbp_msg_csac_telemetry_labels_telemetry_labels_space_remaining(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_space_remaining(
     const sbp_msg_csac_telemetry_labels_t *msg) {
   return sbp_unterminated_string_space_remaining(&msg->telemetry_labels, 254);
 }
@@ -1348,7 +1348,7 @@ bool sbp_msg_group_meta_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->n_group_msgs)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_group_msgs; i++) {
+  for (size_t i = 0; i < msg->n_group_msgs; i++) {
     if (!sbp_u16_encode(ctx, &msg->group_msgs[i])) {
       return false;
     }

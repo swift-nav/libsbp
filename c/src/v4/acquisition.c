@@ -877,7 +877,7 @@ size_t sbp_msg_acq_sv_profile_encoded_len(const sbp_msg_acq_sv_profile_t *msg) {
 
 bool sbp_msg_acq_sv_profile_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_t *msg) {
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+  for (size_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_encode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }
@@ -967,7 +967,7 @@ size_t sbp_msg_acq_sv_profile_dep_encoded_len(
 
 bool sbp_msg_acq_sv_profile_dep_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_dep_t *msg) {
-  for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
+  for (size_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_dep_encode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;
     }

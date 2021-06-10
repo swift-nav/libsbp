@@ -462,7 +462,7 @@ bool sbp_msg_obs_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_observation_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (size_t i = 0; i < msg->n_obs; i++) {
     if (!sbp_packed_obs_content_encode_internal(ctx, &msg->obs[i])) {
       return false;
     }
@@ -3588,17 +3588,17 @@ bool sbp_msg_ephemeris_sbas_dep_a_encode_internal(
   if (!sbp_ephemeris_common_content_dep_a_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3752,17 +3752,17 @@ bool sbp_msg_ephemeris_glo_dep_a_encode_internal(
   if (!sbp_double_encode(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3904,17 +3904,17 @@ bool sbp_msg_ephemeris_sbas_dep_b_encode_internal(
   if (!sbp_ephemeris_common_content_dep_b_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4061,17 +4061,17 @@ bool sbp_msg_ephemeris_sbas_encode_internal(
   if (!sbp_ephemeris_common_content_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_float_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_float_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4224,17 +4224,17 @@ bool sbp_msg_ephemeris_glo_dep_b_encode_internal(
   if (!sbp_double_encode(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4387,17 +4387,17 @@ bool sbp_msg_ephemeris_glo_dep_c_encode_internal(
   if (!sbp_double_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4570,17 +4570,17 @@ bool sbp_msg_ephemeris_glo_dep_d_encode_internal(
   if (!sbp_double_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4763,17 +4763,17 @@ bool sbp_msg_ephemeris_glo_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_float_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_float_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -7036,7 +7036,7 @@ bool sbp_msg_obs_dep_a_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_observation_header_dep_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (size_t i = 0; i < msg->n_obs; i++) {
     if (!sbp_packed_obs_content_dep_a_encode_internal(ctx, &msg->obs[i])) {
       return false;
     }
@@ -7136,7 +7136,7 @@ bool sbp_msg_obs_dep_b_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_observation_header_dep_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (size_t i = 0; i < msg->n_obs; i++) {
     if (!sbp_packed_obs_content_dep_b_encode_internal(ctx, &msg->obs[i])) {
       return false;
     }
@@ -7236,7 +7236,7 @@ bool sbp_msg_obs_dep_c_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_observation_header_dep_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (size_t i = 0; i < msg->n_obs; i++) {
     if (!sbp_packed_obs_content_dep_c_encode_internal(ctx, &msg->obs[i])) {
       return false;
     }
@@ -9488,7 +9488,7 @@ size_t sbp_msg_sv_az_el_encoded_len(const sbp_msg_sv_az_el_t *msg) {
 
 bool sbp_msg_sv_az_el_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_msg_sv_az_el_t *msg) {
-  for (uint8_t i = 0; i < msg->n_azel; i++) {
+  for (size_t i = 0; i < msg->n_azel; i++) {
     if (!sbp_sv_az_el_encode_internal(ctx, &msg->azel[i])) {
       return false;
     }
@@ -9577,7 +9577,7 @@ bool sbp_msg_osr_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_observation_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_obs; i++) {
+  for (size_t i = 0; i < msg->n_obs; i++) {
     if (!sbp_packed_osr_content_encode_internal(ctx, &msg->obs[i])) {
       return false;
     }
