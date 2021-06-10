@@ -83,16 +83,31 @@ protected:
                                                                               
 TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)     
 {                                                                             
-    ((*- macro compare_value(path, value) *))
+    ((*- macro compare_string(root_path, value) *))
+    EXPECT_EQ( (((- value.fn_prefix)))_encoded_len(&(((root_path)))), (((value.encoded_len))));
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    EXPECT_STREQ( (((- value.fn_prefix)))_get_section(&(((root_path))), (((loop.index0)))), "(((value.sections[loop.index0])))");
+    ((*- endfor *))
+    ((*- else *))
+    EXPECT_STREQ( (((- value.fn_prefix)))_get(&(((root_path)))), "(((value.text)))");
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro compare_value(root_path, path, value) *))
     ((*- if value is string_type *))
     {
       const char check_string[] = { (((value|str_escape))) };
       EXPECT_EQ(memcmp( (((-path))), check_string, sizeof(check_string)), 0) << "incorrect value for (((path))), expected string '" << check_string << "', is '" << (((path))) << "'";
     }
     ((*- elif value is array_type *))
-    ((*- for ff in value *))(((compare_value(path + '[' + loop.index0|to_str + ']', ff))))((*- endfor *))
+    ((*- for ff in value *))(((compare_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))((*- endfor *))
     ((*- elif value is dict_type *))
-    ((*- for k in value|sorted *))(((compare_value(path + '.' + k, value[k]))))((*- endfor *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((compare_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in value|sorted *))(((compare_value(root_path, path + '.' + k, value[k]))))((*- endfor *))
+    ((*- endif *))
     ((*- elif value is float_type *))((=
         Note: the ("%.12g"|format(value)|float) filter is intended to keep float
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
@@ -102,7 +117,18 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
     ((*- endif *))
     ((*- endmacro *))
 
-    ((*- macro assign_value(path, value) *))
+    ((*- macro assign_string(root_path, value) *))
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    EXPECT_TRUE( (((- value.fn_prefix)))_add_section(&(((root_path))), "(((value.sections[loop.index0])))"));
+    ((*- endfor *))
+    ((*- else *))
+    EXPECT_TRUE( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))"));
+    ((*- endif *))
+    EXPECT_EQ( (((- value.fn_prefix)))_encoded_len(&(((root_path)))), (((value.encoded_len))));
+    ((*- endmacro *))
+
+    ((*- macro assign_value(root_path, path, value) *))
     ((*- if value is string_type *))
     {
       const char assign_string[] = { (((value|str_escape))) };
@@ -110,10 +136,14 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
     }
     ((*- elif value is array_type *))
     ((*- for ff in value *))
-    (((assign_value(path + '[' + loop.index0|to_str + ']', ff))))
+    (((assign_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))
     ((*- endfor *))
     ((*- elif value is dict_type *))
-    ((*- for k in value|sorted *))(((assign_value(path + '.' + k, value[k]))))((*- endfor *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((assign_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in value|sorted *))(((assign_value(root_path, path + '.' + k, value[k]))))((*- endfor *))
+    ((*- endif *))
     ((*- else *))
     (((path))) = (((value)));
     ((*- endif *))
@@ -123,7 +153,7 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
 
     (((msg_type))) test_msg{};
     ((*- if t.c_decoded_fields *))
-    ((*- for f in t.c_decoded_fieldskeys *))(((assign_value("test_msg." + f, t.c_decoded_fields[f]))))((*- endfor *))
+    ((*- for f in t.c_decoded_fieldskeys *))(((assign_value("test_msg", "test_msg." + f, t.c_decoded_fields[f]))))((*- endfor *))
     ((*- endif *))
                                                                               
     EXPECT_EQ(send_message( (((t.raw_json_obj.sender))), test_msg), SBP_OK);
@@ -139,7 +169,7 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
     EXPECT_EQ(last_sender_id_, (((t.raw_json_obj.sender))));
     EXPECT_EQ(last_msg_, test_msg);
 
-    ((*- for f in t.c_decoded_fieldskeys *))(((compare_value("last_msg_." + f, t.c_decoded_fields[f]))))((*- endfor *))
+    ((*- for f in t.c_decoded_fieldskeys *))(((compare_value("last_msg_", "last_msg_." + f, t.c_decoded_fields[f]))))((*- endfor *))
 }
 ((*- endfor *))
 

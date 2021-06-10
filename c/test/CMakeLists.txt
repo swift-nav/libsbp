@@ -75,3 +75,4 @@ swift_set_compile_options(test-libsbp-v4
 
 add_subdirectory(cpp)
 add_subdirectory(legacy/cpp)
+add_subdirectory(string)

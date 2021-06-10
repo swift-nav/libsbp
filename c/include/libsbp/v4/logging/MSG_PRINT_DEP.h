@@ -19,6 +19,7 @@
 #define LIBSBP_V4_LOGGING_MSG_PRINT_DEP_H
 
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -26,10 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/logging_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,7 +48,7 @@ typedef struct {
   /**
    * Human-readable string
    */
-  sbp_unterminated_string_t text;
+  sbp_string_t text;
 } sbp_msg_print_dep_t;
 
 /**
@@ -88,7 +86,7 @@ int sbp_msg_print_dep_text_strcmp(const sbp_msg_print_dep_t *a,
  * @param msg sbp_msg_print_dep_t instance
  * @return Size of sbp_msg_print_dep_t::text in wire representation
  */
-uint8_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
+size_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
 
 /**
  * Query sbp_msg_print_dep_t::text for remaining space
@@ -100,7 +98,7 @@ uint8_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
  * @param msg sbp_msg_print_dep_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
+size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
 /**
  * Set sbp_msg_print_dep_t::text
  *
@@ -194,8 +192,8 @@ const char *sbp_msg_print_dep_text_get(const sbp_msg_print_dep_t *msg);
  * @param msg sbp_msg_print_dep_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_print_dep_text_section_strlen(const sbp_msg_print_dep_t *msg,
-                                              uint8_t section);
+size_t sbp_msg_print_dep_text_section_strlen(const sbp_msg_print_dep_t *msg,
+                                             size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_print_dep_t

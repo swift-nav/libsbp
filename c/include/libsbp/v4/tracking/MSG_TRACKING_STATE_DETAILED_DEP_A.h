@@ -19,6 +19,7 @@
 #define LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H
 
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -30,10 +31,7 @@
 #include <libsbp/v4/gnss/CarrierPhase.h>
 #include <libsbp/v4/gnss/GPSTime.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

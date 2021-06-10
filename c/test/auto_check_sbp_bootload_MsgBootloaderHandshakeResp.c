@@ -104,14 +104,12 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     test_msg.bootloader_handshake_resp.flags = 0;
 
-    {
-      const char assign_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                    (char)10};
-      memcpy(test_msg.bootloader_handshake_resp.version.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.bootloader_handshake_resp.version.encoded_len = 5;
+    ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_set(
+                      &test_msg.bootloader_handshake_resp, "v1.2\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_encoded_len(
+                      &test_msg.bootloader_handshake_resp) == 5,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, 0,
                      &test_msg, &dummy_write);
@@ -141,24 +139,13 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
         "expected 0, is %d",
         last_msg.msg.bootloader_handshake_resp.flags);
 
-    {
-      const char check_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                   (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.bootloader_handshake_resp.version.data,
-                           check_string, sizeof(check_string)) == 0,
-                    "incorrect value for "
-                    "last_msg.msg.bootloader_handshake_resp.version.data, "
-                    "expected string '%s', is '%s'",
-                    check_string,
-                    last_msg.msg.bootloader_handshake_resp.version.data);
-    }
-
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_resp.version.encoded_len == 5,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_resp.version.encoded_len, expected "
-        "5, is %d",
-        last_msg.msg.bootloader_handshake_resp.version.encoded_len);
+    ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_encoded_len(
+                      &last_msg.msg.bootloader_handshake_resp) == 5,
+                  "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_bootloader_handshake_resp_version_get(
+                             &last_msg.msg.bootloader_handshake_resp),
+                         "v1.2\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -184,15 +171,12 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.bootloader_handshake_dep_a.handshake.data[0] = 118;
-
-    test_msg.bootloader_handshake_dep_a.handshake.data[1] = 49;
-
-    test_msg.bootloader_handshake_dep_a.handshake.data[2] = 46;
-
-    test_msg.bootloader_handshake_dep_a.handshake.data[3] = 50;
-
-    test_msg.bootloader_handshake_dep_a.handshake.encoded_len = 4;
+    ck_assert_msg(sbp_msg_bootloader_handshake_dep_a_handshake_set(
+                      &test_msg.bootloader_handshake_dep_a, "v1.2") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
+                      &test_msg.bootloader_handshake_dep_a) == 4,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, 1219,
                      &test_msg, &dummy_write);
@@ -216,37 +200,13 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
                                   &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[0] == 118,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.data[0], expected "
-        "118, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[0]);
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[1] == 49,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.data[1], expected "
-        "49, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[1]);
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[2] == 46,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.data[2], expected "
-        "46, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[2]);
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[3] == 50,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.data[3], expected "
-        "50, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.data[3]);
-
-    ck_assert_msg(
-        last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len == 4,
-        "incorrect value for "
-        "last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len, "
-        "expected 4, is %d",
-        last_msg.msg.bootloader_handshake_dep_a.handshake.encoded_len);
+    ck_assert_msg(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
+                      &last_msg.msg.bootloader_handshake_dep_a) == 4,
+                  "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_bootloader_handshake_dep_a_handshake_get(
+                             &last_msg.msg.bootloader_handshake_dep_a),
+                         "v1.2") == 0,
+                  "String not decoded properly");
   }
 }
 END_TEST

@@ -510,7 +510,7 @@ bool sbp_stec_sat_element_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->stec_quality_indicator)) {
     return false;
   }
-  for (uint8_t i = 0; i < 4; i++) {
+  for (size_t i = 0; i < 4; i++) {
     if (!sbp_s16_encode(ctx, &msg->stec_coeff[i])) {
       return false;
     }
@@ -1184,7 +1184,7 @@ bool sbp_msg_ssr_code_biases_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->iod_ssr)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_biases; i++) {
+  for (size_t i = 0; i < msg->n_biases; i++) {
     if (!sbp_code_biases_content_encode_internal(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1338,7 +1338,7 @@ bool sbp_msg_ssr_phase_biases_encode_internal(
   if (!sbp_s8_encode(ctx, &msg->yaw_rate)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_biases; i++) {
+  for (size_t i = 0; i < msg->n_biases; i++) {
     if (!sbp_phase_biases_content_encode_internal(ctx, &msg->biases[i])) {
       return false;
     }
@@ -1497,7 +1497,7 @@ bool sbp_msg_ssr_stec_correction_encode_internal(
   if (!sbp_stec_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
+  for (size_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!sbp_stec_sat_element_encode_internal(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -1610,7 +1610,7 @@ bool sbp_msg_ssr_gridded_correction_encode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (size_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_encode_internal(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -1915,12 +1915,12 @@ bool sbp_satellite_apc_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u16_encode(ctx, &msg->svn)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (!sbp_s16_encode(ctx, &msg->pco[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 21; i++) {
+  for (size_t i = 0; i < 21; i++) {
     if (!sbp_s8_encode(ctx, &msg->pcv[i])) {
       return false;
     }
@@ -2026,7 +2026,7 @@ size_t sbp_msg_ssr_satellite_apc_encoded_len(
 
 bool sbp_msg_ssr_satellite_apc_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_t *msg) {
-  for (uint8_t i = 0; i < msg->n_apc; i++) {
+  for (size_t i = 0; i < msg->n_apc; i++) {
     if (!sbp_satellite_apc_encode_internal(ctx, &msg->apc[i])) {
       return false;
     }
@@ -2722,7 +2722,7 @@ bool sbp_msg_ssr_stec_correction_dep_a_encode_internal(
   if (!sbp_stec_header_dep_a_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
+  for (size_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!sbp_stec_sat_element_encode_internal(ctx, &msg->stec_sat_list[i])) {
       return false;
     }
@@ -2837,7 +2837,7 @@ bool sbp_msg_ssr_gridded_correction_no_std_dep_a_encode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (size_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_no_std_encode_internal(ctx,
                                                   &msg->stec_residuals[i])) {
       return false;
@@ -2973,7 +2973,7 @@ bool sbp_msg_ssr_gridded_correction_dep_a_encode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
+  for (size_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_encode_internal(ctx, &msg->stec_residuals[i])) {
       return false;
     }
@@ -3094,7 +3094,7 @@ bool sbp_msg_ssr_grid_definition_dep_a_encode_internal(
   if (!sbp_grid_definition_header_dep_a_encode_internal(ctx, &msg->header)) {
     return false;
   }
-  for (uint8_t i = 0; i < msg->n_rle_list; i++) {
+  for (size_t i = 0; i < msg->n_rle_list; i++) {
     if (!sbp_u8_encode(ctx, &msg->rle_list[i])) {
       return false;
     }

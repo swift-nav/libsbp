@@ -19,6 +19,7 @@
 #define LIBSBP_V4_LINUX_MSG_LINUX_CPU_STATE_H
 
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -26,10 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/linux_macros.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,7 +79,7 @@ typedef struct {
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  sbp_unterminated_string_t cmdline;
+  sbp_string_t cmdline;
 } sbp_msg_linux_cpu_state_t;
 
 /**
@@ -120,7 +118,7 @@ int sbp_msg_linux_cpu_state_cmdline_strcmp(const sbp_msg_linux_cpu_state_t *a,
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Size of sbp_msg_linux_cpu_state_t::cmdline in wire representation
  */
-uint8_t sbp_msg_linux_cpu_state_cmdline_encoded_len(
+size_t sbp_msg_linux_cpu_state_cmdline_encoded_len(
     const sbp_msg_linux_cpu_state_t *msg);
 
 /**
@@ -133,7 +131,7 @@ uint8_t sbp_msg_linux_cpu_state_cmdline_encoded_len(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
+size_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
     const sbp_msg_linux_cpu_state_t *msg);
 /**
  * Set sbp_msg_linux_cpu_state_t::cmdline
@@ -230,8 +228,8 @@ const char *sbp_msg_linux_cpu_state_cmdline_get(
  * @param msg sbp_msg_linux_cpu_state_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_linux_cpu_state_cmdline_section_strlen(
-    const sbp_msg_linux_cpu_state_t *msg, uint8_t section);
+size_t sbp_msg_linux_cpu_state_cmdline_section_strlen(
+    const sbp_msg_linux_cpu_state_t *msg, size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_cpu_state_t

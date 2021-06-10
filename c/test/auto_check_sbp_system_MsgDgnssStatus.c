@@ -109,14 +109,12 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
 
     test_msg.dgnss_status.num_signals = 12;
 
-    {
-      const char assign_string[] = {(char)83, (char)107, (char)121, (char)108,
-                                    (char)97, (char)114, (char)107};
-      memcpy(test_msg.dgnss_status.source.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.dgnss_status.source.encoded_len = 7;
+    ck_assert_msg(sbp_msg_dgnss_status_source_set(&test_msg.dgnss_status,
+                                                  "Skylark") == true,
+                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_dgnss_status_source_encoded_len(&test_msg.dgnss_status) == 7,
+        "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_DGNSS_STATUS, 66, &test_msg,
                      &dummy_write);
@@ -155,22 +153,13 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
                   "expected 12, is %d",
                   last_msg.msg.dgnss_status.num_signals);
 
-    {
-      const char check_string[] = {(char)83, (char)107, (char)121, (char)108,
-                                   (char)97, (char)114, (char)107};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.dgnss_status.source.data, check_string,
-                 sizeof(check_string)) == 0,
-          "incorrect value for last_msg.msg.dgnss_status.source.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.dgnss_status.source.data);
-    }
-
+    ck_assert_msg(sbp_msg_dgnss_status_source_encoded_len(
+                      &last_msg.msg.dgnss_status) == 7,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.dgnss_status.source.encoded_len == 7,
-        "incorrect value for last_msg.msg.dgnss_status.source.encoded_len, "
-        "expected 7, is %d",
-        last_msg.msg.dgnss_status.source.encoded_len);
+        strcmp(sbp_msg_dgnss_status_source_get(&last_msg.msg.dgnss_status),
+               "Skylark") == 0,
+        "String not decoded properly");
   }
 }
 END_TEST
