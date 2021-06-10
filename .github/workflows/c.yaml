@@ -37,6 +37,65 @@ jobs:
         run: |
           bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
+
+  gcc6-release:
+    name: GCC6 - Release
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Run tests
+        run: make test-c
+        env:
+          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+
+      - name: Build examples
+        run: make -C c/build examples
+
+
+  clang6-debug:
+    name: Clang6 - Debug
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Run tests
+        run: make test-c
+        env:
+          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
+          CC: clang-6.0
+          CXX: clang++-6.0
+
+      - name: Build examples
+        run: make -C c/build examples
+
+
+  clang6-release:
+    name: Clang6 - Release
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Run tests
+        run: make test-c
+        env:
+          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+          CC: clang-6.0
+          CXX: clang++-6.0
+
+      - name: Build examples
+        run: make -C c/build examples
+
+
   big-endian:
     name: Test Big Endian
     runs-on: ubuntu-18.04
