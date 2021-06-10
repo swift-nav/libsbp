@@ -23,3 +23,4 @@
 ((*- endfor *))
 
 #endif /* LIBSBP_V4_(((pkg_name|upper)))_MESSAGES_H */
+
