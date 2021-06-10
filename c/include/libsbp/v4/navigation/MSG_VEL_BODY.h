@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H
 #define LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

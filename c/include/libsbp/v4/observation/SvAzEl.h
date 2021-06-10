@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_OBSERVATION_SVAZEL_H
 #define LIBSBP_V4_OBSERVATION_SVAZEL_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

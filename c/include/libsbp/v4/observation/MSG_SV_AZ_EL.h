@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_OBSERVATION_MSG_SV_AZ_EL_H
 #define LIBSBP_V4_OBSERVATION_MSG_SV_AZ_EL_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

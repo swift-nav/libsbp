@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SYSTEM_MSG_STATUS_REPORT_H
 #define LIBSBP_V4_SYSTEM_MSG_STATUS_REPORT_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

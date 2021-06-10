@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_MAG_MSG_MAG_RAW_H
 #define LIBSBP_V4_MAG_MSG_MAG_RAW_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

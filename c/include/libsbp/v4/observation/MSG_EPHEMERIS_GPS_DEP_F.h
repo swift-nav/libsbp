@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GPS_DEP_F_H
 #define LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GPS_DEP_F_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

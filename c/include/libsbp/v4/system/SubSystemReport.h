@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SYSTEM_SUBSYSTEMREPORT_H
 #define LIBSBP_V4_SYSTEM_SUBSYSTEMREPORT_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>

@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_H
 #define LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_H
 
-#include <endian.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
