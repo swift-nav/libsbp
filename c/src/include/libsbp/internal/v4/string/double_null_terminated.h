@@ -74,7 +74,7 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
                                                      size_t max_encoded_len);
 
 /**
- * Get available spze of a double null terminated string
+ * Get available space in a double null terminated string
  *
  * The return value is the maximum number of bytes that can be added to the
  * string before it exceed the maximum encoded length
@@ -233,6 +233,8 @@ bool sbp_double_null_terminated_string_encode(const sbp_string_t *s,
  *
  * If the source buffer does not contain a valid double null terminated string
  * no data will be read and false will be returned
+ *
+ * This function will consume all remaining data in the source buffer.
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
