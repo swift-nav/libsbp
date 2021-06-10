@@ -361,7 +361,7 @@ def render_headers(include_dir, package_specs):
     destination_filename = "%s/v4/sbp_msg.h" % (include_dir)
     py_template = JENV.get_template(SBP_MSG_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
-        f.write(py_template.render(msgs = all_msgs,
+        f.write(py_template.render(msgs = sorted(all_msgs, key=lambda k: k.type_name),
             include=extensions(all_packages),
             filepath="/".join(package_spec.filepath) + ".yaml",
             max_msgid_len=msg_msgid_len))
@@ -369,7 +369,7 @@ def render_headers(include_dir, package_specs):
     py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
         f.write(py_template.render(packages=package_specs,
-                               msgs=all_msgs,
+                               msgs=sorted(all_msgs, key=lambda k: k.type_name),
                                includes=extensions(all_packages)))
 
 def render_sources(output_dir, package_specs):
