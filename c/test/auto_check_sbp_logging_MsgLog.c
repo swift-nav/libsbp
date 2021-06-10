@@ -107,20 +107,12 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
 
     test_msg.log.level = 6;
 
-    {
-      const char assign_string[] = {
-          (char)70,  (char)105, (char)108, (char)116, (char)101, (char)114,
-          (char)101, (char)100, (char)32,  (char)97,  (char)108, (char)108,
-          (char)32,  (char)111, (char)98,  (char)115, (char)32,  (char)102,
-          (char)114, (char)111, (char)109, (char)32,  (char)50,  (char)51,
-          (char)49,  (char)52,  (char)32,  (char)97,  (char)116, (char)32,
-          (char)116, (char)111, (char)119, (char)32,  (char)56,  (char)51,
-          (char)46,  (char)53,  (char)51,  (char)57,  (char)48,  (char)49,
-          (char)57};
-      memcpy(test_msg.log.text.data, assign_string, sizeof(assign_string));
-    }
-
-    test_msg.log.text.encoded_len = 43;
+    ck_assert_msg(sbp_msg_log_text_set(
+                      &test_msg.log,
+                      "Filtered all obs from 2314 at tow 83.539019") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_log_text_encoded_len(&test_msg.log) == 43,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_LOG, 2314, &test_msg, &dummy_write);
 
@@ -147,27 +139,11 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
         "incorrect value for last_msg.msg.log.level, expected 6, is %d",
         last_msg.msg.log.level);
 
-    {
-      const char check_string[] = {
-          (char)70,  (char)105, (char)108, (char)116, (char)101, (char)114,
-          (char)101, (char)100, (char)32,  (char)97,  (char)108, (char)108,
-          (char)32,  (char)111, (char)98,  (char)115, (char)32,  (char)102,
-          (char)114, (char)111, (char)109, (char)32,  (char)50,  (char)51,
-          (char)49,  (char)52,  (char)32,  (char)97,  (char)116, (char)32,
-          (char)116, (char)111, (char)119, (char)32,  (char)56,  (char)51,
-          (char)46,  (char)53,  (char)51,  (char)57,  (char)48,  (char)49,
-          (char)57};
-      ck_assert_msg(memcmp(&last_msg.msg.log.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.log.text.data, expected "
-                    "string '%s', is '%s'",
-                    check_string, last_msg.msg.log.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.log.text.encoded_len == 43,
-                  "incorrect value for last_msg.msg.log.text.encoded_len, "
-                  "expected 43, is %d",
-                  last_msg.msg.log.text.encoded_len);
+    ck_assert_msg(sbp_msg_log_text_encoded_len(&last_msg.msg.log) == 43,
+                  "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_log_text_get(&last_msg.msg.log),
+                         "Filtered all obs from 2314 at tow 83.539019") == 0,
+                  "String not decoded properly");
   }
 }
 END_TEST

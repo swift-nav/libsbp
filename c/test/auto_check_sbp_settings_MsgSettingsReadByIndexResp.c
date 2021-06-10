@@ -110,26 +110,21 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 0;
 
-    {
-      const char assign_string[] = {
-          (char)116, (char)101, (char)108, (char)101, (char)109, (char)101,
-          (char)116, (char)114, (char)121, (char)95,  (char)114, (char)97,
-          (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111,
-          (char)110, (char)102, (char)105, (char)103, (char)117, (char)114,
-          (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
-          (char)115, (char)116, (char)114, (char)105, (char)110, (char)103,
-          (char)0,   (char)65,  (char)84,  (char)38,  (char)70,  (char)44,
-          (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,
-          (char)49,  (char)53,  (char)44,  (char)65,  (char)84,  (char)83,
-          (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
-          (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,
-          (char)44,  (char)65,  (char)84,  (char)38,  (char)87,  (char)44,
-          (char)65,  (char)84,  (char)90,  (char)0};
-      memcpy(test_msg.settings_read_by_index_resp.setting.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.settings_read_by_index_resp.setting.encoded_len = 76;
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "telemetry_radio") == true,
+        "Can't assign section 0");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp,
+                      "configuration_string") == true,
+                  "Can't assign section 1");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp,
+                      "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ") == true,
+                  "Can't assign section 2");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &test_msg.settings_read_by_index_resp) == 76,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -159,36 +154,24 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "expected 0, is %d",
         last_msg.msg.settings_read_by_index_resp.index);
 
-    {
-      const char check_string[] = {
-          (char)116, (char)101, (char)108, (char)101, (char)109, (char)101,
-          (char)116, (char)114, (char)121, (char)95,  (char)114, (char)97,
-          (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111,
-          (char)110, (char)102, (char)105, (char)103, (char)117, (char)114,
-          (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
-          (char)115, (char)116, (char)114, (char)105, (char)110, (char)103,
-          (char)0,   (char)65,  (char)84,  (char)38,  (char)70,  (char)44,
-          (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,
-          (char)49,  (char)53,  (char)44,  (char)65,  (char)84,  (char)83,
-          (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
-          (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,
-          (char)44,  (char)65,  (char)84,  (char)38,  (char)87,  (char)44,
-          (char)65,  (char)84,  (char)90,  (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.settings_read_by_index_resp.setting.data,
-                 check_string, sizeof(check_string)) == 0,
-          "incorrect value for "
-          "last_msg.msg.settings_read_by_index_resp.setting.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
-    }
-
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &last_msg.msg.settings_read_by_index_resp) == 76,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 76,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
-        "expected 76, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 0),
+               "telemetry_radio") == 0,
+        "Section 0 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 1),
+               "configuration_string") == 0,
+        "Section 1 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 2),
+               "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ") == 0,
+        "Section 2 not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -218,19 +201,23 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 1;
 
-    {
-      const char assign_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)109, (char)111,
-          (char)100, (char)101, (char)0,   (char)83,  (char)66,  (char)80,
-          (char)0,   (char)101, (char)110, (char)117, (char)109, (char)58,
-          (char)83,  (char)66,  (char)80,  (char)44,  (char)78,  (char)77,
-          (char)69,  (char)65,  (char)0};
-      memcpy(test_msg.settings_read_by_index_resp.setting.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+        "Can't assign section 0");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "mode") == true,
+                  "Can't assign section 1");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "SBP") == true,
+                  "Can't assign section 2");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == true,
+        "Can't assign section 3");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &test_msg.settings_read_by_index_resp) == 33,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -260,29 +247,29 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "expected 1, is %d",
         last_msg.msg.settings_read_by_index_resp.index);
 
-    {
-      const char check_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)109, (char)111,
-          (char)100, (char)101, (char)0,   (char)83,  (char)66,  (char)80,
-          (char)0,   (char)101, (char)110, (char)117, (char)109, (char)58,
-          (char)83,  (char)66,  (char)80,  (char)44,  (char)78,  (char)77,
-          (char)69,  (char)65,  (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.settings_read_by_index_resp.setting.data,
-                 check_string, sizeof(check_string)) == 0,
-          "incorrect value for "
-          "last_msg.msg.settings_read_by_index_resp.setting.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
-    }
-
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &last_msg.msg.settings_read_by_index_resp) == 33,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 33,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
-        "expected 33, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 0),
+               "uart_ftdi") == 0,
+        "Section 0 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 1),
+               "mode") == 0,
+        "Section 1 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 2),
+               "SBP") == 0,
+        "Section 2 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 3),
+               "enum:SBP,NMEA") == 0,
+        "Section 3 not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -313,19 +300,20 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 2;
 
-    {
-      const char assign_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)115, (char)98,
-          (char)112, (char)95,  (char)109, (char)101, (char)115, (char)115,
-          (char)97,  (char)103, (char)101, (char)95,  (char)109, (char)97,
-          (char)115, (char)107, (char)0,   (char)54,  (char)53,  (char)53,
-          (char)51,  (char)53,  (char)0};
-      memcpy(test_msg.settings_read_by_index_resp.setting.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+        "Can't assign section 0");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "sbp_message_mask") == true,
+        "Can't assign section 1");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "65535") == true,
+                  "Can't assign section 2");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &test_msg.settings_read_by_index_resp) == 33,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -355,29 +343,24 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "expected 2, is %d",
         last_msg.msg.settings_read_by_index_resp.index);
 
-    {
-      const char check_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)115, (char)98,
-          (char)112, (char)95,  (char)109, (char)101, (char)115, (char)115,
-          (char)97,  (char)103, (char)101, (char)95,  (char)109, (char)97,
-          (char)115, (char)107, (char)0,   (char)54,  (char)53,  (char)53,
-          (char)51,  (char)53,  (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.settings_read_by_index_resp.setting.data,
-                 check_string, sizeof(check_string)) == 0,
-          "incorrect value for "
-          "last_msg.msg.settings_read_by_index_resp.setting.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
-    }
-
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &last_msg.msg.settings_read_by_index_resp) == 33,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 33,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
-        "expected 33, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 0),
+               "uart_ftdi") == 0,
+        "Section 0 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 1),
+               "sbp_message_mask") == 0,
+        "Section 1 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 2),
+               "65535") == 0,
+        "Section 2 not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -407,18 +390,20 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 3;
 
-    {
-      const char assign_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)98,  (char)97,
-          (char)117, (char)100, (char)114, (char)97,  (char)116, (char)101,
-          (char)0,   (char)49,  (char)48,  (char)48,  (char)48,  (char)48,
-          (char)48,  (char)48,  (char)0};
-      memcpy(test_msg.settings_read_by_index_resp.setting.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.settings_read_by_index_resp.setting.encoded_len = 27;
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+        "Can't assign section 0");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "baudrate") == true,
+        "Can't assign section 1");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "1000000") == true,
+                  "Can't assign section 2");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &test_msg.settings_read_by_index_resp) == 27,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -448,28 +433,24 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "expected 3, is %d",
         last_msg.msg.settings_read_by_index_resp.index);
 
-    {
-      const char check_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-          (char)116, (char)100, (char)105, (char)0,   (char)98,  (char)97,
-          (char)117, (char)100, (char)114, (char)97,  (char)116, (char)101,
-          (char)0,   (char)49,  (char)48,  (char)48,  (char)48,  (char)48,
-          (char)48,  (char)48,  (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.settings_read_by_index_resp.setting.data,
-                 check_string, sizeof(check_string)) == 0,
-          "incorrect value for "
-          "last_msg.msg.settings_read_by_index_resp.setting.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
-    }
-
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &last_msg.msg.settings_read_by_index_resp) == 27,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 27,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
-        "expected 27, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 0),
+               "uart_ftdi") == 0,
+        "Section 0 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 1),
+               "baudrate") == 0,
+        "Section 1 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 2),
+               "1000000") == 0,
+        "Section 2 not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -499,19 +480,23 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 4;
 
-    {
-      const char assign_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117,
-          (char)97,  (char)114, (char)116, (char)97,  (char)0,   (char)109,
-          (char)111, (char)100, (char)101, (char)0,   (char)83,  (char)66,
-          (char)80,  (char)0,   (char)101, (char)110, (char)117, (char)109,
-          (char)58,  (char)83,  (char)66,  (char)80,  (char)44,  (char)78,
-          (char)77,  (char)69,  (char)65,  (char)0};
-      memcpy(test_msg.settings_read_by_index_resp.setting.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.settings_read_by_index_resp.setting.encoded_len = 34;
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "uart_uarta") == true,
+        "Can't assign section 0");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "mode") == true,
+                  "Can't assign section 1");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp, "SBP") == true,
+                  "Can't assign section 2");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == true,
+        "Can't assign section 3");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &test_msg.settings_read_by_index_resp) == 34,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -541,29 +526,29 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "expected 4, is %d",
         last_msg.msg.settings_read_by_index_resp.index);
 
-    {
-      const char check_string[] = {
-          (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117,
-          (char)97,  (char)114, (char)116, (char)97,  (char)0,   (char)109,
-          (char)111, (char)100, (char)101, (char)0,   (char)83,  (char)66,
-          (char)80,  (char)0,   (char)101, (char)110, (char)117, (char)109,
-          (char)58,  (char)83,  (char)66,  (char)80,  (char)44,  (char)78,
-          (char)77,  (char)69,  (char)65,  (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.settings_read_by_index_resp.setting.data,
-                 check_string, sizeof(check_string)) == 0,
-          "incorrect value for "
-          "last_msg.msg.settings_read_by_index_resp.setting.data, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
-    }
-
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
+                      &last_msg.msg.settings_read_by_index_resp) == 34,
+                  "Invalid encoded len");
     ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 34,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
-        "expected 34, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 0),
+               "uart_uarta") == 0,
+        "Section 0 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 1),
+               "mode") == 0,
+        "Section 1 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 2),
+               "SBP") == 0,
+        "Section 2 not decoded properly");
+    ck_assert_msg(
+        strcmp(sbp_msg_settings_read_by_index_resp_setting_get_section(
+                   &last_msg.msg.settings_read_by_index_resp, 3),
+               "enum:SBP,NMEA") == 0,
+        "Section 3 not decoded properly");
   }
 }
 END_TEST

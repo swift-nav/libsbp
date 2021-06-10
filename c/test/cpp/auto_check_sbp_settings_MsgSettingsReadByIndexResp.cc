@@ -87,24 +87,15 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
 
   sbp_msg_settings_read_by_index_resp_t test_msg{};
   test_msg.index = 0;
-  {
-    const char assign_string[] = {
-        (char)116, (char)101, (char)108, (char)101, (char)109, (char)101,
-        (char)116, (char)114, (char)121, (char)95,  (char)114, (char)97,
-        (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111,
-        (char)110, (char)102, (char)105, (char)103, (char)117, (char)114,
-        (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
-        (char)115, (char)116, (char)114, (char)105, (char)110, (char)103,
-        (char)0,   (char)65,  (char)84,  (char)38,  (char)70,  (char)44,
-        (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,
-        (char)49,  (char)53,  (char)44,  (char)65,  (char)84,  (char)83,
-        (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
-        (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,
-        (char)44,  (char)65,  (char)84,  (char)38,  (char)87,  (char)44,
-        (char)65,  (char)84,  (char)90,  (char)0};
-    memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.setting.encoded_len = 76;
+
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "telemetry_radio"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "configuration_string"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ"));
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&test_msg),
+            76);
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -121,29 +112,18 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   EXPECT_EQ(last_msg_.index, 0)
       << "incorrect value for last_msg_.index, expected 0, is "
       << last_msg_.index;
-  {
-    const char check_string[] = {
-        (char)116, (char)101, (char)108, (char)101, (char)109, (char)101,
-        (char)116, (char)114, (char)121, (char)95,  (char)114, (char)97,
-        (char)100, (char)105, (char)111, (char)0,   (char)99,  (char)111,
-        (char)110, (char)102, (char)105, (char)103, (char)117, (char)114,
-        (char)97,  (char)116, (char)105, (char)111, (char)110, (char)95,
-        (char)115, (char)116, (char)114, (char)105, (char)110, (char)103,
-        (char)0,   (char)65,  (char)84,  (char)38,  (char)70,  (char)44,
-        (char)65,  (char)84,  (char)83,  (char)49,  (char)61,  (char)49,
-        (char)49,  (char)53,  (char)44,  (char)65,  (char)84,  (char)83,
-        (char)50,  (char)61,  (char)49,  (char)50,  (char)56,  (char)44,
-        (char)65,  (char)84,  (char)83,  (char)53,  (char)61,  (char)48,
-        (char)44,  (char)65,  (char)84,  (char)38,  (char)87,  (char)44,
-        (char)65,  (char)84,  (char)90,  (char)0};
-    EXPECT_EQ(
-        memcmp(last_msg_.setting.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.setting.data, expected string '"
-        << check_string << "', is '" << last_msg_.setting.data << "'";
-  }
-  EXPECT_EQ(last_msg_.setting.encoded_len, 76)
-      << "incorrect value for last_msg_.setting.encoded_len, expected 76, is "
-      << last_msg_.setting.encoded_len;
+
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&last_msg_),
+            76);
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 0),
+      "telemetry_radio");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 1),
+      "configuration_string");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 2),
+      "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ");
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
     : public ::testing::Test,
@@ -210,17 +190,17 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
 
   sbp_msg_settings_read_by_index_resp_t test_msg{};
   test_msg.index = 1;
-  {
-    const char assign_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)109, (char)111,
-        (char)100, (char)101, (char)0,   (char)83,  (char)66,  (char)80,
-        (char)0,   (char)101, (char)110, (char)117, (char)109, (char)58,
-        (char)83,  (char)66,  (char)80,  (char)44,  (char)78,  (char)77,
-        (char)69,  (char)65,  (char)0};
-    memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.setting.encoded_len = 33;
+
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "uart_ftdi"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(&test_msg,
+                                                                      "mode"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(&test_msg,
+                                                                      "SBP"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "enum:SBP,NMEA"));
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&test_msg),
+            33);
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -237,22 +217,21 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   EXPECT_EQ(last_msg_.index, 1)
       << "incorrect value for last_msg_.index, expected 1, is "
       << last_msg_.index;
-  {
-    const char check_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)109, (char)111,
-        (char)100, (char)101, (char)0,   (char)83,  (char)66,  (char)80,
-        (char)0,   (char)101, (char)110, (char)117, (char)109, (char)58,
-        (char)83,  (char)66,  (char)80,  (char)44,  (char)78,  (char)77,
-        (char)69,  (char)65,  (char)0};
-    EXPECT_EQ(
-        memcmp(last_msg_.setting.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.setting.data, expected string '"
-        << check_string << "', is '" << last_msg_.setting.data << "'";
-  }
-  EXPECT_EQ(last_msg_.setting.encoded_len, 33)
-      << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
-      << last_msg_.setting.encoded_len;
+
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&last_msg_),
+            33);
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 0),
+      "uart_ftdi");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 1),
+      "mode");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 2),
+      "SBP");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 3),
+      "enum:SBP,NMEA");
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
     : public ::testing::Test,
@@ -319,17 +298,15 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
 
   sbp_msg_settings_read_by_index_resp_t test_msg{};
   test_msg.index = 2;
-  {
-    const char assign_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)115, (char)98,
-        (char)112, (char)95,  (char)109, (char)101, (char)115, (char)115,
-        (char)97,  (char)103, (char)101, (char)95,  (char)109, (char)97,
-        (char)115, (char)107, (char)0,   (char)54,  (char)53,  (char)53,
-        (char)51,  (char)53,  (char)0};
-    memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.setting.encoded_len = 33;
+
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "uart_ftdi"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "sbp_message_mask"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(&test_msg,
+                                                                      "65535"));
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&test_msg),
+            33);
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -346,22 +323,18 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   EXPECT_EQ(last_msg_.index, 2)
       << "incorrect value for last_msg_.index, expected 2, is "
       << last_msg_.index;
-  {
-    const char check_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)115, (char)98,
-        (char)112, (char)95,  (char)109, (char)101, (char)115, (char)115,
-        (char)97,  (char)103, (char)101, (char)95,  (char)109, (char)97,
-        (char)115, (char)107, (char)0,   (char)54,  (char)53,  (char)53,
-        (char)51,  (char)53,  (char)0};
-    EXPECT_EQ(
-        memcmp(last_msg_.setting.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.setting.data, expected string '"
-        << check_string << "', is '" << last_msg_.setting.data << "'";
-  }
-  EXPECT_EQ(last_msg_.setting.encoded_len, 33)
-      << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
-      << last_msg_.setting.encoded_len;
+
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&last_msg_),
+            33);
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 0),
+      "uart_ftdi");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 1),
+      "sbp_message_mask");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 2),
+      "65535");
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
     : public ::testing::Test,
@@ -428,16 +401,15 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
 
   sbp_msg_settings_read_by_index_resp_t test_msg{};
   test_msg.index = 3;
-  {
-    const char assign_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)98,  (char)97,
-        (char)117, (char)100, (char)114, (char)97,  (char)116, (char)101,
-        (char)0,   (char)49,  (char)48,  (char)48,  (char)48,  (char)48,
-        (char)48,  (char)48,  (char)0};
-    memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.setting.encoded_len = 27;
+
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "uart_ftdi"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "baudrate"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "1000000"));
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&test_msg),
+            27);
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -454,21 +426,18 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   EXPECT_EQ(last_msg_.index, 3)
       << "incorrect value for last_msg_.index, expected 3, is "
       << last_msg_.index;
-  {
-    const char check_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
-        (char)116, (char)100, (char)105, (char)0,   (char)98,  (char)97,
-        (char)117, (char)100, (char)114, (char)97,  (char)116, (char)101,
-        (char)0,   (char)49,  (char)48,  (char)48,  (char)48,  (char)48,
-        (char)48,  (char)48,  (char)0};
-    EXPECT_EQ(
-        memcmp(last_msg_.setting.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.setting.data, expected string '"
-        << check_string << "', is '" << last_msg_.setting.data << "'";
-  }
-  EXPECT_EQ(last_msg_.setting.encoded_len, 27)
-      << "incorrect value for last_msg_.setting.encoded_len, expected 27, is "
-      << last_msg_.setting.encoded_len;
+
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&last_msg_),
+            27);
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 0),
+      "uart_ftdi");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 1),
+      "baudrate");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 2),
+      "1000000");
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
     : public ::testing::Test,
@@ -535,17 +504,17 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
 
   sbp_msg_settings_read_by_index_resp_t test_msg{};
   test_msg.index = 4;
-  {
-    const char assign_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117,
-        (char)97,  (char)114, (char)116, (char)97,  (char)0,   (char)109,
-        (char)111, (char)100, (char)101, (char)0,   (char)83,  (char)66,
-        (char)80,  (char)0,   (char)101, (char)110, (char)117, (char)109,
-        (char)58,  (char)83,  (char)66,  (char)80,  (char)44,  (char)78,
-        (char)77,  (char)69,  (char)65,  (char)0};
-    memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.setting.encoded_len = 34;
+
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "uart_uarta"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(&test_msg,
+                                                                      "mode"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(&test_msg,
+                                                                      "SBP"));
+  EXPECT_TRUE(sbp_msg_settings_read_by_index_resp_setting_add_section(
+      &test_msg, "enum:SBP,NMEA"));
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&test_msg),
+            34);
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -562,20 +531,19 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   EXPECT_EQ(last_msg_.index, 4)
       << "incorrect value for last_msg_.index, expected 4, is "
       << last_msg_.index;
-  {
-    const char check_string[] = {
-        (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117,
-        (char)97,  (char)114, (char)116, (char)97,  (char)0,   (char)109,
-        (char)111, (char)100, (char)101, (char)0,   (char)83,  (char)66,
-        (char)80,  (char)0,   (char)101, (char)110, (char)117, (char)109,
-        (char)58,  (char)83,  (char)66,  (char)80,  (char)44,  (char)78,
-        (char)77,  (char)69,  (char)65,  (char)0};
-    EXPECT_EQ(
-        memcmp(last_msg_.setting.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.setting.data, expected string '"
-        << check_string << "', is '" << last_msg_.setting.data << "'";
-  }
-  EXPECT_EQ(last_msg_.setting.encoded_len, 34)
-      << "incorrect value for last_msg_.setting.encoded_len, expected 34, is "
-      << last_msg_.setting.encoded_len;
+
+  EXPECT_EQ(sbp_msg_settings_read_by_index_resp_setting_encoded_len(&last_msg_),
+            34);
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 0),
+      "uart_uarta");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 1),
+      "mode");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 2),
+      "SBP");
+  EXPECT_STREQ(
+      sbp_msg_settings_read_by_index_resp_setting_get_section(&last_msg_, 3),
+      "enum:SBP,NMEA");
 }

@@ -81,12 +81,11 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
 
   sbp_msg_bootloader_handshake_resp_t test_msg{};
   test_msg.flags = 0;
-  {
-    const char assign_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                  (char)10};
-    memcpy(test_msg.version.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.version.encoded_len = 5;
+
+  EXPECT_TRUE(
+      sbp_msg_bootloader_handshake_resp_version_set(&test_msg, "v1.2\n"));
+  EXPECT_EQ(sbp_msg_bootloader_handshake_resp_version_encoded_len(&test_msg),
+            5);
 
   EXPECT_EQ(send_message(0, test_msg), SBP_OK);
 
@@ -103,17 +102,11 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
   EXPECT_EQ(last_msg_.flags, 0)
       << "incorrect value for last_msg_.flags, expected 0, is "
       << last_msg_.flags;
-  {
-    const char check_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                 (char)10};
-    EXPECT_EQ(
-        memcmp(last_msg_.version.data, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_.version.data, expected string '"
-        << check_string << "', is '" << last_msg_.version.data << "'";
-  }
-  EXPECT_EQ(last_msg_.version.encoded_len, 5)
-      << "incorrect value for last_msg_.version.encoded_len, expected 5, is "
-      << last_msg_.version.encoded_len;
+
+  EXPECT_EQ(sbp_msg_bootloader_handshake_resp_version_encoded_len(&last_msg_),
+            5);
+  EXPECT_STREQ(sbp_msg_bootloader_handshake_resp_version_get(&last_msg_),
+               "v1.2\n");
 }
 class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1
     : public ::testing::Test,
@@ -178,14 +171,10 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
 
   sbp_msg_bootloader_handshake_dep_a_t test_msg{};
 
-  test_msg.handshake.data[0] = 118;
-
-  test_msg.handshake.data[1] = 49;
-
-  test_msg.handshake.data[2] = 46;
-
-  test_msg.handshake.data[3] = 50;
-  test_msg.handshake.encoded_len = 4;
+  EXPECT_TRUE(
+      sbp_msg_bootloader_handshake_dep_a_handshake_set(&test_msg, "v1.2"));
+  EXPECT_EQ(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(&test_msg),
+            4);
 
   EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
@@ -199,19 +188,9 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.handshake.data[0], 118)
-      << "incorrect value for last_msg_.handshake.data[0], expected 118, is "
-      << last_msg_.handshake.data[0];
-  EXPECT_EQ(last_msg_.handshake.data[1], 49)
-      << "incorrect value for last_msg_.handshake.data[1], expected 49, is "
-      << last_msg_.handshake.data[1];
-  EXPECT_EQ(last_msg_.handshake.data[2], 46)
-      << "incorrect value for last_msg_.handshake.data[2], expected 46, is "
-      << last_msg_.handshake.data[2];
-  EXPECT_EQ(last_msg_.handshake.data[3], 50)
-      << "incorrect value for last_msg_.handshake.data[3], expected 50, is "
-      << last_msg_.handshake.data[3];
-  EXPECT_EQ(last_msg_.handshake.encoded_len, 4)
-      << "incorrect value for last_msg_.handshake.encoded_len, expected 4, is "
-      << last_msg_.handshake.encoded_len;
+
+  EXPECT_EQ(
+      sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(&last_msg_), 4);
+  EXPECT_STREQ(sbp_msg_bootloader_handshake_dep_a_handshake_get(&last_msg_),
+               "v1.2");
 }

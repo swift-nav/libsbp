@@ -105,21 +105,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32,  (char)80,
-          (char)82,  (char)78,  (char)32,  (char)49,  (char)53,  (char)32,
-          (char)102, (char)111, (char)117, (char)110, (char)100, (char)32,
-          (char)64,  (char)32,  (char)45,  (char)50,  (char)52,  (char)57,
-          (char)55,  (char)32,  (char)72,  (char)122, (char)44,  (char)32,
-          (char)50,  (char)48,  (char)32,  (char)83,  (char)78,  (char)82,
-          (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 43;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 43,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -143,27 +134,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32,  (char)80,
-          (char)82,  (char)78,  (char)32,  (char)49,  (char)53,  (char)32,
-          (char)102, (char)111, (char)117, (char)110, (char)100, (char)32,
-          (char)64,  (char)32,  (char)45,  (char)50,  (char)52,  (char)57,
-          (char)55,  (char)32,  (char)72,  (char)122, (char)44,  (char)32,
-          (char)50,  (char)48,  (char)32,  (char)83,  (char)78,  (char)82,
-          (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 43,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 43, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 43,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -192,20 +168,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32,  (char)80,
-          (char)82,  (char)78,  (char)32,  (char)51,  (char)49,  (char)32,
-          (char)102, (char)111, (char)117, (char)110, (char)100, (char)32,
-          (char)64,  (char)32,  (char)52,  (char)50,  (char)52,  (char)53,
-          (char)32,  (char)72,  (char)122, (char)44,  (char)32,  (char)50,
-          (char)49,  (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 42;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 42,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -229,26 +197,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32,  (char)80,
-          (char)82,  (char)78,  (char)32,  (char)51,  (char)49,  (char)32,
-          (char)102, (char)111, (char)117, (char)110, (char)100, (char)32,
-          (char)64,  (char)32,  (char)52,  (char)50,  (char)52,  (char)53,
-          (char)32,  (char)72,  (char)122, (char)44,  (char)32,  (char)50,
-          (char)49,  (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 42,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 42, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 42,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -276,19 +230,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)68,  (char)105, (char)115, (char)97,  (char)98,  (char)108,
-          (char)105, (char)110, (char)103, (char)32,  (char)99,  (char)104,
-          (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
-          (char)48,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
-          (char)32,  (char)49,  (char)49,  (char)41,  (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 35;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: Disabling channel 0 (PRN 11)\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -312,25 +259,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)68,  (char)105, (char)115, (char)97,  (char)98,  (char)108,
-          (char)105, (char)110, (char)103, (char)32,  (char)99,  (char)104,
-          (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
-          (char)48,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
-          (char)32,  (char)49,  (char)49,  (char)41,  (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 35,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 35, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 35,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: Disabling channel 0 (PRN 11)\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -359,20 +293,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32, (char)80,
-          (char)82,  (char)78,  (char)32,  (char)50,  (char)32, (char)102,
-          (char)111, (char)117, (char)110, (char)100, (char)32, (char)64,
-          (char)32,  (char)51,  (char)57,  (char)57,  (char)54, (char)32,
-          (char)72,  (char)122, (char)44,  (char)32,  (char)50, (char)48,
-          (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 41;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 41,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -396,26 +322,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32, (char)80,
-          (char)82,  (char)78,  (char)32,  (char)50,  (char)32, (char)102,
-          (char)111, (char)117, (char)110, (char)100, (char)32, (char)64,
-          (char)32,  (char)51,  (char)57,  (char)57,  (char)54, (char)32,
-          (char)72,  (char)122, (char)44,  (char)32,  (char)50, (char)48,
-          (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 41,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 41, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 41,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -444,20 +356,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32, (char)80,
-          (char)82,  (char)78,  (char)32,  (char)52,  (char)32, (char)102,
-          (char)111, (char)117, (char)110, (char)100, (char)32, (char)64,
-          (char)32,  (char)45,  (char)55,  (char)52,  (char)57, (char)50,
-          (char)32,  (char)72,  (char)122, (char)44,  (char)32, (char)50,
-          (char)48,  (char)32,  (char)83,  (char)78,  (char)82, (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 42;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 42,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -481,26 +385,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58, (char)32,
-          (char)97,  (char)99,  (char)113, (char)58,  (char)32, (char)80,
-          (char)82,  (char)78,  (char)32,  (char)52,  (char)32, (char)102,
-          (char)111, (char)117, (char)110, (char)100, (char)32, (char)64,
-          (char)32,  (char)45,  (char)55,  (char)52,  (char)57, (char)50,
-          (char)32,  (char)72,  (char)122, (char)44,  (char)32, (char)50,
-          (char)48,  (char)32,  (char)83,  (char)78,  (char)82, (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 42,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 42, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 42,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n") == 0,
+                  "String not decoded properly");
   }
   // Test successful parsing of a message
   {
@@ -528,19 +418,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    {
-      const char assign_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)68,  (char)105, (char)115, (char)97,  (char)98,  (char)108,
-          (char)105, (char)110, (char)103, (char)32,  (char)99,  (char)104,
-          (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
-          (char)49,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
-          (char)32,  (char)49,  (char)53,  (char)41,  (char)10};
-      memcpy(test_msg.print_dep.text.data, assign_string,
-             sizeof(assign_string));
-    }
-
-    test_msg.print_dep.text.encoded_len = 35;
+    ck_assert_msg(sbp_msg_print_dep_text_set(
+                      &test_msg.print_dep,
+                      "INFO: Disabling channel 1 (PRN 15)\n") == true,
+                  "Can't assign text");
+    ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,
+                  "String not encoded properly");
 
     sbp_message_send(&sbp_state, SBP_MSG_PRINT_DEP, 8738, &test_msg,
                      &dummy_write);
@@ -564,25 +447,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
         sbp_message_cmp(SBP_MSG_PRINT_DEP, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    {
-      const char check_string[] = {
-          (char)73,  (char)78,  (char)70,  (char)79,  (char)58,  (char)32,
-          (char)68,  (char)105, (char)115, (char)97,  (char)98,  (char)108,
-          (char)105, (char)110, (char)103, (char)32,  (char)99,  (char)104,
-          (char)97,  (char)110, (char)110, (char)101, (char)108, (char)32,
-          (char)49,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
-          (char)32,  (char)49,  (char)53,  (char)41,  (char)10};
-      ck_assert_msg(memcmp(&last_msg.msg.print_dep.text.data, check_string,
-                           sizeof(check_string)) == 0,
-                    "incorrect value for last_msg.msg.print_dep.text.data, "
-                    "expected string '%s', is '%s'",
-                    check_string, last_msg.msg.print_dep.text.data);
-    }
-
-    ck_assert_msg(last_msg.msg.print_dep.text.encoded_len == 35,
-                  "incorrect value for "
-                  "last_msg.msg.print_dep.text.encoded_len, expected 35, is %d",
-                  last_msg.msg.print_dep.text.encoded_len);
+    ck_assert_msg(
+        sbp_msg_print_dep_text_encoded_len(&last_msg.msg.print_dep) == 35,
+        "Invalid encoded len");
+    ck_assert_msg(strcmp(sbp_msg_print_dep_text_get(&last_msg.msg.print_dep),
+                         "INFO: Disabling channel 1 (PRN 15)\n") == 0,
+                  "String not decoded properly");
   }
 }
 END_TEST

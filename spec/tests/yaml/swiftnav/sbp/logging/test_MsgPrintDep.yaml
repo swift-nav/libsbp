@@ -11,10 +11,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 43
+        text: 'INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -36,10 +36,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 42
+        text: 'INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -61,10 +61,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: Disabling channel 0 (PRN 11)
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 35
+        text: 'INFO: Disabling channel 0 (PRN 11)\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -86,10 +86,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 41
+        text: 'INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -111,10 +111,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 42
+        text: 'INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
@@ -136,10 +136,10 @@ tests:
         '
     c_decoded_fields:
       text: 
-        data: 'INFO: Disabling channel 1 (PRN 15)
-
-        '
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_print_dep_text
         encoded_len: 35
+        text: 'INFO: Disabling channel 1 (PRN 15)\n'
     module: sbp.logging
     name: MsgPrintDep
   msg_type: '0x10'
