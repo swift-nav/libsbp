@@ -111,7 +111,7 @@ jobs:
         run: make -C c/build examples
 
 
-  clang6-release:
+  macos:
     name: macos
     runs-on: macos-10.15
     steps:
