@@ -25,7 +25,7 @@ typedef struct {
   /**
    * Initialise a string
    */
-  void (*init)(sbp_string_t *s, size_t max_encoded_len);
+  void (*init)(sbp_string_t *s);
 
   /**
    * When #sbp_string_encode is called with an invalid source string it will

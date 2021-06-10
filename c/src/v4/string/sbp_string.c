@@ -83,7 +83,7 @@ bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
 bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
                        sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
-  params->init(s, max_encoded_len);
+  params->init(s);
   size_t available = ctx->buf_len - ctx->offset;
   // Take everything or nothing
   if (available > max_encoded_len) {
@@ -98,7 +98,7 @@ bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
     }
   }
   if (!params->valid(s, max_encoded_len)) {
-    params->init(s, max_encoded_len);
+    params->init(s);
     return false;
   }
   ctx->offset += available;

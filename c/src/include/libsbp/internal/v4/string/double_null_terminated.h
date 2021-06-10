@@ -29,10 +29,8 @@ extern "C" {
  * Initialise a double null terminated string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
  */
-void sbp_double_null_terminated_string_init(sbp_string_t *s,
-                                            size_t max_encoded_len);
+void sbp_double_null_terminated_string_init(sbp_string_t *s);
 
 /**
  * Check a double null terminated string for validity

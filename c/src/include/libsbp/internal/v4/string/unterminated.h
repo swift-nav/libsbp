@@ -17,9 +17,8 @@ extern "C" {
  * Initialise an unterminated string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
  */
-void sbp_unterminated_string_init(sbp_string_t *s, size_t max_encoded_len);
+void sbp_unterminated_string_init(sbp_string_t *s);
 
 /**
  * Check an unterminated string for validity

@@ -95,7 +95,7 @@ TEST(TestNullTerminatedString, Init) {
 
   size_t max_encoded_len = 10;
 
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
@@ -114,7 +114,7 @@ TEST(TestNullTerminatedString, Init) {
   EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
 
   // And reinitialise
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
@@ -134,7 +134,7 @@ TEST(TestNullTerminatedString, Init) {
   EXPECT_EQ(s.encoded_len, 11);
 
   // And reinitialise
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
@@ -150,7 +150,7 @@ TEST(TestNullTerminatedString, Set)
 
   size_t max_encoded_len = 20;
 
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
 
   // Put in a valid string
   EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "Hello, World!"));
@@ -198,7 +198,7 @@ TEST(TestNullTerminatedString, Printf)
 
   size_t max_encoded_len = 20;
 
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
 
   auto vprintf_wrapper = [&s, max_encoded_len](const char *fmt, ...) {
     va_list ap;
@@ -248,7 +248,7 @@ TEST(TestNullTerminatedString, Append)
 
   size_t max_encoded_len = 20;
 
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set
   EXPECT_TRUE(sbp_null_terminated_string_append(&s, max_encoded_len, "Hello"));
@@ -291,7 +291,7 @@ TEST(TestNullTerminatedString, AppendPrintf)
 
   size_t max_encoded_len = 20;
 
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
 
   auto vprintf_wrapper = [&s, max_encoded_len](const char *fmt, ...) {
     va_list ap;
@@ -382,7 +382,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 30;
 
-  sbp_null_terminated_string_init(&s, short_params);
+  sbp_null_terminated_string_init(&s);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, short_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, short_params), 1);
   EXPECT_TRUE(sbp_null_terminated_string_encode(&s, short_params, &ctx));
@@ -483,7 +483,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abcd\0", 5);
   ctx.buf_len = 5;
   ctx.offset = 0;
-  sbp_null_terminated_string_init(&s, max_encoded_len);
+  sbp_null_terminated_string_init(&s);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
