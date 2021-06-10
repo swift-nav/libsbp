@@ -29,6 +29,7 @@
 
 SBP_PACK_START
 
+
 /** Raw IMU data
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
@@ -44,16 +45,16 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;   /**< Milliseconds since reference epoch and time status. */
-  u8 tow_f;  /**< Milliseconds since reference epoch, fractional part [ms / 256]
-              */
-  s16 acc_x; /**< Acceleration in the IMU frame X axis */
-  s16 acc_y; /**< Acceleration in the IMU frame Y axis */
-  s16 acc_z; /**< Acceleration in the IMU frame Z axis */
-  s16 gyr_x; /**< Angular rate around IMU frame X axis */
-  s16 gyr_y; /**< Angular rate around IMU frame Y axis */
-  s16 gyr_z; /**< Angular rate around IMU frame Z axis */
+  u32 tow;      /**< Milliseconds since reference epoch and time status. */
+  u8 tow_f;    /**< Milliseconds since reference epoch, fractional part [ms / 256] */
+  s16 acc_x;    /**< Acceleration in the IMU frame X axis */
+  s16 acc_y;    /**< Acceleration in the IMU frame Y axis */
+  s16 acc_z;    /**< Acceleration in the IMU frame Z axis */
+  s16 gyr_x;    /**< Angular rate around IMU frame X axis */
+  s16 gyr_y;    /**< Angular rate around IMU frame Y axis */
+  s16 gyr_z;    /**< Angular rate around IMU frame Z axis */
 } msg_imu_raw_t;
+
 
 /** Auxiliary IMU data
  *
@@ -63,10 +64,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 imu_type; /**< IMU type */
-  s16 temp;    /**< Raw IMU temperature */
-  u8 imu_conf; /**< IMU configuration */
+  u8 imu_type;    /**< IMU type */
+  s16 temp;        /**< Raw IMU temperature */
+  u8 imu_conf;    /**< IMU configuration */
 } msg_imu_aux_t;
+
 
 /** \} */
 

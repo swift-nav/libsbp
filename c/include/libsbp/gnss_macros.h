@@ -18,15 +18,17 @@
 #ifndef LIBSBP_GNSS_MACROS_H
 #define LIBSBP_GNSS_MACROS_H
 
+
 #define SBP_GNSSSIGNAL__MASK (0xff)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \
-  (((flags) >> SBP_GNSSSIGNAL__SHIFT) & SBP_GNSSSIGNAL__MASK)
-#define SBP_GNSSSIGNAL__SET(flags, val)                              \
-  do {                                                               \
-    ((flags) |=                                                      \
-     (((val) & (SBP_GNSSSIGNAL__MASK)) << (SBP_GNSSSIGNAL__SHIFT))); \
-  } while (0)
+                             (((flags) >> SBP_GNSSSIGNAL__SHIFT) \
+                             & SBP_GNSSSIGNAL__MASK)
+#define SBP_GNSSSIGNAL__SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_GNSSSIGNAL__MASK)) \
+                             << (SBP_GNSSSIGNAL__SHIFT)));} while(0)
+                             
 
 #define SBP_GNSSSIGNAL__GPS_L1CA (0)
 #define SBP_GNSSSIGNAL__GPS_L2CM (1)
@@ -43,12 +45,13 @@
 #define SBP_GNSSSIGNALDEP__MASK (0xff)
 #define SBP_GNSSSIGNALDEP__SHIFT (0u)
 #define SBP_GNSSSIGNALDEP__GET(flags) \
-  (((flags) >> SBP_GNSSSIGNALDEP__SHIFT) & SBP_GNSSSIGNALDEP__MASK)
-#define SBP_GNSSSIGNALDEP__SET(flags, val)                                 \
-  do {                                                                     \
-    ((flags) |=                                                            \
-     (((val) & (SBP_GNSSSIGNALDEP__MASK)) << (SBP_GNSSSIGNALDEP__SHIFT))); \
-  } while (0)
+                             (((flags) >> SBP_GNSSSIGNALDEP__SHIFT) \
+                             & SBP_GNSSSIGNALDEP__MASK)
+#define SBP_GNSSSIGNALDEP__SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_GNSSSIGNALDEP__MASK)) \
+                             << (SBP_GNSSSIGNALDEP__SHIFT)));} while(0)
+                             
 
 #define SBP_GNSSSIGNALDEP__GPS_L1CA (0)
 #define SBP_GNSSSIGNALDEP__GPS_L2CM (1)

@@ -17,8 +17,8 @@
 
 #ifndef LIBSBP_V4_LOGGING_MESSAGES_H
 #define LIBSBP_V4_LOGGING_MESSAGES_H
-#include <libsbp/v4/logging/MSG_FWD.h>
 #include <libsbp/v4/logging/MSG_LOG.h>
+#include <libsbp/v4/logging/MSG_FWD.h>
 #include <libsbp/v4/logging/MSG_PRINT_DEP.h>
 
 #endif /* LIBSBP_V4_LOGGING_MESSAGES_H */

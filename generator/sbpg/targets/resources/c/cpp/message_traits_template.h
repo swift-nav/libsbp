@@ -38,7 +38,7 @@ struct MessageTraits;
 ((*- if m.is_real_message *))
 template<>
 struct MessageTraits<(((m.type_name)))> {
-  static constexpr u16 id = SBP_(((m.name)));
+  static constexpr sbp_msg_type_t id = (((m.enum_name)));
   static const (((m.type_name)))& get(const sbp_msg_t &msg) {
     return msg.(((m.short_name)));
   }

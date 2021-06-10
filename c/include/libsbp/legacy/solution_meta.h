@@ -30,6 +30,7 @@
 
 SBP_PACK_START
 
+
 /** Flags for a given solution input type
  *
  * Metadata describing which sensors were involved in the solution. The
@@ -42,9 +43,10 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 sensor_type; /**< The type of sensor */
-  u8 flags;       /**< Refer to each InputType description [(XX)InputType] */
+  u8 sensor_type;    /**< The type of sensor */
+  u8 flags;          /**< Refer to each InputType description [(XX)InputType] */
 } solution_input_type_t;
+
 
 /** Deprecated
  *
@@ -56,42 +58,43 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 pdop;                        /**< Position Dilution of Precision as per
-                                        last available DOPS from PVT engine
-                                        (0xFFFF indicates invalid) [0.01] */
-  u16 hdop;                        /**< Horizontal Dilution of Precision as per
-                                        last available DOPS from PVT engine
-                                        (0xFFFF indicates invalid) [0.01] */
-  u16 vdop;                        /**< Vertical Dilution of Precision as per
-                                        last available DOPS from PVT engine
-                                        (0xFFFF indicates invalid) [0.01] */
-  u8 n_sats;                       /**< Number of satellites as per last
-                                        available solution from PVT engine */
-  u16 age_corrections;             /**< Age of corrections as per last available
-                                        AGE_CORRECTIONS from PVT engine (0xFFFF
-                                        indicates invalid) [deciseconds] */
-  u8 alignment_status;             /**< State of alignment and the status and
-                                        receipt of the alignment inputs */
-  u32 last_used_gnss_pos_tow;      /**< Tow of last-used GNSS position
-                                        measurement [ms] */
-  u32 last_used_gnss_vel_tow;      /**< Tow of last-used GNSS velocity
-                                        measurement [ms] */
-  solution_input_type_t sol_in[0]; /**< Array of Metadata
-                                        describing the sensors
-                                        potentially involved
-                                        in the solution. Each
-                                        element in the array
-                                        represents a single
-                                        sensor type and
-                                        consists of flags
-                                        containing (meta)data
-                                        pertaining to that
-                                        specific single
-                                        sensor. Refer to each
-                                        (XX)InputType
-                                        descriptor in the
-                                        present doc. */
+  u16 pdop;                      /**< Position Dilution of Precision as per
+                                      last available DOPS from PVT engine
+                                      (0xFFFF indicates invalid) [0.01] */
+  u16 hdop;                      /**< Horizontal Dilution of Precision as per
+                                      last available DOPS from PVT engine
+                                      (0xFFFF indicates invalid) [0.01] */
+  u16 vdop;                      /**< Vertical Dilution of Precision as per
+                                      last available DOPS from PVT engine
+                                      (0xFFFF indicates invalid) [0.01] */
+  u8 n_sats;                    /**< Number of satellites as per last
+                                     available solution from PVT engine */
+  u16 age_corrections;           /**< Age of corrections as per last available
+                                      AGE_CORRECTIONS from PVT engine (0xFFFF
+                                      indicates invalid) [deciseconds] */
+  u8 alignment_status;          /**< State of alignment and the status and
+                                     receipt of the alignment inputs */
+  u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position
+                                      measurement [ms] */
+  u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity
+                                      measurement [ms] */
+  solution_input_type_t sol_in[0];                 /**< Array of Metadata
+                                                        describing the sensors
+                                                        potentially involved
+                                                        in the solution. Each
+                                                        element in the array
+                                                        represents a single
+                                                        sensor type and
+                                                        consists of flags
+                                                        containing (meta)data
+                                                        pertaining to that
+                                                        specific single
+                                                        sensor. Refer to each
+                                                        (XX)InputType
+                                                        descriptor in the
+                                                        present doc. */
 } msg_soln_meta_dep_a_t;
+
 
 /** Solution Sensors Metadata
  *
@@ -107,34 +110,35 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;             /**< GPS time of week rounded to the nearest
-                            millisecond [ms] */
-  u16 pdop;            /**< Position Dilution of Precision as per last
-                            available DOPS from PVT engine (0xFFFF
-                            indicates invalid) [0.01] */
-  u16 hdop;            /**< Horizontal Dilution of Precision as per last
-                            available DOPS from PVT engine (0xFFFF
-                            indicates invalid) [0.01] */
-  u16 vdop;            /**< Vertical Dilution of Precision as per last
-                            available DOPS from PVT engine (0xFFFF
-                            indicates invalid) [0.01] */
-  u16 age_corrections; /**< Age of corrections as per last available
-                            AGE_CORRECTIONS from PVT engine (0xFFFF
-                            indicates invalid) [deciseconds] */
-  u32 age_gnss;        /**< Age and Time Status of the last received valid
-                            GNSS solution. [ms] */
-  solution_input_type_t sol_in[0]; /**< Array of Metadata describing
-                                        the sensors potentially
-                                        involved in the solution.
-                                        Each element in the array
-                                        represents a single sensor
-                                        type and consists of flags
-                                        containing (meta)data
-                                        pertaining to that specific
-                                        single sensor. Refer to each
-                                        (XX)InputType descriptor in
-                                        the present doc. */
+  u32 tow;                /**< GPS time of week rounded to the nearest
+                               millisecond [ms] */
+  u16 pdop;               /**< Position Dilution of Precision as per last
+                               available DOPS from PVT engine (0xFFFF
+                               indicates invalid) [0.01] */
+  u16 hdop;               /**< Horizontal Dilution of Precision as per last
+                               available DOPS from PVT engine (0xFFFF
+                               indicates invalid) [0.01] */
+  u16 vdop;               /**< Vertical Dilution of Precision as per last
+                               available DOPS from PVT engine (0xFFFF
+                               indicates invalid) [0.01] */
+  u16 age_corrections;    /**< Age of corrections as per last available
+                               AGE_CORRECTIONS from PVT engine (0xFFFF
+                               indicates invalid) [deciseconds] */
+  u32 age_gnss;           /**< Age and Time Status of the last received valid
+                               GNSS solution. [ms] */
+  solution_input_type_t sol_in[0];          /**< Array of Metadata describing
+                                                 the sensors potentially
+                                                 involved in the solution.
+                                                 Each element in the array
+                                                 represents a single sensor
+                                                 type and consists of flags
+                                                 containing (meta)data
+                                                 pertaining to that specific
+                                                 single sensor. Refer to each
+                                                 (XX)InputType descriptor in
+                                                 the present doc. */
 } msg_soln_meta_t;
+
 
 /** Instruments the physical type of GNSS sensor input to the fuzed solution
  *
@@ -143,12 +147,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 flags; /**< flags that store all relevant info specific to this sensor
-                 type. */
+  u8 flags;    /**< flags that store all relevant info specific to this sensor
+                    type. */
 } gnss_input_type_t;
 
-/** Provides detail about the IMU sensor, its timestamping mode, and its quality
- for input to the fuzed solution
+
+/** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution
 
  *
  * Metadata around the IMU sensors involved in the fuzed solution. Accessible
@@ -156,11 +160,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 flags; /**< Instrument time, grade, and architecture for a sensor. */
+  u8 flags;    /**< Instrument time, grade, and architecture for a sensor. */
 } imu_input_type_t;
 
-/** Provides detail about the Odometry sensor, its timestamping mode, and its
- quality for input to the fuzed solution
+
+/** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution
 
  *
  * Metadata around the Odometry sensors involved in the fuzed solution.
@@ -168,8 +172,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 flags; /**< Instrument ODO rate, grade, and quality. */
+  u8 flags;    /**< Instrument ODO rate, grade, and quality. */
 } odo_input_type_t;
+
 
 /** \} */
 

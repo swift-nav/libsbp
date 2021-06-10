@@ -20,12 +20,12 @@
 
 #include <stdbool.h>
 
+#include <libsbp/v4/tracking.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/gnss.h>
-#include <libsbp/v4/tracking.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 /**
@@ -35,8 +35,7 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_a_t *msg);
+bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -45,8 +44,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_detailed_dep_a_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_detailed_dep_a_t *msg);
+bool sbp_msg_tracking_state_detailed_dep_a_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_detailed_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -55,8 +53,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_detailed_dep_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_t *msg);
+bool sbp_msg_tracking_state_detailed_dep_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -65,8 +62,7 @@ bool sbp_msg_tracking_state_detailed_dep_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_detailed_dep_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_detailed_dep_t *msg);
+bool sbp_msg_tracking_state_detailed_dep_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_detailed_dep_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -75,8 +71,7 @@ bool sbp_msg_tracking_state_detailed_dep_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_t *msg);
+bool sbp_tracking_channel_state_encode_internal(sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -85,8 +80,7 @@ bool sbp_tracking_channel_state_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_t *msg);
+bool sbp_tracking_channel_state_decode_internal(sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -95,8 +89,7 @@ bool sbp_tracking_channel_state_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_t *msg);
+bool sbp_msg_tracking_state_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -105,8 +98,7 @@ bool sbp_msg_tracking_state_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_tracking_state_t *msg);
+bool sbp_msg_tracking_state_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -115,8 +107,7 @@ bool sbp_msg_tracking_state_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_measurement_state_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_measurement_state_t *msg);
+bool sbp_measurement_state_encode_internal(sbp_encode_ctx_t *ctx, const sbp_measurement_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -125,8 +116,7 @@ bool sbp_measurement_state_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_measurement_state_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_measurement_state_t *msg);
+bool sbp_measurement_state_decode_internal(sbp_decode_ctx_t *ctx, sbp_measurement_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -135,8 +125,7 @@ bool sbp_measurement_state_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_measurement_state_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_measurement_state_t *msg);
+bool sbp_msg_measurement_state_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_measurement_state_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -145,8 +134,7 @@ bool sbp_msg_measurement_state_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_measurement_state_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_measurement_state_t *msg);
+bool sbp_msg_measurement_state_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_measurement_state_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -155,8 +143,7 @@ bool sbp_msg_measurement_state_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_correlation_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_tracking_channel_correlation_t *msg);
+bool sbp_tracking_channel_correlation_encode_internal(sbp_encode_ctx_t *ctx, const sbp_tracking_channel_correlation_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -165,8 +152,7 @@ bool sbp_tracking_channel_correlation_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_correlation_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_tracking_channel_correlation_t *msg);
+bool sbp_tracking_channel_correlation_decode_internal(sbp_decode_ctx_t *ctx, sbp_tracking_channel_correlation_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -175,8 +161,7 @@ bool sbp_tracking_channel_correlation_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_tracking_iq_t *msg);
+bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -185,8 +170,7 @@ bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_tracking_iq_t *msg);
+bool sbp_msg_tracking_iq_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_iq_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -195,8 +179,7 @@ bool sbp_msg_tracking_iq_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_correlation_dep_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_tracking_channel_correlation_dep_t *msg);
+bool sbp_tracking_channel_correlation_dep_encode_internal(sbp_encode_ctx_t *ctx, const sbp_tracking_channel_correlation_dep_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -205,8 +188,7 @@ bool sbp_tracking_channel_correlation_dep_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_correlation_dep_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_tracking_channel_correlation_dep_t *msg);
+bool sbp_tracking_channel_correlation_dep_decode_internal(sbp_decode_ctx_t *ctx, sbp_tracking_channel_correlation_dep_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -215,8 +197,7 @@ bool sbp_tracking_channel_correlation_dep_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_dep_b_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_dep_b_t *msg);
+bool sbp_msg_tracking_iq_dep_b_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_dep_b_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -225,8 +206,7 @@ bool sbp_msg_tracking_iq_dep_b_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_dep_b_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_iq_dep_b_t *msg);
+bool sbp_msg_tracking_iq_dep_b_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_iq_dep_b_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -235,8 +215,7 @@ bool sbp_msg_tracking_iq_dep_b_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_dep_a_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_dep_a_t *msg);
+bool sbp_msg_tracking_iq_dep_a_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -245,8 +224,7 @@ bool sbp_msg_tracking_iq_dep_a_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_iq_dep_a_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_iq_dep_a_t *msg);
+bool sbp_msg_tracking_iq_dep_a_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_iq_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -255,8 +233,7 @@ bool sbp_msg_tracking_iq_dep_a_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_dep_a_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_dep_a_t *msg);
+bool sbp_tracking_channel_state_dep_a_encode_internal(sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -265,8 +242,7 @@ bool sbp_tracking_channel_state_dep_a_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_dep_a_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_dep_a_t *msg);
+bool sbp_tracking_channel_state_dep_a_decode_internal(sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -275,8 +251,7 @@ bool sbp_tracking_channel_state_dep_a_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_dep_a_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_a_t *msg);
+bool sbp_msg_tracking_state_dep_a_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -285,8 +260,7 @@ bool sbp_msg_tracking_state_dep_a_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_dep_a_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_a_t *msg);
+bool sbp_msg_tracking_state_dep_a_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -295,8 +269,7 @@ bool sbp_msg_tracking_state_dep_a_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_dep_b_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_dep_b_t *msg);
+bool sbp_tracking_channel_state_dep_b_encode_internal(sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_dep_b_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -305,8 +278,7 @@ bool sbp_tracking_channel_state_dep_b_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_tracking_channel_state_dep_b_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_dep_b_t *msg);
+bool sbp_tracking_channel_state_dep_b_decode_internal(sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_dep_b_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -315,8 +287,7 @@ bool sbp_tracking_channel_state_dep_b_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_dep_b_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_b_t *msg);
+bool sbp_msg_tracking_state_dep_b_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_b_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -325,11 +296,10 @@ bool sbp_msg_tracking_state_dep_b_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_tracking_state_dep_b_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_b_t *msg);
+bool sbp_msg_tracking_state_dep_b_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_b_t *msg);
 
 #ifdef __cplusplus
-}
+  }
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_TRACKING_H */

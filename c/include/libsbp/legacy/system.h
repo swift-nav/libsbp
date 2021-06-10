@@ -29,6 +29,7 @@
 
 SBP_PACK_START
 
+
 /** System start-up message
  *
  * The system start-up message is sent once on system start-up. It notifies
@@ -37,10 +38,11 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 cause;        /**< Cause of startup */
-  u8 startup_type; /**< Startup type */
-  u16 reserved;    /**< Reserved */
+  u8 cause;           /**< Cause of startup */
+  u8 startup_type;    /**< Startup type */
+  u16 reserved;        /**< Reserved */
 } msg_startup_t;
+
 
 /** Status of received corrections
  *
@@ -50,11 +52,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 flags;       /**< Status flags */
-  u16 latency;    /**< Latency of observation receipt [deci-seconds] */
-  u8 num_signals; /**< Number of signals from base station */
-  char source[0]; /**< Corrections source string */
+  u8 flags;          /**< Status flags */
+  u16 latency;        /**< Latency of observation receipt [deci-seconds] */
+  u8 num_signals;    /**< Number of signals from base station */
+  char source[0];      /**< Corrections source string */
 } msg_dgnss_status_t;
+
 
 /** System heartbeat message
  *
@@ -70,8 +73,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 flags; /**< Status flags */
+  u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
+
 
 /** Sub-system Status report
  *
@@ -80,10 +84,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 component; /**< Identity of reporting subsystem */
-  u8 generic;    /**< Generic form status report */
-  u8 specific;   /**< Subsystem specific status code */
+  u16 component;    /**< Identity of reporting subsystem */
+  u8 generic;      /**< Generic form status report */
+  u8 specific;     /**< Subsystem specific status code */
 } sub_system_report_t;
+
 
 /** Status report message
  *
@@ -98,13 +103,14 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 reporting_system;          /**< Identity of reporting system */
-  u16 sbp_version;               /**< SBP protocol version */
-  u32 sequence;                  /**< Increments on each status report sent */
-  u32 uptime;                    /**< Number of seconds since system start-up */
-  sub_system_report_t status[0]; /**< Reported status of individual
-                                      subsystems */
+  u16 reporting_system;    /**< Identity of reporting system */
+  u16 sbp_version;         /**< SBP protocol version */
+  u32 sequence;            /**< Increments on each status report sent */
+  u32 uptime;              /**< Number of seconds since system start-up */
+  sub_system_report_t status[0];           /**< Reported status of individual
+                                                subsystems */
 } msg_status_report_t;
+
 
 /** Inertial Navigation System status message
  *
@@ -113,8 +119,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 flags; /**< Status flags */
+  u32 flags;    /**< Status flags */
 } msg_ins_status_t;
+
 
 /** Experimental telemetry message
  *
@@ -124,11 +131,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 id;             /**< Index representing the type of telemetry in use.  It
-                          is implemention defined. */
+  u8 id;           /**< Index representing the type of telemetry in use.  It
+                        is implemention defined. */
   char telemetry[0]; /**< Comma separated list of values as defined by the
                           index */
 } msg_csac_telemetry_t;
+
 
 /** Experimental telemetry message labels
  *
@@ -138,11 +146,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 id;                    /**< Index representing the type of telemetry in
-                                 use.  It is implemention defined. */
+  u8 id;                  /**< Index representing the type of telemetry in
+                               use.  It is implemention defined. */
   char telemetry_labels[0]; /**< Comma separated list of telemetry field
                                  values */
 } msg_csac_telemetry_labels_t;
+
 
 /** Inertial Navigation System update status message
  *
@@ -152,14 +161,15 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;       /**< GPS Time of Week [ms] */
-  u8 gnsspos;    /**< GNSS position update status flags */
-  u8 gnssvel;    /**< GNSS velocity update status flags */
-  u8 wheelticks; /**< Wheelticks update status flags */
-  u8 speed;      /**< Wheelticks update status flags */
-  u8 nhc;        /**< NHC update status flags */
-  u8 zerovel;    /**< Zero velocity update status flags */
+  u32 tow;           /**< GPS Time of Week [ms] */
+  u8 gnsspos;       /**< GNSS position update status flags */
+  u8 gnssvel;       /**< GNSS velocity update status flags */
+  u8 wheelticks;    /**< Wheelticks update status flags */
+  u8 speed;         /**< Wheelticks update status flags */
+  u8 nhc;           /**< NHC update status flags */
+  u8 zerovel;       /**< Zero velocity update status flags */
 } msg_ins_updates_t;
+
 
 /** Offset of the local time with respect to GNSS time
  *
@@ -169,12 +179,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  s16 weeks;        /**< Weeks portion of the time offset [weeks] */
-  s32 milliseconds; /**< Milliseconds portion of the time offset [ms] */
-  s16 microseconds; /**< Microseconds portion of the time offset [microseconds]
-                     */
-  u8 flags;         /**< Status flags (reserved) */
+  s16 weeks;           /**< Weeks portion of the time offset [weeks] */
+  s32 milliseconds;    /**< Milliseconds portion of the time offset [ms] */
+  s16 microseconds;    /**< Microseconds portion of the time offset [microseconds] */
+  u8 flags;           /**< Status flags (reserved) */
 } msg_gnss_time_offset_t;
+
 
 /** Local time at detection of PPS pulse
  *
@@ -192,9 +202,10 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u64 time; /**< Local time in microseconds [microseconds] */
-  u8 flags; /**< Status flags */
+  u64 time;     /**< Local time in microseconds [microseconds] */
+  u8 flags;    /**< Status flags */
 } msg_pps_time_t;
+
 
 /** Solution Group Metadata
  *
@@ -204,13 +215,14 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 group_id;       /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2
-                          is Gnss */
-  u8 flags;          /**< Status flags (reserved) */
-  u8 n_group_msgs;   /**< Size of list group_msgs */
-  u16 group_msgs[0]; /**< An inorder list of message types included in the
-                          Solution Group, including GROUP_META itself */
+  u8 group_id;        /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2
+                           is Gnss */
+  u8 flags;           /**< Status flags (reserved) */
+  u8 n_group_msgs;    /**< Size of list group_msgs */
+  u16 group_msgs[0];   /**< An inorder list of message types included in the
+                            Solution Group, including GROUP_META itself */
 } msg_group_meta_t;
+
 
 /** \} */
 

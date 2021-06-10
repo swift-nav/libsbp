@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/vehicle.h>
+#include <libsbp/internal/v4/common.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 /**
@@ -34,8 +34,7 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_odometry_t *msg);
+bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_odometry_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -44,8 +43,7 @@ bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_odometry_t *msg);
+bool sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_odometry_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -54,8 +52,7 @@ bool sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_wheeltick_t *msg);
+bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_wheeltick_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -64,11 +61,10 @@ bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_wheeltick_t *msg);
+bool sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_wheeltick_t *msg);
 
 #ifdef __cplusplus
-}
+  }
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_VEHICLE_H */

@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/system.h>
+#include <libsbp/internal/v4/common.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 /**
@@ -34,8 +34,7 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_startup_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_startup_t *msg);
+bool sbp_msg_startup_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_startup_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -44,8 +43,7 @@ bool sbp_msg_startup_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_startup_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_startup_t *msg);
+bool sbp_msg_startup_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_startup_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -54,8 +52,7 @@ bool sbp_msg_startup_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_dgnss_status_t *msg);
+bool sbp_msg_dgnss_status_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -64,8 +61,7 @@ bool sbp_msg_dgnss_status_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_dgnss_status_t *msg);
+bool sbp_msg_dgnss_status_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_dgnss_status_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -74,8 +70,7 @@ bool sbp_msg_dgnss_status_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_heartbeat_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_heartbeat_t *msg);
+bool sbp_msg_heartbeat_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_heartbeat_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -84,8 +79,7 @@ bool sbp_msg_heartbeat_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_heartbeat_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_heartbeat_t *msg);
+bool sbp_msg_heartbeat_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_heartbeat_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -94,8 +88,7 @@ bool sbp_msg_heartbeat_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sub_system_report_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_sub_system_report_t *msg);
+bool sbp_sub_system_report_encode_internal(sbp_encode_ctx_t *ctx, const sbp_sub_system_report_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -104,8 +97,7 @@ bool sbp_sub_system_report_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sub_system_report_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_sub_system_report_t *msg);
+bool sbp_sub_system_report_decode_internal(sbp_decode_ctx_t *ctx, sbp_sub_system_report_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -114,8 +106,7 @@ bool sbp_sub_system_report_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_status_report_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_status_report_t *msg);
+bool sbp_msg_status_report_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_status_report_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -124,8 +115,7 @@ bool sbp_msg_status_report_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_status_report_t *msg);
+bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_status_report_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -134,8 +124,7 @@ bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ins_status_encode_internal(sbp_encode_ctx_t *ctx,
-                                        const sbp_msg_ins_status_t *msg);
+bool sbp_msg_ins_status_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_ins_status_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -144,8 +133,7 @@ bool sbp_msg_ins_status_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ins_status_decode_internal(sbp_decode_ctx_t *ctx,
-                                        sbp_msg_ins_status_t *msg);
+bool sbp_msg_ins_status_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_ins_status_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -154,8 +142,7 @@ bool sbp_msg_ins_status_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_csac_telemetry_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_csac_telemetry_t *msg);
+bool sbp_msg_csac_telemetry_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_csac_telemetry_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -164,8 +151,7 @@ bool sbp_msg_csac_telemetry_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_csac_telemetry_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_csac_telemetry_t *msg);
+bool sbp_msg_csac_telemetry_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_csac_telemetry_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -174,8 +160,7 @@ bool sbp_msg_csac_telemetry_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_csac_telemetry_labels_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_csac_telemetry_labels_t *msg);
+bool sbp_msg_csac_telemetry_labels_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_csac_telemetry_labels_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -184,8 +169,7 @@ bool sbp_msg_csac_telemetry_labels_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_csac_telemetry_labels_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_csac_telemetry_labels_t *msg);
+bool sbp_msg_csac_telemetry_labels_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_csac_telemetry_labels_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -194,8 +178,7 @@ bool sbp_msg_csac_telemetry_labels_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ins_updates_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_ins_updates_t *msg);
+bool sbp_msg_ins_updates_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_ins_updates_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -204,8 +187,7 @@ bool sbp_msg_ins_updates_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ins_updates_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_ins_updates_t *msg);
+bool sbp_msg_ins_updates_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_ins_updates_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -214,8 +196,7 @@ bool sbp_msg_ins_updates_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_gnss_time_offset_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_gnss_time_offset_t *msg);
+bool sbp_msg_gnss_time_offset_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_gnss_time_offset_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -224,8 +205,7 @@ bool sbp_msg_gnss_time_offset_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_gnss_time_offset_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_gnss_time_offset_t *msg);
+bool sbp_msg_gnss_time_offset_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_gnss_time_offset_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -234,8 +214,7 @@ bool sbp_msg_gnss_time_offset_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_pps_time_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_pps_time_t *msg);
+bool sbp_msg_pps_time_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_pps_time_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -244,8 +223,7 @@ bool sbp_msg_pps_time_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_pps_time_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_pps_time_t *msg);
+bool sbp_msg_pps_time_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_pps_time_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -254,8 +232,7 @@ bool sbp_msg_pps_time_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_group_meta_encode_internal(sbp_encode_ctx_t *ctx,
-                                        const sbp_msg_group_meta_t *msg);
+bool sbp_msg_group_meta_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_group_meta_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -264,11 +241,10 @@ bool sbp_msg_group_meta_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_group_meta_decode_internal(sbp_decode_ctx_t *ctx,
-                                        sbp_msg_group_meta_t *msg);
+bool sbp_msg_group_meta_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_group_meta_t *msg);
 
 #ifdef __cplusplus
-}
+  }
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_SYSTEM_H */

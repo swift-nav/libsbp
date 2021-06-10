@@ -17,14 +17,14 @@
 
 #ifndef LIBSBP_V4_FILE_IO_MESSAGES_H
 #define LIBSBP_V4_FILE_IO_MESSAGES_H
-#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_RESP.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_RESP.h>
 #include <libsbp/v4/file_io/MSG_FILEIO_READ_REQ.h>
 #include <libsbp/v4/file_io/MSG_FILEIO_READ_RESP.h>
+#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_REQ.h>
+#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_RESP.h>
 #include <libsbp/v4/file_io/MSG_FILEIO_REMOVE.h>
 #include <libsbp/v4/file_io/MSG_FILEIO_WRITE_REQ.h>
 #include <libsbp/v4/file_io/MSG_FILEIO_WRITE_RESP.h>
+#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_REQ.h>
+#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_RESP.h>
 
 #endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */

@@ -36,6 +36,7 @@
 
 SBP_PACK_START
 
+
 /** Read file from the file system (host => device)
  *
  * The file read message reads a certain length (up to 255 bytes) from a given
@@ -48,11 +49,12 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;     /**< Read sequence number */
-  u32 offset;       /**< File offset [bytes] */
+  u32 sequence;      /**< Read sequence number */
+  u32 offset;        /**< File offset [bytes] */
   u8 chunk_size;    /**< Chunk size to read [bytes] */
-  char filename[0]; /**< Name of the file to read from */
+  char filename[0];   /**< Name of the file to read from */
 } msg_fileio_read_req_t;
+
 
 /** File read from the file system (host <= device)
  *
@@ -63,9 +65,10 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;   /**< Read sequence number */
+  u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read file */
 } msg_fileio_read_resp_t;
+
 
 /** List files in a directory (host => device)
  *
@@ -84,8 +87,9 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u32 offset;      /**< The offset to skip the first n elements of the file
                         list */
-  char dirname[0]; /**< Name of the directory to list */
+  char dirname[0];  /**< Name of the directory to list */
 } msg_fileio_read_dir_req_t;
+
 
 /** Files listed in a directory (host <= device)
  *
@@ -97,9 +101,10 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;   /**< Read sequence number */
+  u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read directory */
 } msg_fileio_read_dir_resp_t;
+
 
 /** Delete a file from the file system (host => device)
  *
@@ -113,6 +118,7 @@ typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
 } msg_fileio_remove_t;
 
+
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes) of data to
@@ -125,12 +131,13 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;     /**< Write sequence number */
-  u32 offset;       /**< Offset into the file at which to start writing in
-                         bytes [bytes] */
+  u32 sequence;    /**< Write sequence number */
+  u32 offset;      /**< Offset into the file at which to start writing in
+                        bytes [bytes] */
   char filename[0]; /**< Name of the file to write to */
-  u8 data[0];       /**< Variable-length array of data to write */
+  u8 data[0];     /**< Variable-length array of data to write */
 } msg_fileio_write_req_t;
+
 
 /** File written to (host <= device)
  *
@@ -141,8 +148,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence; /**< Write sequence number */
+  u32 sequence;    /**< Write sequence number */
 } msg_fileio_write_resp_t;
+
 
 /** Request advice on the optimal configuration for FileIO
  *
@@ -153,8 +161,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence; /**< Advice sequence number */
+  u32 sequence;    /**< Advice sequence number */
 } msg_fileio_config_req_t;
+
 
 /** Response with advice on the optimal configuration for FileIO.
 
@@ -166,12 +175,13 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;       /**< Advice sequence number */
-  u32 window_size;    /**< The number of SBP packets in the data in-flight
-                           window */
-  u32 batch_size;     /**< The number of SBP packets sent in one PDU */
-  u32 fileio_version; /**< The version of FileIO that is supported */
+  u32 sequence;          /**< Advice sequence number */
+  u32 window_size;       /**< The number of SBP packets in the data in-flight
+                              window */
+  u32 batch_size;        /**< The number of SBP packets sent in one PDU */
+  u32 fileio_version;    /**< The version of FileIO that is supported */
 } msg_fileio_config_resp_t;
+
 
 /** \} */
 

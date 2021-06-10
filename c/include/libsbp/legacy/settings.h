@@ -53,11 +53,13 @@
 
 SBP_PACK_START
 
+
 /** Save settings to flash (host => device)
  *
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
+
 
 /** Write device configuration settings (host => device)
  *
@@ -75,6 +77,7 @@ typedef struct SBP_ATTR_PACKED {
                         contents "SECTION_SETTING\0SETTING\0VALUE\0" */
 } msg_settings_write_t;
 
+
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
  * Return the status of a write request with the new value of the setting.  If
@@ -86,10 +89,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 status;       /**< Write status */
+  u8 status;     /**< Write status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE\0" */
 } msg_settings_write_resp_t;
+
 
 /** Read device configuration settings (host => device)
  *
@@ -108,6 +112,7 @@ typedef struct SBP_ATTR_PACKED {
                         contents "SECTION_SETTING\0SETTING\0" */
 } msg_settings_read_req_t;
 
+
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -123,6 +128,7 @@ typedef struct SBP_ATTR_PACKED {
                         contents "SECTION_SETTING\0SETTING\0VALUE\0" */
 } msg_settings_read_resp_t;
 
+
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings values. A device
@@ -130,9 +136,10 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 index; /**< An index into the device settings, with values ranging
-                  from 0 to length(settings). */
+  u16 index;    /**< An index into the device settings, with values ranging
+                     from 0 to length(settings). */
 } msg_settings_read_by_index_req_t;
+
 
 /** Read setting by direct index (host <= device)
  *
@@ -149,16 +156,18 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 index;       /**< An index into the device settings, with values ranging
-                        from 0 to length(settings) */
+  u16 index;      /**< An index into the device settings, with values ranging
+                       from 0 to length(settings) */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0" */
 } msg_settings_read_by_index_resp_t;
+
 
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
+
 
 /** Register setting and default value (device => host)
  *
@@ -172,6 +181,7 @@ typedef struct SBP_ATTR_PACKED {
                         "SECTION_SETTING\0SETTING\0VALUE". */
 } msg_settings_register_t;
 
+
 /** Register setting and default value (device <= host)
  *
  * This message responds to setting registration with the effective value. The
@@ -181,11 +191,12 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 status;       /**< Register status */
+  u8 status;     /**< Register status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE". The meaning of
                         value is defined according to the status field. */
 } msg_settings_register_resp_t;
+
 
 /** \} */
 

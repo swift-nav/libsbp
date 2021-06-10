@@ -18,21 +18,21 @@
 #ifndef LIBSBP_V4_OBSERVATION_SVAZEL_H
 #define LIBSBP_V4_OBSERVATION_SVAZEL_H
 
-#include <math.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
+#include <stdarg.h>
 #include <string.h>
+#include <stdint.h>
+#include <math.h>
 
 #include <libsbp/common.h>
+#include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/observation_macros.h>
 #include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
-#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 struct sbp_state;
@@ -44,24 +44,30 @@ struct sbp_state;
  *****************************************************************************/
 /** Satellite azimuth and elevation
  *
- * Satellite azimuth and elevation.
+* Satellite azimuth and elevation.
  */
 typedef struct {
+
+  
   /**
-   * GNSS signal identifier
+* GNSS signal identifier 
    */
   sbp_sbp_gnss_signal_t sid;
 
+  
   /**
-   * Azimuth angle (range 0..179) [deg * 2]
+* Azimuth angle (range 0..179) [deg * 2]
    */
   u8 az;
 
+  
   /**
-   * Elevation angle (range -90..90) [deg]
+* Elevation angle (range -90..90) [deg]
    */
   s8 el;
 } sbp_sv_az_el_t;
+
+
 
 /**
  * Get encoded size of an instance of sbp_sv_az_el_t
@@ -74,53 +80,39 @@ size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg);
 /**
  * Encode an instance of sbp_sv_az_el_t to wire representation
  *
- * This function encodes the given instance in to the user provided buffer. The
- * buffer provided to this function must be large enough to store the encoded
- * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
- * the buffer.
+ * This function encodes the given instance in to the user provided buffer. The buffer provided to this function must be large enough to store the encoded message otherwise it will return SBP_ENCODE_ERROR without writing anything to the buffer.
  *
- * Specify the length of the destination buffer in the \p len parameter. If
- * non-null the number of bytes written to the buffer will be returned in \p
- * n_written.
+ * Specify the length of the destination buffer in the \p len parameter. If non-null the number of bytes written to the buffer will be returned in \p n_written.
  *
  * @param buf Destination buffer
  * @param len Length of \p buf
- * @param n_written If not null, on success will be set to the number of bytes
- * written to \p buf
+ * @param n_written If not null, on success will be set to the number of bytes written to \p buf
  * @param msg Instance of sbp_sv_az_el_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_sv_az_el_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                       const sbp_sv_az_el_t *msg);
+s8 sbp_sv_az_el_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_sv_az_el_t *msg);
 
 /**
  * Decode an instance of sbp_sv_az_el_t from wire representation
  *
- * This function decodes the wire representation of a sbp_sv_az_el_t message to
- * the given instance. The caller must specify the length of the buffer in the
- * \p len parameter. If non-null the number of bytes read from the buffer will
- * be returned in \p n_read.
+ * This function decodes the wire representation of a sbp_sv_az_el_t message to the given instance. The caller must specify the length of the buffer in the \p len parameter. If non-null the number of bytes read from the buffer will be returned in \p n_read.
  *
  * @param buf Wire representation of the sbp_sv_az_el_t instance
  * @param len Length of \p buf
- * @param n_read If not null, on success will be set to the number of bytes read
- * from \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_sv_az_el_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                       sbp_sv_az_el_t *msg);
+s8 sbp_sv_az_el_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_sv_az_el_t *msg);
 
 /**
  * Compare two instances of sbp_sv_az_el_t
  *
- * The two instances will be compared and a value returned consistent with the
- * return codes of comparison functions from the C standard library
+ * The two instances will be compared and a value returned consistent with the return codes of comparison functions from the C standard library
  *
  * 0 will be returned if \p a and \p b are considered equal
- * A value less than 0 will be returned if \p a is considered to be less than \p
- * b A value greater than 0 will be returned if \p b is considered to be greater
- * than \p b
+ * A value less than 0 will be returned if \p a is considered to be less than \p b
+ * A value greater than 0 will be returned if \p b is considered to be greater than \p b
  *
  * @param a sbp_sv_az_el_t instance
  * @param b sbp_sv_az_el_t instance
@@ -129,35 +121,29 @@ s8 sbp_sv_az_el_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
 int sbp_sv_az_el_cmp(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b);
 
 #ifdef __cplusplus
-}
+  }
 
-static inline bool operator==(const sbp_sv_az_el_t &lhs,
-                              const sbp_sv_az_el_t &rhs) {
+static inline bool operator==(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_sv_az_el_t &lhs,
-                              const sbp_sv_az_el_t &rhs) {
+static inline bool operator!=(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_sv_az_el_t &lhs,
-                             const sbp_sv_az_el_t &rhs) {
+static inline bool operator<(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_sv_az_el_t &lhs,
-                              const sbp_sv_az_el_t &rhs) {
+static inline bool operator<=(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_sv_az_el_t &lhs,
-                             const sbp_sv_az_el_t &rhs) {
+static inline bool operator>(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_sv_az_el_t &lhs,
-                              const sbp_sv_az_el_t &rhs) {
+static inline bool operator>=(const sbp_sv_az_el_t &lhs, const sbp_sv_az_el_t &rhs) {
   return sbp_sv_az_el_cmp(&lhs, &rhs) >= 0;
 }
 

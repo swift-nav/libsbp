@@ -17,15 +17,15 @@
 
 #ifndef LIBSBP_V4_SETTINGS_MESSAGES_H
 #define LIBSBP_V4_SETTINGS_MESSAGES_H
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_REQ.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_RESP.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER_RESP.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_SAVE.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_WRITE.h>
 #include <libsbp/v4/settings/MSG_SETTINGS_WRITE_RESP.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_READ_REQ.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_READ_RESP.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER.h>
+#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER_RESP.h>
 
 #endif /* LIBSBP_V4_SETTINGS_MESSAGES_H */

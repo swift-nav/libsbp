@@ -45,7 +45,7 @@ using CallbackMsgFn = void (ClassT::*)(uint16_t, const ArgT &);
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
 template<typename MsgT, typename ClassT, CallbackMsgFn<ClassT, MsgT> func>
-inline void sbp_msg_cb_passthrough(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t *msg, void *context) {
+inline void sbp_msg_cb_passthrough(uint16_t sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context) {
   (void)msg_type;
   assert(nullptr != context);
   assert(msg_type == sbp::MessageTraits<MsgT>::id);
@@ -172,10 +172,10 @@ template<typename... MsgTypes>
 };
 
 template<typename ClassT>
-using CallbackSbpMsgFn = void (*ClassT::*)(uint16_t, uint16_t, const sbp_msg_t &);
+using CallbackSbpMsgFn = void (*ClassT::*)(uint16_t, sbp_msg_type_t, const sbp_msg_t &);
 
 template<typename ClassT>
-inline void sbp_all_msg_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
+inline void sbp_all_msg_cb_passthrough(uint16_t sender_id, sbp_msg_type_t msg_type,
                                      const sbp_msg_t *msg,
                                      void *context) {
   assert(nullptr != context);
@@ -206,7 +206,7 @@ class AllMessageHandler {
     AllMessageHandler& operator=(const AllMessageHandler&) = delete;
     AllMessageHandler& operator=(AllMessageHandler&&) = delete;
     
-    virtual void handle_sbp_message(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t &msg) = 0;
+    virtual void handle_sbp_message(uint16_t sender_id, sbp_msg_type_t msg_type, const sbp_msg_t &msg) = 0;
 };
 
 } /* namespace sbp */

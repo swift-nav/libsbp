@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+exit 0
 set -e -x
 # This only reformats the generated headers and tests
 # as it is introduced as part of fixing the docs,

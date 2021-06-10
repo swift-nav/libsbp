@@ -17,17 +17,17 @@
 
 #ifndef LIBSBP_V4_SYSTEM_MESSAGES_H
 #define LIBSBP_V4_SYSTEM_MESSAGES_H
+#include <libsbp/v4/system/MSG_STARTUP.h>
+#include <libsbp/v4/system/MSG_DGNSS_STATUS.h>
+#include <libsbp/v4/system/MSG_HEARTBEAT.h>
+#include <libsbp/v4/system/SubSystemReport.h>
+#include <libsbp/v4/system/MSG_STATUS_REPORT.h>
+#include <libsbp/v4/system/MSG_INS_STATUS.h>
 #include <libsbp/v4/system/MSG_CSAC_TELEMETRY.h>
 #include <libsbp/v4/system/MSG_CSAC_TELEMETRY_LABELS.h>
-#include <libsbp/v4/system/MSG_DGNSS_STATUS.h>
-#include <libsbp/v4/system/MSG_GNSS_TIME_OFFSET.h>
-#include <libsbp/v4/system/MSG_GROUP_META.h>
-#include <libsbp/v4/system/MSG_HEARTBEAT.h>
-#include <libsbp/v4/system/MSG_INS_STATUS.h>
 #include <libsbp/v4/system/MSG_INS_UPDATES.h>
+#include <libsbp/v4/system/MSG_GNSS_TIME_OFFSET.h>
 #include <libsbp/v4/system/MSG_PPS_TIME.h>
-#include <libsbp/v4/system/MSG_STARTUP.h>
-#include <libsbp/v4/system/MSG_STATUS_REPORT.h>
-#include <libsbp/v4/system/SubSystemReport.h>
+#include <libsbp/v4/system/MSG_GROUP_META.h>
 
 #endif /* LIBSBP_V4_SYSTEM_MESSAGES_H */

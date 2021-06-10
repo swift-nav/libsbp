@@ -17,12 +17,12 @@
 
 #ifndef LIBSBP_V4_GNSS_MESSAGES_H
 #define LIBSBP_V4_GNSS_MESSAGES_H
-#include <libsbp/v4/gnss/CarrierPhase.h>
-#include <libsbp/v4/gnss/GPSTime.h>
+#include <libsbp/v4/gnss/GnssSignal.h>
+#include <libsbp/v4/gnss/SvId.h>
+#include <libsbp/v4/gnss/GnssSignalDep.h>
 #include <libsbp/v4/gnss/GPSTimeDep.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
-#include <libsbp/v4/gnss/GnssSignal.h>
-#include <libsbp/v4/gnss/GnssSignalDep.h>
-#include <libsbp/v4/gnss/SvId.h>
+#include <libsbp/v4/gnss/GPSTime.h>
+#include <libsbp/v4/gnss/CarrierPhase.h>
 
 #endif /* LIBSBP_V4_GNSS_MESSAGES_H */

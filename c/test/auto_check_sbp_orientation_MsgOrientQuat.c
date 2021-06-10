@@ -10,20 +10,18 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientQuat.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientQuat.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
+#include <stdio.h> // for debugging
+#include <stdlib.h> // for malloc
 #include <libsbp/sbp.h>
 #include <libsbp/v4/orientation.h>
-#include <stdio.h>   // for debugging
-#include <stdlib.h>  // for malloc
 
 static struct {
   u32 n_callbacks_logged;
   u16 sender_id;
-  u16 msg_type;
+  sbp_msg_type_t msg_type;
   sbp_msg_t msg;
   void *context;
 } last_msg;
@@ -31,36 +29,42 @@ static struct {
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
-static void *last_io_context;
+static void* last_io_context;
 
 static int DUMMY_MEMORY_FOR_CALLBACKS = 0xdeadbeef;
 static int DUMMY_MEMORY_FOR_IO = 0xdead0000;
 
-static void dummy_reset() {
+static void dummy_reset()
+{
   dummy_rd = dummy_wr = 0;
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-static s32 dummy_write(u8 *buff, u32 n, void *context) {
-  last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
-  memcpy(dummy_buff + dummy_wr, buff, real_n);
-  dummy_wr += real_n;
-  return real_n;
+static s32 dummy_write(u8 *buff, u32 n, void* context)
+{
+ last_io_context = context;
+ u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
+ memcpy(dummy_buff + dummy_wr, buff, real_n);
+ dummy_wr += real_n;
+ return real_n;
 }
 
-static s32 dummy_read(u8 *buff, u32 n, void *context) {
-  last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
-  memcpy(buff, dummy_buff + dummy_rd, real_n);
-  dummy_rd += real_n;
-  return real_n;
+static s32 dummy_read(u8 *buff, u32 n, void* context)
+{
+ last_io_context = context;
+ u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
+ memcpy(buff, dummy_buff + dummy_rd, real_n);
+ dummy_rd += real_n;
+ return real_n;
 }
 
-static void logging_reset() { memset(&last_msg, 0, sizeof(last_msg)); }
+static void logging_reset()
+{
+  memset(&last_msg, 0, sizeof(last_msg));
+}
 
-static void msg_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg,
-                         void *context) {
+static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context)
+{
   last_msg.n_callbacks_logged++;
   last_msg.sender_id = sender_id;
   last_msg.msg_type = msg_type;
@@ -68,7 +72,8 @@ static void msg_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg,
   last_msg.context = context;
 }
 
-START_TEST(test_auto_check_sbp_orientation_MsgOrientQuat) {
+START_TEST( test_auto_check_sbp_orientation_MsgOrientQuat )
+{
   static sbp_msg_callbacks_node_t n;
 
   // State of the SBP message parser.
@@ -81,8 +86,7 @@ START_TEST(test_auto_check_sbp_orientation_MsgOrientQuat) {
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message
-    // types can be
+    // We re-initialize before every test so that callbacks for the same message types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -90,124 +94,83 @@ START_TEST(test_auto_check_sbp_orientation_MsgOrientQuat) {
 
     logging_reset();
 
-    sbp_callback_register(&sbp_state, 0x220, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_callback_register(&sbp_state, 0x220, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 encoded_frame[] = {
-        85, 32, 2,   66, 0, 37, 0, 0,  0, 0, 3,  0,  0, 0,   7,
-        0,  0,  0,   8,  0, 0,  0, 4,  0, 0, 0,  0,  0, 64,  64,
-        0,  0,  128, 64, 0, 0,  0, 65, 0, 0, 64, 64, 1, 186, 6,
-    };
+    u8 encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
 
     dummy_reset();
 
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
-
+      
     test_msg.orient_quat.flags = 1;
-
+      
     test_msg.orient_quat.tow = 0;
-
+      
     test_msg.orient_quat.w = 3;
-
+      
     test_msg.orient_quat.w_accuracy = 3.0;
-
+      
     test_msg.orient_quat.x = 7;
-
+      
     test_msg.orient_quat.x_accuracy = 4.0;
-
+      
     test_msg.orient_quat.y = 8;
-
+      
     test_msg.orient_quat.y_accuracy = 8.0;
-
+      
     test_msg.orient_quat.z = 4;
-
+      
     test_msg.orient_quat.z_accuracy = 3.0;
 
-    sbp_message_send(&sbp_state, SBP_MSG_ORIENT_QUAT, 66, &test_msg,
-                     &dummy_write);
+    sbp_message_send(&sbp_state, SBP_MSG_ORIENT_QUAT, 66, &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+        "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-                  "frame was not encoded properly");
+        "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-                    "sbp_process threw an error!");
+          "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-                  "msg_callback: one callback should have been logged");
+        "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 66,
-                  "msg_callback: sender_id decoded incorrectly");
+        "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_message_cmp(SBP_MSG_ORIENT_QUAT, &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_ORIENT_QUAT, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
+      
+    ck_assert_msg(last_msg.msg.orient_quat.flags == 1, "incorrect value for last_msg.msg.orient_quat.flags, expected 1, is %d", last_msg.msg.orient_quat.flags);
+      
+    ck_assert_msg(last_msg.msg.orient_quat.tow == 0, "incorrect value for last_msg.msg.orient_quat.tow, expected 0, is %d", last_msg.msg.orient_quat.tow);
+      
+    ck_assert_msg(last_msg.msg.orient_quat.w == 3, "incorrect value for last_msg.msg.orient_quat.w, expected 3, is %d", last_msg.msg.orient_quat.w);
+      
+    ck_assert_msg((last_msg.msg.orient_quat.w_accuracy * 100 - 3.0 * 100) < 0.05, "incorrect value for last_msg.msg.orient_quat.w_accuracy, expected 3.0, is %s", last_msg.msg.orient_quat.w_accuracy);
+      
+    ck_assert_msg(last_msg.msg.orient_quat.x == 7, "incorrect value for last_msg.msg.orient_quat.x, expected 7, is %d", last_msg.msg.orient_quat.x);
+      
+    ck_assert_msg((last_msg.msg.orient_quat.x_accuracy * 100 - 4.0 * 100) < 0.05, "incorrect value for last_msg.msg.orient_quat.x_accuracy, expected 4.0, is %s", last_msg.msg.orient_quat.x_accuracy);
+      
+    ck_assert_msg(last_msg.msg.orient_quat.y == 8, "incorrect value for last_msg.msg.orient_quat.y, expected 8, is %d", last_msg.msg.orient_quat.y);
+      
+    ck_assert_msg((last_msg.msg.orient_quat.y_accuracy * 100 - 8.0 * 100) < 0.05, "incorrect value for last_msg.msg.orient_quat.y_accuracy, expected 8.0, is %s", last_msg.msg.orient_quat.y_accuracy);
+      
+    ck_assert_msg(last_msg.msg.orient_quat.z == 4, "incorrect value for last_msg.msg.orient_quat.z, expected 4, is %d", last_msg.msg.orient_quat.z);
+      
+    ck_assert_msg((last_msg.msg.orient_quat.z_accuracy * 100 - 3.0 * 100) < 0.05, "incorrect value for last_msg.msg.orient_quat.z_accuracy, expected 3.0, is %s", last_msg.msg.orient_quat.z_accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.flags == 1,
-        "incorrect value for last_msg.msg.orient_quat.flags, expected 1, is %d",
-        last_msg.msg.orient_quat.flags);
-
-    ck_assert_msg(
-        last_msg.msg.orient_quat.tow == 0,
-        "incorrect value for last_msg.msg.orient_quat.tow, expected 0, is %d",
-        last_msg.msg.orient_quat.tow);
-
-    ck_assert_msg(
-        last_msg.msg.orient_quat.w == 3,
-        "incorrect value for last_msg.msg.orient_quat.w, expected 3, is %d",
-        last_msg.msg.orient_quat.w);
-
-    ck_assert_msg(
-        (last_msg.msg.orient_quat.w_accuracy * 100 - 3.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.orient_quat.w_accuracy, expected "
-        "3.0, is %s",
-        last_msg.msg.orient_quat.w_accuracy);
-
-    ck_assert_msg(
-        last_msg.msg.orient_quat.x == 7,
-        "incorrect value for last_msg.msg.orient_quat.x, expected 7, is %d",
-        last_msg.msg.orient_quat.x);
-
-    ck_assert_msg(
-        (last_msg.msg.orient_quat.x_accuracy * 100 - 4.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.orient_quat.x_accuracy, expected "
-        "4.0, is %s",
-        last_msg.msg.orient_quat.x_accuracy);
-
-    ck_assert_msg(
-        last_msg.msg.orient_quat.y == 8,
-        "incorrect value for last_msg.msg.orient_quat.y, expected 8, is %d",
-        last_msg.msg.orient_quat.y);
-
-    ck_assert_msg(
-        (last_msg.msg.orient_quat.y_accuracy * 100 - 8.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.orient_quat.y_accuracy, expected "
-        "8.0, is %s",
-        last_msg.msg.orient_quat.y_accuracy);
-
-    ck_assert_msg(
-        last_msg.msg.orient_quat.z == 4,
-        "incorrect value for last_msg.msg.orient_quat.z, expected 4, is %d",
-        last_msg.msg.orient_quat.z);
-
-    ck_assert_msg(
-        (last_msg.msg.orient_quat.z_accuracy * 100 - 3.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.orient_quat.z_accuracy, expected "
-        "3.0, is %s",
-        last_msg.msg.orient_quat.z_accuracy);
   }
 }
 END_TEST
 
-Suite *auto_check_sbp_orientation_MsgOrientQuat_suite(void) {
-  Suite *s = suite_create(
-      "SBP generated test suite: auto_check_sbp_orientation_MsgOrientQuat");
-  TCase *tc_acq =
-      tcase_create("Automated_Suite_auto_check_sbp_orientation_MsgOrientQuat");
+Suite* auto_check_sbp_orientation_MsgOrientQuat_suite(void)
+{
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_orientation_MsgOrientQuat");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_orientation_MsgOrientQuat");
   tcase_add_test(tc_acq, test_auto_check_sbp_orientation_MsgOrientQuat);
   suite_add_tcase(s, tc_acq);
   return s;

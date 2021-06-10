@@ -18,21 +18,21 @@
 #ifndef LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_H
 #define LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_H
 
-#include <math.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
+#include <stdarg.h>
 #include <string.h>
+#include <stdint.h>
+#include <math.h>
 
 #include <libsbp/common.h>
+#include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/observation_macros.h>
 #include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/EphemerisCommonContent.h>
-#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 struct sbp_state;
@@ -44,57 +44,66 @@ struct sbp_state;
  *****************************************************************************/
 /** Satellite broadcast ephemeris for GLO
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GLO satellite position, velocity, and clock offset. Please
- * see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
- * information (ephemeris parameters)" for more details.
+* The ephemeris message returns a set of satellite orbit parameters that is used to calculate GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate information (ephemeris parameters)" for more details.
  */
 typedef struct {
+
+  
   /**
-   * Values common for all ephemeris types
+* Values common for all ephemeris types 
    */
   sbp_ephemeris_common_content_t common;
 
+  
   /**
-   * Relative deviation of predicted carrier frequency from nominal
+* Relative deviation of predicted carrier frequency from nominal 
    */
   float gamma;
 
+  
   /**
-   * Correction to the SV time [s]
+* Correction to the SV time [s]
    */
   float tau;
 
+  
   /**
-   * Equipment delay between L1 and L2 [s]
+* Equipment delay between L1 and L2 [s]
    */
   float d_tau;
 
+  
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system [m]
+* Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
 
+  
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
+* Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
 
+  
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
+* Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   float acc[3];
 
+  
   /**
-   * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+* Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid 
    */
   u8 fcn;
 
+  
   /**
-   * Issue of data. Equal to the 7 bits of the immediate data word t_b
+* Issue of data. Equal to the 7 bits of the immediate data word t_b 
    */
   u8 iod;
 } sbp_msg_ephemeris_glo_t;
+
+
 
 /**
  * Get encoded size of an instance of sbp_msg_ephemeris_glo_t
@@ -107,51 +116,36 @@ size_t sbp_msg_ephemeris_glo_encoded_len(const sbp_msg_ephemeris_glo_t *msg);
 /**
  * Encode an instance of sbp_msg_ephemeris_glo_t to wire representation
  *
- * This function encodes the given instance in to the user provided buffer. The
- * buffer provided to this function must be large enough to store the encoded
- * message otherwise it will return SBP_ENCODE_ERROR without writing anything to
- * the buffer.
+ * This function encodes the given instance in to the user provided buffer. The buffer provided to this function must be large enough to store the encoded message otherwise it will return SBP_ENCODE_ERROR without writing anything to the buffer.
  *
- * Specify the length of the destination buffer in the \p len parameter. If
- * non-null the number of bytes written to the buffer will be returned in \p
- * n_written.
+ * Specify the length of the destination buffer in the \p len parameter. If non-null the number of bytes written to the buffer will be returned in \p n_written.
  *
  * @param buf Destination buffer
  * @param len Length of \p buf
- * @param n_written If not null, on success will be set to the number of bytes
- * written to \p buf
+ * @param n_written If not null, on success will be set to the number of bytes written to \p buf
  * @param msg Instance of sbp_msg_ephemeris_glo_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_ephemeris_glo_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                const sbp_msg_ephemeris_glo_t *msg);
+s8 sbp_msg_ephemeris_glo_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const sbp_msg_ephemeris_glo_t *msg);
 
 /**
  * Decode an instance of sbp_msg_ephemeris_glo_t from wire representation
  *
- * This function decodes the wire representation of a sbp_msg_ephemeris_glo_t
- * message to the given instance. The caller must specify the length of the
- * buffer in the \p len parameter. If non-null the number of bytes read from the
- * buffer will be returned in \p n_read.
+ * This function decodes the wire representation of a sbp_msg_ephemeris_glo_t message to the given instance. The caller must specify the length of the buffer in the \p len parameter. If non-null the number of bytes read from the buffer will be returned in \p n_read.
  *
  * @param buf Wire representation of the sbp_msg_ephemeris_glo_t instance
  * @param len Length of \p buf
- * @param n_read If not null, on success will be set to the number of bytes read
- * from \p buf
+ * @param n_read If not null, on success will be set to the number of bytes read from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_ephemeris_glo_decode(const uint8_t *buf, uint8_t len,
-                                uint8_t *n_read, sbp_msg_ephemeris_glo_t *msg);
+s8 sbp_msg_ephemeris_glo_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_ephemeris_glo_t *msg);
 /**
  * Send an instance of sbp_msg_ephemeris_glo_t with the given write function
  *
- * An equivalent of #sbp_send_message which operates specifically on
- * sbp_msg_ephemeris_glo_t
+ * An equivalent of #sbp_send_message which operates specifically on sbp_msg_ephemeris_glo_t
  *
- * The given message will be encoded to wire representation and passed in to the
- * given write function callback. The write callback will be called several
- * times for each invocation of this function.
+ * The given message will be encoded to wire representation and passed in to the given write function callback. The write callback will be called several times for each invocation of this function.
  *
  * @param s SBP state
  * @param sender_id SBP sender id
@@ -159,58 +153,47 @@ s8 sbp_msg_ephemeris_glo_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_ephemeris_glo_send(struct sbp_state *s, u16 sender_id,
-                              const sbp_msg_ephemeris_glo_t *msg,
-                              sbp_write_fn_t write);
+s8 sbp_msg_ephemeris_glo_send(struct sbp_state  *s, u16 sender_id, const sbp_msg_ephemeris_glo_t *msg, sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_ephemeris_glo_t
  *
- * The two instances will be compared and a value returned consistent with the
- * return codes of comparison functions from the C standard library
+ * The two instances will be compared and a value returned consistent with the return codes of comparison functions from the C standard library
  *
  * 0 will be returned if \p a and \p b are considered equal
- * A value less than 0 will be returned if \p a is considered to be less than \p
- * b A value greater than 0 will be returned if \p b is considered to be greater
- * than \p b
+ * A value less than 0 will be returned if \p a is considered to be less than \p b
+ * A value greater than 0 will be returned if \p b is considered to be greater than \p b
  *
  * @param a sbp_msg_ephemeris_glo_t instance
  * @param b sbp_msg_ephemeris_glo_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_ephemeris_glo_cmp(const sbp_msg_ephemeris_glo_t *a,
-                              const sbp_msg_ephemeris_glo_t *b);
+int sbp_msg_ephemeris_glo_cmp(const sbp_msg_ephemeris_glo_t *a, const sbp_msg_ephemeris_glo_t *b);
 
 #ifdef __cplusplus
-}
+  }
 
-static inline bool operator==(const sbp_msg_ephemeris_glo_t &lhs,
-                              const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator==(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ephemeris_glo_t &lhs,
-                              const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator!=(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ephemeris_glo_t &lhs,
-                             const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator<(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ephemeris_glo_t &lhs,
-                              const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator<=(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ephemeris_glo_t &lhs,
-                             const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator>(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ephemeris_glo_t &lhs,
-                              const sbp_msg_ephemeris_glo_t &rhs) {
+static inline bool operator>=(const sbp_msg_ephemeris_glo_t &lhs, const sbp_msg_ephemeris_glo_t &rhs) {
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) >= 0;
 }
 

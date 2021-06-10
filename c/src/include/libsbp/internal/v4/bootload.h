@@ -20,11 +20,11 @@
 
 #include <stdbool.h>
 
-#include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/bootload.h>
+#include <libsbp/internal/v4/common.h>
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 /**
@@ -34,8 +34,7 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_req_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg);
+bool sbp_msg_bootloader_handshake_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -44,8 +43,7 @@ bool sbp_msg_bootloader_handshake_req_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_req_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_req_t *msg);
+bool sbp_msg_bootloader_handshake_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -54,8 +52,7 @@ bool sbp_msg_bootloader_handshake_req_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_resp_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg);
+bool sbp_msg_bootloader_handshake_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -64,8 +61,7 @@ bool sbp_msg_bootloader_handshake_resp_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_resp_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_resp_t *msg);
+bool sbp_msg_bootloader_handshake_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -74,8 +70,7 @@ bool sbp_msg_bootloader_handshake_resp_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_jump_to_app_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg);
+bool sbp_msg_bootloader_jump_to_app_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -84,8 +79,7 @@ bool sbp_msg_bootloader_jump_to_app_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_jump_to_app_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_bootloader_jump_to_app_t *msg);
+bool sbp_msg_bootloader_jump_to_app_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_jump_to_app_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -94,8 +88,7 @@ bool sbp_msg_bootloader_jump_to_app_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_nap_device_dna_req_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg);
+bool sbp_msg_nap_device_dna_req_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -104,8 +97,7 @@ bool sbp_msg_nap_device_dna_req_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_nap_device_dna_req_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_req_t *msg);
+bool sbp_msg_nap_device_dna_req_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -114,8 +106,7 @@ bool sbp_msg_nap_device_dna_req_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_nap_device_dna_resp_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg);
+bool sbp_msg_nap_device_dna_resp_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -124,8 +115,7 @@ bool sbp_msg_nap_device_dna_resp_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_nap_device_dna_resp_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_resp_t *msg);
+bool sbp_msg_nap_device_dna_resp_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -134,8 +124,7 @@ bool sbp_msg_nap_device_dna_resp_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg);
+bool sbp_msg_bootloader_handshake_dep_a_encode_internal(sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -144,11 +133,10 @@ bool sbp_msg_bootloader_handshake_dep_a_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_dep_a_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg);
+bool sbp_msg_bootloader_handshake_dep_a_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg);
 
 #ifdef __cplusplus
-}
+  }
 #endif
 
 #endif /* LIBSBP_INTERNAL_V4_BOOTLOAD_H */

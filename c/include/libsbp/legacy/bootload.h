@@ -33,12 +33,14 @@
 
 SBP_PACK_START
 
+
 /** Bootloading handshake request (host => device)
  *
  * The handshake message request from the host establishes a handshake between
  * the device bootloader and the host. The response from the device is
  * MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
+
 
 /** Bootloading handshake response (host <= device)
  *
@@ -49,9 +51,10 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 flags;       /**< Bootloader flags */
+  u32 flags;      /**< Bootloader flags */
   char version[0]; /**< Bootloader version number */
 } msg_bootloader_handshake_resp_t;
+
 
 /** Bootloader jump to application (host => device)
  *
@@ -59,8 +62,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 jump; /**< Ignored by the device */
+  u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
+
 
 /** Read FPGA device ID over UART request (host => device)
  *
@@ -71,6 +75,7 @@ typedef struct SBP_ATTR_PACKED {
  * that this ID is tied to the FPGA, and not related to the Piksi's serial
  * number.
  */
+
 
 /** Read FPGA device ID over UART response (host <= device)
  *
@@ -87,6 +92,7 @@ typedef struct SBP_ATTR_PACKED {
                   the right. */
 } msg_nap_device_dna_resp_t;
 
+
 /** Deprecated
  *
  * Deprecated.
@@ -95,6 +101,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;
+
 
 /** \} */
 

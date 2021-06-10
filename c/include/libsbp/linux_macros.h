@@ -18,6 +18,7 @@
 #ifndef LIBSBP_LINUX_MACROS_H
 #define LIBSBP_LINUX_MACROS_H
 
+
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A 0x7F00
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A 0x7F01
 #define SBP_MSG_LINUX_SYS_STATE_DEP_A 0x7F02
@@ -29,42 +30,42 @@
 #define SBP_MSG_LINUX_CPU_STATE 0x7F08
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
+#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags) \
+                             (((flags) >> SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT) \
+                             & SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)
+#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)) \
+                             << (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT)));} while(0)
+                             
 
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 #define SBP_MSG_LINUX_MEM_STATE 0x7F09
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
+#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags) \
+                             (((flags) >> SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT) \
+                             & SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)
+#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)) \
+                             << (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT)));} while(0)
+                             
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 #define SBP_MSG_LINUX_SYS_STATE 0x7F0A
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
+#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags) \
+                             (((flags) >> SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT) \
+                             & SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)
+#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)) \
+                             << (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT)));} while(0)
+                             
 
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)

@@ -29,6 +29,7 @@
 
 SBP_PACK_START
 
+
 /** Plaintext logging messages with levels
  *
  * This message contains a human-readable payload string from the device
@@ -37,9 +38,10 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 level;     /**< Logging level */
-  char text[0]; /**< Human-readable string */
+  u8 level;    /**< Logging level */
+  char text[0];  /**< Human-readable string */
 } msg_log_t;
+
 
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -59,6 +61,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 fwd_payload[0]; /**< variable length wrapped binary message */
 } msg_fwd_t;
 
+
 /** Deprecated
  *
  * Deprecated.
@@ -67,6 +70,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
+
 
 /** \} */
 

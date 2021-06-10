@@ -12,6 +12,7 @@
 
 #include <libsbp/edc.h>
 #include <libsbp/sbp.h>
+#include <libsbp/sbp_msg_type.h>
 
 #define SBP_PREAMBLE 0x55
 
@@ -176,7 +177,7 @@
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
+static s8 sbp_register_callback_generic(sbp_state_t *s, sbp_msg_type_t msg_type,
                                         sbp_callback_t cb, sbp_cb_type cb_type,
                                         void *context,
                                         sbp_msg_callbacks_node_t *node) {
@@ -269,85 +270,6 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
       }
     }
   return SBP_CALLBACK_ERROR;
-}
-
- /** Register a frame callback for a msg_type.
- *
- * \param s        Pointer to sbp_state
- * \param cb       Pointer to message callback function
- * \param msg_type Message type on which to fire frame callback,
- *                 SBP_MSG_ALL will fire for every message
- * \param context  Pointer to context for callback function
- * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
- *         `SBP_CALLBACK_ERROR` if the if callback was already
- *         registered for that message type.
- */
-s8 sbp_frame_callback_register(sbp_state_t *s, u16 msg_type,
-                               sbp_frame_callback_t cb, void *context,
-                               sbp_msg_callbacks_node_t *node) {
-  sbp_callback_t callback;
-  callback.frame = cb;
-  return sbp_register_callback_generic(s, msg_type, callback,
-                                       SBP_FRAME_CALLBACK, context, node);
-}
-
-/** Register a frame callback for ANY message.
- *
- * \param s        Pointer to sbp_state
- * \param cb       Pointer to message callback function
- * \param context  Pointer to context for callback function
- * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
- *         `SBP_CALLBACK_ERROR` if the node already exists
- */
-
-s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context,
-                                 sbp_msg_callbacks_node_t *node) {
-  return sbp_frame_callback_register(s, SBP_MSG_ALL, cb, context, node);
-}
-
-/** Register a payload callback for a message type.
- *
- * Register a payload callback that is called when a message
- * with type msg_type is received. Note, this might better
- * be called sbp_register_payload_callback, but is left
- * as sbp_register_callback for backwards compatibility.
- *
- * \param s        Pointer to sbp_state
- * \param msg_type Message type associated with callback
- * \param cb       Pointer to message callback function
- * \param context  Pointer to context for callback function
- * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
- *         `SBP_CALLBACK_ERROR` if the callback was already
- *         registered for that message type.
- */
-s8 sbp_payload_callback_register(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
-                         sbp_msg_callbacks_node_t *node) {
-  sbp_callback_t callback;
-  callback.msg = cb;
-  return sbp_register_callback_generic(s, msg_type, callback,
-                                       SBP_MSG_CALLBACK, context, node);
-}
-
-s8 sbp_callback_register(sbp_state_t *s, u16 msg_type,
-                                  sbp_decoded_callback_t cb, void *context,
-                                  sbp_msg_callbacks_node_t *node) {
-  sbp_callback_t callback;
-  callback.decoded = cb;
-  return sbp_register_callback_generic(s, msg_type, callback,
-                                       SBP_DECODED_CALLBACK, context, node);
-}
-
-s8 sbp_all_message_callback_register(sbp_state_t *s,
-                                 sbp_decoded_callback_t cb, void *context,
-                                 sbp_msg_callbacks_node_t *node) {
-  sbp_callback_t callback;
-  callback.decoded = cb;
-  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
-                                       SBP_DECODED_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.
@@ -448,6 +370,54 @@ static void sbp_u16_to_u8_array(const u16 v, u8 *array_start)
   array_start[1] = (u8)((v & 0xff00) >> 8);
 }
 
+static s8 process_frame(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
+                     u8 payload_len, u8 payload[],
+                     u16 frame_len, u8 frame[],
+                     u8 cb_mask) {
+  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+  sbp_msg_callbacks_node_t *node;
+  sbp_msg_t unpacked_msg;
+  bool need_unpack = true;
+  bool unpacked_successfully = false;
+  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
+    if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
+        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
+        switch (node->cb_type) {
+        case SBP_FRAME_CALLBACK:
+        {
+          node->cb.frame(sender_id, (u16)msg_type, payload_len, payload, frame_len,
+                         frame, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        case SBP_MSG_CALLBACK:
+        {
+          node->cb.msg(sender_id, payload_len, payload, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        case SBP_DECODED_CALLBACK: {
+                                 if (need_unpack) {
+                                   need_unpack = false;
+                                   if (sbp_message_decode(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
+                                     unpacked_successfully = true;
+                                   }
+                                   else { ret = SBP_DECODE_ERROR; }
+                                 }
+                                 if (unpacked_successfully) {
+                                   node->cb.decoded(sender_id, msg_type, &unpacked_msg, node->context);
+                                   ret = SBP_OK_CALLBACK_EXECUTED;
+                                 } 
+                               } break;
+        case SBP_CALLBACK_TYPE_COUNT:
+        default:
+        {
+            // NOP
+        };
+        }
+    }
+  }
+  return ret;
+}
+
 /** Read and process SBP messages.
  * Reads bytes from an input source using the provided `read` function, decodes
  * the SBP framing and performs a CRC check on the message.
@@ -518,11 +488,11 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case SBP_GET_TYPE:
-    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->msg_type)-s->n_read));
+    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(u16)-s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
-    if (s->n_read >= sizeof(s->msg_type)) {
+    if (s->n_read >= sizeof(u16)) {
       s->msg_type =  sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
       s->n_read = 0;
       s->state = SBP_GET_SENDER;
@@ -574,7 +544,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
       s->state = SBP_WAITING;
       s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
 
-      sbp_u16_to_u8_array(s->msg_type, (u8*)&buf);
+      u16 raw_msg_type = (u16)s->msg_type;
+      sbp_u16_to_u8_array(raw_msg_type, (u8*)&buf);
+      s->msg_type = (sbp_msg_type_t)raw_msg_type;
       crc = crc16_ccitt((u8*)&(buf), 2, 0);
       sbp_u16_to_u8_array(s->sender_id, (u8*)&buf);
       crc = crc16_ccitt((u8*)&(buf), 2, crc);
@@ -582,9 +554,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
       crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
       if (s->crc == crc) {
         /* Message complete, process frame callbacks and payload callbacks. */
-        ret = sbp_process_frame(s, s->sender_id, s->msg_type,
+        ret = process_frame(s, s->sender_id, s->msg_type,
                                 s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
-                                (u16)s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
+                                s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
       } 
       return SBP_CRC_ERROR;
@@ -599,169 +571,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   return SBP_OK;
 }
 
-/** Directly process an SBP message.
- * If a SBP message has already been decoded (for example, from a binary
- * stream or from a JSON log file) use this function to directly process it.
- *
- * \param s         State structure
- * \param sender_id SBP message sender id
- * \param msg_type  SBP message type
- * \param msg_len   SBP message length
- * \param payload   SBP message payload
- * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
- *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
- *         callback.
- */
-s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
-                       u8 payload[]) {
-  return sbp_process_frame(s, sender_id, msg_type, msg_len, payload,
-                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK));
-}
-
-s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                       const sbp_msg_t *msg) {
-  sbp_msg_callbacks_node_t *node;
-  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
-  uint8_t payload_len;
-  bool need_pack = true;
-  bool packed_successfully = false;
-
-  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
-  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
-      switch (node->cb_type) {
-        case SBP_FRAME_CALLBACK:
-        case SBP_MSG_CALLBACK:
-          {
-            if (need_pack) {
-              need_pack = false;
-              if (sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
-                packed_successfully = true;
-              }
-              else { ret = SBP_ENCODE_ERROR; }
-            }
-            if (packed_successfully) {
-              ret = SBP_OK_CALLBACK_EXECUTED;
-              if (node->cb_type == SBP_FRAME_CALLBACK) {
-                node->cb.frame(sender_id, msg_type, payload_len, payload, 0, 0, node->context);
-              } else {
-                node->cb.msg(sender_id, payload_len, payload, node->context);
-              }
-            }
-          }
-          break;
-        case SBP_DECODED_CALLBACK: {
-                                 node->cb.decoded(sender_id, msg_type, msg, node->context);
-                                 ret = SBP_OK_CALLBACK_EXECUTED;
-                               } break;
-        case SBP_CALLBACK_TYPE_COUNT:
-        default:
-                               break;
-      }
-    }
-  }
-  return ret;
-}
-
-/** Directly process an SBP frame.
- * Use this function to directly process the entire SBP frame after
- * it is succesfully deframed and the CRC has passed. It will fire any
- * callbacks registered for the message which match the cb_mask.
- *
- * \param s           State structure
- * \param sender_id   SBP message sender id
- * \param msg_type    SBP message type. Type SBP_MSG_ALL will fire for all messages.
- * \param payload_len SBP message length
- * \param payload     SBP Message payload
- * \param frame_len   Length of ENTIRE frame (from header to CRC).  Max of 263.
- * \param frame       Pointer to the entire SBP frame (stored on state struct)
- * \param cb_mask     Bitmask defining which callbacks to include/exclude from
- *                    processing. Use SBP_CALLBACK_ALL_MASK for all callback
- *                    types or construct custom mask using
- *                    SBP_CALLBACK_FLAG(cb_type).
- * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed
- *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
- *          associated callback.
- */
-s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[],
-                     u16 frame_len, u8 frame[],
-                     u8 cb_mask) {
-  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
-  sbp_msg_callbacks_node_t *node;
-  sbp_msg_t unpacked_msg;
-  bool need_unpack = true;
-  bool unpacked_successfully = false;
-  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
-        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
-        switch (node->cb_type) {
-        case SBP_FRAME_CALLBACK:
-        {
-          node->cb.frame(sender_id, msg_type, payload_len, payload, frame_len,
-                         frame, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-        } break;
-        case SBP_MSG_CALLBACK:
-        {
-          node->cb.msg(sender_id, payload_len, payload, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-        } break;
-        case SBP_DECODED_CALLBACK: {
-                                 if (need_unpack) {
-                                   need_unpack = false;
-                                   if (sbp_message_decode(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
-                                     unpacked_successfully = true;
-                                   }
-                                   else { ret = SBP_DECODE_ERROR; }
-                                 }
-                                 if (unpacked_successfully) {
-                                   node->cb.decoded(sender_id, msg_type, &unpacked_msg, node->context);
-                                   ret = SBP_OK_CALLBACK_EXECUTED;
-                                 } 
-                               } break;
-        case SBP_CALLBACK_TYPE_COUNT:
-        default:
-        {
-            // NOP
-        };
-        }
-    }
-  }
-  return ret;
-}
-
-
-/** Send SBP messages.
- * Takes an SBP message payload, type and sender ID then writes a message to
- * the output stream using the supplied `write` function with the correct
- * framing and CRC.
- *
- * The supplied `write` function must have the prototype:
- *
- * ~~~
- * u32 write(u8 *buff, u32 n, void* context)
- * ~~~
- *
- * where `n` is the number of bytes to be written and `buff` is the buffer from
- * which to read the data to be written, and `context` is the arbitrary pointer
- * set by `sbp_state_set_io_context`. The function should return the number
- * of bytes successfully written which may be between 0 and `n`. Currently, if
- * the number of bytes written is different from `n` then `sbp_payload_send`
- * will immediately return with an error.
- *
- * Note that `sbp_payload_send` makes multiple calls to write and therefore if
- * a `write` call fails then this may result in a partial message being written
- * to the output. This should be caught by the CRC check on the receiving end
- * but will result in lost messages.
- *
- * \param write Function pointer to a function that writes `n` bytes from
- *              `buff` to the output stream  and returns the number of bytes
- *              successfully written.
- * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
- *         not be sent or was only partially sent.
- */
-s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u8 len, u8 *payload,
                     sbp_write_fn_t write)
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */
@@ -787,7 +597,8 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
     return SBP_SEND_ERROR;
   }
 
-  sbp_u16_to_u8_array(msg_type, (u8*)&buf);
+  u16 raw_msg_type = (u16)msg_type;
+  sbp_u16_to_u8_array(raw_msg_type, (u8*)&buf);
   crc = crc16_ccitt((u8*)&(buf), 2, 0);
   wr = (*write)((u8*)&buf, 2, s->io_context);
   if (0 > wr) {
@@ -840,12 +651,130 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   return SBP_OK;
 }
 
-s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
+/******************************************************************************
+ *
+ * V4 API
+ *
+ *****************************************************************************/
+
+s8 sbp_callback_register(sbp_state_t *s, sbp_msg_type_t msg_type,
+                                  sbp_decoded_callback_t cb, void *context,
+                                  sbp_msg_callbacks_node_t *node) {
+  sbp_callback_t callback;
+  callback.decoded = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_DECODED_CALLBACK, context, node);
+}
+
+s8 sbp_all_message_callback_register(sbp_state_t *s,
+                                 sbp_decoded_callback_t cb, void *context,
+                                 sbp_msg_callbacks_node_t *node) {
+  sbp_callback_t callback;
+  callback.decoded = cb;
+  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
+                                       SBP_DECODED_CALLBACK, context, node);
+}
+
+s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_payload_send(s, msg_type, sender_id, payload_len, payload, write);
+  return send_payload(s, msg_type, sender_id, payload_len, payload, write);
+}
+
+s8 sbp_process_message(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
+                       const sbp_msg_t *msg) {
+  sbp_msg_callbacks_node_t *node;
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  bool need_pack = true;
+  bool packed_successfully = false;
+
+  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
+    if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
+      switch (node->cb_type) {
+        case SBP_FRAME_CALLBACK:
+        case SBP_MSG_CALLBACK:
+          {
+            if (need_pack) {
+              need_pack = false;
+              if (sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
+                packed_successfully = true;
+              }
+              else { ret = SBP_ENCODE_ERROR; }
+            }
+            if (packed_successfully) {
+              ret = SBP_OK_CALLBACK_EXECUTED;
+              if (node->cb_type == SBP_FRAME_CALLBACK) {
+                node->cb.frame(sender_id, (u16)msg_type, payload_len, payload, 0, 0, node->context);
+              } else {
+                node->cb.msg(sender_id, payload_len, payload, node->context);
+              }
+            }
+          }
+          break;
+        case SBP_DECODED_CALLBACK: {
+                                 node->cb.decoded(sender_id, msg_type, msg, node->context);
+                                 ret = SBP_OK_CALLBACK_EXECUTED;
+                               } break;
+        case SBP_CALLBACK_TYPE_COUNT:
+        default:
+                               break;
+      }
+    }
+  }
+  return ret;
+}
+
+
+/******************************************************************************
+ *
+ * Legacy API
+ *
+ *****************************************************************************/
+s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
+                         sbp_msg_callbacks_node_t *node)
+{
+  sbp_callback_t callback;
+  callback.msg = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_MSG_CALLBACK, context, node);
+}
+
+s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
+                               sbp_frame_callback_t cb, void* context,
+                               sbp_msg_callbacks_node_t *node)
+{
+  sbp_callback_t callback;
+  callback.frame = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_FRAME_CALLBACK, context, node);
+}
+
+s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
+                                 void *context, sbp_msg_callbacks_node_t *node)
+{
+  return sbp_frame_callback_register(s, SBP_MSG_ALL, cb, context, node);
+}
+
+s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
+                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask)
+{
+  return process_frame(s, sender_id, (sbp_msg_type_t)msg_type, payload_len, payload, frame_len, frame, cb_mask);
+}
+
+s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+                       u8 payload[]) {
+  return process_frame(s, sender_id, msg_type, msg_len, payload,
+                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK));
+}
+
+s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+                    sbp_write_fn_t write)
+{
+  return send_payload(s, (sbp_msg_type_t)msg_type, sender_id, len, payload, write);
 }
 
 /** \} */

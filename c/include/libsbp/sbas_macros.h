@@ -18,6 +18,7 @@
 #ifndef LIBSBP_SBAS_MACROS_H
 #define LIBSBP_SBAS_MACROS_H
 
+
 #define SBP_MSG_SBAS_RAW 0x7777
 
 #endif
