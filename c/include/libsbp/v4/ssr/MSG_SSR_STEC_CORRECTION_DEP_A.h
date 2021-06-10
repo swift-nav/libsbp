@@ -36,8 +36,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_SSR_STEC_CORRECTION_DEP_A
@@ -137,7 +135,7 @@ s8 sbp_msg_ssr_stec_correction_dep_a_decode(
  * @param SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_ssr_stec_correction_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_ssr_stec_correction_dep_a_t *msg, sbp_write_fn_t write);
 
 /**

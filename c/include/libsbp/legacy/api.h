@@ -19,11 +19,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-typedef struct sbp_state sbp_state_t;
-struct sbp_msg_callbacks_node;
-typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
-
 /** SBP callback function prototype definitions. */
 typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
 typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,

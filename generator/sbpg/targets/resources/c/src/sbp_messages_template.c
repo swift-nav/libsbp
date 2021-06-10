@@ -255,7 +255,7 @@ s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.
 }
 
 ((* if m.is_real_message *))
-s8 (((m.prefix)))_send(struct sbp_state *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write)
+s8 (((m.prefix)))_send(sbp_state_t *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write)
 {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

@@ -69,7 +69,7 @@ s8 sbp_msg_bootloader_handshake_req_decode(
 }
 
 s8 sbp_msg_bootloader_handshake_req_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_bootloader_handshake_req_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -218,7 +218,7 @@ s8 sbp_msg_bootloader_handshake_resp_decode(
 }
 
 s8 sbp_msg_bootloader_handshake_resp_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_bootloader_handshake_resp_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -304,8 +304,8 @@ s8 sbp_msg_bootloader_jump_to_app_decode(
 }
 
 s8 sbp_msg_bootloader_jump_to_app_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_bootloader_jump_to_app_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_bootloader_jump_to_app_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_bootloader_jump_to_app_encode(payload, sizeof(payload),
@@ -381,7 +381,7 @@ s8 sbp_msg_nap_device_dna_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_nap_device_dna_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_nap_device_dna_req_send(sbp_state_t *s, u16 sender_id,
                                    const sbp_msg_nap_device_dna_req_t *msg,
                                    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -462,7 +462,7 @@ s8 sbp_msg_nap_device_dna_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_nap_device_dna_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_nap_device_dna_resp_send(sbp_state_t *s, u16 sender_id,
                                     const sbp_msg_nap_device_dna_resp_t *msg,
                                     sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -609,7 +609,7 @@ s8 sbp_msg_bootloader_handshake_dep_a_decode(
 }
 
 s8 sbp_msg_bootloader_handshake_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_bootloader_handshake_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

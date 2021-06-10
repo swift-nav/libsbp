@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_CSAC_TELEMETRY
@@ -272,7 +270,7 @@ s8 sbp_msg_csac_telemetry_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_csac_telemetry_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_csac_telemetry_send(sbp_state_t *s, u16 sender_id,
                                const sbp_msg_csac_telemetry_t *msg,
                                sbp_write_fn_t write);
 

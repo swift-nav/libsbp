@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_LINUX_PROCESS_FD_SUMMARY
@@ -336,7 +334,7 @@ s8 sbp_msg_linux_process_fd_summary_decode(
  * @param SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_linux_process_fd_summary_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_linux_process_fd_summary_t *msg, sbp_write_fn_t write);
 
 /**

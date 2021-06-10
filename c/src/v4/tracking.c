@@ -212,7 +212,7 @@ s8 sbp_msg_tracking_state_detailed_dep_a_decode(
 }
 
 s8 sbp_msg_tracking_state_detailed_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_tracking_state_detailed_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -533,7 +533,7 @@ s8 sbp_msg_tracking_state_detailed_dep_decode(
 }
 
 s8 sbp_msg_tracking_state_detailed_dep_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_tracking_state_detailed_dep_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -809,7 +809,7 @@ s8 sbp_msg_tracking_state_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_state_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_state_send(sbp_state_t *s, u16 sender_id,
                                const sbp_msg_tracking_state_t *msg,
                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -974,7 +974,7 @@ s8 sbp_msg_measurement_state_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_measurement_state_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_measurement_state_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_measurement_state_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1154,7 +1154,7 @@ s8 sbp_msg_tracking_iq_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_iq_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_iq_send(sbp_state_t *s, u16 sender_id,
                             const sbp_msg_tracking_iq_t *msg,
                             sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1346,7 +1346,7 @@ s8 sbp_msg_tracking_iq_dep_b_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_iq_dep_b_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_iq_dep_b_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_tracking_iq_dep_b_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1459,7 +1459,7 @@ s8 sbp_msg_tracking_iq_dep_a_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_iq_dep_a_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_iq_dep_a_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_tracking_iq_dep_a_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1652,7 +1652,7 @@ s8 sbp_msg_tracking_state_dep_a_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_state_dep_a_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_state_dep_a_send(sbp_state_t *s, u16 sender_id,
                                      const sbp_msg_tracking_state_dep_a_t *msg,
                                      sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1836,7 +1836,7 @@ s8 sbp_msg_tracking_state_dep_b_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_tracking_state_dep_b_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_tracking_state_dep_b_send(sbp_state_t *s, u16 sender_id,
                                      const sbp_msg_tracking_state_dep_b_t *msg,
                                      sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
