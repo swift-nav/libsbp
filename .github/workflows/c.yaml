@@ -65,6 +65,11 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Setup
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install clang-6.0
+
       - name: Run tests
         run: make test-c
         env:
@@ -84,6 +89,11 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+
+      - name: Setup
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install clang-6.0
 
       - name: Run tests
         run: make test-c
