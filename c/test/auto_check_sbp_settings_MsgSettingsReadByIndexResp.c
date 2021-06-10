@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <libsbp/new/settings.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/settings.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
@@ -129,6 +129,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
              sizeof(assign_string));
     }
 
+    test_msg.settings_read_by_index_resp.setting.encoded_len = 76;
+
     test_msg.settings_read_by_index_resp.setting.lens[0] = 15;
 
     test_msg.settings_read_by_index_resp.setting.lens[1] = 20;
@@ -142,8 +144,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     test_msg.settings_read_by_index_resp.setting.offsets[1] = 16;
 
     test_msg.settings_read_by_index_resp.setting.offsets[2] = 37;
-
-    test_msg.settings_read_by_index_resp.setting.packed_len = 76;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -163,8 +163,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -196,6 +196,13 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
     }
+
+    ck_assert_msg(
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 76,
+        "incorrect value for "
+        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
+        "expected 76, is %d",
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
 
     ck_assert_msg(
         last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 15,
@@ -241,13 +248,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
         "37, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len == 76,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.packed_len, expected "
-        "76, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -289,6 +289,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
              sizeof(assign_string));
     }
 
+    test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
+
     test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
 
     test_msg.settings_read_by_index_resp.setting.lens[1] = 4;
@@ -306,8 +308,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     test_msg.settings_read_by_index_resp.setting.offsets[2] = 15;
 
     test_msg.settings_read_by_index_resp.setting.offsets[3] = 19;
-
-    test_msg.settings_read_by_index_resp.setting.packed_len = 33;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -327,8 +327,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -353,6 +353,13 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
     }
+
+    ck_assert_msg(
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 33,
+        "incorrect value for "
+        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
+        "expected 33, is %d",
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
 
     ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
                   "incorrect value for "
@@ -407,13 +414,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.offsets[3], expected "
         "19, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.offsets[3]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len == 33,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.packed_len, expected "
-        "33, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -456,6 +456,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
              sizeof(assign_string));
     }
 
+    test_msg.settings_read_by_index_resp.setting.encoded_len = 33;
+
     test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
 
     test_msg.settings_read_by_index_resp.setting.lens[1] = 16;
@@ -469,8 +471,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     test_msg.settings_read_by_index_resp.setting.offsets[1] = 10;
 
     test_msg.settings_read_by_index_resp.setting.offsets[2] = 27;
-
-    test_msg.settings_read_by_index_resp.setting.packed_len = 33;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -490,8 +490,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -516,6 +516,13 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
     }
+
+    ck_assert_msg(
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 33,
+        "incorrect value for "
+        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
+        "expected 33, is %d",
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
 
     ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
                   "incorrect value for "
@@ -559,13 +566,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
         "27, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len == 33,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.packed_len, expected "
-        "33, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -606,6 +606,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
              sizeof(assign_string));
     }
 
+    test_msg.settings_read_by_index_resp.setting.encoded_len = 27;
+
     test_msg.settings_read_by_index_resp.setting.lens[0] = 9;
 
     test_msg.settings_read_by_index_resp.setting.lens[1] = 8;
@@ -619,8 +621,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     test_msg.settings_read_by_index_resp.setting.offsets[1] = 10;
 
     test_msg.settings_read_by_index_resp.setting.offsets[2] = 19;
-
-    test_msg.settings_read_by_index_resp.setting.packed_len = 27;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -640,8 +640,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -665,6 +665,13 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
     }
+
+    ck_assert_msg(
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 27,
+        "incorrect value for "
+        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
+        "expected 27, is %d",
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
 
     ck_assert_msg(last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 9,
                   "incorrect value for "
@@ -707,13 +714,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.offsets[2], expected "
         "19, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.offsets[2]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len == 27,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.packed_len, expected "
-        "27, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len);
   }
   // Test successful parsing of a message
   {
@@ -755,6 +755,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
              sizeof(assign_string));
     }
 
+    test_msg.settings_read_by_index_resp.setting.encoded_len = 34;
+
     test_msg.settings_read_by_index_resp.setting.lens[0] = 10;
 
     test_msg.settings_read_by_index_resp.setting.lens[1] = 4;
@@ -772,8 +774,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     test_msg.settings_read_by_index_resp.setting.offsets[2] = 16;
 
     test_msg.settings_read_by_index_resp.setting.offsets[3] = 20;
-
-    test_msg.settings_read_by_index_resp.setting.packed_len = 34;
 
     sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
                      &test_msg, &dummy_write);
@@ -793,8 +793,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                              &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
+                                  &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -819,6 +819,13 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.settings_read_by_index_resp.setting.data);
     }
+
+    ck_assert_msg(
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len == 34,
+        "incorrect value for "
+        "last_msg.msg.settings_read_by_index_resp.setting.encoded_len, "
+        "expected 34, is %d",
+        last_msg.msg.settings_read_by_index_resp.setting.encoded_len);
 
     ck_assert_msg(
         last_msg.msg.settings_read_by_index_resp.setting.lens[0] == 10,
@@ -874,13 +881,6 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
         "last_msg.msg.settings_read_by_index_resp.setting.offsets[3], expected "
         "20, is %d",
         last_msg.msg.settings_read_by_index_resp.setting.offsets[3]);
-
-    ck_assert_msg(
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len == 34,
-        "incorrect value for "
-        "last_msg.msg.settings_read_by_index_resp.setting.packed_len, expected "
-        "34, is %d",
-        last_msg.msg.settings_read_by_index_resp.setting.packed_len);
   }
 }
 END_TEST

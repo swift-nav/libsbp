@@ -16,7 +16,7 @@
 #include <libsbp/common.h>
 #include <libsbp/legacy/api.h>
 #include <libsbp/legacy/compat.h>
-#include <libsbp/new/sbp_msg.h>
+#include <libsbp/v4/sbp_msg.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,7 +43,9 @@ extern "C" {
 #define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR           (-6)
+/** Return value indicating an error while encoding an SBP message to wire format */
 #define SBP_ENCODE_ERROR (-7)
+/** Return value indicating an error while decoding an SBP message from wire format */
 #define SBP_DECODE_ERROR (-8)
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
@@ -119,12 +121,12 @@ typedef struct sbp_msg_callbacks_node {
 /** State structure for processing SBP messages. */
 typedef struct sbp_state {
   enum {
-    WAITING = 0,
-    GET_TYPE,
-    GET_SENDER,
-    GET_LEN,
-    GET_MSG,
-    GET_CRC
+    SBP_WAITING = 0,
+    SBP_GET_TYPE,
+    SBP_GET_SENDER,
+    SBP_GET_LEN,
+    SBP_GET_MSG,
+    SBP_GET_CRC
   } state;
   u16 msg_type;
   u16 sender_id;

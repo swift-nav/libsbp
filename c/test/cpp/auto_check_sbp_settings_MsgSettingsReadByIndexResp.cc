@@ -104,6 +104,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
         (char)65,  (char)84,  (char)90,  (char)0};
     memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
   }
+  test_msg.setting.encoded_len = 76;
 
   test_msg.setting.lens[0] = 15;
 
@@ -117,7 +118,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   test_msg.setting.offsets[1] = 16;
 
   test_msg.setting.offsets[2] = 37;
-  test_msg.setting.packed_len = 76;
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -154,6 +154,9 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
         << "incorrect value for last_msg_.setting.data, expected string '"
         << check_string << "', is '" << last_msg_.setting.data << "'";
   }
+  EXPECT_EQ(last_msg_.setting.encoded_len, 76)
+      << "incorrect value for last_msg_.setting.encoded_len, expected 76, is "
+      << last_msg_.setting.encoded_len;
   EXPECT_EQ(last_msg_.setting.lens[0], 15)
       << "incorrect value for last_msg_.setting.lens[0], expected 15, is "
       << last_msg_.setting.lens[0];
@@ -175,9 +178,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   EXPECT_EQ(last_msg_.setting.offsets[2], 37)
       << "incorrect value for last_msg_.setting.offsets[2], expected 37, is "
       << last_msg_.setting.offsets[2];
-  EXPECT_EQ(last_msg_.setting.packed_len, 76)
-      << "incorrect value for last_msg_.setting.packed_len, expected 76, is "
-      << last_msg_.setting.packed_len;
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
     : public ::testing::Test,
@@ -254,6 +254,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
         (char)69,  (char)65,  (char)0};
     memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
   }
+  test_msg.setting.encoded_len = 33;
 
   test_msg.setting.lens[0] = 9;
 
@@ -271,7 +272,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   test_msg.setting.offsets[2] = 15;
 
   test_msg.setting.offsets[3] = 19;
-  test_msg.setting.packed_len = 33;
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -301,6 +301,9 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
         << "incorrect value for last_msg_.setting.data, expected string '"
         << check_string << "', is '" << last_msg_.setting.data << "'";
   }
+  EXPECT_EQ(last_msg_.setting.encoded_len, 33)
+      << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
+      << last_msg_.setting.encoded_len;
   EXPECT_EQ(last_msg_.setting.lens[0], 9)
       << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
       << last_msg_.setting.lens[0];
@@ -328,9 +331,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   EXPECT_EQ(last_msg_.setting.offsets[3], 19)
       << "incorrect value for last_msg_.setting.offsets[3], expected 19, is "
       << last_msg_.setting.offsets[3];
-  EXPECT_EQ(last_msg_.setting.packed_len, 33)
-      << "incorrect value for last_msg_.setting.packed_len, expected 33, is "
-      << last_msg_.setting.packed_len;
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
     : public ::testing::Test,
@@ -407,6 +407,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
         (char)51,  (char)53,  (char)0};
     memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
   }
+  test_msg.setting.encoded_len = 33;
 
   test_msg.setting.lens[0] = 9;
 
@@ -420,7 +421,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   test_msg.setting.offsets[1] = 10;
 
   test_msg.setting.offsets[2] = 27;
-  test_msg.setting.packed_len = 33;
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -450,6 +450,9 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
         << "incorrect value for last_msg_.setting.data, expected string '"
         << check_string << "', is '" << last_msg_.setting.data << "'";
   }
+  EXPECT_EQ(last_msg_.setting.encoded_len, 33)
+      << "incorrect value for last_msg_.setting.encoded_len, expected 33, is "
+      << last_msg_.setting.encoded_len;
   EXPECT_EQ(last_msg_.setting.lens[0], 9)
       << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
       << last_msg_.setting.lens[0];
@@ -471,9 +474,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   EXPECT_EQ(last_msg_.setting.offsets[2], 27)
       << "incorrect value for last_msg_.setting.offsets[2], expected 27, is "
       << last_msg_.setting.offsets[2];
-  EXPECT_EQ(last_msg_.setting.packed_len, 33)
-      << "incorrect value for last_msg_.setting.packed_len, expected 33, is "
-      << last_msg_.setting.packed_len;
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
     : public ::testing::Test,
@@ -549,6 +549,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
         (char)48,  (char)48,  (char)0};
     memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
   }
+  test_msg.setting.encoded_len = 27;
 
   test_msg.setting.lens[0] = 9;
 
@@ -562,7 +563,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   test_msg.setting.offsets[1] = 10;
 
   test_msg.setting.offsets[2] = 19;
-  test_msg.setting.packed_len = 27;
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -591,6 +591,9 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
         << "incorrect value for last_msg_.setting.data, expected string '"
         << check_string << "', is '" << last_msg_.setting.data << "'";
   }
+  EXPECT_EQ(last_msg_.setting.encoded_len, 27)
+      << "incorrect value for last_msg_.setting.encoded_len, expected 27, is "
+      << last_msg_.setting.encoded_len;
   EXPECT_EQ(last_msg_.setting.lens[0], 9)
       << "incorrect value for last_msg_.setting.lens[0], expected 9, is "
       << last_msg_.setting.lens[0];
@@ -612,9 +615,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   EXPECT_EQ(last_msg_.setting.offsets[2], 19)
       << "incorrect value for last_msg_.setting.offsets[2], expected 19, is "
       << last_msg_.setting.offsets[2];
-  EXPECT_EQ(last_msg_.setting.packed_len, 27)
-      << "incorrect value for last_msg_.setting.packed_len, expected 27, is "
-      << last_msg_.setting.packed_len;
 }
 class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
     : public ::testing::Test,
@@ -691,6 +691,7 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
         (char)77,  (char)69,  (char)65,  (char)0};
     memcpy(test_msg.setting.data, assign_string, sizeof(assign_string));
   }
+  test_msg.setting.encoded_len = 34;
 
   test_msg.setting.lens[0] = 10;
 
@@ -708,7 +709,6 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   test_msg.setting.offsets[2] = 16;
 
   test_msg.setting.offsets[3] = 20;
-  test_msg.setting.packed_len = 34;
 
   EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
@@ -738,6 +738,9 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
         << "incorrect value for last_msg_.setting.data, expected string '"
         << check_string << "', is '" << last_msg_.setting.data << "'";
   }
+  EXPECT_EQ(last_msg_.setting.encoded_len, 34)
+      << "incorrect value for last_msg_.setting.encoded_len, expected 34, is "
+      << last_msg_.setting.encoded_len;
   EXPECT_EQ(last_msg_.setting.lens[0], 10)
       << "incorrect value for last_msg_.setting.lens[0], expected 10, is "
       << last_msg_.setting.lens[0];
@@ -765,7 +768,4 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   EXPECT_EQ(last_msg_.setting.offsets[3], 20)
       << "incorrect value for last_msg_.setting.offsets[3], expected 20, is "
       << last_msg_.setting.offsets[3];
-  EXPECT_EQ(last_msg_.setting.packed_len, 34)
-      << "incorrect value for last_msg_.setting.packed_len, expected 34, is "
-      << last_msg_.setting.packed_len;
 }

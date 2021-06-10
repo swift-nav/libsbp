@@ -368,7 +368,7 @@ void sbp_clear_callbacks(sbp_state_t *s)
  */
 void sbp_state_init(sbp_state_t *s)
 {
-  s->state = WAITING;
+  s->state = SBP_WAITING;
 
   /* Set the IO context pointer, passed to read and write functions, to NULL. */
   s->io_context = 0;
@@ -501,7 +501,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   u8 buf[2] = {0};
 
   switch (s->state) {
-  case WAITING:
+  case SBP_WAITING:
     rd = (*read)(&temp, sizeof(temp), s->io_context);
     if (0 > rd) {
       return SBP_READ_ERROR;
@@ -512,12 +512,12 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
         sbp_state_frame_buffer_clear(s);
         s->frame_buff[s->frame_len++] = temp;
         s->n_read = 0;
-        s->state = GET_TYPE;
+        s->state = SBP_GET_TYPE;
       }
     }
     break;
 
-  case GET_TYPE:
+  case SBP_GET_TYPE:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
     if (ret != SBP_OK) {
       return ret;
@@ -525,11 +525,11 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     if (s->n_read >= sizeof(s->msg_type)) {
       s->msg_type =  sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
       s->n_read = 0;
-      s->state = GET_SENDER;
+      s->state = SBP_GET_SENDER;
     }
     break;
 
-  case GET_SENDER:
+  case SBP_GET_SENDER:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
     if (ret != SBP_OK) {
       return ret;
@@ -537,11 +537,11 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     if (s->n_read >= sizeof(s->sender_id)) {
       s->sender_id = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_SENDERID]));
       s->n_read = 0;
-      s->state = GET_LEN;
+      s->state = SBP_GET_LEN;
     }
     break;
 
-  case GET_LEN:
+  case SBP_GET_LEN:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
     if (ret != SBP_OK) {
       return ret;
@@ -549,11 +549,11 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     if (s->n_read == sizeof(s->msg_len)) {
       s->msg_len = s->frame_buff[SBP_FRAME_OFFSET_MSGLEN];
       s->n_read = 0;
-      s->state = GET_MSG;
+      s->state = SBP_GET_MSG;
     }
     break;
 
-  case GET_MSG:
+  case SBP_GET_MSG:
     /* Not received whole message yet, try and read some more. */
     ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
     if (ret != SBP_OK) {
@@ -561,17 +561,17 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     }
     if (s->msg_len - s->n_read <= 0) {
       s->n_read = 0;
-      s->state = GET_CRC;
+      s->state = SBP_GET_CRC;
     }
     break;
 
-  case GET_CRC:
+  case SBP_GET_CRC:
     ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
     if (ret != SBP_OK) {
       return ret;
     }
     if (s->n_read >= SBP_CRC_LEN) {
-      s->state = WAITING;
+      s->state = SBP_WAITING;
       s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
 
       sbp_u16_to_u8_array(s->msg_type, (u8*)&buf);
@@ -592,7 +592,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   default:
-    s->state = WAITING;
+    s->state = SBP_WAITING;
     break;
   }
 
@@ -635,7 +635,7 @@ s8 sbp_process_message(sbp_state_t *s, u16 sender_id, u16 msg_type,
           {
             if (need_pack) {
               need_pack = false;
-              if (sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
+              if (sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
                 packed_successfully = true;
               }
               else { ret = SBP_ENCODE_ERROR; }
@@ -710,7 +710,7 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
         case SBP_DECODED_CALLBACK: {
                                  if (need_unpack) {
                                    need_unpack = false;
-                                   if (sbp_decode_msg(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
+                                   if (sbp_message_decode(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
                                      unpacked_successfully = true;
                                    }
                                    else { ret = SBP_DECODE_ERROR; }
@@ -843,7 +843,7 @@ s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
 s8 sbp_message_send(sbp_state_t *s, u16 msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_encode_msg(payload, sizeof(payload), &payload_len, msg_type, msg);
+  s8 ret = sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
   if (ret != SBP_OK) { return ret; }
   return sbp_payload_send(s, msg_type, sender_id, payload_len, payload, write);
 }

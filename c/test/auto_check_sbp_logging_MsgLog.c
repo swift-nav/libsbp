@@ -15,8 +15,8 @@
 // modify by hand!
 
 #include <check.h>
-#include <libsbp/new/logging.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/logging.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
@@ -120,7 +120,7 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
       memcpy(test_msg.log.text.data, assign_string, sizeof(assign_string));
     }
 
-    test_msg.log.text.packed_len = 43;
+    test_msg.log.text.encoded_len = 43;
 
     sbp_message_send(&sbp_state, SBP_MSG_LOG, 2314, &test_msg, &dummy_write);
 
@@ -139,7 +139,7 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
     ck_assert_msg(last_msg.sender_id == 2314,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_msg_cmp(SBP_MSG_LOG, &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SBP_MSG_LOG, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -164,10 +164,10 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
                     check_string, last_msg.msg.log.text.data);
     }
 
-    ck_assert_msg(last_msg.msg.log.text.packed_len == 43,
-                  "incorrect value for last_msg.msg.log.text.packed_len, "
+    ck_assert_msg(last_msg.msg.log.text.encoded_len == 43,
+                  "incorrect value for last_msg.msg.log.text.encoded_len, "
                   "expected 43, is %d",
-                  last_msg.msg.log.text.packed_len);
+                  last_msg.msg.log.text.encoded_len);
   }
 }
 END_TEST

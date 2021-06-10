@@ -15,8 +15,8 @@
 // Do not modify by hand!
 
 #include <check.h>
-#include <libsbp/new/system.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/system.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
@@ -116,7 +116,7 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
              sizeof(assign_string));
     }
 
-    test_msg.dgnss_status.source.packed_len = 7;
+    test_msg.dgnss_status.source.encoded_len = 7;
 
     sbp_message_send(&sbp_state, SBP_MSG_DGNSS_STATUS, 66, &test_msg,
                      &dummy_write);
@@ -137,7 +137,7 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_DGNSS_STATUS, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_DGNSS_STATUS, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.dgnss_status.flags == 0,
@@ -167,10 +167,10 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
     }
 
     ck_assert_msg(
-        last_msg.msg.dgnss_status.source.packed_len == 7,
-        "incorrect value for last_msg.msg.dgnss_status.source.packed_len, "
+        last_msg.msg.dgnss_status.source.encoded_len == 7,
+        "incorrect value for last_msg.msg.dgnss_status.source.encoded_len, "
         "expected 7, is %d",
-        last_msg.msg.dgnss_status.source.packed_len);
+        last_msg.msg.dgnss_status.source.encoded_len);
   }
 }
 END_TEST

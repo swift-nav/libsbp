@@ -1,12 +1,12 @@
-FILE(GLOB generated_c_sources new/*.c)
+FILE(GLOB generated_c_sources v4/*.c)
 
 set(libsbp_SRCS
   edc.c
   sbp.c
-  new/string/unterminated.c
-  new/string/null_terminated.c
-  new/string/multipart.c
-  new/string/double_null_terminated.c
+  v4/string/unterminated.c
+  v4/string/null_terminated.c
+  v4/string/multipart.c
+  v4/string/double_null_terminated.c
   ${generated_c_sources}
   )
 

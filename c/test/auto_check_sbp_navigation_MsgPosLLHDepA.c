@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <libsbp/new/navigation.h>
 #include <libsbp/sbp.h>
+#include <libsbp/v4/navigation.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
@@ -139,7 +139,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -246,7 +246,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 1,
@@ -353,7 +353,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -460,7 +460,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 1,
@@ -567,7 +567,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -674,7 +674,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -781,7 +781,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -888,7 +888,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -995,7 +995,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -1102,7 +1102,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
@@ -1209,7 +1209,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_msg_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SBP_MSG_POS_LLH_DEP_A, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,

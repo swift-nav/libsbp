@@ -89,7 +89,7 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test) {
                                   (char)97, (char)114, (char)107};
     memcpy(test_msg.source.data, assign_string, sizeof(assign_string));
   }
-  test_msg.source.packed_len = 7;
+  test_msg.source.encoded_len = 7;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -120,7 +120,7 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test) {
         << "incorrect value for last_msg_.source.data, expected string '"
         << check_string << "', is '" << last_msg_.source.data << "'";
   }
-  EXPECT_EQ(last_msg_.source.packed_len, 7)
-      << "incorrect value for last_msg_.source.packed_len, expected 7, is "
-      << last_msg_.source.packed_len;
+  EXPECT_EQ(last_msg_.source.encoded_len, 7)
+      << "incorrect value for last_msg_.source.encoded_len, expected 7, is "
+      << last_msg_.source.encoded_len;
 }

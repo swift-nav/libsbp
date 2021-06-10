@@ -94,7 +94,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgLog0, Test) {
         (char)57};
     memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
   }
-  test_msg.text.packed_len = 43;
+  test_msg.text.encoded_len = 43;
 
   EXPECT_EQ(send_message(2314, test_msg), SBP_OK);
 
@@ -126,7 +126,7 @@ TEST_F(Test_auto_check_sbp_logging_MsgLog0, Test) {
         << "incorrect value for last_msg_.text.data, expected string '"
         << check_string << "', is '" << last_msg_.text.data << "'";
   }
-  EXPECT_EQ(last_msg_.text.packed_len, 43)
-      << "incorrect value for last_msg_.text.packed_len, expected 43, is "
-      << last_msg_.text.packed_len;
+  EXPECT_EQ(last_msg_.text.encoded_len, 43)
+      << "incorrect value for last_msg_.text.encoded_len, expected 43, is "
+      << last_msg_.text.encoded_len;
 }
