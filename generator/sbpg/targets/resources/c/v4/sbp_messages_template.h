@@ -435,3 +435,4 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
 
 #endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
 
+
