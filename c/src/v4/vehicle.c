@@ -82,7 +82,7 @@ s8 sbp_msg_odometry_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_odometry_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_odometry_send(sbp_state_t *s, u16 sender_id,
                          const sbp_msg_odometry_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -188,7 +188,7 @@ s8 sbp_msg_wheeltick_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_wheeltick_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_wheeltick_send(sbp_state_t *s, u16 sender_id,
                           const sbp_msg_wheeltick_t *msg,
                           sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];

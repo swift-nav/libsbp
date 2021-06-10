@@ -154,7 +154,7 @@ s8 sbp_msg_fileio_read_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_read_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_read_req_send(sbp_state_t *s, u16 sender_id,
                                 const sbp_msg_fileio_read_req_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -262,7 +262,7 @@ s8 sbp_msg_fileio_read_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_read_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_read_resp_send(sbp_state_t *s, u16 sender_id,
                                  const sbp_msg_fileio_read_resp_t *msg,
                                  sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -428,7 +428,7 @@ s8 sbp_msg_fileio_read_dir_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_read_dir_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_read_dir_req_send(sbp_state_t *s, u16 sender_id,
                                     const sbp_msg_fileio_read_dir_req_t *msg,
                                     sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -604,7 +604,7 @@ s8 sbp_msg_fileio_read_dir_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_read_dir_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_read_dir_resp_send(sbp_state_t *s, u16 sender_id,
                                      const sbp_msg_fileio_read_dir_resp_t *msg,
                                      sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -749,7 +749,7 @@ s8 sbp_msg_fileio_remove_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_remove_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_remove_send(sbp_state_t *s, u16 sender_id,
                               const sbp_msg_fileio_remove_t *msg,
                               sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -919,7 +919,7 @@ s8 sbp_msg_fileio_write_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_write_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_write_req_send(sbp_state_t *s, u16 sender_id,
                                  const sbp_msg_fileio_write_req_t *msg,
                                  sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1017,7 +1017,7 @@ s8 sbp_msg_fileio_write_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_write_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_write_resp_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_fileio_write_resp_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1097,7 +1097,7 @@ s8 sbp_msg_fileio_config_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_config_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_config_req_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_fileio_config_req_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1198,7 +1198,7 @@ s8 sbp_msg_fileio_config_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_fileio_config_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_fileio_config_resp_send(sbp_state_t *s, u16 sender_id,
                                    const sbp_msg_fileio_config_resp_t *msg,
                                    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];

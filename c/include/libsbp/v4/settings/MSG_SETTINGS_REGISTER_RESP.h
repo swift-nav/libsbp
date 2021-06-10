@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_SETTINGS_REGISTER_RESP
@@ -333,8 +331,8 @@ s8 sbp_msg_settings_register_resp_decode(const uint8_t *buf, uint8_t len,
  * @param SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_settings_register_resp_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_settings_register_resp_t *msg, sbp_write_fn_t write);
+    sbp_state_t *s, u16 sender_id, const sbp_msg_settings_register_resp_t *msg,
+    sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_settings_register_resp_t

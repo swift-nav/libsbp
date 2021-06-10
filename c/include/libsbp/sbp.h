@@ -110,16 +110,16 @@ typedef enum sbp_cb_type sbp_cb_type;
  * \note Must be statically allocated for use with sbp_register_callback()
  *       and sbp_register_frame_callback().
  */
-typedef struct sbp_msg_callbacks_node {
+struct sbp_msg_callbacks_node {
   sbp_msg_type_t msg_type;      /**< Message ID associated with callback. */
   sbp_callback_t cb; /**< Pointer to callback function. */
   void *context;     /**< Pointer to a context */
   struct sbp_msg_callbacks_node *next; /**< Pointer to next node in list. */
   sbp_cb_type cb_type;                 /**< Enum that holds the type of callback. */
-} sbp_msg_callbacks_node_t;
+};
 
 /** State structure for processing SBP messages. */
-typedef struct sbp_state {
+struct sbp_state {
   enum {
     SBP_WAITING = 0,
     SBP_GET_TYPE,
@@ -138,7 +138,7 @@ typedef struct sbp_state {
   u8* msg_buff;
   void* io_context;
   sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
-} sbp_state_t;
+};
 
 /** \} */
 
@@ -146,7 +146,7 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
 void sbp_state_init(sbp_state_t *s);
 void sbp_state_set_io_context(sbp_state_t *s, void* context);
-s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void* context));
+s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 
 #ifdef __cplusplus
 }

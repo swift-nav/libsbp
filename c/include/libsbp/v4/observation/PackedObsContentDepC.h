@@ -36,8 +36,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_PACKEDOBSCONTENTDEPC

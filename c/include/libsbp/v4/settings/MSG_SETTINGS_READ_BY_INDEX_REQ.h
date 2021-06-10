@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_SETTINGS_READ_BY_INDEX_REQ
@@ -125,7 +123,7 @@ s8 sbp_msg_settings_read_by_index_req_decode(
  * @param SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_settings_read_by_index_req_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_settings_read_by_index_req_t *msg, sbp_write_fn_t write);
 
 /**

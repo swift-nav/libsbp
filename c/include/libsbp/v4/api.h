@@ -20,11 +20,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-typedef struct sbp_state sbp_state_t;
-struct sbp_msg_callbacks_node;
-typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
-
 typedef void (*sbp_decoded_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
 
 s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_decoded_callback_t cb, void* context,

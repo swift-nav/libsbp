@@ -82,7 +82,7 @@ s8 sbp_msg_startup_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_startup_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_startup_send(sbp_state_t *s, u16 sender_id,
                         const sbp_msg_startup_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -247,7 +247,7 @@ s8 sbp_msg_dgnss_status_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_dgnss_status_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_dgnss_status_send(sbp_state_t *s, u16 sender_id,
                              const sbp_msg_dgnss_status_t *msg,
                              sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -339,7 +339,7 @@ s8 sbp_msg_heartbeat_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_heartbeat_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_heartbeat_send(sbp_state_t *s, u16 sender_id,
                           const sbp_msg_heartbeat_t *msg,
                           sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -538,7 +538,7 @@ s8 sbp_msg_status_report_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_status_report_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_status_report_send(sbp_state_t *s, u16 sender_id,
                               const sbp_msg_status_report_t *msg,
                               sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -638,7 +638,7 @@ s8 sbp_msg_ins_status_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_ins_status_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ins_status_send(sbp_state_t *s, u16 sender_id,
                            const sbp_msg_ins_status_t *msg,
                            sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -785,7 +785,7 @@ s8 sbp_msg_csac_telemetry_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_csac_telemetry_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_csac_telemetry_send(sbp_state_t *s, u16 sender_id,
                                const sbp_msg_csac_telemetry_t *msg,
                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -946,8 +946,8 @@ s8 sbp_msg_csac_telemetry_labels_decode(const uint8_t *buf, uint8_t len,
 }
 
 s8 sbp_msg_csac_telemetry_labels_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_csac_telemetry_labels_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_csac_telemetry_labels_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_csac_telemetry_labels_encode(payload, sizeof(payload),
@@ -1070,7 +1070,7 @@ s8 sbp_msg_ins_updates_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_ins_updates_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ins_updates_send(sbp_state_t *s, u16 sender_id,
                             const sbp_msg_ins_updates_t *msg,
                             sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1201,7 +1201,7 @@ s8 sbp_msg_gnss_time_offset_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_gnss_time_offset_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_gnss_time_offset_send(sbp_state_t *s, u16 sender_id,
                                  const sbp_msg_gnss_time_offset_t *msg,
                                  sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1300,7 +1300,7 @@ s8 sbp_msg_pps_time_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_pps_time_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_pps_time_send(sbp_state_t *s, u16 sender_id,
                          const sbp_msg_pps_time_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -1407,7 +1407,7 @@ s8 sbp_msg_group_meta_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_group_meta_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_group_meta_send(sbp_state_t *s, u16 sender_id,
                            const sbp_msg_group_meta_t *msg,
                            sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];

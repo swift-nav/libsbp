@@ -99,7 +99,7 @@ s8 sbp_msg_flash_program_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_flash_program_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_flash_program_send(sbp_state_t *s, u16 sender_id,
                               const sbp_msg_flash_program_t *msg,
                               sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -196,7 +196,7 @@ s8 sbp_msg_flash_done_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_flash_done_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_flash_done_send(sbp_state_t *s, u16 sender_id,
                            const sbp_msg_flash_done_t *msg,
                            sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -292,7 +292,7 @@ s8 sbp_msg_flash_read_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_flash_read_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_flash_read_req_send(sbp_state_t *s, u16 sender_id,
                                const sbp_msg_flash_read_req_t *msg,
                                sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -401,7 +401,7 @@ s8 sbp_msg_flash_read_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_flash_read_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_flash_read_resp_send(sbp_state_t *s, u16 sender_id,
                                 const sbp_msg_flash_read_resp_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -497,7 +497,7 @@ s8 sbp_msg_flash_erase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_flash_erase_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_flash_erase_send(sbp_state_t *s, u16 sender_id,
                             const sbp_msg_flash_erase_t *msg,
                             sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -583,8 +583,8 @@ s8 sbp_msg_stm_flash_lock_sector_decode(const uint8_t *buf, uint8_t len,
 }
 
 s8 sbp_msg_stm_flash_lock_sector_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_stm_flash_lock_sector_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_stm_flash_lock_sector_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_stm_flash_lock_sector_encode(payload, sizeof(payload),
@@ -664,8 +664,8 @@ s8 sbp_msg_stm_flash_unlock_sector_decode(
 }
 
 s8 sbp_msg_stm_flash_unlock_sector_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_stm_flash_unlock_sector_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_stm_flash_unlock_sector_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_stm_flash_unlock_sector_encode(payload, sizeof(payload),
@@ -741,7 +741,7 @@ s8 sbp_msg_stm_unique_id_req_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_stm_unique_id_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_stm_unique_id_req_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_stm_unique_id_req_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -822,7 +822,7 @@ s8 sbp_msg_stm_unique_id_resp_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_stm_unique_id_resp_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_stm_unique_id_resp_send(sbp_state_t *s, u16 sender_id,
                                    const sbp_msg_stm_unique_id_resp_t *msg,
                                    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -909,8 +909,8 @@ s8 sbp_msg_m25_flash_write_status_decode(
 }
 
 s8 sbp_msg_m25_flash_write_status_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_m25_flash_write_status_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_m25_flash_write_status_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_m25_flash_write_status_encode(payload, sizeof(payload),

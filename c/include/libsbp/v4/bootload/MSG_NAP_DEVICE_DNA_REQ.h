@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_NAP_DEVICE_DNA_REQ
@@ -123,7 +121,7 @@ s8 sbp_msg_nap_device_dna_req_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_nap_device_dna_req_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_nap_device_dna_req_send(sbp_state_t *s, u16 sender_id,
                                    const sbp_msg_nap_device_dna_req_t *msg,
                                    sbp_write_fn_t write);
 
