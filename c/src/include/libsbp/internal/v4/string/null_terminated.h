@@ -133,6 +133,10 @@ bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
 /**
  * Append to a null terminated string.
  *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
+ *
  * The new string will be appended to the current contents of this string. If
  * the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned
@@ -148,6 +152,10 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
 
 /**
  * Append to a null terminated string with printf style formatting
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned
