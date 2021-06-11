@@ -179,7 +179,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -G "Visual Studio 16 2019" -S c -B build -DBUILD_TESTS=false -DBUILD_EXAMPLES=false
+        run: cmake -G "Visual Studio 16 2019" -S c -B build -Dlibsbp_ENABLE_TESTS=false -Dlibsbp_ENABLE_EXAMPLES=false
 
       - name: Build
         run: cmake --build build --target ALL_BUILD
