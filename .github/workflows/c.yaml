@@ -149,3 +149,39 @@ jobs:
 
           CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
 
+
+  windows-mingw:
+    runs-on: windows-2019
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install MinGW 6.4.0
+        run: |
+          choco install -y --no-progress --allow-downgrade --version=6.4.0 mingw;
+          choco install -y --no-progress sqlite;
+
+      - name: Install msys2 packages
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          install: git base-devel
+          update: true
+
+      - name: Install Chocolatey packages
+        run: |
+          choco install -y --noprogress cmake
+          choco install -y --noprogress sqlite
+
+      - name: Run build
+        shell: msys2 {0}
+        env:
+          CC: gcc
+          CXX: g++
+          CMAKE_GENERATOR: MinGW Makefiles
+        run: |
+          export PATH="$PATH:/C/Rust/.cargo/bin:/C/ProgramData/chocolatey/bin:/C/Program Files/CMake/bin"
+          gitbash.exe ./ci-build.sh
