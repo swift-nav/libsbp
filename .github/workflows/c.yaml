@@ -160,7 +160,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -S c -B build -G "MinGW Makefiles"
+        run: cmake -G "MinGW Makefiles" -S c -B build
 
       - name: Build
         run: cmake --build build --target all
@@ -179,7 +179,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -S c -B build -G "Visual Studio 16 2019" -A Win64
+        run: cmake -G "Visual Studio 16 2019" -A Win64 -S c -B build
 
       - name: Build
         run: cmake --build build --target ALL_BUILD
