@@ -101,7 +101,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_PACK_END __pragma(pack());
 #define SBP_ATTR_PACKED /* Intentionally empty */
 #define SBP_MESSAGE(msg) /* Intentionally empty */
-#define SBP_DEPRECATED __declspec(deprecated())
+#define SBP_DEPRECATED __declspec(deprecated)
 #define SBP_ATTR_FORMAT(fmt,args)
 
 #elif defined(__ghs__)
