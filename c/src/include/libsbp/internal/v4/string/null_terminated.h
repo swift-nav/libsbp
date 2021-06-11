@@ -37,8 +37,7 @@ void sbp_null_terminated_string_init(sbp_string_t *s);
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return true if valid, false otherwise
  */
 bool sbp_null_terminated_string_valid(const sbp_string_t *s,
                                       size_t max_encoded_len);
@@ -51,11 +50,10 @@ bool sbp_null_terminated_string_valid(const sbp_string_t *s,
  *
  * An invalid string will be considered as less than a valid string.
  *
- * @param a
- * @param b
+ * @param a string
+ * @param b string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return Comparison result
  */
 int sbp_null_terminated_string_strcmp(const sbp_string_t *a,
                                       const sbp_string_t *b,
@@ -68,8 +66,7 @@ int sbp_null_terminated_string_strcmp(const sbp_string_t *a,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return Encoded length
  */
 size_t sbp_null_terminated_string_encoded_len(const sbp_string_t *s,
                                               size_t max_encoded_len);
@@ -82,8 +79,7 @@ size_t sbp_null_terminated_string_encoded_len(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return Available space
  */
 size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
                                                   size_t max_encoded_len);
@@ -93,8 +89,7 @@ size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return Length of string
  */
 size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
                                          size_t max_encoded_len);
@@ -107,9 +102,8 @@ size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param new_str
- *
- * @return
+ * @param new_str New string contents
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_set(sbp_string_t *s, size_t max_encoded_len,
                                     const char *new_str);
@@ -122,13 +116,12 @@ bool sbp_null_terminated_string_set(sbp_string_t *s, size_t max_encoded_len,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param fmt
- * @param va_list
- *
- * @return
+ * @param fmt print style format specification
+ * @param ap Argument list
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
-                                        const char *fmt, va_list /*ap*/);
+                                        const char *fmt, va_list ap);
 
 /**
  * Append to a null terminated string.
@@ -143,9 +136,8 @@ bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param new_str
- *
- * @return
+ * @param new_str String to append
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
                                        const char *new_str);
@@ -162,14 +154,13 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param fmt
- * @param va_list
- *
- * @return
+ * @param fmt printf style format specification
+ * @param ap Argument list
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
                                                size_t max_encoded_len,
-                                               const char *fmt, va_list /*ap*/);
+                                               const char *fmt, va_list ap);
 
 /**
  * Get contents
@@ -178,8 +169,7 @@ bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- *
- * @return
+ * @return String contents, or NULL
  */
 const char *sbp_null_terminated_string_get(const sbp_string_t *s,
                                            size_t max_encoded_len);
@@ -192,9 +182,8 @@ const char *sbp_null_terminated_string_get(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param ctx
- *
- * @return
+ * @param ctx Encode context
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_encode(const sbp_string_t *s,
                                        size_t max_encoded_len,
@@ -213,9 +202,8 @@ bool sbp_null_terminated_string_encode(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param ctx
- *
- * @return
+ * @param ctx Decode context
+ * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_decode(sbp_string_t *s, size_t max_encoded_len,
                                        sbp_decode_ctx_t *ctx);
