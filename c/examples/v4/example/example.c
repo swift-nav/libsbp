@@ -6,7 +6,6 @@
 #include <libserialport.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/legacy/system.h>
 
 char *serial_port_name = NULL;
 struct sp_port *piksi_port = NULL;
@@ -60,9 +59,9 @@ void setup_port()
   printf("Configured the number of stop bits... done.\n");
 }
 
-void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
+void heartbeat_callback(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context)
 {
-  (void)sender_id, (void)len, (void)msg, (void)context;
+  (void)sender_id, (void)msg_type, (void)msg, (void)context;
   fprintf(stdout, "%s\n", __FUNCTION__);
 }
 
@@ -128,7 +127,7 @@ int main(int argc, char **argv)
 
   sbp_state_init(&s);
 
-  sbp_payload_callback_register(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
+  sbp_callback_register(&s, SbpMsgHeartbeat, &heartbeat_callback, NULL,
                         &heartbeat_callback_node);
 
   while(1) {
