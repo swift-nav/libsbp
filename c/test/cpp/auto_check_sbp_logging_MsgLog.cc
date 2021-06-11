@@ -82,19 +82,10 @@ TEST_F(Test_auto_check_sbp_logging_MsgLog0, Test) {
 
   sbp_msg_log_t test_msg{};
   test_msg.level = 6;
-  {
-    const char assign_string[] = {
-        (char)70,  (char)105, (char)108, (char)116, (char)101, (char)114,
-        (char)101, (char)100, (char)32,  (char)97,  (char)108, (char)108,
-        (char)32,  (char)111, (char)98,  (char)115, (char)32,  (char)102,
-        (char)114, (char)111, (char)109, (char)32,  (char)50,  (char)51,
-        (char)49,  (char)52,  (char)32,  (char)97,  (char)116, (char)32,
-        (char)116, (char)111, (char)119, (char)32,  (char)56,  (char)51,
-        (char)46,  (char)53,  (char)51,  (char)57,  (char)48,  (char)49,
-        (char)57};
-    memcpy(test_msg.text.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.text.encoded_len = 43;
+
+  EXPECT_TRUE(sbp_msg_log_text_set(
+      &test_msg, "Filtered all obs from 2314 at tow 83.539019"));
+  EXPECT_EQ(sbp_msg_log_text_encoded_len(&test_msg), 43);
 
   EXPECT_EQ(send_message(2314, test_msg), SBP_OK);
 
@@ -111,22 +102,8 @@ TEST_F(Test_auto_check_sbp_logging_MsgLog0, Test) {
   EXPECT_EQ(last_msg_.level, 6)
       << "incorrect value for last_msg_.level, expected 6, is "
       << last_msg_.level;
-  {
-    const char check_string[] = {
-        (char)70,  (char)105, (char)108, (char)116, (char)101, (char)114,
-        (char)101, (char)100, (char)32,  (char)97,  (char)108, (char)108,
-        (char)32,  (char)111, (char)98,  (char)115, (char)32,  (char)102,
-        (char)114, (char)111, (char)109, (char)32,  (char)50,  (char)51,
-        (char)49,  (char)52,  (char)32,  (char)97,  (char)116, (char)32,
-        (char)116, (char)111, (char)119, (char)32,  (char)56,  (char)51,
-        (char)46,  (char)53,  (char)51,  (char)57,  (char)48,  (char)49,
-        (char)57};
-    EXPECT_EQ(memcmp(last_msg_.text.data, check_string, sizeof(check_string)),
-              0)
-        << "incorrect value for last_msg_.text.data, expected string '"
-        << check_string << "', is '" << last_msg_.text.data << "'";
-  }
-  EXPECT_EQ(last_msg_.text.encoded_len, 43)
-      << "incorrect value for last_msg_.text.encoded_len, expected 43, is "
-      << last_msg_.text.encoded_len;
+
+  EXPECT_EQ(sbp_msg_log_text_encoded_len(&last_msg_), 43);
+  EXPECT_STREQ(sbp_msg_log_text_get(&last_msg_),
+               "Filtered all obs from 2314 at tow 83.539019");
 }

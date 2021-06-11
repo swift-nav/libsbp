@@ -84,12 +84,9 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test) {
   test_msg.flags = 0;
   test_msg.latency = 50;
   test_msg.num_signals = 12;
-  {
-    const char assign_string[] = {(char)83, (char)107, (char)121, (char)108,
-                                  (char)97, (char)114, (char)107};
-    memcpy(test_msg.source.data, assign_string, sizeof(assign_string));
-  }
-  test_msg.source.encoded_len = 7;
+
+  EXPECT_TRUE(sbp_msg_dgnss_status_source_set(&test_msg, "Skylark"));
+  EXPECT_EQ(sbp_msg_dgnss_status_source_encoded_len(&test_msg), 7);
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -112,15 +109,7 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test) {
   EXPECT_EQ(last_msg_.num_signals, 12)
       << "incorrect value for last_msg_.num_signals, expected 12, is "
       << last_msg_.num_signals;
-  {
-    const char check_string[] = {(char)83, (char)107, (char)121, (char)108,
-                                 (char)97, (char)114, (char)107};
-    EXPECT_EQ(memcmp(last_msg_.source.data, check_string, sizeof(check_string)),
-              0)
-        << "incorrect value for last_msg_.source.data, expected string '"
-        << check_string << "', is '" << last_msg_.source.data << "'";
-  }
-  EXPECT_EQ(last_msg_.source.encoded_len, 7)
-      << "incorrect value for last_msg_.source.encoded_len, expected 7, is "
-      << last_msg_.source.encoded_len;
+
+  EXPECT_EQ(sbp_msg_dgnss_status_source_encoded_len(&last_msg_), 7);
+  EXPECT_STREQ(sbp_msg_dgnss_status_source_get(&last_msg_), "Skylark");
 }

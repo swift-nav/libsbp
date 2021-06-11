@@ -90,96 +90,76 @@ int sbp_msg_bootloader_handshake_req_cmp(
   int ret = 0;
   return ret;
 }
-static const sbp_unterminated_string_params_t
-    sbp_msg_bootloader_handshake_resp_tversion_params = {.max_encoded_len =
-                                                             251};
 
 void sbp_msg_bootloader_handshake_resp_version_init(
     sbp_msg_bootloader_handshake_resp_t *msg) {
-  sbp_unterminated_string_init(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  sbp_unterminated_string_init(&msg->version);
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_valid(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
-  return sbp_unterminated_string_valid(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  return sbp_unterminated_string_valid(&msg->version, 251);
 }
 
 int sbp_msg_bootloader_handshake_resp_version_strcmp(
     const sbp_msg_bootloader_handshake_resp_t *a,
     const sbp_msg_bootloader_handshake_resp_t *b) {
-  return sbp_unterminated_string_strcmp(
-      &a->version, &b->version,
-      &sbp_msg_bootloader_handshake_resp_tversion_params);
+  return sbp_unterminated_string_strcmp(&a->version, &b->version, 251);
 }
 
-uint8_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
+size_t sbp_msg_bootloader_handshake_resp_version_encoded_len(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
-  return sbp_unterminated_string_encoded_len(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  return sbp_unterminated_string_encoded_len(&msg->version, 251);
 }
 
-uint8_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
+size_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
-  return sbp_unterminated_string_space_remaining(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  return sbp_unterminated_string_space_remaining(&msg->version, 251);
 }
 bool sbp_msg_bootloader_handshake_resp_version_set(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params,
-      new_str);
+  return sbp_unterminated_string_set(&msg->version, 251, new_str);
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_printf(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, fmt,
-      ap);
+  bool ret = sbp_unterminated_string_vprintf(&msg->version, 251, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_vprintf(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, fmt,
-      ap);
+  return sbp_unterminated_string_vprintf(&msg->version, 251, fmt, ap);
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_append_printf(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_append_vprintf(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, fmt,
-      ap);
+  bool ret =
+      sbp_unterminated_string_append_vprintf(&msg->version, 251, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params, fmt,
-      ap);
+  return sbp_unterminated_string_append_vprintf(&msg->version, 251, fmt, ap);
 }
 
 const char *sbp_msg_bootloader_handshake_resp_version_get(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
-  return sbp_unterminated_string_get(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  return sbp_unterminated_string_get(&msg->version, 251);
 }
 
 size_t sbp_msg_bootloader_handshake_resp_encoded_len(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->flags);
-  encoded_len += sbp_unterminated_string_encoded_len(
-      &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params);
+  encoded_len += sbp_unterminated_string_encoded_len(&msg->version, 251);
   return encoded_len;
 }
 
@@ -188,9 +168,7 @@ bool sbp_msg_bootloader_handshake_resp_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_unterminated_string_pack(
-          &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params,
-          ctx)) {
+  if (!sbp_unterminated_string_encode(&msg->version, 251, ctx)) {
     return false;
   }
   return true;
@@ -217,9 +195,7 @@ bool sbp_msg_bootloader_handshake_resp_decode_internal(
   if (!sbp_u32_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_unterminated_string_unpack(
-          &msg->version, &sbp_msg_bootloader_handshake_resp_tversion_params,
-          ctx)) {
+  if (!sbp_unterminated_string_decode(&msg->version, 251, ctx)) {
     return false;
   }
   return true;
@@ -436,7 +412,7 @@ size_t sbp_msg_nap_device_dna_resp_encoded_len(
 
 bool sbp_msg_nap_device_dna_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg) {
-  for (uint8_t i = 0; i < 8; i++) {
+  for (size_t i = 0; i < 8; i++) {
     if (!sbp_u8_encode(ctx, &msg->dna[i])) {
       return false;
     }
@@ -512,103 +488,81 @@ int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
   }
   return ret;
 }
-static const sbp_unterminated_string_params_t
-    sbp_msg_bootloader_handshake_dep_a_thandshake_params = {.max_encoded_len =
-                                                                255};
 
 void sbp_msg_bootloader_handshake_dep_a_handshake_init(
     sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  sbp_unterminated_string_init(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  sbp_unterminated_string_init(&msg->handshake);
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_valid(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  return sbp_unterminated_string_valid(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  return sbp_unterminated_string_valid(&msg->handshake, 255);
 }
 
 int sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(
     const sbp_msg_bootloader_handshake_dep_a_t *a,
     const sbp_msg_bootloader_handshake_dep_a_t *b) {
-  return sbp_unterminated_string_strcmp(
-      &a->handshake, &b->handshake,
-      &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  return sbp_unterminated_string_strcmp(&a->handshake, &b->handshake, 255);
 }
 
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  return sbp_unterminated_string_encoded_len(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  return sbp_unterminated_string_encoded_len(&msg->handshake, 255);
 }
 
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  return sbp_unterminated_string_space_remaining(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  return sbp_unterminated_string_space_remaining(&msg->handshake, 255);
 }
 bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params,
-      new_str);
+  return sbp_unterminated_string_set(&msg->handshake, 255, new_str);
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params,
-      fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(&msg->handshake, 255, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params,
-      fmt, ap);
+  return sbp_unterminated_string_vprintf(&msg->handshake, 255, fmt, ap);
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_append_vprintf(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params,
-      fmt, ap);
+  bool ret =
+      sbp_unterminated_string_append_vprintf(&msg->handshake, 255, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params,
-      fmt, ap);
+  return sbp_unterminated_string_append_vprintf(&msg->handshake, 255, fmt, ap);
 }
 
 const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  return sbp_unterminated_string_get(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  return sbp_unterminated_string_get(&msg->handshake, 255);
 }
 
 size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   size_t encoded_len = 0;
-  encoded_len += sbp_unterminated_string_encoded_len(
-      &msg->handshake, &sbp_msg_bootloader_handshake_dep_a_thandshake_params);
+  encoded_len += sbp_unterminated_string_encoded_len(&msg->handshake, 255);
   return encoded_len;
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  if (!sbp_unterminated_string_pack(
-          &msg->handshake,
-          &sbp_msg_bootloader_handshake_dep_a_thandshake_params, ctx)) {
+  if (!sbp_unterminated_string_encode(&msg->handshake, 255, ctx)) {
     return false;
   }
   return true;
@@ -632,9 +586,7 @@ s8 sbp_msg_bootloader_handshake_dep_a_encode(
 
 bool sbp_msg_bootloader_handshake_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  if (!sbp_unterminated_string_unpack(
-          &msg->handshake,
-          &sbp_msg_bootloader_handshake_dep_a_thandshake_params, ctx)) {
+  if (!sbp_unterminated_string_decode(&msg->handshake, 255, ctx)) {
     return false;
   }
   return true;

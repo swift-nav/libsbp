@@ -19,6 +19,7 @@
 #define LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_H
 
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -26,10 +27,7 @@
 
 #include <libsbp/bootload_macros.h>
 #include <libsbp/common.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,7 +48,7 @@ typedef struct {
   /**
    * Version number string (not NULL terminated)
    */
-  sbp_unterminated_string_t handshake;
+  sbp_string_t handshake;
 } sbp_msg_bootloader_handshake_dep_a_t;
 
 /**
@@ -93,7 +91,7 @@ int sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(
  * @return Size of sbp_msg_bootloader_handshake_dep_a_t::handshake in wire
  * representation
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg);
 
 /**
@@ -106,7 +104,7 @@ uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
     const sbp_msg_bootloader_handshake_dep_a_t *msg);
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake
@@ -208,8 +206,8 @@ const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @return Length of section
  */
-uint8_t sbp_msg_bootloader_handshake_dep_a_handshake_section_strlen(
-    const sbp_msg_bootloader_handshake_dep_a_t *msg, uint8_t section);
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_section_strlen(
+    const sbp_msg_bootloader_handshake_dep_a_t *msg, size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_bootloader_handshake_dep_a_t

@@ -24,7 +24,7 @@ size_t sbp_msg_user_data_encoded_len(const sbp_msg_user_data_t *msg) {
 
 bool sbp_msg_user_data_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_user_data_t *msg) {
-  for (uint8_t i = 0; i < msg->n_contents; i++) {
+  for (size_t i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_encode(ctx, &msg->contents[i])) {
       return false;
     }

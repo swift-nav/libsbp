@@ -36,7 +36,7 @@ bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->message_type)) {
     return false;
   }
-  for (uint8_t i = 0; i < 27; i++) {
+  for (size_t i = 0; i < 27; i++) {
     if (!sbp_u8_encode(ctx, &msg->data[i])) {
       return false;
     }

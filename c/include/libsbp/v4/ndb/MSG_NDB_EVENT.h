@@ -19,6 +19,7 @@
 #define LIBSBP_V4_NDB_MSG_NDB_EVENT_H
 
 #include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -28,10 +29,7 @@
 #include <libsbp/ndb_macros.h>
 #include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
-#include <libsbp/v4/string/double_null_terminated.h>
-#include <libsbp/v4/string/multipart.h>
-#include <libsbp/v4/string/null_terminated.h>
-#include <libsbp/v4/string/unterminated.h>
+#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
