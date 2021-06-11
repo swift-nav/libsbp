@@ -148,8 +148,26 @@ jobs:
 #          CXX: mips-linux-gnu-g++
 #
 #          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
+#
+#  windows-mingw:
+#    runs-on: windows-2019
+#    steps:
+#
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Configure
+#        run: cmake -S c -B c/build -G "MinGW Makefiles"
+#
+#      - name: Build
+#        run: cmake --build c/build --target all
+#
+#      - name: Test
+#        run: cmake --build c/build --target do-all-tests
 
-  windows-mingw:
+  windows-vs-2017-win32:
     runs-on: windows-2019
     steps:
 
@@ -159,25 +177,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -S c -B c/build -G "MinGW Makefiles"
-
-      - name: Build
-        run: cmake --build c/build --target all
-
-      - name: Test
-        run: cmake --build c/build --target do-all-tests
-
-  windows-vs-2019-win32:
-    runs-on: windows-2019
-    steps:
-
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Configure
-        run: cmake -S c -B c/build -G "Visual Studio 16 2019" -A Win32
+        run: cmake -S c -B c/build -G "Visual Studio 15 2017 Win32"
 
       - name: Build
         run: cmake --build c/build --target all
