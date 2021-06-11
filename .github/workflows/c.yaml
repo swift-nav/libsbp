@@ -11,33 +11,33 @@ on:
       - "c/**"
       - .github/workflows/c.yaml
 jobs:
-  coverage:
-    name: Test
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
-
-      - name: Build examples
-        run: make -C c/build examples
-
-      - name: Upload coverage to codecov.io
-        run: |
-          bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
-
-
+#  coverage:
+#    name: Test
+#    runs-on: ubuntu-18.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Setup
+#        run: |
+#          sudo apt-get -qq update
+#          sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
+#
+#      - name: Run tests
+#        run: make test-c
+#        env:
+#          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
+#
+#      - name: Build examples
+#        run: make -C c/build examples
+#
+#      - name: Upload coverage to codecov.io
+#        run: |
+#          bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
+#
+#
 #  gcc6-release:
 #    name: GCC6 - Release
 #    runs-on: ubuntu-18.04
@@ -168,7 +168,7 @@ jobs:
 #        run: cmake --build c/build --target do-all-tests
 
   windows-vs-2017-win32:
-    runs-on: windows-2019
+    runs-on: windows-2016
     steps:
 
       - uses: actions/checkout@v2
