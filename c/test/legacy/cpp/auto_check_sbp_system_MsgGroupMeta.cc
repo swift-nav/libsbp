@@ -15,22 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_system_MsgGroupMeta0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_system_MsgGroupMeta0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_group_meta_t> {
+      sbp::PayloadHandler<msg_group_meta_t> {
  public:
-  Test_auto_check_sbp_system_MsgGroupMeta0()
+  Test_legacy_auto_check_sbp_system_MsgGroupMeta0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_group_meta_t>(this),
+        sbp::PayloadHandler<msg_group_meta_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_group_meta_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_system_MsgGroupMeta0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_system_MsgGroupMeta0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_system_MsgGroupMeta0, Test) {
   uint8_t encoded_frame[] = {
       85, 10, 255, 238, 238, 9, 1, 2, 3, 10, 255, 10, 2, 2, 255, 2, 14,
   };
@@ -134,19 +134,19 @@ TEST_F(Test_auto_check_sbp_system_MsgGroupMeta0, Test) {
       << "incorrect value for n_group_msgs, expected 3, is "
       << last_msg_->n_group_msgs;
 }
-class Test_auto_check_sbp_system_MsgGroupMeta1
+class Test_legacy_auto_check_sbp_system_MsgGroupMeta1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_group_meta_t> {
+      sbp::PayloadHandler<msg_group_meta_t> {
  public:
-  Test_auto_check_sbp_system_MsgGroupMeta1()
+  Test_legacy_auto_check_sbp_system_MsgGroupMeta1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_group_meta_t>(this),
+        sbp::PayloadHandler<msg_group_meta_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_group_meta_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -192,7 +192,7 @@ class Test_auto_check_sbp_system_MsgGroupMeta1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_system_MsgGroupMeta1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_system_MsgGroupMeta1, Test) {
   uint8_t encoded_frame[] = {
       85, 10, 255, 21, 3, 31, 1,   1, 14,  2,  1,   3,  1,
       10, 2,  17,  2,  9, 2,  20,  2, 14,  2,  18,  2,  13,

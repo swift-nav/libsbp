@@ -15,10 +15,10 @@
 // not modify by hand!
 
 #include <check.h>
+#include <libsbp/legacy/vehicle.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
-#include <vehicle.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_auto_check_sbp_vehicle_MsgOdometry) {
+START_TEST(test_legacy_auto_check_sbp_vehicle_MsgOdometry) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_vehicle_MsgOdometry) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x903, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x903, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x903, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x903, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -135,7 +135,7 @@ START_TEST(test_auto_check_sbp_vehicle_MsgOdometry) {
     test_msg->flags = 1;
     test_msg->tow = 8;
     test_msg->velocity = 7;
-    sbp_send_message(&sbp_state, 0x903, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x903, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -201,12 +201,12 @@ START_TEST(test_auto_check_sbp_vehicle_MsgOdometry) {
 }
 END_TEST
 
-Suite *auto_check_sbp_vehicle_MsgOdometry_suite(void) {
+Suite *legacy_auto_check_sbp_vehicle_MsgOdometry_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: auto_check_sbp_vehicle_MsgOdometry");
+      "SBP generated test suite: legacy_auto_check_sbp_vehicle_MsgOdometry");
   TCase *tc_acq =
-      tcase_create("Automated_Suite_auto_check_sbp_vehicle_MsgOdometry");
-  tcase_add_test(tc_acq, test_auto_check_sbp_vehicle_MsgOdometry);
+      tcase_create("Automated_Suite_legacy_auto_check_sbp_vehicle_MsgOdometry");
+  tcase_add_test(tc_acq, test_legacy_auto_check_sbp_vehicle_MsgOdometry);
   suite_add_tcase(s, tc_acq);
   return s;
 }

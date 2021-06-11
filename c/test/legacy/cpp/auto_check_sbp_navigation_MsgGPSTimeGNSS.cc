@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS0, Test) {
   uint8_t encoded_frame[] = {
       85,  4,  1,   211, 136, 11, 128, 7,   40, 244,
       122, 19, 244, 139, 2,   0,  0,   153, 88,
@@ -113,19 +113,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS0, Test) {
   EXPECT_EQ(last_msg_->wn, 1920)
       << "incorrect value for wn, expected 1920, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -171,7 +171,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS1, Test) {
   uint8_t encoded_frame[] = {
       85,  4,  1,   211, 136, 11, 128, 7,   28,  246,
       122, 19, 126, 234, 3,   0,  0,   250, 195,
@@ -208,19 +208,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS1, Test) {
   EXPECT_EQ(last_msg_->wn, 1920)
       << "incorrect value for wn, expected 1920, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -266,7 +266,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS2, Test) {
   uint8_t encoded_frame[] = {
       85,  4,  1,   211, 136, 11, 128, 7,   16,  248,
       122, 19, 129, 12,  4,   0,  0,   183, 148,
@@ -303,19 +303,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS2, Test) {
   EXPECT_EQ(last_msg_->wn, 1920)
       << "incorrect value for wn, expected 1920, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -361,7 +361,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS3, Test) {
   uint8_t encoded_frame[] = {
       85,  4,  1,   211, 136, 11, 128, 7,   4,   250,
       122, 19, 137, 204, 4,   0,  0,   137, 101,
@@ -398,19 +398,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS3, Test) {
   EXPECT_EQ(last_msg_->wn, 1920)
       << "incorrect value for wn, expected 1920, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_gnss_t> {
+      sbp::PayloadHandler<msg_gps_time_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_gnss_t>(this),
+        sbp::PayloadHandler<msg_gps_time_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_gnss_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -456,7 +456,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeGNSS4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS4, Test) {
   uint8_t encoded_frame[] = {
       85,  4,  1,   211, 136, 11, 128, 7,  248, 251,
       122, 19, 181, 137, 5,   0,  0,   15, 225,

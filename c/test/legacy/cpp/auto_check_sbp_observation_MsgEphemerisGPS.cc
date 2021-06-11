@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_observation_MsgEphemerisGPS0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_observation_MsgEphemerisGPS0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_gps_t> {
+      sbp::PayloadHandler<msg_ephemeris_gps_t> {
  public:
-  Test_auto_check_sbp_observation_MsgEphemerisGPS0()
+  Test_legacy_auto_check_sbp_observation_MsgEphemerisGPS0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_gps_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_gps_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_gps_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_observation_MsgEphemerisGPS0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgEphemerisGPS0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgEphemerisGPS0, Test) {
   uint8_t encoded_frame[] = {
       85,  138, 0,   10,  9,   139, 22,  0,   176, 207, 6,   0,   106, 8,   0,
       0,   0,   64,  64,  56,  0,   0,   1,   0,   0,   0,   152, 178, 0,   64,

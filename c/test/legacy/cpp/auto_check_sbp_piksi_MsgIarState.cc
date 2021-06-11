@@ -15,22 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_piksi_MsgIarState0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_piksi_MsgIarState0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState0()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_piksi_MsgIarState0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState0, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 246, 215, 4, 1, 0, 0, 0, 216, 140,
   };
@@ -102,19 +102,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState0, Test) {
   EXPECT_EQ(last_msg_->num_hyps, 1)
       << "incorrect value for num_hyps, expected 1, is " << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState1
+class Test_legacy_auto_check_sbp_piksi_MsgIarState1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState1()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -160,7 +160,7 @@ class Test_auto_check_sbp_piksi_MsgIarState1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState1, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 0, 0, 0, 0, 18, 176,
   };
@@ -186,19 +186,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState1, Test) {
   EXPECT_EQ(last_msg_->num_hyps, 0)
       << "incorrect value for num_hyps, expected 0, is " << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState2
+class Test_legacy_auto_check_sbp_piksi_MsgIarState2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState2()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -244,7 +244,7 @@ class Test_auto_check_sbp_piksi_MsgIarState2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState2, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 1, 0, 0, 0, 166, 198,
   };
@@ -270,19 +270,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState2, Test) {
   EXPECT_EQ(last_msg_->num_hyps, 1)
       << "incorrect value for num_hyps, expected 1, is " << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState3
+class Test_legacy_auto_check_sbp_piksi_MsgIarState3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState3()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -328,7 +328,7 @@ class Test_auto_check_sbp_piksi_MsgIarState3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState3, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 217, 2, 0, 0, 6, 133,
   };
@@ -355,19 +355,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState3, Test) {
       << "incorrect value for num_hyps, expected 729, is "
       << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState4
+class Test_legacy_auto_check_sbp_piksi_MsgIarState4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState4()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -413,7 +413,7 @@ class Test_auto_check_sbp_piksi_MsgIarState4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState4, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 216, 2, 0, 0, 178, 243,
   };
@@ -440,19 +440,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState4, Test) {
       << "incorrect value for num_hyps, expected 728, is "
       << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState5
+class Test_legacy_auto_check_sbp_piksi_MsgIarState5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState5()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -498,7 +498,7 @@ class Test_auto_check_sbp_piksi_MsgIarState5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState5, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 215, 2, 0, 0, 92, 39,
   };
@@ -525,19 +525,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgIarState5, Test) {
       << "incorrect value for num_hyps, expected 727, is "
       << last_msg_->num_hyps;
 }
-class Test_auto_check_sbp_piksi_MsgIarState6
+class Test_legacy_auto_check_sbp_piksi_MsgIarState6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_iar_state_t> {
+      sbp::PayloadHandler<msg_iar_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgIarState6()
+  Test_legacy_auto_check_sbp_piksi_MsgIarState6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_iar_state_t>(this),
+        sbp::PayloadHandler<msg_iar_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_iar_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -583,7 +583,7 @@ class Test_auto_check_sbp_piksi_MsgIarState6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgIarState6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState6, Test) {
   uint8_t encoded_frame[] = {
       85, 25, 0, 195, 4, 4, 211, 2, 0, 0, 173, 237,
   };

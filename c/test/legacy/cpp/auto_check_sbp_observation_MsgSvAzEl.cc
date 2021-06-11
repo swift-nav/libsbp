@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_observation_MsgSvAzEl0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_observation_MsgSvAzEl0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_sv_az_el_t> {
+      sbp::PayloadHandler<msg_sv_az_el_t> {
  public:
-  Test_auto_check_sbp_observation_MsgSvAzEl0()
+  Test_legacy_auto_check_sbp_observation_MsgSvAzEl0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_sv_az_el_t>(this),
+        sbp::PayloadHandler<msg_sv_az_el_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_sv_az_el_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_observation_MsgSvAzEl0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgSvAzEl0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgSvAzEl0, Test) {
   uint8_t encoded_frame[] = {
       85,  151, 0,  207, 121, 132, 8,  0,  160, 12, 10,  0,  139, 66, 13, 0,
       16,  1,   15, 0,   24,  25,  16, 0,  127, 18, 18,  0,  42,  53, 20, 0,

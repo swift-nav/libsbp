@@ -15,22 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_piksi_MsgUartState0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_piksi_MsgUartState0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartState0()
+  Test_legacy_auto_check_sbp_piksi_MsgUartState0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_piksi_MsgUartState0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartState0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartState0, Test) {
   uint8_t encoded_frame[] = {
       85, 24, 0, 246, 215, 58,  26,  191, 93,  63,  0,   0,  0,  0,
       0,  0,  0, 0,   24,  0,   123, 50,  62,  64,  0,   0,  0,  0,
@@ -197,19 +197,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartState0, Test) {
          "is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartState1
+class Test_legacy_auto_check_sbp_piksi_MsgUartState1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartState1()
+  Test_legacy_auto_check_sbp_piksi_MsgUartState1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -255,7 +255,7 @@ class Test_auto_check_sbp_piksi_MsgUartState1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartState1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartState1, Test) {
   uint8_t encoded_frame[] = {
       85, 24, 0, 246, 215, 58,  237, 232, 95,  63,  0,  0,  0,   0,
       0,  0,  0, 0,   24,  0,   198, 186, 63,  64,  0,  0,  0,   0,

@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgProtectionLevel0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgProtectionLevel0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_protection_level_dep_a_t> {
+      sbp::PayloadHandler<msg_protection_level_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgProtectionLevel0()
+  Test_legacy_auto_check_sbp_navigation_MsgProtectionLevel0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_protection_level_dep_a_t>(this),
+        sbp::PayloadHandler<msg_protection_level_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_protection_level_dep_a_t *>(
             last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_navigation_MsgProtectionLevel0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgProtectionLevel0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgProtectionLevel0, Test) {
   uint8_t encoded_frame[] = {
       85, 22, 2, 0, 16, 33, 136, 227, 233, 29, 0, 0,  0,   0,
       0,  0,  0, 0, 0,  0,  0,   0,   0,   0,  0, 0,  0,   0,

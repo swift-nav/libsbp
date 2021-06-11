@@ -15,7 +15,7 @@
 // modify by hand!
 
 #include <check.h>
-#include <imu.h>
+#include <libsbp/legacy/imu.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_auto_check_sbp_imu_MsgImuRaw) {
+START_TEST(test_legacy_auto_check_sbp_imu_MsgImuRaw) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_imu_MsgImuRaw) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x900, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x900, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x900, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x900, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -141,7 +141,7 @@ START_TEST(test_auto_check_sbp_imu_MsgImuRaw) {
     test_msg->gyr_z = -18;
     test_msg->tow = 3221225754;
     test_msg->tow_f = 206;
-    sbp_send_message(&sbp_state, 0x900, 4660, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x900, 4660, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -223,11 +223,12 @@ START_TEST(test_auto_check_sbp_imu_MsgImuRaw) {
 }
 END_TEST
 
-Suite *auto_check_sbp_imu_MsgImuRaw_suite(void) {
-  Suite *s =
-      suite_create("SBP generated test suite: auto_check_sbp_imu_MsgImuRaw");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_imu_MsgImuRaw");
-  tcase_add_test(tc_acq, test_auto_check_sbp_imu_MsgImuRaw);
+Suite *legacy_auto_check_sbp_imu_MsgImuRaw_suite(void) {
+  Suite *s = suite_create(
+      "SBP generated test suite: legacy_auto_check_sbp_imu_MsgImuRaw");
+  TCase *tc_acq =
+      tcase_create("Automated_Suite_legacy_auto_check_sbp_imu_MsgImuRaw");
+  tcase_add_test(tc_acq, test_legacy_auto_check_sbp_imu_MsgImuRaw);
   suite_add_tcase(s, tc_acq);
   return s;
 }

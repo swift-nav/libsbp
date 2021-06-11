@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#include "libsbp/edc.h"
+#include <libsbp/edc.h>
 
 /** \defgroup edc Error Detection and Correction
  * Error detection and correction functions.
@@ -74,7 +74,7 @@ static const u16 crc16tab[256] = {
 u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc)
 {
   for (u32 i = 0; i < len; i++) {
-    crc = (crc << 8) ^ crc16tab[((crc >> 8) ^ *buf++) & 0x00FF];
+    crc = (u16)((crc << 8) ^ crc16tab[((crc >> 8) ^ *buf++) & 0x00FF]);
   }
   return crc;
 }

@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_piksi_MsgUartStateDepA0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA0()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA0, Test) {
   uint8_t encoded_frame[] = {
       85,  24,  0,  195, 4, 58, 0, 0, 0, 0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,  0,   0, 0,  0, 0, 0, 0,   0,   0,   0,   0,   0,   0,   0,
@@ -192,19 +192,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA0, Test) {
          "is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartStateDepA1
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA1()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -250,7 +250,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA1, Test) {
   uint8_t encoded_frame[] = {
       85,  24, 0,   195, 4, 58, 0, 0, 0, 0,   0,   0,   0,   0,  0,   0,   0,
       0,   0,  0,   0,   0, 0,  0, 0, 0, 0,   0,   0,   0,   0,  0,   0,   0,
@@ -366,19 +366,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA1, Test) {
          "0.0659999996424, is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartStateDepA2
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA2()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -424,7 +424,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA2, Test) {
   uint8_t encoded_frame[] = {
       85,  24, 0,  195, 4, 58, 0, 0, 0, 0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,  0,  0,   0, 0,  0, 0, 0, 0,   0,   0,   0,   0,   0,   0,   0,
@@ -540,19 +540,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA2, Test) {
          "0.138999998569, is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartStateDepA3
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA3()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -598,7 +598,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA3, Test) {
   uint8_t encoded_frame[] = {
       85,  24, 0,   195, 4, 58, 0, 0, 0, 0,   0,   0,   0,   0,  0,   0,   0,
       0,   0,  0,   0,   0, 0,  0, 0, 0, 0,   0,   0,   0,   0,  0,   0,   0,
@@ -714,19 +714,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA3, Test) {
          "0.0659999996424, is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartStateDepA4
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA4()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -772,7 +772,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
   uint8_t encoded_frame[] = {
       85, 24, 0, 195, 4,   58,  0,   0,   0,   0,   138, 75, 6, 60,
       0,  0,  0, 0,   0,   0,   80,  113, 201, 61,  0,   0,  0, 0,
@@ -893,19 +893,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
          "0.493999987841, is "
       << last_msg_->uart_ftdi.tx_throughput;
 }
-class Test_auto_check_sbp_piksi_MsgUartStateDepA5
+class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_uart_state_depa_t> {
+      sbp::PayloadHandler<msg_uart_state_depa_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgUartStateDepA5()
+  Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_uart_state_depa_t>(this),
+        sbp::PayloadHandler<msg_uart_state_depa_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_uart_state_depa_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -951,7 +951,7 @@ class Test_auto_check_sbp_piksi_MsgUartStateDepA5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgUartStateDepA5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5, Test) {
   uint8_t encoded_frame[] = {
       85, 24, 0, 195, 4,   58,  166, 155, 68,  60,  0, 0, 0, 0,
       0,  0,  0, 0,   2,   0,   166, 155, 68,  60,  0, 0, 0, 0,

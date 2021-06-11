@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_settings_read_by_index_resp_t> {
+      sbp::PayloadHandler<msg_settings_read_by_index_resp_t> {
  public:
-  Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0()
+  Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_settings_read_by_index_resp_t>(this),
+        sbp::PayloadHandler<msg_settings_read_by_index_resp_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_settings_read_by_index_resp_t *>(
             last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   uint8_t encoded_frame[] = {
       85,  167, 0,  246, 215, 78,  0,   0,   116, 101, 108, 101, 109, 101, 116,
       114, 121, 95, 114, 97,  100, 105, 111, 0,   99,  111, 110, 102, 105, 103,
@@ -148,19 +148,19 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
         << check_string << "', is '" << last_msg_->setting << "'";
   }
 }
-class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
+class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_settings_read_by_index_resp_t> {
+      sbp::PayloadHandler<msg_settings_read_by_index_resp_t> {
  public:
-  Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1()
+  Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_settings_read_by_index_resp_t>(this),
+        sbp::PayloadHandler<msg_settings_read_by_index_resp_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_settings_read_by_index_resp_t *>(
             last_msg_storage_)),
@@ -207,7 +207,7 @@ class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   uint8_t encoded_frame[] = {
       85,  167, 0,  246, 215, 35,  1,   0,  117, 97, 114, 116, 95,  102, 116,
       100, 105, 0,  109, 111, 100, 101, 0,  83,  66, 80,  0,   101, 110, 117,
@@ -261,19 +261,19 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
         << check_string << "', is '" << last_msg_->setting << "'";
   }
 }
-class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
+class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_settings_read_by_index_resp_t> {
+      sbp::PayloadHandler<msg_settings_read_by_index_resp_t> {
  public:
-  Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2()
+  Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_settings_read_by_index_resp_t>(this),
+        sbp::PayloadHandler<msg_settings_read_by_index_resp_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_settings_read_by_index_resp_t *>(
             last_msg_storage_)),
@@ -320,7 +320,7 @@ class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   uint8_t encoded_frame[] = {
       85,  167, 0,   246, 215, 35,  2,  0,   117, 97,  114, 116, 95,  102, 116,
       100, 105, 0,   115, 98,  112, 95, 109, 101, 115, 115, 97,  103, 101, 95,
@@ -374,19 +374,19 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
         << check_string << "', is '" << last_msg_->setting << "'";
   }
 }
-class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
+class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_settings_read_by_index_resp_t> {
+      sbp::PayloadHandler<msg_settings_read_by_index_resp_t> {
  public:
-  Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3()
+  Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_settings_read_by_index_resp_t>(this),
+        sbp::PayloadHandler<msg_settings_read_by_index_resp_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_settings_read_by_index_resp_t *>(
             last_msg_storage_)),
@@ -433,7 +433,7 @@ class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   uint8_t encoded_frame[] = {
       85,  167, 0,   246, 215, 29, 3,  0,   117, 97,  114, 116, 95,
       102, 116, 100, 105, 0,   98, 97, 117, 100, 114, 97,  116, 101,
@@ -485,19 +485,19 @@ TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
         << check_string << "', is '" << last_msg_->setting << "'";
   }
 }
-class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
+class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_settings_read_by_index_resp_t> {
+      sbp::PayloadHandler<msg_settings_read_by_index_resp_t> {
  public:
-  Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4()
+  Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_settings_read_by_index_resp_t>(this),
+        sbp::PayloadHandler<msg_settings_read_by_index_resp_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_settings_read_by_index_resp_t *>(
             last_msg_storage_)),
@@ -544,7 +544,7 @@ class Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   uint8_t encoded_frame[] = {
       85,  167, 0,  246, 215, 36,  4,   0,   117, 97, 114, 116, 95, 117, 97,
       114, 116, 97, 0,   109, 111, 100, 101, 0,   83, 66,  80,  0,  101, 110,

@@ -179,6 +179,13 @@ gen-c:
 		       -r $(SBP_VERSION) \
 	               --c
 
+	$(call announce-begin,"Generating C headers")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/c/src \
+		       -r $(SBP_VERSION) \
+	               --c-sources
+
 	$(call announce-begin,"Generating C tests")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
@@ -311,7 +318,7 @@ gen-quicktype-elm:
 
 # Testers
 
-test: test-all-begin test-c test-java test-python test-haskell test-javascript test-rust test-all-end
+test: test-all-begin test-c test-c-v4 test-java test-python test-haskell test-javascript test-rust test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -326,6 +333,15 @@ test-c:
 	cmake $(CMAKEFLAGS) ../; \
 	$(MAKE); \
 	$(MAKE) do-all-tests
+	$(call announce-end,"Finished running C tests")
+
+test-c-v4:
+	$(call announce-begin,"Running C tests")
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake $(CMAKEFLAGS) ../; \
+	$(MAKE); \
+	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp-v4
 	$(call announce-end,"Finished running C tests")
 
 test-python:

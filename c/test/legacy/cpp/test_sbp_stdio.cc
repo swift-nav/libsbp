@@ -12,8 +12,8 @@
 
 #include <gtest/gtest.h>
 
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/sbp_stdio.h>
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/sbp_stdio.h>
 
 namespace {
 
@@ -24,10 +24,10 @@ struct SbpHeaderParams {
   msg_obs_t payload;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<msg_obs_t> {
+class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
  public:
   explicit MsgObsHandler(sbp::State *state)
-      : sbp::MessageHandler<msg_obs_t>(state), state_(state) {}
+      : sbp::PayloadHandler<msg_obs_t>(state), state_(state) {}
 
   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
                       const msg_obs_t &msg) override {

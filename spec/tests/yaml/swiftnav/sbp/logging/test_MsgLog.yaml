@@ -8,6 +8,12 @@ tests:
     fields:
       level: 6
       text: "Filtered all obs from 2314 at tow 83.539019"
+    c_decoded_fields:
+      text: 
+        handle_as: encoded-string
+        fn_prefix: sbp_msg_log_text
+        encoded_len: 43
+        text: "Filtered all obs from 2314 at tow 83.539019"
     module: sbp.logging
     name: MsgLog
   msg_type: '0x0401'

@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgDopsDepA0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA0()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA0, Test) {
   uint8_t encoded_frame[] = {
       85, 6,   2, 246, 215, 14,  8, 48,  39, 0,   180,
       0,  190, 0, 170, 0,   160, 0, 150, 0,  121, 170,
@@ -118,19 +118,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA0, Test) {
   EXPECT_EQ(last_msg_->vdop, 150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA1
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA1()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -176,7 +176,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA1, Test) {
   uint8_t encoded_frame[] = {
       85, 6,   2, 246, 215, 14,  240, 51,  39, 0,  180,
       0,  190, 0, 170, 0,   160, 0,   150, 0,  78, 169,
@@ -218,19 +218,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA1, Test) {
   EXPECT_EQ(last_msg_->vdop, 150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA2
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA2()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -276,7 +276,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA2, Test) {
   uint8_t encoded_frame[] = {
       85, 6,   2, 246, 215, 14,  216, 55,  39, 0,  180,
       0,  190, 0, 170, 0,   160, 0,   150, 0,  71, 218,
@@ -318,19 +318,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA2, Test) {
   EXPECT_EQ(last_msg_->vdop, 150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA3
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA3()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -376,7 +376,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA3, Test) {
   uint8_t encoded_frame[] = {
       85, 6,   2, 195, 4, 14, 212, 157, 67, 24,  247,
       0,  215, 0, 123, 0, 17, 1,   44,  0,  206, 21,
@@ -418,19 +418,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA3, Test) {
   EXPECT_EQ(last_msg_->vdop, 44)
       << "incorrect value for vdop, expected 44, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA4
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA4()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -476,7 +476,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA4, Test) {
   uint8_t encoded_frame[] = {
       85,  6,   2,   195, 4, 14, 0, 0, 0, 0,   255,
       255, 255, 255, 0,   0, 0,  0, 0, 0, 146, 12,
@@ -518,19 +518,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA4, Test) {
   EXPECT_EQ(last_msg_->vdop, 0)
       << "incorrect value for vdop, expected 0, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA5
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA5()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -576,7 +576,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA5, Test) {
   uint8_t encoded_frame[] = {
       85, 6,  2, 195, 4, 14,  128, 165, 68, 24,  92,
       1,  56, 1, 155, 0, 125, 2,   113, 0,  129, 93,
@@ -618,19 +618,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA5, Test) {
   EXPECT_EQ(last_msg_->vdop, 113)
       << "incorrect value for vdop, expected 113, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA6
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA6()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -676,7 +676,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA6, Test) {
   uint8_t encoded_frame[] = {
       85, 6,  2, 195, 4, 14,  104, 169, 68, 24,  92,
       1,  55, 1, 155, 0, 125, 2,   113, 0,  209, 128,
@@ -718,19 +718,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA6, Test) {
   EXPECT_EQ(last_msg_->vdop, 113)
       << "incorrect value for vdop, expected 113, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA7
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA7()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -776,7 +776,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA7
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA7, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA7, Test) {
   uint8_t encoded_frame[] = {
       85, 6,  2, 195, 4, 14,  80, 173, 68, 24, 92,
       1,  55, 1, 155, 0, 125, 2,  112, 0,  30, 6,
@@ -818,19 +818,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA7, Test) {
   EXPECT_EQ(last_msg_->vdop, 112)
       << "incorrect value for vdop, expected 112, is " << last_msg_->vdop;
 }
-class Test_auto_check_sbp_navigation_MsgDopsDepA8
+class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_dops_dep_a_t> {
+      sbp::PayloadHandler<msg_dops_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgDopsDepA8()
+  Test_legacy_auto_check_sbp_navigation_MsgDopsDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_dops_dep_a_t>(this),
+        sbp::PayloadHandler<msg_dops_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_dops_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -876,7 +876,7 @@ class Test_auto_check_sbp_navigation_MsgDopsDepA8
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgDopsDepA8, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA8, Test) {
   uint8_t encoded_frame[] = {
       85, 6,  2, 195, 4, 14,  56, 177, 68, 24, 92,
       1,  55, 1, 155, 0, 125, 2,  112, 0,  70, 67,

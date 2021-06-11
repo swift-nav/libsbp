@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgPosLlhCovGnss0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_pos_llh_cov_gnss_t> {
+      sbp::PayloadHandler<msg_pos_llh_cov_gnss_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgPosLlhCovGnss0()
+  Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_pos_llh_cov_gnss_t>(this),
+        sbp::PayloadHandler<msg_pos_llh_cov_gnss_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_pos_llh_cov_gnss_t *>(last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_navigation_MsgPosLlhCovGnss0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgPosLlhCovGnss0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0, Test) {
   uint8_t encoded_frame[] = {
       85,  49,  2,   0,   16,  54,  24,  229, 233, 29,  73,  123, 28,
       207, 101, 234, 66,  64,  100, 168, 19,  20,  86,  146, 94,  192,

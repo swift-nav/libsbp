@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA0()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA0, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 246, 215, 11, 251, 6, 120, 46, 39, 0, 0, 0, 0, 0, 0, 133, 36,
   };
@@ -112,19 +112,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA0, Test) {
   EXPECT_EQ(last_msg_->wn, 1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA1
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA1()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -170,7 +170,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA1, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 246, 215, 11, 251, 6, 220, 46, 39, 0, 0, 0, 0, 0, 0, 36, 160,
   };
@@ -206,19 +206,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA1, Test) {
   EXPECT_EQ(last_msg_->wn, 1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA2
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA2()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -264,7 +264,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA2, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 246, 215, 11, 251, 6, 64, 47, 39, 0, 0, 0, 0, 0, 0, 171, 190,
   };
@@ -300,19 +300,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA2, Test) {
   EXPECT_EQ(last_msg_->wn, 1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA3
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA3()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -358,7 +358,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA3, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 246, 215, 11, 251, 6, 164, 47, 39, 0, 0, 0, 0, 0, 0, 211, 101,
   };
@@ -394,19 +394,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA3, Test) {
   EXPECT_EQ(last_msg_->wn, 1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA4
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA4()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -452,7 +452,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA4, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 246, 215, 11, 251, 6, 8, 48, 39, 0, 0, 0, 0, 0, 0, 251, 44,
   };
@@ -488,19 +488,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA4, Test) {
   EXPECT_EQ(last_msg_->wn, 1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA5
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA5()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -546,7 +546,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA5, Test) {
   uint8_t encoded_frame[] = {
       85, 0,  1,   195, 4,   11,  46, 7,   212, 157,
       67, 24, 111, 147, 252, 255, 0,  215, 190,
@@ -583,19 +583,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA5, Test) {
   EXPECT_EQ(last_msg_->wn, 1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA6
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA6()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -641,7 +641,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA6, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 195, 4, 11, 46, 7, 56, 158, 67, 24, 109, 103, 3, 0, 0, 134, 89,
   };
@@ -677,19 +677,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA6, Test) {
   EXPECT_EQ(last_msg_->wn, 1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA7
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA7()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -735,7 +735,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA7
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA7, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA7, Test) {
   uint8_t encoded_frame[] = {
       85, 0,  1,   195, 4,   11,  46, 7,   156, 158,
       67, 24, 233, 152, 252, 255, 0,  206, 241,
@@ -772,19 +772,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA7, Test) {
   EXPECT_EQ(last_msg_->wn, 1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA8
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA8()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -830,7 +830,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA8
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA8, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA8, Test) {
   uint8_t encoded_frame[] = {
       85, 0, 1, 195, 4, 11, 46, 7, 0, 159, 67, 24, 240, 154, 3, 0, 0, 147, 98,
   };
@@ -866,19 +866,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA8, Test) {
   EXPECT_EQ(last_msg_->wn, 1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA9
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA9
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA9()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -924,7 +924,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA9
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA9, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA9, Test) {
   uint8_t encoded_frame[] = {
       85, 0,  1,   195, 4,   11,  46, 7,   100, 159,
       67, 24, 144, 101, 252, 255, 0,  186, 152,
@@ -961,19 +961,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA9, Test) {
   EXPECT_EQ(last_msg_->wn, 1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
-class Test_auto_check_sbp_navigation_MsgGPSTimeDepA10
+class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA10
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_gps_time_dep_a_t> {
+      sbp::PayloadHandler<msg_gps_time_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgGPSTimeDepA10()
+  Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_gps_time_dep_a_t>(this),
+        sbp::PayloadHandler<msg_gps_time_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_gps_time_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1019,7 +1019,7 @@ class Test_auto_check_sbp_navigation_MsgGPSTimeDepA10
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgGPSTimeDepA10, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA10, Test) {
   uint8_t encoded_frame[] = {
       85, 0,  1,   195, 4,   11,  46, 7,  46,  162,
       68, 24, 205, 230, 250, 255, 0,  11, 225,

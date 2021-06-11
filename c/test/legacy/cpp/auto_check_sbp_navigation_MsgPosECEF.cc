@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgPosECEF0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgPosECEF0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_pos_ecef_t> {
+      sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgPosECEF0()
+  Test_legacy_auto_check_sbp_navigation_MsgPosECEF0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_pos_ecef_t>(this),
+        sbp::PayloadHandler<msg_pos_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_pos_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_navigation_MsgPosECEF0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF0, Test) {
   uint8_t encoded_frame[] = {
       85,  9,   2,  211, 136, 32,  16, 248, 122, 19,  73, 29,  46, 132,
       182, 122, 68, 193, 219, 192, 29, 176, 121, 119, 80, 193, 83, 11,
@@ -122,19 +122,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF0, Test) {
   EXPECT_LT((last_msg_->z * 100 - 3839646.70954 * 100), 0.05)
       << "incorrect value for z, expected 3839646.70954, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgPosECEF1
+class Test_legacy_auto_check_sbp_navigation_MsgPosECEF1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_pos_ecef_t> {
+      sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgPosECEF1()
+  Test_legacy_auto_check_sbp_navigation_MsgPosECEF1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_pos_ecef_t>(this),
+        sbp::PayloadHandler<msg_pos_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_pos_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -180,7 +180,7 @@ class Test_auto_check_sbp_navigation_MsgPosECEF1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF1, Test) {
   uint8_t encoded_frame[] = {
       85,  9,   2,  211, 136, 32,  248, 251, 122, 19,  103, 106, 57,  136,
       182, 122, 68, 193, 176, 242, 200, 176, 121, 119, 80,  193, 244, 135,
@@ -226,19 +226,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF1, Test) {
   EXPECT_LT((last_msg_->z * 100 - 3839646.46391 * 100), 0.05)
       << "incorrect value for z, expected 3839646.46391, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgPosECEF2
+class Test_legacy_auto_check_sbp_navigation_MsgPosECEF2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_pos_ecef_t> {
+      sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgPosECEF2()
+  Test_legacy_auto_check_sbp_navigation_MsgPosECEF2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_pos_ecef_t>(this),
+        sbp::PayloadHandler<msg_pos_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_pos_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -284,7 +284,7 @@ class Test_auto_check_sbp_navigation_MsgPosECEF2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF2, Test) {
   uint8_t encoded_frame[] = {
       85,  9,   2,  211, 136, 32,  224, 255, 122, 19,  101, 179, 242, 182,
       182, 122, 68, 193, 130, 196, 145, 199, 121, 119, 80,  193, 212, 10,
@@ -330,19 +330,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF2, Test) {
   EXPECT_LT((last_msg_->z * 100 - 3839646.12491 * 100), 0.05)
       << "incorrect value for z, expected 3839646.12491, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgPosECEF3
+class Test_legacy_auto_check_sbp_navigation_MsgPosECEF3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_pos_ecef_t> {
+      sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgPosECEF3()
+  Test_legacy_auto_check_sbp_navigation_MsgPosECEF3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_pos_ecef_t>(this),
+        sbp::PayloadHandler<msg_pos_ecef_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_pos_ecef_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -388,7 +388,7 @@ class Test_auto_check_sbp_navigation_MsgPosECEF3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgPosECEF3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF3, Test) {
   uint8_t encoded_frame[] = {
       85,  9,   2,  211, 136, 32, 200, 3,   123, 19,  146, 214, 132, 215,
       182, 122, 68, 193, 213, 68, 49,  215, 121, 119, 80,  193, 71,  34,

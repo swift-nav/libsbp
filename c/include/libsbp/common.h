@@ -50,18 +50,68 @@ typedef uint64_t u64;
 
 #endif
 
+/**
+ * Write callback
+ *
+ * The user of libsbp must provide a write callback conforming to this type
+ * to functions which send messages (eg, #sbp_message_send). The write 
+ * function will be called several times during the course of sending a single 
+ * message. The context parameter can be set by calling #sbp_state_set_io_context.
+ *
+ * @param buff Data to write
+ * @param n Length of \p buff
+ * @param context User provided context
+ * @return Number of bytes written, or <0 to indicate error
+ */
+typedef s32 (*sbp_write_fn_t)(u8 *buff, u32 n, void *context);
+
+/**
+ * Read callback
+ *
+ * The user of libsbp must provide a read callback confirming to this type when calling #sbp_process. This function will be called once per invocation of #sbp_process in order to read data from an input source. Once the entire frame has been read any registered callbacks will be invoked.
+ *
+ * @param buff Destination buffer
+ * @param n Length of \p buff, maximum number of bytes to read
+ * @param
+ * @context User provided context, see #sbp_state_set_io_context
+ * @return Number of bytes read, or -1 to indicate error
+ */
+typedef s32 (*sbp_read_fn_t)(u8 *buff, u32 n, void *context);
+
+/* Forward declarations */
+struct sbp_state;
+typedef struct sbp_state sbp_state_t;
+struct sbp_msg_callbacks_node;
+typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
+
 /* Set packing based upon toolchain */
 #if defined(__GNUC__) || defined(__clang__)
 
 #define SBP_PACK_START /* Intentionally empty */
 #define SBP_PACK_END /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
+#define DO_PRAGMA(x) _Pragma(#x)
+#define SBP_MESSAGE(msg) DO_PRAGMA(message (msg))
+#define SBP_DEPRECATED __attribute__((deprecated))
+#define SBP_ATTR_FORMAT(fmt,args) __attribute__((format(printf,fmt,args)))
 
 #elif defined(_MSC_VER)
 
 #define SBP_PACK_START __pragma(pack(1));
 #define SBP_PACK_END __pragma(pack());
 #define SBP_ATTR_PACKED /* Intentionally empty */
+#define SBP_MESSAGE(msg) /* Intentionally empty */
+#define SBP_DEPRECATED __declspec(deprecated())
+#define SBP_ATTR_FORMAT(fmt,args)
+
+#elif defined(__ghs__)
+
+#define SBP_PACK_START /* Intentionally empty */
+#define SBP_PACK_END /* Intentionally empty */
+#define SBP_ATTR_PACKED __attribute__((packed))
+#define SBP_MESSAGE(msg) /* Intentionally empty */
+#define SBP_DEPRECATED /* Intentionally empty */
+#define SBP_ATTR_FORMAT(fmt,args)
 
 #else
 
@@ -74,4 +124,3 @@ typedef uint64_t u64;
 /** \} */
 
 #endif /* LIBSBP_COMMON_H */
-

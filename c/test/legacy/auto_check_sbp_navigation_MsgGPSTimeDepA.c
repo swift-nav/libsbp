@@ -15,7 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <navigation.h>
+#include <libsbp/legacy/navigation.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
+START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -136,7 +136,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 0;
     test_msg->tow = 2567800;
     test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -216,9 +216,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -236,7 +236,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 0;
     test_msg->tow = 2567900;
     test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -316,9 +316,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -336,7 +336,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 0;
     test_msg->tow = 2568000;
     test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -416,9 +416,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -436,7 +436,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 0;
     test_msg->tow = 2568100;
     test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -516,9 +516,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -536,7 +536,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 0;
     test_msg->tow = 2568200;
     test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -616,9 +616,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -637,7 +637,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = -224401;
     test_msg->tow = 407084500;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -717,9 +717,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -738,7 +738,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 223085;
     test_msg->tow = 407084600;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -818,9 +818,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -839,7 +839,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = -222999;
     test_msg->tow = 407084700;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -919,9 +919,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -939,7 +939,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = 236272;
     test_msg->tow = 407084800;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1019,9 +1019,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -1040,7 +1040,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = -236144;
     test_msg->tow = 407084900;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1120,9 +1120,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x100, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x100, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -1141,7 +1141,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
     test_msg->ns_residual = -334131;
     test_msg->tow = 407151150;
     test_msg->wn = 1838;
-    sbp_send_message(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x100, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -1212,12 +1212,13 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 }
 END_TEST
 
-Suite* auto_check_sbp_navigation_MsgGPSTimeDepA_suite(void) {
+Suite* legacy_auto_check_sbp_navigation_MsgGPSTimeDepA_suite(void) {
   Suite* s = suite_create(
-      "SBP generated test suite: auto_check_sbp_navigation_MsgGPSTimeDepA");
-  TCase* tc_acq =
-      tcase_create("Automated_Suite_auto_check_sbp_navigation_MsgGPSTimeDepA");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgGPSTimeDepA);
+      "SBP generated test suite: "
+      "legacy_auto_check_sbp_navigation_MsgGPSTimeDepA");
+  TCase* tc_acq = tcase_create(
+      "Automated_Suite_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA");
+  tcase_add_test(tc_acq, test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA);
   suite_add_tcase(s, tc_acq);
   return s;
 }
