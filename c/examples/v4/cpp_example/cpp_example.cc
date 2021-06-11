@@ -2,8 +2,7 @@
 #include <fstream>
 
 #include <libsbp/cpp/state.h>
-#include <libsbp/legacy/cpp/message_handler.h>
-#include <libsbp/legacy/cpp/frame_handler.h>
+#include <libsbp/cpp/message_handler.h>
 
 void usage(char *prog_name) {
   fprintf(stderr, "usage: %s [filename]\n", prog_name);
@@ -34,56 +33,33 @@ class SbpFileReader : public sbp::IReader {
   std::ifstream file_stream_;
 };
 
-class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> {
+class ECEFHandler : private sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t> {
   public:
-    ECEFHandler(sbp::State *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+    ECEFHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_gps_time_t, sbp_msg_pos_ecef_t>(state) {
     }
 
-    void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_gps_time_t& msg) {
+    void handle_sbp_msg(uint16_t sender_id, const sbp_msg_gps_time_t& msg) {
       (void)sender_id;
-      (void)message_length;
       std::cout << "Received new GPS_TME message with WN = " << msg.wn << ", TOW = " << msg.tow << "\n";
     }
 
-    void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_pos_ecef_t& msg) {
+    void handle_sbp_msg(uint16_t sender_id, const sbp_msg_pos_ecef_t& msg) {
       (void)sender_id;
-      (void)message_length;
       std::cout << "Received new POS_ECEF message with TOW = " << msg.tow;
       std::cout << ", (X,Y,Z) = (" << msg.x << "," << msg.y << "," << msg.z << ")\n";
     }
 };
 
-class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t> {
+class EverythingHandler : private sbp::AllMessageHandler {
   public:
-    LLHFrameHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>(state) {
+    EverythingHandler(sbp::State *state) : sbp::AllMessageHandler(state) {
     }
 
-    void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
-                                     uint8_t payload_len, uint8_t payload[],
-                                     uint16_t frame_len, uint8_t frame[]) {
+    void handle_sbp_message(uint16_t sender_id, sbp_msg_type_t msg_type,
+                                     const sbp_msg_t &msg) {
       (void)sender_id;
-      (void)payload;
-      (void)frame;
-      if (msg_type == SBP_MSG_POS_LLH) {
-        std::cout << "Received new POS_LLH frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
-      } else if (msg_type == SBP_MSG_GPS_TIME) {
-        std::cout << "Received new GPS_TIME frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
-      }
-    }
-};
-
-class EverythingHandler : private sbp::AllFrameHandler {
-  public:
-    EverythingHandler(sbp::State *state) : sbp::AllFrameHandler(state) {
-    }
-
-    void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
-                                     uint8_t payload_len, uint8_t payload[],
-                                     uint16_t frame_len, uint8_t frame[]) {
-      (void)sender_id;
-      (void)payload;
-      (void)frame;
-      std::cout << "Received new frame, message type " << msg_type << ", payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+      (void)msg;
+      std::cout << "Received new message, message type " << msg_type << "\n";
     }
 };
 
@@ -104,7 +80,6 @@ int main(int argc, char **argv)
 
   sbp::State s;
   ECEFHandler ecef_handler(&s);
-  LLHFrameHandler llh_handler(&s);
   EverythingHandler everything_handler(&s);
 
   s.set_reader(&reader);
