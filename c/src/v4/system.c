@@ -116,7 +116,7 @@ int sbp_msg_startup_cmp(const sbp_msg_startup_t *a,
 }
 
 void sbp_msg_dgnss_status_source_init(sbp_msg_dgnss_status_t *msg) {
-  sbp_unterminated_string_init(&msg->source, 251);
+  sbp_unterminated_string_init(&msg->source);
 }
 
 bool sbp_msg_dgnss_status_source_valid(const sbp_msg_dgnss_status_t *msg) {
@@ -664,7 +664,7 @@ int sbp_msg_ins_status_cmp(const sbp_msg_ins_status_t *a,
 }
 
 void sbp_msg_csac_telemetry_telemetry_init(sbp_msg_csac_telemetry_t *msg) {
-  sbp_unterminated_string_init(&msg->telemetry, 254);
+  sbp_unterminated_string_init(&msg->telemetry);
 }
 
 bool sbp_msg_csac_telemetry_telemetry_valid(
@@ -817,7 +817,7 @@ int sbp_msg_csac_telemetry_cmp(const sbp_msg_csac_telemetry_t *a,
 
 void sbp_msg_csac_telemetry_labels_telemetry_labels_init(
     sbp_msg_csac_telemetry_labels_t *msg) {
-  sbp_unterminated_string_init(&msg->telemetry_labels, 254);
+  sbp_unterminated_string_init(&msg->telemetry_labels);
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_valid(

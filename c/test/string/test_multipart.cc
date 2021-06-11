@@ -80,7 +80,7 @@ TEST(TestMultipartString, Init)
   sbp_string_t s;
   size_t max_encoded_len = 16;
 
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
@@ -96,7 +96,7 @@ TEST(TestMultipartString, Init)
   EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 2), "three");
 
   // And reinitialise
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
@@ -109,7 +109,7 @@ TEST(TestMultipartString, Init)
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
 
   // And reinitialise
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
@@ -120,7 +120,7 @@ TEST(TestMultipartString, AddSection)
   sbp_string_t s;
   size_t max_encoded_len = 10;
 
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
@@ -186,7 +186,7 @@ TEST(TestMultipartString, AddSectionPrintf)
     return ret;
   };
 
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
@@ -244,7 +244,7 @@ TEST(TestMultipartString, Append)
   sbp_string_t s;
   size_t max_encoded_len = 10;
 
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
@@ -330,7 +330,7 @@ TEST(TestMultipartString, AppendPrintf)
     return ret;
   };
 
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
   EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
@@ -432,7 +432,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 30;
 
-  sbp_multipart_string_init(&s, short_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_valid(&s, short_params));
   EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
   // Should not have written anything
@@ -444,7 +444,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 30;
 
-  sbp_multipart_string_init(&s, long_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "Hello"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "World!"));
   EXPECT_TRUE(sbp_multipart_string_encode(&s, long_params, &ctx));
@@ -458,7 +458,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 30;
 
-  sbp_multipart_string_init(&s, short_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
   EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
@@ -472,7 +472,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 10;
 
-  sbp_multipart_string_init(&s, short_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
   EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
@@ -485,7 +485,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 10;
 
-  sbp_multipart_string_init(&s, long_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "A"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "long"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, long_params, "string"));
@@ -500,7 +500,7 @@ TEST(TestMultipartString, Pack)
   ctx.offset = 5;
   ctx.buf_len = 30;
 
-  sbp_multipart_string_init(&s, short_params);
+  sbp_multipart_string_init(&s);
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "10"));
   EXPECT_TRUE(sbp_multipart_string_add_section(&s, short_params, "bytes."));
   EXPECT_TRUE(sbp_multipart_string_encode(&s, short_params, &ctx));
@@ -538,7 +538,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 8);
 
   // Unpack in to an initialised but empty buffer
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   memcpy(payload, "one\0two\0", 8);
   ctx.buf_len = 8;
   ctx.offset = 0;
@@ -555,7 +555,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 8);
 
   // Overwrite a previously valid string
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   sbp_multipart_string_add_section(&s, max_encoded_len, "old");
   sbp_multipart_string_add_section(&s, max_encoded_len, "data");
   memcpy(payload, "one\0two\0", 8);
@@ -574,7 +574,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 8);
 
   // Unpack a string of maximum length
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   memcpy(payload, "10\0bytes.\0", 10);
   ctx.buf_len = 10;
   ctx.offset = 0;
@@ -591,7 +591,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 10);
 
   // Unpack a string without a final NULL terminator
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   memcpy(payload, "ab\0cd", 5);
   ctx.buf_len = 5;
   ctx.offset = 0;
@@ -608,7 +608,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 5);
 
   // fail to unpack a string where there is extra data in buffer
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   memcpy(payload, "two\0sections\0with lots of extra data", 36);
   ctx.buf_len = 36;
   ctx.offset = 0;
@@ -620,7 +620,7 @@ TEST(TestMultipartString, Unpack)
   EXPECT_EQ(ctx.offset, 0);
 
   // Unpack from an offset in the payload buffer
-  sbp_multipart_string_init(&s, max_encoded_len);
+  sbp_multipart_string_init(&s);
   memset(payload, 0xCC, sizeof(payload));
   memcpy(payload + 5, "one\0two\0", 8);
   ctx.buf_len = 13;

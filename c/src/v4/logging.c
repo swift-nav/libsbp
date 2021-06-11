@@ -17,7 +17,7 @@
 #include <libsbp/v4/logging.h>
 
 void sbp_msg_log_text_init(sbp_msg_log_t *msg) {
-  sbp_unterminated_string_init(&msg->text, 254);
+  sbp_unterminated_string_init(&msg->text);
 }
 
 bool sbp_msg_log_text_valid(const sbp_msg_log_t *msg) {
@@ -261,7 +261,7 @@ int sbp_msg_fwd_cmp(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
 }
 
 void sbp_msg_print_dep_text_init(sbp_msg_print_dep_t *msg) {
-  sbp_unterminated_string_init(&msg->text, 255);
+  sbp_unterminated_string_init(&msg->text);
 }
 
 bool sbp_msg_print_dep_text_valid(const sbp_msg_print_dep_t *msg) {

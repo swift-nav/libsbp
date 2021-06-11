@@ -17,7 +17,7 @@
 #include <libsbp/v4/file_io.h>
 
 void sbp_msg_fileio_read_req_filename_init(sbp_msg_fileio_read_req_t *msg) {
-  sbp_null_terminated_string_init(&msg->filename, 246);
+  sbp_null_terminated_string_init(&msg->filename);
 }
 
 bool sbp_msg_fileio_read_req_filename_valid(
@@ -297,7 +297,7 @@ int sbp_msg_fileio_read_resp_cmp(const sbp_msg_fileio_read_resp_t *a,
 
 void sbp_msg_fileio_read_dir_req_dirname_init(
     sbp_msg_fileio_read_dir_req_t *msg) {
-  sbp_null_terminated_string_init(&msg->dirname, 247);
+  sbp_null_terminated_string_init(&msg->dirname);
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_valid(
@@ -465,7 +465,7 @@ int sbp_msg_fileio_read_dir_req_cmp(const sbp_msg_fileio_read_dir_req_t *a,
 
 void sbp_msg_fileio_read_dir_resp_contents_init(
     sbp_msg_fileio_read_dir_resp_t *msg) {
-  sbp_multipart_string_init(&msg->contents, 251);
+  sbp_multipart_string_init(&msg->contents);
 }
 
 bool sbp_msg_fileio_read_dir_resp_contents_valid(
@@ -635,7 +635,7 @@ int sbp_msg_fileio_read_dir_resp_cmp(const sbp_msg_fileio_read_dir_resp_t *a,
 }
 
 void sbp_msg_fileio_remove_filename_init(sbp_msg_fileio_remove_t *msg) {
-  sbp_null_terminated_string_init(&msg->filename, 255);
+  sbp_null_terminated_string_init(&msg->filename);
 }
 
 bool sbp_msg_fileio_remove_filename_valid(const sbp_msg_fileio_remove_t *msg) {
@@ -775,7 +775,7 @@ int sbp_msg_fileio_remove_cmp(const sbp_msg_fileio_remove_t *a,
 }
 
 void sbp_msg_fileio_write_req_filename_init(sbp_msg_fileio_write_req_t *msg) {
-  sbp_null_terminated_string_init(&msg->filename, 247);
+  sbp_null_terminated_string_init(&msg->filename);
 }
 
 bool sbp_msg_fileio_write_req_filename_valid(

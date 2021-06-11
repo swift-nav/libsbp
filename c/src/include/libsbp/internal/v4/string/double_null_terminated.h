@@ -10,8 +10,8 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef LIBSBP_INTERNAL_UNPACKED_STRING_DOUBLE_NULL_TERMINATED_H
-#define LIBSBP_INTERNAL_UNPACKED_STRING_DOUBLE_NULL_TERMINATED_H
+#ifndef LIBSBP_INTERNAL_V4_STRING_DOUBLE_NULL_TERMINATED_H
+#define LIBSBP_INTERNAL_V4_STRING_DOUBLE_NULL_TERMINATED_H
 
 #include <stdarg.h>
 #include <stdbool.h>
@@ -29,10 +29,8 @@ extern "C" {
  * Initialise a double null terminated string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
  */
-void sbp_double_null_terminated_string_init(sbp_string_t *s,
-                                            size_t max_encoded_len);
+void sbp_double_null_terminated_string_init(sbp_string_t *s);
 
 /**
  * Check a double null terminated string for validity
@@ -101,6 +99,10 @@ size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
 /**
  * Add section to a double null terminated string
  *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
+ *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
  *
@@ -115,6 +117,10 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
 
 /**
  * Add a section to a double null terminated string with printf style formatting
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * IF the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
@@ -133,6 +139,10 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
  *
  * The specified string will be appended to the last section in the double null
  * terminated string.
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
@@ -156,6 +166,10 @@ bool sbp_double_null_terminated_string_append(sbp_string_t *s,
  *
  * The newly formatted string will be appended to the last section in the double
  * null terminated string.
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be return.
