@@ -79,7 +79,7 @@ class CallbackInterface : CallbackInterface<OtherTypes...> {
 
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_unpacked_callback(state,
+    sbp_callback_register(state,
         sbp::MessageTraits<MsgType>::id,
         &sbp_msg_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
         this,
