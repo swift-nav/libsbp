@@ -179,7 +179,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -G "Visual Studio 16 2019" -A Win64 -S c -B build
+        run: cmake -G "Visual Studio 16 2019" -S c -B build
 
       - name: Build
         run: cmake --build build --target ALL_BUILD
