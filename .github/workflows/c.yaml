@@ -149,3 +149,41 @@ jobs:
 
           CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
 
+
+  windows-mingw:
+    runs-on: windows-2019
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Configure
+        run: cmake -S c -B build -G "MinGW Makefiles"
+
+      - name: Build
+        run: cmake --build build --target all
+
+      - name: Test
+        run: cmake --build build --target do-all-tests
+
+
+  windows-vs-2019-win64:
+    runs-on: windows-2019
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Configure
+        run: cmake -S c -B build -G "Visual Studio 16 2019" -A Win64
+
+      - name: Build
+        run: cmake --build build --target ALL_BUILD
+
+      - name: Test
+        run: cmake --build build --target do-all-tests
+
