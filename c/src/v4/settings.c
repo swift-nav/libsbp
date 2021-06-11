@@ -88,7 +88,7 @@ int sbp_msg_settings_save_cmp(const sbp_msg_settings_save_t *a,
 }
 
 void sbp_msg_settings_write_setting_init(sbp_msg_settings_write_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 255);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_write_setting_valid(const sbp_msg_settings_write_t *msg) {
@@ -243,7 +243,7 @@ int sbp_msg_settings_write_cmp(const sbp_msg_settings_write_t *a,
 
 void sbp_msg_settings_write_resp_setting_init(
     sbp_msg_settings_write_resp_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 254);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_write_resp_setting_valid(
@@ -413,7 +413,7 @@ int sbp_msg_settings_write_resp_cmp(const sbp_msg_settings_write_resp_t *a,
 }
 
 void sbp_msg_settings_read_req_setting_init(sbp_msg_settings_read_req_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 255);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_read_req_setting_valid(
@@ -572,7 +572,7 @@ int sbp_msg_settings_read_req_cmp(const sbp_msg_settings_read_req_t *a,
 
 void sbp_msg_settings_read_resp_setting_init(
     sbp_msg_settings_read_resp_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 255);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_read_resp_setting_valid(
@@ -812,7 +812,7 @@ int sbp_msg_settings_read_by_index_req_cmp(
 
 void sbp_msg_settings_read_by_index_resp_setting_init(
     sbp_msg_settings_read_by_index_resp_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 253);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_read_by_index_resp_setting_valid(
@@ -1058,7 +1058,7 @@ int sbp_msg_settings_read_by_index_done_cmp(
 }
 
 void sbp_msg_settings_register_setting_init(sbp_msg_settings_register_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 255);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_register_setting_valid(
@@ -1217,7 +1217,7 @@ int sbp_msg_settings_register_cmp(const sbp_msg_settings_register_t *a,
 
 void sbp_msg_settings_register_resp_setting_init(
     sbp_msg_settings_register_resp_t *msg) {
-  sbp_multipart_string_init(&msg->setting, 254);
+  sbp_multipart_string_init(&msg->setting);
 }
 
 bool sbp_msg_settings_register_resp_setting_valid(

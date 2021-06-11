@@ -1,5 +1,17 @@
-#ifndef LIBSBP_INTERNAL_UNPACKED_STRING_UNTERMINATED_H
-#define LIBSBP_INTERNAL_UNPACKED_STRING_UNTERMINATED_H
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swift-nav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+#ifndef LIBSBP_INTERNAL_V4_STRING_UNTERMINATED_H
+#define LIBSBP_INTERNAL_V4_STRING_UNTERMINATED_H
 
 #include <stdarg.h>
 #include <stdbool.h>
@@ -17,9 +29,8 @@ extern "C" {
  * Initialise an unterminated string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
  */
-void sbp_unterminated_string_init(sbp_string_t *s, size_t max_encoded_len);
+void sbp_unterminated_string_init(sbp_string_t *s);
 
 /**
  * Check an unterminated string for validity
@@ -116,6 +127,10 @@ bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
 /**
  * Append an unterminated string
  *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
+ *
  * The new string will be appended to the current contents of this string. If
  * the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned
@@ -129,7 +144,11 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t max_encoded_len,
                                     const char *new_str);
 
 /**
- * Appens to an unterminated string will printf style formatting
+ * Append to an unterminated string will printf style formatting
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned

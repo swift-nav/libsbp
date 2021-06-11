@@ -1,5 +1,17 @@
-#ifndef LIBSBP_INTERNAL_STRING_MULTIPART_H
-#define LIBSBP_INTERNAL_STRING_MULTIPART_H
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swift-nav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+#ifndef LIBSBP_INTERNAL_V4_STRING_MULTIPART_H
+#define LIBSBP_INTERNAL_V4_STRING_MULTIPART_H
 
 #include <stdarg.h>
 #include <stdbool.h>
@@ -17,9 +29,8 @@ extern "C" {
  * Initialise a multipart string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
  */
-void sbp_multipart_string_init(sbp_string_t *s, size_t max_encoded_len);
+void sbp_multipart_string_init(sbp_string_t *s);
 
 /**
  * Check a multipart string for validity
@@ -105,6 +116,10 @@ size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
 /**
  * Add section to a multipart string
  *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
+ *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned
  *
@@ -118,6 +133,10 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t max_encoded_len,
 
 /**
  * Add a section to a multipart string with printf style formatting
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
@@ -137,6 +156,10 @@ bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
  *
  * The specified string will be appended to the last section in the multipart
  * string.
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
@@ -158,6 +181,10 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t max_encoded_len,
  *
  * The newly formatted string will be appended to the last section in the
  * multipart string.
+ *
+ * If the current string's encoded length is less than the maximum encoded
+ * length, the function will clear off any previous data before attempting to
+ * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.

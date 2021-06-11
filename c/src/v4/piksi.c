@@ -1637,7 +1637,7 @@ int sbp_msg_device_monitor_cmp(const sbp_msg_device_monitor_t *a,
 }
 
 void sbp_msg_command_req_command_init(sbp_msg_command_req_t *msg) {
-  sbp_null_terminated_string_init(&msg->command, 251);
+  sbp_null_terminated_string_init(&msg->command);
 }
 
 bool sbp_msg_command_req_command_valid(const sbp_msg_command_req_t *msg) {
@@ -1875,7 +1875,7 @@ int sbp_msg_command_resp_cmp(const sbp_msg_command_resp_t *a,
 }
 
 void sbp_msg_command_output_line_init(sbp_msg_command_output_t *msg) {
-  sbp_unterminated_string_init(&msg->line, 251);
+  sbp_unterminated_string_init(&msg->line);
 }
 
 bool sbp_msg_command_output_line_valid(const sbp_msg_command_output_t *msg) {

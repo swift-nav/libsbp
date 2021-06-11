@@ -93,7 +93,7 @@ int sbp_msg_bootloader_handshake_req_cmp(
 
 void sbp_msg_bootloader_handshake_resp_version_init(
     sbp_msg_bootloader_handshake_resp_t *msg) {
-  sbp_unterminated_string_init(&msg->version, 251);
+  sbp_unterminated_string_init(&msg->version);
 }
 
 bool sbp_msg_bootloader_handshake_resp_version_valid(
@@ -491,7 +491,7 @@ int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
 
 void sbp_msg_bootloader_handshake_dep_a_handshake_init(
     sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  sbp_unterminated_string_init(&msg->handshake, 255);
+  sbp_unterminated_string_init(&msg->handshake);
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_handshake_valid(

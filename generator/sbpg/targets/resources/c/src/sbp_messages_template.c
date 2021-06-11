@@ -25,7 +25,7 @@
 
 void (((field_prefix)))_init( (((-m.type_name))) *msg)
 {
-  (((string_prefix)))_init(&msg->(((f.name))), (((f.max_items))));
+  (((string_prefix)))_init(&msg->(((f.name))));
 }
 
 bool (((field_prefix)))_valid(const (((m.type_name))) *msg)

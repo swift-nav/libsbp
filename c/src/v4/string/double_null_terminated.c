@@ -19,13 +19,11 @@ static const sbp_string_params_t params = {
 
 static void maybe_init(sbp_string_t *s, size_t max_encoded_len) {
   if (!sbp_double_null_terminated_string_valid(s, max_encoded_len)) {
-    sbp_double_null_terminated_string_init(s, max_encoded_len);
+    sbp_double_null_terminated_string_init(s);
   }
 }
 
-void sbp_double_null_terminated_string_init(sbp_string_t *s,
-                                            size_t max_encoded_len) {
-  (void)max_encoded_len;
+void sbp_double_null_terminated_string_init(sbp_string_t *s) {
   memset(s, 0, sizeof(*s));
   s->encoded_len = 2;
 }

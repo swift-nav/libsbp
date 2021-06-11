@@ -18,7 +18,7 @@
 
 void sbp_msg_linux_cpu_state_dep_a_cmdline_init(
     sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 236);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_valid(
@@ -217,7 +217,7 @@ int sbp_msg_linux_cpu_state_dep_a_cmp(
 
 void sbp_msg_linux_mem_state_dep_a_cmdline_init(
     sbp_msg_linux_mem_state_dep_a_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 236);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_valid(
@@ -557,7 +557,7 @@ int sbp_msg_linux_sys_state_dep_a_cmp(
 
 void sbp_msg_linux_process_socket_counts_cmdline_init(
     sbp_msg_linux_process_socket_counts_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 246);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_process_socket_counts_cmdline_valid(
@@ -762,7 +762,7 @@ int sbp_msg_linux_process_socket_counts_cmp(
 
 void sbp_msg_linux_process_socket_queues_cmdline_init(
     sbp_msg_linux_process_socket_queues_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 180);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_process_socket_queues_cmdline_valid(
@@ -1125,7 +1125,7 @@ int sbp_msg_linux_socket_usage_cmp(const sbp_msg_linux_socket_usage_t *a,
 
 void sbp_msg_linux_process_fd_count_cmdline_init(
     sbp_msg_linux_process_fd_count_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 250);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_process_fd_count_cmdline_valid(
@@ -1306,7 +1306,7 @@ int sbp_msg_linux_process_fd_count_cmp(
 
 void sbp_msg_linux_process_fd_summary_most_opened_init(
     sbp_msg_linux_process_fd_summary_t *msg) {
-  sbp_double_null_terminated_string_init(&msg->most_opened, 251);
+  sbp_double_null_terminated_string_init(&msg->most_opened);
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_valid(
@@ -1487,7 +1487,7 @@ int sbp_msg_linux_process_fd_summary_cmp(
 }
 
 void sbp_msg_linux_cpu_state_cmdline_init(sbp_msg_linux_cpu_state_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 231);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_cpu_state_cmdline_valid(
@@ -1706,7 +1706,7 @@ int sbp_msg_linux_cpu_state_cmp(const sbp_msg_linux_cpu_state_t *a,
 }
 
 void sbp_msg_linux_mem_state_cmdline_init(sbp_msg_linux_mem_state_t *msg) {
-  sbp_unterminated_string_init(&msg->cmdline, 231);
+  sbp_unterminated_string_init(&msg->cmdline);
 }
 
 bool sbp_msg_linux_mem_state_cmdline_valid(
