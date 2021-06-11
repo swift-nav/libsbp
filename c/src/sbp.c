@@ -546,7 +546,6 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
       u16 raw_msg_type = (u16)s->msg_type;
       sbp_u16_to_u8_array(raw_msg_type, (u8*)&buf);
-      s->msg_type = (sbp_msg_type_t)raw_msg_type;
       crc = crc16_ccitt((u8*)&(buf), 2, 0);
       sbp_u16_to_u8_array(s->sender_id, (u8*)&buf);
       crc = crc16_ccitt((u8*)&(buf), 2, crc);
