@@ -21,9 +21,10 @@ from jinja2.utils import pass_environment
 from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
-MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
-VERSION_TEMPLATE_NAME = "sbp_version_template.h"
-MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
+MESSAGES_TEMPLATE_NAME = "c/sbp_messages_template.h"
+LEGACY_MESSAGES_TEMPLATE_NAME = "c/legacy/sbp_messages_template.h"
+VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
+LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME = "c/legacy/cpp/message_traits_template.h"
 
 
 @pass_environment
@@ -166,6 +167,16 @@ def render_source(output_dir, package_spec):
                                description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))
+  destination_filename = "%s/legacy/%s.h" % (output_dir, name)
+  py_template = JENV.get_template(LEGACY_MESSAGES_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(msgs=package_spec.definitions,
+                               pkg_name=name,
+                               filepath="/".join(package_spec.filepath) + ".yaml",
+                               max_msgid_len=package_spec.max_msgid_len,
+                               description=package_spec.description,
+                               timestamp=package_spec.creation_timestamp,
+                               include=extensions(package_spec.includes)))
 
 def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/version.h" % output_dir
@@ -188,8 +199,8 @@ def render_traits(output_dir, package_specs):
     for m in package_spec.definitions:
       if m.is_real_message:
         msgs.append(m)
-  destination_filename = "%s/cpp/message_traits.h" % output_dir
-  py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
+  destination_filename = "%s/legacy/cpp/message_traits.h" % output_dir
+  py_template = JENV.get_template(LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(packages=package_specs,
                                msgs=sorted(msgs, key=lambda msg: msg.sbp_id),
