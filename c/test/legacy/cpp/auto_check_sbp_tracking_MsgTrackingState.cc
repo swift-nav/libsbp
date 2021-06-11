@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_tracking_MsgTrackingState0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingState0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_dep_b_t> {
+      sbp::PayloadHandler<msg_tracking_state_dep_b_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingState0()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingState0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_dep_b_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_tracking_state_dep_b_t *>(last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingState0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingState0, Test) {
   uint8_t encoded_frame[] = {
       85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   197, 253, 28,
       66,  1,   203, 0,   0,   0,   231, 99,  16, 66,  1,   208, 0,   0,
@@ -372,19 +372,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState0, Test) {
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingState1
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingState1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_dep_b_t> {
+      sbp::PayloadHandler<msg_tracking_state_dep_b_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingState1()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingState1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_dep_b_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_tracking_state_dep_b_t *>(last_msg_storage_)),
@@ -431,7 +431,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingState1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingState1, Test) {
   uint8_t encoded_frame[] = {
       85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   250, 249, 27,
       66,  1,   203, 0,   0,   0,   40,  143, 11, 66,  1,   208, 0,   0,
@@ -726,19 +726,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState1, Test) {
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingState2
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingState2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_dep_b_t> {
+      sbp::PayloadHandler<msg_tracking_state_dep_b_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingState2()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingState2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_dep_b_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_tracking_state_dep_b_t *>(last_msg_storage_)),
@@ -785,7 +785,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingState2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingState2, Test) {
   uint8_t encoded_frame[] = {
       85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   123, 209, 27,
       66,  1,   203, 0,   0,   0,   214, 64,  15, 66,  1,   208, 0,   0,
@@ -1080,19 +1080,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState2, Test) {
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingState3
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingState3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_dep_b_t> {
+      sbp::PayloadHandler<msg_tracking_state_dep_b_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingState3()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingState3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_dep_b_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_tracking_state_dep_b_t *>(last_msg_storage_)),
@@ -1139,7 +1139,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingState3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingState3, Test) {
   uint8_t encoded_frame[] = {
       85,  19,  0,   246, 215, 99,  1,   202, 0,   0,   0,   120, 122, 29,
       66,  1,   203, 0,   0,   0,   66,  22,  18,  66,  1,   208, 0,   0,
@@ -1434,19 +1434,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState3, Test) {
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingState4
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingState4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_dep_b_t> {
+      sbp::PayloadHandler<msg_tracking_state_dep_b_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingState4()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingState4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_dep_b_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_tracking_state_dep_b_t *>(last_msg_storage_)),
@@ -1493,7 +1493,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingState4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingState4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingState4, Test) {
   uint8_t encoded_frame[] = {
       85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   103, 208, 30,
       66,  1,   203, 0,   0,   0,   117, 24,  18, 66,  1,   208, 0,   0,

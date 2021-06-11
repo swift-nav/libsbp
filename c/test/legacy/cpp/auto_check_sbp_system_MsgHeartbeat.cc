@@ -15,22 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_system_MsgHeartbeat0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_system_MsgHeartbeat0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_heartbeat_t> {
+      sbp::PayloadHandler<msg_heartbeat_t> {
  public:
-  Test_auto_check_sbp_system_MsgHeartbeat0()
+  Test_legacy_auto_check_sbp_system_MsgHeartbeat0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_heartbeat_t>(this),
+        sbp::PayloadHandler<msg_heartbeat_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_heartbeat_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_system_MsgHeartbeat0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_system_MsgHeartbeat0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_system_MsgHeartbeat0, Test) {
   uint8_t encoded_frame[] = {
       85, 255, 255, 246, 215, 4, 0, 50, 0, 0, 249, 216,
   };
@@ -103,19 +103,19 @@ TEST_F(Test_auto_check_sbp_system_MsgHeartbeat0, Test) {
   EXPECT_EQ(last_msg_->flags, 12800)
       << "incorrect value for flags, expected 12800, is " << last_msg_->flags;
 }
-class Test_auto_check_sbp_system_MsgHeartbeat1
+class Test_legacy_auto_check_sbp_system_MsgHeartbeat1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_heartbeat_t> {
+      sbp::PayloadHandler<msg_heartbeat_t> {
  public:
-  Test_auto_check_sbp_system_MsgHeartbeat1()
+  Test_legacy_auto_check_sbp_system_MsgHeartbeat1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_heartbeat_t>(this),
+        sbp::PayloadHandler<msg_heartbeat_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_heartbeat_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -161,7 +161,7 @@ class Test_auto_check_sbp_system_MsgHeartbeat1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_system_MsgHeartbeat1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_system_MsgHeartbeat1, Test) {
   uint8_t encoded_frame[] = {
       85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57,
   };

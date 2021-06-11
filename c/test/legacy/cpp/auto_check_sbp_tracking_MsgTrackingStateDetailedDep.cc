@@ -15,22 +15,22 @@
 // by generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0, Test) {
   uint8_t encoded_frame[] = {
       85,  17, 0,  59, 103, 55, 163, 151, 112, 215, 1,  0, 0, 0,   0,   0,
       0,   0,  0,  0,  0,   0,  0,   0,   0,   0,   39, 5, 0, 0,   169, 177,
@@ -193,19 +193,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0, Test) {
   EXPECT_EQ(last_msg_->uptime, 1)
       << "incorrect value for uptime, expected 1, is " << last_msg_->uptime;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -252,7 +252,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1, Test) {
   uint8_t encoded_frame[] = {
       85,  17, 0,  59, 103, 55, 97,  251, 61, 245, 1,  0, 0, 0,   0,   0,
       0,   0,  0,  0,  0,   0,  0,   0,   0,  0,   18, 7, 0, 0,   14,  175,
@@ -368,19 +368,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1, Test) {
   EXPECT_EQ(last_msg_->uptime, 1)
       << "incorrect value for uptime, expected 1, is " << last_msg_->uptime;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -427,7 +427,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2, Test) {
   uint8_t encoded_frame[] = {
       85,  17, 0,  59, 103, 55, 139, 218, 236, 18, 2,   0, 0, 0,   0,   0,
       0,   0,  0,  0,  0,   0,  0,   0,   0,   0,  250, 8, 0, 0,   8,   179,
@@ -543,19 +543,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2, Test) {
   EXPECT_EQ(last_msg_->uptime, 2)
       << "incorrect value for uptime, expected 2, is " << last_msg_->uptime;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -602,7 +602,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3, Test) {
   uint8_t encoded_frame[] = {
       85,  17, 0,  59, 103, 55, 255, 251, 170, 48, 2,   0,  0, 0,  0,   0,
       0,   0,  0,  0,  0,   0,  0,   0,   0,   0,  226, 10, 0, 0,  125, 181,
@@ -718,19 +718,19 @@ TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3, Test) {
   EXPECT_EQ(last_msg_->uptime, 2)
       << "incorrect value for uptime, expected 2, is " << last_msg_->uptime;
 }
-class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4
+class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_tracking_state_detailed_dep_t> {
+      sbp::PayloadHandler<msg_tracking_state_detailed_dep_t> {
  public:
-  Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4()
+  Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_tracking_state_detailed_dep_t>(this),
+        sbp::PayloadHandler<msg_tracking_state_detailed_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_tracking_state_detailed_dep_t *>(
             last_msg_storage_)),
@@ -777,7 +777,7 @@ class Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4, Test) {
   uint8_t encoded_frame[] = {
       85,  17, 0,  59, 103, 55, 189, 95, 120, 78, 2,   0,  0, 0,   0,   0,
       0,   0,  0,  0,  0,   0,  0,   0,  0,   0,  203, 12, 0, 0,   64,  184,

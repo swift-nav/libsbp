@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_piksi_MsgDeviceMonitor0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_device_monitor_t> {
+      sbp::PayloadHandler<msg_device_monitor_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgDeviceMonitor0()
+  Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_device_monitor_t>(this),
+        sbp::PayloadHandler<msg_device_monitor_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_device_monitor_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_piksi_MsgDeviceMonitor0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor0, Test) {
   uint8_t encoded_frame[] = {
       85, 181, 0, 95, 66, 10,  241, 216, 219,
       3,  253, 6, 21, 24, 168, 18,  207, 233,
@@ -120,19 +120,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor0, Test) {
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
-class Test_auto_check_sbp_piksi_MsgDeviceMonitor1
+class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_device_monitor_t> {
+      sbp::PayloadHandler<msg_device_monitor_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgDeviceMonitor1()
+  Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_device_monitor_t>(this),
+        sbp::PayloadHandler<msg_device_monitor_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_device_monitor_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -178,7 +178,7 @@ class Test_auto_check_sbp_piksi_MsgDeviceMonitor1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor1, Test) {
   uint8_t encoded_frame[] = {
       85, 181, 0, 95, 66, 10,  241, 216, 219,
       3,  254, 6, 24, 24, 168, 18,  169, 30,
@@ -222,19 +222,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor1, Test) {
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
-class Test_auto_check_sbp_piksi_MsgDeviceMonitor2
+class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_device_monitor_t> {
+      sbp::PayloadHandler<msg_device_monitor_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgDeviceMonitor2()
+  Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_device_monitor_t>(this),
+        sbp::PayloadHandler<msg_device_monitor_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_device_monitor_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -280,7 +280,7 @@ class Test_auto_check_sbp_piksi_MsgDeviceMonitor2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor2, Test) {
   uint8_t encoded_frame[] = {
       85, 181, 0, 95, 66, 10,  241, 216, 219,
       3,  253, 6, 22, 24, 168, 18,  19,  114,
@@ -324,19 +324,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor2, Test) {
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
-class Test_auto_check_sbp_piksi_MsgDeviceMonitor3
+class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_device_monitor_t> {
+      sbp::PayloadHandler<msg_device_monitor_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgDeviceMonitor3()
+  Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_device_monitor_t>(this),
+        sbp::PayloadHandler<msg_device_monitor_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_device_monitor_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -382,7 +382,7 @@ class Test_auto_check_sbp_piksi_MsgDeviceMonitor3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor3, Test) {
   uint8_t encoded_frame[] = {
       85, 181, 0, 95, 66, 10,  241, 216, 218,
       3,  252, 6, 6,  24, 168, 18,  199, 107,
@@ -426,19 +426,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor3, Test) {
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
-class Test_auto_check_sbp_piksi_MsgDeviceMonitor4
+class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_device_monitor_t> {
+      sbp::PayloadHandler<msg_device_monitor_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgDeviceMonitor4()
+  Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_device_monitor_t>(this),
+        sbp::PayloadHandler<msg_device_monitor_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_device_monitor_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -484,7 +484,7 @@ class Test_auto_check_sbp_piksi_MsgDeviceMonitor4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgDeviceMonitor4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor4, Test) {
   uint8_t encoded_frame[] = {
       85, 181, 0, 95,  66, 10,  241, 216, 220,
       3,  253, 6, 235, 23, 168, 18,  241, 63,

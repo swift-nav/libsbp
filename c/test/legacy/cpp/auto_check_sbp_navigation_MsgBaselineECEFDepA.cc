@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA0()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA0, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   246, 215, 20,  20,  46,  39, 0, 21, 48, 255, 255,
       52, 117, 255, 255, 216, 211, 254, 255, 0,  0, 9,  1,  50,  137,
@@ -123,19 +123,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA0, Test) {
   EXPECT_EQ(last_msg_->z, -76840)
       << "incorrect value for z, expected -76840, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA1
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA1()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -182,7 +182,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA1, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   246, 215, 20,  120, 46,  39, 0, 58, 49, 255, 255,
       49, 116, 255, 255, 134, 211, 254, 255, 0,  0, 9,  1,  227, 155,
@@ -228,19 +228,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA1, Test) {
   EXPECT_EQ(last_msg_->z, -76922)
       << "incorrect value for z, expected -76922, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA2
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA2()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -287,7 +287,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA2, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   246, 215, 20,  220, 46,  39, 0, 97, 50, 255, 255,
       47, 115, 255, 255, 52,  211, 254, 255, 0,  0, 9,  1,  61,  126,
@@ -333,19 +333,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA2, Test) {
   EXPECT_EQ(last_msg_->z, -77004)
       << "incorrect value for z, expected -77004, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA3
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA3()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -392,7 +392,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA3, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   246, 215, 20,  64,  47,  39, 0, 136, 51, 255, 255,
       45, 114, 255, 255, 228, 210, 254, 255, 0,  0, 9,   1,  200, 79,
@@ -438,19 +438,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA3, Test) {
   EXPECT_EQ(last_msg_->z, -77084)
       << "incorrect value for z, expected -77084, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA4
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA4()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -497,7 +497,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA4, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   246, 215, 20,  164, 47,  39, 0, 176, 52, 255, 255,
       44, 113, 255, 255, 149, 210, 254, 255, 0,  0, 9,   1,  104, 24,
@@ -543,19 +543,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA4, Test) {
   EXPECT_EQ(last_msg_->z, -77163)
       << "incorrect value for z, expected -77163, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA5
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA5()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -602,7 +602,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA5, Test) {
   uint8_t encoded_frame[] = {
       85,  2,   2,   195, 4,   20, 156, 21, 69, 24, 169, 231, 255, 255,
       102, 208, 255, 255, 251, 28, 0,   0,  0,  0,  6,   0,   146, 168,
@@ -648,19 +648,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA5, Test) {
   EXPECT_EQ(last_msg_->z, 7419)
       << "incorrect value for z, expected 7419, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA6
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA6()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -707,7 +707,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA6, Test) {
   uint8_t encoded_frame[] = {
       85,  2,   2,   195, 4,   20, 0, 22, 69, 24, 169, 231, 255, 255,
       103, 208, 255, 255, 252, 28, 0, 0,  0,  0,  6,   0,   34,  116,
@@ -753,19 +753,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA6, Test) {
   EXPECT_EQ(last_msg_->z, 7420)
       << "incorrect value for z, expected 7420, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA7
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA7()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -812,7 +812,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA7
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA7, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA7, Test) {
   uint8_t encoded_frame[] = {
       85,  2,   2,   195, 4,   20, 100, 22, 69, 24, 30, 224, 255, 255,
       192, 183, 255, 255, 239, 53, 0,   0,  0,  0,  6,  0,   225, 15,
@@ -858,19 +858,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA7, Test) {
   EXPECT_EQ(last_msg_->z, 13807)
       << "incorrect value for z, expected 13807, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA8
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA8()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -917,7 +917,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA8
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA8, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA8, Test) {
   uint8_t encoded_frame[] = {
       85,  2,   2,   195, 4,   20, 200, 22, 69, 24, 28, 224, 255, 255,
       191, 183, 255, 255, 242, 53, 0,   0,  0,  0,  6,  0,   35,  100,
@@ -963,19 +963,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA8, Test) {
   EXPECT_EQ(last_msg_->z, 13810)
       << "incorrect value for z, expected 13810, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA9
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA9
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA9()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -1022,7 +1022,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA9
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA9, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA9, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   195, 4,   20, 44, 23, 69, 24, 24, 227, 255, 255,
       25, 195, 255, 255, 153, 59, 0,  0,  0,  0,  6,  0,   66,  66,
@@ -1068,19 +1068,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA9, Test) {
   EXPECT_EQ(last_msg_->z, 15257)
       << "incorrect value for z, expected 15257, is " << last_msg_->z;
 }
-class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA10
+class Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA10
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_baseline_ecef_dep_a_t> {
+      sbp::PayloadHandler<msg_baseline_ecef_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgBaselineECEFDepA10()
+  Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_baseline_ecef_dep_a_t>(this),
+        sbp::PayloadHandler<msg_baseline_ecef_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_baseline_ecef_dep_a_t *>(last_msg_storage_)),
@@ -1127,7 +1127,7 @@ class Test_auto_check_sbp_navigation_MsgBaselineECEFDepA10
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgBaselineECEFDepA10, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineECEFDepA10, Test) {
   uint8_t encoded_frame[] = {
       85, 2,   2,   195, 4,   20, 144, 23, 69, 24, 23, 227, 255, 255,
       25, 195, 255, 255, 153, 59, 0,   0,  0,  0,  6,  0,   35,  135,

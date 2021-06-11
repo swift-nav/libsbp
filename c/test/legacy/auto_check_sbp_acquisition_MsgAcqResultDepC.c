@@ -14,8 +14,8 @@
 // spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepC.yaml by
 // generate.py. Do not modify by hand!
 
-#include <acquisition.h>
 #include <check.h>
+#include <libsbp/legacy/acquisition.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
+START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -140,7 +140,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 10;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -226,9 +226,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -250,7 +250,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 6;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -336,9 +336,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -360,7 +360,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 13;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -446,9 +446,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -470,7 +470,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 1;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -556,9 +556,9 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x1f, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x1f, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0x1f, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0x1f, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -580,7 +580,7 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     test_msg->sid.code = 0;
     test_msg->sid.reserved = 0;
     test_msg->sid.sat = 27;
-    sbp_send_message(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0x1f, 3112, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -657,12 +657,14 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
 }
 END_TEST
 
-Suite* auto_check_sbp_acquisition_MsgAcqResultDepC_suite(void) {
+Suite* legacy_auto_check_sbp_acquisition_MsgAcqResultDepC_suite(void) {
   Suite* s = suite_create(
-      "SBP generated test suite: auto_check_sbp_acquisition_MsgAcqResultDepC");
+      "SBP generated test suite: "
+      "legacy_auto_check_sbp_acquisition_MsgAcqResultDepC");
   TCase* tc_acq = tcase_create(
-      "Automated_Suite_auto_check_sbp_acquisition_MsgAcqResultDepC");
-  tcase_add_test(tc_acq, test_auto_check_sbp_acquisition_MsgAcqResultDepC);
+      "Automated_Suite_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC");
+  tcase_add_test(tc_acq,
+                 test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC);
   suite_add_tcase(s, tc_acq);
   return s;
 }

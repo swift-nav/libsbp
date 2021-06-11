@@ -15,22 +15,22 @@
 // modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_sbas_MsgSbasRaw0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_sbas_MsgSbasRaw0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_sbas_raw_t> {
+      sbp::PayloadHandler<msg_sbas_raw_t> {
  public:
-  Test_auto_check_sbp_sbas_MsgSbasRaw0()
+  Test_legacy_auto_check_sbp_sbas_MsgSbasRaw0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_sbas_raw_t>(this),
+        sbp::PayloadHandler<msg_sbas_raw_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_sbas_raw_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_sbas_MsgSbasRaw0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_sbas_MsgSbasRaw0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_sbas_MsgSbasRaw0, Test) {
   uint8_t encoded_frame[] = {
       85,  119, 119, 28,  200, 34,  131, 2,   201, 228, 233, 29,  4,   23,
       255, 0,   23,  255, 0,   23,  255, 127, 240, 2,   255, 192, 3,   127,

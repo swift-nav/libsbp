@@ -15,22 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_logging_MsgPrintDep0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep0()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep0, Test) {
   uint8_t encoded_frame[] = {
       85,  16,  0,   34, 34, 43, 73, 78, 70, 79, 58,  32,  97,
       99,  113, 58,  32, 80, 82, 78, 32, 49, 53, 32,  102, 111,
@@ -131,19 +131,19 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
         << check_string << "', is '" << last_msg_->text << "'";
   }
 }
-class Test_auto_check_sbp_logging_MsgPrintDep1
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep1()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -189,7 +189,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep1, Test) {
   uint8_t encoded_frame[] = {
       85, 16, 0,  34, 34,  42, 73, 78,  70,  79,  58,  32,  97, 99, 113, 58, 32,
       80, 82, 78, 32, 51,  49, 32, 102, 111, 117, 110, 100, 32, 64, 32,  52, 50,
@@ -241,19 +241,19 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
         << check_string << "', is '" << last_msg_->text << "'";
   }
 }
-class Test_auto_check_sbp_logging_MsgPrintDep2
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep2()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -299,7 +299,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep2, Test) {
   uint8_t encoded_frame[] = {
       85, 16, 0,   34,  34,  35,  73, 78, 70,  79, 58,  32,  68,  105, 115,
       97, 98, 108, 105, 110, 103, 32, 99, 104, 97, 110, 110, 101, 108, 32,
@@ -349,19 +349,19 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
         << check_string << "', is '" << last_msg_->text << "'";
   }
 }
-class Test_auto_check_sbp_logging_MsgPrintDep3
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep3()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -407,7 +407,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep3, Test) {
   uint8_t encoded_frame[] = {
       85,  16,  0,  34, 34, 41, 73, 78, 70,  79, 58,  32,  97,
       99,  113, 58, 32, 80, 82, 78, 32, 50,  32, 102, 111, 117,
@@ -460,19 +460,19 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
         << check_string << "', is '" << last_msg_->text << "'";
   }
 }
-class Test_auto_check_sbp_logging_MsgPrintDep4
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep4()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -518,7 +518,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep4, Test) {
   uint8_t encoded_frame[] = {
       85,  16,  0,  34, 34, 42, 73, 78, 70, 79, 58,  32,  97,
       99,  113, 58, 32, 80, 82, 78, 32, 52, 32, 102, 111, 117,
@@ -571,19 +571,19 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
         << check_string << "', is '" << last_msg_->text << "'";
   }
 }
-class Test_auto_check_sbp_logging_MsgPrintDep5
+class Test_legacy_auto_check_sbp_logging_MsgPrintDep5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_print_dep_t> {
+      sbp::PayloadHandler<msg_print_dep_t> {
  public:
-  Test_auto_check_sbp_logging_MsgPrintDep5()
+  Test_legacy_auto_check_sbp_logging_MsgPrintDep5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_print_dep_t>(this),
+        sbp::PayloadHandler<msg_print_dep_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_print_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -629,7 +629,7 @@ class Test_auto_check_sbp_logging_MsgPrintDep5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgPrintDep5, Test) {
   uint8_t encoded_frame[] = {
       85, 16, 0,   34,  34,  35,  73, 78, 70,  79, 58,  32,  68,  105, 115,
       97, 98, 108, 105, 110, 103, 32, 99, 104, 97, 110, 110, 101, 108, 32,

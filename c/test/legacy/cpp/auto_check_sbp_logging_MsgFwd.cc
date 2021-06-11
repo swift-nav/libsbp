@@ -15,21 +15,22 @@
 // modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_logging_MsgFwd0 : public ::testing::Test,
-                                            public sbp::State,
-                                            public sbp::IReader,
-                                            public sbp::IWriter,
-                                            sbp::MessageHandler<msg_fwd_t> {
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_logging_MsgFwd0
+    : public ::testing::Test,
+      public sbp::State,
+      public sbp::IReader,
+      public sbp::IWriter,
+      sbp::PayloadHandler<msg_fwd_t> {
  public:
-  Test_auto_check_sbp_logging_MsgFwd0()
+  Test_legacy_auto_check_sbp_logging_MsgFwd0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_fwd_t>(this),
+        sbp::PayloadHandler<msg_fwd_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_fwd_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -75,7 +76,7 @@ class Test_auto_check_sbp_logging_MsgFwd0 : public ::testing::Test,
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_logging_MsgFwd0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_logging_MsgFwd0, Test) {
   uint8_t encoded_frame[] = {
       85,  2,  4,  66, 0,  18, 0,  0,  86, 81, 68,  47,  81,
       103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103, 125, 95,

@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_piksi_MsgThreadState0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState0()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState0, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 246, 215, 26, 109, 97, 105, 110, 0, 0,   0, 0, 0, 0,  0,
       0,  0,  0, 0,   0,   0,  0,   0,  0,   0,   0, 156, 9, 0, 0, 73, 138,
@@ -126,19 +126,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState0, Test) {
       << "incorrect value for stack_free, expected 2460, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState1
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState1()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -184,7 +184,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState1, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 246, 215, 26, 105, 100, 108, 101, 0, 0,  0, 0, 0, 0,   0,
       0,  0,  0, 0,   0,   0,  0,   0,   0,   83,  2, 36, 0, 0, 0, 151, 20,
@@ -234,19 +234,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState1, Test) {
       << "incorrect value for stack_free, expected 36, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState2
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState2()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -292,7 +292,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState2, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 246, 215, 26, 78, 65, 80, 32, 73, 83,  82, 0, 0, 0,   0,
       0,  0,  0, 0,   0,   0,  0,  0,  0,  14, 0,  116, 4,  0, 0, 226, 60,
@@ -342,19 +342,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState2, Test) {
       << "incorrect value for stack_free, expected 1140, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState3
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState3()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -400,7 +400,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState3, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 246, 215, 26, 83, 66, 80, 0, 0, 0,   0,  0, 0, 0,  0,
       0,  0,  0, 0,   0,   0,  0,  0,  0,  1, 0, 196, 19, 0, 0, 90, 169,
@@ -450,19 +450,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState3, Test) {
       << "incorrect value for stack_free, expected 5060, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState4
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState4()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -508,7 +508,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState4, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 246, 215, 26, 109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0,
       0,  0,  0, 0,   0,   0,  0,   0,  0,   7,  0,   20,  9,  0,  0,  47,  75,
@@ -560,19 +560,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState4, Test) {
       << "incorrect value for stack_free, expected 2324, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState5
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState5()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -618,7 +618,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState5, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 195, 4, 26, 109, 97, 105, 110, 0, 0,   0, 0, 0, 0,   0,
       0,  0,  0, 0,   0, 0,  0,   0,  0,   0,   0, 148, 9, 0, 0, 195, 212,
@@ -668,19 +668,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState5, Test) {
       << "incorrect value for stack_free, expected 2452, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState6
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState6()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -726,7 +726,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState6, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 195, 4, 26, 105, 100, 108, 101, 0, 0,  0, 0, 0, 0,   0,
       0,  0,  0, 0,   0, 0,  0,   0,   0,   228, 1, 36, 0, 0, 0, 225, 18,
@@ -776,19 +776,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState6, Test) {
       << "incorrect value for stack_free, expected 36, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState7
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState7()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -834,7 +834,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState7
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState7, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState7, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 195, 4, 26, 78, 65, 80, 32,  73, 83, 82, 0, 0, 0,   0,
       0,  0,  0, 0,   0, 0,  0,  0,  0,  138, 1,  92, 7,  0, 0, 166, 116,
@@ -884,19 +884,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState7, Test) {
       << "incorrect value for stack_free, expected 1884, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState8
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState8()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -942,7 +942,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState8
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState8, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState8, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 195, 4, 26, 83, 66, 80, 0, 0, 0, 0,  0, 0, 0,   0,
       0,  0,  0, 0,   0, 0,  0,  0,  0,  1, 0, 4, 12, 0, 0, 229, 174,
@@ -992,19 +992,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState8, Test) {
       << "incorrect value for stack_free, expected 3076, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState9
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState9
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState9()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1050,7 +1050,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState9
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState9, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState9, Test) {
   uint8_t encoded_frame[] = {
       85, 23, 0, 195, 4, 26, 109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0,
       0,  0,  0, 0,   0, 0,  0,   0,  0,   10, 0,   124, 9,  0,  0,  52,  2,
@@ -1102,19 +1102,19 @@ TEST_F(Test_auto_check_sbp_piksi_MsgThreadState9, Test) {
       << "incorrect value for stack_free, expected 2428, is "
       << last_msg_->stack_free;
 }
-class Test_auto_check_sbp_piksi_MsgThreadState10
+class Test_legacy_auto_check_sbp_piksi_MsgThreadState10
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_thread_state_t> {
+      sbp::PayloadHandler<msg_thread_state_t> {
  public:
-  Test_auto_check_sbp_piksi_MsgThreadState10()
+  Test_legacy_auto_check_sbp_piksi_MsgThreadState10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_thread_state_t>(this),
+        sbp::PayloadHandler<msg_thread_state_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_thread_state_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1160,7 +1160,7 @@ class Test_auto_check_sbp_piksi_MsgThreadState10
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_piksi_MsgThreadState10, Test) {
+TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState10, Test) {
   uint8_t encoded_frame[] = {
       85,  23, 0, 195, 4, 26, 109, 97, 110, 97, 103, 101, 32, 116, 114, 97,  99,
       107, 0,  0, 0,   0, 0,  0,   0,  0,   0,  0,   28,  9,  0,   0,   122, 54,

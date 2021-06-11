@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_orientation_MsgAngularRate0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_orientation_MsgAngularRate0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_angular_rate_t> {
+      sbp::PayloadHandler<msg_angular_rate_t> {
  public:
-  Test_auto_check_sbp_orientation_MsgAngularRate0()
+  Test_legacy_auto_check_sbp_orientation_MsgAngularRate0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_angular_rate_t>(this),
+        sbp::PayloadHandler<msg_angular_rate_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_angular_rate_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_orientation_MsgAngularRate0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_orientation_MsgAngularRate0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_orientation_MsgAngularRate0, Test) {
   uint8_t encoded_frame[] = {
       85, 34, 2, 66, 0, 17, 2, 0, 0, 0, 2,  0,  0,
       0,  5,  0, 0,  0, 2,  0, 0, 0, 0, 88, 70,

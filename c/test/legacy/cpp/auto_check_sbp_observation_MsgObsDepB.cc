@@ -15,22 +15,22 @@
 // Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_observation_MsgObsDepB0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_observation_MsgObsDepB0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_obs_dep_b_t> {
+      sbp::PayloadHandler<msg_obs_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_MsgObsDepB0()
+  Test_legacy_auto_check_sbp_observation_MsgObsDepB0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_obs_dep_b_t>(this),
+        sbp::PayloadHandler<msg_obs_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_obs_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_observation_MsgObsDepB0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgObsDepB0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgObsDepB0, Test) {
   uint8_t encoded_frame[] = {
       85,  67,  0,   246, 215, 103, 120, 46, 39, 0,   251, 6, 32, 180, 175, 187,
       133, 223, 53,  7,   7,   27,  157, 0,  0,  202, 0,   0, 0,  58,  140, 85,
@@ -333,19 +333,19 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepB0, Test) {
       << "incorrect value for obs[5].sid.sat, expected 218, is "
       << last_msg_->obs[5].sid.sat;
 }
-class Test_auto_check_sbp_observation_MsgObsDepB1
+class Test_legacy_auto_check_sbp_observation_MsgObsDepB1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_obs_dep_b_t> {
+      sbp::PayloadHandler<msg_obs_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_MsgObsDepB1()
+  Test_legacy_auto_check_sbp_observation_MsgObsDepB1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_obs_dep_b_t>(this),
+        sbp::PayloadHandler<msg_obs_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_obs_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -391,7 +391,7 @@ class Test_auto_check_sbp_observation_MsgObsDepB1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgObsDepB1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgObsDepB1, Test) {
   uint8_t encoded_frame[] = {
       85,  67,  0,   246, 215, 55,  120, 46, 39, 0,   251, 6, 33, 68,  199, 101,
       136, 133, 247, 42,  7,   219, 154, 0,  0,  220, 0,   0, 0,  219, 14,  123,
@@ -537,19 +537,19 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepB1, Test) {
       << "incorrect value for obs[2].sid.sat, expected 225, is "
       << last_msg_->obs[2].sid.sat;
 }
-class Test_auto_check_sbp_observation_MsgObsDepB2
+class Test_legacy_auto_check_sbp_observation_MsgObsDepB2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_obs_dep_b_t> {
+      sbp::PayloadHandler<msg_obs_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_MsgObsDepB2()
+  Test_legacy_auto_check_sbp_observation_MsgObsDepB2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_obs_dep_b_t>(this),
+        sbp::PayloadHandler<msg_obs_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_obs_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -595,7 +595,7 @@ class Test_auto_check_sbp_observation_MsgObsDepB2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgObsDepB2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgObsDepB2, Test) {
   uint8_t encoded_frame[] = {
       85,  67,  0,   246, 215, 103, 64,  47, 39, 0,   251, 6, 32, 100, 132, 187,
       133, 236, 51,  7,   7,   94,  156, 0,  0,  202, 0,   0, 0,  97,  184, 85,
@@ -852,19 +852,19 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepB2, Test) {
       << "incorrect value for obs[5].sid.sat, expected 218, is "
       << last_msg_->obs[5].sid.sat;
 }
-class Test_auto_check_sbp_observation_MsgObsDepB3
+class Test_legacy_auto_check_sbp_observation_MsgObsDepB3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_obs_dep_b_t> {
+      sbp::PayloadHandler<msg_obs_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_MsgObsDepB3()
+  Test_legacy_auto_check_sbp_observation_MsgObsDepB3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_obs_dep_b_t>(this),
+        sbp::PayloadHandler<msg_obs_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_obs_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -910,7 +910,7 @@ class Test_auto_check_sbp_observation_MsgObsDepB3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgObsDepB3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgObsDepB3, Test) {
   uint8_t encoded_frame[] = {
       85,  67, 0,   246, 215, 55, 64,  47, 39, 0,   251, 6, 33, 234, 148, 101,
       136, 15, 245, 42,  7,   20, 154, 0,  0,  220, 0,   0, 0,  208, 247, 122,
@@ -1056,19 +1056,19 @@ TEST_F(Test_auto_check_sbp_observation_MsgObsDepB3, Test) {
       << "incorrect value for obs[2].sid.sat, expected 225, is "
       << last_msg_->obs[2].sid.sat;
 }
-class Test_auto_check_sbp_observation_MsgObsDepB4
+class Test_legacy_auto_check_sbp_observation_MsgObsDepB4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_obs_dep_b_t> {
+      sbp::PayloadHandler<msg_obs_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_MsgObsDepB4()
+  Test_legacy_auto_check_sbp_observation_MsgObsDepB4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_obs_dep_b_t>(this),
+        sbp::PayloadHandler<msg_obs_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_obs_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1114,7 +1114,7 @@ class Test_auto_check_sbp_observation_MsgObsDepB4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgObsDepB4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgObsDepB4, Test) {
   uint8_t encoded_frame[] = {
       85,  67,  0,   246, 215, 103, 8,   48, 39, 0,   251, 6, 32, 254, 96,  187,
       133, 249, 49,  7,   7,   165, 156, 0,  0,  202, 0,   0, 0,  113, 229, 85,

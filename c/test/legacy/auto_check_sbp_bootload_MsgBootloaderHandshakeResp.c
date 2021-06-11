@@ -14,8 +14,8 @@
 // spec/tests/yaml/swiftnav/sbp/bootload/test_MsgBootloaderHandshakeResp.yaml by
 // generate.py. Do not modify by hand!
 
-#include <bootload.h>
 #include <check.h>
+#include <libsbp/legacy/bootload.h>
 #include <sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
+START_TEST(test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb4, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb4, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb4, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0xb4, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -142,7 +142,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0xb4, 0, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb4, 0, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -222,9 +222,9 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb0, &msg_callback,
-                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xb0, &frame_callback,
+    sbp_payload_callback_register(&sbp_state, 0xb0, &msg_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_frame_callback_register(&sbp_state, 0xb0, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
@@ -259,7 +259,7 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
       test_msg_len += sizeof(test_msg->handshake[0]);
     }
     test_msg->handshake[3] = 50;
-    sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -330,14 +330,15 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
 }
 END_TEST
 
-Suite* auto_check_sbp_bootload_MsgBootloaderHandshakeResp_suite(void) {
+Suite* legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp_suite(void) {
   Suite* s = suite_create(
       "SBP generated test suite: "
-      "auto_check_sbp_bootload_MsgBootloaderHandshakeResp");
+      "legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp");
   TCase* tc_acq = tcase_create(
-      "Automated_Suite_auto_check_sbp_bootload_MsgBootloaderHandshakeResp");
-  tcase_add_test(tc_acq,
-                 test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp);
+      "Automated_Suite_legacy_auto_check_sbp_bootload_"
+      "MsgBootloaderHandshakeResp");
+  tcase_add_test(
+      tc_acq, test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp);
   suite_add_tcase(s, tc_acq);
   return s;
 }

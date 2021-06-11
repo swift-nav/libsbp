@@ -15,21 +15,22 @@
 // not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_observation_MsgOsr0 : public ::testing::Test,
-                                                public sbp::State,
-                                                public sbp::IReader,
-                                                public sbp::IWriter,
-                                                sbp::MessageHandler<msg_osr_t> {
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_observation_MsgOsr0
+    : public ::testing::Test,
+      public sbp::State,
+      public sbp::IReader,
+      public sbp::IWriter,
+      sbp::PayloadHandler<msg_osr_t> {
  public:
-  Test_auto_check_sbp_observation_MsgOsr0()
+  Test_legacy_auto_check_sbp_observation_MsgOsr0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_osr_t>(this),
+        sbp::PayloadHandler<msg_osr_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_osr_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -75,7 +76,7 @@ class Test_auto_check_sbp_observation_MsgOsr0 : public ::testing::Test,
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_MsgOsr0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_MsgOsr0, Test) {
   uint8_t encoded_frame[] = {
       85,  64,  6,   0,   0,   239, 248, 225, 233, 29,  0,   0,   0,   0,   104,
       8,   64,  75,  143, 241, 68,  230, 250, 62,  7,   66,  15,  3,   1,   0,

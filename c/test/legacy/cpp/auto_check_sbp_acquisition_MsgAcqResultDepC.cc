@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_acquisition_MsgAcqResultDepC0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
-  Test_auto_check_sbp_acquisition_MsgAcqResultDepC0()
+  Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -77,7 +77,7 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC0, Test) {
   uint8_t encoded_frame[] = {
       85,  31, 0,  40, 12,  16, 72, 9, 34, 66, 155, 152,
       228, 67, 28, 34, 221, 68, 10, 0, 0,  0,  9,   189,
@@ -121,19 +121,19 @@ TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC0, Test) {
   EXPECT_EQ(last_msg_->sid.sat, 10)
       << "incorrect value for sid.sat, expected 10, is " << last_msg_->sid.sat;
 }
-class Test_auto_check_sbp_acquisition_MsgAcqResultDepC1
+class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
-  Test_auto_check_sbp_acquisition_MsgAcqResultDepC1()
+  Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -180,7 +180,7 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC1, Test) {
   uint8_t encoded_frame[] = {
       85, 31, 0,  40,  12,  16,  132, 250, 45, 66, 207, 93,
       88, 68, 68, 185, 252, 195, 6,   0,   0,  0,  136, 185,
@@ -225,19 +225,19 @@ TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC1, Test) {
   EXPECT_EQ(last_msg_->sid.sat, 6)
       << "incorrect value for sid.sat, expected 6, is " << last_msg_->sid.sat;
 }
-class Test_auto_check_sbp_acquisition_MsgAcqResultDepC2
+class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
-  Test_auto_check_sbp_acquisition_MsgAcqResultDepC2()
+  Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -284,7 +284,7 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC2, Test) {
   uint8_t encoded_frame[] = {
       85,  31, 0,   40,  12,  16,  163, 223, 24, 66, 64,  91,
       102, 67, 202, 243, 157, 196, 13,  0,   0,  0,  150, 161,
@@ -328,19 +328,19 @@ TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC2, Test) {
   EXPECT_EQ(last_msg_->sid.sat, 13)
       << "incorrect value for sid.sat, expected 13, is " << last_msg_->sid.sat;
 }
-class Test_auto_check_sbp_acquisition_MsgAcqResultDepC3
+class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
-  Test_auto_check_sbp_acquisition_MsgAcqResultDepC3()
+  Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -387,7 +387,7 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC3, Test) {
   uint8_t encoded_frame[] = {
       85,  31, 0,   40,  12, 16, 129, 65, 21, 66, 224, 214,
       124, 67, 243, 138, 61, 69, 1,   0,  0,  0,  109, 209,
@@ -431,19 +431,19 @@ TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC3, Test) {
   EXPECT_EQ(last_msg_->sid.sat, 1)
       << "incorrect value for sid.sat, expected 1, is " << last_msg_->sid.sat;
 }
-class Test_auto_check_sbp_acquisition_MsgAcqResultDepC4
+class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_acq_result_dep_c_t> {
+      sbp::PayloadHandler<msg_acq_result_dep_c_t> {
  public:
-  Test_auto_check_sbp_acquisition_MsgAcqResultDepC4()
+  Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_acq_result_dep_c_t>(this),
+        sbp::PayloadHandler<msg_acq_result_dep_c_t>(this),
         last_msg_storage_(),
         last_msg_(
             reinterpret_cast<msg_acq_result_dep_c_t *>(last_msg_storage_)),
@@ -490,7 +490,7 @@ class Test_auto_check_sbp_acquisition_MsgAcqResultDepC4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_acquisition_MsgAcqResultDepC4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC4, Test) {
   uint8_t encoded_frame[] = {
       85,  31, 0,   40,  12, 16, 126, 35, 62, 66, 226, 37,
       102, 68, 202, 243, 29, 69, 27,  0,  0,  0,  91,  67,

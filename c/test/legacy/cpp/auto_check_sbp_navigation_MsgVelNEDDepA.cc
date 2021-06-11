@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA0()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA0, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 246, 215, 22, 20, 46, 39, 0, 198, 251, 255, 255, 156,
       15, 0, 0, 0,   0,   0,  0,  0,  0,  0, 0,   9,   0,   161, 92,
@@ -126,19 +126,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA0, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA1
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA1()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -184,7 +184,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA1, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 246, 215, 22, 120, 46, 39, 0, 14, 252, 255, 255, 207,
       14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   125, 160,
@@ -234,19 +234,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA1, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA2
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA2()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -292,7 +292,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA2, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 246, 215, 22, 220, 46, 39, 0, 48, 252, 255, 255, 140,
       14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   179, 135,
@@ -342,19 +342,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA2, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA3
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA3()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -400,7 +400,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA3, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 246, 215, 22, 64, 47, 39, 0, 32, 252, 255, 255, 8,
       15, 0, 0, 0,   0,   0,  0,  0,  0,  0, 0,  9,   0,   51,  177,
@@ -450,19 +450,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA3, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA4
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA4()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -508,7 +508,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA4, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 246, 215, 22, 164, 47, 39, 0, 80, 252, 255, 255, 140,
       14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   23,  0,
@@ -558,19 +558,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA4, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA5
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA5()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -616,7 +616,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA5, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 195, 4, 22, 212, 157, 67, 24, 229, 255, 255, 255, 26,
       0,  0, 0, 25,  0, 0,  0,   0,   0,  0,  0,   8,   0,   132, 25,
@@ -666,19 +666,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA5, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA6
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA6
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA6()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA6()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -724,7 +724,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA6
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA6, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA6, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 195, 4,   22,  56,  158, 67, 24, 4, 0, 0, 0,  15,
       0,  0, 0, 232, 255, 255, 255, 0,   0,  0,  0, 8, 0, 42, 14,
@@ -774,19 +774,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA6, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA7
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA7
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA7()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA7()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -832,7 +832,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA7
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA7, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA7, Test) {
   uint8_t encoded_frame[] = {
       85,  5,   2,   195, 4,   22,  156, 158, 67, 24, 251, 255, 255, 255, 232,
       255, 255, 255, 247, 255, 255, 255, 0,   0,  0,  0,   8,   0,   218, 148,
@@ -882,19 +882,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA7, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA8
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA8
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA8()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA8()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -940,7 +940,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA8
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA8, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA8, Test) {
   uint8_t encoded_frame[] = {
       85, 5, 2, 195, 4,   22,  0,   159, 67, 24, 10, 0, 0, 0,   2,
       0,  0, 0, 222, 255, 255, 255, 0,   0,  0,  0,  8, 0, 148, 16,
@@ -990,19 +990,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA8, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA9
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA9
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA9()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA9()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1048,7 +1048,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA9
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA9, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA9, Test) {
   uint8_t encoded_frame[] = {
       85,  5,   2,   195, 4, 22, 100, 159, 67, 24, 248, 255, 255, 255, 254,
       255, 255, 255, 7,   0, 0,  0,   0,   0,  0,  0,   8,   0,   255, 236,
@@ -1098,19 +1098,19 @@ TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA9, Test) {
       << "incorrect value for v_accuracy, expected 0, is "
       << last_msg_->v_accuracy;
 }
-class Test_auto_check_sbp_navigation_MsgVelNEDDepA10
+class Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA10
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_vel_ned_dep_a_t> {
+      sbp::PayloadHandler<msg_vel_ned_dep_a_t> {
  public:
-  Test_auto_check_sbp_navigation_MsgVelNEDDepA10()
+  Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA10()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_vel_ned_dep_a_t>(this),
+        sbp::PayloadHandler<msg_vel_ned_dep_a_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_vel_ned_dep_a_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1156,7 +1156,7 @@ class Test_auto_check_sbp_navigation_MsgVelNEDDepA10
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_navigation_MsgVelNEDDepA10, Test) {
+TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelNEDDepA10, Test) {
   uint8_t encoded_frame[] = {
       85,  5,   2,   195, 4,   22,  46,  162, 68, 24, 255, 255, 255, 255, 253,
       255, 255, 255, 148, 255, 255, 255, 0,   0,  0,  0,   5,   0,   166, 189,

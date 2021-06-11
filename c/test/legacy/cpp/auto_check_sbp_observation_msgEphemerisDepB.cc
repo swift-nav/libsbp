@@ -15,22 +15,22 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-class Test_auto_check_sbp_observation_msgEphemerisDepB0
+#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_traits.h>
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB0()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -76,7 +76,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   0,   60,  190, 0,
       0,   0,   0,   0,   186, 82,  192, 0,   0,   0,   0,   0,   76,  109, 64,
@@ -208,19 +208,19 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
   EXPECT_LT((last_msg_->w * 100 - 1.05250472004 * 100), 0.05)
       << "incorrect value for w, expected 1.05250472004, is " << last_msg_->w;
 }
-class Test_auto_check_sbp_observation_msgEphemerisDepB1
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB1()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -266,7 +266,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB1
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   0,   68,  190, 0,
       0,   0,   0,   0,   72,  66,  64,  0,   0,   0,   0,   128, 188, 115, 64,
@@ -399,19 +399,19 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
   EXPECT_LT((last_msg_->w * 100 - -1.97360228379 * 100), 0.05)
       << "incorrect value for w, expected -1.97360228379, is " << last_msg_->w;
 }
-class Test_auto_check_sbp_observation_msgEphemerisDepB2
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB2()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -457,7 +457,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB2
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   0,   56,  62,  0,
       0,   0,   0,   0,   40,  81,  192, 0,   0,   0,   0,   0,   129, 109, 64,
@@ -589,19 +589,19 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
   EXPECT_LT((last_msg_->w * 100 - 0.378735666146 * 100), 0.05)
       << "incorrect value for w, expected 0.378735666146, is " << last_msg_->w;
 }
-class Test_auto_check_sbp_observation_msgEphemerisDepB3
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB3()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -647,7 +647,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB3
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   0,   68,  190, 0,
       0,   0,   0,   0,   72,  66,  64,  0,   0,   0,   0,   128, 188, 115, 64,
@@ -780,19 +780,19 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
   EXPECT_LT((last_msg_->w * 100 - -1.97360228379 * 100), 0.05)
       << "incorrect value for w, expected -1.97360228379, is " << last_msg_->w;
 }
-class Test_auto_check_sbp_observation_msgEphemerisDepB4
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB4()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -838,7 +838,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB4
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   128, 85,  190, 0,
       0,   0,   0,   0,   156, 69,  64,  0,   0,   0,   0,   128, 19,  115, 64,
@@ -971,19 +971,19 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
   EXPECT_LT((last_msg_->w * 100 - -2.70212414527 * 100), 0.05)
       << "incorrect value for w, expected -2.70212414527, is " << last_msg_->w;
 }
-class Test_auto_check_sbp_observation_msgEphemerisDepB5
+class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
-  Test_auto_check_sbp_observation_msgEphemerisDepB5()
+  Test_legacy_auto_check_sbp_observation_msgEphemerisDepB5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
+        sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
         last_msg_storage_(),
         last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
         last_msg_len_(),
@@ -1029,7 +1029,7 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB5
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB5, Test) {
+TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB5, Test) {
   uint8_t encoded_frame[] = {
       85,  70,  0,   195, 4,   176, 0,   0,   0,   0,   0,   0,   77,  190, 0,
       0,   0,   0,   0,   122, 83,  192, 0,   0,   0,   0,   0,   233, 110, 64,
