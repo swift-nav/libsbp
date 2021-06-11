@@ -177,7 +177,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -S c -B c/build -G "Visual Studio 15 2017 Win32"
+        run: cmake -S c -B c/build -G "Visual Studio 15 2017 Win64"
 
       - name: Build
         run: cmake --build c/build --target all
