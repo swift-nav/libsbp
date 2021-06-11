@@ -150,7 +150,7 @@ jobs:
           CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
 
 
-  windows-mingw:
+  Windows-MinGW:
     runs-on: windows-2019
     steps:
 
@@ -169,7 +169,7 @@ jobs:
         run: cmake --build build --target do-all-tests
 
 
-  windows-vs-2019-win64:
+  Windows-VS-2019:
     runs-on: windows-2019
     steps:
 
