@@ -40,8 +40,6 @@
   extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_(((m.name|upper)))
@@ -386,7 +384,7 @@ s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 (((m.prefix)))_send(struct sbp_state  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
+s8 (((m.prefix)))_send(sbp_state_t  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
 ((*- endif *))
 
 /**
@@ -434,4 +432,5 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
 #endif
 
 #endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
+
 

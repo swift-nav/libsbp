@@ -18,7 +18,7 @@ target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include PRIVATE ${CM
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
 target_code_coverage(sbp AUTO ALL)
-swift_set_language_standards(sbp)
+swift_set_language_standards(sbp C 99)
 swift_set_compile_options(sbp ADD -pedantic)
 
 if (MINGW)

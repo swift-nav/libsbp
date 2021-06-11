@@ -35,8 +35,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_EPHEMERIS_DEP_D
@@ -265,7 +263,7 @@ s8 sbp_msg_ephemeris_dep_d_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_ephemeris_dep_d_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ephemeris_dep_d_send(sbp_state_t *s, u16 sender_id,
                                 const sbp_msg_ephemeris_dep_d_t *msg,
                                 sbp_write_fn_t write);
 

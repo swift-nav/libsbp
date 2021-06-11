@@ -1068,7 +1068,7 @@ s8 sbp_msg_ssr_orbit_clock_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_orbit_clock_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_orbit_clock_send(sbp_state_t *s, u16 sender_id,
                                 const sbp_msg_ssr_orbit_clock_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1248,7 +1248,7 @@ s8 sbp_msg_ssr_code_biases_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_code_biases_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_code_biases_send(sbp_state_t *s, u16 sender_id,
                                 const sbp_msg_ssr_code_biases_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1415,7 +1415,7 @@ s8 sbp_msg_ssr_phase_biases_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_phase_biases_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_phase_biases_send(sbp_state_t *s, u16 sender_id,
                                  const sbp_msg_ssr_phase_biases_t *msg,
                                  sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1553,7 +1553,7 @@ s8 sbp_msg_ssr_stec_correction_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_stec_correction_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_stec_correction_send(sbp_state_t *s, u16 sender_id,
                                     const sbp_msg_ssr_stec_correction_t *msg,
                                     sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -1674,8 +1674,8 @@ s8 sbp_msg_ssr_gridded_correction_decode(
 }
 
 s8 sbp_msg_ssr_gridded_correction_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_ssr_gridded_correction_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_gridded_correction_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_ssr_gridded_correction_encode(payload, sizeof(payload),
@@ -1829,7 +1829,7 @@ s8 sbp_msg_ssr_tile_definition_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_tile_definition_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_tile_definition_send(sbp_state_t *s, u16 sender_id,
                                     const sbp_msg_ssr_tile_definition_t *msg,
                                     sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -2078,7 +2078,7 @@ s8 sbp_msg_ssr_satellite_apc_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_satellite_apc_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_ssr_satellite_apc_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_ssr_satellite_apc_t *msg,
                                   sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -2253,8 +2253,8 @@ s8 sbp_msg_ssr_orbit_clock_dep_a_decode(const uint8_t *buf, uint8_t len,
 }
 
 s8 sbp_msg_ssr_orbit_clock_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
-    const sbp_msg_ssr_orbit_clock_dep_a_t *msg, sbp_write_fn_t write) {
+    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_orbit_clock_dep_a_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
   s8 ret = sbp_msg_ssr_orbit_clock_dep_a_encode(payload, sizeof(payload),
@@ -2779,7 +2779,7 @@ s8 sbp_msg_ssr_stec_correction_dep_a_decode(
 }
 
 s8 sbp_msg_ssr_stec_correction_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_ssr_stec_correction_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -2903,7 +2903,7 @@ s8 sbp_msg_ssr_gridded_correction_no_std_dep_a_decode(
 }
 
 s8 sbp_msg_ssr_gridded_correction_no_std_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg,
     sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
@@ -3037,7 +3037,7 @@ s8 sbp_msg_ssr_gridded_correction_dep_a_decode(
 }
 
 s8 sbp_msg_ssr_gridded_correction_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_ssr_gridded_correction_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
@@ -3150,7 +3150,7 @@ s8 sbp_msg_ssr_grid_definition_dep_a_decode(
 }
 
 s8 sbp_msg_ssr_grid_definition_dep_a_send(
-    struct sbp_state *s, u16 sender_id,
+    sbp_state_t *s, u16 sender_id,
     const sbp_msg_ssr_grid_definition_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;

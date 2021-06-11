@@ -33,8 +33,6 @@
 extern "C" {
 #endif
 
-struct sbp_state;
-
 /******************************************************************************
  *
  * SBP_MSG_IMU_RAW
@@ -157,7 +155,7 @@ s8 sbp_msg_imu_raw_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @param SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_imu_raw_send(struct sbp_state *s, u16 sender_id,
+s8 sbp_msg_imu_raw_send(sbp_state_t *s, u16 sender_id,
                         const sbp_msg_imu_raw_t *msg, sbp_write_fn_t write);
 
 /**
