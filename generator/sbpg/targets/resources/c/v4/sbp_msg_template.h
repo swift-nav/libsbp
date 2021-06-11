@@ -22,6 +22,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/sbp_msg_type.h>
 ((*- for i in include *))
 #include <libsbp/v4/(((i)))>
 ((*- endfor *))
@@ -53,10 +54,10 @@ typedef union {
  *         `SBP_OK` (0) if the message was successfully encoded and written to buf
  *         callback
  */
-static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, uint16_t msg_type, const sbp_msg_t *msg) {
+static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m.name))):
+    case (((m.enum_name))):
       return (((m.prefix)))_encode(buf, len, n_written, &msg->(((m.short_name))));
 ((*- endfor *))
     default:
@@ -76,10 +77,10 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_writte
  *         `SBP_OK` (0) if the message was successfully decoded
  *         callback
  */
-static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, uint16_t msg_type, sbp_msg_t *msg) {
+static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_type_t msg_type, sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m.name))):
+    case (((m.enum_name))):
       return (((m.prefix)))_decode(buf, len, n_read, &msg->(((m.short_name))));
 ((*- endfor *))
     default:
@@ -94,10 +95,10 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_
  * \param msg         SBP message
  * \return            The Number of bytes that the given message would be on the wire
  */
-static inline size_t sbp_message_encoded_len(uint16_t msg_type, const sbp_msg_t *msg) {
+static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case SBP_(((m.name))):
+    case (((m.enum_name))):
       return (((m.prefix)))_encoded_len(&msg->(((m.short_name))));
 ((*- endfor *))
     default:
@@ -115,10 +116,10 @@ static inline size_t sbp_message_encoded_len(uint16_t msg_type, const sbp_msg_t 
  *                    1 if, on the first non-equal field, a.field > b.field
  *                    -1 if, on the first non-equal field, a.field < b.field
  */
-static inline int sbp_message_cmp(uint16_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
+static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
   switch(msg_type) {
     ((*- for m in msgs *))
-    case SBP_(((m.name))):
+    case (((m.enum_name))):
       return (((m.prefix)))_cmp(&a->(((m.short_name))), &b->(((m.short_name))));
     ((*- endfor *))
     default:

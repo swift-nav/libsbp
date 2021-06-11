@@ -23,7 +23,7 @@
 static struct {
   u32 n_callbacks_logged;
   u16 sender_id;
-  u16 msg_type;
+  sbp_msg_type_t msg_type;
   sbp_msg_t msg;
   void *context;
 } last_msg;
@@ -59,8 +59,8 @@ static s32 dummy_read(u8 *buff, u32 n, void *context) {
 
 static void logging_reset() { memset(&last_msg, 0, sizeof(last_msg)); }
 
-static void msg_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg,
-                         void *context) {
+static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type,
+                         const sbp_msg_t *msg, void *context) {
   last_msg.n_callbacks_logged++;
   last_msg.sender_id = sender_id;
   last_msg.msg_type = msg_type;

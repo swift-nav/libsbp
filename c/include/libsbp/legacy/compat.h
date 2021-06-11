@@ -40,6 +40,12 @@ static inline s8 sbp_register_all_msg_callback(sbp_state_t* s, sbp_frame_callbac
 }
 
 SBP_DEPRECATED
+static inline s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask)
+{
+  return sbp_frame_process(s, sender_id, msg_type, payload_len, payload, frame_len, frame, cb_mask);
+}
+
+SBP_DEPRECATED
 static inline s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len, u8 payload[])
 {
   return sbp_payload_process(s, sender_id, msg_type, msg_len, payload);

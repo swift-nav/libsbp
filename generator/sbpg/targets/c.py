@@ -26,6 +26,7 @@ MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
 SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
 SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
+SBP_MSG_TYPE_TEMPLATE_NAME = "c/sbp_msg_type_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
@@ -87,6 +88,12 @@ def snake_case(value):
     """
     """
     return convert_unpacked(value)[:-2]
+
+def camel_case(value):
+    """
+    """
+    return "Sbp" + ''.join(ele.title() for ele in value.split('_'))
+
 
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get('desc', '').replace(" ", "_").upper()
@@ -290,6 +297,7 @@ class MsgItem(object):
         self.prefix = snake_case(self.name)
         self.type_name = self.prefix + "_t"
         self.short_name = self.prefix[8:]
+        self.enum_name = camel_case(self.name)
         self.sbp_id = msg.sbp_id
         self.desc = msg.desc
         self.short_desc = msg.short_desc
@@ -371,6 +379,12 @@ def render_headers(include_dir, package_specs):
         f.write(py_template.render(packages=package_specs,
                                msgs=sorted(all_msgs, key=lambda k: k.type_name),
                                includes=extensions(all_packages)))
+    destination_filename = "%s/sbp_msg_type.h" % include_dir
+    py_template = JENV.get_template(SBP_MSG_TYPE_TEMPLATE_NAME)
+    with open(destination_filename, 'w') as f:
+        f.write(py_template.render(msgs = sorted(all_msgs, key=lambda k: k.type_name),
+                                   packages=all_packages))
+
 
 def render_sources(output_dir, package_specs):
     all_msgs = []
