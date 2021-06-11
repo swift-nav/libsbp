@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -20,10 +20,12 @@
  * Various structs shared between modules
  * \{ */
 
-#ifndef LIBSBP_GNSS_MESSAGES_H
-#define LIBSBP_GNSS_MESSAGES_H
+#ifndef LIBSBP_LEGACY_GNSS_MESSAGES_H
+#define LIBSBP_LEGACY_GNSS_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
+
+#include <libsbp/gnss_macros.h>
 
 SBP_PACK_START
 
@@ -117,4 +119,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_GNSS_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_GNSS_MESSAGES_H */

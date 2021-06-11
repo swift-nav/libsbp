@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -24,10 +24,12 @@
  * the host request and the device response.
  * \{ */
 
-#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
-#define LIBSBP_BOOTLOAD_MESSAGES_H
+#ifndef LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
+#define LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
+
+#include <libsbp/bootload_macros.h>
 
 SBP_PACK_START
 
@@ -37,7 +39,6 @@ SBP_PACK_START
  * the device bootloader and the host. The response from the device is
  * MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ 0x00B3
 
 /** Bootloading handshake response (host <= device)
  *
@@ -46,42 +47,6 @@ SBP_PACK_START
  * MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
  * number and the SBP protocol version number.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
-  (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT \
-  (8u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
-  } while (0)
-
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK \
-  (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT \
-  (0u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
-  } while (0)
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags;       /**< Bootloader flags */
@@ -92,7 +57,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The host initiates the bootloader to jump to the application.
  */
-#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
 
 typedef struct SBP_ATTR_PACKED {
   u8 jump; /**< Ignored by the device */
@@ -107,7 +71,6 @@ typedef struct SBP_ATTR_PACKED {
  * that this ID is tied to the FPGA, and not related to the Piksi's serial
  * number.
  */
-#define SBP_MSG_NAP_DEVICE_DNA_REQ 0x00DE
 
 /** Read FPGA device ID over UART response (host <= device)
  *
@@ -118,7 +81,6 @@ typedef struct SBP_ATTR_PACKED {
  * that this ID is tied to the FPGA, and not related to the Piksi's serial
  * number.
  */
-#define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
 
 typedef struct SBP_ATTR_PACKED {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on
@@ -129,7 +91,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
 
 typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
@@ -139,4 +100,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_BOOTLOAD_MESSAGES_H */

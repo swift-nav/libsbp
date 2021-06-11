@@ -10,12 +10,12 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_STDIO_H
-#define SBP_CPP_STDIO_H
+#ifndef SBP_LEGACY_CPP_STDIO_H
+#define SBP_LEGACY_CPP_STDIO_H
 
 #include <fstream>
 
-#include <libsbp/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/message_handler.h>
 
 namespace sbp {
 
@@ -69,4 +69,4 @@ class SbpFileWriter : public sbp::IWriter {
 
 } // namespace sbp
 
-#endif // SBP_CPP_STDIO_H
+#endif // SBP_LEGACY_CPP_STDIO_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -20,10 +20,12 @@
  * Linux state monitoring.
  * \{ */
 
-#ifndef LIBSBP_LINUX_MESSAGES_H
-#define LIBSBP_LINUX_MESSAGES_H
+#ifndef LIBSBP_LEGACY_LINUX_MESSAGES_H
+#define LIBSBP_LEGACY_LINUX_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
+
+#include <libsbp/linux_macros.h>
 
 SBP_PACK_START
 
@@ -32,7 +34,6 @@ SBP_PACK_START
  * This message indicates the process state of the top 10 heaviest consumers
  * of CPU on the system.
  */
-#define SBP_MSG_LINUX_CPU_STATE_DEP_A 0x7F00
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -48,7 +49,6 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of memory on the system.
  */
-#define SBP_MSG_LINUX_MEM_STATE_DEP_A 0x7F01
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
@@ -63,7 +63,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * This presents a summary of CPU and memory utilization.
  */
-#define SBP_MSG_LINUX_SYS_STATE_DEP_A 0x7F02
 
 typedef struct SBP_ATTR_PACKED {
   u16 mem_total;      /**< total system memory */
@@ -80,7 +79,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of processes with high socket counts.
  */
-#define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS 0x7F03
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;          /**< sequence of this status message, values from 0-9 */
@@ -102,7 +100,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of sockets with deep queues.
  */
-#define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES 0x7F04
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;                    /**< sequence of this status message, values from
@@ -133,7 +130,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Summaries the socket usage across the system.
  */
-#define SBP_MSG_LINUX_SOCKET_USAGE 0x7F05
 
 typedef struct SBP_ATTR_PACKED {
   u32 avg_queue_depth;         /**< average socket queue depths across all
@@ -154,7 +150,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Top 10 list of processes with a large number of open file descriptors.
  */
-#define SBP_MSG_LINUX_PROCESS_FD_COUNT 0x7F06
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -168,7 +163,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Summary of open file descriptors on the system.
  */
-#define SBP_MSG_LINUX_PROCESS_FD_SUMMARY 0x7F07
 
 typedef struct SBP_ATTR_PACKED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
@@ -186,20 +180,6 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of CPU on the system, including a timestamp.
  */
-#define SBP_MSG_LINUX_CPU_STATE 0x7F08
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
-
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
@@ -218,20 +198,6 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest consumers
  * of memory on the system, including a timestamp.
  */
-#define SBP_MSG_LINUX_MEM_STATE 0x7F09
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
-
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 
 typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
@@ -250,20 +216,6 @@ typedef struct SBP_ATTR_PACKED {
  * This presents a summary of CPU and memory utilization, including a
  * timestamp.
  */
-#define SBP_MSG_LINUX_SYS_STATE 0x7F0A
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags)      \
-  (((flags) >> SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT) & \
-   SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SET(flags, val)           \
-  do {                                                               \
-    ((flags) |= (((val) & (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)) \
-                 << (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT)));    \
-  } while (0)
-
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 
 typedef struct SBP_ATTR_PACKED {
   u16 mem_total;      /**< total system memory, in MiB */
@@ -285,4 +237,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_LINUX_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_LINUX_MESSAGES_H */

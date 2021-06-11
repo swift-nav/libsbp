@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -20,10 +20,12 @@
  * Magnetometer (mag) messages.
  * \{ */
 
-#ifndef LIBSBP_MAG_MESSAGES_H
-#define LIBSBP_MAG_MESSAGES_H
+#ifndef LIBSBP_LEGACY_MAG_MESSAGES_H
+#define LIBSBP_LEGACY_MAG_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
+
+#include <libsbp/mag_macros.h>
 
 SBP_PACK_START
 
@@ -31,7 +33,6 @@ SBP_PACK_START
  *
  * Raw data from the magnetometer.
  */
-#define SBP_MSG_MAG_RAW 0x0902
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;   /**< Milliseconds since start of GPS week. If the high bit is
@@ -47,4 +48,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_MAG_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_MAG_MESSAGES_H */

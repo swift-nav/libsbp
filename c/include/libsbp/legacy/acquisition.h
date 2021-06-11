@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -20,11 +20,13 @@
  * Satellite acquisition messages from the device.
  * \{ */
 
-#ifndef LIBSBP_ACQUISITION_MESSAGES_H
-#define LIBSBP_ACQUISITION_MESSAGES_H
+#ifndef LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
+#define LIBSBP_LEGACY_ACQUISITION_MESSAGES_H
 
-#include "common.h"
-#include "gnss.h"
+#include <libsbp/common.h>
+
+#include <libsbp/acquisition_macros.h>
+#include <libsbp/legacy/gnss.h>
 
 SBP_PACK_START
 
@@ -35,7 +37,6 @@ SBP_PACK_START
  * contains the parameters of the point in the acquisition search space with
  * the best carrier-to-noise (CN/0) ratio.
  */
-#define SBP_MSG_ACQ_RESULT 0x002F
 
 typedef struct SBP_ATTR_PACKED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
@@ -49,7 +50,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#define SBP_MSG_ACQ_RESULT_DEP_C 0x001F
 
 typedef struct SBP_ATTR_PACKED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
@@ -63,7 +63,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
 
 typedef struct SBP_ATTR_PACKED {
   float snr; /**< SNR of best point. Currently in arbitrary SNR points, but
@@ -79,7 +78,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
 
 typedef struct SBP_ATTR_PACKED {
   float snr; /**< SNR of best point. Currently dimensonless, but will have
@@ -143,7 +141,6 @@ typedef struct SBP_ATTR_PACKED {
  * The message describes all SV profiles during acquisition time. The message
  * is used to debug and measure the performance.
  */
-#define SBP_MSG_ACQ_SV_PROFILE 0x002E
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_t
@@ -154,7 +151,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated.
  */
-#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition
@@ -165,4 +161,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_ACQUISITION_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_ACQUISITION_MESSAGES_H */
