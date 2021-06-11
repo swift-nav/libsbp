@@ -40,8 +40,8 @@ using CallbackMsgFn = void (ClassT::*)(uint16_t, const ArgT &);
  * @tparam func Pointer to the member function to call
  *
  * @param sender_id The decoded sender ID, is forwarded on to `func`
- * @param len The length of the message, is forwarded on to `func`
- * @param msg The raw message payload
+ * @param msg_type SBP message type
+ * @param msg The decoded message
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
 template<typename MsgT, typename ClassT, CallbackMsgFn<ClassT, MsgT> func>

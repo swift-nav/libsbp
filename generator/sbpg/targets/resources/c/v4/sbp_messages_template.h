@@ -110,7 +110,7 @@ typedef struct {
   /**
    * Tests 2 instances of (((comment_name))) for equality
    *
-   * Returns a value with the same definitions as #strcmp from the C standard library
+   * Returns a value with the same definitions as strcmp from the C standard library
    *
    * @param a (((m.type_name))) instance
    * @param b (((m.type_name))) instance
@@ -213,6 +213,7 @@ typedef struct {
    * The returned value does not include the NULL terminator.
    *
    * @param msg (((m.type_name))) instance
+   * @param section Section number
    * @return Length of section
    */
   size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
@@ -374,7 +375,7 @@ s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.
 /**
  * Send an instance of (((m.type_name))) with the given write function
  *
- * An equivalent of #sbp_send_message which operates specifically on (((m.type_name)))
+ * An equivalent of #sbp_message_send which operates specifically on (((m.type_name)))
  *
  * The given message will be encoded to wire representation and passed in to the given write function callback. The write callback will be called several times for each invocation of this function.
  *
@@ -382,7 +383,7 @@ s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 (((m.prefix)))_send(sbp_state_t  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
 ((*- endif *))

@@ -108,7 +108,7 @@ size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param new_str New section string
+ * @param str New section string
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
@@ -153,7 +153,7 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
- * @param String to append
+ * @param new_str String to append
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_append(sbp_string_t *s,

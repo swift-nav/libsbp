@@ -76,7 +76,7 @@ bool sbp_msg_settings_read_req_setting_valid(
 /**
  * Tests 2 instances of sbp_msg_settings_read_req_t::setting for equality
  *
- * Returns a value with the same definitions as #strcmp from the C standard
+ * Returns a value with the same definitions as strcmp from the C standard
  * library
  *
  * @param a sbp_msg_settings_read_req_t instance
@@ -307,7 +307,7 @@ s8 sbp_msg_settings_read_req_decode(const uint8_t *buf, uint8_t len,
 /**
  * Send an instance of sbp_msg_settings_read_req_t with the given write function
  *
- * An equivalent of #sbp_send_message which operates specifically on
+ * An equivalent of #sbp_message_send which operates specifically on
  * sbp_msg_settings_read_req_t
  *
  * The given message will be encoded to wire representation and passed in to the
@@ -318,7 +318,7 @@ s8 sbp_msg_settings_read_req_decode(const uint8_t *buf, uint8_t len,
  * @param sender_id SBP sender id
  * @param msg Message to send
  * @param write Write function
- * @param SBP_OK on success, or other libsbp error code
+ * @return SBP_OK on success, or other libsbp error code
  */
 s8 sbp_msg_settings_read_req_send(sbp_state_t *s, u16 sender_id,
                                   const sbp_msg_settings_read_req_t *msg,

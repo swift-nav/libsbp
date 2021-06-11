@@ -56,7 +56,7 @@ typedef uint64_t u64;
  * The user of libsbp must provide a write callback conforming to this type
  * to functions which send messages (eg, #sbp_message_send). The write 
  * function will be called several times during the course of sending a single 
- * message. The context parameter can be set by calling #sbp_set_io_context.
+ * message. The context parameter can be set by calling #sbp_state_set_io_context.
  *
  * @param buff Data to write
  * @param n Length of \p buff

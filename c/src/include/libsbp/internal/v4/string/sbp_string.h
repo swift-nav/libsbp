@@ -71,7 +71,7 @@ typedef struct {
  *
  * @param a string
  * @param b string
- * @param max_encoded_len
+ * @param max_encoded_len Maximum encoded length
  * @param params string params
  */
 int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
@@ -142,7 +142,7 @@ bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
  * @param s destination string
  * @param max_encoded_len Maximum encoded length
  * @param ctx Decode context
- * @param param string params
+ * @param params string params
  * @return true on success, false otherwise
  */
 bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
