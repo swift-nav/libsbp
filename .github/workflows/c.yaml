@@ -167,8 +167,8 @@ jobs:
 #      - name: Test
 #        run: cmake --build c/build --target do-all-tests
 
-  windows-vs-2017-win64:
-    runs-on: windows-2016
+  windows-vs-2019-win64:
+    runs-on: windows-2019
     steps:
 
       - uses: actions/checkout@v2
@@ -177,10 +177,10 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -S c -B c/build -G "Visual Studio 15 2017 Win64"
+        run: mkdir c/build && cd c/build && cmake -G "Visual Studio 16 2019" -A Win64 ..
 
       - name: Build
         run: cd c/build && cmake --build . --config Release --target all
 
       - name: Test
-        run: cmake --build c/build --target do-all-tests
+        run: cd c/build && cmake --build . --config Release --target do-all-tests
