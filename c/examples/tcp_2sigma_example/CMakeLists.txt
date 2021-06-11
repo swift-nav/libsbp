@@ -3,7 +3,7 @@ project(libsbp_tcp_2sigma_example)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unknown-warning-option -Werror -std=c++14 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-error=deprecated-declarations -std=c++14")
 
 add_executable(libsbp_tcp_2sigma_example tcp_2sigma_example.cc)
 
