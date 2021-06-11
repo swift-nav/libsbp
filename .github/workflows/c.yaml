@@ -167,7 +167,7 @@ jobs:
 #      - name: Test
 #        run: cmake --build c/build --target do-all-tests
 
-  windows-vs-2017-win32:
+  windows-vs-2017-win64:
     runs-on: windows-2016
     steps:
 
@@ -180,7 +180,7 @@ jobs:
         run: cmake -S c -B c/build -G "Visual Studio 15 2017 Win64"
 
       - name: Build
-        run: cmake --build c/build --target all
+        run: cd c/build && cmake --build . --config Release --target all
 
       - name: Test
         run: cmake --build c/build --target do-all-tests
