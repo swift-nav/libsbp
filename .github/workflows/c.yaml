@@ -38,116 +38,116 @@ jobs:
           bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
 
-  gcc6-release:
-    name: GCC6 - Release
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
-
-      - name: Build examples
-        run: make -C c/build examples
-
-
-  clang6-debug:
-    name: Clang6 - Debug
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
-          CC: clang-6.0
-          CXX: clang++-6.0
-
-      - name: Build examples
-        run: make -C c/build examples
-
-
-  clang6-release:
-    name: Clang6 - Release
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
-          CC: clang-6.0
-          CXX: clang++-6.0
-
-      - name: Build examples
-        run: make -C c/build examples
-
-
-  macos:
-    name: macos
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CC: clang
-          CXX: clang++
-
-
-  big-endian:
-    name: Test Big Endian
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user g++-mips-linux-gnu
-
-      - name: Run big endian tests
-        run: make test-c-v4
-        env:
-          CC: mips-linux-gnu-gcc
-          CXX: mips-linux-gnu-g++
-
-          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
+#  gcc6-release:
+#    name: GCC6 - Release
+#    runs-on: ubuntu-18.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Setup
+#        run: |
+#          sudo apt-get -qq update
+#          sudo apt-get -qq install libeigen3-dev libserialport-dev
+#
+#      - name: Run tests
+#        run: make test-c
+#        env:
+#          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+#
+#      - name: Build examples
+#        run: make -C c/build examples
+#
+#
+#  clang6-debug:
+#    name: Clang6 - Debug
+#    runs-on: ubuntu-18.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Setup
+#        run: |
+#          sudo apt-get -qq update
+#          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
+#
+#      - name: Run tests
+#        run: make test-c
+#        env:
+#          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
+#          CC: clang-6.0
+#          CXX: clang++-6.0
+#
+#      - name: Build examples
+#        run: make -C c/build examples
+#
+#
+#  clang6-release:
+#    name: Clang6 - Release
+#    runs-on: ubuntu-18.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Setup
+#        run: |
+#          sudo apt-get -qq update
+#          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
+#
+#      - name: Run tests
+#        run: make test-c
+#        env:
+#          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+#          CC: clang-6.0
+#          CXX: clang++-6.0
+#
+#      - name: Build examples
+#        run: make -C c/build examples
+#
+#
+#  macos:
+#    name: macos
+#    runs-on: macos-10.15
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Run tests
+#        run: make test-c
+#        env:
+#          CC: clang
+#          CXX: clang++
+#
+#
+#  big-endian:
+#    name: Test Big Endian
+#    runs-on: ubuntu-18.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          fetch-depth: 0
+#
+#      - name: Setup
+#        run: |
+#          sudo apt-get -qq update
+#          sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user g++-mips-linux-gnu
+#
+#      - name: Run big endian tests
+#        run: make test-c-v4
+#        env:
+#          CC: mips-linux-gnu-gcc
+#          CXX: mips-linux-gnu-g++
+#
+#          CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
 
 
   windows-mingw:
@@ -159,29 +159,29 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Install MinGW 6.4.0
-        run: |
-          choco install -y --no-progress --allow-downgrade --version=6.4.0 mingw;
-          choco install -y --no-progress sqlite;
+      - name: Configure
+        run: cmake -S c -B c/build -G "MinGW Makefiles"
 
-      - name: Install msys2 packages
-        uses: msys2/setup-msys2@v2
+      - name: Build
+        run: cmake --build c/build --target all
+
+      - name: Test
+        run: cmake --build c/build --target do-all-tests
+
+  windows-vs-2019:
+    runs-on: windows-2019
+    steps:
+
+      - uses: actions/checkout@v2
         with:
-          msystem: MINGW64
-          install: git base-devel
-          update: true
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Install Chocolatey packages
-        run: |
-          choco install -y --noprogress cmake
-          choco install -y --noprogress sqlite
+      - name: Configure
+        run: cmake -S c -B c/build -G "Visual Studio 16 2019"
 
-      - name: Run build
-        shell: msys2 {0}
-        env:
-          CC: gcc
-          CXX: g++
-          CMAKE_GENERATOR: MinGW Makefiles
-        run: |
-          export PATH="$PATH:/C/Rust/.cargo/bin:/C/ProgramData/chocolatey/bin:/C/Program Files/CMake/bin"
-          gitbash.exe ./ci-build.sh
+      - name: Build
+        run: cmake --build c/build --target all
+
+      - name: Test
+        run: cmake --build c/build --target do-all-tests
