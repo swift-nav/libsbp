@@ -3,7 +3,7 @@
 This example demonstrates parsing SBP from a file using the C++ classes
 
 ## Requirements
-On Debian-based systems (including Ubuntu 12.10 or later) you can get all
+On Debian based systems (including Ubuntu) you can get all
 the requirements with:
 
 ```shell
@@ -44,6 +44,6 @@ usage: ./libsbp_cpp_example [filename.sbp]
 
 ## LICENSE
 
-Copyright © 2019 Swift Navigation
+Copyright © 2021 Swift Navigation
 
 Distributed under MIT.

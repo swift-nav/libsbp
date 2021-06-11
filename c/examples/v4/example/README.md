@@ -5,7 +5,7 @@ the Piksi, that parses incoming SBP messages from the Piksi and prints some of
 them to the screen.
 
 ## Requirements
-On Debian-based systems (including Ubuntu 12.10 or later) you can get all
+On Debian based systems (including Ubuntu) you can get all
 the requirements with:
 
 ```shell
@@ -48,6 +48,6 @@ usage: ./libsbp_example [-p serial port]
 
 ## LICENSE
 
-Copyright © 2015 Swift Navigation
+Copyright © 2021 Swift Navigation
 
 Distributed under MIT.
