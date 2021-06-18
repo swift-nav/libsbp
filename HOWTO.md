@@ -96,7 +96,7 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.04.22``
+``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.06.18``
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 

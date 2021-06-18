@@ -110,7 +110,7 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.04.22``
+``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.06.18``
 
 This will mount your local copy of the libsbp repository onto the image.
 
