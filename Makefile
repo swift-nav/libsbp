@@ -378,7 +378,7 @@ test-quicktype-elm:
 
 dist-python:
 	$(call announce-begin,"Deploying Python package")
-	$(MAKE) -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_VERSION)" deploy
+	$(MAKE) -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_VERSION_UNPREFIXED)" deploy
 	$(call announce-end,"Finished deploying Python package")
 
 dist-javascript:
