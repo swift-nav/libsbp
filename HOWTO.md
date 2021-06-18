@@ -253,26 +253,8 @@ at the moment.
 
 # Distributing Python
 
-Python package distribution for each platform can be created by running the
-`make dist-python` target on each platform
-(Windows, Mac OS X, Linux x86/ARM through docker).
-
-For example, running this:
-
-```
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
-```
-
-...will produce and upload a `.whl` appropriate for that platform.
-A wheel that targets any platform can be produced and uploaded by
-running the following command:
-
-```
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
-```
-
-The Linux x86 build of libsbp should be done through docker via the
-"manylinux" project by running the following set of commands:
+The build of the libsbp wheel should be done through docker via the "manylinux"
+project by running the following set of commands:
 
 ```
 docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
@@ -280,106 +262,6 @@ docker run -v libsbp-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/b
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
-
-The Linux ARM build of libsbp can be done through docker via the following set
-of commands:
-
-```
-docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/libsbp-arm:2020.09.15 libsbp-arm /bin/bash
-cd /work
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
-```
-
-## Building on Windows
-
-### Using docker
-
-A Windows docker container is provided to streamline the process of building on Windows.
-To run this container, install Docker for Windows and enable Windows container support
-(see the [Docker documentation][windows-containers] for more details).
-
-[windows-containers]: https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers
-
-Then build the container:
-
-```
-mkdir build
-docker build -t libsbp -f .\python\Dockerfile.win build
-```
-
-And run the container:
-
-```
-docker run --rm -it -v c:\path\to\libsbp:c:/work libsbp
-```
-
-Then proceed to the "Building on Windows" section.
-
-### Manual installation
-
-In order to build on Windows, first install the necessary compilers per the
-instructions [on this Microsoft developer blog][1] (shortcut: install
-[Microsoft Visual Studio Community 2019][msvsc2019] and select the "native
-Python development" option, or you can install [Visual Studio Build
-Tools][vcbuildtools] and install the "C++ build tools", also make sure to
-install MSVC v140 and MSCV v141.  Afterwards install the 64-bit Python 3.7
-version of [Conda][2].  You'll also need to install [Chocolatey][3].
-
-[1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
-[2]: https://docs.conda.io/en/latest/miniconda.html
-[3]: https://chocolatey.org/docs/installation
-[msvsc2019]: https://www.microsoft.com/en-us/download/details.aspx?id=48159
-[vcbuildtools]: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019
-
-For Chocolatey, the following packages are recommended:
-- make
-- vcredist140
-- vcredist2015
-
-### Building on Windows
-
-In order to compile for 64-bit: start a command shell with the x64 set
-of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
-Then activate Conda with the `activate.bat` script in the Conda installation.
-
-Alternately, if you're using PowerShell, you can use the utility here:
-https://github.com/olegsych/posh-vs -- in order to  bring Visual Studio
-compilers into your PowerShell session.  For example for 64-bit:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
-    $env:CONDA_FORCE_32BIT = 0
-
-Or if you install the Visual Studio Build tools:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat'
-    $env:CONDA_FORCE_32BIT = 1
-
-And for 32-bit:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat'
-    $env:CONDA_FORCE_32BIT = 1
-
-Or if you install the Visual Studio Build tools:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars32.bat'
-    $env:CONDA_FORCE_32BIT = 0
-
-Then invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
-This will need to be once for 32-bit and 64-bit.
-
-If not using PowerShell, to compile for 32-bit: start a command shell with 
-the x86 set of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
-Then activate Conda with the `activate.bat` script in the Conda installation.
-
-Prior to invoking the `dist-python` target.  Set the following global variable
-to force Conda to create 32-bit environemnts:
-
-    set CONDA_FORCE_32BIT=1
-
-Then invoke the `dist-python` target per usual. (Side note: at some point
-it was also necessary to delete libraries from `C:\Users\<user>\AppData\Roaming\Python`
-in order to prevent 32-bit Conda Python from loading libraries of the wrong
-architecture).
 
 ## Troubleshooting
 
