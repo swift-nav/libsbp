@@ -1,5 +1,37 @@
 # Change Log
 
+## [v3.4.8](https://github.com/swift-nav/libsbp/tree/v3.4.8) (2021-06-18)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.7...v3.4.8)
+
+**Closed issues:**
+
+- Broken pyusb dependency on Python 2.x [\#982](https://github.com/swift-nav/libsbp/issues/982)
+- Restart the serial thread [\#970](https://github.com/swift-nav/libsbp/issues/970)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - SV4-144 update googleflags \(\#83\) [\#1010](https://github.com/swift-nav/libsbp/pull/1010) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: impl TryFrom\<SBP\> for all messages [\#1009](https://github.com/swift-nav/libsbp/pull/1009) ([notoriaga](https://github.com/notoriaga))
+- rust: fix parsing of invalid sbp [\#992](https://github.com/swift-nav/libsbp/pull/992) ([notoriaga](https://github.com/notoriaga))
+- Correct spec for fwd\_payload member of MSG\_FWD [\#991](https://github.com/swift-nav/libsbp/pull/991) ([woodfell](https://github.com/woodfell))
+- Correct docs for read dir resp [\#989](https://github.com/swift-nav/libsbp/pull/989) ([woodfell](https://github.com/woodfell))
+- docker: add clang for rust build [\#987](https://github.com/swift-nav/libsbp/pull/987) ([silverjam](https://github.com/silverjam))
+- rust: support encoding borrowed messages [\#986](https://github.com/swift-nav/libsbp/pull/986) ([notoriaga](https://github.com/notoriaga))
+- Fix Java parsing and generate tests [\#985](https://github.com/swift-nav/libsbp/pull/985) ([jayvdb](https://github.com/jayvdb))
+- Add support for construct 2.9.52 and 2.10 [\#984](https://github.com/swift-nav/libsbp/pull/984) ([jayvdb](https://github.com/jayvdb))
+- Auto generate cpp tests [\#980](https://github.com/swift-nav/libsbp/pull/980) ([woodfell](https://github.com/woodfell))
+- Add three message test specs [\#977](https://github.com/swift-nav/libsbp/pull/977) ([jayvdb](https://github.com/jayvdb))
+- sbpjson: Sync generated code [\#976](https://github.com/swift-nav/libsbp/pull/976) ([jayvdb](https://github.com/jayvdb))
+- Tidy generated tests [\#975](https://github.com/swift-nav/libsbp/pull/975) ([jayvdb](https://github.com/jayvdb))
+- Remove unused test spec from python/ [\#974](https://github.com/swift-nav/libsbp/pull/974) ([jayvdb](https://github.com/jayvdb))
+- Remove haskell from python CI [\#973](https://github.com/swift-nav/libsbp/pull/973) ([jayvdb](https://github.com/jayvdb))
+- python: Run coverage and parameterize test cases [\#972](https://github.com/swift-nav/libsbp/pull/972) ([jayvdb](https://github.com/jayvdb))
+- Add tcp\_2sigma\_example [\#971](https://github.com/swift-nav/libsbp/pull/971) ([dgburr](https://github.com/dgburr))
+- Python: Detect and Fix pyflakes errors, and remove broken to\_binary [\#969](https://github.com/swift-nav/libsbp/pull/969) ([jayvdb](https://github.com/jayvdb))
+- add gps\_time method [\#967](https://github.com/swift-nav/libsbp/pull/967) ([notoriaga](https://github.com/notoriaga))
+- Fix docs [\#929](https://github.com/swift-nav/libsbp/pull/929) ([jayvdb](https://github.com/jayvdb))
+
 ## [v3.4.7](https://github.com/swift-nav/libsbp/tree/v3.4.7) (2021-04-30)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.6...v3.4.7)
