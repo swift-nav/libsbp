@@ -47,7 +47,7 @@ def read_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -58,7 +58,7 @@ def read_spec(filename, verbose=False):
   with open(filename, 'r') as f:
     contents = yaml.load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       s.package_schema(contents)
     except Exception as e:
@@ -82,7 +82,7 @@ def read_test_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -93,7 +93,7 @@ def read_test_spec(filename, verbose=False):
   with open(filename, 'r') as f:
     contents = yaml.load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       t.test_schema(contents)
     except Exception as e:
