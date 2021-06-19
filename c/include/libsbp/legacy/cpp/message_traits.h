@@ -12,29 +12,29 @@
 
 #ifndef SBP_CPP_MESSAGE_TRAITS_H
 #define SBP_CPP_MESSAGE_TRAITS_H
-#include <libsbp/acquisition.h>
-#include <libsbp/bootload.h>
-#include <libsbp/ext_events.h>
-#include <libsbp/file_io.h>
-#include <libsbp/flash.h>
-#include <libsbp/gnss.h>
-#include <libsbp/imu.h>
-#include <libsbp/linux.h>
-#include <libsbp/logging.h>
-#include <libsbp/mag.h>
-#include <libsbp/navigation.h>
-#include <libsbp/ndb.h>
-#include <libsbp/observation.h>
-#include <libsbp/orientation.h>
-#include <libsbp/piksi.h>
-#include <libsbp/sbas.h>
-#include <libsbp/settings.h>
-#include <libsbp/solution_meta.h>
-#include <libsbp/ssr.h>
-#include <libsbp/system.h>
-#include <libsbp/tracking.h>
-#include <libsbp/user.h>
-#include <libsbp/vehicle.h>
+#include <libsbp/legacy/acquisition.h>
+#include <libsbp/legacy/bootload.h>
+#include <libsbp/legacy/ext_events.h>
+#include <libsbp/legacy/file_io.h>
+#include <libsbp/legacy/flash.h>
+#include <libsbp/legacy/gnss.h>
+#include <libsbp/legacy/imu.h>
+#include <libsbp/legacy/linux.h>
+#include <libsbp/legacy/logging.h>
+#include <libsbp/legacy/mag.h>
+#include <libsbp/legacy/navigation.h>
+#include <libsbp/legacy/ndb.h>
+#include <libsbp/legacy/observation.h>
+#include <libsbp/legacy/orientation.h>
+#include <libsbp/legacy/piksi.h>
+#include <libsbp/legacy/sbas.h>
+#include <libsbp/legacy/settings.h>
+#include <libsbp/legacy/solution_meta.h>
+#include <libsbp/legacy/ssr.h>
+#include <libsbp/legacy/system.h>
+#include <libsbp/legacy/tracking.h>
+#include <libsbp/legacy/user.h>
+#include <libsbp/legacy/vehicle.h>
 
 namespace sbp {
 

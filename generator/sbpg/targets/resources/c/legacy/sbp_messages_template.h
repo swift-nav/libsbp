@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -20,13 +20,14 @@
 (((description|commentify)))
  * \{ */
 
-#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
-#define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#ifndef LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
+#define LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
 
+#include <libsbp/(((pkg_name)))_macros.h>
 ((*- for i in include *))
-#include "(((i)))"
+#include <libsbp/legacy/(((i)))>
 ((*- endfor *))
 
 SBP_PACK_START
@@ -38,17 +39,7 @@ SBP_PACK_START
 (((m.desc|commentify)))
  */
 ((*- endif *))
-((*- if m.is_real_message *))
-#define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
-((*- endif *))
 ((*- if m.fields *))
-((*- if m.sbp_id or m.embedded_type *))
-((*- for f in m.fields *))
-((*- if f.options.fields *))
-(((f|create_bitfield_macros(m.identifier))))
-((*- endif *))
-((*- endfor *))
-((*- endif *))
 
 typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))
@@ -66,4 +57,4 @@ typedef struct SBP_ATTR_PACKED {
 
 SBP_PACK_END
 
-#endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_LEGACY_(((pkg_name|upper)))_MESSAGES_H */

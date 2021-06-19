@@ -10,14 +10,14 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_FRAME_HANDLER_H
-#define SBP_CPP_FRAME_HANDLER_H
+#ifndef SBP_LEGACY_CPP_FRAME_HANDLER_H
+#define SBP_LEGACY_CPP_FRAME_HANDLER_H
 
 #include <cassert>
 #include <array>
 
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 
 namespace sbp {
 
@@ -92,7 +92,7 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  */
 template<typename ...MsgTypes>
 class FrameHandler {
-    static constexpr size_t kMsgCount = sizeof...(MsgTypes);
+    static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
@@ -102,8 +102,8 @@ class FrameHandler {
     explicit FrameHandler(State *state) : state_(*state), callback_nodes_() {
         static constexpr std::array<uint16_t, kMsgCount> ids = { sbp::MessageTraits<MsgTypes>::id... };
 
-        for (size_t i = 0; i < kMsgCount; ++i) {
-            sbp_register_frame_callback(state_.get_state(),
+        for (std::size_t i = 0; i < kMsgCount; ++i) {
+            sbp_frame_callback_register(state_.get_state(),
                     ids[i],
                     &sbp_frame_cb_passthrough<FrameHandler>,
                     this,
@@ -171,7 +171,7 @@ class AllFrameHandler {
   public:
 
     explicit AllFrameHandler(State *state) : state_(*state), callback_node_() {
-      sbp_register_all_msg_callback(state_.get_state(),
+      sbp_all_payload_callback_register(state_.get_state(),
               sbp_frame_cb_passthrough<AllFrameHandler>,
               this,
               &callback_node_);
@@ -193,4 +193,4 @@ class AllFrameHandler {
 
 } /* namespace sbp */
 
-#endif /* SBP_CPP_MESSAGE_HANDLER_H */
+#endif /* SBP_LEGACY_CPP_MESSAGE_HANDLER_H */

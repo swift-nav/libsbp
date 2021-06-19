@@ -10,14 +10,14 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_MESSAGE_HANDLER_H_
-#define SBP_CPP_MESSAGE_HANDLER_H_
+#ifndef SBP_LEGACY_CPP_MESSAGE_HANDLER_H_
+#define SBP_LEGACY_CPP_MESSAGE_HANDLER_H_
 
 #include <cassert>
 #include <array>
 
 #include <libsbp/cpp/state.h>
-#include <libsbp/cpp/message_traits.h>
+#include <libsbp/legacy/cpp/message_traits.h>
 
 namespace sbp {
 
@@ -25,7 +25,7 @@ namespace sbp {
  * A convenience type alias for class member functions that accept SBP message callbacks
  */
 template<typename ClassT, typename ArgT>
-using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
+using PayloadCallbackFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
 
 /**
  * A helper function for calling a C++ object member function from a libsbp callback.
@@ -44,8 +44,8 @@ using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
  * @param msg The raw message payload
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
-template<typename MsgT, typename ClassT, CallbackMemFn<ClassT, MsgT> func>
-inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], void *context) {
+template<typename MsgT, typename ClassT, PayloadCallbackFn<ClassT, MsgT> func>
+inline void sbp_payload_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], void *context) {
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
@@ -56,7 +56,7 @@ inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], v
 namespace details {
 
 /**
- * Recursive interface type for defining the interface functions for `MessageHandler`.
+ * Recursive interface type for defining the interface functions for `PayloadHandler`.
  *
  * These types define a virtual `handle_sbp_msg()` for handling a specific SBP message type,
  * as well as a function for registering it as a SBP callback.
@@ -67,37 +67,37 @@ namespace details {
  * @tparam OtherTypes Other types to recursively define interfaces for
  */
 template<typename MsgType, typename... OtherTypes>
-class CallbackInterface : CallbackInterface<OtherTypes...> {
+class PayloadCallbackInterface : PayloadCallbackInterface<OtherTypes...> {
  public:
-  CallbackInterface() = default;
-  ~CallbackInterface() override = default;
+  PayloadCallbackInterface() = default;
+  ~PayloadCallbackInterface() override = default;
 
-  using CallbackInterface<OtherTypes...>::handle_sbp_msg;
+  using PayloadCallbackInterface<OtherTypes...>::handle_sbp_msg;
   virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
 
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(state,
+    sbp_payload_callback_register(state,
         sbp::MessageTraits<MsgType>::id,
-        &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+        &sbp_payload_cb_passthrough<MsgType, PayloadCallbackInterface, &PayloadCallbackInterface::handle_sbp_msg>,
         this,
         &nodes[0]);
-    CallbackInterface<OtherTypes...>::register_callback(state, &nodes[1]);
+    PayloadCallbackInterface<OtherTypes...>::register_callback(state, &nodes[1]);
   }
 };
 
 template<typename MsgType>
-class CallbackInterface<MsgType> {
+class PayloadCallbackInterface<MsgType> {
  public:
-  CallbackInterface() = default;
-  virtual ~CallbackInterface() = default;
+  PayloadCallbackInterface() = default;
+  virtual ~PayloadCallbackInterface() = default;
 
   virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
  protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(state,
+    sbp_payload_callback_register(state,
                           sbp::MessageTraits<MsgType>::id,
-                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+                          &sbp_payload_cb_passthrough<MsgType, PayloadCallbackInterface, &PayloadCallbackInterface::handle_sbp_msg>,
                           this,
                           &nodes[0]);
   }
@@ -109,24 +109,24 @@ class CallbackInterface<MsgType> {
  * Base type for defining classes that handle SBP messages
  *
  * Application classes should derive from this class if they wish to handle
- * SBP messages with a member function. `MessageHandler` instantiates all of
+ * SBP messages with a member function. `PayloadHandler` instantiates all of
  * the callback nodes, and registers the member functions with the given
  * `sbp_state_t`.
  *
- * Classes that derive from `MessageHandler` need to implement
+ * Classes that derive from `PayloadHandler` need to implement
  *   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg);
  * for each `MsgType` in the list of message types given as template parameters.
  *
  * Due to the nature of the callback registration in libsbp we dissallow copying or
- * moving of `MessageHandler`.
+ * moving of `PayloadHandler`.
  *
- * @note It should not matter if the class derives publicly or privately from `MessageHandler`
+ * @note It should not matter if the class derives publicly or privately from `PayloadHandler`
  * or if the `handle_sbp_msg` functions are public or private.
  *
  * @example
- * class ECEFHandler : private sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t> {
+ * class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> {
  *   public:
- *     ECEFHandler(sbp::State *state) : sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+ *     ECEFHandler(sbp::State *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
@@ -143,32 +143,32 @@ class CallbackInterface<MsgType> {
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename... MsgTypes>
- class MessageHandler : public details::CallbackInterface<MsgTypes...> {
-    static constexpr size_t kMsgCount = sizeof...(MsgTypes);
+ class PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
+    static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
 
   public:
 
-    explicit MessageHandler(State *state) : details::CallbackInterface<MsgTypes...>(), state_(*state), callback_nodes_() {
-      details::CallbackInterface<MsgTypes...>::register_callback(state_.get_state(), callback_nodes_.data());
+    explicit PayloadHandler(State *state) : details::PayloadCallbackInterface<MsgTypes...>(), state_(*state), callback_nodes_() {
+      details::PayloadCallbackInterface<MsgTypes...>::register_callback(state_.get_state(), callback_nodes_.data());
     }
 
-    ~MessageHandler() override {
+    ~PayloadHandler() override {
         for (auto& node : callback_nodes_) {
             sbp_remove_callback(state_.get_state(), &node);
         }
     }
 
-    MessageHandler(const MessageHandler&) = delete;
-    MessageHandler(MessageHandler&& other) = delete;
-    MessageHandler& operator=(const MessageHandler&) = delete;
-    MessageHandler& operator=(MessageHandler&&) = delete;
+    PayloadHandler(const PayloadHandler&) = delete;
+    PayloadHandler(PayloadHandler&& other) = delete;
+    PayloadHandler& operator=(const PayloadHandler&) = delete;
+    PayloadHandler& operator=(PayloadHandler&&) = delete;
 
-    using details::CallbackInterface<MsgTypes...>::handle_sbp_msg;
+    using details::PayloadCallbackInterface<MsgTypes...>::handle_sbp_msg;
 };
 
 } /* namespace sbp */
 
-#endif /* SBP_CPP_MESSAGE_HANDLER_H_ */
+#endif /* SBP_LEGACY_CPP_MESSAGE_HANDLER_H_ */

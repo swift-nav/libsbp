@@ -15,7 +15,11 @@
 #include <stdlib.h>
 #include <check.h>
 
+((*- if test_type == 'legacy' *))
+#include "check_suites_legacy.h"
+((*- else *))
 #include "check_suites.h"
+((*- endif *))
 
 int main(void)
 {
@@ -28,7 +32,11 @@ int main(void)
 
   // auto-generated tests:
   ((*- for s in package_suites *))
+  ((*- if test_type == 'legacy' *))
+  srunner_add_suite(sr, legacy_(((s.suite_name)))_suite());
+  ((*- else *))
   srunner_add_suite(sr, (((s.suite_name)))_suite());
+  ((*- endif *))
   ((*- endfor *))
 
   srunner_set_fork_status(sr, CK_NOFORK);
