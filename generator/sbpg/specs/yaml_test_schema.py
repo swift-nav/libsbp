@@ -9,11 +9,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from voluptuous import Coerce
-from voluptuous import Optional
-from voluptuous import Schema
-from voluptuous import Any
-from voluptuous import IsFalse
+from voluptuous import Any, Coerce, IsFalse, Schema
 
 SBP_EXTENSION = "/*.yaml"
 

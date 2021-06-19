@@ -21,8 +21,7 @@ import copy
 from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
-from sbpg.targets.templating import JENV, ACRONYMS, indented_wordwrap
-from sbpg.utils import markdown_links
+from sbpg.targets.templating import JENV, indented_wordwrap
 
 MESSAGES_TEMPLATE_NAME = 'message_template.proto.j2'
 

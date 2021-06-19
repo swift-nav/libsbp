@@ -18,7 +18,7 @@ import copy
 from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
-from sbpg.targets.templating import JENV, ACRONYMS, indented_wordwrap
+from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
