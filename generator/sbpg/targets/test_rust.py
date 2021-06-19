@@ -14,7 +14,6 @@ Generator for rust tests target.
 """
 
 from sbpg.targets.templating import *
-from sbpg.targets.rust import *
 from sbpg.targets.common import *
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"

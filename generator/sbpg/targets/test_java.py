@@ -14,7 +14,6 @@ Generator for java tests target.
 """
 
 from sbpg.targets.common import *
-from sbpg.targets.java import *
 from sbpg.targets.templating import *
 
 TEST_TEMPLATE_NAME = "MessageTest.java.j2"
