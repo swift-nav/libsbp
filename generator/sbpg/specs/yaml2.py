@@ -264,7 +264,7 @@ def mk_definition(defn):
       assert desc.endswith("."), f"{identifier}: Append . to: `{desc}`"
     assert all(x in string.printable for x in desc), f"Unprintable: {desc}"
     lines = desc.splitlines()
-    assert all(line.strip() == line for line in lines), f"Extra whitespace: {line}"
+    assert all(line.strip() == line for line in lines), f"Extra whitespace:\n{lines}"
     odd_lines = list(itertools.islice(lines,1,len(lines),2))
     if any(line for line in odd_lines):
       print(f"Warning: Multi-line desc contains single blank lines (use two):\n{lines}")
