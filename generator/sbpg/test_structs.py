@@ -72,8 +72,8 @@ class TestSpecification(object):
     self.msg = msg
     self.sbp = sbp
 
-  def __lt__(self, other):
-    return raw_packet.__lt__(other.raw_packet)
+  def __lt__(self, other: "TestSpecification"):
+    return self.raw_packet.__lt__(other.raw_packet)
 
   @property
   def msg_type_name(self):
