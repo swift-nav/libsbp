@@ -223,14 +223,14 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       name = f.options['fill'].value
       definition = next(d for d in definitions if name == d.identifier)
       prefix_name = '.'.join([prefix, f.identifier]) if prefix else f.identifier
-      (new_items, new_offset, new_multiplier) \
+      (_, new_offset, _) \
         = handle_fields(definitions,
                         definition.fields,
                         prefix_name + "[N]",
                         offset,
                         multiplier)
       multiplier = new_offset - offset
-      (newer_items, newer_offset, newer_multiplier) \
+      (newer_items, newer_offset, _) \
         = handle_fields(definitions,
                         definition.fields,
                         prefix_name + "[N]", offset,

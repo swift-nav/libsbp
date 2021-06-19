@@ -121,7 +121,6 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   Formats for binary-parser library.
   """
-  formatted = ""
   if type_map.get(f.type_id, None):
     return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
@@ -151,7 +150,6 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
       return "array('%s', { type: %s, readUntil: 'eof' })" % (f_.identifier, field_type_arr)
   else:
     return "nest('%s', { type: %s.prototype.parser })" % (f.identifier, f.type_id)
-  return formatted
 
 
 def js_classnameify(s):

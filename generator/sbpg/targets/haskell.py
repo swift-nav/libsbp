@@ -25,6 +25,7 @@ MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
 CABAL_TEMPLATE_NAME = "sbp-template.cabal"
 SBP_TEMPLATE_NAME = "SbpTemplate.hs"
 MESSAGE_TEMPLATE_NAME = "SbpMessageTemplate.hs"
+MODULE_PREFIX = "SwiftNav.SBP"
 
 CONSTRUCT_CODE = {
   'u8': 'Word8',
@@ -179,12 +180,11 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  module_prefix = "SwiftNav.SBP"
   module_name = camel_case(name)
-  full_module_name = ".".join([module_prefix, module_name])
+  full_module_name = ".".join([MODULE_PREFIX, module_name])
   destination_filename = "%s/src/SwiftNav/SBP/%s.hs" % (output_dir, module_name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
-  module_includes = [".".join([module_prefix] + [camel_case(j) for j in i.split(".")[:-1]])
+  module_includes = [".".join([MODULE_PREFIX] + [camel_case(j) for j in i.split(".")[:-1]])
                      for i in package_spec.includes]
 
   with open(destination_filename, 'w') as f:
@@ -195,13 +195,12 @@ def render_source(output_dir, package_spec):
 
 def render_cabal(output_dir, package_specs, release: ReleaseVersion):
   modules = []
-  module_prefix = "SwiftNav.SBP"
   for package_spec in package_specs:
     if not package_spec.render_source:
       continue
     path, name = package_spec.filepath
     module_name = camel_case(name)
-    full_module_name = ".".join([module_prefix, module_name])
+    full_module_name = ".".join([MODULE_PREFIX, module_name])
     modules.append(full_module_name)
   destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
@@ -212,13 +211,12 @@ def render_cabal(output_dir, package_specs, release: ReleaseVersion):
 def render_sbp(output_dir, package_specs):
   modules = []
   msgs = []
-  module_prefix = "SwiftNav.SBP"
   for package_spec in package_specs:
     if not package_spec.render_source:
       continue
     path, name = package_spec.filepath
     module_name = camel_case(name)
-    full_module_name = ".".join([module_prefix, module_name])
+    full_module_name = ".".join([MODULE_PREFIX, module_name])
     modules.append(full_module_name)
     for m in package_spec.definitions:
       if m.is_real_message:
