@@ -17,8 +17,7 @@ import tempfile
 
 from operator import attrgetter
 
-from sbpg.targets.templating import *
-from sbpg.utils import fmt_repr
+from sbpg.targets.templating import ACRONYMS, JENV
 from sbpg import ReleaseVersion
 
 

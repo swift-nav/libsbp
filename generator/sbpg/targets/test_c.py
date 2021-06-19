@@ -13,9 +13,9 @@
 Generator for c tests target.
 """
 
-from sbpg.targets.templating import *
 from sbpg.targets.c import convert
-from sbpg.targets.common import *
+from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
 CPP_TEST_TEMPLATE_NAME = "sbp_cpp_test.cc.j2"
