@@ -54,6 +54,7 @@ master_doc = 'index'
 project = 'sbp'
 author = 'Swift Navigation'
 copyright = '2021, ' + author
+_TITLE = 'sbp Documentation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -227,8 +228,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-                   (master_doc, 'sbp.tex', 'sbp Documentation',
-                    'Swift Navigation', 'manual'),
+                   (master_doc, 'sbp.tex', _TITLE,
+                    author, 'manual'),
                    ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -255,7 +256,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'sbp', 'sbp Documentation',
+man_pages = [(master_doc, project, _TITLE,
               [author], 1)]
 
 # If true, show URL addresses after external links.
@@ -267,8 +268,8 @@ man_pages = [(master_doc, 'sbp', 'sbp Documentation',
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [(master_doc, 'sbp', 'sbp Documentation',
-                      author, 'sbp', 'One line description of project.',
+texinfo_documents = [(master_doc, project, _TITLE,
+                      author, project, 'One line description of project.',
                       'Miscellaneous'),]
 
 # Documents to append as an appendix to all manuals.
