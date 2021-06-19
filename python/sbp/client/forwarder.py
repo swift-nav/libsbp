@@ -56,5 +56,5 @@ class Forwarder(Thread):
     def __enter__(self):
         self.run()
 
-    def __exit__(self):
+    def __exit__(self, *args, **kw):
         self.stop()
