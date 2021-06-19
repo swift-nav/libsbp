@@ -48,8 +48,8 @@ class Forwarder(Thread):
         self._broken = True
         try:
             self._source.breakiter()
-            self.sink.flush()
-            self.sink.close()
+            self._sink.flush()
+            self._sink.close()
         except:
             pass
 
