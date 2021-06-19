@@ -35,6 +35,9 @@ class JSONLoggerBase(BaseLogger):
 
         return data
 
+    def dump(self, msg, **metadata):
+        raise NotImplementedError
+
     def __call__(self, msg, **metadata):
         output = self.dump(msg, **metadata)
         if output:

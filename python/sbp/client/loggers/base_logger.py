@@ -8,10 +8,11 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from ...table import dispatch
 from construct.core import ConstructError
 import warnings
 import six
+
+import sbp.table
 
 
 class BaseLogger(object):
@@ -74,7 +75,7 @@ class LogIterator(six.Iterator):
 
     """
 
-    def __init__(self, handle, dispatcher=dispatch):
+    def __init__(self, handle, dispatcher=sbp.table.dispatch):
         self.handle = handle
         self.dispatcher = dispatcher
 
