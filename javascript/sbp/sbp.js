@@ -150,7 +150,7 @@ SBP.prototype.toBuffer = function toBuffer () {
 SBP.prototype.toJSON = function toJSON () {
   var dict = {};
 
-  Object.keys(this.sbp).map(function (k) {
+  Object.keys(this.sbp).forEach(function (k) {
     if (this.sbp[k] instanceof Buffer) {
       dict[k] = this.sbp[k].toString('base64');
     } else {
@@ -158,7 +158,7 @@ SBP.prototype.toJSON = function toJSON () {
     }
   }.bind(this));
 
-  Object.keys(this.fields).map(function (k) {
+  Object.keys(this.fields).forEach(function (k) {
     dict[k] = this.fields[k];
   }.bind(this));
 

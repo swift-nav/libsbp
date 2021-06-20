@@ -93,7 +93,7 @@ function assertFieldsMatch (spec, fields1, fields2) {
     if (Array.isArray(fieldType)) {
       return assertFieldsMatch(fieldType, v1, v2);
     } else if (fieldType === 'array') {
-    } else if (fieldType.toLowerCase().indexOf('float') !== -1 || fieldType.toLowerCase().indexOf('float') !== -1) {
+    } else if (fieldType.toLowerCase().indexOf('float') !== -1) {
     } else if (fieldType === 'writeUInt64LE') {
       assert.equal(v1.toString(), v2.toString());
     } else {
@@ -110,10 +110,9 @@ describe('test packages based on descriptors of types', function () {
     );
  });
 
-  testMsgTypes.forEach(function (k) {
-    it('should test ' + k, function () {
-      var msgLabel = k;
-      var msgConstructor = messageTypesTable[k];
+  testMsgTypes.forEach(function (msgLabel) {
+    it('should test ' + msgLabel, function () {
+      var msgConstructor = messageTypesTable[msgLabel];
       if (!msgConstructor.prototype.msg_type) {
         return;
       }
