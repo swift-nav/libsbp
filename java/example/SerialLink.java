@@ -15,6 +15,8 @@ import com.swiftnav.sbp.client.SBPHandler;
 import com.swiftnav.sbp.drivers.SBPDriverJSSC;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.navigation.MsgPosLLH;
+import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
+import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
 import jssc.SerialPortException;
 
 public class SerialLink {
@@ -70,19 +72,46 @@ public class SerialLink {
     }
     for (SBPMessage msg : handler) {
       switch (msg.type) {
+
         case MsgLog.TYPE:
           logHandler(msg);
-          break;
-        case MsgPosLLH.TYPE:
+          break; 
+       case MsgPosLLH.TYPE:
           llhHandler(msg);
+          break;
+        case MsgGPSTimeDepA.TYPE:
+          MsgGPSTimeDepAHandler(msg);
+          break;
+        case MsgPosLLHDepA.TYPE:
+          MsgPosLLHDepAHandler(msg);
+          break;
+       default:
+          defaultHandler(msg);
           break;
       }
     }
   }
 
+  public void MsgPosLLHDepAHandler(SBPMessage msg_) {
+    MsgPosLLHDepA msg = (MsgPosLLHDepA) msg_;
+    System.out.printf(
+          "lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d .\n",
+          msg.lat,
+          msg.lon,
+          msg.height,
+          msg.h_accuracy / 1000.0,
+          msg.v_accuracy / 1000.0,
+          msg.n_sats);
+  }
+
+  public void MsgGPSTimeDepAHandler(SBPMessage msg_) {
+    MsgGPSTimeDepA msg = (MsgGPSTimeDepA) msg_;
+    System.out.print(msg.tow + ".\n");
+  }
+
   public void logHandler(SBPMessage msg_) {
     MsgLog msg = (MsgLog) msg_;
-    System.out.print(msg.text);
+    System.out.print(msg.text + ".\n");
   }
 
   public void llhHandler(SBPMessage msg_) {
@@ -92,7 +121,7 @@ public class SerialLink {
         "POSLLH message received -- fix_type: %s, tow [ms]: %d", this.fix_type[fix_type], msg.tow);
     if (fix_type != 0) {
       System.out.printf(
-          ", lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d",
+          ", lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d .\n",
           msg.lat,
           msg.lon,
           msg.height,
@@ -101,5 +130,9 @@ public class SerialLink {
           msg.n_sats);
     }
     System.out.println();
+  }
+
+  public void defaultHandler(SBPMessage msg_){
+    System.out.print(msg_ + ".\n");
   }
 }
