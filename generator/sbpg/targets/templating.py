@@ -72,8 +72,8 @@ def indented_wordwrap(
             environment,
             value,
             width=width,
-            break_on_hyphens=False,
             break_long_words=False,
+            break_on_hyphens=False,
         )
     else:
         # While breaking on long lines is helpful for the Jinja output,
@@ -83,8 +83,8 @@ def indented_wordwrap(
             environment,
             value,
             width=width,
-            break_on_hyphens=True,
             break_long_words=False,
+            break_on_hyphens=True,
         )
     # If the indent contains characters, it sould be shown for blank lines.
     blank = indent.strip() != ""
