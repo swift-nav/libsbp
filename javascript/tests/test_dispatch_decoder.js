@@ -51,11 +51,13 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
           it('should parse binary sbp and payload with leading extra preamble', function (done) {
             var rs = new Readable();
             rs.push(new Buffer([0x55]));
-            var expectedCalls, bufLength = 0;
-            for (expectedCalls = 0; bufLength < 500; expectedCalls++) {
+            let expectedCalls = 0
+            let bufLength = 0;
+            while (bufLength < 500) {
               var buf = new Buffer(testSpec['raw_packet'], 'base64');
               rs.push(buf);
               bufLength += buf.length;
+              expectedCalls++
             }
             rs.push(null);
 
@@ -75,9 +77,10 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
           it('should parse binary sbp and payload with leading extra preamble (2)', function (done) {
             var rs = new Readable();
             var bigBuf = new Buffer(0);
-            var expectedCalls;
-            for (expectedCalls = 0; bigBuf.length < 500; expectedCalls++) {
+            let expectedCalls = 0;
+            while (bigBuf.length < 500) {
               bigBuf = Buffer.concat([bigBuf, new Buffer(testSpec['raw_packet'], 'base64')]);
+              expectedCalls++
             }
             rs.push(Buffer.concat([new Buffer([0x55]), bigBuf]));
             rs.push(null);
