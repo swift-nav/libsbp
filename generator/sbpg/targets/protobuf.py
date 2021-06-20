@@ -45,7 +45,7 @@ def commentify(environment: Environment,
   """
   Builds a comment.
   """
-  return indented_wordwrap(environment, value, indent=" * ", first=True, blank=True)
+  return indented_wordwrap(environment, value, indent=" * ", first=True)
 
 def to_identifier(s):
   """

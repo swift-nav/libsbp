@@ -53,7 +53,6 @@ def indented_wordwrap(
     indent: str,
     width: int = None,
     first: bool = True,
-    blank: bool = True,
     markdown: bool = False,
 ):
     """
@@ -86,7 +85,7 @@ def indented_wordwrap(
             break_long_words=False,
             break_on_hyphens=True,
         )
-    # If the indent contains characters, it sould be shown for blank lines.
+    # If the indent contains characters, it should be shown for blank lines.
     blank = indent.strip() != ""
     value = do_indent(value, indent, first=first, blank=blank)
     value = "\n".join([line.rstrip() for line in value.splitlines()])

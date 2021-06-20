@@ -155,7 +155,7 @@ def commentify(environment: Environment, value: str, indent=0, wrap_in_brackets=
   """
   if not value:
     return
-  value = indented_wordwrap(environment, value, indent=(" " * indent) + "-- ", first=False, blank=True)
+  value = indented_wordwrap(environment, value, indent=(" " * indent) + "-- ", first=False)
   if wrap_in_brackets:
     return "\< " + value + " \>"
   else:
