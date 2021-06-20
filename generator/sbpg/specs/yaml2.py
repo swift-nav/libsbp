@@ -56,7 +56,7 @@ def read_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
       raise ValueError("Empty yaml file: %s." % filename)
     try:
@@ -91,7 +91,7 @@ def read_test_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
       raise ValueError("Empty yaml file: %s." % filename)
     try:
