@@ -50,7 +50,7 @@ function getFieldValuesFromSpecType (fieldType, line, previousValues) {
     }
 
     var str = '';
-    for (var i = 0; i < strLength; i++) {
+    for (let i = 0; i < strLength; i++) {
       str += 'x';
     }
     return str;
@@ -59,7 +59,7 @@ function getFieldValuesFromSpecType (fieldType, line, previousValues) {
     var randomSize = (Math.floor(Math.random() * 3) + 2);
     var numElements = (typeof sizeField === 'number' ? sizeField : (typeof sizeField === 'string' ? previousValues[sizeField] : randomSize));
     var elements = [];
-    for (var i = 0; i < numElements; i++) {
+    for (let i = 0; i < numElements; i++) {
       elements.push(getFieldValuesFromSpecType(line[2]));
     }
     return elements;

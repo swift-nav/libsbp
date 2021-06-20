@@ -63,17 +63,17 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
         assert(data[fieldName] instanceof UInt64, 'uint64 type must be represented by cuint.UINT64');
         var high = data[fieldName].clone().shiftRight(32).and(new UInt64(0xffffffff, 0)).toNumber();
         var low = data[fieldName].clone().and(new UInt64(0xffffffff, 0)).toNumber();
-        var b = new Buffer(8);
+        let b = new Buffer(8);
         b.writeUInt32LE(low);
         b.writeUInt32LE(high, 4);
         buffers.push(b);
       } else {
-        var b = new Buffer(dataSize);
+        let b = new Buffer(dataSize);
         b[dataType](data[fieldName], 0);
         buffers.push(b);
       }
     } else if (dataType === 'string') {
-      var b = new Buffer(data[fieldName].length);
+      let b = new Buffer(data[fieldName].length);
       b.write(data[fieldName], 0, 'utf8');
       buffers.push(b);
     } else if (dataType === 'array') {
@@ -85,7 +85,7 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
           buffers = buffers.concat(this.payloadToBuffer(dataFill, iData));
         } else {
           // Built-in type
-          var b = new Buffer(fieldSize(field[3]));
+          let b = new Buffer(fieldSize(field[3]));
           b[dataFill](iData, 0);
           buffers.push(b);
         }
