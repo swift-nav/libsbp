@@ -17,7 +17,7 @@ var dispatch = require(path.resolve(__dirname, '../sbp/')).dispatch;
 var MsgPosLlhDepA = require(path.resolve(__dirname, '../sbp/navigation')).MsgPosLlhDepA;
 var MsgVelEcefDepA = require(path.resolve(__dirname, '../sbp/navigation')).MsgVelEcefDepA;
 
-var framedMessage =                 [0x55, 0x02, 0x02, 0xcc, 0x04, 0x14, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
+var goodMessage =                   [0x55, 0x02, 0x02, 0xcc, 0x04, 0x14, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
 var corruptedMessageTooShort =      [0x55, 0x02, 0x02, 0xcc, 0x04, 0x12, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
 var corruptedMessageTooLong =       [0x55, 0x02, 0x02, 0xcc, 0x04, 0x16, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
 var corruptedMessageExtraPreamble = [0x55, 0x55, 0x02, 0x02, 0xcc, 0x04, 0x14, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
@@ -25,7 +25,7 @@ var corruptedMessageExtraPreamble = [0x55, 0x55, 0x02, 0x02, 0xcc, 0x04, 0x14, 0
 describe('dispatcher', function () {
   it('should read stream of bytes and dispatch callback for single framed message', function (done) {
     var rs = new Readable();
-    rs.push(new Buffer(framedMessage));
+    rs.push(new Buffer(goodMessage));
     rs.push(null);
 
     var callbacks = 0;
@@ -43,8 +43,8 @@ describe('dispatcher', function () {
 
   it('should read stream of bytes and dispatch callback for two framed message', function (done) {
     var rs = new Readable();
-    rs.push(new Buffer(framedMessage));
-    rs.push(new Buffer(framedMessage));
+    rs.push(new Buffer(goodMessage));
+    rs.push(new Buffer(goodMessage));
     rs.push(null);
 
     var callbacks = 0;
@@ -62,9 +62,9 @@ describe('dispatcher', function () {
 
   it('should read stream of bytes and dispatch callback for two framed message, with garbage in between', function (done) {
     var rs = new Readable();
-    rs.push(new Buffer(framedMessage));
+    rs.push(new Buffer(goodMessage));
     rs.push(new Buffer([0x54, 0x53, 0x00, 0x01]));
-    rs.push(new Buffer(framedMessage));
+    rs.push(new Buffer(goodMessage));
     rs.push(null);
 
     var callbacks = 0;
@@ -82,13 +82,13 @@ describe('dispatcher', function () {
 
   it('should read stream of bytes and dispatch callback for three framed messages, with garbage before first message and last', function (done) {
     var rs = new Readable();
-    rs.push(new Buffer(framedMessage.slice(2)));
-    rs.push(new Buffer(framedMessage));
-    rs.push(new Buffer(framedMessage.slice(1)));
-    rs.push(new Buffer(framedMessage));
-    rs.push(new Buffer(framedMessage.slice(3)));
-    rs.push(new Buffer(framedMessage));
-    rs.push(new Buffer(framedMessage.slice(4)));
+    rs.push(new Buffer(goodMessage.slice(2)));
+    rs.push(new Buffer(goodMessage));
+    rs.push(new Buffer(goodMessage.slice(1)));
+    rs.push(new Buffer(goodMessage));
+    rs.push(new Buffer(goodMessage.slice(3)));
+    rs.push(new Buffer(goodMessage));
+    rs.push(new Buffer(goodMessage.slice(4)));
     rs.push(null);
 
     var callbacks = 0;
@@ -107,7 +107,7 @@ describe('dispatcher', function () {
   it('should read stream of bytes and dispatch callback for one valid message, ignore corrupt message', function (done) {
     var rs = new Readable();
     rs.push(new Buffer(corruptedMessageTooShort));
-    rs.push(new Buffer(framedMessage));
+    rs.push(new Buffer(goodMessage));
     rs.push(new Buffer(corruptedMessageTooLong));
     rs.push(null);
 
