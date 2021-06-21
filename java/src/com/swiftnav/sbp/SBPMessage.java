@@ -13,12 +13,12 @@ package com.swiftnav.sbp;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -129,17 +129,13 @@ public class SBPMessage {
             return buf.getDouble();
         }
 
-        public String getString() throws SBPBinaryException {
+        public String getString() {
             return getString(buf.remaining());
         }
-        public String getString(int n) throws SBPBinaryException {
+        public String getString(int n) {
             byte[] tmp = new byte[n];
             buf.get(tmp);
-            try {
-                return new String(tmp, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                throw new SBPBinaryException("Failed to decode UTF-8 string");
-            }
+            return new String(tmp, StandardCharsets.UTF_8);
         }
 
         public int[] getArrayofU8() {
