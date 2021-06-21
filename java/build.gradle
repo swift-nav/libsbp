@@ -45,6 +45,7 @@ archivesBaseName = 'sbp'
 
 sonarqube {
   properties {
+    property 'sonar.projectName', "libsbp-java"
     property "sonar.projectKey", "swift-nav_libsbp"
     property "sonar.organization", "swift-nav"
     property "sonar.host.url", "https://sonarcloud.io"
