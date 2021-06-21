@@ -21,7 +21,6 @@ import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class PackedObsContentDepC extends SBPStruct {
     

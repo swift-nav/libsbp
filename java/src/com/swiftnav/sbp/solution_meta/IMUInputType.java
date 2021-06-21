@@ -20,7 +20,6 @@ import com.swiftnav.sbp.SBPStruct;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class IMUInputType extends SBPStruct {
     
