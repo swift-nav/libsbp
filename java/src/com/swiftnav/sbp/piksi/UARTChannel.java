@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,41 +8,39 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class UARTChannel extends SBPStruct {
-    
+
     /** UART transmit throughput */
     public float tx_throughput;
-    
+
     /** UART receive throughput */
     public float rx_throughput;
-    
+
     /** UART CRC error count */
     public int crc_error_count;
-    
+
     /** UART IO error count */
     public int io_error_count;
-    
+
     /** UART transmit buffer percentage utilization (ranges from 0 to 255) */
     public int tx_buffer_level;
-    
+
     /** UART receive buffer percentage utilization (ranges from 0 to 255) */
     public int rx_buffer_level;
-    
 
-    public UARTChannel () {}
+    public UARTChannel() {}
 
     @Override
     public UARTChannel parse(SBPMessage.Parser parser) throws SBPBinaryException {

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,38 +8,37 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
+import java.math.BigInteger;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class NetworkUsage extends SBPStruct {
-    
+
     /** Duration over which the measurement was collected */
     public BigInteger duration;
-    
+
     /** Number of bytes handled in total within period */
     public BigInteger total_bytes;
-    
+
     /** Number of bytes transmitted within period */
     public long rx_bytes;
-    
+
     /** Number of bytes received within period */
     public long tx_bytes;
-    
+
     /** Interface Name */
     public String interface_name;
-    
 
-    public NetworkUsage () {}
+    public NetworkUsage() {}
 
     @Override
     public NetworkUsage parse(SBPMessage.Parser parser) throws SBPBinaryException {

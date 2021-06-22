@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,8 +10,8 @@
  */
 package com.swiftnav.sbp.drivers;
 
-import com.swiftnav.sbp.client.SBPDriver;
 
+import com.swiftnav.sbp.client.SBPDriver;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -37,8 +36,7 @@ public class SBPDriverTCP implements SBPDriver {
         int i = 0;
 
         synchronized (this) {
-            if (socket == null)
-                openSocket();
+            if (socket == null) openSocket();
         }
 
         while (i < len) {
@@ -54,8 +52,7 @@ public class SBPDriverTCP implements SBPDriver {
     @Override
     public void write(byte[] data) throws IOException {
         synchronized (this) {
-            if (socket == null)
-                openSocket();
+            if (socket == null) openSocket();
         }
 
         socket.getOutputStream().write(data);

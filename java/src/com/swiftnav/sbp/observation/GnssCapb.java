@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,70 +8,73 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
+import java.math.BigInteger;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class GnssCapb extends SBPStruct {
-    
+
     /** GPS SV active mask */
     public BigInteger gps_active;
-    
+
     /** GPS L2C active mask */
     public BigInteger gps_l2c;
-    
+
     /** GPS L5 active mask */
     public BigInteger gps_l5;
-    
+
     /** GLO active mask */
     public long glo_active;
-    
+
     /** GLO L2OF active mask */
     public long glo_l2of;
-    
+
     /** GLO L3 active mask */
     public long glo_l3;
-    
-    /** SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-      * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf) */
+
+    /**
+     * SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+     * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+     */
     public BigInteger sbas_active;
-    
-    /** SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-      * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf) */
+
+    /**
+     * SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+     * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+     */
     public BigInteger sbas_l5;
-    
+
     /** BDS active mask */
     public BigInteger bds_active;
-    
+
     /** BDS D2NAV active mask */
     public BigInteger bds_d2nav;
-    
+
     /** BDS B2 active mask */
     public BigInteger bds_b2;
-    
+
     /** BDS B2A active mask */
     public BigInteger bds_b2a;
-    
+
     /** QZSS active mask */
     public long qzss_active;
-    
+
     /** GAL active mask */
     public BigInteger gal_active;
-    
+
     /** GAL E5 active mask */
     public BigInteger gal_e5;
-    
 
-    public GnssCapb () {}
+    public GnssCapb() {}
 
     @Override
     public GnssCapb parse(SBPMessage.Parser parser) throws SBPBinaryException {

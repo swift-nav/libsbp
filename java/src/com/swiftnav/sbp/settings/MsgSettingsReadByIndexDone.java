@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,46 +8,48 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.settings;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/settings.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SETTINGS_READ_BY_INDEX_DONE (0x00A6).
+/**
+ * SBP class for message MSG_SETTINGS_READ_BY_INDEX_DONE (0x00A6).
  *
- * You can have MSG_SETTINGS_READ_BY_INDEX_DONE inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SETTINGS_READ_BY_INDEX_DONE inherent its fields directly from an inherited
+ * SBP object, or construct it inline using a dict of its fields.
  *
- * The settings message for indicating end of the settings values. */
-
+ * <p>The settings message for indicating end of the settings values.
+ */
 public class MsgSettingsReadByIndexDone extends SBPMessage {
     public static final int TYPE = 0x00A6;
 
-    
+    public MsgSettingsReadByIndexDone(int sender) {
+        super(sender, TYPE);
+    }
 
-    public MsgSettingsReadByIndexDone (int sender) { super(sender, TYPE); }
-    public MsgSettingsReadByIndexDone () { super(TYPE); }
-    public MsgSettingsReadByIndexDone (SBPMessage msg) throws SBPBinaryException {
+    public MsgSettingsReadByIndexDone() {
+        super(TYPE);
+    }
+
+    public MsgSettingsReadByIndexDone(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
-        /* Parse fields from binary */
+        // No additional fields
     }
 
     @Override
     protected void build(Builder builder) {
+        // No additional fields
     }
 
     @Override

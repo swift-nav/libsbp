@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,21 +10,23 @@
  */
 package com.swiftnav.sbp;
 
+
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 public abstract class SBPStruct {
     protected SBPStruct() {}
+
     protected abstract void build(SBPMessage.Builder builder);
+
     protected abstract <T> T parse(SBPMessage.Parser parser) throws SBPBinaryException;
+
     protected abstract JSONObject toJSON();
 
     public static JSONArray toJSONArray(SBPStruct[] structs) {
         JSONObject objs[] = new JSONObject[structs.length];
-        for (int i = 0; i < structs.length; i++)
-            objs[i] = structs[i].toJSON();
+        for (int i = 0; i < structs.length; i++) objs[i] = structs[i].toJSON();
         return new JSONArray(Arrays.asList(objs));
     }
 }

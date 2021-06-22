@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,44 +8,45 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.ssr;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
  *
- * You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * STEC residuals are per space vehicle, troposphere is not.
+ * <p>STEC residuals are per space vehicle, troposphere is not.
  *
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages. */
-
+ * <p>It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
+ */
 public class MsgSsrGriddedCorrection extends SBPMessage {
     public static final int TYPE = 0x05FC;
 
-    
     /** Header of a gridded correction message */
     public GriddedCorrectionHeader header;
-    
+
     /** Tropo and STEC residuals for the given grid point. */
     public GridElement element;
-    
 
-    public MsgSsrGriddedCorrection (int sender) { super(sender, TYPE); }
-    public MsgSsrGriddedCorrection () { super(TYPE); }
-    public MsgSsrGriddedCorrection (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrGriddedCorrection(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSsrGriddedCorrection() {
+        super(TYPE);
+    }
+
+    public MsgSsrGriddedCorrection(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

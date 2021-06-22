@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,45 +8,45 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.settings;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/settings.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SETTINGS_WRITE (0x00A0).
+/**
+ * SBP class for message MSG_SETTINGS_WRITE (0x00A0).
  *
- * You can have MSG_SETTINGS_WRITE inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SETTINGS_WRITE inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The setting message writes the device configuration for a particular
- * setting via A NULL-terminated and NULL-delimited string with contents
- * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
- * the NULL character and where quotation marks are omitted. A device will
- * only process to this message when it is received from sender ID 0x42. An
- * example string that could be sent to a device is
- * "solution\0soln_freq\010\0". */
-
+ * <p>The setting message writes the device configuration for a particular setting via A
+ * NULL-terminated and NULL-delimited string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where
+ * the '\0' escape sequence denotes the NULL character and where quotation marks are omitted. A
+ * device will only process to this message when it is received from sender ID 0x42. An example
+ * string that could be sent to a device is "solution\0soln_freq\010\0".
+ */
 public class MsgSettingsWrite extends SBPMessage {
     public static final int TYPE = 0x00A0;
 
-    
-    /** A NULL-terminated and NULL-delimited string with contents
-      * "SECTION_SETTING\0SETTING\0VALUE\0" */
+    /**
+     * A NULL-terminated and NULL-delimited string with contents "SECTION_SETTING\0SETTING\0VALUE\0"
+     */
     public String setting;
-    
 
-    public MsgSettingsWrite (int sender) { super(sender, TYPE); }
-    public MsgSettingsWrite () { super(TYPE); }
-    public MsgSettingsWrite (SBPMessage msg) throws SBPBinaryException {
+    public MsgSettingsWrite(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSettingsWrite() {
+        super(TYPE);
+    }
+
+    public MsgSettingsWrite(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

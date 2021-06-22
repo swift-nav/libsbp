@@ -1,5 +1,7 @@
 plugins {
   id "org.sonarqube" version "3.3"
+  // spotless pre v5 used to allow gradle 4 on ubuntu-latest
+  id "com.diffplug.gradle.spotless" version "4.5.1"
 }
 
 apply plugin: 'java'
@@ -49,5 +51,26 @@ sonarqube {
     property "sonar.projectKey", "swift-nav_libsbp"
     property "sonar.organization", "swift-nav"
     property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
+spotless {
+  java {
+    // Use Android Open Source Project style
+    googleJavaFormat().aosp()
+    importOrder()
+    endWithNewline()
+    removeUnusedImports()
+
+    licenseHeader '/* Copyright (C) 2015-2021 Swift Navigation Inc.\n' +
+                  ' * Contact: https://support.swiftnav.com\n' +
+                  ' *\n' +
+                  ' * This source is subject to the license found in the file \'LICENSE\' which must\n' +
+                  ' * be be distributed together with this source. All other rights reserved.\n' +
+                  ' *\n' +
+                  ' * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,\n' +
+                  ' * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED\n' +
+                  ' * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.\n' +
+                  ' */\n'
   }
 }

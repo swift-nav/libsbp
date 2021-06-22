@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,19 +8,17 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgStartup.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgStartup.yaml by
+// generate.py. Do not modify by hand!
 
-import java.math.BigInteger;
-
-import org.junit.Test;
-
-import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
-
 import com.swiftnav.sbp.system.MsgStartup;
-
+import java.math.BigInteger;
+import org.json.JSONObject;
+import org.junit.Test;
 
 public class auto_check_sbp_system_MsgStartupTest {
 
@@ -30,17 +27,20 @@ public class auto_check_sbp_system_MsgStartupTest {
 
     @Test
     public void test1() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_system_MsgStartupTest.test1");
-        byte[] payload = new byte[] {(byte)0,(byte)0,(byte)0,(byte)0, };
-        SBPMessage sbp = new SBPMessage( 0x42, 0xff00, payload );
-        MsgStartup msg = new MsgStartup( sbp );
+        if (debug) System.out.format("%n%s%n", "auto_check_sbp_system_MsgStartupTest.test1");
+        byte[] payload =
+                new byte[] {
+                    (byte) 0, (byte) 0, (byte) 0, (byte) 0,
+                };
+        SBPMessage sbp = new SBPMessage(0x42, 0xff00, payload);
+        MsgStartup msg = new MsgStartup(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.cause;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.cause + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.cause + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -48,7 +48,8 @@ public class auto_check_sbp_system_MsgStartupTest {
         }
         value = msg.reserved;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.reserved + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.reserved + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -56,7 +57,9 @@ public class auto_check_sbp_system_MsgStartupTest {
         }
         value = msg.startup_type;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.startup_type + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.startup_type + "' != '" + 0 + "'",
+                    value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -66,17 +69,20 @@ public class auto_check_sbp_system_MsgStartupTest {
 
     @Test
     public void test2() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_system_MsgStartupTest.test2");
-        byte[] payload = new byte[] {(byte)0,(byte)0,(byte)0,(byte)0, };
-        SBPMessage sbp = new SBPMessage( 0x4c3, 0xff00, payload );
-        MsgStartup msg = new MsgStartup( sbp );
+        if (debug) System.out.format("%n%s%n", "auto_check_sbp_system_MsgStartupTest.test2");
+        byte[] payload =
+                new byte[] {
+                    (byte) 0, (byte) 0, (byte) 0, (byte) 0,
+                };
+        SBPMessage sbp = new SBPMessage(0x4c3, 0xff00, payload);
+        MsgStartup msg = new MsgStartup(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.cause;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.cause + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.cause + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -84,7 +90,8 @@ public class auto_check_sbp_system_MsgStartupTest {
         }
         value = msg.reserved;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.reserved + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.reserved + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -92,7 +99,9 @@ public class auto_check_sbp_system_MsgStartupTest {
         }
         value = msg.startup_type;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.startup_type + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.startup_type + "' != '" + 0 + "'",
+                    value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;

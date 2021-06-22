@@ -242,6 +242,10 @@ gen-java:
 
 	$(call announce-end,"Finished generating Java tests")
 
+	$(call announce-begin,"Formatting Java code")
+	cd $(SWIFTNAV_ROOT)/java && gradle spotlessApply
+	$(call announce-end,"Finished formatting Java code")
+
 gen-haskell:
 	$(call announce-begin,"Generating Haskell bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \

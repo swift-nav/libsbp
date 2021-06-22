@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,119 +8,117 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_EPHEMERIS_BDS (0x0089).
+/**
+ * SBP class for message MSG_EPHEMERIS_BDS (0x0089).
  *
- * You can have MSG_EPHEMERIS_BDS inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_EPHEMERIS_BDS inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate BDS satellite position, velocity, and clock offset.
- * Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
- * Table 5-9 for more details. */
-
+ * <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate
+ * BDS satellite position, velocity, and clock offset. Please see the BeiDou Navigation Satellite
+ * System SIS-ICD Version 2.1, Table 5-9 for more details.
+ */
 public class MsgEphemerisBds extends SBPMessage {
     public static final int TYPE = 0x0089;
 
-    
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
-    
+
     /** Group delay differential for B1 */
     public float tgd1;
-    
+
     /** Group delay differential for B2 */
     public float tgd2;
-    
+
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public float c_rs;
-    
+
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public float c_rc;
-    
-    /** Amplitude of the cosine harmonic correction term to the argument of
-      * latitude */
+
+    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
     public float c_uc;
-    
-    /** Amplitude of the sine harmonic correction term to the argument of
-      * latitude */
+
+    /** Amplitude of the sine harmonic correction term to the argument of latitude */
     public float c_us;
-    
-    /** Amplitude of the cosine harmonic correction term to the angle of
-      * inclination */
+
+    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
     public float c_ic;
-    
-    /** Amplitude of the sine harmonic correction term to the angle of
-      * inclination */
+
+    /** Amplitude of the sine harmonic correction term to the angle of inclination */
     public float c_is;
-    
+
     /** Mean motion difference */
     public double dn;
-    
+
     /** Mean anomaly at reference time */
     public double m0;
-    
+
     /** Eccentricity of satellite orbit */
     public double ecc;
-    
+
     /** Square root of the semi-major axis of orbit */
     public double sqrta;
-    
+
     /** Longitude of ascending node of orbit plane at weekly epoch */
     public double omega0;
-    
+
     /** Rate of right ascension */
     public double omegadot;
-    
+
     /** Argument of perigee */
     public double w;
-    
+
     /** Inclination */
     public double inc;
-    
+
     /** Inclination first derivative */
     public double inc_dot;
-    
+
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
-    
+
     /** Polynomial clock correction coefficient (clock drift) */
     public float af1;
-    
+
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public float af2;
-    
+
     /** Clock reference */
     public GPSTimeSec toc;
-    
-    /** Issue of ephemeris data
-      * Calculated from the navigation data parameter t_oe per RTCM/CSNO
-      * recommendation: IODE = mod (t_oe / 720, 240) */
-    public int iode;
-    
-    /** Issue of clock data
-      * Calculated from the navigation data parameter t_oe per RTCM/CSNO
-      * recommendation: IODE = mod (t_oc / 720, 240) */
-    public int iodc;
-    
 
-    public MsgEphemerisBds (int sender) { super(sender, TYPE); }
-    public MsgEphemerisBds () { super(TYPE); }
-    public MsgEphemerisBds (SBPMessage msg) throws SBPBinaryException {
+    /**
+     * Issue of ephemeris data Calculated from the navigation data parameter t_oe per RTCM/CSNO
+     * recommendation: IODE = mod (t_oe / 720, 240)
+     */
+    public int iode;
+
+    /**
+     * Issue of clock data Calculated from the navigation data parameter t_oe per RTCM/CSNO
+     * recommendation: IODE = mod (t_oc / 720, 240)
+     */
+    public int iodc;
+
+    public MsgEphemerisBds(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgEphemerisBds() {
+        super(TYPE);
+    }
+
+    public MsgEphemerisBds(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

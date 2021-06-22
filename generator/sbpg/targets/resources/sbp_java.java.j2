@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,6 +11,9 @@
  */
 
 package (((module_path)));
+
+// This file was auto-generated from yaml/(((filepath))) by generate.py.
+// Do not modify by hand!
 
 import java.math.BigInteger;
 
@@ -57,17 +60,22 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
+        ((*- if m.fields *))
         /* Parse fields from binary */
-        ((*- if m.fields *)) ((*- for f in m.fields *))
+        ((*- for f in m.fields *))
         (((f.identifier))) = (((f | parse_type)));
-        ((*- endfor *)) ((*- endif *))
+        ((*- endfor *)) ((* else *))
+        // No additional fields
+        ((*- endif *))
     }
 
     @Override
     protected void build(Builder builder) {
         ((*- if m.fields *)) ((*- for f in m.fields *))
         (((f | build_type)));
-        ((*- endfor *)) ((*- endif *))
+        ((*- endfor *)) ((* else *))
+        // No additional fields
+        ((*- endif *))
     }
 
     @Override

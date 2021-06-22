@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,49 +8,51 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.sbas;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/sbas.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_SBAS_RAW (0x7777).
+/**
+ * SBP class for message MSG_SBAS_RAW (0x7777).
  *
- * You can have MSG_SBAS_RAW inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SBAS_RAW inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This message is sent once per second per SBAS satellite. ME checks the
- * parity of the data block and sends only blocks that pass the check. */
-
+ * <p>This message is sent once per second per SBAS satellite. ME checks the parity of the data
+ * block and sends only blocks that pass the check.
+ */
 public class MsgSbasRaw extends SBPMessage {
     public static final int TYPE = 0x7777;
 
-    
     /** GNSS signal identifier. */
     public GnssSignal sid;
-    
+
     /** GPS time-of-week at the start of the data block. */
     public long tow;
-    
+
     /** SBAS message type (0-63) */
     public int message_type;
-    
+
     /** Raw SBAS data field of 212 bits (last byte padded with zeros). */
     public int[] data;
-    
 
-    public MsgSbasRaw (int sender) { super(sender, TYPE); }
-    public MsgSbasRaw () { super(TYPE); }
-    public MsgSbasRaw (SBPMessage msg) throws SBPBinaryException {
+    public MsgSbasRaw(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSbasRaw() {
+        super(TYPE);
+    }
+
+    public MsgSbasRaw(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
