@@ -1,4 +1,5 @@
 plugins {
+  id 'jacoco'
   id "org.sonarqube" version "3.3"
   // spotless pre v5 used to allow gradle 4 on ubuntu-latest
   id "com.diffplug.gradle.spotless" version "4.5.1"
@@ -41,15 +42,23 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnit()
+    finalizedBy jacocoTestReport
 }
 
 archivesBaseName = 'sbp'
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
 
 sonarqube {
   properties {
     property 'sonar.projectName', "libsbp-java"
     property "sonar.projectKey", "swift-nav_libsbp"
     property "sonar.organization", "swift-nav"
+    property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
     property "sonar.host.url", "https://sonarcloud.io"
   }
 }
