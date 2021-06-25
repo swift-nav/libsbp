@@ -1218,6 +1218,175 @@ class MsgPosLLHCov(SBP):
     d.update(j)
     return d
     
+SBP_MSG_POS_LLH_ACC = 0x0218
+class MsgPosLLHAcc(SBP):
+  """SBP class for message MSG_POS_LLH_ACC (0x0218).
+
+  You can have MSG_POS_LLH_ACC inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic coordinates and
+  the status (single point vs pseudo-absolute RTK) of the position solution as
+  well as the estimated horizontal, vertical, cross-track and along-track
+  errors.
+  The estimated errors are reported at a user-configurable confidence level.
+  The user-configured percentile is encoded in the percentile field.
+  The position information and Fix Mode flags should follow the MSG_POS_LLH
+  message. Since the covariance matrix is computed in the local-level North,
+  East, Down frame, the estimated error terms follow with that convention.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height above WGS84 ellipsoid
+  horizontal_accuracy : float
+    Estimated horizontal error at the user-configured confidence level; zero
+    implies invalid.
+  vertical_accuracy : float
+    Estimated vertical error at the user-configured confidence level; zero
+    implies invalid.
+  crosstrack_accuracy : float
+    Estimated cross-track error at the user-configured confidence level; zero
+    implies invalid.
+  alongtrack_accuracy : float
+    Estimated along-track error at the user-configured confidence level; zero
+    implies invalid.
+  hor_ell_semi_major : float
+    The semi major axis of the horizontal error ellipse at the user-configured
+    confidence level; zero implies invalid.
+  hor_ell_semi_minor : float
+    The semi minor axis of the horizontal error ellipse at the user-configured
+    confidence level; zero implies invalid.
+  hor_ell_orientation : float
+    The orientation of semi major axis of the horizontal error ellipse with
+    respect to North.
+  percentile : int
+    Configured percentile for the estimated position error
+  n_sats : int
+    Number of satellites used in solution.
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'horizontal_accuracy' / construct.Float32l,
+                   'vertical_accuracy' / construct.Float32l,
+                   'crosstrack_accuracy' / construct.Float32l,
+                   'alongtrack_accuracy' / construct.Float32l,
+                   'hor_ell_semi_major' / construct.Float32l,
+                   'hor_ell_semi_minor' / construct.Float32l,
+                   'hor_ell_orientation' / construct.Float32l,
+                   'percentile' / construct.Int8ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'lat',
+               'lon',
+               'height',
+               'horizontal_accuracy',
+               'vertical_accuracy',
+               'crosstrack_accuracy',
+               'alongtrack_accuracy',
+               'hor_ell_semi_major',
+               'hor_ell_semi_minor',
+               'hor_ell_orientation',
+               'percentile',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosLLHAcc,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosLLHAcc, self).__init__()
+      self.msg_type = SBP_MSG_POS_LLH_ACC
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.horizontal_accuracy = kwargs.pop('horizontal_accuracy')
+      self.vertical_accuracy = kwargs.pop('vertical_accuracy')
+      self.crosstrack_accuracy = kwargs.pop('crosstrack_accuracy')
+      self.alongtrack_accuracy = kwargs.pop('alongtrack_accuracy')
+      self.hor_ell_semi_major = kwargs.pop('hor_ell_semi_major')
+      self.hor_ell_semi_minor = kwargs.pop('hor_ell_semi_minor')
+      self.hor_ell_orientation = kwargs.pop('hor_ell_orientation')
+      self.percentile = kwargs.pop('percentile')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosLLHAcc.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLHAcc(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosLLHAcc._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosLLHAcc._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosLLHAcc._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosLLHAcc, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_BASELINE_ECEF = 0x020B
 class MsgBaselineECEF(SBP):
   """SBP class for message MSG_BASELINE_ECEF (0x020B).
@@ -4774,6 +4943,7 @@ msg_classes = {
   0x0214: MsgPosECEFCov,
   0x020A: MsgPosLLH,
   0x0211: MsgPosLLHCov,
+  0x0218: MsgPosLLHAcc,
   0x020B: MsgBaselineECEF,
   0x020C: MsgBaselineNED,
   0x020D: MsgVelECEF,

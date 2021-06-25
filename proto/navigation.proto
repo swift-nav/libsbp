@@ -230,6 +230,35 @@ message MsgPosLlhCov {
     uint32 flags = 12;
 }
 
+/** Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic coordinates
+ * and the status (single point vs pseudo-absolute RTK) of the position
+ * solution as well as the estimated horizontal, vertical, cross-track and
+ * along-track errors.
+ * The estimated errors are reported at a user-configurable confidence level.
+ * The user-configured percentile is encoded in the percentile field.
+ * The position information and Fix Mode flags should follow the MSG_POS_LLH
+ * message. Since the covariance matrix is computed in the local-level North,
+ * East, Down frame, the estimated error terms follow with that convention.
+ */
+message MsgPosLlhAcc {
+    uint32 tow = 1;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    float horizontal_accuracy = 5;
+    float vertical_accuracy = 6;
+    float crosstrack_accuracy = 7;
+    float alongtrack_accuracy = 8;
+    float hor_ell_semi_major = 9;
+    float hor_ell_semi_minor = 10;
+    float hor_ell_orientation = 11;
+    uint32 percentile = 12;
+    uint32 n_sats = 13;
+    uint32 flags = 14;
+}
+
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed

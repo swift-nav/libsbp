@@ -516,6 +516,86 @@ MsgPosLlhCov.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgPosLlhCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_POS_LLH_ACC (0x0218).
+ *
+ * This position solution message reports the absolute geodetic coordinates and the
+ * status (single point vs pseudo-absolute RTK) of the position solution as well as
+ * the estimated horizontal, vertical, cross-track and along-track errors. The
+ * estimated errors are reported at a user-configurable confidence level. The user-
+ * configured percentile is encoded in the percentile field. The position
+ * information and Fix Mode flags should follow the MSG_POS_LLH message. Since the
+ * covariance matrix is computed in the local-level North, East, Down frame, the
+ * estimated error terms follow with that convention.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field lat number (float, 8 bytes) Latitude
+ * @field lon number (float, 8 bytes) Longitude
+ * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
+ * @field horizontal_accuracy number (float, 4 bytes) Estimated horizontal error at the user-configured confidence level; zero implies
+ *   invalid.
+ * @field vertical_accuracy number (float, 4 bytes) Estimated vertical error at the user-configured confidence level; zero implies
+ *   invalid.
+ * @field crosstrack_accuracy number (float, 4 bytes) Estimated cross-track error at the user-configured confidence level; zero
+ *   implies invalid.
+ * @field alongtrack_accuracy number (float, 4 bytes) Estimated along-track error at the user-configured confidence level; zero
+ *   implies invalid.
+ * @field hor_ell_semi_major number (float, 4 bytes) The semi major axis of the horizontal error ellipse at the user-configured
+ *   confidence level; zero implies invalid.
+ * @field hor_ell_semi_minor number (float, 4 bytes) The semi minor axis of the horizontal error ellipse at the user-configured
+ *   confidence level; zero implies invalid.
+ * @field hor_ell_orientation number (float, 4 bytes) The orientation of semi major axis of the horizontal error ellipse with respect
+ *   to North.
+ * @field percentile number (unsigned 8-bit int, 1 byte) Configured percentile for the estimated position error
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgPosLlhAcc = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_POS_LLH_ACC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgPosLlhAcc.prototype = Object.create(SBP.prototype);
+MsgPosLlhAcc.prototype.messageType = "MSG_POS_LLH_ACC";
+MsgPosLlhAcc.prototype.msg_type = 0x0218;
+MsgPosLlhAcc.prototype.constructor = MsgPosLlhAcc;
+MsgPosLlhAcc.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .doublele('lat')
+  .doublele('lon')
+  .doublele('height')
+  .floatle('horizontal_accuracy')
+  .floatle('vertical_accuracy')
+  .floatle('crosstrack_accuracy')
+  .floatle('alongtrack_accuracy')
+  .floatle('hor_ell_semi_major')
+  .floatle('hor_ell_semi_minor')
+  .floatle('hor_ell_orientation')
+  .uint8('percentile')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgPosLlhAcc.prototype.fieldSpec = [];
+MsgPosLlhAcc.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['horizontal_accuracy', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['vertical_accuracy', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['crosstrack_accuracy', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['alongtrack_accuracy', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['hor_ell_semi_major', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['hor_ell_semi_minor', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['hor_ell_orientation', 'writeFloatLE', 4]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['percentile', 'writeUInt8', 1]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_BASELINE_ECEF (0x020B).
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed (ECEF)
@@ -1983,6 +2063,8 @@ module.exports = {
   MsgPosLlh: MsgPosLlh,
   0x0211: MsgPosLlhCov,
   MsgPosLlhCov: MsgPosLlhCov,
+  0x0218: MsgPosLlhAcc,
+  MsgPosLlhAcc: MsgPosLlhAcc,
   0x020B: MsgBaselineEcef,
   MsgBaselineEcef: MsgBaselineEcef,
   0x020C: MsgBaselineNed,

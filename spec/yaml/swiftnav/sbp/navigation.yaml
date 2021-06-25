@@ -604,6 +604,108 @@ definitions:
                       - 5: Dead Reckoning
                       - 6: SBAS Position
 
+
+ - MSG_POS_LLH_ACC:
+    id: 0x0218
+    short_desc: Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic coordinates
+      and the status (single point vs pseudo-absolute RTK) of the position
+      solution as well as the estimated horizontal, vertical, cross-track and
+      along-track errors.
+
+      The estimated errors are reported at a user-configurable confidence level.
+      The user-configured percentile is encoded in the percentile field.
+
+      The position information and Fix Mode flags should follow the MSG_POS_LLH
+      message. Since the covariance matrix is computed in the local-level North,
+      East, Down frame, the estimated error terms follow with that convention.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - horizontal_accuracy:
+            type: float
+            units: m
+            desc: Estimated horizontal error at the user-configured confidence level; zero implies invalid.
+        - vertical_accuracy:
+            type: float
+            units: m
+            desc: Estimated vertical error at the user-configured confidence level; zero implies invalid.
+        - crosstrack_accuracy:
+            type: float
+            units: m
+            desc: Estimated cross-track error at the user-configured confidence level; zero implies invalid.
+        - alongtrack_accuracy:
+            type: float
+            units: m
+            desc: Estimated along-track error at the user-configured confidence level; zero implies invalid.
+        - hor_ell_semi_major:
+            type: float
+            units: m
+            desc: The semi major axis of the horizontal error ellipse at the user-configured confidence level; zero implies invalid.
+        - hor_ell_semi_minor:
+            type: float
+            units: m
+            desc: The semi minor axis of the horizontal error ellipse at the user-configured confidence level; zero implies invalid.
+        - hor_ell_orientation:
+            type: float
+            units: deg
+            desc: The orientation of semi major axis of the horizontal error ellipse with respect to North.
+        - percentile:
+            type: u8
+            desc: Configured percentile for the estimated position error
+            fields:
+              - 0-7:
+                  desc: Configured percentile for the estimated position error
+                  values:
+                    - 0: no scaling
+                    - 1: 68.27%
+                    - 2: 95.45%
+                    - 3: 99.74%
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
  - MSG_BASELINE_ECEF:
     id: 0x020B
     short_desc: Baseline Position in ECEF
