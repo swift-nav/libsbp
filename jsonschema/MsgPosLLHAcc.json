@@ -1,0 +1,50 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgPosLLHAcc",
+  "title":"MsgPosLLHAcc",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the estimated horizontal, vertical, cross-track and along-track errors.,\nThe estimated errors are reported at a user-configurable confidence level. The user-configured percentile is encoded in the percentile field.,\nThe position information and Fix Mode flags should follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level North, East, Down frame, the estimated error terms follow with that convention.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "lat": {"type": "number"},
+    "lon": {"type": "number"},
+    "height": {"type": "number"},
+    "horizontal_accuracy": {"type": "number"},
+    "vertical_accuracy": {"type": "number"},
+    "crosstrack_accuracy": {"type": "number"},
+    "alongtrack_accuracy": {"type": "number"},
+    "hor_ell_semi_major": {"type": "number"},
+    "hor_ell_semi_minor": {"type": "number"},
+    "hor_ell_orientation": {"type": "number"},
+    "percentile": {"type": "integer"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "lat",
+    "lon",
+    "height",
+    "horizontal_accuracy",
+    "vertical_accuracy",
+    "crosstrack_accuracy",
+    "alongtrack_accuracy",
+    "hor_ell_semi_major",
+    "hor_ell_semi_minor",
+    "hor_ell_orientation",
+    "percentile",
+    "n_sats",
+    "flags"
+  ]
+}
