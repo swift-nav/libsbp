@@ -13,10 +13,9 @@
 Generator for c tests target.
 """
 
-from sbpg.targets.c import convert
+from sbpg.targets.c import convert_packed, convert_unpacked, convert_unpacked_union
 from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
-from sbpg.targets.legacy_c import mk_id as mk_packed_id
-from sbpg.targets.legacy_c import mk_size
+from sbpg.targets.legacy_c import mk_id as mk_packed_id, mk_size, convert, commentify
 from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "c/test/v4/sbp_c_test.c.j2"
