@@ -24,7 +24,7 @@ print("Start: building random data...")
 
 for _ in range(blob_count):
     blob = bytes(b'').join(
-        (chr(int(0xFF * random.random()) & 0xFF)) for X in range(blob_size))
+        (chr(int(0xFF * random.random()) & 0xFF)) for _ in range(blob_size))
     blobs.append(blob)
 
 print("End: building random data.")

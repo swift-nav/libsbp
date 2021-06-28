@@ -401,6 +401,20 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrCodeBiases {
+    const MESSAGE_TYPE: u16 = 1505;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_CODE_BIASES";
+}
+impl TryFrom<super::SBP> for MsgSsrCodeBiases {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrCodeBiases(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
     #[allow(unused_variables)]
@@ -484,6 +498,20 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrGriddedCorrection {
+    const MESSAGE_TYPE: u16 = 1532;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION";
+}
+impl TryFrom<super::SBP> for MsgSsrGriddedCorrection {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrGriddedCorrection(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
     #[allow(unused_variables)]
@@ -557,6 +585,20 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSsrGriddedCorrectionDepA {
+    const MESSAGE_TYPE: u16 = 1530;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrGriddedCorrectionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -634,6 +676,20 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrGriddedCorrectionNoStdDepA {
+    const MESSAGE_TYPE: u16 = 1520;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionNoStdDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrGriddedCorrectionNoStdDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStdDepA {
     #[allow(unused_variables)]
@@ -704,6 +760,20 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSsrGridDefinitionDepA {
+    const MESSAGE_TYPE: u16 = 1525;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_GRID_DEFINITION_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgSsrGridDefinitionDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrGridDefinitionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -813,6 +883,20 @@ impl super::SBPMessage for MsgSsrOrbitClock {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSsrOrbitClock {
+    const MESSAGE_TYPE: u16 = 1501;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK";
+}
+impl TryFrom<super::SBP> for MsgSsrOrbitClock {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrOrbitClock(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -942,6 +1026,20 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrOrbitClockDepA {
+    const MESSAGE_TYPE: u16 = 1500;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgSsrOrbitClockDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrOrbitClockDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
     #[allow(unused_variables)]
@@ -1062,6 +1160,20 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrPhaseBiases {
+    const MESSAGE_TYPE: u16 = 1510;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_PHASE_BIASES";
+}
+impl TryFrom<super::SBP> for MsgSsrPhaseBiases {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrPhaseBiases(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
     #[allow(unused_variables)]
@@ -1138,6 +1250,20 @@ impl super::SBPMessage for MsgSsrSatelliteApc {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrSatelliteApc {
+    const MESSAGE_TYPE: u16 = 1540;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_SATELLITE_APC";
+}
+impl TryFrom<super::SBP> for MsgSsrSatelliteApc {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrSatelliteApc(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
     #[allow(unused_variables)]
@@ -1210,6 +1336,20 @@ impl super::SBPMessage for MsgSsrStecCorrection {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSsrStecCorrection {
+    const MESSAGE_TYPE: u16 = 1531;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION";
+}
+impl TryFrom<super::SBP> for MsgSsrStecCorrection {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrStecCorrection(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
     #[allow(unused_variables)]
@@ -1273,6 +1413,20 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSsrStecCorrectionDepA {
+    const MESSAGE_TYPE: u16 = 1515;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION_DEP_A";
+}
+impl TryFrom<super::SBP> for MsgSsrStecCorrectionDepA {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrStecCorrectionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1407,6 +1561,20 @@ impl super::SBPMessage for MsgSsrTileDefinition {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSsrTileDefinition {
+    const MESSAGE_TYPE: u16 = 1526;
+    const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION";
+}
+impl TryFrom<super::SBP> for MsgSsrTileDefinition {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSsrTileDefinition(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

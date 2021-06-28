@@ -78,7 +78,7 @@ def _assert_unsorted_equal(a, b):
       pass
     if not hasattr(unittest.TestCase, "assertCountEqual"):
       def assertCountEqual(self, *args, **kw):
-        return self.assertItemsEqual(*args, **kw)
+        return self.assertItemsEqual(*args, **kw)  # pylint: disable=no-member
   case = UnitTestCase()
   case.assertCountEqual(a, b)
 

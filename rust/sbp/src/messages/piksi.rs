@@ -143,6 +143,20 @@ impl super::SBPMessage for MsgAlmanac {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgAlmanac {
+    const MESSAGE_TYPE: u16 = 105;
+    const MESSAGE_NAME: &'static str = "MSG_ALMANAC";
+}
+impl TryFrom<super::SBP> for MsgAlmanac {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgAlmanac(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgAlmanac {
     #[allow(unused_variables)]
@@ -209,6 +223,20 @@ impl super::SBPMessage for MsgCellModemStatus {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgCellModemStatus {
+    const MESSAGE_TYPE: u16 = 190;
+    const MESSAGE_NAME: &'static str = "MSG_CELL_MODEM_STATUS";
+}
+impl TryFrom<super::SBP> for MsgCellModemStatus {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCellModemStatus(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -284,6 +312,20 @@ impl super::SBPMessage for MsgCommandOutput {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgCommandOutput {
+    const MESSAGE_TYPE: u16 = 188;
+    const MESSAGE_NAME: &'static str = "MSG_COMMAND_OUTPUT";
+}
+impl TryFrom<super::SBP> for MsgCommandOutput {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCommandOutput(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgCommandOutput {
     #[allow(unused_variables)]
@@ -353,6 +395,20 @@ impl super::SBPMessage for MsgCommandReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgCommandReq {
+    const MESSAGE_TYPE: u16 = 184;
+    const MESSAGE_NAME: &'static str = "MSG_COMMAND_REQ";
+}
+impl TryFrom<super::SBP> for MsgCommandReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCommandReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -425,6 +481,20 @@ impl super::SBPMessage for MsgCommandResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgCommandResp {
+    const MESSAGE_TYPE: u16 = 185;
+    const MESSAGE_NAME: &'static str = "MSG_COMMAND_RESP";
+}
+impl TryFrom<super::SBP> for MsgCommandResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCommandResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgCommandResp {
     #[allow(unused_variables)]
@@ -490,6 +560,20 @@ impl super::SBPMessage for MsgCwResults {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgCwResults {
+    const MESSAGE_TYPE: u16 = 192;
+    const MESSAGE_NAME: &'static str = "MSG_CW_RESULTS";
+}
+impl TryFrom<super::SBP> for MsgCwResults {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCwResults(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgCwResults {
     #[allow(unused_variables)]
@@ -547,6 +631,20 @@ impl super::SBPMessage for MsgCwStart {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgCwStart {
+    const MESSAGE_TYPE: u16 = 193;
+    const MESSAGE_NAME: &'static str = "MSG_CW_START";
+}
+impl TryFrom<super::SBP> for MsgCwStart {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgCwStart(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -621,6 +719,20 @@ impl super::SBPMessage for MsgDeviceMonitor {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgDeviceMonitor {
+    const MESSAGE_TYPE: u16 = 181;
+    const MESSAGE_NAME: &'static str = "MSG_DEVICE_MONITOR";
+}
+impl TryFrom<super::SBP> for MsgDeviceMonitor {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgDeviceMonitor(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -704,6 +816,20 @@ impl super::SBPMessage for MsgFrontEndGain {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgFrontEndGain {
+    const MESSAGE_TYPE: u16 = 191;
+    const MESSAGE_NAME: &'static str = "MSG_FRONT_END_GAIN";
+}
+impl TryFrom<super::SBP> for MsgFrontEndGain {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgFrontEndGain(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgFrontEndGain {
     #[allow(unused_variables)]
@@ -772,6 +898,20 @@ impl super::SBPMessage for MsgIarState {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgIarState {
+    const MESSAGE_TYPE: u16 = 25;
+    const MESSAGE_NAME: &'static str = "MSG_IAR_STATE";
+}
+impl TryFrom<super::SBP> for MsgIarState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgIarState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgIarState {
     #[allow(unused_variables)]
@@ -831,6 +971,20 @@ impl super::SBPMessage for MsgInitBaseDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgInitBaseDep {
+    const MESSAGE_TYPE: u16 = 35;
+    const MESSAGE_NAME: &'static str = "MSG_INIT_BASE_DEP";
+}
+impl TryFrom<super::SBP> for MsgInitBaseDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgInitBaseDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -895,6 +1049,20 @@ impl super::SBPMessage for MsgMaskSatellite {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgMaskSatellite {
+    const MESSAGE_TYPE: u16 = 43;
+    const MESSAGE_NAME: &'static str = "MSG_MASK_SATELLITE";
+}
+impl TryFrom<super::SBP> for MsgMaskSatellite {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgMaskSatellite(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -966,6 +1134,20 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgMaskSatelliteDep {
+    const MESSAGE_TYPE: u16 = 27;
+    const MESSAGE_NAME: &'static str = "MSG_MASK_SATELLITE_DEP";
+}
+impl TryFrom<super::SBP> for MsgMaskSatelliteDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgMaskSatelliteDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgMaskSatelliteDep {
     #[allow(unused_variables)]
@@ -1032,6 +1214,20 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgNetworkBandwidthUsage {
+    const MESSAGE_TYPE: u16 = 189;
+    const MESSAGE_NAME: &'static str = "MSG_NETWORK_BANDWIDTH_USAGE";
+}
+impl TryFrom<super::SBP> for MsgNetworkBandwidthUsage {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgNetworkBandwidthUsage(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgNetworkBandwidthUsage {
     #[allow(unused_variables)]
@@ -1092,6 +1288,20 @@ impl super::SBPMessage for MsgNetworkStateReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgNetworkStateReq {
+    const MESSAGE_TYPE: u16 = 186;
+    const MESSAGE_NAME: &'static str = "MSG_NETWORK_STATE_REQ";
+}
+impl TryFrom<super::SBP> for MsgNetworkStateReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgNetworkStateReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1176,6 +1386,20 @@ impl super::SBPMessage for MsgNetworkStateResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgNetworkStateResp {
+    const MESSAGE_TYPE: u16 = 187;
+    const MESSAGE_NAME: &'static str = "MSG_NETWORK_STATE_RESP";
+}
+impl TryFrom<super::SBP> for MsgNetworkStateResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgNetworkStateResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgNetworkStateResp {
     #[allow(unused_variables)]
@@ -1254,6 +1478,20 @@ impl super::SBPMessage for MsgReset {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgReset {
+    const MESSAGE_TYPE: u16 = 182;
+    const MESSAGE_NAME: &'static str = "MSG_RESET";
+}
+impl TryFrom<super::SBP> for MsgReset {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgReset(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgReset {
     #[allow(unused_variables)]
@@ -1313,6 +1551,20 @@ impl super::SBPMessage for MsgResetDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgResetDep {
+    const MESSAGE_TYPE: u16 = 178;
+    const MESSAGE_NAME: &'static str = "MSG_RESET_DEP";
+}
+impl TryFrom<super::SBP> for MsgResetDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgResetDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1376,6 +1628,20 @@ impl super::SBPMessage for MsgResetFilters {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgResetFilters {
+    const MESSAGE_TYPE: u16 = 34;
+    const MESSAGE_NAME: &'static str = "MSG_RESET_FILTERS";
+}
+impl TryFrom<super::SBP> for MsgResetFilters {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgResetFilters(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgResetFilters {
     #[allow(unused_variables)]
@@ -1436,6 +1702,20 @@ impl super::SBPMessage for MsgSetTime {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSetTime {
+    const MESSAGE_TYPE: u16 = 104;
+    const MESSAGE_NAME: &'static str = "MSG_SET_TIME";
+}
+impl TryFrom<super::SBP> for MsgSetTime {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSetTime(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1514,6 +1794,20 @@ impl super::SBPMessage for MsgSpecan {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSpecan {
+    const MESSAGE_TYPE: u16 = 81;
+    const MESSAGE_NAME: &'static str = "MSG_SPECAN";
+}
+impl TryFrom<super::SBP> for MsgSpecan {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSpecan(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1610,6 +1904,20 @@ impl super::SBPMessage for MsgSpecanDep {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSpecanDep {
+    const MESSAGE_TYPE: u16 = 80;
+    const MESSAGE_NAME: &'static str = "MSG_SPECAN_DEP";
+}
+impl TryFrom<super::SBP> for MsgSpecanDep {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSpecanDep(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSpecanDep {
     #[allow(unused_variables)]
@@ -1693,6 +2001,20 @@ impl super::SBPMessage for MsgThreadState {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgThreadState {
+    const MESSAGE_TYPE: u16 = 23;
+    const MESSAGE_NAME: &'static str = "MSG_THREAD_STATE";
+}
+impl TryFrom<super::SBP> for MsgThreadState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgThreadState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -1782,6 +2104,20 @@ impl super::SBPMessage for MsgUartState {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgUartState {
+    const MESSAGE_TYPE: u16 = 29;
+    const MESSAGE_NAME: &'static str = "MSG_UART_STATE";
+}
+impl TryFrom<super::SBP> for MsgUartState {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUartState(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgUartState {
     #[allow(unused_variables)]
@@ -1861,6 +2197,20 @@ impl super::SBPMessage for MsgUartStateDepa {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgUartStateDepa {
+    const MESSAGE_TYPE: u16 = 24;
+    const MESSAGE_NAME: &'static str = "MSG_UART_STATE_DEPA";
+}
+impl TryFrom<super::SBP> for MsgUartStateDepa {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUartStateDepa(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

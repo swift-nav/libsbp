@@ -33,7 +33,7 @@ def commentify(environment: Environment,
   """
   Builds a comment.
   """
-  return indented_wordwrap(environment, value, indent=" * ", first=True, blank=True, markdown=True)
+  return indented_wordwrap(environment, value, indent=" * ", first=True, markdown=True)
 
 
 @pass_environment
@@ -47,7 +47,7 @@ def commentify_field(environment: Environment,
     return
   f_size_len = len(mk_size(field).ljust(message.max_fid_len+4))
   indent = len("  ") + f_size_len + len(" ") + len(mk_id(field)) + len(" /**< ")
-  return indented_wordwrap(environment, value, indent=" " * indent, first=False, blank=False)
+  return indented_wordwrap(environment, value, indent=" " * indent, first=False)
 
 
 def extensions(includes):

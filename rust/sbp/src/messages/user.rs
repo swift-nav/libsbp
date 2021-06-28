@@ -76,6 +76,20 @@ impl super::SBPMessage for MsgUserData {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgUserData {
+    const MESSAGE_TYPE: u16 = 2048;
+    const MESSAGE_NAME: &'static str = "MSG_USER_DATA";
+}
+impl TryFrom<super::SBP> for MsgUserData {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgUserData(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgUserData {
     #[allow(unused_variables)]

@@ -103,6 +103,20 @@ impl super::SBPMessage for MsgOdometry {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
+impl super::ConcreteMessage for MsgOdometry {
+    const MESSAGE_TYPE: u16 = 2307;
+    const MESSAGE_NAME: &'static str = "MSG_ODOMETRY";
+}
+impl TryFrom<super::SBP> for MsgOdometry {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgOdometry(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgOdometry {
     #[allow(unused_variables)]
@@ -209,6 +223,20 @@ impl super::SBPMessage for MsgWheeltick {
             Err(e) => return Some(Err(e.into())),
         };
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::ConcreteMessage for MsgWheeltick {
+    const MESSAGE_TYPE: u16 = 2308;
+    const MESSAGE_NAME: &'static str = "MSG_WHEELTICK";
+}
+impl TryFrom<super::SBP> for MsgWheeltick {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgWheeltick(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

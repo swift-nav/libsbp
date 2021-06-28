@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,40 +8,40 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.settings;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/settings.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SETTINGS_READ_BY_INDEX_REQ (0x00A2).
+/**
+ * SBP class for message MSG_SETTINGS_READ_BY_INDEX_REQ (0x00A2).
  *
- * You can have MSG_SETTINGS_READ_BY_INDEX_REQ inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SETTINGS_READ_BY_INDEX_REQ inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * The settings message for iterating through the settings values. A device
- * will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP". */
-
+ * <p>The settings message for iterating through the settings values. A device will respond to this
+ * message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
+ */
 public class MsgSettingsReadByIndexReq extends SBPMessage {
     public static final int TYPE = 0x00A2;
 
-    
-    /** An index into the device settings, with values ranging from 0 to
-      * length(settings). */
+    /** An index into the device settings, with values ranging from 0 to length(settings). */
     public int index;
-    
 
-    public MsgSettingsReadByIndexReq (int sender) { super(sender, TYPE); }
-    public MsgSettingsReadByIndexReq () { super(TYPE); }
-    public MsgSettingsReadByIndexReq (SBPMessage msg) throws SBPBinaryException {
+    public MsgSettingsReadByIndexReq(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSettingsReadByIndexReq() {
+        super(TYPE);
+    }
+
+    public MsgSettingsReadByIndexReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

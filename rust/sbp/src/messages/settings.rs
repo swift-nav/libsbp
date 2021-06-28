@@ -97,6 +97,20 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSettingsReadByIndexDone {
+    const MESSAGE_TYPE: u16 = 166;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_DONE";
+}
+impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsReadByIndexDone(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
     #[allow(unused_variables)]
@@ -157,6 +171,20 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSettingsReadByIndexReq {
+    const MESSAGE_TYPE: u16 = 162;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_REQ";
+}
+impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsReadByIndexReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -237,6 +265,20 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSettingsReadByIndexResp {
+    const MESSAGE_TYPE: u16 = 167;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_RESP";
+}
+impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsReadByIndexResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
     #[allow(unused_variables)]
@@ -311,6 +353,20 @@ impl super::SBPMessage for MsgSettingsReadReq {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSettingsReadReq {
+    const MESSAGE_TYPE: u16 = 164;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_REQ";
+}
+impl TryFrom<super::SBP> for MsgSettingsReadReq {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsReadReq(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
     #[allow(unused_variables)]
@@ -381,6 +437,20 @@ impl super::SBPMessage for MsgSettingsReadResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSettingsReadResp {
+    const MESSAGE_TYPE: u16 = 165;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_RESP";
+}
+impl TryFrom<super::SBP> for MsgSettingsReadResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsReadResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
     #[allow(unused_variables)]
@@ -446,6 +516,20 @@ impl super::SBPMessage for MsgSettingsRegister {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSettingsRegister {
+    const MESSAGE_TYPE: u16 = 174;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER";
+}
+impl TryFrom<super::SBP> for MsgSettingsRegister {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsRegister(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -520,6 +604,20 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
         crate::write_frame(self, frame)
     }
 }
+impl super::ConcreteMessage for MsgSettingsRegisterResp {
+    const MESSAGE_TYPE: u16 = 431;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER_RESP";
+}
+impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsRegisterResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
 
 impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
     #[allow(unused_variables)]
@@ -582,6 +680,20 @@ impl super::SBPMessage for MsgSettingsSave {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSettingsSave {
+    const MESSAGE_TYPE: u16 = 161;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_SAVE";
+}
+impl TryFrom<super::SBP> for MsgSettingsSave {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsSave(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -649,6 +761,20 @@ impl super::SBPMessage for MsgSettingsWrite {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSettingsWrite {
+    const MESSAGE_TYPE: u16 = 160;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE";
+}
+impl TryFrom<super::SBP> for MsgSettingsWrite {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsWrite(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 
@@ -723,6 +849,20 @@ impl super::SBPMessage for MsgSettingsWriteResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgSettingsWriteResp {
+    const MESSAGE_TYPE: u16 = 175;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE_RESP";
+}
+impl TryFrom<super::SBP> for MsgSettingsWriteResp {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgSettingsWriteResp(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
     }
 }
 

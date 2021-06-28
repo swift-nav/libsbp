@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,8 +10,8 @@
  */
 package com.swiftnav.sbp.client;
 
-import com.swiftnav.sbp.SBPMessage;
 
+import com.swiftnav.sbp.SBPMessage;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -26,8 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Provide an interface for queueing and filtering messages.
- */
+/** Provide an interface for queueing and filtering messages. */
 public class SBPHandler implements Iterable<SBPMessage> {
     private Iterable<SBPMessage> source;
     private static final int THREAD_WAIT_TIMEOUT = 1000;
@@ -60,15 +58,14 @@ public class SBPHandler implements Iterable<SBPMessage> {
 
     /** Start the listener/dispatch thread */
     public void start() {
-        assert(receiveThread == null);
+        assert (receiveThread == null);
         receiveThread = new ReceiveThread();
         receiveThread.start();
     }
 
     /** Request to stop the listener/dispatch thread */
     public void stop() {
-        if (receiveThread == null)
-            return;
+        if (receiveThread == null) return;
 
         receiveThread.finish();
         try {
@@ -78,7 +75,6 @@ public class SBPHandler implements Iterable<SBPMessage> {
         }
         receiveThread = null;
     }
-
 
     public void addCallback(Integer id, SBPCallback cb) {
         synchronized (callbacks) {
@@ -114,8 +110,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
             addCallback(null, cb);
             return;
         }
-        for (int id : ids)
-            addCallback(id, cb);
+        for (int id : ids) addCallback(id, cb);
     }
 
     public void removeCallback(SBPCallback cb) {
@@ -137,17 +132,13 @@ public class SBPHandler implements Iterable<SBPMessage> {
         @Override
         public void run() {
             for (SBPMessage msg : source) {
-                if (stopFlag)
-                    break;
+                if (stopFlag) break;
 
-                if (msg == null)
-                    continue;
+                if (msg == null) continue;
 
                 synchronized (callbacks) {
-                    if (callbacks.containsKey(msg.type))
-                        dispatch(msg.type, msg);
-                    if (callbacks.containsKey(null))
-                        dispatch(null, msg);
+                    if (callbacks.containsKey(msg.type)) dispatch(msg.type, msg);
+                    if (callbacks.containsKey(null)) dispatch(null, msg);
                 }
             }
 
@@ -160,7 +151,6 @@ public class SBPHandler implements Iterable<SBPMessage> {
                     }
                 }
             }
-
         }
 
         void finish() {

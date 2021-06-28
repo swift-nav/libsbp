@@ -13,9 +13,8 @@
 Generator for java tests target.
 """
 
-from sbpg.targets.common import *
-from sbpg.targets.java import *
-from sbpg.targets.templating import *
+from sbpg.targets.common import array_type, b64_decode, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "MessageTest.java.j2"
 

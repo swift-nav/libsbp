@@ -28,7 +28,6 @@ var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var GPSTime = require("./gnss").GPSTime;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
 var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;

@@ -21,7 +21,7 @@ var utils = require('./utils');
 var yamlTestFiles = utils.getYamlTests();
 
 describe('test packages based on YAML test files', function () {
-  yamlTestFiles.map(function (filename) {
+  yamlTestFiles.forEach(function (filename) {
     describe(filename, function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,53 +8,54 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.linux;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/linux.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
+/**
+ * SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
  *
- * You can have MSG_LINUX_SYS_STATE_DEP_A inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_LINUX_SYS_STATE_DEP_A inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * This presents a summary of CPU and memory utilization. */
-
+ * <p>This presents a summary of CPU and memory utilization.
+ */
 public class MsgLinuxSysStateDepA extends SBPMessage {
     public static final int TYPE = 0x7F02;
 
-    
     /** total system memory */
     public int mem_total;
-    
+
     /** percent of total cpu currently utilized */
     public int pcpu;
-    
+
     /** percent of total memory currently utilized */
     public int pmem;
-    
+
     /** number of processes that started during collection phase */
     public int procs_starting;
-    
+
     /** number of processes that stopped during collection phase */
     public int procs_stopping;
-    
+
     /** the count of processes on the system */
     public int pid_count;
-    
 
-    public MsgLinuxSysStateDepA (int sender) { super(sender, TYPE); }
-    public MsgLinuxSysStateDepA () { super(TYPE); }
-    public MsgLinuxSysStateDepA (SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxSysStateDepA(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgLinuxSysStateDepA() {
+        super(TYPE);
+    }
+
+    public MsgLinuxSysStateDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

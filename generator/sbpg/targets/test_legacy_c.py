@@ -13,9 +13,9 @@
 Generator for c tests target.
 """
 
-from sbpg.targets.templating import *
-from sbpg.targets.legacy_c import *
-from sbpg.targets.common import *
+from sbpg.targets.legacy_c import convert
+from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "c/test/legacy/sbp_c_test.c.j2"
 CPP_TEST_TEMPLATE_NAME = "c/test/legacy/sbp_cpp_test.cc.j2"
@@ -26,6 +26,7 @@ def str_escape(value):
 JENV.filters['str_escape'] = str_escape
 JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
+JENV.filters['convert'] = convert
 
 JENV.tests['string_type'] = string_type
 JENV.tests['array_type'] = array_type

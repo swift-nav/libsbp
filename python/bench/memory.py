@@ -14,7 +14,7 @@ from guppy import hpy
 def sbp_nav():
   import sbp.navigation as nav
   ll = []
-  for i in range(0, 100000):
+  for _ in range(0, 100000):
     ll.append(nav.MsgBaselineECEF(sender=0x42,
                                   tow=100,
                                   x=10,

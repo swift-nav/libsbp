@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,8 +10,8 @@
  */
 package com.swiftnav.sbp.drivers;
 
-import com.swiftnav.sbp.client.SBPDriver;
 
+import com.swiftnav.sbp.client.SBPDriver;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -37,8 +36,7 @@ public class SBPDriverUDP implements SBPDriver {
     @Override
     public byte[] read(int len) throws IOException {
         synchronized (this) {
-            if (socket == null)
-                openSocket();
+            if (socket == null) openSocket();
         }
 
         while (rxdata.length < len) {
@@ -57,8 +55,7 @@ public class SBPDriverUDP implements SBPDriver {
     @Override
     public void write(byte[] data) throws IOException {
         synchronized (this) {
-            if (socket == null)
-                openSocket();
+            if (socket == null) openSocket();
         }
 
         DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -68,6 +65,6 @@ public class SBPDriverUDP implements SBPDriver {
     private void openSocket() throws IOException {
         socket = new DatagramSocket();
         socket.connect(InetAddress.getByName(server), port);
-        socket.send(new DatagramPacket(new byte[]{0}, 1));
+        socket.send(new DatagramPacket(new byte[] {0}, 1));
     }
 }

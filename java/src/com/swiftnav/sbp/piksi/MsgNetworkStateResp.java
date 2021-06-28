@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,61 +8,63 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
+/**
+ * SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
  *
- * You can have MSG_NETWORK_STATE_RESP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_NETWORK_STATE_RESP inherent its fields directly from an inherited SBP object,
+ * or construct it inline using a dict of its fields.
  *
- * The state of a network interface on the Piksi. Data is made to reflect
- * output of ifaddrs struct returned by getifaddrs in c. */
-
+ * <p>The state of a network interface on the Piksi. Data is made to reflect output of ifaddrs
+ * struct returned by getifaddrs in c.
+ */
 public class MsgNetworkStateResp extends SBPMessage {
     public static final int TYPE = 0x00BB;
 
-    
     /** IPv4 address (all zero when unavailable) */
     public int[] ipv4_address;
-    
+
     /** IPv4 netmask CIDR notation */
     public int ipv4_mask_size;
-    
+
     /** IPv6 address (all zero when unavailable) */
     public int[] ipv6_address;
-    
+
     /** IPv6 netmask CIDR notation */
     public int ipv6_mask_size;
-    
+
     /** Number of Rx bytes */
     public long rx_bytes;
-    
+
     /** Number of Tx bytes */
     public long tx_bytes;
-    
+
     /** Interface Name */
     public String interface_name;
-    
+
     /** Interface flags from SIOCGIFFLAGS */
     public long flags;
-    
 
-    public MsgNetworkStateResp (int sender) { super(sender, TYPE); }
-    public MsgNetworkStateResp () { super(TYPE); }
-    public MsgNetworkStateResp (SBPMessage msg) throws SBPBinaryException {
+    public MsgNetworkStateResp(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgNetworkStateResp() {
+        super(TYPE);
+    }
+
+    public MsgNetworkStateResp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

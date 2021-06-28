@@ -29,7 +29,7 @@ from sbp.utils import fmt_repr
 
 ((*- for (file, ident) in include *))
   ((*- if ident is list *))
-from (((module_path))).(((file))) import ((* for name in ident -*))((( name )))((*- if not loop.last *)), ((* endif -*))((*- endfor *))  # noqa
+from (((module_path))).(((file))) import ((* for name in ident -*))((( name )))((*- if not loop.last *)), ((* endif -*))((*- endfor *))
   ((*- else *))
 from (((module_path))).(((file))) import *
   ((*- endif *))

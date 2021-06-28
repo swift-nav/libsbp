@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,44 +8,44 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
+/**
+ * SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
  *
- * You can have MSG_COMMAND_OUTPUT inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_COMMAND_OUTPUT inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * Returns the standard output and standard error of the command requested by
- * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
- * the correct command. */
-
+ * <p>Returns the standard output and standard error of the command requested by MSG_COMMAND_REQ.
+ * The sequence number can be used to filter for filtering the correct command.
+ */
 public class MsgCommandOutput extends SBPMessage {
     public static final int TYPE = 0x00BC;
 
-    
     /** Sequence number */
     public long sequence;
-    
+
     /** Line of standard output or standard error */
     public String line;
-    
 
-    public MsgCommandOutput (int sender) { super(sender, TYPE); }
-    public MsgCommandOutput () { super(TYPE); }
-    public MsgCommandOutput (SBPMessage msg) throws SBPBinaryException {
+    public MsgCommandOutput(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgCommandOutput() {
+        super(TYPE);
+    }
+
+    public MsgCommandOutput(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

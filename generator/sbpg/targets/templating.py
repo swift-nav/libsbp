@@ -36,7 +36,6 @@ INCLUDE_MAP = {
         "GnssSignal",
         "GnssSignalDep",
         "GPSTime",
-        "GPSTime",
         "GPSTimeDep",
         "GPSTimeSec",
         "SvId",
@@ -54,7 +53,6 @@ def indented_wordwrap(
     indent: str,
     width: int = None,
     first: bool = True,
-    blank: bool = True,
     markdown: bool = False,
 ):
     """
@@ -73,8 +71,8 @@ def indented_wordwrap(
             environment,
             value,
             width=width,
-            break_on_hyphens=False,
             break_long_words=False,
+            break_on_hyphens=False,
         )
     else:
         # While breaking on long lines is helpful for the Jinja output,
@@ -84,10 +82,10 @@ def indented_wordwrap(
             environment,
             value,
             width=width,
-            break_on_hyphens=True,
             break_long_words=False,
+            break_on_hyphens=True,
         )
-    # If the indent contains characters, it sould be shown for blank lines.
+    # If the indent contains characters, it should be shown for blank lines.
     blank = indent.strip() != ""
     value = do_indent(value, indent, first=first, blank=blank)
     value = "\n".join([line.rstrip() for line in value.splitlines()])

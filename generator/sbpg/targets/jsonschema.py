@@ -98,7 +98,7 @@ def render_source(output_dir, package_spec):
     for msg in package_spec.definitions:
         if 'Dep' in msg.identifier or 'DEP' in msg.identifier:
             continue
-        msg_name = classnameify(msg.identifier) if msg.sbp_id else classnameify(msg.identifier)
+        msg_name = classnameify(msg.identifier)
         destination_filename = "%s/%s.json" % (output_dir, msg_name)
         with open(destination_filename, 'w+') as output_fp:
             print(destination_filename)
