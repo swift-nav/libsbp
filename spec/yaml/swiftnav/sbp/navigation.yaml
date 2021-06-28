@@ -605,6 +605,29 @@ definitions:
                       - 6: SBAS Position
 
 
+ - EstimatedHorizontalErrorEllipse:
+     short_desc: Horizontal estimated error ellipse
+     fields:
+       - semi_major:
+           type: float
+           units: m
+           desc: >
+             The semi major axis of the estimated horizontal error ellipse at
+             the user-configured confidence level; zero implies invalid.
+       - semi_minor:
+           type: float
+           units: m
+           desc: >
+             The semi minor axis of the estimated horizontal error ellipse at
+             the user-configured confidence level; zero implies invalid.
+       - orientation:
+           type: float
+           units: deg
+           desc: >
+             The orientation of semi major axis of the estimated horizontal
+             error ellipse with respect to North.
+
+
  - MSG_POS_LLH_ACC:
     id: 0x0218
     short_desc: Geodetic Position
@@ -612,14 +635,14 @@ definitions:
       This position solution message reports the absolute geodetic coordinates
       and the status (single point vs pseudo-absolute RTK) of the position
       solution as well as the estimated horizontal, vertical, cross-track and
-      along-track errors.
+      along-track errors.  The position information and Fix Mode flags should
+      follow the MSG_POS_LLH message. Since the covariance matrix is computed in
+      the local-level North, East, Down frame, the estimated error terms follow
+      with that convention.
+
 
       The estimated errors are reported at a user-configurable confidence level.
       The user-configured percentile is encoded in the percentile field.
-
-      The position information and Fix Mode flags should follow the MSG_POS_LLH
-      message. Since the covariance matrix is computed in the local-level North,
-      East, Down frame, the estimated error terms follow with that convention.
     fields:
         - tow:
             type: u32
@@ -637,40 +660,31 @@ definitions:
             type: double
             units: m
             desc: Height above WGS84 ellipsoid
-        - horizontal_accuracy:
+        - h_accuracy:
             type: float
             units: m
             desc: Estimated horizontal error at the user-configured confidence level; zero implies invalid.
-        - vertical_accuracy:
+        - v_accuracy:
             type: float
             units: m
             desc: Estimated vertical error at the user-configured confidence level; zero implies invalid.
-        - crosstrack_accuracy:
+        - ct_accuracy:
             type: float
             units: m
             desc: Estimated cross-track error at the user-configured confidence level; zero implies invalid.
-        - alongtrack_accuracy:
+        - at_accuracy:
             type: float
             units: m
             desc: Estimated along-track error at the user-configured confidence level; zero implies invalid.
-        - hor_ell_semi_major:
-            type: float
-            units: m
-            desc: The semi major axis of the horizontal error ellipse at the user-configured confidence level; zero implies invalid.
-        - hor_ell_semi_minor:
-            type: float
-            units: m
-            desc: The semi minor axis of the horizontal error ellipse at the user-configured confidence level; zero implies invalid.
-        - hor_ell_orientation:
-            type: float
-            units: deg
-            desc: The orientation of semi major axis of the horizontal error ellipse with respect to North.
+        - h_ellipse:
+            type: EstimatedHorizontalErrorEllipse
+            desc: The estimated horizontal error ellipse at the user-configured confidence level.
         - percentile:
             type: u8
             desc: Configured percentile for the estimated position error
             fields:
               - 0-7:
-                  desc: Configured percentile for the estimated position error
+                  desc: Percentile
                   values:
                     - 0: no scaling
                     - 1: 68.27%

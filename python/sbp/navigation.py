@@ -47,6 +47,49 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
+class EstimatedHorizontalErrorEllipse(object):
+  """EstimatedHorizontalErrorEllipse.
+  
+  
+  Parameters
+  ----------
+  semi_major : float
+    The semi major axis of the estimated horizontal error ellipse at the user-
+    configured confidence level; zero implies invalid.
+  semi_minor : float
+    The semi minor axis of the estimated horizontal error ellipse at the user-
+    configured confidence level; zero implies invalid.
+  orientation : float
+    The orientation of semi major axis of the estimated horizontal error
+    ellipse with respect to North.
+
+  """
+  _parser = construct.Struct(
+                     'semi_major' / construct.Float32l,
+                     'semi_minor' / construct.Float32l,
+                     'orientation' / construct.Float32l,)
+  __slots__ = [
+               'semi_major',
+               'semi_minor',
+               'orientation',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.semi_major = kwargs.pop('semi_major')
+      self.semi_minor = kwargs.pop('semi_minor')
+      self.orientation = kwargs.pop('orientation')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = EstimatedHorizontalErrorEllipse._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_GPS_TIME = 0x0102
 class MsgGPSTime(SBP):
   """SBP class for message MSG_GPS_TIME (0x0102).
@@ -1230,12 +1273,13 @@ class MsgPosLLHAcc(SBP):
   This position solution message reports the absolute geodetic coordinates and
   the status (single point vs pseudo-absolute RTK) of the position solution as
   well as the estimated horizontal, vertical, cross-track and along-track
-  errors.
+  errors.  The position information and Fix Mode flags should follow the
+  MSG_POS_LLH message. Since the covariance matrix is computed in the local-
+  level North, East, Down frame, the estimated error terms follow with that
+  convention.
+
   The estimated errors are reported at a user-configurable confidence level.
   The user-configured percentile is encoded in the percentile field.
-  The position information and Fix Mode flags should follow the MSG_POS_LLH
-  message. Since the covariance matrix is computed in the local-level North,
-  East, Down frame, the estimated error terms follow with that convention.
 
   Parameters
   ----------
@@ -1249,27 +1293,21 @@ class MsgPosLLHAcc(SBP):
     Longitude
   height : double
     Height above WGS84 ellipsoid
-  horizontal_accuracy : float
+  h_accuracy : float
     Estimated horizontal error at the user-configured confidence level; zero
     implies invalid.
-  vertical_accuracy : float
+  v_accuracy : float
     Estimated vertical error at the user-configured confidence level; zero
     implies invalid.
-  crosstrack_accuracy : float
+  ct_accuracy : float
     Estimated cross-track error at the user-configured confidence level; zero
     implies invalid.
-  alongtrack_accuracy : float
+  at_accuracy : float
     Estimated along-track error at the user-configured confidence level; zero
     implies invalid.
-  hor_ell_semi_major : float
-    The semi major axis of the horizontal error ellipse at the user-configured
-    confidence level; zero implies invalid.
-  hor_ell_semi_minor : float
-    The semi minor axis of the horizontal error ellipse at the user-configured
-    confidence level; zero implies invalid.
-  hor_ell_orientation : float
-    The orientation of semi major axis of the horizontal error ellipse with
-    respect to North.
+  h_ellipse : EstimatedHorizontalErrorEllipse
+    The estimated horizontal error ellipse at the user-configured confidence
+    level.
   percentile : int
     Configured percentile for the estimated position error
   n_sats : int
@@ -1285,13 +1323,11 @@ class MsgPosLLHAcc(SBP):
                    'lat' / construct.Float64l,
                    'lon' / construct.Float64l,
                    'height' / construct.Float64l,
-                   'horizontal_accuracy' / construct.Float32l,
-                   'vertical_accuracy' / construct.Float32l,
-                   'crosstrack_accuracy' / construct.Float32l,
-                   'alongtrack_accuracy' / construct.Float32l,
-                   'hor_ell_semi_major' / construct.Float32l,
-                   'hor_ell_semi_minor' / construct.Float32l,
-                   'hor_ell_orientation' / construct.Float32l,
+                   'h_accuracy' / construct.Float32l,
+                   'v_accuracy' / construct.Float32l,
+                   'ct_accuracy' / construct.Float32l,
+                   'at_accuracy' / construct.Float32l,
+                   'h_ellipse' / EstimatedHorizontalErrorEllipse._parser,
                    'percentile' / construct.Int8ul,
                    'n_sats' / construct.Int8ul,
                    'flags' / construct.Int8ul,)
@@ -1300,13 +1336,11 @@ class MsgPosLLHAcc(SBP):
                'lat',
                'lon',
                'height',
-               'horizontal_accuracy',
-               'vertical_accuracy',
-               'crosstrack_accuracy',
-               'alongtrack_accuracy',
-               'hor_ell_semi_major',
-               'hor_ell_semi_minor',
-               'hor_ell_orientation',
+               'h_accuracy',
+               'v_accuracy',
+               'ct_accuracy',
+               'at_accuracy',
+               'h_ellipse',
                'percentile',
                'n_sats',
                'flags',
@@ -1326,13 +1360,11 @@ class MsgPosLLHAcc(SBP):
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
-      self.horizontal_accuracy = kwargs.pop('horizontal_accuracy')
-      self.vertical_accuracy = kwargs.pop('vertical_accuracy')
-      self.crosstrack_accuracy = kwargs.pop('crosstrack_accuracy')
-      self.alongtrack_accuracy = kwargs.pop('alongtrack_accuracy')
-      self.hor_ell_semi_major = kwargs.pop('hor_ell_semi_major')
-      self.hor_ell_semi_minor = kwargs.pop('hor_ell_semi_minor')
-      self.hor_ell_orientation = kwargs.pop('hor_ell_orientation')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.ct_accuracy = kwargs.pop('ct_accuracy')
+      self.at_accuracy = kwargs.pop('at_accuracy')
+      self.h_ellipse = kwargs.pop('h_ellipse')
       self.percentile = kwargs.pop('percentile')
       self.n_sats = kwargs.pop('n_sats')
       self.flags = kwargs.pop('flags')

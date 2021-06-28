@@ -26,11 +26,12 @@ import org.json.JSONObject;
  *
  * <p>This position solution message reports the absolute geodetic coordinates and the status
  * (single point vs pseudo-absolute RTK) of the position solution as well as the estimated
- * horizontal, vertical, cross-track and along-track errors. The estimated errors are reported at a
- * user-configurable confidence level. The user-configured percentile is encoded in the percentile
- * field. The position information and Fix Mode flags should follow the MSG_POS_LLH message. Since
- * the covariance matrix is computed in the local-level North, East, Down frame, the estimated error
- * terms follow with that convention.
+ * horizontal, vertical, cross-track and along-track errors. The position information and Fix Mode
+ * flags should follow the MSG_POS_LLH message. Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the estimated error terms follow with that convention.
+ *
+ * <p>The estimated errors are reported at a user-configurable confidence level. The user-configured
+ * percentile is encoded in the percentile field.
  */
 public class MsgPosLLHAcc extends SBPMessage {
     public static final int TYPE = 0x0218;
@@ -48,35 +49,23 @@ public class MsgPosLLHAcc extends SBPMessage {
     public double height;
 
     /** Estimated horizontal error at the user-configured confidence level; zero implies invalid. */
-    public float horizontal_accuracy;
+    public float h_accuracy;
 
     /** Estimated vertical error at the user-configured confidence level; zero implies invalid. */
-    public float vertical_accuracy;
+    public float v_accuracy;
 
     /**
      * Estimated cross-track error at the user-configured confidence level; zero implies invalid.
      */
-    public float crosstrack_accuracy;
+    public float ct_accuracy;
 
     /**
      * Estimated along-track error at the user-configured confidence level; zero implies invalid.
      */
-    public float alongtrack_accuracy;
+    public float at_accuracy;
 
-    /**
-     * The semi major axis of the horizontal error ellipse at the user- configured confidence level;
-     * zero implies invalid.
-     */
-    public float hor_ell_semi_major;
-
-    /**
-     * The semi minor axis of the horizontal error ellipse at the user- configured confidence level;
-     * zero implies invalid.
-     */
-    public float hor_ell_semi_minor;
-
-    /** The orientation of semi major axis of the horizontal error ellipse with respect to North. */
-    public float hor_ell_orientation;
+    /** The estimated horizontal error ellipse at the user-configured confidence level. */
+    public EstimatedHorizontalErrorEllipse h_ellipse;
 
     /** Configured percentile for the estimated position error */
     public int percentile;
@@ -107,13 +96,11 @@ public class MsgPosLLHAcc extends SBPMessage {
         lat = parser.getDouble();
         lon = parser.getDouble();
         height = parser.getDouble();
-        horizontal_accuracy = parser.getFloat();
-        vertical_accuracy = parser.getFloat();
-        crosstrack_accuracy = parser.getFloat();
-        alongtrack_accuracy = parser.getFloat();
-        hor_ell_semi_major = parser.getFloat();
-        hor_ell_semi_minor = parser.getFloat();
-        hor_ell_orientation = parser.getFloat();
+        h_accuracy = parser.getFloat();
+        v_accuracy = parser.getFloat();
+        ct_accuracy = parser.getFloat();
+        at_accuracy = parser.getFloat();
+        h_ellipse = new EstimatedHorizontalErrorEllipse().parse(parser);
         percentile = parser.getU8();
         n_sats = parser.getU8();
         flags = parser.getU8();
@@ -125,13 +112,11 @@ public class MsgPosLLHAcc extends SBPMessage {
         builder.putDouble(lat);
         builder.putDouble(lon);
         builder.putDouble(height);
-        builder.putFloat(horizontal_accuracy);
-        builder.putFloat(vertical_accuracy);
-        builder.putFloat(crosstrack_accuracy);
-        builder.putFloat(alongtrack_accuracy);
-        builder.putFloat(hor_ell_semi_major);
-        builder.putFloat(hor_ell_semi_minor);
-        builder.putFloat(hor_ell_orientation);
+        builder.putFloat(h_accuracy);
+        builder.putFloat(v_accuracy);
+        builder.putFloat(ct_accuracy);
+        builder.putFloat(at_accuracy);
+        h_ellipse.build(builder);
         builder.putU8(percentile);
         builder.putU8(n_sats);
         builder.putU8(flags);
@@ -144,13 +129,11 @@ public class MsgPosLLHAcc extends SBPMessage {
         obj.put("lat", lat);
         obj.put("lon", lon);
         obj.put("height", height);
-        obj.put("horizontal_accuracy", horizontal_accuracy);
-        obj.put("vertical_accuracy", vertical_accuracy);
-        obj.put("crosstrack_accuracy", crosstrack_accuracy);
-        obj.put("alongtrack_accuracy", alongtrack_accuracy);
-        obj.put("hor_ell_semi_major", hor_ell_semi_major);
-        obj.put("hor_ell_semi_minor", hor_ell_semi_minor);
-        obj.put("hor_ell_orientation", hor_ell_orientation);
+        obj.put("h_accuracy", h_accuracy);
+        obj.put("v_accuracy", v_accuracy);
+        obj.put("ct_accuracy", ct_accuracy);
+        obj.put("at_accuracy", at_accuracy);
+        obj.put("h_ellipse", h_ellipse.toJSON());
         obj.put("percentile", percentile);
         obj.put("n_sats", n_sats);
         obj.put("flags", flags);

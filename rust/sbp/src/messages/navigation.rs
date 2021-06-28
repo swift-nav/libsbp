@@ -48,6 +48,69 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct EstimatedHorizontalErrorEllipse {
+    /// The semi major axis of the estimated horizontal error ellipse at the
+    /// user-configured confidence level; zero implies invalid.
+    pub semi_major: f32,
+    /// The semi minor axis of the estimated horizontal error ellipse at the
+    /// user-configured confidence level; zero implies invalid.
+    pub semi_minor: f32,
+    /// The orientation of semi major axis of the estimated horizontal error
+    /// ellipse with respect to North.
+    pub orientation: f32,
+}
+
+impl EstimatedHorizontalErrorEllipse {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<EstimatedHorizontalErrorEllipse, crate::Error> {
+        Ok( EstimatedHorizontalErrorEllipse{
+            semi_major: _buf.read_f32::<LittleEndian>()?,
+            semi_minor: _buf.read_f32::<LittleEndian>()?,
+            orientation: _buf.read_f32::<LittleEndian>()?,
+        } )
+    }
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for EstimatedHorizontalErrorEllipse {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.semi_major.append_to_sbp_buffer(buf);
+        self.semi_minor.append_to_sbp_buffer(buf);
+        self.orientation.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.semi_major.sbp_size();
+        size += self.semi_minor.sbp_size();
+        size += self.orientation.sbp_size();
+        size
+    }
+}
+
 /// Age of corrections
 ///
 /// This message reports the Age of the corrections used for the current
@@ -2174,12 +2237,13 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 /// This position solution message reports the absolute geodetic coordinates
 /// and the status (single point vs pseudo-absolute RTK) of the position
 /// solution as well as the estimated horizontal, vertical, cross-track and
-/// along-track errors.
+/// along-track errors.  The position information and Fix Mode flags should
+/// follow the MSG_POS_LLH message. Since the covariance matrix is computed in
+/// the local-level North, East, Down frame, the estimated error terms follow
+/// with that convention.
+///
 /// The estimated errors are reported at a user-configurable confidence level.
 /// The user-configured percentile is encoded in the percentile field.
-/// The position information and Fix Mode flags should follow the MSG_POS_LLH
-/// message. Since the covariance matrix is computed in the local-level North,
-/// East, Down frame, the estimated error terms follow with that convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -2197,25 +2261,19 @@ pub struct MsgPosLLHAcc {
     pub height: f64,
     /// Estimated horizontal error at the user-configured confidence level; zero
     /// implies invalid.
-    pub horizontal_accuracy: f32,
+    pub h_accuracy: f32,
     /// Estimated vertical error at the user-configured confidence level; zero
     /// implies invalid.
-    pub vertical_accuracy: f32,
+    pub v_accuracy: f32,
     /// Estimated cross-track error at the user-configured confidence level;
     /// zero implies invalid.
-    pub crosstrack_accuracy: f32,
+    pub ct_accuracy: f32,
     /// Estimated along-track error at the user-configured confidence level;
     /// zero implies invalid.
-    pub alongtrack_accuracy: f32,
-    /// The semi major axis of the horizontal error ellipse at the user-
-    /// configured confidence level; zero implies invalid.
-    pub hor_ell_semi_major: f32,
-    /// The semi minor axis of the horizontal error ellipse at the user-
-    /// configured confidence level; zero implies invalid.
-    pub hor_ell_semi_minor: f32,
-    /// The orientation of semi major axis of the horizontal error ellipse with
-    /// respect to North.
-    pub hor_ell_orientation: f32,
+    pub at_accuracy: f32,
+    /// The estimated horizontal error ellipse at the user-configured confidence
+    /// level.
+    pub h_ellipse: EstimatedHorizontalErrorEllipse,
     /// Configured percentile for the estimated position error
     pub percentile: u8,
     /// Number of satellites used in solution.
@@ -2233,13 +2291,11 @@ impl MsgPosLLHAcc {
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
             height: _buf.read_f64::<LittleEndian>()?,
-            horizontal_accuracy: _buf.read_f32::<LittleEndian>()?,
-            vertical_accuracy: _buf.read_f32::<LittleEndian>()?,
-            crosstrack_accuracy: _buf.read_f32::<LittleEndian>()?,
-            alongtrack_accuracy: _buf.read_f32::<LittleEndian>()?,
-            hor_ell_semi_major: _buf.read_f32::<LittleEndian>()?,
-            hor_ell_semi_minor: _buf.read_f32::<LittleEndian>()?,
-            hor_ell_orientation: _buf.read_f32::<LittleEndian>()?,
+            h_accuracy: _buf.read_f32::<LittleEndian>()?,
+            v_accuracy: _buf.read_f32::<LittleEndian>()?,
+            ct_accuracy: _buf.read_f32::<LittleEndian>()?,
+            at_accuracy: _buf.read_f32::<LittleEndian>()?,
+            h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
             percentile: _buf.read_u8()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
@@ -2307,13 +2363,11 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         self.lat.append_to_sbp_buffer(buf);
         self.lon.append_to_sbp_buffer(buf);
         self.height.append_to_sbp_buffer(buf);
-        self.horizontal_accuracy.append_to_sbp_buffer(buf);
-        self.vertical_accuracy.append_to_sbp_buffer(buf);
-        self.crosstrack_accuracy.append_to_sbp_buffer(buf);
-        self.alongtrack_accuracy.append_to_sbp_buffer(buf);
-        self.hor_ell_semi_major.append_to_sbp_buffer(buf);
-        self.hor_ell_semi_minor.append_to_sbp_buffer(buf);
-        self.hor_ell_orientation.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.ct_accuracy.append_to_sbp_buffer(buf);
+        self.at_accuracy.append_to_sbp_buffer(buf);
+        self.h_ellipse.append_to_sbp_buffer(buf);
         self.percentile.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
@@ -2325,13 +2379,11 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         size += self.lat.sbp_size();
         size += self.lon.sbp_size();
         size += self.height.sbp_size();
-        size += self.horizontal_accuracy.sbp_size();
-        size += self.vertical_accuracy.sbp_size();
-        size += self.crosstrack_accuracy.sbp_size();
-        size += self.alongtrack_accuracy.sbp_size();
-        size += self.hor_ell_semi_major.sbp_size();
-        size += self.hor_ell_semi_minor.sbp_size();
-        size += self.hor_ell_orientation.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.ct_accuracy.sbp_size();
+        size += self.at_accuracy.sbp_size();
+        size += self.h_ellipse.sbp_size();
         size += self.percentile.sbp_size();
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();

@@ -540,45 +540,47 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_t;
 
+typedef struct SBP_ATTR_PACKED {
+  float semi_major;  /**< The semi major axis of the estimated horizontal
+                          error ellipse at the user-configured confidence
+                          level; zero implies invalid. [m] */
+  float semi_minor;  /**< The semi minor axis of the estimated horizontal
+                          error ellipse at the user-configured confidence
+                          level; zero implies invalid. [m] */
+  float orientation; /**< The orientation of semi major axis of the
+                          estimated horizontal error ellipse with respect
+                          to North. [deg] */
+} estimated_horizontal_error_ellipse_t;
+
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the estimated horizontal, vertical, cross-track and
- * along-track errors.
+ * along-track errors.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message. Since the covariance matrix is computed in
+ * the local-level North, East, Down frame, the estimated error terms follow
+ * with that convention.
+ *
  * The estimated errors are reported at a user-configurable confidence level.
  * The user-configured percentile is encoded in the percentile field.
- * The position information and Fix Mode flags should follow the MSG_POS_LLH
- * message. Since the covariance matrix is computed in the local-level North,
- * East, Down frame, the estimated error terms follow with that convention.
  */
 #define SBP_MSG_POS_LLH_ACC 0x0218
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_MASK \
-  (0xff)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_SHIFT \
-  (0u)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_GET( \
-    flags)                                                                          \
-  (((flags) >>                                                                      \
-    SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_SHIFT) & \
-   SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_MASK)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_SET(        \
-    flags, val)                                                                            \
-  do {                                                                                     \
-    ((flags) |=                                                                            \
-     (((val) &                                                                             \
-       (SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_MASK))      \
-      << (SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_SHIFT))); \
+#define SBP_POS_LLH_ACC_PERCENTILE_MASK (0xff)
+#define SBP_POS_LLH_ACC_PERCENTILE_SHIFT (0u)
+#define SBP_POS_LLH_ACC_PERCENTILE_GET(flags)      \
+  (((flags) >> SBP_POS_LLH_ACC_PERCENTILE_SHIFT) & \
+   SBP_POS_LLH_ACC_PERCENTILE_MASK)
+#define SBP_POS_LLH_ACC_PERCENTILE_SET(flags, val)           \
+  do {                                                       \
+    ((flags) |= (((val) & (SBP_POS_LLH_ACC_PERCENTILE_MASK)) \
+                 << (SBP_POS_LLH_ACC_PERCENTILE_SHIFT)));    \
   } while (0)
 
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_NO_SCALING \
-  (0)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_6827 \
-  (1)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_9545 \
-  (2)
-#define SBP_POS_LLH_ACC_CONFIGURED_PERCENTILE_FOR_THE_ESTIMATED_POSITION_ERROR_9974 \
-  (3)
+#define SBP_POS_LLH_ACC_PERCENTILE_NO_SCALING (0)
+#define SBP_POS_LLH_ACC_PERCENTILE_6827 (1)
+#define SBP_POS_LLH_ACC_PERCENTILE_9545 (2)
+#define SBP_POS_LLH_ACC_PERCENTILE_9974 (3)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -624,35 +626,29 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_ACC_FIX_MODE_SBAS_POSITION (6)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;                   /**< GPS Time of Week [ms] */
-  double lat;                /**< Latitude [deg] */
-  double lon;                /**< Longitude [deg] */
-  double height;             /**< Height above WGS84 ellipsoid [m] */
-  float horizontal_accuracy; /**< Estimated horizontal error at the user-
-                                  configured confidence level; zero implies
-                                  invalid. [m] */
-  float vertical_accuracy;   /**< Estimated vertical error at the user-
-                                  configured confidence level; zero implies
-                                  invalid. [m] */
-  float crosstrack_accuracy; /**< Estimated cross-track error at the user-
-                                  configured confidence level; zero implies
-                                  invalid. [m] */
-  float alongtrack_accuracy; /**< Estimated along-track error at the user-
-                                  configured confidence level; zero implies
-                                  invalid. [m] */
-  float hor_ell_semi_major;  /**< The semi major axis of the horizontal
-                                  error ellipse at the user-configured
-                                  confidence level; zero implies invalid. [m] */
-  float hor_ell_semi_minor;  /**< The semi minor axis of the horizontal
-                                  error ellipse at the user-configured
-                                  confidence level; zero implies invalid. [m] */
-  float hor_ell_orientation; /**< The orientation of semi major axis of the
-                                  horizontal error ellipse with respect to
-                                  North. [deg] */
-  u8 percentile;             /**< Configured percentile for the estimated
-                                  position error */
-  u8 n_sats;                 /**< Number of satellites used in solution. */
-  u8 flags;                  /**< Status flags */
+  u32 tow;           /**< GPS Time of Week [ms] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height above WGS84 ellipsoid [m] */
+  float h_accuracy;  /**< Estimated horizontal error at the user-configured
+                          confidence level; zero implies invalid. [m] */
+  float v_accuracy;  /**< Estimated vertical error at the user-configured
+                          confidence level; zero implies invalid. [m] */
+  float ct_accuracy; /**< Estimated cross-track error at the user-
+                          configured confidence level; zero implies
+                          invalid. [m] */
+  float at_accuracy; /**< Estimated along-track error at the user-
+                          configured confidence level; zero implies
+                          invalid. [m] */
+  estimated_horizontal_error_ellipse_t h_ellipse; /**< The estimated
+                                                       horizontal error
+                                                       ellipse at the
+                                                       user-configured
+                                                       confidence level. */
+  u8 percentile; /**< Configured percentile for the estimated position
+                      error */
+  u8 n_sats;     /**< Number of satellites used in solution. */
+  u8 flags;      /**< Status flags */
 } msg_pos_llh_acc_t;
 
 /** Baseline Position in ECEF

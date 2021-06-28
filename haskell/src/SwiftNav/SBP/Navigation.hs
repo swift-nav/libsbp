@@ -571,6 +571,33 @@ $(makeSBP 'msgPosLlhCov ''MsgPosLlhCov)
 $(makeJSON "_msgPosLlhCov_" ''MsgPosLlhCov)
 $(makeLenses ''MsgPosLlhCov)
 
+data EstimatedHorizontalErrorEllipse = EstimatedHorizontalErrorEllipse
+  { _estimatedHorizontalErrorEllipse_semi_major :: !Float
+    -- ^ The semi major axis of the estimated horizontal error ellipse at the
+    -- user-configured confidence level; zero implies invalid.
+  , _estimatedHorizontalErrorEllipse_semi_minor :: !Float
+    -- ^ The semi minor axis of the estimated horizontal error ellipse at the
+    -- user-configured confidence level; zero implies invalid.
+  , _estimatedHorizontalErrorEllipse_orientation :: !Float
+    -- ^ The orientation of semi major axis of the estimated horizontal error
+    -- ellipse with respect to North.
+  } deriving ( Show, Read, Eq )
+
+instance Binary EstimatedHorizontalErrorEllipse where
+  get = do
+    _estimatedHorizontalErrorEllipse_semi_major <- getFloat32le
+    _estimatedHorizontalErrorEllipse_semi_minor <- getFloat32le
+    _estimatedHorizontalErrorEllipse_orientation <- getFloat32le
+    pure EstimatedHorizontalErrorEllipse {..}
+
+  put EstimatedHorizontalErrorEllipse {..} = do
+    putFloat32le _estimatedHorizontalErrorEllipse_semi_major
+    putFloat32le _estimatedHorizontalErrorEllipse_semi_minor
+    putFloat32le _estimatedHorizontalErrorEllipse_orientation
+
+$(makeJSON "_estimatedHorizontalErrorEllipse_" ''EstimatedHorizontalErrorEllipse)
+$(makeLenses ''EstimatedHorizontalErrorEllipse)
+
 msgPosLlhAcc :: Word16
 msgPosLlhAcc = 0x0218
 
@@ -579,47 +606,42 @@ msgPosLlhAcc = 0x0218
 -- This position solution message reports the absolute geodetic coordinates
 -- and the status (single point vs pseudo-absolute RTK) of the position
 -- solution as well as the estimated horizontal, vertical, cross-track and
--- along-track errors.
+-- along-track errors.  The position information and Fix Mode flags should
+-- follow the MSG_POS_LLH message. Since the covariance matrix is computed in
+-- the local-level North, East, Down frame, the estimated error terms follow
+-- with that convention.
+--
 -- The estimated errors are reported at a user-configurable confidence level.
 -- The user-configured percentile is encoded in the percentile field.
--- The position information and Fix Mode flags should follow the MSG_POS_LLH
--- message. Since the covariance matrix is computed in the local-level North,
--- East, Down frame, the estimated error terms follow with that convention.
 data MsgPosLlhAcc = MsgPosLlhAcc
-  { _msgPosLlhAcc_tow               :: !Word32
+  { _msgPosLlhAcc_tow       :: !Word32
     -- ^ GPS Time of Week
-  , _msgPosLlhAcc_lat               :: !Double
+  , _msgPosLlhAcc_lat       :: !Double
     -- ^ Latitude
-  , _msgPosLlhAcc_lon               :: !Double
+  , _msgPosLlhAcc_lon       :: !Double
     -- ^ Longitude
-  , _msgPosLlhAcc_height            :: !Double
+  , _msgPosLlhAcc_height    :: !Double
     -- ^ Height above WGS84 ellipsoid
-  , _msgPosLlhAcc_horizontal_accuracy :: !Float
+  , _msgPosLlhAcc_h_accuracy :: !Float
     -- ^ Estimated horizontal error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_vertical_accuracy :: !Float
+  , _msgPosLlhAcc_v_accuracy :: !Float
     -- ^ Estimated vertical error at the user-configured confidence level; zero
     -- implies invalid.
-  , _msgPosLlhAcc_crosstrack_accuracy :: !Float
+  , _msgPosLlhAcc_ct_accuracy :: !Float
     -- ^ Estimated cross-track error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_alongtrack_accuracy :: !Float
+  , _msgPosLlhAcc_at_accuracy :: !Float
     -- ^ Estimated along-track error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_hor_ell_semi_major :: !Float
-    -- ^ The semi major axis of the horizontal error ellipse at the user-
-    -- configured confidence level; zero implies invalid.
-  , _msgPosLlhAcc_hor_ell_semi_minor :: !Float
-    -- ^ The semi minor axis of the horizontal error ellipse at the user-
-    -- configured confidence level; zero implies invalid.
-  , _msgPosLlhAcc_hor_ell_orientation :: !Float
-    -- ^ The orientation of semi major axis of the horizontal error ellipse with
-    -- respect to North.
-  , _msgPosLlhAcc_percentile        :: !Word8
+  , _msgPosLlhAcc_h_ellipse :: !EstimatedHorizontalErrorEllipse
+    -- ^ The estimated horizontal error ellipse at the user-configured
+    -- confidence level.
+  , _msgPosLlhAcc_percentile :: !Word8
     -- ^ Configured percentile for the estimated position error
-  , _msgPosLlhAcc_n_sats            :: !Word8
+  , _msgPosLlhAcc_n_sats    :: !Word8
     -- ^ Number of satellites used in solution.
-  , _msgPosLlhAcc_flags             :: !Word8
+  , _msgPosLlhAcc_flags     :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -629,13 +651,11 @@ instance Binary MsgPosLlhAcc where
     _msgPosLlhAcc_lat <- getFloat64le
     _msgPosLlhAcc_lon <- getFloat64le
     _msgPosLlhAcc_height <- getFloat64le
-    _msgPosLlhAcc_horizontal_accuracy <- getFloat32le
-    _msgPosLlhAcc_vertical_accuracy <- getFloat32le
-    _msgPosLlhAcc_crosstrack_accuracy <- getFloat32le
-    _msgPosLlhAcc_alongtrack_accuracy <- getFloat32le
-    _msgPosLlhAcc_hor_ell_semi_major <- getFloat32le
-    _msgPosLlhAcc_hor_ell_semi_minor <- getFloat32le
-    _msgPosLlhAcc_hor_ell_orientation <- getFloat32le
+    _msgPosLlhAcc_h_accuracy <- getFloat32le
+    _msgPosLlhAcc_v_accuracy <- getFloat32le
+    _msgPosLlhAcc_ct_accuracy <- getFloat32le
+    _msgPosLlhAcc_at_accuracy <- getFloat32le
+    _msgPosLlhAcc_h_ellipse <- get
     _msgPosLlhAcc_percentile <- getWord8
     _msgPosLlhAcc_n_sats <- getWord8
     _msgPosLlhAcc_flags <- getWord8
@@ -646,13 +666,11 @@ instance Binary MsgPosLlhAcc where
     putFloat64le _msgPosLlhAcc_lat
     putFloat64le _msgPosLlhAcc_lon
     putFloat64le _msgPosLlhAcc_height
-    putFloat32le _msgPosLlhAcc_horizontal_accuracy
-    putFloat32le _msgPosLlhAcc_vertical_accuracy
-    putFloat32le _msgPosLlhAcc_crosstrack_accuracy
-    putFloat32le _msgPosLlhAcc_alongtrack_accuracy
-    putFloat32le _msgPosLlhAcc_hor_ell_semi_major
-    putFloat32le _msgPosLlhAcc_hor_ell_semi_minor
-    putFloat32le _msgPosLlhAcc_hor_ell_orientation
+    putFloat32le _msgPosLlhAcc_h_accuracy
+    putFloat32le _msgPosLlhAcc_v_accuracy
+    putFloat32le _msgPosLlhAcc_ct_accuracy
+    putFloat32le _msgPosLlhAcc_at_accuracy
+    put _msgPosLlhAcc_h_ellipse
     putWord8 _msgPosLlhAcc_percentile
     putWord8 _msgPosLlhAcc_n_sats
     putWord8 _msgPosLlhAcc_flags
