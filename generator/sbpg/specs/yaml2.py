@@ -47,7 +47,7 @@ def read_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -56,9 +56,9 @@ def read_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       s.package_schema(contents)
     except Exception as e:
@@ -82,7 +82,7 @@ def read_test_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -91,9 +91,9 @@ def read_test_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       t.test_schema(contents)
     except Exception as e:
@@ -264,7 +264,7 @@ def mk_definition(defn):
       assert desc.endswith("."), f"{identifier}: Append . to: `{desc}`"
     assert all(x in string.printable for x in desc), f"Unprintable: {desc}"
     lines = desc.splitlines()
-    assert all(line.strip() == line for line in lines), f"Extra whitespace: {line}"
+    assert all(line.strip() == line for line in lines), f"Extra whitespace:\n{lines}"
     odd_lines = list(itertools.islice(lines,1,len(lines),2))
     if any(line for line in odd_lines):
       print(f"Warning: Multi-line desc contains single blank lines (use two):\n{lines}")

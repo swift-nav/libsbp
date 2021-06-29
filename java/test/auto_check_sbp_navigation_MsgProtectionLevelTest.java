@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,19 +8,18 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgProtectionLevel.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgProtectionLevel.yaml by generate.py. Do not
+// modify by hand!
 
-import java.math.BigInteger;
-
-import org.junit.Test;
-
-import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
-
 import com.swiftnav.sbp.navigation.MsgProtectionLevelDepA;
-
+import java.math.BigInteger;
+import org.json.JSONObject;
+import org.junit.Test;
 
 public class auto_check_sbp_navigation_MsgProtectionLevelTest {
 
@@ -32,15 +30,51 @@ public class auto_check_sbp_navigation_MsgProtectionLevelTest {
     public void test1() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgProtectionLevelTest.test1");
-        byte[] payload = new byte[] {(byte)136,(byte)227,(byte)233,(byte)29,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0, };
-        SBPMessage sbp = new SBPMessage( 0x1000, 0x216, payload );
-        MsgProtectionLevelDepA msg = new MsgProtectionLevelDepA( sbp );
+        byte[] payload =
+                new byte[] {
+                    (byte) 136,
+                    (byte) 227,
+                    (byte) 233,
+                    (byte) 29,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                };
+        SBPMessage sbp = new SBPMessage(0x1000, 0x216, payload);
+        MsgProtectionLevelDepA msg = new MsgProtectionLevelDepA(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.flags;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.flags + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.flags + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -49,7 +83,8 @@ public class auto_check_sbp_navigation_MsgProtectionLevelTest {
         org.junit.Assert.assertEquals(msg.height, 0.00000000000000000e+00, DELTA);
         value = msg.hpl;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.hpl + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.hpl + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
@@ -59,7 +94,9 @@ public class auto_check_sbp_navigation_MsgProtectionLevelTest {
         org.junit.Assert.assertEquals(msg.lon, 0.00000000000000000e+00, DELTA);
         value = msg.tow;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.tow + "' != '" + 501867400 + "'", value.equals(BigInteger.valueOf( 501867400L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.tow + "' != '" + 501867400 + "'",
+                    value.equals(BigInteger.valueOf(501867400L)));
         } else {
             value = value.longValue();
             expected = 501867400L;
@@ -67,7 +104,8 @@ public class auto_check_sbp_navigation_MsgProtectionLevelTest {
         }
         value = msg.vpl;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.vpl + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
+            org.junit.Assert.assertTrue(
+                    "'" + msg.vpl + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;

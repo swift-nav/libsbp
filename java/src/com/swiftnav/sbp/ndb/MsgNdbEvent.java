@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,67 +8,74 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.ndb;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/ndb.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
+import java.math.BigInteger;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_NDB_EVENT (0x0400).
+/**
+ * SBP class for message MSG_NDB_EVENT (0x0400).
  *
- * You can have MSG_NDB_EVENT inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_NDB_EVENT inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This message is sent out when an object is stored into NDB. If needed
- * message could also be sent out when fetching an object from NDB. */
-
+ * <p>This message is sent out when an object is stored into NDB. If needed message could also be
+ * sent out when fetching an object from NDB.
+ */
 public class MsgNdbEvent extends SBPMessage {
     public static final int TYPE = 0x0400;
 
-    
     /** HW time in milliseconds. */
     public BigInteger recv_time;
-    
+
     /** Event type. */
     public int event;
-    
+
     /** Event object type. */
     public int object_type;
-    
+
     /** Event result. */
     public int result;
-    
+
     /** Data source for STORE event, reserved for other events. */
     public int data_source;
-    
-    /** GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
-      * indicates for which signal the object belongs to. Reserved in other
-      * cases. */
-    public GnssSignal object_sid;
-    
-    /** GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR
-      * L2C capabilities AND data_source is NDB_DS_RECEIVER sid indicates from
-      * which SV data was decoded. Reserved in other cases. */
-    public GnssSignal src_sid;
-    
-    /** A unique identifier of the sending hardware. For v1.0, set to the 2
-      * least significant bytes of the device serial number, valid only if
-      * data_source is NDB_DS_SBP. Reserved in case of other data_source. */
-    public int original_sender;
-    
 
-    public MsgNdbEvent (int sender) { super(sender, TYPE); }
-    public MsgNdbEvent () { super(TYPE); }
-    public MsgNdbEvent (SBPMessage msg) throws SBPBinaryException {
+    /**
+     * GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates for which
+     * signal the object belongs to. Reserved in other cases.
+     */
+    public GnssSignal object_sid;
+
+    /**
+     * GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C capabilities AND
+     * data_source is NDB_DS_RECEIVER sid indicates from which SV data was decoded. Reserved in
+     * other cases.
+     */
+    public GnssSignal src_sid;
+
+    /**
+     * A unique identifier of the sending hardware. For v1.0, set to the 2 least significant bytes
+     * of the device serial number, valid only if data_source is NDB_DS_SBP. Reserved in case of
+     * other data_source.
+     */
+    public int original_sender;
+
+    public MsgNdbEvent(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgNdbEvent() {
+        super(TYPE);
+    }
+
+    public MsgNdbEvent(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,20 +10,23 @@
  */
 package com.swiftnav.sbp.client;
 
+
 import java.io.IOException;
 
 /** Abstract interface for SBP stream drivers. */
 public interface SBPDriver {
-    /** Read bytes from the SBP link .
-     * This function must read the number of bytes specified from the link
-     * and may block if necessary.  If the link is no longer available an
-     * IOException must be thrown.
+    /**
+     * Read bytes from the SBP link.
+     *
+     * <p>This function must read the number of bytes specified from the link and may block if
+     * necessary. If the link is no longer available an IOException must be thrown.
      */
     byte[] read(int len) throws IOException;
-    /** Write bytes to the SBP link.
-     * This function must write all the data bytes to the link.  If this is
-     * not possible because the link is no longer available an IOException must
-     * be thrown.
+    /**
+     * Write bytes to the SBP link.
+     *
+     * <p>This function must write all the data bytes to the link. If this is not possible because
+     * the link is no longer available an IOException must be thrown.
      */
     void write(byte[] data) throws IOException;
 }

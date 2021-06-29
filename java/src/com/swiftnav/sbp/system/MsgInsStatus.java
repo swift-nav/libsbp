@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,39 +8,40 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.system;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_INS_STATUS (0xFF03).
+/**
+ * SBP class for message MSG_INS_STATUS (0xFF03).
  *
- * You can have MSG_INS_STATUS inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_INS_STATUS inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The INS status message describes the state of the operation and
- * initialization of the inertial navigation system. */
-
+ * <p>The INS status message describes the state of the operation and initialization of the inertial
+ * navigation system.
+ */
 public class MsgInsStatus extends SBPMessage {
     public static final int TYPE = 0xFF03;
 
-    
     /** Status flags */
     public long flags;
-    
 
-    public MsgInsStatus (int sender) { super(sender, TYPE); }
-    public MsgInsStatus () { super(TYPE); }
-    public MsgInsStatus (SBPMessage msg) throws SBPBinaryException {
+    public MsgInsStatus(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgInsStatus() {
+        super(TYPE);
+    }
+
+    public MsgInsStatus(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

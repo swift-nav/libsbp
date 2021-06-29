@@ -89,7 +89,7 @@ def commentify(environment: Environment,
   """
   Builds a comment.
   """
-  return indented_wordwrap(environment, value, width=width, indent=" " * indent, first=False, blank=True)
+  return indented_wordwrap(environment, value, width=width, indent=" " * indent, first=False)
 
 
 def pydoc_format(type_id, pydoc=PYDOC_CODE):

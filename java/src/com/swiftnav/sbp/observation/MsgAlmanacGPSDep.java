@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,69 +8,70 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
+/**
+ * SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
  *
- * You can have MSG_ALMANAC_GPS_DEP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_ALMANAC_GPS_DEP inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac
- * data is not very precise and is considered valid for up to several months.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
- * GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details. */
-
+ * <p>The almanac message returns a set of satellite orbit parameters. Almanac data is not very
+ * precise and is considered valid for up to several months. Please see the Navstar GPS Space
+ * Segment/Navigation user interfaces (ICD- GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
+ * details.
+ */
 public class MsgAlmanacGPSDep extends SBPMessage {
     public static final int TYPE = 0x0070;
 
-    
     /** Values common for all almanac types */
     public AlmanacCommonContentDep common;
-    
+
     /** Mean anomaly at reference time */
     public double m0;
-    
+
     /** Eccentricity of satellite orbit */
     public double ecc;
-    
+
     /** Square root of the semi-major axis of orbit */
     public double sqrta;
-    
+
     /** Longitude of ascending node of orbit plane at weekly epoch */
     public double omega0;
-    
+
     /** Rate of right ascension */
     public double omegadot;
-    
+
     /** Argument of perigee */
     public double w;
-    
+
     /** Inclination */
     public double inc;
-    
+
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
-    
+
     /** Polynomial clock correction coefficient (clock drift) */
     public double af1;
-    
 
-    public MsgAlmanacGPSDep (int sender) { super(sender, TYPE); }
-    public MsgAlmanacGPSDep () { super(TYPE); }
-    public MsgAlmanacGPSDep (SBPMessage msg) throws SBPBinaryException {
+    public MsgAlmanacGPSDep(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgAlmanacGPSDep() {
+        super(TYPE);
+    }
+
+    public MsgAlmanacGPSDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

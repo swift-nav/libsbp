@@ -17,11 +17,8 @@ message tests.
 """
 
 import base64
-import datetime
 import json
 import os.path
-
-from binascii import unhexlify
 
 ##############################################################################
 #
@@ -31,13 +28,13 @@ class PackageTestSpecification(object):
 
   """
 
-  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=[]):
+  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=None):
     self.src_filename = src_filename
     self.package = package
     self.suite_no = suite_no
     self.description = description
     self.generated_on = generated_on
-    self.tests = tests
+    self.tests = tests or []
     self.render_source = True
 
   def __lt__(self, other):
@@ -72,8 +69,8 @@ class TestSpecification(object):
     self.msg = msg
     self.sbp = sbp
 
-  def __lt__(self, other):
-    return raw_packet.__lt__(other.raw_packet)
+  def __lt__(self, other: "TestSpecification"):
+    return self.raw_packet.__lt__(other.raw_packet)
 
   @property
   def msg_type_name(self):

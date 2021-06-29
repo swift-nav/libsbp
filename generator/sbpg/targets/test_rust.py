@@ -13,9 +13,8 @@
 Generator for rust tests target.
 """
 
-from sbpg.targets.templating import *
-from sbpg.targets.rust import *
-from sbpg.targets.common import *
+from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
 

@@ -13,11 +13,10 @@
 Generator for c tests target.
 """
 
-from sbpg.targets.templating import *
-from sbpg.targets.c import *
-from sbpg.targets.legacy_c import mk_id as mk_packed_id
-from sbpg.targets.legacy_c import mk_size
-from sbpg.targets.common import *
+from sbpg.targets.c import convert_packed, convert_unpacked, convert_unpacked_union
+from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.legacy_c import mk_id as mk_packed_id, mk_size, convert, commentify
+from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "c/test/v4/sbp_c_test.c.j2"
 CPP_TEST_TEMPLATE_NAME = "c/test/v4/sbp_cpp_test.cc.j2"
@@ -44,6 +43,7 @@ JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
 JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
+JENV.filters['convert'] = convert
 
 JENV.tests['string_type'] = string_type
 JENV.tests['array_type'] = array_type

@@ -1,9 +1,5 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
- *
- * Based on community contributed code:
- * https://groups.google.com/forum/#!topic/swiftnav-discuss/s0ouH81Lc88
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -13,11 +9,14 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 package com.swiftnav.sbp.drivers;
+/*
+ * Based on community contributed code:
+ * https://groups.google.com/forum/#!topic/swiftnav-discuss/s0ouH81Lc88
+ */
+
 
 import com.swiftnav.sbp.client.SBPDriver;
-
 import java.io.IOException;
-
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
@@ -58,4 +57,3 @@ public class SBPDriverJSSC implements SBPDriver {
         }
     }
 }
-
