@@ -2232,7 +2232,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
     }
 }
 
-/// Geodetic Position
+/// Geodetic Position and Accuracy
 ///
 /// This position solution message reports the absolute geodetic coordinates
 /// and the status (single point vs pseudo-absolute RTK) of the position

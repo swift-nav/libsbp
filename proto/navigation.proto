@@ -240,7 +240,7 @@ message EstimatedHorizontalErrorEllipse {
     float orientation = 3;
 }
 
-/** Geodetic Position
+/** Geodetic Position and Accuracy
  *
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position

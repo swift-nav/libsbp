@@ -630,7 +630,7 @@ definitions:
 
  - MSG_POS_LLH_ACC:
     id: 0x0218
-    short_desc: Geodetic Position
+    short_desc: Geodetic Position and Accuracy
     desc: >
       This position solution message reports the absolute geodetic coordinates
       and the status (single point vs pseudo-absolute RTK) of the position

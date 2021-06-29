@@ -552,7 +552,7 @@ typedef struct SBP_ATTR_PACKED {
                           to North. [deg] */
 } estimated_horizontal_error_ellipse_t;
 
-/** Geodetic Position
+/** Geodetic Position and Accuracy
  *
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
