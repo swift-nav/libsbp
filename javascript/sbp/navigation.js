@@ -455,10 +455,10 @@ MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This position solution message reports the absolute geodetic coordinates and the
  * status (single point vs pseudo-absolute RTK) of the position solution as well as
  * the upper triangle of the 3x3 covariance matrix.  The position information and
- * Fix Mode flags should follow the MSG_POS_LLH message.  Since the covariance
- * matrix is computed in the local-level North, East, Down frame, the covariance
- * terms follow with that convention. Thus, covariances are reported against the
- * "downward" measurement and care should be taken with the sign convention.
+ * Fix Mode flags follow the MSG_POS_LLH message.  Since the covariance matrix is
+ * computed in the local-level North, East, Down frame, the covariance terms follow
+ * that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -524,7 +524,7 @@ MsgPosLlhCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *   configured confidence level; zero implies invalid.
  * @field semi_minor number (float, 4 bytes) The semi minor axis of the estimated horizontal error ellipse at the user-
  *   configured confidence level; zero implies invalid.
- * @field orientation number (float, 4 bytes) The orientation of semi major axis of the estimated horizontal error ellipse
+ * @field orientation number (float, 4 bytes) The orientation of the semi major axis of the estimated horizontal error ellipse
  *   with respect to North.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -555,11 +555,11 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * This position solution message reports the absolute geodetic coordinates and the
  * status (single point vs pseudo-absolute RTK) of the position solution as well as
  * the estimated horizontal, vertical, cross-track and along-track errors.  The
- * position information and Fix Mode flags should follow the MSG_POS_LLH message.
- * Since the covariance matrix is computed in the local-level North, East, Down
- * frame, the estimated error terms follow with that convention.  The estimated
- * errors are reported at a user-configurable confidence level. The user-configured
- * percentile is encoded in the percentile field.
+ * position information and Fix Mode flags  follow the MSG_POS_LLH message. Since
+ * the covariance matrix is computed in the local-level North, East, Down frame,
+ * the estimated error terms follow that convention.  The estimated errors are
+ * reported at a user-configurable confidence level. The user-configured percentile
+ * is encoded in the percentile field.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -575,7 +575,7 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * @field at_accuracy number (float, 4 bytes) Estimated along-track error at the user-configured confidence level; zero
  *   implies invalid.
  * @field h_ellipse EstimatedHorizontalErrorEllipse The estimated horizontal error ellipse at the user-configured confidence level.
- * @field percentile number (unsigned 8-bit int, 1 byte) Configured percentile for the estimated position error
+ * @field confidence number (unsigned 8-bit int, 1 byte) Configured confidence level for the estimated position error
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -603,7 +603,7 @@ MsgPosLlhAcc.prototype.parser = new Parser()
   .floatle('ct_accuracy')
   .floatle('at_accuracy')
   .nest('h_ellipse', { type: EstimatedHorizontalErrorEllipse.prototype.parser })
-  .uint8('percentile')
+  .uint8('confidence')
   .uint8('n_sats')
   .uint8('flags');
 MsgPosLlhAcc.prototype.fieldSpec = [];
@@ -616,7 +616,7 @@ MsgPosLlhAcc.prototype.fieldSpec.push(['v_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['ct_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['at_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['h_ellipse', EstimatedHorizontalErrorEllipse.prototype.fieldSpec]);
-MsgPosLlhAcc.prototype.fieldSpec.push(['percentile', 'writeUInt8', 1]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['confidence', 'writeUInt8', 1]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 

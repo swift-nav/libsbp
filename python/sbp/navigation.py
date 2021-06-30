@@ -60,7 +60,7 @@ class EstimatedHorizontalErrorEllipse(object):
     The semi minor axis of the estimated horizontal error ellipse at the user-
     configured confidence level; zero implies invalid.
   orientation : float
-    The orientation of semi major axis of the estimated horizontal error
+    The orientation of the semi major axis of the estimated horizontal error
     ellipse with respect to North.
 
   """
@@ -1122,11 +1122,11 @@ class MsgPosLLHCov(SBP):
   This position solution message reports the absolute geodetic coordinates and
   the status (single point vs pseudo-absolute RTK) of the position solution as
   well as the upper triangle of the 3x3 covariance matrix.  The position
-  information and Fix Mode flags should follow the MSG_POS_LLH message.  Since
-  the covariance matrix is computed in the local-level North, East, Down
-  frame, the covariance terms follow with that convention. Thus, covariances
-  are reported against the "downward" measurement and care should be taken
-  with the sign convention.
+  information and Fix Mode flags follow the MSG_POS_LLH message.  Since the
+  covariance matrix is computed in the local-level North, East, Down frame,
+  the covariance terms follow that convention. Thus, covariances are reported
+  against the "downward" measurement and care should be taken with the sign
+  convention.
 
   Parameters
   ----------
@@ -1273,10 +1273,9 @@ class MsgPosLLHAcc(SBP):
   This position solution message reports the absolute geodetic coordinates and
   the status (single point vs pseudo-absolute RTK) of the position solution as
   well as the estimated horizontal, vertical, cross-track and along-track
-  errors.  The position information and Fix Mode flags should follow the
-  MSG_POS_LLH message. Since the covariance matrix is computed in the local-
-  level North, East, Down frame, the estimated error terms follow with that
-  convention.
+  errors.  The position information and Fix Mode flags  follow the MSG_POS_LLH
+  message. Since the covariance matrix is computed in the local-level North,
+  East, Down frame, the estimated error terms follow that convention.
 
   The estimated errors are reported at a user-configurable confidence level.
   The user-configured percentile is encoded in the percentile field.
@@ -1308,8 +1307,8 @@ class MsgPosLLHAcc(SBP):
   h_ellipse : EstimatedHorizontalErrorEllipse
     The estimated horizontal error ellipse at the user-configured confidence
     level.
-  percentile : int
-    Configured percentile for the estimated position error
+  confidence : int
+    Configured confidence level for the estimated position error
   n_sats : int
     Number of satellites used in solution.
   flags : int
@@ -1328,7 +1327,7 @@ class MsgPosLLHAcc(SBP):
                    'ct_accuracy' / construct.Float32l,
                    'at_accuracy' / construct.Float32l,
                    'h_ellipse' / EstimatedHorizontalErrorEllipse._parser,
-                   'percentile' / construct.Int8ul,
+                   'confidence' / construct.Int8ul,
                    'n_sats' / construct.Int8ul,
                    'flags' / construct.Int8ul,)
   __slots__ = [
@@ -1341,7 +1340,7 @@ class MsgPosLLHAcc(SBP):
                'ct_accuracy',
                'at_accuracy',
                'h_ellipse',
-               'percentile',
+               'confidence',
                'n_sats',
                'flags',
               ]
@@ -1365,7 +1364,7 @@ class MsgPosLLHAcc(SBP):
       self.ct_accuracy = kwargs.pop('ct_accuracy')
       self.at_accuracy = kwargs.pop('at_accuracy')
       self.h_ellipse = kwargs.pop('h_ellipse')
-      self.percentile = kwargs.pop('percentile')
+      self.confidence = kwargs.pop('confidence')
       self.n_sats = kwargs.pop('n_sats')
       self.flags = kwargs.pop('flags')
 

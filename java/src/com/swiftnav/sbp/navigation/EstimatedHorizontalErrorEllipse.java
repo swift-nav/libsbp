@@ -34,8 +34,8 @@ public class EstimatedHorizontalErrorEllipse extends SBPStruct {
     public float semi_minor;
 
     /**
-     * The orientation of semi major axis of the estimated horizontal error ellipse with respect to
-     * North.
+     * The orientation of the semi major axis of the estimated horizontal error ellipse with respect
+     * to North.
      */
     public float orientation;
 

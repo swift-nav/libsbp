@@ -27,8 +27,8 @@ import org.json.JSONObject;
  * <p>This position solution message reports the absolute geodetic coordinates and the status
  * (single point vs pseudo-absolute RTK) of the position solution as well as the estimated
  * horizontal, vertical, cross-track and along-track errors. The position information and Fix Mode
- * flags should follow the MSG_POS_LLH message. Since the covariance matrix is computed in the
- * local-level North, East, Down frame, the estimated error terms follow with that convention.
+ * flags follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level
+ * North, East, Down frame, the estimated error terms follow that convention.
  *
  * <p>The estimated errors are reported at a user-configurable confidence level. The user-configured
  * percentile is encoded in the percentile field.
@@ -67,8 +67,8 @@ public class MsgPosLLHAcc extends SBPMessage {
     /** The estimated horizontal error ellipse at the user-configured confidence level. */
     public EstimatedHorizontalErrorEllipse h_ellipse;
 
-    /** Configured percentile for the estimated position error */
-    public int percentile;
+    /** Configured confidence level for the estimated position error */
+    public int confidence;
 
     /** Number of satellites used in solution. */
     public int n_sats;
@@ -101,7 +101,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         ct_accuracy = parser.getFloat();
         at_accuracy = parser.getFloat();
         h_ellipse = new EstimatedHorizontalErrorEllipse().parse(parser);
-        percentile = parser.getU8();
+        confidence = parser.getU8();
         n_sats = parser.getU8();
         flags = parser.getU8();
     }
@@ -117,7 +117,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         builder.putFloat(ct_accuracy);
         builder.putFloat(at_accuracy);
         h_ellipse.build(builder);
-        builder.putU8(percentile);
+        builder.putU8(confidence);
         builder.putU8(n_sats);
         builder.putU8(flags);
     }
@@ -134,7 +134,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         obj.put("ct_accuracy", ct_accuracy);
         obj.put("at_accuracy", at_accuracy);
         obj.put("h_ellipse", h_ellipse.toJSON());
-        obj.put("percentile", percentile);
+        obj.put("confidence", confidence);
         obj.put("n_sats", n_sats);
         obj.put("flags", flags);
         return obj;

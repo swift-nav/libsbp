@@ -474,11 +474,11 @@ typedef struct SBP_ATTR_PACKED {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the upper triangle of the 3x3 covariance matrix.  The
- * position information and Fix Mode flags should follow the MSG_POS_LLH
- * message.  Since the covariance matrix is computed in the local-level North,
- * East, Down frame, the covariance terms follow with that convention. Thus,
- * covariances are reported against the "downward" measurement and care should
- * be taken with the sign convention.
+ * position information and Fix Mode flags follow the MSG_POS_LLH message.
+ * Since the covariance matrix is computed in the local-level North, East,
+ * Down frame, the covariance terms follow that convention. Thus, covariances
+ * are reported against the "downward" measurement and care should be taken
+ * with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV 0x0211
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
@@ -547,7 +547,7 @@ typedef struct SBP_ATTR_PACKED {
   float semi_minor;  /**< The semi minor axis of the estimated horizontal
                           error ellipse at the user-configured confidence
                           level; zero implies invalid. [m] */
-  float orientation; /**< The orientation of semi major axis of the
+  float orientation; /**< The orientation of the semi major axis of the
                           estimated horizontal error ellipse with respect
                           to North. [deg] */
 } estimated_horizontal_error_ellipse_t;
@@ -557,30 +557,29 @@ typedef struct SBP_ATTR_PACKED {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the estimated horizontal, vertical, cross-track and
- * along-track errors.  The position information and Fix Mode flags should
- * follow the MSG_POS_LLH message. Since the covariance matrix is computed in
- * the local-level North, East, Down frame, the estimated error terms follow
- * with that convention.
+ * along-track errors.  The position information and Fix Mode flags  follow
+ * the MSG_POS_LLH message. Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the estimated error terms follow that
+ * convention.
  *
  * The estimated errors are reported at a user-configurable confidence level.
  * The user-configured percentile is encoded in the percentile field.
  */
 #define SBP_MSG_POS_LLH_ACC 0x0218
-#define SBP_POS_LLH_ACC_PERCENTILE_MASK (0xff)
-#define SBP_POS_LLH_ACC_PERCENTILE_SHIFT (0u)
-#define SBP_POS_LLH_ACC_PERCENTILE_GET(flags)      \
-  (((flags) >> SBP_POS_LLH_ACC_PERCENTILE_SHIFT) & \
-   SBP_POS_LLH_ACC_PERCENTILE_MASK)
-#define SBP_POS_LLH_ACC_PERCENTILE_SET(flags, val)           \
-  do {                                                       \
-    ((flags) |= (((val) & (SBP_POS_LLH_ACC_PERCENTILE_MASK)) \
-                 << (SBP_POS_LLH_ACC_PERCENTILE_SHIFT)));    \
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_MASK (0xf)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_SHIFT (0u)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_GET(flags)      \
+  (((flags) >> SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_SHIFT) & \
+   SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_MASK)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_SET(flags, val)           \
+  do {                                                             \
+    ((flags) |= (((val) & (SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_MASK)) \
+                 << (SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_SHIFT)));    \
   } while (0)
 
-#define SBP_POS_LLH_ACC_PERCENTILE_NO_SCALING (0)
-#define SBP_POS_LLH_ACC_PERCENTILE_6827 (1)
-#define SBP_POS_LLH_ACC_PERCENTILE_9545 (2)
-#define SBP_POS_LLH_ACC_PERCENTILE_9974 (3)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_6827 (1)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_9545 (2)
+#define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_9974 (3)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -645,8 +644,8 @@ typedef struct SBP_ATTR_PACKED {
                                                        ellipse at the
                                                        user-configured
                                                        confidence level. */
-  u8 percentile; /**< Configured percentile for the estimated position
-                      error */
+  u8 confidence; /**< Configured confidence level for the estimated
+                      position error */
   u8 n_sats;     /**< Number of satellites used in solution. */
   u8 flags;      /**< Status flags */
 } msg_pos_llh_acc_t;

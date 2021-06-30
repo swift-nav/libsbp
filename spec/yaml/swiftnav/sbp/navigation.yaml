@@ -433,7 +433,7 @@ definitions:
               - 6-7:
                   desc: Reserved
               - 5-5:
-                  desc: Type of Reported tow
+                  desc: Type of reported TOW
                   values:
                       - 0: Time of Measurement
                       - 1: Other
@@ -500,7 +500,7 @@ definitions:
               - 6-7:
                   desc: Reserved
               - 5-5:
-                  desc: Type of Reported tow
+                  desc: Type of reported TOW
                   values:
                       - 0: Time of Measurement
                       - 1: Other
@@ -528,10 +528,10 @@ definitions:
       This position solution message reports the absolute geodetic
       coordinates and the status (single point vs pseudo-absolute RTK)
       of the position solution as well as the upper triangle of the 3x3
-      covariance matrix.  The position information and Fix Mode flags should
-      follow the MSG_POS_LLH message.  Since the covariance matrix is computed
-      in the local-level North, East, Down frame, the covariance terms follow
-      with that convention. Thus, covariances are reported against the "downward"
+      covariance matrix.  The position information and Fix Mode flags follow the
+      MSG_POS_LLH message.  Since the covariance matrix is computed in the
+      local-level North, East, Down frame, the covariance terms follow that
+      convention. Thus, covariances are reported against the "downward"
       measurement and care should be taken with the sign convention.
     fields:
         - tow:
@@ -584,7 +584,7 @@ definitions:
               - 6-7:
                   desc: Reserved
               - 5-5:
-                  desc: Type of Reported tow
+                  desc: Type of reported TOW
                   values:
                       - 0: Time of Measurement
                       - 1: Other
@@ -624,7 +624,7 @@ definitions:
            type: float
            units: deg
            desc: >
-             The orientation of semi major axis of the estimated horizontal
+             The orientation of the semi major axis of the estimated horizontal
              error ellipse with respect to North.
 
 
@@ -635,10 +635,10 @@ definitions:
       This position solution message reports the absolute geodetic coordinates
       and the status (single point vs pseudo-absolute RTK) of the position
       solution as well as the estimated horizontal, vertical, cross-track and
-      along-track errors.  The position information and Fix Mode flags should
-      follow the MSG_POS_LLH message. Since the covariance matrix is computed in
-      the local-level North, East, Down frame, the estimated error terms follow
-      with that convention.
+      along-track errors.  The position information and Fix Mode flags  follow
+      the MSG_POS_LLH message. Since the covariance matrix is computed in the
+      local-level North, East, Down frame, the estimated error terms follow that
+      convention.
 
 
       The estimated errors are reported at a user-configurable confidence level.
@@ -679,14 +679,16 @@ definitions:
         - h_ellipse:
             type: EstimatedHorizontalErrorEllipse
             desc: The estimated horizontal error ellipse at the user-configured confidence level.
-        - percentile:
+        - confidence:
             type: u8
-            desc: Configured percentile for the estimated position error
+            desc: Configured confidence level for the estimated position error
             fields:
-              - 0-7:
-                  desc: Percentile
+              - 4-7:
+                  desc: Reserved
+              - 0-3:
+                  desc: Confidence level
                   values:
-                    - 0: no scaling
+                    - 0: reserved
                     - 1: 68.27%
                     - 2: 95.45%
                     - 3: 99.74%
@@ -700,7 +702,7 @@ definitions:
               - 6-7:
                   desc: Reserved
               - 5-5:
-                  desc: Type of Reported tow
+                  desc: Type of reported TOW
                   values:
                       - 0: Time of Measurement
                       - 1: Other
@@ -864,7 +866,7 @@ definitions:
                 - 6-7:
                     desc: Reserved
                 - 5-5:
-                    desc: Type of Reported tow
+                    desc: Type of reported TOW
                     values:
                         - 0: Time of Measurement
                         - 1: Other
@@ -939,7 +941,7 @@ definitions:
                 - 6-7:
                     desc: Reserved
                 - 5-5:
-                    desc: Type of Reported tow
+                    desc: Type of reported TOW
                     values:
                         - 0: Time of Measurement
                         - 1: Other
@@ -1001,7 +1003,7 @@ definitions:
                 - 6-7:
                     desc: Reserved
                 - 5-5:
-                    desc: Type of Reported tow
+                    desc: Type of reported TOW
                     values:
                         - 0: Time of Measurement
                         - 1: Other
@@ -1079,7 +1081,7 @@ definitions:
                 - 6-7:
                     desc: Reserved
                 - 5-5:
-                    desc: Type of Reported tow
+                    desc: Type of reported TOW
                     values:
                         - 0: Time of Measurement
                         - 1: Other
