@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgPosLLHAcc",
   "title":"MsgPosLLHAcc",
-  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the estimated horizontal, vertical, cross-track and along-track errors.  The position information and Fix Mode flags should follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level North, East, Down frame, the estimated error terms follow with that convention.,\n,\nThe estimated errors are reported at a user-configurable confidence level. The user-configured percentile is encoded in the percentile field.\n",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the estimated horizontal, vertical, cross-track and along-track errors.  The position information and Fix Mode flags  follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level North, East, Down frame, the estimated error terms follow that convention.,\n,\nThe estimated errors are reported at a user-configurable confidence level. The user-configured percentile is encoded in the percentile field.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},
@@ -25,7 +25,7 @@
     "ct_accuracy": {"type": "number"},
     "at_accuracy": {"type": "number"},
     "h_ellipse": {"$ref": "EstimatedHorizontalErrorEllipse.json"},
-    "percentile": {"type": "integer"},
+    "confidence": {"type": "integer"},
     "n_sats": {"type": "integer"},
     "flags": {"type": "integer"}
   },
@@ -39,7 +39,7 @@
     "ct_accuracy",
     "at_accuracy",
     "h_ellipse",
-    "percentile",
+    "confidence",
     "n_sats",
     "flags"
   ]

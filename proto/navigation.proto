@@ -209,11 +209,11 @@ message MsgPosLlh {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the upper triangle of the 3x3 covariance matrix.  The
- * position information and Fix Mode flags should follow the MSG_POS_LLH
- * message.  Since the covariance matrix is computed in the local-level North,
- * East, Down frame, the covariance terms follow with that convention. Thus,
- * covariances are reported against the "downward" measurement and care should
- * be taken with the sign convention.
+ * position information and Fix Mode flags follow the MSG_POS_LLH message.
+ * Since the covariance matrix is computed in the local-level North, East,
+ * Down frame, the covariance terms follow that convention. Thus, covariances
+ * are reported against the "downward" measurement and care should be taken
+ * with the sign convention.
  */
 message MsgPosLlhCov {
     uint32 tow = 1;
@@ -245,10 +245,10 @@ message EstimatedHorizontalErrorEllipse {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the estimated horizontal, vertical, cross-track and
- * along-track errors.  The position information and Fix Mode flags should
- * follow the MSG_POS_LLH message. Since the covariance matrix is computed in
- * the local-level North, East, Down frame, the estimated error terms follow
- * with that convention.
+ * along-track errors.  The position information and Fix Mode flags  follow
+ * the MSG_POS_LLH message. Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the estimated error terms follow that
+ * convention.
  *
  * The estimated errors are reported at a user-configurable confidence level.
  * The user-configured percentile is encoded in the percentile field.
@@ -263,7 +263,7 @@ message MsgPosLlhAcc {
     float ct_accuracy = 7;
     float at_accuracy = 8;
     EstimatedHorizontalErrorEllipse h_ellipse = 9;
-    uint32 percentile = 10;
+    uint32 confidence = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }

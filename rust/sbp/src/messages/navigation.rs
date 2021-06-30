@@ -58,7 +58,7 @@ pub struct EstimatedHorizontalErrorEllipse {
     /// The semi minor axis of the estimated horizontal error ellipse at the
     /// user-configured confidence level; zero implies invalid.
     pub semi_minor: f32,
-    /// The orientation of semi major axis of the estimated horizontal error
+    /// The orientation of the semi major axis of the estimated horizontal error
     /// ellipse with respect to North.
     pub orientation: f32,
 }
@@ -2237,10 +2237,10 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 /// This position solution message reports the absolute geodetic coordinates
 /// and the status (single point vs pseudo-absolute RTK) of the position
 /// solution as well as the estimated horizontal, vertical, cross-track and
-/// along-track errors.  The position information and Fix Mode flags should
-/// follow the MSG_POS_LLH message. Since the covariance matrix is computed in
-/// the local-level North, East, Down frame, the estimated error terms follow
-/// with that convention.
+/// along-track errors.  The position information and Fix Mode flags  follow
+/// the MSG_POS_LLH message. Since the covariance matrix is computed in the
+/// local-level North, East, Down frame, the estimated error terms follow that
+/// convention.
 ///
 /// The estimated errors are reported at a user-configurable confidence level.
 /// The user-configured percentile is encoded in the percentile field.
@@ -2274,8 +2274,8 @@ pub struct MsgPosLLHAcc {
     /// The estimated horizontal error ellipse at the user-configured confidence
     /// level.
     pub h_ellipse: EstimatedHorizontalErrorEllipse,
-    /// Configured percentile for the estimated position error
-    pub percentile: u8,
+    /// Configured confidence level for the estimated position error
+    pub confidence: u8,
     /// Number of satellites used in solution.
     pub n_sats: u8,
     /// Status flags
@@ -2296,7 +2296,7 @@ impl MsgPosLLHAcc {
             ct_accuracy: _buf.read_f32::<LittleEndian>()?,
             at_accuracy: _buf.read_f32::<LittleEndian>()?,
             h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
-            percentile: _buf.read_u8()?,
+            confidence: _buf.read_u8()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         } )
@@ -2368,7 +2368,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         self.ct_accuracy.append_to_sbp_buffer(buf);
         self.at_accuracy.append_to_sbp_buffer(buf);
         self.h_ellipse.append_to_sbp_buffer(buf);
-        self.percentile.append_to_sbp_buffer(buf);
+        self.confidence.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
     }
@@ -2384,7 +2384,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         size += self.ct_accuracy.sbp_size();
         size += self.at_accuracy.sbp_size();
         size += self.h_ellipse.sbp_size();
-        size += self.percentile.sbp_size();
+        size += self.confidence.sbp_size();
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
@@ -2396,11 +2396,11 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
 /// This position solution message reports the absolute geodetic coordinates
 /// and the status (single point vs pseudo-absolute RTK) of the position
 /// solution as well as the upper triangle of the 3x3 covariance matrix.  The
-/// position information and Fix Mode flags should follow the MSG_POS_LLH
-/// message.  Since the covariance matrix is computed in the local-level
-/// North, East, Down frame, the covariance terms follow with that convention.
-/// Thus, covariances are reported against the "downward" measurement and care
-/// should be taken with the sign convention.
+/// position information and Fix Mode flags follow the MSG_POS_LLH message.
+/// Since the covariance matrix is computed in the local-level North, East,
+/// Down frame, the covariance terms follow that convention. Thus, covariances
+/// are reported against the "downward" measurement and care should be taken
+/// with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

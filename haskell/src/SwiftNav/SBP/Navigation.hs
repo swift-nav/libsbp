@@ -505,11 +505,11 @@ msgPosLlhCov = 0x0211
 -- This position solution message reports the absolute geodetic coordinates
 -- and the status (single point vs pseudo-absolute RTK) of the position
 -- solution as well as the upper triangle of the 3x3 covariance matrix.  The
--- position information and Fix Mode flags should follow the MSG_POS_LLH
--- message.  Since the covariance matrix is computed in the local-level North,
--- East, Down frame, the covariance terms follow with that convention. Thus,
--- covariances are reported against the "downward" measurement and care should
--- be taken with the sign convention.
+-- position information and Fix Mode flags follow the MSG_POS_LLH message.
+-- Since the covariance matrix is computed in the local-level North, East,
+-- Down frame, the covariance terms follow that convention. Thus, covariances
+-- are reported against the "downward" measurement and care should be taken
+-- with the sign convention.
 data MsgPosLlhCov = MsgPosLlhCov
   { _msgPosLlhCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -579,8 +579,8 @@ data EstimatedHorizontalErrorEllipse = EstimatedHorizontalErrorEllipse
     -- ^ The semi minor axis of the estimated horizontal error ellipse at the
     -- user-configured confidence level; zero implies invalid.
   , _estimatedHorizontalErrorEllipse_orientation :: !Float
-    -- ^ The orientation of semi major axis of the estimated horizontal error
-    -- ellipse with respect to North.
+    -- ^ The orientation of the semi major axis of the estimated horizontal
+    -- error ellipse with respect to North.
   } deriving ( Show, Read, Eq )
 
 instance Binary EstimatedHorizontalErrorEllipse where
@@ -606,10 +606,10 @@ msgPosLlhAcc = 0x0218
 -- This position solution message reports the absolute geodetic coordinates
 -- and the status (single point vs pseudo-absolute RTK) of the position
 -- solution as well as the estimated horizontal, vertical, cross-track and
--- along-track errors.  The position information and Fix Mode flags should
--- follow the MSG_POS_LLH message. Since the covariance matrix is computed in
--- the local-level North, East, Down frame, the estimated error terms follow
--- with that convention.
+-- along-track errors.  The position information and Fix Mode flags  follow
+-- the MSG_POS_LLH message. Since the covariance matrix is computed in the
+-- local-level North, East, Down frame, the estimated error terms follow that
+-- convention.
 --
 -- The estimated errors are reported at a user-configurable confidence level.
 -- The user-configured percentile is encoded in the percentile field.
@@ -637,8 +637,8 @@ data MsgPosLlhAcc = MsgPosLlhAcc
   , _msgPosLlhAcc_h_ellipse :: !EstimatedHorizontalErrorEllipse
     -- ^ The estimated horizontal error ellipse at the user-configured
     -- confidence level.
-  , _msgPosLlhAcc_percentile :: !Word8
-    -- ^ Configured percentile for the estimated position error
+  , _msgPosLlhAcc_confidence :: !Word8
+    -- ^ Configured confidence level for the estimated position error
   , _msgPosLlhAcc_n_sats    :: !Word8
     -- ^ Number of satellites used in solution.
   , _msgPosLlhAcc_flags     :: !Word8
@@ -656,7 +656,7 @@ instance Binary MsgPosLlhAcc where
     _msgPosLlhAcc_ct_accuracy <- getFloat32le
     _msgPosLlhAcc_at_accuracy <- getFloat32le
     _msgPosLlhAcc_h_ellipse <- get
-    _msgPosLlhAcc_percentile <- getWord8
+    _msgPosLlhAcc_confidence <- getWord8
     _msgPosLlhAcc_n_sats <- getWord8
     _msgPosLlhAcc_flags <- getWord8
     pure MsgPosLlhAcc {..}
@@ -671,7 +671,7 @@ instance Binary MsgPosLlhAcc where
     putFloat32le _msgPosLlhAcc_ct_accuracy
     putFloat32le _msgPosLlhAcc_at_accuracy
     put _msgPosLlhAcc_h_ellipse
-    putWord8 _msgPosLlhAcc_percentile
+    putWord8 _msgPosLlhAcc_confidence
     putWord8 _msgPosLlhAcc_n_sats
     putWord8 _msgPosLlhAcc_flags
 
