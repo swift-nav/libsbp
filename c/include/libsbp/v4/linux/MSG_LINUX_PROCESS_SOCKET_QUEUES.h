@@ -242,11 +242,10 @@ const char *sbp_msg_linux_process_socket_queues_cmdline_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_linux_process_socket_queues_t instance
- * @param section Section number
- * @return Length of section
+ * @return Length of string
  */
 size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
-    const sbp_msg_linux_process_socket_queues_t *msg, size_t section);
+    const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_socket_queues_t

@@ -224,11 +224,10 @@ const char *sbp_msg_linux_cpu_state_cmdline_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_linux_cpu_state_t instance
- * @param section Section number
- * @return Length of section
+ * @return Length of string
  */
 size_t sbp_msg_linux_cpu_state_cmdline_strlen(
-    const sbp_msg_linux_cpu_state_t *msg, size_t section);
+    const sbp_msg_linux_cpu_state_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_cpu_state_t
