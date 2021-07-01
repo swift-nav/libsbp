@@ -215,7 +215,7 @@ const char *sbp_msg_linux_process_fd_count_cmdline_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_linux_process_fd_count_cmdline_section_strlen(
+size_t sbp_msg_linux_process_fd_count_cmdline_strlen(
     const sbp_msg_linux_process_fd_count_t *msg, size_t section);
 
 /**

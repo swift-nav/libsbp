@@ -205,7 +205,7 @@ const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_bootloader_handshake_dep_a_handshake_section_strlen(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_strlen(
     const sbp_msg_bootloader_handshake_dep_a_t *msg, size_t section);
 
 /**

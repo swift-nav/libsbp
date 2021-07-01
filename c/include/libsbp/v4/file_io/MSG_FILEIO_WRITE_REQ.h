@@ -228,7 +228,7 @@ const char *sbp_msg_fileio_write_req_filename_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_fileio_write_req_filename_section_strlen(
+size_t sbp_msg_fileio_write_req_filename_strlen(
     const sbp_msg_fileio_write_req_t *msg, size_t section);
 
 /**

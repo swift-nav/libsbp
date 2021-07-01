@@ -174,6 +174,10 @@ const char *sbp_msg_dgnss_status_source_get(const sbp_msg_dgnss_status_t *msg) {
   return sbp_unterminated_string_get(&msg->source, 251);
 }
 
+size_t sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->source, 251);
+}
+
 size_t sbp_msg_dgnss_status_encoded_len(const sbp_msg_dgnss_status_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u8_encoded_len(&msg->flags);
@@ -725,6 +729,11 @@ const char *sbp_msg_csac_telemetry_telemetry_get(
   return sbp_unterminated_string_get(&msg->telemetry, 254);
 }
 
+size_t sbp_msg_csac_telemetry_telemetry_strlen(
+    const sbp_msg_csac_telemetry_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->telemetry, 254);
+}
+
 size_t sbp_msg_csac_telemetry_encoded_len(const sbp_msg_csac_telemetry_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u8_encoded_len(&msg->id);
@@ -880,6 +889,11 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
 const char *sbp_msg_csac_telemetry_labels_telemetry_labels_get(
     const sbp_msg_csac_telemetry_labels_t *msg) {
   return sbp_unterminated_string_get(&msg->telemetry_labels, 254);
+}
+
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_strlen(
+    const sbp_msg_csac_telemetry_labels_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->telemetry_labels, 254);
 }
 
 size_t sbp_msg_csac_telemetry_labels_encoded_len(

@@ -211,7 +211,7 @@ const char *sbp_msg_bootloader_handshake_resp_version_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_bootloader_handshake_resp_version_section_strlen(
+size_t sbp_msg_bootloader_handshake_resp_version_strlen(
     const sbp_msg_bootloader_handshake_resp_t *msg, size_t section);
 
 /**

@@ -216,7 +216,7 @@ typedef struct {
    * @param section Section number
    * @return Length of section
    */
-  size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
+  size_t (((prefix)))_strlen(const (((m.type_name))) *msg, size_t section);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   /**
    * Return the number of sections in (((comment_name)))

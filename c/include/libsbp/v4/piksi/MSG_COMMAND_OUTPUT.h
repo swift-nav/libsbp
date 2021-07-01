@@ -204,8 +204,8 @@ const char *sbp_msg_command_output_line_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_command_output_line_section_strlen(
-    const sbp_msg_command_output_t *msg, size_t section);
+size_t sbp_msg_command_output_line_strlen(const sbp_msg_command_output_t *msg,
+                                          size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_command_output_t

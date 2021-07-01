@@ -204,7 +204,7 @@ const char *sbp_msg_csac_telemetry_telemetry_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_csac_telemetry_telemetry_section_strlen(
+size_t sbp_msg_csac_telemetry_telemetry_strlen(
     const sbp_msg_csac_telemetry_t *msg, size_t section);
 
 /**

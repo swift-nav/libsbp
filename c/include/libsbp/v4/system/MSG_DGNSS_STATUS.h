@@ -212,8 +212,8 @@ const char *sbp_msg_dgnss_status_source_get(const sbp_msg_dgnss_status_t *msg);
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_dgnss_status_source_section_strlen(
-    const sbp_msg_dgnss_status_t *msg, size_t section);
+size_t sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg,
+                                          size_t section);
 
 /**
  * Get encoded size of an instance of sbp_msg_dgnss_status_t

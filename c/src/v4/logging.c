@@ -68,6 +68,10 @@ const char *sbp_msg_log_text_get(const sbp_msg_log_t *msg) {
   return sbp_unterminated_string_get(&msg->text, 254);
 }
 
+size_t sbp_msg_log_text_strlen(const sbp_msg_log_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->text, 254);
+}
+
 size_t sbp_msg_log_encoded_len(const sbp_msg_log_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u8_encoded_len(&msg->level);
@@ -314,6 +318,10 @@ bool sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
 
 const char *sbp_msg_print_dep_text_get(const sbp_msg_print_dep_t *msg) {
   return sbp_unterminated_string_get(&msg->text, 255);
+}
+
+size_t sbp_msg_print_dep_text_strlen(const sbp_msg_print_dep_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->text, 255);
 }
 
 size_t sbp_msg_print_dep_encoded_len(const sbp_msg_print_dep_t *msg) {

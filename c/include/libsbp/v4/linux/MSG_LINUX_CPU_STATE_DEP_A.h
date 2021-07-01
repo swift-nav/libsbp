@@ -221,7 +221,7 @@ const char *sbp_msg_linux_cpu_state_dep_a_cmdline_get(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_linux_cpu_state_dep_a_cmdline_section_strlen(
+size_t sbp_msg_linux_cpu_state_dep_a_cmdline_strlen(
     const sbp_msg_linux_cpu_state_dep_a_t *msg, size_t section);
 
 /**

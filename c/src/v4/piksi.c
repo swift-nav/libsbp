@@ -1696,6 +1696,10 @@ const char *sbp_msg_command_req_command_get(const sbp_msg_command_req_t *msg) {
   return sbp_null_terminated_string_get(&msg->command, 251);
 }
 
+size_t sbp_msg_command_req_command_strlen(const sbp_msg_command_req_t *msg) {
+  return sbp_null_terminated_string_strlen(&msg->command, 251);
+}
+
 size_t sbp_msg_command_req_encoded_len(const sbp_msg_command_req_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_u32_encoded_len(&msg->sequence);
@@ -1932,6 +1936,10 @@ bool sbp_msg_command_output_line_append_vprintf(sbp_msg_command_output_t *msg,
 const char *sbp_msg_command_output_line_get(
     const sbp_msg_command_output_t *msg) {
   return sbp_unterminated_string_get(&msg->line, 251);
+}
+
+size_t sbp_msg_command_output_line_strlen(const sbp_msg_command_output_t *msg) {
+  return sbp_unterminated_string_strlen(&msg->line, 251);
 }
 
 size_t sbp_msg_command_output_encoded_len(const sbp_msg_command_output_t *msg) {
