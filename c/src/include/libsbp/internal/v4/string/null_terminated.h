@@ -10,6 +10,31 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+/**
+ * @file null_terminated.h
+ *
+ * Handles encoding and deecoding of NULL terminated strings.
+ *
+ * In SBP a NULL terminated string has the same definition as string in the C
+ * language. On the wire it is a sequence of characters with a NULL character to
+ * indicate the end of the string.
+ *
+ * For example the string "text" would be represented on the wire as
+ *
+ * text\0
+ *
+ * for a total of 5 bytes.
+ *
+ * While it is possible for a consumer of libsbp to interact directly with the
+ * on-wire encoding of a NULL terminated strings these functions exist for
+ * harmony with the other string encodings in SBP.
+ *
+ * The value of a NULL terminated string can be retrieved with
+ * #sbp_null_terminated_string_get, and set with one of the "set" functions.
+ * Characteristics of the string can be queried with a number of different
+ * functions.
+ */
+
 #ifndef LIBSBP_INTERNAL_V4_STRING_NULL_TERMINATED_H
 #define LIBSBP_INTERNAL_V4_STRING_NULL_TERMINATED_H
 

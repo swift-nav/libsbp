@@ -9,10 +9,7 @@
 static const sbp_string_params_t params = {
     .valid = sbp_null_terminated_string_valid,
     .init = sbp_null_terminated_string_init,
-    .default_output =
-        {
-            0,
-        },
+    .default_output = "", // Just the NULL terminator
     .default_output_len = 1,
     .inject_missing_terminator = true,
 };

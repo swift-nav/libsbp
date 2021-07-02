@@ -90,8 +90,14 @@ typedef union {
 /** SBP callback type enum:
  * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing args
  * SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as args.
+ * SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw) messages
+ *
  * This enum is stored on each sbp_msg_callback_node struct to identify how
  * to cast the callback function pointer stored within.
+ *
+ * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp API. They
+ * are both deprecated and should not be used in new code. SBP_DECODED_CALLBACK should
+ * be used for all new development.
  */
 enum sbp_cb_type {
   SBP_MSG_CALLBACK = 0,

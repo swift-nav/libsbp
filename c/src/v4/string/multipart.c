@@ -9,10 +9,7 @@
 static const sbp_string_params_t params = {
     .valid = sbp_multipart_string_valid,
     .init = sbp_multipart_string_init,
-    .default_output =
-        {
-            0,
-        },
+    .default_output = NULL,
     .default_output_len = 0,
     .inject_missing_terminator = true,
 };

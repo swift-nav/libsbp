@@ -10,6 +10,56 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+/**
+ * @file double_null_terminated.h
+ *
+ * Handles encoding and decoding of double NULL terminated strings.
+ *
+ * In SBP double NULL terminated strings are rather similar to multipart strings
+ * except they have an extra NULL terminator at the end of a sequence. A double
+ * NULL terminated string is not a single C style string, rather it is a
+ * collection of substrings (or sections) each separated on the wire with a NULL
+ * terminator with the end of sequence being marked by an extra sequence.
+ *
+ * For example, a double NULL terminated string might contain 3 sections -
+ * "one", "two", and "three". On the wire this string would be encoded as
+ *
+ * one\0two\0three\0\0
+ *
+ * for a total of 15 bytes.
+ *
+ * A double NULL terminated string might contain no sections in which case on
+ * the wire it would consists of just two NULL terminators with no printable
+ * text.
+ *
+ * Since C strings are NULL terminated it isn't possible for a consumer of
+ * libsbp to interact directly with the wire encoding of a double NULL
+ * terminated string without performing some sort of tokenisation on the input
+ * or carefully constructing the output.
+ *
+ * The functions in this file handle all aspects of interacting with a double
+ * NULL terminated string for a consumer of libsbp, including all encoding and
+ * decoding considerations.
+ *
+ * When processing an incoming double NULL terminated string individual sections
+ * can be retrieved from the double NULL terminated string object with
+ * #sbp_double_null_terminated_string_get_section. The returned string will
+ * corrospond to the requested section number and will always be represented in
+ * C format. For example when operating on the string from the first example
+ * above, calling #sbp_double_null_terminated_string_get_section(&string,
+ * max_encoded_len, 0) will return the C string "one". Calling
+ * #sbp_double_null_terminated_string_get_section(&string, max_encoded_len, 1)
+ * will return "two" and so on.
+ *
+ * Other characteristics of the string such as the number of sections, the
+ * length of any given section, or the total encoded length of the double NULL
+ * terminated string can be queried at will.
+ *
+ * When constructing a double NULL terminated string new sections can be added
+ * with one of the "add" functions. All query functions can be used as described
+ * above.
+ */
+
 #ifndef LIBSBP_INTERNAL_V4_STRING_DOUBLE_NULL_TERMINATED_H
 #define LIBSBP_INTERNAL_V4_STRING_DOUBLE_NULL_TERMINATED_H
 
@@ -81,8 +131,9 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
  * @param max_encoded_len Maximum encoded length
  * @return Available space
  */
-size_t sbp_double_null_terminated_string_space_remaining(
-    const sbp_string_t *s, size_t max_encoded_len);
+size_t
+sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
+                                                  size_t max_encoded_len);
 
 /**
  * Count sections in a double null terminated string

@@ -1,4 +1,4 @@
-FILE(GLOB generated_c_sources v4/*.c)
+FILE(GLOB generated_c_sources v4/*.c v4/*.cc)
 
 set(libsbp_SRCS
   edc.c

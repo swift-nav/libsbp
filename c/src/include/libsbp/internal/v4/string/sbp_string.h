@@ -43,7 +43,7 @@ typedef struct {
    * When #sbp_string_encode is called with an invalid source string it will
    * write this string to the output instead
    */
-  const char default_output[2];
+  const char *default_output;
 
   /**
    * Length of data in default_output

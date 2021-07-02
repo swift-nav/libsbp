@@ -10,6 +10,40 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+/**
+ * @file unterminated.h
+ *
+ * Handles encoding and decoding of unterminated strings.
+ *
+ * In SBP an unterminated string is a sequence of characters without a NULL
+ * terminator to indicate the end of the string. Unterminated strings can only
+ * appear at the end of an SBP payload, their length is indicated by the
+ * remaining length of payload when processing incoming data.
+ *
+ * For example, the string "text" would be represented on the wire as
+ *
+ * text
+ *
+ * for a total of 4 bytes
+ *
+ * Since C strings require a NULL terminator it isn't possible for a consumer of
+ * SBP to interact directly with the on-wire encoding of an unterminated string
+ * since it's missing the NULL terminator. Instead the incoming unterminated
+ * string must be copied to some other user provided buffer and a NULL
+ * terminator added before it can be processed.
+ *
+ * The functions in this file provide a convenient way to interact with string
+ * which don't have a NULL terminator on the wire. These functions ensure that
+ * strings are always in correct C string representation for the consumer of
+ * libsbp and will handle the adding or removal of NULL terminators when
+ * encoding or decoding the string to wire format.
+ *
+ * That value of an unterminated string can be retrieved with
+ * #sbp_unterminated_string_get, and set with one of the "set" functions.
+ * Characteristics of the string can be queried with a number of different
+ * funtions.
+ */
+
 #ifndef LIBSBP_INTERNAL_V4_STRING_UNTERMINATED_H
 #define LIBSBP_INTERNAL_V4_STRING_UNTERMINATED_H
 

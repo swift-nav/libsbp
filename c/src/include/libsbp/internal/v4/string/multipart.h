@@ -10,6 +10,50 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+/**
+ * @file multipart.h
+ *
+ * Handles encoding and decoding of multipart strings.
+ *
+ * In SBP a multipart string is not a single C string but a collection of
+ * smaller strings (or sections) each separated by a NULL character.
+ *
+ * For example, a multipart string might contain 3 sections - "one", "two", and
+ * "three". On the wire this string would be encoded as
+ *
+ * one\0two\0three\0
+ *
+ * for a total of 14 bytes.
+ *
+ * A multipart string might contain no sections in which case on the wire it
+ * would consist of just a single NULL character.
+ *
+ * Since C string are NULL terminated it isn't possible for a consumer of libsbp
+ * to interact directly with the wire encoding of a multipart string without
+ * performing some sort of tokenisation on the input or carefully constructing
+ * the output.
+ *
+ * The functions in this file handle all aspects of interacting with a multipart
+ * string for a consumer of libsbp, including all encoding and decoding
+ * considerations.
+ *
+ * When processing an incoming multipart string individual sections can be
+ * retrieved from the multipart string object with
+ * #sbp_multipart_string_get_section. The returned string will corrospond to the
+ * requested section number and will always be represented in C format. For
+ * example when operating on the string from the first example above, calling
+ * #sbp_multipart_string_get_section(&string, max_encoded_len, 0) will return
+ * the C string "one". Calling #sbp_multipart_string_get_section(&string,
+ * max_encoded_len, 1) will return "two" and so on.
+ *
+ * Other characteristics of the string such as the number of sections, the
+ * length of any given section, or the total encoded length of the multipart
+ * string can be queried at will.
+ *
+ * When constructing a multipart string new sections can be added with one of
+ * the "add" functions. All query functions can be used as described above.
+ */
+
 #ifndef LIBSBP_INTERNAL_V4_STRING_MULTIPART_H
 #define LIBSBP_INTERNAL_V4_STRING_MULTIPART_H
 
