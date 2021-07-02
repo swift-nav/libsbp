@@ -118,109 +118,94 @@ static inline size_t sbp_u64_decode(sbp_decode_ctx_t *ctx, u64 *v) {
 }
 
 static inline size_t sbp_s8_encode(sbp_encode_ctx_t *ctx, const s8 *v) {
-  return sbp_u8_encode(ctx, (const u8 *)v);
+  uint8_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u8_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_s8_decode(sbp_decode_ctx_t *ctx, s8 *v) {
-  return sbp_u8_decode(ctx, (u8 *)v);
+  uint8_t tmp = 0;
+  size_t result = sbp_u8_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_s16_encode(sbp_encode_ctx_t *ctx, const s16 *v) {
-  return sbp_u16_encode(ctx, (const u16 *)v);
+  uint16_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u16_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_s16_decode(sbp_decode_ctx_t *ctx, s16 *v) {
-  return sbp_u16_decode(ctx, (u16 *)v);
+  uint16_t tmp = 0;
+  size_t result = sbp_u16_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_s32_encode(sbp_encode_ctx_t *ctx, const s32 *v) {
-  return sbp_u32_encode(ctx, (const u32 *)v);
+  uint32_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u32_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_s32_decode(sbp_decode_ctx_t *ctx, s32 *v) {
-  return sbp_u32_decode(ctx, (u32 *)v);
+  uint32_t tmp = 0;
+  size_t result = sbp_u32_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_s64_encode(sbp_encode_ctx_t *ctx, const s64 *v) {
-  return sbp_u64_encode(ctx, (const u64 *)v);
+  uint64_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u64_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_s64_decode(sbp_decode_ctx_t *ctx, s64 *v) {
-  return sbp_u64_decode(ctx, (u64 *)v);
+  uint64_t tmp = 0;
+  size_t result = sbp_u64_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_char_encode(sbp_encode_ctx_t *ctx, const char *v) {
-  return sbp_u8_encode(ctx, (const uint8_t *)v);
+  uint8_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u8_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_char_decode(sbp_decode_ctx_t *ctx, char *v) {
-  return sbp_u8_decode(ctx, (uint8_t *)v);
+  uint8_t tmp = 0;
+  size_t result = sbp_u8_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_float_encode(sbp_encode_ctx_t *ctx, const float *v) {
-  if (!SBP_CAN_PACK(ctx, float)) {
-    return false;
-  }
-
-  union {
-    uint32_t i;
-    float f;
-  } u;
-
-  u.f = *v;
-
-  return sbp_u32_encode(ctx, &u.i);
+  uint32_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u32_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_float_decode(sbp_decode_ctx_t *ctx, float *v) {
-  if (!SBP_CAN_UNPACK(ctx, float)) {
-    return false;
-  }
-
-  union {
-    uint32_t i;
-    float f;
-  } u;
-
-  if (!sbp_u32_decode(ctx, &u.i)) {
-    return false;
-  }
-
-  *v = u.f;
-  return true;
+  uint32_t tmp = 0;
+  size_t result = sbp_u32_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline size_t sbp_double_encode(sbp_encode_ctx_t *ctx, const double *v) {
-  if (!SBP_CAN_PACK(ctx, double)) {
-    return false;
-  }
-
-  union {
-    uint64_t i;
-    double d;
-  } u;
-
-  u.d = *v;
-
-  return sbp_u64_encode(ctx, &u.i);
+  uint64_t tmp;
+  memcpy(&tmp, v, sizeof(tmp));
+  return sbp_u64_encode(ctx, &tmp);
 }
 
 static inline size_t sbp_double_decode(sbp_decode_ctx_t *ctx, double *v) {
-  if (!SBP_CAN_UNPACK(ctx, double)) {
-    return false;
-  }
-
-  union {
-    uint64_t i;
-    double d;
-  } u;
-
-  if (!sbp_u64_decode(ctx, &u.i)) {
-    return false;
-  }
-
-  *v = u.d;
-  return true;
+  uint64_t tmp = 0;
+  size_t result = sbp_u64_decode(ctx, &tmp);
+  memcpy(v, &tmp, sizeof(tmp));
+  return result;
 }
 
 static inline int sbp_u8_cmp(const uint8_t *a, const uint8_t *b) {
