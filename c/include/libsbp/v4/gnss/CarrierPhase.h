@@ -62,7 +62,11 @@ typedef struct {
  * @param msg sbp_carrier_phase_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_carrier_phase_encoded_len(const sbp_carrier_phase_t *msg);
+static inline size_t sbp_carrier_phase_encoded_len(
+    const sbp_carrier_phase_t *msg) {
+  (void)msg;
+  return 5u;
+}
 
 /**
  * Encode an instance of sbp_carrier_phase_t to wire representation

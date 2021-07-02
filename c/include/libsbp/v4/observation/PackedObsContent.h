@@ -98,7 +98,11 @@ typedef struct {
  * @param msg sbp_packed_obs_content_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_obs_content_encoded_len(const sbp_packed_obs_content_t *msg);
+static inline size_t sbp_packed_obs_content_encoded_len(
+    const sbp_packed_obs_content_t *msg) {
+  (void)msg;
+  return 17u;
+}
 
 /**
  * Encode an instance of sbp_packed_obs_content_t to wire representation

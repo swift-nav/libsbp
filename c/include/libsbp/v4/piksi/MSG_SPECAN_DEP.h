@@ -98,7 +98,10 @@ typedef struct {
  * @param msg sbp_msg_specan_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_specan_dep_encoded_len(const sbp_msg_specan_dep_t *msg);
+static inline size_t sbp_msg_specan_dep_encoded_len(
+    const sbp_msg_specan_dep_t *msg) {
+  return 24u + (msg->n_amplitude_value * 1u);
+}
 
 /**
  * Encode an instance of sbp_msg_specan_dep_t to wire representation

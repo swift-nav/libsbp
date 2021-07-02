@@ -207,7 +207,10 @@ size_t sbp_msg_fileio_remove_filename_strlen(
  * @param msg sbp_msg_fileio_remove_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_remove_encoded_len(const sbp_msg_fileio_remove_t *msg);
+static inline size_t sbp_msg_fileio_remove_encoded_len(
+    const sbp_msg_fileio_remove_t *msg) {
+  return 0u + sbp_msg_fileio_remove_filename_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_remove_t to wire representation

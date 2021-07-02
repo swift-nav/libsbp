@@ -16,10 +16,7 @@
 #include <stdlib.h>
 #include "check_suites.h"
 
-int main(int argc, char *argv[]) {
-  (void)argv;
-  int32_t k = 0x7fffffff;
-  k += argc;
+int main(void) {
   int number_failed;
   Suite *s = edc_suite();
   SRunner *sr = srunner_create(s);

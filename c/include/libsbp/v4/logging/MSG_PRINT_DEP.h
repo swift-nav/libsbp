@@ -198,7 +198,10 @@ size_t sbp_msg_print_dep_text_strlen(const sbp_msg_print_dep_t *msg);
  * @param msg sbp_msg_print_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_print_dep_encoded_len(const sbp_msg_print_dep_t *msg);
+static inline size_t sbp_msg_print_dep_encoded_len(
+    const sbp_msg_print_dep_t *msg) {
+  return 0u + sbp_msg_print_dep_text_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_print_dep_t to wire representation

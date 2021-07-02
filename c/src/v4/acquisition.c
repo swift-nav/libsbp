@@ -16,15 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/acquisition.h>
 
-size_t sbp_msg_acq_result_encoded_len(const sbp_msg_acq_result_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_float_encoded_len(&msg->cn0);
-  encoded_len += sbp_float_encoded_len(&msg->cp);
-  encoded_len += sbp_float_encoded_len(&msg->cf);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  return encoded_len;
-}
-
 bool sbp_msg_acq_result_encode_internal(sbp_encode_ctx_t *ctx,
                                         const sbp_msg_acq_result_t *msg) {
   if (!sbp_float_encode(ctx, &msg->cn0)) {
@@ -127,16 +118,6 @@ int sbp_msg_acq_result_cmp(const sbp_msg_acq_result_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_acq_result_dep_c_encoded_len(
-    const sbp_msg_acq_result_dep_c_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_float_encoded_len(&msg->cn0);
-  encoded_len += sbp_float_encoded_len(&msg->cp);
-  encoded_len += sbp_float_encoded_len(&msg->cf);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  return encoded_len;
 }
 
 bool sbp_msg_acq_result_dep_c_encode_internal(
@@ -245,16 +226,6 @@ int sbp_msg_acq_result_dep_c_cmp(const sbp_msg_acq_result_dep_c_t *a,
   return ret;
 }
 
-size_t sbp_msg_acq_result_dep_b_encoded_len(
-    const sbp_msg_acq_result_dep_b_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_float_encoded_len(&msg->snr);
-  encoded_len += sbp_float_encoded_len(&msg->cp);
-  encoded_len += sbp_float_encoded_len(&msg->cf);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  return encoded_len;
-}
-
 bool sbp_msg_acq_result_dep_b_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_result_dep_b_t *msg) {
   if (!sbp_float_encode(ctx, &msg->snr)) {
@@ -361,16 +332,6 @@ int sbp_msg_acq_result_dep_b_cmp(const sbp_msg_acq_result_dep_b_t *a,
   return ret;
 }
 
-size_t sbp_msg_acq_result_dep_a_encoded_len(
-    const sbp_msg_acq_result_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_float_encoded_len(&msg->snr);
-  encoded_len += sbp_float_encoded_len(&msg->cp);
-  encoded_len += sbp_float_encoded_len(&msg->cf);
-  encoded_len += sbp_u8_encoded_len(&msg->prn);
-  return encoded_len;
-}
-
 bool sbp_msg_acq_result_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_result_dep_a_t *msg) {
   if (!sbp_float_encode(ctx, &msg->snr)) {
@@ -475,23 +436,6 @@ int sbp_msg_acq_result_dep_a_cmp(const sbp_msg_acq_result_dep_a_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_acq_sv_profile_encoded_len(const sbp_acq_sv_profile_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->job_type);
-  encoded_len += sbp_u8_encoded_len(&msg->status);
-  encoded_len += sbp_u16_encoded_len(&msg->cn0);
-  encoded_len += sbp_u8_encoded_len(&msg->int_time);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len += sbp_u16_encoded_len(&msg->bin_width);
-  encoded_len += sbp_u32_encoded_len(&msg->timestamp);
-  encoded_len += sbp_u32_encoded_len(&msg->time_spent);
-  encoded_len += sbp_s32_encoded_len(&msg->cf_min);
-  encoded_len += sbp_s32_encoded_len(&msg->cf_max);
-  encoded_len += sbp_s32_encoded_len(&msg->cf);
-  encoded_len += sbp_u32_encoded_len(&msg->cp);
-  return encoded_len;
 }
 
 bool sbp_acq_sv_profile_encode_internal(sbp_encode_ctx_t *ctx,
@@ -670,23 +614,6 @@ int sbp_acq_sv_profile_cmp(const sbp_acq_sv_profile_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_acq_sv_profile_dep_encoded_len(const sbp_acq_sv_profile_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->job_type);
-  encoded_len += sbp_u8_encoded_len(&msg->status);
-  encoded_len += sbp_u16_encoded_len(&msg->cn0);
-  encoded_len += sbp_u8_encoded_len(&msg->int_time);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  encoded_len += sbp_u16_encoded_len(&msg->bin_width);
-  encoded_len += sbp_u32_encoded_len(&msg->timestamp);
-  encoded_len += sbp_u32_encoded_len(&msg->time_spent);
-  encoded_len += sbp_s32_encoded_len(&msg->cf_min);
-  encoded_len += sbp_s32_encoded_len(&msg->cf_max);
-  encoded_len += sbp_s32_encoded_len(&msg->cf);
-  encoded_len += sbp_u32_encoded_len(&msg->cp);
-  return encoded_len;
 }
 
 bool sbp_acq_sv_profile_dep_encode_internal(
@@ -868,13 +795,6 @@ int sbp_acq_sv_profile_dep_cmp(const sbp_acq_sv_profile_dep_t *a,
   return ret;
 }
 
-size_t sbp_msg_acq_sv_profile_encoded_len(const sbp_msg_acq_sv_profile_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (msg->n_acq_sv_profile *
-                  sbp_acq_sv_profile_encoded_len(&msg->acq_sv_profile[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_acq_sv_profile_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_t *msg) {
   for (size_t i = 0; i < msg->n_acq_sv_profile; i++) {
@@ -902,9 +822,7 @@ s8 sbp_msg_acq_sv_profile_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_acq_sv_profile_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_msg_acq_sv_profile_t *msg) {
-  msg->n_acq_sv_profile =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_acq_sv_profile_encoded_len(&msg->acq_sv_profile[0]));
+  msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / 33);
   for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_decode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;
@@ -957,14 +875,6 @@ int sbp_msg_acq_sv_profile_cmp(const sbp_msg_acq_sv_profile_t *a,
   return ret;
 }
 
-size_t sbp_msg_acq_sv_profile_dep_encoded_len(
-    const sbp_msg_acq_sv_profile_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (msg->n_acq_sv_profile *
-                  sbp_acq_sv_profile_dep_encoded_len(&msg->acq_sv_profile[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_acq_sv_profile_dep_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_acq_sv_profile_dep_t *msg) {
   for (size_t i = 0; i < msg->n_acq_sv_profile; i++) {
@@ -993,9 +903,7 @@ s8 sbp_msg_acq_sv_profile_dep_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_acq_sv_profile_dep_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_acq_sv_profile_dep_t *msg) {
-  msg->n_acq_sv_profile =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_acq_sv_profile_dep_encoded_len(&msg->acq_sv_profile[0]));
+  msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / 35);
   for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_dep_decode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;

@@ -57,8 +57,11 @@ typedef struct {
  * @param msg sbp_msg_settings_read_by_index_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_settings_read_by_index_req_encoded_len(
-    const sbp_msg_settings_read_by_index_req_t *msg);
+static inline size_t sbp_msg_settings_read_by_index_req_encoded_len(
+    const sbp_msg_settings_read_by_index_req_t *msg) {
+  (void)msg;
+  return 2u;
+}
 
 /**
  * Encode an instance of sbp_msg_settings_read_by_index_req_t to wire

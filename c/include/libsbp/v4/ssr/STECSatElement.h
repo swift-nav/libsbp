@@ -69,7 +69,11 @@ typedef struct {
  * @param msg sbp_stec_sat_element_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_stec_sat_element_encoded_len(const sbp_stec_sat_element_t *msg);
+static inline size_t sbp_stec_sat_element_encoded_len(
+    const sbp_stec_sat_element_t *msg) {
+  (void)msg;
+  return 11u;
+}
 
 /**
  * Encode an instance of sbp_stec_sat_element_t to wire representation

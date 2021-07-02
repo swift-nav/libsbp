@@ -219,8 +219,10 @@ size_t sbp_msg_bootloader_handshake_resp_version_strlen(
  * @param msg sbp_msg_bootloader_handshake_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_bootloader_handshake_resp_encoded_len(
-    const sbp_msg_bootloader_handshake_resp_t *msg);
+static inline size_t sbp_msg_bootloader_handshake_resp_encoded_len(
+    const sbp_msg_bootloader_handshake_resp_t *msg) {
+  return 4u + sbp_msg_bootloader_handshake_resp_version_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_bootloader_handshake_resp_t to wire

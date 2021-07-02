@@ -95,7 +95,11 @@ typedef struct {
  * @param msg sbp_msg_orient_euler_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_orient_euler_encoded_len(const sbp_msg_orient_euler_t *msg);
+static inline size_t sbp_msg_orient_euler_encoded_len(
+    const sbp_msg_orient_euler_t *msg) {
+  (void)msg;
+  return 29u;
+}
 
 /**
  * Encode an instance of sbp_msg_orient_euler_t to wire representation

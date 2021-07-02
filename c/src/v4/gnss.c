@@ -16,13 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/gnss.h>
 
-size_t sbp_sbp_gnss_signal_encoded_len(const sbp_sbp_gnss_signal_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->sat);
-  encoded_len += sbp_u8_encoded_len(&msg->code);
-  return encoded_len;
-}
-
 bool sbp_sbp_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
                                          const sbp_sbp_gnss_signal_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->sat)) {
@@ -91,13 +84,6 @@ int sbp_sbp_gnss_signal_cmp(const sbp_sbp_gnss_signal_t *a,
   return ret;
 }
 
-size_t sbp_sv_id_encoded_len(const sbp_sv_id_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->satId);
-  encoded_len += sbp_u8_encoded_len(&msg->constellation);
-  return encoded_len;
-}
-
 bool sbp_sv_id_encode_internal(sbp_encode_ctx_t *ctx, const sbp_sv_id_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->satId)) {
     return false;
@@ -161,14 +147,6 @@ int sbp_sv_id_cmp(const sbp_sv_id_t *a, const sbp_sv_id_t *b) {
     return ret;
   }
   return ret;
-}
-
-size_t sbp_gnss_signal_dep_encoded_len(const sbp_gnss_signal_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u16_encoded_len(&msg->sat);
-  encoded_len += sbp_u8_encoded_len(&msg->code);
-  encoded_len += sbp_u8_encoded_len(&msg->reserved);
-  return encoded_len;
 }
 
 bool sbp_gnss_signal_dep_encode_internal(sbp_encode_ctx_t *ctx,
@@ -250,13 +228,6 @@ int sbp_gnss_signal_dep_cmp(const sbp_gnss_signal_dep_t *a,
   return ret;
 }
 
-size_t sbp_gps_time_dep_encoded_len(const sbp_gps_time_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u16_encoded_len(&msg->wn);
-  return encoded_len;
-}
-
 bool sbp_gps_time_dep_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_gps_time_dep_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -325,13 +296,6 @@ int sbp_gps_time_dep_cmp(const sbp_gps_time_dep_t *a,
   return ret;
 }
 
-size_t sbp_gps_time_sec_encoded_len(const sbp_gps_time_sec_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u16_encoded_len(&msg->wn);
-  return encoded_len;
-}
-
 bool sbp_gps_time_sec_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_gps_time_sec_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -398,14 +362,6 @@ int sbp_gps_time_sec_cmp(const sbp_gps_time_sec_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_sbp_gps_time_encoded_len(const sbp_sbp_gps_time_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->ns_residual);
-  encoded_len += sbp_u16_encoded_len(&msg->wn);
-  return encoded_len;
 }
 
 bool sbp_sbp_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
@@ -485,13 +441,6 @@ int sbp_sbp_gps_time_cmp(const sbp_sbp_gps_time_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_carrier_phase_encoded_len(const sbp_carrier_phase_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_s32_encoded_len(&msg->i);
-  encoded_len += sbp_u8_encoded_len(&msg->f);
-  return encoded_len;
 }
 
 bool sbp_carrier_phase_encode_internal(sbp_encode_ctx_t *ctx,

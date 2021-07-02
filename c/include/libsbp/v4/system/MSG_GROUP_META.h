@@ -73,7 +73,10 @@ typedef struct {
  * @param msg sbp_msg_group_meta_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_group_meta_encoded_len(const sbp_msg_group_meta_t *msg);
+static inline size_t sbp_msg_group_meta_encoded_len(
+    const sbp_msg_group_meta_t *msg) {
+  return 3u + (msg->n_group_msgs * 2u);
+}
 
 /**
  * Encode an instance of sbp_msg_group_meta_t to wire representation

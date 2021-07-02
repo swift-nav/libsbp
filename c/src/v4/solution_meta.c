@@ -16,14 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/solution_meta.h>
 
-size_t sbp_solution_input_type_encoded_len(
-    const sbp_solution_input_type_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->sensor_type);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_solution_input_type_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_solution_input_type_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->sensor_type)) {
@@ -91,22 +83,6 @@ int sbp_solution_input_type_cmp(const sbp_solution_input_type_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_soln_meta_dep_a_encoded_len(
-    const sbp_msg_soln_meta_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u16_encoded_len(&msg->pdop);
-  encoded_len += sbp_u16_encoded_len(&msg->hdop);
-  encoded_len += sbp_u16_encoded_len(&msg->vdop);
-  encoded_len += sbp_u8_encoded_len(&msg->n_sats);
-  encoded_len += sbp_u16_encoded_len(&msg->age_corrections);
-  encoded_len += sbp_u8_encoded_len(&msg->alignment_status);
-  encoded_len += sbp_u32_encoded_len(&msg->last_used_gnss_pos_tow);
-  encoded_len += sbp_u32_encoded_len(&msg->last_used_gnss_vel_tow);
-  encoded_len +=
-      (msg->n_sol_in * sbp_solution_input_type_encoded_len(&msg->sol_in[0]));
-  return encoded_len;
 }
 
 bool sbp_msg_soln_meta_dep_a_encode_internal(
@@ -184,9 +160,7 @@ bool sbp_msg_soln_meta_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->last_used_gnss_vel_tow)) {
     return false;
   }
-  msg->n_sol_in =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_solution_input_type_encoded_len(&msg->sol_in[0]));
+  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) / 2);
   for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!sbp_solution_input_type_decode_internal(ctx, &msg->sol_in[i])) {
       return false;
@@ -279,19 +253,6 @@ int sbp_msg_soln_meta_dep_a_cmp(const sbp_msg_soln_meta_dep_a_t *a,
   return ret;
 }
 
-size_t sbp_msg_soln_meta_encoded_len(const sbp_msg_soln_meta_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u16_encoded_len(&msg->pdop);
-  encoded_len += sbp_u16_encoded_len(&msg->hdop);
-  encoded_len += sbp_u16_encoded_len(&msg->vdop);
-  encoded_len += sbp_u16_encoded_len(&msg->age_corrections);
-  encoded_len += sbp_u32_encoded_len(&msg->age_gnss);
-  encoded_len +=
-      (msg->n_sol_in * sbp_solution_input_type_encoded_len(&msg->sol_in[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_soln_meta_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_soln_meta_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -355,9 +316,7 @@ bool sbp_msg_soln_meta_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->age_gnss)) {
     return false;
   }
-  msg->n_sol_in =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_solution_input_type_encoded_len(&msg->sol_in[0]));
+  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) / 2);
   for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!sbp_solution_input_type_decode_internal(ctx, &msg->sol_in[i])) {
       return false;
@@ -439,12 +398,6 @@ int sbp_msg_soln_meta_cmp(const sbp_msg_soln_meta_t *a,
   return ret;
 }
 
-size_t sbp_gnss_input_type_encoded_len(const sbp_gnss_input_type_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_gnss_input_type_encode_internal(sbp_encode_ctx_t *ctx,
                                          const sbp_gnss_input_type_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->flags)) {
@@ -502,12 +455,6 @@ int sbp_gnss_input_type_cmp(const sbp_gnss_input_type_t *a,
   return ret;
 }
 
-size_t sbp_imu_input_type_encoded_len(const sbp_imu_input_type_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_imu_input_type_encode_internal(sbp_encode_ctx_t *ctx,
                                         const sbp_imu_input_type_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->flags)) {
@@ -563,12 +510,6 @@ int sbp_imu_input_type_cmp(const sbp_imu_input_type_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_odo_input_type_encoded_len(const sbp_odo_input_type_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
 }
 
 bool sbp_odo_input_type_encode_internal(sbp_encode_ctx_t *ctx,

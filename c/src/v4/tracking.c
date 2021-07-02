@@ -16,33 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/tracking.h>
 
-size_t sbp_msg_tracking_state_detailed_dep_a_encoded_len(
-    const sbp_msg_tracking_state_detailed_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u64_encoded_len(&msg->recv_time);
-  encoded_len += sbp_sbp_gps_time_encoded_len(&msg->tot);
-  encoded_len += sbp_u32_encoded_len(&msg->P);
-  encoded_len += sbp_u16_encoded_len(&msg->P_std);
-  encoded_len += sbp_carrier_phase_encoded_len(&msg->L);
-  encoded_len += sbp_u8_encoded_len(&msg->cn0);
-  encoded_len += sbp_u16_encoded_len(&msg->lock);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len += sbp_s32_encoded_len(&msg->doppler);
-  encoded_len += sbp_u16_encoded_len(&msg->doppler_std);
-  encoded_len += sbp_u32_encoded_len(&msg->uptime);
-  encoded_len += sbp_s16_encoded_len(&msg->clock_offset);
-  encoded_len += sbp_s16_encoded_len(&msg->clock_drift);
-  encoded_len += sbp_u16_encoded_len(&msg->corr_spacing);
-  encoded_len += sbp_s8_encoded_len(&msg->acceleration);
-  encoded_len += sbp_u8_encoded_len(&msg->sync_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->tow_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->track_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->nav_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->pset_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->misc_flags);
-  return encoded_len;
-}
-
 bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_a_t *msg) {
   if (!sbp_u64_encode(ctx, &msg->recv_time)) {
@@ -335,33 +308,6 @@ int sbp_msg_tracking_state_detailed_dep_a_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_tracking_state_detailed_dep_encoded_len(
-    const sbp_msg_tracking_state_detailed_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u64_encoded_len(&msg->recv_time);
-  encoded_len += sbp_gps_time_dep_encoded_len(&msg->tot);
-  encoded_len += sbp_u32_encoded_len(&msg->P);
-  encoded_len += sbp_u16_encoded_len(&msg->P_std);
-  encoded_len += sbp_carrier_phase_encoded_len(&msg->L);
-  encoded_len += sbp_u8_encoded_len(&msg->cn0);
-  encoded_len += sbp_u16_encoded_len(&msg->lock);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  encoded_len += sbp_s32_encoded_len(&msg->doppler);
-  encoded_len += sbp_u16_encoded_len(&msg->doppler_std);
-  encoded_len += sbp_u32_encoded_len(&msg->uptime);
-  encoded_len += sbp_s16_encoded_len(&msg->clock_offset);
-  encoded_len += sbp_s16_encoded_len(&msg->clock_drift);
-  encoded_len += sbp_u16_encoded_len(&msg->corr_spacing);
-  encoded_len += sbp_s8_encoded_len(&msg->acceleration);
-  encoded_len += sbp_u8_encoded_len(&msg->sync_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->tow_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->track_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->nav_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->pset_flags);
-  encoded_len += sbp_u8_encoded_len(&msg->misc_flags);
-  return encoded_len;
 }
 
 bool sbp_msg_tracking_state_detailed_dep_encode_internal(
@@ -658,15 +604,6 @@ int sbp_msg_tracking_state_detailed_dep_cmp(
   return ret;
 }
 
-size_t sbp_tracking_channel_state_encoded_len(
-    const sbp_tracking_channel_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len += sbp_u8_encoded_len(&msg->fcn);
-  encoded_len += sbp_u8_encoded_len(&msg->cn0);
-  return encoded_len;
-}
-
 bool sbp_tracking_channel_state_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_t *msg) {
   if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
@@ -748,13 +685,6 @@ int sbp_tracking_channel_state_cmp(const sbp_tracking_channel_state_t *a,
   return ret;
 }
 
-size_t sbp_msg_tracking_state_encoded_len(const sbp_msg_tracking_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len +=
-      (msg->n_states * sbp_tracking_channel_state_encoded_len(&msg->states[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_tracking_state_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_t *msg) {
   for (size_t i = 0; i < msg->n_states; i++) {
@@ -782,9 +712,7 @@ s8 sbp_msg_tracking_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_tracking_state_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_msg_tracking_state_t *msg) {
-  msg->n_states =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_tracking_channel_state_encoded_len(&msg->states[0]));
+  msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) / 4);
   for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!sbp_tracking_channel_state_decode_internal(ctx, &msg->states[i])) {
       return false;
@@ -835,13 +763,6 @@ int sbp_msg_tracking_state_cmp(const sbp_msg_tracking_state_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_measurement_state_encoded_len(const sbp_measurement_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->mesid);
-  encoded_len += sbp_u8_encoded_len(&msg->cn0);
-  return encoded_len;
 }
 
 bool sbp_measurement_state_encode_internal(sbp_encode_ctx_t *ctx,
@@ -912,14 +833,6 @@ int sbp_measurement_state_cmp(const sbp_measurement_state_t *a,
   return ret;
 }
 
-size_t sbp_msg_measurement_state_encoded_len(
-    const sbp_msg_measurement_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len +=
-      (msg->n_states * sbp_measurement_state_encoded_len(&msg->states[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_measurement_state_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_measurement_state_t *msg) {
   for (size_t i = 0; i < msg->n_states; i++) {
@@ -948,8 +861,7 @@ s8 sbp_msg_measurement_state_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_measurement_state_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_measurement_state_t *msg) {
-  msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) /
-                            sbp_measurement_state_encoded_len(&msg->states[0]));
+  msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) / 3);
   for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!sbp_measurement_state_decode_internal(ctx, &msg->states[i])) {
       return false;
@@ -1000,14 +912,6 @@ int sbp_msg_measurement_state_cmp(const sbp_msg_measurement_state_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_tracking_channel_correlation_encoded_len(
-    const sbp_tracking_channel_correlation_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_s16_encoded_len(&msg->I);
-  encoded_len += sbp_s16_encoded_len(&msg->Q);
-  return encoded_len;
 }
 
 bool sbp_tracking_channel_correlation_encode_internal(
@@ -1079,15 +983,6 @@ int sbp_tracking_channel_correlation_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_tracking_iq_encoded_len(const sbp_msg_tracking_iq_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->channel);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len +=
-      (3 * sbp_tracking_channel_correlation_encoded_len(&msg->corrs[0]));
-  return encoded_len;
 }
 
 bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx,
@@ -1191,14 +1086,6 @@ int sbp_msg_tracking_iq_cmp(const sbp_msg_tracking_iq_t *a,
   return ret;
 }
 
-size_t sbp_tracking_channel_correlation_dep_encoded_len(
-    const sbp_tracking_channel_correlation_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_s32_encoded_len(&msg->I);
-  encoded_len += sbp_s32_encoded_len(&msg->Q);
-  return encoded_len;
-}
-
 bool sbp_tracking_channel_correlation_dep_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_tracking_channel_correlation_dep_t *msg) {
   if (!sbp_s32_encode(ctx, &msg->I)) {
@@ -1268,16 +1155,6 @@ int sbp_tracking_channel_correlation_dep_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_tracking_iq_dep_b_encoded_len(
-    const sbp_msg_tracking_iq_dep_b_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->channel);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len +=
-      (3 * sbp_tracking_channel_correlation_dep_encoded_len(&msg->corrs[0]));
-  return encoded_len;
 }
 
 bool sbp_msg_tracking_iq_dep_b_encode_internal(
@@ -1383,16 +1260,6 @@ int sbp_msg_tracking_iq_dep_b_cmp(const sbp_msg_tracking_iq_dep_b_t *a,
   return ret;
 }
 
-size_t sbp_msg_tracking_iq_dep_a_encoded_len(
-    const sbp_msg_tracking_iq_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->channel);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  encoded_len +=
-      (3 * sbp_tracking_channel_correlation_dep_encoded_len(&msg->corrs[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_tracking_iq_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_iq_dep_a_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->channel)) {
@@ -1496,15 +1363,6 @@ int sbp_msg_tracking_iq_dep_a_cmp(const sbp_msg_tracking_iq_dep_a_t *a,
   return ret;
 }
 
-size_t sbp_tracking_channel_state_dep_a_encoded_len(
-    const sbp_tracking_channel_state_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->state);
-  encoded_len += sbp_u8_encoded_len(&msg->prn);
-  encoded_len += sbp_float_encoded_len(&msg->cn0);
-  return encoded_len;
-}
-
 bool sbp_tracking_channel_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_dep_a_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->state)) {
@@ -1587,14 +1445,6 @@ int sbp_tracking_channel_state_dep_a_cmp(
   return ret;
 }
 
-size_t sbp_msg_tracking_state_dep_a_encoded_len(
-    const sbp_msg_tracking_state_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (msg->n_states * sbp_tracking_channel_state_dep_a_encoded_len(
-                                      &msg->states[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_tracking_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_a_t *msg) {
   for (size_t i = 0; i < msg->n_states; i++) {
@@ -1624,9 +1474,7 @@ s8 sbp_msg_tracking_state_dep_a_encode(
 
 bool sbp_msg_tracking_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_a_t *msg) {
-  msg->n_states =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_tracking_channel_state_dep_a_encoded_len(&msg->states[0]));
+  msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) / 6);
   for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!sbp_tracking_channel_state_dep_a_decode_internal(ctx,
                                                           &msg->states[i])) {
@@ -1678,15 +1526,6 @@ int sbp_msg_tracking_state_dep_a_cmp(const sbp_msg_tracking_state_dep_a_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_tracking_channel_state_dep_b_encoded_len(
-    const sbp_tracking_channel_state_dep_b_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->state);
-  encoded_len += sbp_gnss_signal_dep_encoded_len(&msg->sid);
-  encoded_len += sbp_float_encoded_len(&msg->cn0);
-  return encoded_len;
 }
 
 bool sbp_tracking_channel_state_dep_b_encode_internal(
@@ -1771,14 +1610,6 @@ int sbp_tracking_channel_state_dep_b_cmp(
   return ret;
 }
 
-size_t sbp_msg_tracking_state_dep_b_encoded_len(
-    const sbp_msg_tracking_state_dep_b_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (msg->n_states * sbp_tracking_channel_state_dep_b_encoded_len(
-                                      &msg->states[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_tracking_state_dep_b_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_dep_b_t *msg) {
   for (size_t i = 0; i < msg->n_states; i++) {
@@ -1808,9 +1639,7 @@ s8 sbp_msg_tracking_state_dep_b_encode(
 
 bool sbp_msg_tracking_state_dep_b_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_b_t *msg) {
-  msg->n_states =
-      (uint8_t)((ctx->buf_len - ctx->offset) /
-                sbp_tracking_channel_state_dep_b_encoded_len(&msg->states[0]));
+  msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) / 9);
   for (uint8_t i = 0; i < msg->n_states; i++) {
     if (!sbp_tracking_channel_state_dep_b_decode_internal(ctx,
                                                           &msg->states[i])) {

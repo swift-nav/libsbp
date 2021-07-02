@@ -57,7 +57,11 @@ typedef struct {
  * @param msg sbp_msg_reset_filters_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_reset_filters_encoded_len(const sbp_msg_reset_filters_t *msg);
+static inline size_t sbp_msg_reset_filters_encoded_len(
+    const sbp_msg_reset_filters_t *msg) {
+  (void)msg;
+  return 1u;
+}
 
 /**
  * Encode an instance of sbp_msg_reset_filters_t to wire representation

@@ -228,7 +228,7 @@ class FieldItem(object):
             self.basetype = "char"
             self.basetype_encode = get_basetype_encode(self.basetype)
             self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
             self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value
@@ -247,7 +247,7 @@ class FieldItem(object):
             self.basetype = field.options['fill'].value
             self.basetype_encode = get_basetype_encode(self.basetype)
             self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
             self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value * get_type_packed_size(self.basetype, package_specs)
@@ -257,7 +257,7 @@ class FieldItem(object):
             self.basetype = field.options['fill'].value
             self.basetype_encode = get_basetype_encode(self.basetype)
             self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
             self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
             self.packed_size = 0
@@ -273,7 +273,7 @@ class FieldItem(object):
             self.basetype = type_id
             self.basetype_encode = get_basetype_encode(self.basetype)
             self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_basetype_encoded_len(self.basetype)
+            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
             self.basetype_cmp = get_basetype_cmp(self.basetype)
             self.max_items = 1
             self.packed_size = get_type_packed_size(self.basetype, package_specs)
@@ -304,12 +304,17 @@ class MsgItem(object):
         self.fields = []
         self.is_real_message = msg.is_real_message
         self.sibling_include = []
+        self.packed_size = 0
+        self.is_fixed_size = True
         #print("Creating message %s" % self.name)
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
-            if new_field.packed_size == 0 and not self.is_real_message:
-                print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
-                raise "error"
+            self.packed_size = self.packed_size + new_field.packed_size
+            if new_field.packed_size == 0:
+                self.is_fixed_size = False
+                if not self.is_real_message:
+                    print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
+                    raise "error"
             self.fields.append(new_field)
             if new_field.basetype not in PRIMITIVE_TYPES:
                 self.sibling_include.append(find_package(package_specs, new_field.basetype) + "/" + new_field.basetype)

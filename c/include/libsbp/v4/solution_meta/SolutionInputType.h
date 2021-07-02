@@ -65,8 +65,11 @@ typedef struct {
  * @param msg sbp_solution_input_type_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_solution_input_type_encoded_len(
-    const sbp_solution_input_type_t *msg);
+static inline size_t sbp_solution_input_type_encoded_len(
+    const sbp_solution_input_type_t *msg) {
+  (void)msg;
+  return 2u;
+}
 
 /**
  * Encode an instance of sbp_solution_input_type_t to wire representation

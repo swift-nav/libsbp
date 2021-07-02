@@ -67,7 +67,10 @@ typedef struct {
  * @param msg sbp_msg_imu_aux_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_imu_aux_encoded_len(const sbp_msg_imu_aux_t *msg);
+static inline size_t sbp_msg_imu_aux_encoded_len(const sbp_msg_imu_aux_t *msg) {
+  (void)msg;
+  return 4u;
+}
 
 /**
  * Encode an instance of sbp_msg_imu_aux_t to wire representation

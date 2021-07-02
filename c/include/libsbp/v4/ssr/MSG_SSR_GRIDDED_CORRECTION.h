@@ -86,8 +86,10 @@ typedef struct {
  * @param msg sbp_msg_ssr_gridded_correction_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_gridded_correction_encoded_len(
-    const sbp_msg_ssr_gridded_correction_t *msg);
+static inline size_t sbp_msg_ssr_gridded_correction_encoded_len(
+    const sbp_msg_ssr_gridded_correction_t *msg) {
+  return 23u + (msg->n_stec_residuals * 5u);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_gridded_correction_t to wire representation

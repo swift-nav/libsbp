@@ -74,7 +74,10 @@ typedef struct {
  * @param msg sbp_latency_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_latency_encoded_len(const sbp_latency_t *msg);
+static inline size_t sbp_latency_encoded_len(const sbp_latency_t *msg) {
+  (void)msg;
+  return 16u;
+}
 
 /**
  * Encode an instance of sbp_latency_t to wire representation

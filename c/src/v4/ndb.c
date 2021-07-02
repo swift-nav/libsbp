@@ -16,19 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/ndb.h>
 
-size_t sbp_msg_ndb_event_encoded_len(const sbp_msg_ndb_event_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u64_encoded_len(&msg->recv_time);
-  encoded_len += sbp_u8_encoded_len(&msg->event);
-  encoded_len += sbp_u8_encoded_len(&msg->object_type);
-  encoded_len += sbp_u8_encoded_len(&msg->result);
-  encoded_len += sbp_u8_encoded_len(&msg->data_source);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->object_sid);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->src_sid);
-  encoded_len += sbp_u16_encoded_len(&msg->original_sender);
-  return encoded_len;
-}
-
 bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_ndb_event_t *msg) {
   if (!sbp_u64_encode(ctx, &msg->recv_time)) {

@@ -115,7 +115,11 @@ typedef struct {
  * @param msg sbp_msg_vel_ned_cov_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_vel_ned_cov_encoded_len(const sbp_msg_vel_ned_cov_t *msg);
+static inline size_t sbp_msg_vel_ned_cov_encoded_len(
+    const sbp_msg_vel_ned_cov_t *msg) {
+  (void)msg;
+  return 42u;
+}
 
 /**
  * Encode an instance of sbp_msg_vel_ned_cov_t to wire representation

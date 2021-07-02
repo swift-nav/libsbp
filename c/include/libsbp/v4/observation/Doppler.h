@@ -63,7 +63,10 @@ typedef struct {
  * @param msg sbp_doppler_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_doppler_encoded_len(const sbp_doppler_t *msg);
+static inline size_t sbp_doppler_encoded_len(const sbp_doppler_t *msg) {
+  (void)msg;
+  return 3u;
+}
 
 /**
  * Encode an instance of sbp_doppler_t to wire representation

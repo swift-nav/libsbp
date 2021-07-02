@@ -185,7 +185,11 @@ typedef struct {
  * @param msg sbp_msg_ephemeris_gal_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ephemeris_gal_encoded_len(const sbp_msg_ephemeris_gal_t *msg);
+static inline size_t sbp_msg_ephemeris_gal_encoded_len(
+    const sbp_msg_ephemeris_gal_t *msg) {
+  (void)msg;
+  return 153u;
+}
 
 /**
  * Encode an instance of sbp_msg_ephemeris_gal_t to wire representation

@@ -225,8 +225,10 @@ size_t sbp_msg_fileio_read_req_filename_strlen(
  * @param msg sbp_msg_fileio_read_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_read_req_encoded_len(
-    const sbp_msg_fileio_read_req_t *msg);
+static inline size_t sbp_msg_fileio_read_req_encoded_len(
+    const sbp_msg_fileio_read_req_t *msg) {
+  return 9u + sbp_msg_fileio_read_req_filename_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_read_req_t to wire representation

@@ -62,8 +62,11 @@ typedef struct {
  * @param msg sbp_stec_residual_no_std_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_stec_residual_no_std_encoded_len(
-    const sbp_stec_residual_no_std_t *msg);
+static inline size_t sbp_stec_residual_no_std_encoded_len(
+    const sbp_stec_residual_no_std_t *msg) {
+  (void)msg;
+  return 4u;
+}
 
 /**
  * Encode an instance of sbp_stec_residual_no_std_t to wire representation

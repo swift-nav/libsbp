@@ -60,8 +60,11 @@ typedef struct {
  * @param msg sbp_msg_nap_device_dna_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_nap_device_dna_resp_encoded_len(
-    const sbp_msg_nap_device_dna_resp_t *msg);
+static inline size_t sbp_msg_nap_device_dna_resp_encoded_len(
+    const sbp_msg_nap_device_dna_resp_t *msg) {
+  (void)msg;
+  return 8u;
+}
 
 /**
  * Encode an instance of sbp_msg_nap_device_dna_resp_t to wire representation

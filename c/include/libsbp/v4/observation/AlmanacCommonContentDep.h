@@ -92,8 +92,11 @@ typedef struct {
  * @param msg sbp_almanac_common_content_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_almanac_common_content_dep_encoded_len(
-    const sbp_almanac_common_content_dep_t *msg);
+static inline size_t sbp_almanac_common_content_dep_encoded_len(
+    const sbp_almanac_common_content_dep_t *msg) {
+  (void)msg;
+  return 24u;
+}
 
 /**
  * Encode an instance of sbp_almanac_common_content_dep_t to wire representation

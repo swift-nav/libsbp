@@ -80,7 +80,11 @@ typedef struct {
  * @param msg sbp_stec_header_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_stec_header_dep_a_encoded_len(const sbp_stec_header_dep_a_t *msg);
+static inline size_t sbp_stec_header_dep_a_encoded_len(
+    const sbp_stec_header_dep_a_t *msg) {
+  (void)msg;
+  return 10u;
+}
 
 /**
  * Encode an instance of sbp_stec_header_dep_a_t to wire representation

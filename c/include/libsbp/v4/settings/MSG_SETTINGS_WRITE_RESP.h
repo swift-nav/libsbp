@@ -266,8 +266,10 @@ size_t sbp_msg_settings_write_resp_setting_section_strlen(
  * @param msg sbp_msg_settings_write_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_settings_write_resp_encoded_len(
-    const sbp_msg_settings_write_resp_t *msg);
+static inline size_t sbp_msg_settings_write_resp_encoded_len(
+    const sbp_msg_settings_write_resp_t *msg) {
+  return 1u + sbp_msg_settings_write_resp_setting_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_settings_write_resp_t to wire representation

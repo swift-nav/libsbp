@@ -16,19 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/imu.h>
 
-size_t sbp_msg_imu_raw_encoded_len(const sbp_msg_imu_raw_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u8_encoded_len(&msg->tow_f);
-  encoded_len += sbp_s16_encoded_len(&msg->acc_x);
-  encoded_len += sbp_s16_encoded_len(&msg->acc_y);
-  encoded_len += sbp_s16_encoded_len(&msg->acc_z);
-  encoded_len += sbp_s16_encoded_len(&msg->gyr_x);
-  encoded_len += sbp_s16_encoded_len(&msg->gyr_y);
-  encoded_len += sbp_s16_encoded_len(&msg->gyr_z);
-  return encoded_len;
-}
-
 bool sbp_msg_imu_raw_encode_internal(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_imu_raw_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -173,14 +160,6 @@ int sbp_msg_imu_raw_cmp(const sbp_msg_imu_raw_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_imu_aux_encoded_len(const sbp_msg_imu_aux_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->imu_type);
-  encoded_len += sbp_s16_encoded_len(&msg->temp);
-  encoded_len += sbp_u8_encoded_len(&msg->imu_conf);
-  return encoded_len;
 }
 
 bool sbp_msg_imu_aux_encode_internal(sbp_encode_ctx_t *ctx,

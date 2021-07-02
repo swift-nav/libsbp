@@ -16,12 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/bootload.h>
 
-size_t sbp_msg_bootloader_handshake_req_encoded_len(
-    const sbp_msg_bootloader_handshake_req_t *msg) {
-  (void)msg;
-  return 0;
-}
-
 bool sbp_msg_bootloader_handshake_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg) {
   (void)ctx;
@@ -160,14 +154,6 @@ size_t sbp_msg_bootloader_handshake_resp_version_strlen(
   return sbp_unterminated_string_strlen(&msg->version, 251);
 }
 
-size_t sbp_msg_bootloader_handshake_resp_encoded_len(
-    const sbp_msg_bootloader_handshake_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->flags);
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->version, 251);
-  return encoded_len;
-}
-
 bool sbp_msg_bootloader_handshake_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->flags)) {
@@ -253,13 +239,6 @@ int sbp_msg_bootloader_handshake_resp_cmp(
   return ret;
 }
 
-size_t sbp_msg_bootloader_jump_to_app_encoded_len(
-    const sbp_msg_bootloader_jump_to_app_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->jump);
-  return encoded_len;
-}
-
 bool sbp_msg_bootloader_jump_to_app_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->jump)) {
@@ -334,12 +313,6 @@ int sbp_msg_bootloader_jump_to_app_cmp(
   return ret;
 }
 
-size_t sbp_msg_nap_device_dna_req_encoded_len(
-    const sbp_msg_nap_device_dna_req_t *msg) {
-  (void)msg;
-  return 0;
-}
-
 bool sbp_msg_nap_device_dna_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg) {
   (void)ctx;
@@ -406,13 +379,6 @@ int sbp_msg_nap_device_dna_req_cmp(const sbp_msg_nap_device_dna_req_t *a,
   (void)b;
   int ret = 0;
   return ret;
-}
-
-size_t sbp_msg_nap_device_dna_resp_encoded_len(
-    const sbp_msg_nap_device_dna_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (8 * sbp_u8_encoded_len(&msg->dna[0]));
-  return encoded_len;
 }
 
 bool sbp_msg_nap_device_dna_resp_encode_internal(
@@ -561,13 +527,6 @@ const char *sbp_msg_bootloader_handshake_dep_a_handshake_get(
 size_t sbp_msg_bootloader_handshake_dep_a_handshake_strlen(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   return sbp_unterminated_string_strlen(&msg->handshake, 255);
-}
-
-size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
-    const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->handshake, 255);
-  return encoded_len;
 }
 
 bool sbp_msg_bootloader_handshake_dep_a_encode_internal(

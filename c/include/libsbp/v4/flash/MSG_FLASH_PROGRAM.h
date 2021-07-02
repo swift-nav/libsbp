@@ -75,7 +75,10 @@ typedef struct {
  * @param msg sbp_msg_flash_program_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_flash_program_encoded_len(const sbp_msg_flash_program_t *msg);
+static inline size_t sbp_msg_flash_program_encoded_len(
+    const sbp_msg_flash_program_t *msg) {
+  return 5u + (msg->addr_len * 1u);
+}
 
 /**
  * Encode an instance of sbp_msg_flash_program_t to wire representation

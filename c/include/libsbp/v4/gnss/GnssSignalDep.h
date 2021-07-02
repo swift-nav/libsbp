@@ -68,7 +68,11 @@ typedef struct {
  * @param msg sbp_gnss_signal_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_gnss_signal_dep_encoded_len(const sbp_gnss_signal_dep_t *msg);
+static inline size_t sbp_gnss_signal_dep_encoded_len(
+    const sbp_gnss_signal_dep_t *msg) {
+  (void)msg;
+  return 4u;
+}
 
 /**
  * Encode an instance of sbp_gnss_signal_dep_t to wire representation

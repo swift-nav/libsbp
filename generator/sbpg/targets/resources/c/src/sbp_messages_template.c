@@ -152,28 +152,6 @@ size_t (((field_prefix)))_section_strlen(const (((m.type_name))) *msg, size_t se
 ((*- endif *))
 ((*- endfor *))
 
-size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg) {
-  ((*- if not m.fields *))
-  (void)msg;
-  return 0;
-  ((*- else *))
-  size_t encoded_len = 0;
-  ((*- for f in m.fields *))
-  ((*- set field = "msg->" + f.name *))
-  ((*- if f.packing == "packed-string" *))
-  encoded_len += sbp_(((f.encoding)))_string_encoded_len(&(((field))), (((f.max_items))));
-  ((*- elif f.packing == "single" *))
-  encoded_len += (((f.basetype_encoded_len)))(&(((field))));
-  ((*- elif f.packing == "fixed-array" *))
-  encoded_len += ( (((-f.max_items))) * (((f.basetype_encoded_len)))(&(((field)))[0]));
-  ((*- else *))
-  encoded_len += (msg->(((f.size_fn))) * (((f.basetype_encoded_len)))(&(((field)))[0]));
-  ((*- endif *))
-  ((*- endfor *))
-  return encoded_len;
-  ((*- endif *))
-}
-
 bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg)
 {
   ((*- if not m.fields *))
@@ -235,7 +213,7 @@ bool (((m.prefix)))_decode_internal(sbp_decode_ctx_t *ctx, (((m.type_name))) *ms
     if (!(((f.basetype_decode)))(ctx, &(((field)))[i])) { return false; }
   }
   ((*- elif f.packing == "variable-array" *))
-    msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / (((f.basetype_encoded_len)))(&(((field)))[0]));
+    msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / (((f.basetype_encoded_len))));
   for (uint8_t i = 0; i < msg->(((f.size_fn))); i++) {
     if (!(((f.basetype_decode)))(ctx, &(((field)))[i])) { return false; }
   }

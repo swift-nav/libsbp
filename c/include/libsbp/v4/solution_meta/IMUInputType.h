@@ -58,7 +58,11 @@ typedef struct {
  * @param msg sbp_imu_input_type_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_imu_input_type_encoded_len(const sbp_imu_input_type_t *msg);
+static inline size_t sbp_imu_input_type_encoded_len(
+    const sbp_imu_input_type_t *msg) {
+  (void)msg;
+  return 1u;
+}
 
 /**
  * Encode an instance of sbp_imu_input_type_t to wire representation

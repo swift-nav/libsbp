@@ -16,12 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/user.h>
 
-size_t sbp_msg_user_data_encoded_len(const sbp_msg_user_data_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (msg->n_contents * sbp_u8_encoded_len(&msg->contents[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_user_data_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_user_data_t *msg) {
   for (size_t i = 0; i < msg->n_contents; i++) {
@@ -49,8 +43,7 @@ s8 sbp_msg_user_data_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_user_data_decode_internal(sbp_decode_ctx_t *ctx,
                                        sbp_msg_user_data_t *msg) {
-  msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) /
-                              sbp_u8_encoded_len(&msg->contents[0]));
+  msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
   for (uint8_t i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_decode(ctx, &msg->contents[i])) {
       return false;

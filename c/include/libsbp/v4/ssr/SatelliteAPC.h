@@ -81,7 +81,11 @@ typedef struct {
  * @param msg sbp_satellite_apc_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_satellite_apc_encoded_len(const sbp_satellite_apc_t *msg);
+static inline size_t sbp_satellite_apc_encoded_len(
+    const sbp_satellite_apc_t *msg) {
+  (void)msg;
+  return 32u;
+}
 
 /**
  * Encode an instance of sbp_satellite_apc_t to wire representation

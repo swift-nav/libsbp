@@ -235,8 +235,10 @@ size_t sbp_msg_linux_mem_state_cmdline_strlen(
  * @param msg sbp_msg_linux_mem_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_mem_state_encoded_len(
-    const sbp_msg_linux_mem_state_t *msg);
+static inline size_t sbp_msg_linux_mem_state_encoded_len(
+    const sbp_msg_linux_mem_state_t *msg) {
+  return 24u + sbp_msg_linux_mem_state_cmdline_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_linux_mem_state_t to wire representation

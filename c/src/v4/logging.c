@@ -72,13 +72,6 @@ size_t sbp_msg_log_text_strlen(const sbp_msg_log_t *msg) {
   return sbp_unterminated_string_strlen(&msg->text, 254);
 }
 
-size_t sbp_msg_log_encoded_len(const sbp_msg_log_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->level);
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->text, 254);
-  return encoded_len;
-}
-
 bool sbp_msg_log_encode_internal(sbp_encode_ctx_t *ctx,
                                  const sbp_msg_log_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->level)) {
@@ -157,15 +150,6 @@ int sbp_msg_log_cmp(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
   return ret;
 }
 
-size_t sbp_msg_fwd_encoded_len(const sbp_msg_fwd_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->source);
-  encoded_len += sbp_u8_encoded_len(&msg->protocol);
-  encoded_len +=
-      (msg->n_fwd_payload * sbp_u8_encoded_len(&msg->fwd_payload[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_fwd_encode_internal(sbp_encode_ctx_t *ctx,
                                  const sbp_msg_fwd_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->source)) {
@@ -204,8 +188,7 @@ bool sbp_msg_fwd_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fwd_t *msg) {
   if (!sbp_u8_decode(ctx, &msg->protocol)) {
     return false;
   }
-  msg->n_fwd_payload = (uint8_t)((ctx->buf_len - ctx->offset) /
-                                 sbp_u8_encoded_len(&msg->fwd_payload[0]));
+  msg->n_fwd_payload = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
   for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
     if (!sbp_u8_decode(ctx, &msg->fwd_payload[i])) {
       return false;
@@ -322,12 +305,6 @@ const char *sbp_msg_print_dep_text_get(const sbp_msg_print_dep_t *msg) {
 
 size_t sbp_msg_print_dep_text_strlen(const sbp_msg_print_dep_t *msg) {
   return sbp_unterminated_string_strlen(&msg->text, 255);
-}
-
-size_t sbp_msg_print_dep_encoded_len(const sbp_msg_print_dep_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->text, 255);
-  return encoded_len;
 }
 
 bool sbp_msg_print_dep_encode_internal(sbp_encode_ctx_t *ctx,

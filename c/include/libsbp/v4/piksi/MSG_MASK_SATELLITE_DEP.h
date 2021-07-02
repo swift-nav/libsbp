@@ -62,8 +62,11 @@ typedef struct {
  * @param msg sbp_msg_mask_satellite_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_mask_satellite_dep_encoded_len(
-    const sbp_msg_mask_satellite_dep_t *msg);
+static inline size_t sbp_msg_mask_satellite_dep_encoded_len(
+    const sbp_msg_mask_satellite_dep_t *msg) {
+  (void)msg;
+  return 5u;
+}
 
 /**
  * Encode an instance of sbp_msg_mask_satellite_dep_t to wire representation

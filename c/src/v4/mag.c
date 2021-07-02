@@ -16,16 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/mag.h>
 
-size_t sbp_msg_mag_raw_encoded_len(const sbp_msg_mag_raw_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u8_encoded_len(&msg->tow_f);
-  encoded_len += sbp_s16_encoded_len(&msg->mag_x);
-  encoded_len += sbp_s16_encoded_len(&msg->mag_y);
-  encoded_len += sbp_s16_encoded_len(&msg->mag_z);
-  return encoded_len;
-}
-
 bool sbp_msg_mag_raw_encode_internal(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_mag_raw_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {

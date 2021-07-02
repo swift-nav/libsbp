@@ -67,7 +67,10 @@ typedef struct {
  * @param msg sbp_sv_az_el_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg);
+static inline size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg) {
+  (void)msg;
+  return 4u;
+}
 
 /**
  * Encode an instance of sbp_sv_az_el_t to wire representation

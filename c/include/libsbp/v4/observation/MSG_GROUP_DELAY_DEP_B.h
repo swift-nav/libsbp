@@ -75,8 +75,11 @@ typedef struct {
  * @param msg sbp_msg_group_delay_dep_b_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_group_delay_dep_b_encoded_len(
-    const sbp_msg_group_delay_dep_b_t *msg);
+static inline size_t sbp_msg_group_delay_dep_b_encoded_len(
+    const sbp_msg_group_delay_dep_b_t *msg) {
+  (void)msg;
+  return 17u;
+}
 
 /**
  * Encode an instance of sbp_msg_group_delay_dep_b_t to wire representation

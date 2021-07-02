@@ -86,7 +86,11 @@ typedef struct {
  * @param msg sbp_msg_uart_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_uart_state_encoded_len(const sbp_msg_uart_state_t *msg);
+static inline size_t sbp_msg_uart_state_encoded_len(
+    const sbp_msg_uart_state_t *msg) {
+  (void)msg;
+  return 74u;
+}
 
 /**
  * Encode an instance of sbp_msg_uart_state_t to wire representation

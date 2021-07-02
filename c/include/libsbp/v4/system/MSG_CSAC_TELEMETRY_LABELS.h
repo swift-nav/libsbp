@@ -222,8 +222,10 @@ size_t sbp_msg_csac_telemetry_labels_telemetry_labels_strlen(
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_csac_telemetry_labels_encoded_len(
-    const sbp_msg_csac_telemetry_labels_t *msg);
+static inline size_t sbp_msg_csac_telemetry_labels_encoded_len(
+    const sbp_msg_csac_telemetry_labels_t *msg) {
+  return 1u + sbp_msg_csac_telemetry_labels_telemetry_labels_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_csac_telemetry_labels_t to wire representation

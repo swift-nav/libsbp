@@ -16,14 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/vehicle.h>
 
-size_t sbp_msg_odometry_encoded_len(const sbp_msg_odometry_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->velocity);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_msg_odometry_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -113,15 +105,6 @@ int sbp_msg_odometry_cmp(const sbp_msg_odometry_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_wheeltick_encoded_len(const sbp_msg_wheeltick_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u64_encoded_len(&msg->time);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  encoded_len += sbp_u8_encoded_len(&msg->source);
-  encoded_len += sbp_s32_encoded_len(&msg->ticks);
-  return encoded_len;
 }
 
 bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,

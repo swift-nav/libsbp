@@ -62,8 +62,11 @@ typedef struct {
  * @param msg sbp_tropospheric_delay_correction_no_std_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_tropospheric_delay_correction_no_std_encoded_len(
-    const sbp_tropospheric_delay_correction_no_std_t *msg);
+static inline size_t sbp_tropospheric_delay_correction_no_std_encoded_len(
+    const sbp_tropospheric_delay_correction_no_std_t *msg) {
+  (void)msg;
+  return 3u;
+}
 
 /**
  * Encode an instance of sbp_tropospheric_delay_correction_no_std_t to wire

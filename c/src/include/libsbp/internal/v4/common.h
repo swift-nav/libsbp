@@ -28,26 +28,6 @@ typedef struct {
   size_t offset;
 } sbp_encode_ctx_t;
 
-static inline size_t sbp_u8_encoded_len(const uint8_t *v) {
-  (void)v;
-  return 1;
-}
-
-static inline size_t sbp_u16_encoded_len(const uint16_t *v) {
-  (void)v;
-  return 2;
-}
-
-static inline size_t sbp_u32_encoded_len(const uint32_t *v) {
-  (void)v;
-  return 4;
-}
-
-static inline size_t sbp_u64_encoded_len(const uint64_t *v) {
-  (void)v;
-  return 8;
-}
-
 static inline bool sbp_u8_encode(sbp_encode_ctx_t *ctx, const u8 *v) {
   if (!SBP_CAN_PACK(ctx, u8)) {
     return false;
@@ -137,22 +117,12 @@ static inline size_t sbp_u64_decode(sbp_decode_ctx_t *ctx, u64 *v) {
   return true;
 }
 
-static inline size_t sbp_s8_encoded_len(const s8 *v) {
-  (void)v;
-  return 1;
-}
-
 static inline size_t sbp_s8_encode(sbp_encode_ctx_t *ctx, const s8 *v) {
   return sbp_u8_encode(ctx, (const u8 *)v);
 }
 
 static inline size_t sbp_s8_decode(sbp_decode_ctx_t *ctx, s8 *v) {
   return sbp_u8_decode(ctx, (u8 *)v);
-}
-
-static inline size_t sbp_s16_encoded_len(const s16 *v) {
-  (void)v;
-  return 2;
 }
 
 static inline size_t sbp_s16_encode(sbp_encode_ctx_t *ctx, const s16 *v) {
@@ -163,22 +133,12 @@ static inline size_t sbp_s16_decode(sbp_decode_ctx_t *ctx, s16 *v) {
   return sbp_u16_decode(ctx, (u16 *)v);
 }
 
-static inline size_t sbp_s32_encoded_len(const s32 *v) {
-  (void)v;
-  return 4;
-}
-
 static inline size_t sbp_s32_encode(sbp_encode_ctx_t *ctx, const s32 *v) {
   return sbp_u32_encode(ctx, (const u32 *)v);
 }
 
 static inline size_t sbp_s32_decode(sbp_decode_ctx_t *ctx, s32 *v) {
   return sbp_u32_decode(ctx, (u32 *)v);
-}
-
-static inline size_t sbp_s64_encoded_len(const s64 *v) {
-  (void)v;
-  return 8;
 }
 
 static inline size_t sbp_s64_encode(sbp_encode_ctx_t *ctx, const s64 *v) {
@@ -189,22 +149,12 @@ static inline size_t sbp_s64_decode(sbp_decode_ctx_t *ctx, s64 *v) {
   return sbp_u64_decode(ctx, (u64 *)v);
 }
 
-static inline size_t sbp_char_encoded_len(const char *v) {
-  (void)v;
-  return 1;
-}
-
 static inline size_t sbp_char_encode(sbp_encode_ctx_t *ctx, const char *v) {
   return sbp_u8_encode(ctx, (const uint8_t *)v);
 }
 
 static inline size_t sbp_char_decode(sbp_decode_ctx_t *ctx, char *v) {
   return sbp_u8_decode(ctx, (uint8_t *)v);
-}
-
-static inline size_t sbp_float_encoded_len(const float *v) {
-  (void)v;
-  return 4;
 }
 
 static inline size_t sbp_float_encode(sbp_encode_ctx_t *ctx, const float *v) {
@@ -238,11 +188,6 @@ static inline size_t sbp_float_decode(sbp_decode_ctx_t *ctx, float *v) {
 
   *v = u.f;
   return true;
-}
-
-static inline size_t sbp_double_encoded_len(const double *v) {
-  (void)v;
-  return 8;
 }
 
 static inline size_t sbp_double_encode(sbp_encode_ctx_t *ctx, const double *v) {

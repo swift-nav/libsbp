@@ -219,7 +219,10 @@ size_t sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg);
  * @param msg sbp_msg_dgnss_status_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_dgnss_status_encoded_len(const sbp_msg_dgnss_status_t *msg);
+static inline size_t sbp_msg_dgnss_status_encoded_len(
+    const sbp_msg_dgnss_status_t *msg) {
+  return 4u + sbp_msg_dgnss_status_source_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_dgnss_status_t to wire representation

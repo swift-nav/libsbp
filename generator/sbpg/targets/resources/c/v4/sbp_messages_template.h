@@ -341,7 +341,23 @@ typedef struct {
  * @param msg (((m.type_name))) instance
  * @return Length of on-wire representation
  */
-size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg);
+static inline size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg) 
+{
+  ((*- if m.is_fixed_size *))
+  (void)msg;
+  return (((m.packed_size)))u;
+  ((*- else *))
+    return (((m.packed_size)))u 
+    ((*- for f in m.fields *))
+    ((*- if f.packing == "variable-array" *))
+    + (msg->(((f.size_fn))) * (((f.basetype_encoded_len)))u)
+    ((*- elif f.packing == "packed-string" *))
+    + (((m.prefix)))_(((f.name)))_encoded_len(msg)
+    ((*- endif *))
+    ((*- endfor *))
+    ;
+  ((*- endif *))
+}
 
 /**
  * Encode an instance of (((m.type_name))) to wire representation

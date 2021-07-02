@@ -16,15 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/sbas.h>
 
-size_t sbp_msg_sbas_raw_encoded_len(const sbp_msg_sbas_raw_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u8_encoded_len(&msg->message_type);
-  encoded_len += (27 * sbp_u8_encoded_len(&msg->data[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_msg_sbas_raw_t *msg) {
   if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {

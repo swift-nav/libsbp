@@ -56,8 +56,11 @@ typedef struct {
  * @param msg sbp_msg_m25_flash_write_status_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_m25_flash_write_status_encoded_len(
-    const sbp_msg_m25_flash_write_status_t *msg);
+static inline size_t sbp_msg_m25_flash_write_status_encoded_len(
+    const sbp_msg_m25_flash_write_status_t *msg) {
+  (void)msg;
+  return 1u;
+}
 
 /**
  * Encode an instance of sbp_msg_m25_flash_write_status_t to wire representation

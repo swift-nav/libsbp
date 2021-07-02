@@ -114,7 +114,11 @@ typedef struct {
  * @param msg sbp_acq_sv_profile_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_acq_sv_profile_encoded_len(const sbp_acq_sv_profile_t *msg);
+static inline size_t sbp_acq_sv_profile_encoded_len(
+    const sbp_acq_sv_profile_t *msg) {
+  (void)msg;
+  return 33u;
+}
 
 /**
  * Encode an instance of sbp_acq_sv_profile_t to wire representation

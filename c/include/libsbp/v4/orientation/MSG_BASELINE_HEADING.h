@@ -73,8 +73,11 @@ typedef struct {
  * @param msg sbp_msg_baseline_heading_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_baseline_heading_encoded_len(
-    const sbp_msg_baseline_heading_t *msg);
+static inline size_t sbp_msg_baseline_heading_encoded_len(
+    const sbp_msg_baseline_heading_t *msg) {
+  (void)msg;
+  return 10u;
+}
 
 /**
  * Encode an instance of sbp_msg_baseline_heading_t to wire representation

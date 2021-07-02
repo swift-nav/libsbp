@@ -56,8 +56,11 @@ typedef struct {
  * @param msg sbp_msg_settings_read_by_index_done_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_settings_read_by_index_done_encoded_len(
-    const sbp_msg_settings_read_by_index_done_t *msg);
+static inline size_t sbp_msg_settings_read_by_index_done_encoded_len(
+    const sbp_msg_settings_read_by_index_done_t *msg) {
+  (void)msg;
+  return 0u;
+}
 
 /**
  * Encode an instance of sbp_msg_settings_read_by_index_done_t to wire

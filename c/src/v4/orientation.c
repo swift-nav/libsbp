@@ -16,16 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/orientation.h>
 
-size_t sbp_msg_baseline_heading_encoded_len(
-    const sbp_msg_baseline_heading_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u32_encoded_len(&msg->heading);
-  encoded_len += sbp_u8_encoded_len(&msg->n_sats);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_msg_baseline_heading_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_baseline_heading_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -130,21 +120,6 @@ int sbp_msg_baseline_heading_cmp(const sbp_msg_baseline_heading_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_orient_quat_encoded_len(const sbp_msg_orient_quat_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->w);
-  encoded_len += sbp_s32_encoded_len(&msg->x);
-  encoded_len += sbp_s32_encoded_len(&msg->y);
-  encoded_len += sbp_s32_encoded_len(&msg->z);
-  encoded_len += sbp_float_encoded_len(&msg->w_accuracy);
-  encoded_len += sbp_float_encoded_len(&msg->x_accuracy);
-  encoded_len += sbp_float_encoded_len(&msg->y_accuracy);
-  encoded_len += sbp_float_encoded_len(&msg->z_accuracy);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
 }
 
 bool sbp_msg_orient_quat_encode_internal(sbp_encode_ctx_t *ctx,
@@ -317,19 +292,6 @@ int sbp_msg_orient_quat_cmp(const sbp_msg_orient_quat_t *a,
   return ret;
 }
 
-size_t sbp_msg_orient_euler_encoded_len(const sbp_msg_orient_euler_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->roll);
-  encoded_len += sbp_s32_encoded_len(&msg->pitch);
-  encoded_len += sbp_s32_encoded_len(&msg->yaw);
-  encoded_len += sbp_float_encoded_len(&msg->roll_accuracy);
-  encoded_len += sbp_float_encoded_len(&msg->pitch_accuracy);
-  encoded_len += sbp_float_encoded_len(&msg->yaw_accuracy);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
-}
-
 bool sbp_msg_orient_euler_encode_internal(sbp_encode_ctx_t *ctx,
                                           const sbp_msg_orient_euler_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -476,16 +438,6 @@ int sbp_msg_orient_euler_cmp(const sbp_msg_orient_euler_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_angular_rate_encoded_len(const sbp_msg_angular_rate_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->x);
-  encoded_len += sbp_s32_encoded_len(&msg->y);
-  encoded_len += sbp_s32_encoded_len(&msg->z);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
 }
 
 bool sbp_msg_angular_rate_encode_internal(sbp_encode_ctx_t *ctx,

@@ -61,7 +61,11 @@ typedef struct {
  * @param msg sbp_gps_time_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_gps_time_dep_encoded_len(const sbp_gps_time_dep_t *msg);
+static inline size_t sbp_gps_time_dep_encoded_len(
+    const sbp_gps_time_dep_t *msg) {
+  (void)msg;
+  return 6u;
+}
 
 /**
  * Encode an instance of sbp_gps_time_dep_t to wire representation

@@ -68,8 +68,11 @@ typedef struct {
  * @param msg sbp_tracking_channel_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_tracking_channel_state_encoded_len(
-    const sbp_tracking_channel_state_t *msg);
+static inline size_t sbp_tracking_channel_state_encoded_len(
+    const sbp_tracking_channel_state_t *msg) {
+  (void)msg;
+  return 4u;
+}
 
 /**
  * Encode an instance of sbp_tracking_channel_state_t to wire representation

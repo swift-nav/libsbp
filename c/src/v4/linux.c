@@ -85,17 +85,6 @@ size_t sbp_msg_linux_cpu_state_dep_a_cmdline_strlen(
   return sbp_unterminated_string_strlen(&msg->cmdline, 236);
 }
 
-size_t sbp_msg_linux_cpu_state_dep_a_encoded_len(
-    const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
-  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 236);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_cpu_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_cpu_state_dep_a_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->index)) {
@@ -289,17 +278,6 @@ size_t sbp_msg_linux_mem_state_dep_a_cmdline_strlen(
   return sbp_unterminated_string_strlen(&msg->cmdline, 236);
 }
 
-size_t sbp_msg_linux_mem_state_dep_a_encoded_len(
-    const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u8_encoded_len(&msg->pmem);
-  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 236);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_mem_state_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_dep_a_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->index)) {
@@ -422,18 +400,6 @@ int sbp_msg_linux_mem_state_dep_a_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_linux_sys_state_dep_a_encoded_len(
-    const sbp_msg_linux_sys_state_dep_a_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u16_encoded_len(&msg->mem_total);
-  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
-  encoded_len += sbp_u8_encoded_len(&msg->pmem);
-  encoded_len += sbp_u16_encoded_len(&msg->procs_starting);
-  encoded_len += sbp_u16_encoded_len(&msg->procs_stopping);
-  encoded_len += sbp_u16_encoded_len(&msg->pid_count);
-  return encoded_len;
 }
 
 bool sbp_msg_linux_sys_state_dep_a_encode_internal(
@@ -634,18 +600,6 @@ size_t sbp_msg_linux_process_socket_counts_cmdline_strlen(
   return sbp_unterminated_string_strlen(&msg->cmdline, 246);
 }
 
-size_t sbp_msg_linux_process_socket_counts_encoded_len(
-    const sbp_msg_linux_process_socket_counts_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u16_encoded_len(&msg->socket_count);
-  encoded_len += sbp_u16_encoded_len(&msg->socket_types);
-  encoded_len += sbp_u16_encoded_len(&msg->socket_states);
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 246);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_process_socket_counts_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_counts_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->index)) {
@@ -844,20 +798,6 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
   return sbp_unterminated_string_strlen(&msg->cmdline, 180);
 }
 
-size_t sbp_msg_linux_process_socket_queues_encoded_len(
-    const sbp_msg_linux_process_socket_queues_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u16_encoded_len(&msg->recv_queued);
-  encoded_len += sbp_u16_encoded_len(&msg->send_queued);
-  encoded_len += sbp_u16_encoded_len(&msg->socket_types);
-  encoded_len += sbp_u16_encoded_len(&msg->socket_states);
-  encoded_len += (64 * sbp_char_encoded_len(&msg->address_of_largest[0]));
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 180);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_process_socket_queues_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_socket_queues_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->index)) {
@@ -1013,16 +953,6 @@ int sbp_msg_linux_process_socket_queues_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_linux_socket_usage_encoded_len(
-    const sbp_msg_linux_socket_usage_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->avg_queue_depth);
-  encoded_len += sbp_u32_encoded_len(&msg->max_queue_depth);
-  encoded_len += (16 * sbp_u16_encoded_len(&msg->socket_state_counts[0]));
-  encoded_len += (16 * sbp_u16_encoded_len(&msg->socket_type_counts[0]));
-  return encoded_len;
 }
 
 bool sbp_msg_linux_socket_usage_encode_internal(
@@ -1210,16 +1140,6 @@ const char *sbp_msg_linux_process_fd_count_cmdline_get(
 size_t sbp_msg_linux_process_fd_count_cmdline_strlen(
     const sbp_msg_linux_process_fd_count_t *msg) {
   return sbp_unterminated_string_strlen(&msg->cmdline, 250);
-}
-
-size_t sbp_msg_linux_process_fd_count_encoded_len(
-    const sbp_msg_linux_process_fd_count_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u16_encoded_len(&msg->fd_count);
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 250);
-  return encoded_len;
 }
 
 bool sbp_msg_linux_process_fd_count_encode_internal(
@@ -1417,15 +1337,6 @@ size_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
                                                           251, section);
 }
 
-size_t sbp_msg_linux_process_fd_summary_encoded_len(
-    const sbp_msg_linux_process_fd_summary_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sys_fd_count);
-  encoded_len +=
-      sbp_double_null_terminated_string_encoded_len(&msg->most_opened, 251);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_process_fd_summary_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_process_fd_summary_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sys_fd_count)) {
@@ -1576,19 +1487,6 @@ const char *sbp_msg_linux_cpu_state_cmdline_get(
 size_t sbp_msg_linux_cpu_state_cmdline_strlen(
     const sbp_msg_linux_cpu_state_t *msg) {
   return sbp_unterminated_string_strlen(&msg->cmdline, 231);
-}
-
-size_t sbp_msg_linux_cpu_state_encoded_len(
-    const sbp_msg_linux_cpu_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
-  encoded_len += sbp_u32_encoded_len(&msg->time);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 231);
-  return encoded_len;
 }
 
 bool sbp_msg_linux_cpu_state_encode_internal(
@@ -1802,19 +1700,6 @@ size_t sbp_msg_linux_mem_state_cmdline_strlen(
   return sbp_unterminated_string_strlen(&msg->cmdline, 231);
 }
 
-size_t sbp_msg_linux_mem_state_encoded_len(
-    const sbp_msg_linux_mem_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->index);
-  encoded_len += sbp_u16_encoded_len(&msg->pid);
-  encoded_len += sbp_u8_encoded_len(&msg->pmem);
-  encoded_len += sbp_u32_encoded_len(&msg->time);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  encoded_len += (15 * sbp_char_encoded_len(&msg->tname[0]));
-  encoded_len += sbp_unterminated_string_encoded_len(&msg->cmdline, 231);
-  return encoded_len;
-}
-
 bool sbp_msg_linux_mem_state_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_linux_mem_state_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->index)) {
@@ -1957,20 +1842,6 @@ int sbp_msg_linux_mem_state_cmp(const sbp_msg_linux_mem_state_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_linux_sys_state_encoded_len(
-    const sbp_msg_linux_sys_state_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u16_encoded_len(&msg->mem_total);
-  encoded_len += sbp_u8_encoded_len(&msg->pcpu);
-  encoded_len += sbp_u8_encoded_len(&msg->pmem);
-  encoded_len += sbp_u16_encoded_len(&msg->procs_starting);
-  encoded_len += sbp_u16_encoded_len(&msg->procs_stopping);
-  encoded_len += sbp_u16_encoded_len(&msg->pid_count);
-  encoded_len += sbp_u32_encoded_len(&msg->time);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  return encoded_len;
 }
 
 bool sbp_msg_linux_sys_state_encode_internal(

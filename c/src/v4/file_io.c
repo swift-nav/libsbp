@@ -84,16 +84,6 @@ size_t sbp_msg_fileio_read_req_filename_strlen(
   return sbp_null_terminated_string_strlen(&msg->filename, 246);
 }
 
-size_t sbp_msg_fileio_read_req_encoded_len(
-    const sbp_msg_fileio_read_req_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_u32_encoded_len(&msg->offset);
-  encoded_len += sbp_u8_encoded_len(&msg->chunk_size);
-  encoded_len += sbp_null_terminated_string_encoded_len(&msg->filename, 246);
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_read_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
@@ -199,14 +189,6 @@ int sbp_msg_fileio_read_req_cmp(const sbp_msg_fileio_read_req_t *a,
   return ret;
 }
 
-size_t sbp_msg_fileio_read_resp_encoded_len(
-    const sbp_msg_fileio_read_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += (msg->n_contents * sbp_u8_encoded_len(&msg->contents[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_read_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
@@ -241,8 +223,7 @@ bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->sequence)) {
     return false;
   }
-  msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) /
-                              sbp_u8_encoded_len(&msg->contents[0]));
+  msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
   for (uint8_t i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_decode(ctx, &msg->contents[i])) {
       return false;
@@ -367,15 +348,6 @@ const char *sbp_msg_fileio_read_dir_req_dirname_get(
 size_t sbp_msg_fileio_read_dir_req_dirname_strlen(
     const sbp_msg_fileio_read_dir_req_t *msg) {
   return sbp_null_terminated_string_strlen(&msg->dirname, 247);
-}
-
-size_t sbp_msg_fileio_read_dir_req_encoded_len(
-    const sbp_msg_fileio_read_dir_req_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_u32_encoded_len(&msg->offset);
-  encoded_len += sbp_null_terminated_string_encoded_len(&msg->dirname, 247);
-  return encoded_len;
 }
 
 bool sbp_msg_fileio_read_dir_req_encode_internal(
@@ -552,14 +524,6 @@ size_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
   return sbp_multipart_string_section_strlen(&msg->contents, 251, section);
 }
 
-size_t sbp_msg_fileio_read_dir_resp_encoded_len(
-    const sbp_msg_fileio_read_dir_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_multipart_string_encoded_len(&msg->contents, 251);
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_read_dir_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
@@ -712,12 +676,6 @@ size_t sbp_msg_fileio_remove_filename_strlen(
   return sbp_null_terminated_string_strlen(&msg->filename, 255);
 }
 
-size_t sbp_msg_fileio_remove_encoded_len(const sbp_msg_fileio_remove_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_null_terminated_string_encoded_len(&msg->filename, 255);
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_remove_encode_internal(sbp_encode_ctx_t *ctx,
                                            const sbp_msg_fileio_remove_t *msg) {
   if (!sbp_null_terminated_string_encode(&msg->filename, 255, ctx)) {
@@ -857,16 +815,6 @@ size_t sbp_msg_fileio_write_req_filename_strlen(
   return sbp_null_terminated_string_strlen(&msg->filename, 247);
 }
 
-size_t sbp_msg_fileio_write_req_encoded_len(
-    const sbp_msg_fileio_write_req_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_u32_encoded_len(&msg->offset);
-  encoded_len += sbp_null_terminated_string_encoded_len(&msg->filename, 247);
-  encoded_len += (msg->n_data * sbp_u8_encoded_len(&msg->data[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_write_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
@@ -913,8 +861,7 @@ bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_null_terminated_string_decode(&msg->filename, 247, ctx)) {
     return false;
   }
-  msg->n_data = (uint8_t)((ctx->buf_len - ctx->offset) /
-                          sbp_u8_encoded_len(&msg->data[0]));
+  msg->n_data = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
   for (uint8_t i = 0; i < msg->n_data; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;
@@ -980,13 +927,6 @@ int sbp_msg_fileio_write_req_cmp(const sbp_msg_fileio_write_req_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_fileio_write_resp_encoded_len(
-    const sbp_msg_fileio_write_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  return encoded_len;
 }
 
 bool sbp_msg_fileio_write_resp_encode_internal(
@@ -1062,13 +1002,6 @@ int sbp_msg_fileio_write_resp_cmp(const sbp_msg_fileio_write_resp_t *a,
   return ret;
 }
 
-size_t sbp_msg_fileio_config_req_encoded_len(
-    const sbp_msg_fileio_config_req_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  return encoded_len;
-}
-
 bool sbp_msg_fileio_config_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sequence)) {
@@ -1140,16 +1073,6 @@ int sbp_msg_fileio_config_req_cmp(const sbp_msg_fileio_config_req_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_fileio_config_resp_encoded_len(
-    const sbp_msg_fileio_config_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sequence);
-  encoded_len += sbp_u32_encoded_len(&msg->window_size);
-  encoded_len += sbp_u32_encoded_len(&msg->batch_size);
-  encoded_len += sbp_u32_encoded_len(&msg->fileio_version);
-  return encoded_len;
 }
 
 bool sbp_msg_fileio_config_resp_encode_internal(

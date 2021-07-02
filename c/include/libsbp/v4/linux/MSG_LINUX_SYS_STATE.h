@@ -90,8 +90,11 @@ typedef struct {
  * @param msg sbp_msg_linux_sys_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_sys_state_encoded_len(
-    const sbp_msg_linux_sys_state_t *msg);
+static inline size_t sbp_msg_linux_sys_state_encoded_len(
+    const sbp_msg_linux_sys_state_t *msg) {
+  (void)msg;
+  return 15u;
+}
 
 /**
  * Encode an instance of sbp_msg_linux_sys_state_t to wire representation
