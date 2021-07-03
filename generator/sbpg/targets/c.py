@@ -313,8 +313,7 @@ class MsgItem(object):
             if new_field.packed_size == 0:
                 self.is_fixed_size = False
                 if not self.is_real_message:
-                    print("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
-                    raise "error"
+                    raise Exception("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
             self.fields.append(new_field)
             if new_field.basetype not in PRIMITIVE_TYPES:
                 self.sibling_include.append(find_package(package_specs, new_field.basetype) + "/" + new_field.basetype)

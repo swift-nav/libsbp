@@ -68,7 +68,7 @@ typedef s32 (*sbp_write_fn_t)(u8 *buff, u32 n, void *context);
 /**
  * Read callback
  *
- * The user of libsbp must provide a read callback confirming to this type when
+ * The user of libsbp must provide a read callback conforming to this type when
  * calling #sbp_process. This function will be called once per invocation of 
  * #sbp_process in order to read data from an input source. Once the entire 
  * frame has been read any registered callbacks will be invoked.

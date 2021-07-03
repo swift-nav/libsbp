@@ -32,11 +32,11 @@
  * string must be copied to some other user provided buffer and a NULL
  * terminator added before it can be processed.
  *
- * The functions in this file provide a convenient way to interact with string
+ * The functions in this file provide a convenient way to interact with strings
  * which don't have a NULL terminator on the wire. These functions ensure that
  * strings are always in correct C string representation for the consumer of
  * libsbp and will handle the adding or removal of NULL terminators when
- * encoding or decoding the string to wire format.
+ * encoding or decoding the string to the wire format.
  *
  * That value of an unterminated string can be retrieved with
  * #sbp_unterminated_string_get, and set with one of the "set" functions.

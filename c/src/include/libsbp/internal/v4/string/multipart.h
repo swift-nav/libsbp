@@ -30,7 +30,7 @@
  *
  * Since C string are NULL terminated it isn't possible for a consumer of libsbp
  * to interact directly with the wire encoding of a multipart string without
- * performing some sort of tokenisation on the input or carefully constructing
+ * performing some sort of tokenization on the input or carefully constructing
  * the output.
  *
  * The functions in this file handle all aspects of interacting with a multipart

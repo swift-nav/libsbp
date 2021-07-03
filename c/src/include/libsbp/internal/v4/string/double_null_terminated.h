@@ -19,7 +19,7 @@
  * except they have an extra NULL terminator at the end of a sequence. A double
  * NULL terminated string is not a single C style string, rather it is a
  * collection of substrings (or sections) each separated on the wire with a NULL
- * terminator with the end of sequence being marked by an extra sequence.
+ * terminator with the end of sequence being marked by an extra NULL terminator.
  *
  * For example, a double NULL terminated string might contain 3 sections -
  * "one", "two", and "three". On the wire this string would be encoded as
@@ -34,7 +34,7 @@
  *
  * Since C strings are NULL terminated it isn't possible for a consumer of
  * libsbp to interact directly with the wire encoding of a double NULL
- * terminated string without performing some sort of tokenisation on the input
+ * terminated string without performing some sort of tokenization on the input
  * or carefully constructing the output.
  *
  * The functions in this file handle all aspects of interacting with a double
@@ -46,9 +46,9 @@
  * #sbp_double_null_terminated_string_get_section. The returned string will
  * corrospond to the requested section number and will always be represented in
  * C format. For example when operating on the string from the first example
- * above, calling #sbp_double_null_terminated_string_get_section(&string,
- * max_encoded_len, 0) will return the C string "one". Calling
- * #sbp_double_null_terminated_string_get_section(&string, max_encoded_len, 1)
+ * above, calling `sbp_double_null_terminated_string_get_section(&string,
+ * max_encoded_len, 0)` will return the C string "one". Calling
+ * `sbp_double_null_terminated_string_get_section(&string, max_encoded_len, 1)`
  * will return "two" and so on.
  *
  * Other characteristics of the string such as the number of sections, the
