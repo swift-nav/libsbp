@@ -193,6 +193,6 @@ static inline bool operator>=(const sbp_msg_group_delay_dep_b_t &lhs,
   return sbp_msg_group_delay_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_DEP_B_H */

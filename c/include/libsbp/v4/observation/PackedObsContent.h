@@ -196,6 +196,6 @@ static inline bool operator>=(const sbp_packed_obs_content_t &lhs,
   return sbp_packed_obs_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENT_H */

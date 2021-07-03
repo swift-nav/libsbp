@@ -153,7 +153,8 @@ bool sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_command_output_line_vprintf(sbp_msg_command_output_t *msg,
-                                         const char *fmt, va_list ap);
+                                         const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_command_output_t::line with printf style formatting
@@ -184,7 +185,8 @@ bool sbp_msg_command_output_line_append_printf(sbp_msg_command_output_t *msg,
  *
  */
 bool sbp_msg_command_output_line_append_vprintf(sbp_msg_command_output_t *msg,
-                                                const char *fmt, va_list ap);
+                                                const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_command_output_t::line
@@ -327,6 +329,6 @@ static inline bool operator>=(const sbp_msg_command_output_t &lhs,
   return sbp_msg_command_output_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_COMMAND_OUTPUT_H */

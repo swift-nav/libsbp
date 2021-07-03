@@ -191,6 +191,6 @@ static inline bool operator>=(const sbp_msg_baseline_heading_t &lhs,
   return sbp_msg_baseline_heading_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ORIENTATION_MSG_BASELINE_HEADING_H */

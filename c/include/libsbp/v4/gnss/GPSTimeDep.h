@@ -158,6 +158,6 @@ static inline bool operator>=(const sbp_gps_time_dep_t &lhs,
   return sbp_gps_time_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_GPSTIMEDEP_H */

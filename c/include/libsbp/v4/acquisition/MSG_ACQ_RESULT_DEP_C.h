@@ -190,6 +190,6 @@ static inline bool operator>=(const sbp_msg_acq_result_dep_c_t &lhs,
   return sbp_msg_acq_result_dep_c_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_RESULT_DEP_C_H */

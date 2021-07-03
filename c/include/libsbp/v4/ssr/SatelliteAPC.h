@@ -178,6 +178,6 @@ static inline bool operator>=(const sbp_satellite_apc_t &lhs,
   return sbp_satellite_apc_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_SATELLITEAPC_H */

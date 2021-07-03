@@ -220,6 +220,6 @@ static inline bool operator>=(const sbp_msg_orient_quat_t &lhs,
   return sbp_msg_orient_quat_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ORIENTATION_MSG_ORIENT_QUAT_H */

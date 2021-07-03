@@ -219,6 +219,6 @@ static inline bool operator>=(const sbp_gnss_capb_t &lhs,
   return sbp_gnss_capb_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_GNSSCAPB_H */

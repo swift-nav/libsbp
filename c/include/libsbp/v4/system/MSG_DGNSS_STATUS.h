@@ -162,7 +162,8 @@ bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
-                                         const char *fmt, va_list ap);
+                                         const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_dgnss_status_t::source with printf style formatting
@@ -193,7 +194,8 @@ bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
  *
  */
 bool sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
-                                                const char *fmt, va_list ap);
+                                                const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_dgnss_status_t::source
@@ -334,6 +336,6 @@ static inline bool operator>=(const sbp_msg_dgnss_status_t &lhs,
   return sbp_msg_dgnss_status_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_DGNSS_STATUS_H */

@@ -179,6 +179,6 @@ static inline bool operator>=(const sbp_msg_flash_erase_t &lhs,
   return sbp_msg_flash_erase_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_FLASH_ERASE_H */

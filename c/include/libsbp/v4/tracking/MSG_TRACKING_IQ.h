@@ -185,6 +185,6 @@ static inline bool operator>=(const sbp_msg_tracking_iq_t &lhs,
   return sbp_msg_tracking_iq_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_H */

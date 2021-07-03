@@ -161,6 +161,6 @@ static inline bool operator>=(const sbp_stec_residual_no_std_t &lhs,
   return sbp_stec_residual_no_std_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_STECRESIDUALNOSTD_H */

@@ -196,6 +196,6 @@ static inline bool operator>=(const sbp_msg_ssr_stec_correction_t &lhs,
   return sbp_msg_ssr_stec_correction_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_STEC_CORRECTION_H */

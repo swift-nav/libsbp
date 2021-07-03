@@ -165,7 +165,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_add_section_vprintf(
-    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append a string to the last section in
@@ -230,7 +231,8 @@ bool sbp_msg_fileio_read_dir_resp_contents_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_resp_contents_append_vprintf(
-    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_resp_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain a section from sbp_msg_fileio_read_dir_resp_t::contents
@@ -384,6 +386,6 @@ static inline bool operator>=(const sbp_msg_fileio_read_dir_resp_t &lhs,
   return sbp_msg_fileio_read_dir_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_RESP_H */

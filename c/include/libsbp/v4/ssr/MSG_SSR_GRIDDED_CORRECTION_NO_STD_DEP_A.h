@@ -213,6 +213,6 @@ static inline bool operator>=(
   return sbp_msg_ssr_gridded_correction_no_std_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_H */

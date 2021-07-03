@@ -292,6 +292,6 @@ static inline bool operator>=(const sbp_msg_ephemeris_gps_dep_f_t &lhs,
   return sbp_msg_ephemeris_gps_dep_f_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GPS_DEP_F_H */

@@ -193,6 +193,6 @@ static inline bool operator>=(
   return sbp_gridded_correction_header_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_GRIDDEDCORRECTIONHEADERDEPA_H */

@@ -158,6 +158,6 @@ static inline bool operator>=(const sbp_doppler_t &lhs,
   return sbp_doppler_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_DOPPLER_H */

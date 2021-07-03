@@ -173,6 +173,6 @@ static inline bool operator>=(const sbp_msg_settings_save_t &lhs,
   return sbp_msg_settings_save_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_SAVE_H */

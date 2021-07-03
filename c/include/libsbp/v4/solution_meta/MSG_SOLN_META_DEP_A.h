@@ -231,6 +231,6 @@ static inline bool operator>=(const sbp_msg_soln_meta_dep_a_t &lhs,
   return sbp_msg_soln_meta_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_DEP_A_H */

@@ -221,6 +221,6 @@ static inline bool operator>=(const sbp_msg_almanac_gps_t &lhs,
   return sbp_msg_almanac_gps_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_ALMANAC_GPS_H */

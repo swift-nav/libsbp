@@ -196,6 +196,6 @@ static inline bool operator>=(const sbp_msg_cell_modem_status_t &lhs,
   return sbp_msg_cell_modem_status_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_CELL_MODEM_STATUS_H */

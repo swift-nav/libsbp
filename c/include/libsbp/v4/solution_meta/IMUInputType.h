@@ -155,6 +155,6 @@ static inline bool operator>=(const sbp_imu_input_type_t &lhs,
   return sbp_imu_input_type_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SOLUTION_META_IMUINPUTTYPE_H */

@@ -171,6 +171,6 @@ static inline bool operator>=(
   return sbp_tracking_channel_correlation_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_TRACKINGCHANNELCORRELATIONDEP_H */

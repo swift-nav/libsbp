@@ -179,6 +179,6 @@ static inline bool operator>=(const sbp_msg_nap_device_dna_resp_t &lhs,
   return sbp_msg_nap_device_dna_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_NAP_DEVICE_DNA_RESP_H */

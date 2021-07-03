@@ -180,6 +180,6 @@ static inline bool operator>=(const sbp_msg_imu_aux_t &lhs,
   return sbp_msg_imu_aux_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_IMU_MSG_IMU_AUX_H */

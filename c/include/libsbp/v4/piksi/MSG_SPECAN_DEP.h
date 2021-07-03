@@ -213,6 +213,6 @@ static inline bool operator>=(const sbp_msg_specan_dep_t &lhs,
   return sbp_msg_specan_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_SPECAN_DEP_H */

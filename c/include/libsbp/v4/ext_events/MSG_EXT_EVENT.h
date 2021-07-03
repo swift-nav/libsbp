@@ -192,6 +192,6 @@ static inline bool operator>=(const sbp_msg_ext_event_t &lhs,
   return sbp_msg_ext_event_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_EXT_EVENTS_MSG_EXT_EVENT_H */

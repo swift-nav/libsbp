@@ -201,6 +201,6 @@ static inline bool operator>=(const sbp_msg_linux_sys_state_dep_a_t &lhs,
   return sbp_msg_linux_sys_state_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_SYS_STATE_DEP_A_H */

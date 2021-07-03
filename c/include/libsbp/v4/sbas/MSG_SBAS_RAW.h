@@ -188,6 +188,6 @@ static inline bool operator>=(const sbp_msg_sbas_raw_t &lhs,
   return sbp_msg_sbas_raw_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SBAS_MSG_SBAS_RAW_H */

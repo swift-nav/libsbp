@@ -192,6 +192,6 @@ static inline bool operator>=(const sbp_msg_fileio_config_resp_t &lhs,
   return sbp_msg_fileio_config_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_CONFIG_RESP_H */

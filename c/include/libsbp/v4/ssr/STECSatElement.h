@@ -166,6 +166,6 @@ static inline bool operator>=(const sbp_stec_sat_element_t &lhs,
   return sbp_stec_sat_element_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_STECSATELEMENT_H */

@@ -245,6 +245,6 @@ static inline bool operator>=(const sbp_msg_ssr_orbit_clock_dep_a_t &lhs,
   return sbp_msg_ssr_orbit_clock_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_ORBIT_CLOCK_DEP_A_H */

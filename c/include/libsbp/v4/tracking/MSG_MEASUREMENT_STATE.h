@@ -187,6 +187,6 @@ static inline bool operator>=(const sbp_msg_measurement_state_t &lhs,
   return sbp_msg_measurement_state_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_MEASUREMENT_STATE_H */

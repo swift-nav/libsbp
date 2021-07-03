@@ -185,6 +185,6 @@ static inline bool operator>=(const sbp_msg_sv_configuration_gps_dep_t &lhs,
   return sbp_msg_sv_configuration_gps_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_SV_CONFIGURATION_GPS_DEP_H */

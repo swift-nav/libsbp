@@ -177,6 +177,6 @@ static inline bool operator>=(const sbp_network_usage_t &lhs,
   return sbp_network_usage_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_NETWORKUSAGE_H */

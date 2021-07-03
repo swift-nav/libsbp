@@ -179,6 +179,6 @@ static inline bool operator>=(const sbp_uart_channel_t &lhs,
   return sbp_uart_channel_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_UARTCHANNEL_H */

@@ -44,7 +44,7 @@ extern "C" {
 #define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR           (-6)
-/** Return value indicating an error while encoding an SBP message to wire format */
+/** Return value indicating an error while encoding an SBP message to the wire format */
 #define SBP_ENCODE_ERROR (-7)
 /** Return value indicating an error while decoding an SBP message from wire format */
 #define SBP_DECODE_ERROR (-8)

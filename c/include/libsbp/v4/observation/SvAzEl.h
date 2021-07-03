@@ -162,6 +162,6 @@ static inline bool operator>=(const sbp_sv_az_el_t &lhs,
   return sbp_sv_az_el_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_SVAZEL_H */

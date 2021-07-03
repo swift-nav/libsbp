@@ -173,6 +173,6 @@ static inline bool operator>=(const sbp_msg_iar_state_t &lhs,
   return sbp_msg_iar_state_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_IAR_STATE_H */

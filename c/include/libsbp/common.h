@@ -96,6 +96,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) DO_PRAGMA(message (msg))
 #define SBP_DEPRECATED __attribute__((deprecated))
 #define SBP_ATTR_FORMAT(fmt,args) __attribute__((format(printf,fmt,args)))
+#define SBP_ATTR_VFORMAT(fmt) __attribute__((format(printf,fmt,0)))
 
 #elif defined(_MSC_VER)
 
@@ -105,6 +106,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) /* Intentionally empty */
 #define SBP_DEPRECATED __declspec(deprecated)
 #define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_ATTR_VFORMAT(fmt)
 
 #elif defined(__ghs__)
 
@@ -114,6 +116,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) /* Intentionally empty */
 #define SBP_DEPRECATED /* Intentionally empty */
 #define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_ATTR_VFORMAT(fmt)
 
 #else
 

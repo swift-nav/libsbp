@@ -150,6 +150,6 @@ static inline bool operator>=(const sbp_sv_id_t &lhs, const sbp_sv_id_t &rhs) {
   return sbp_sv_id_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_SVID_H */

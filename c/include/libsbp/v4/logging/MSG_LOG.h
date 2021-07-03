@@ -145,7 +145,8 @@ bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, const char *fmt, ...)
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_log_text_vprintf(sbp_msg_log_t *msg, const char *fmt, va_list ap);
+bool sbp_msg_log_text_vprintf(sbp_msg_log_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_log_t::text with printf style formatting
@@ -175,7 +176,7 @@ bool sbp_msg_log_text_append_printf(sbp_msg_log_t *msg, const char *fmt, ...)
  *
  */
 bool sbp_msg_log_text_append_vprintf(sbp_msg_log_t *msg, const char *fmt,
-                                     va_list ap);
+                                     va_list ap) SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_log_t::text
@@ -313,6 +314,6 @@ static inline bool operator>=(const sbp_msg_log_t &lhs,
   return sbp_msg_log_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LOGGING_MSG_LOG_H */

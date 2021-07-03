@@ -187,6 +187,6 @@ static inline bool operator>=(const sbp_grid_definition_header_dep_a_t &lhs,
   return sbp_grid_definition_header_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_GRIDDEFINITIONHEADERDEPA_H */

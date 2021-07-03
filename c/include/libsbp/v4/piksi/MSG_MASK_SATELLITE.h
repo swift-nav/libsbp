@@ -180,6 +180,6 @@ static inline bool operator>=(const sbp_msg_mask_satellite_t &lhs,
   return sbp_msg_mask_satellite_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_MASK_SATELLITE_H */

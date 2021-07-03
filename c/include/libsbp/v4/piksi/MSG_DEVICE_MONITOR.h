@@ -195,6 +195,6 @@ static inline bool operator>=(const sbp_msg_device_monitor_t &lhs,
   return sbp_msg_device_monitor_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_DEVICE_MONITOR_H */

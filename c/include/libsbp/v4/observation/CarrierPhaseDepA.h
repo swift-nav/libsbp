@@ -162,6 +162,6 @@ static inline bool operator>=(const sbp_carrier_phase_dep_a_t &lhs,
   return sbp_carrier_phase_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_CARRIERPHASEDEPA_H */

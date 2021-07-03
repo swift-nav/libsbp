@@ -177,7 +177,8 @@ bool sbp_msg_fileio_write_req_filename_printf(sbp_msg_fileio_write_req_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_write_req_filename_vprintf(sbp_msg_fileio_write_req_t *msg,
-                                               const char *fmt, va_list ap);
+                                               const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_fileio_write_req_t::filename with printf style formatting
@@ -208,7 +209,8 @@ bool sbp_msg_fileio_write_req_filename_append_printf(
  *
  */
 bool sbp_msg_fileio_write_req_filename_append_vprintf(
-    sbp_msg_fileio_write_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_write_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_fileio_write_req_t::filename
@@ -354,6 +356,6 @@ static inline bool operator>=(const sbp_msg_fileio_write_req_t &lhs,
   return sbp_msg_fileio_write_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_WRITE_REQ_H */

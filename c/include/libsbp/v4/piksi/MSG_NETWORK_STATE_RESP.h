@@ -211,6 +211,6 @@ static inline bool operator>=(const sbp_msg_network_state_resp_t &lhs,
   return sbp_msg_network_state_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_NETWORK_STATE_RESP_H */

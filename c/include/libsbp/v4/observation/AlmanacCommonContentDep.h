@@ -194,6 +194,6 @@ static inline bool operator>=(const sbp_almanac_common_content_dep_t &lhs,
   return sbp_almanac_common_content_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_ALMANACCOMMONCONTENTDEP_H */

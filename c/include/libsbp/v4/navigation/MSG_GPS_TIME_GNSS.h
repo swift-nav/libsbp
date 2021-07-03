@@ -191,6 +191,6 @@ static inline bool operator>=(const sbp_msg_gps_time_gnss_t &lhs,
   return sbp_msg_gps_time_gnss_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NAVIGATION_MSG_GPS_TIME_GNSS_H */

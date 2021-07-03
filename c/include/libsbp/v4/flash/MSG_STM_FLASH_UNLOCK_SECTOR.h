@@ -179,6 +179,6 @@ static inline bool operator>=(const sbp_msg_stm_flash_unlock_sector_t &lhs,
   return sbp_msg_stm_flash_unlock_sector_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_STM_FLASH_UNLOCK_SECTOR_H */

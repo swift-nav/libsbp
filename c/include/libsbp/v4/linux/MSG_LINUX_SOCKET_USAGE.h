@@ -191,6 +191,6 @@ static inline bool operator>=(const sbp_msg_linux_socket_usage_t &lhs,
   return sbp_msg_linux_socket_usage_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_SOCKET_USAGE_H */

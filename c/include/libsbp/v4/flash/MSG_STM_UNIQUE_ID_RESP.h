@@ -177,6 +177,6 @@ static inline bool operator>=(const sbp_msg_stm_unique_id_resp_t &lhs,
   return sbp_msg_stm_unique_id_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_STM_UNIQUE_ID_RESP_H */

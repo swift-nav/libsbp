@@ -161,6 +161,6 @@ static inline bool operator>=(const sbp_observation_header_t &lhs,
   return sbp_observation_header_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_OBSERVATIONHEADER_H */

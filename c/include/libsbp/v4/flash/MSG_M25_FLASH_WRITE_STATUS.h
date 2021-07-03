@@ -178,6 +178,6 @@ static inline bool operator>=(const sbp_msg_m25_flash_write_status_t &lhs,
   return sbp_msg_m25_flash_write_status_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_M25_FLASH_WRITE_STATUS_H */

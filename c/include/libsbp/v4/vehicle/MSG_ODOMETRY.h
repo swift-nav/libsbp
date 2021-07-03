@@ -190,6 +190,6 @@ static inline bool operator>=(const sbp_msg_odometry_t &lhs,
   return sbp_msg_odometry_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_VEHICLE_MSG_ODOMETRY_H */

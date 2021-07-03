@@ -184,6 +184,6 @@ static inline bool operator>=(const sbp_msg_front_end_gain_t &lhs,
   return sbp_msg_front_end_gain_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H */

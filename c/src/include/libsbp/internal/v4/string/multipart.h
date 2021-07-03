@@ -70,7 +70,7 @@ extern "C" {
 #endif
 
 /**
- * Initialise a multipart string
+ * Initialize a multipart string
  *
  * @param s string
  */
@@ -79,6 +79,23 @@ void sbp_multipart_string_init(sbp_string_t *s);
 /**
  * Check a multipart string for validity
  *
+ * A multipart string is considered valid if all the following critera are met:
+ * - `s->encoded_len` is greater than or equal to \p max_encoded_len
+ * - The final character in `s->data` is NULL
+ *
+ * All other functions which deal with multipart strings will first check for
+ * validity before proceeding. If the given string object is currently
+ * considered invalid mutator functions (eg: #sbp_multipart_string_add_section,
+ * #sbp_multipart_string_append) will first initialize the string object to an
+ * empty state before performing their task. Accessor functions (eg:
+ * #sbp_multipart_string_get_section, #sbp_multipart_string_count_sections) will
+ * return 0, NULL, or whatever value they would normally return for an
+ * initialized but otherwise empty multipart string.
+ *
+ * Attempting to encode an invalid multipart string will result in a single NULL
+ * terminator character being written to the destination (assuming there is
+ * sufficient space in the destination buffer).
+ *
  * @param s string
  * @param max_encoded_len Maximum encoded length
  * @return true is the string is valid, false otherwise
@@ -86,7 +103,7 @@ void sbp_multipart_string_init(sbp_string_t *s);
 bool sbp_multipart_string_valid(const sbp_string_t *s, size_t max_encoded_len);
 
 /**
- * Compare two multipart string
+ * Compare two multipart strings
  *
  * The return value has the same definition as C standard library comparison
  * functions such as memcmp, strcmp
@@ -114,10 +131,10 @@ size_t sbp_multipart_string_encoded_len(const sbp_string_t *s,
                                         size_t max_encoded_len);
 
 /**
- * Get availab e space in a multipart string
+ * Get available space in a multipart string
  *
  * The return value is the maximum number of bytes that can be added to the
- * string before it exceed the maximum encoded length
+ * string before it exceeds the maximum encoded length
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
@@ -161,7 +178,7 @@ size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
  * Add section to a multipart string
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
@@ -179,7 +196,7 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t max_encoded_len,
  * Add a section to a multipart string with printf style formatting
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
@@ -193,7 +210,8 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t max_encoded_len,
  */
 bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
                                               size_t max_encoded_len,
-                                              const char *fmt, va_list ap);
+                                              const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Append to the last section of a multipart string
@@ -202,13 +220,13 @@ bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
  * string.
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
  *
- * If the string is currently invalid it will be initialised and this function
+ * If the string is currently invalid it will be initialized and this function
  * will behave identically to #sbp_multipart_string_add_section operating on an
  * empty string.
  *
@@ -227,13 +245,13 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t max_encoded_len,
  * multipart string.
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
  *
- * If the string is currently invalid it will be initialised and this function
+ * If the string is currently invalid it will be initialized and this function
  * will behave identically to #sbp_multipart_string_add_section_vprintf
  * operating on an empty string
  *
@@ -245,7 +263,8 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t max_encoded_len,
  */
 bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
                                          size_t max_encoded_len,
-                                         const char *fmt, va_list ap);
+                                         const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Retrieve a section from a multipart string

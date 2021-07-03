@@ -210,6 +210,6 @@ static inline bool operator>=(const sbp_msg_ssr_code_biases_t &lhs,
   return sbp_msg_ssr_code_biases_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_CODE_BIASES_H */

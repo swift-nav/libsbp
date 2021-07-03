@@ -186,6 +186,6 @@ static inline bool operator>=(const sbp_msg_acq_sv_profile_dep_t &lhs,
   return sbp_msg_acq_sv_profile_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H */

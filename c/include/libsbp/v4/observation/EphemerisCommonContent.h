@@ -181,6 +181,6 @@ static inline bool operator>=(const sbp_ephemeris_common_content_t &lhs,
   return sbp_ephemeris_common_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_EPHEMERISCOMMONCONTENT_H */

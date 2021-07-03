@@ -177,6 +177,6 @@ static inline bool operator>=(const sbp_phase_biases_content_t &lhs,
   return sbp_phase_biases_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_PHASEBIASESCONTENT_H */

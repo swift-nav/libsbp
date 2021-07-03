@@ -160,7 +160,8 @@ bool sbp_msg_settings_read_req_setting_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_req_setting_add_section_vprintf(
-    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append a string to the last section in sbp_msg_settings_read_req_t::setting
@@ -224,7 +225,8 @@ bool sbp_msg_settings_read_req_setting_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_req_setting_append_vprintf(
-    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain a section from sbp_msg_settings_read_req_t::setting
@@ -377,6 +379,6 @@ static inline bool operator>=(const sbp_msg_settings_read_req_t &lhs,
   return sbp_msg_settings_read_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_REQ_H */

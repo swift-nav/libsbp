@@ -159,6 +159,6 @@ static inline bool operator>=(const sbp_carrier_phase_t &lhs,
   return sbp_carrier_phase_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_CARRIERPHASE_H */

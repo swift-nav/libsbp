@@ -163,6 +163,6 @@ static inline bool operator>=(const sbp_sub_system_report_t &lhs,
   return sbp_sub_system_report_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_SUBSYSTEMREPORT_H */

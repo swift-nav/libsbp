@@ -173,7 +173,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -197,7 +197,7 @@ typedef struct {
    * @return true on success, false otherwise
    *
    */
-  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Obtain the string value from (((comment_name)))
@@ -257,7 +257,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Append a string to the last section in (((comment_name)))
@@ -303,7 +303,7 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Obtain a section from (((comment_name)))
@@ -445,7 +445,7 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
   return (((m.prefix)))_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
 

@@ -181,6 +181,6 @@ static inline bool operator>=(const sbp_msg_settings_read_by_index_req_t &lhs,
   return sbp_msg_settings_read_by_index_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_REQ_H */

@@ -178,6 +178,6 @@ static inline bool operator>=(const sbp_msg_command_resp_t &lhs,
   return sbp_msg_command_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_COMMAND_RESP_H */

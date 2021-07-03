@@ -190,6 +190,6 @@ static inline bool operator>=(const sbp_msg_uart_state_depa_t &lhs,
   return sbp_msg_uart_state_depa_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_UART_STATE_DEPA_H */

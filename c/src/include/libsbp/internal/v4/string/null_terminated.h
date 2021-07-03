@@ -51,7 +51,7 @@ extern "C" {
 #endif
 
 /**
- * Initialis a null terminated string
+ * Initialize a null terminated string
  *
  * @param s string
  */
@@ -59,6 +59,25 @@ void sbp_null_terminated_string_init(sbp_string_t *s);
 
 /**
  * Check a null terminated string for validity
+ *
+ * A null terminated string is considered valid if it meets all the following
+ * criteria:
+ * - `s->encoded_len` is less than or equal to \p max_encoded_len
+ * - `s->encoded_len` is greater than or equal to 1
+ * - The final byte in `s->data` is NULL
+ *
+ * All other functions which deal with NULL terminated strings will first check
+ * for validity before proceeding. If the given string object is currently
+ * considered invalid mutator functions (eg: #sbp_null_terminated_string_set,
+ * #sbp_null_terminated_string_append) will first initialize the string object
+ * to an empty state before performing their task. Accessor functions (eg:
+ * #sbp_null_terminated_string_get, #sbp_null_terminated_string_strlen) will
+ * return 0, NULL, or whatever value they would normally return for an
+ * initialized but otherwise empty NULL terminated string.
+ *
+ * Attempting to encode an invalid NULL terminated string will result in a
+ * single NULL character being written to the destination (assuming there is
+ * sufficient space in the destination buffer).
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
@@ -146,13 +165,14 @@ bool sbp_null_terminated_string_set(sbp_string_t *s, size_t max_encoded_len,
  * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
-                                        const char *fmt, va_list ap);
+                                        const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Append to a null terminated string.
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * The new string will be appended to the current contents of this string. If
@@ -171,7 +191,7 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  * Append to a null terminated string with printf style formatting
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
@@ -185,7 +205,8 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  */
 bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
                                                size_t max_encoded_len,
-                                               const char *fmt, va_list ap);
+                                               const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Get contents

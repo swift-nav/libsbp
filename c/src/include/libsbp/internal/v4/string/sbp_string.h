@@ -35,7 +35,7 @@ typedef struct {
   bool (*valid)(const sbp_string_t *s, size_t max_encoded_len);
 
   /**
-   * Initialise a string
+   * Initialize a string
    */
   void (*init)(sbp_string_t *s);
 
@@ -106,7 +106,7 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
  * @return true on success, false otherwise
  */
 bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
-                               const char *fmt, va_list ap);
+                               const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Write a string to a buffer

@@ -181,6 +181,6 @@ static inline bool operator>=(const sbp_msg_bootloader_handshake_req_t &lhs,
   return sbp_msg_bootloader_handshake_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H */

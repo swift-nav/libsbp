@@ -152,7 +152,8 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -185,7 +186,8 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
  *
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_bootloader_handshake_dep_a_t::handshake
@@ -336,6 +338,6 @@ static inline bool operator>=(const sbp_msg_bootloader_handshake_dep_a_t &lhs,
   return sbp_msg_bootloader_handshake_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_DEP_A_H */

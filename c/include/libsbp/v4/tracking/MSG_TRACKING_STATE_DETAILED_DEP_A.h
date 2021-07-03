@@ -299,6 +299,6 @@ static inline bool operator>=(
   return sbp_msg_tracking_state_detailed_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H */

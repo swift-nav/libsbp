@@ -210,6 +210,6 @@ static inline bool operator>=(const sbp_acq_sv_profile_dep_t &lhs,
   return sbp_acq_sv_profile_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_ACQSVPROFILEDEP_H */

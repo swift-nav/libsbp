@@ -174,6 +174,6 @@ static inline bool operator>=(const sbp_msg_cw_start_t &lhs,
   return sbp_msg_cw_start_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_CW_START_H */

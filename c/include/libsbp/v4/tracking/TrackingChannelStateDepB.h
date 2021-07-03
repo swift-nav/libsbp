@@ -170,6 +170,6 @@ static inline bool operator>=(const sbp_tracking_channel_state_dep_b_t &lhs,
   return sbp_tracking_channel_state_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_TRACKINGCHANNELSTATEDEPB_H */

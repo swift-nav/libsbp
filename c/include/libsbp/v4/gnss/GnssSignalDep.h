@@ -165,6 +165,6 @@ static inline bool operator>=(const sbp_gnss_signal_dep_t &lhs,
   return sbp_gnss_signal_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_GNSSSIGNALDEP_H */

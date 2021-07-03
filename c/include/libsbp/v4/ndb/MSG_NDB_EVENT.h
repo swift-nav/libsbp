@@ -213,6 +213,6 @@ static inline bool operator>=(const sbp_msg_ndb_event_t &lhs,
   return sbp_msg_ndb_event_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NDB_MSG_NDB_EVENT_H */

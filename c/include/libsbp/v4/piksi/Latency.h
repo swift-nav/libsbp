@@ -169,6 +169,6 @@ static inline bool operator>=(const sbp_latency_t &lhs,
   return sbp_latency_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_LATENCY_H */

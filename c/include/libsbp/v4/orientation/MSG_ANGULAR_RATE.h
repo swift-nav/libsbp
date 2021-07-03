@@ -199,6 +199,6 @@ static inline bool operator>=(const sbp_msg_angular_rate_t &lhs,
   return sbp_msg_angular_rate_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ORIENTATION_MSG_ANGULAR_RATE_H */

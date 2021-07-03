@@ -141,7 +141,7 @@ bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, const char *fmt,
  * @return true on success, false otherwise
  */
 bool sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg, const char *fmt,
-                                    va_list ap);
+                                    va_list ap) SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_print_dep_t::text with printf style formatting
@@ -172,7 +172,8 @@ bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
  *
  */
 bool sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
-                                           const char *fmt, va_list ap);
+                                           const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_print_dep_t::text
@@ -312,6 +313,6 @@ static inline bool operator>=(const sbp_msg_print_dep_t &lhs,
   return sbp_msg_print_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LOGGING_MSG_PRINT_DEP_H */

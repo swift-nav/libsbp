@@ -68,6 +68,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -76,7 +77,7 @@ extern "C" {
 #endif
 
 /**
- * Initialise a double null terminated string
+ * Initialize a double null terminated string
  *
  * @param s string
  */
@@ -84,6 +85,27 @@ void sbp_double_null_terminated_string_init(sbp_string_t *s);
 
 /**
  * Check a double null terminated string for validity
+ *
+ * A double null terminated string is considered valid if it meets all the
+ * following criteria:
+ * - `s->encoded_len` is less than or equal to \p max_encoded_len
+ * - `s->encoded_len` is greater than or equal to 2
+ * - The final 2 bytes in `s->data` are both NULL
+ *
+ * All other functions which deal with double NULL terminated strings will first
+ * check for validity before proceeding. If the given string object is currently
+ * considered invalid mutator functions (eg:
+ * #sbp_double_null_terminated_string_add_section,
+ * #sbp_double_null_terminated_string_append) will first initialize the string
+ * object to an empty state before performing their task. Accessor functions
+ * (eg: #sbp_double_null_terminated_string_get_section,
+ * #sbp_double_null_terminated_string_count_sections) will return 0, NULL, or
+ * whatever value they would normally return for an initialized but otherwise
+ * empty double NULL terminated string.
+ *
+ * Attempting to encode an invalid double NULL terminated string will result in
+ * 2 NULL terminator characters being written to the destination (assuming there
+ * is sufficient space in the destination buffer).
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
@@ -125,7 +147,7 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
  * Get available space in a double null terminated string
  *
  * The return value is the maximum number of bytes that can be added to the
- * string before it exceed the maximum encoded length
+ * string before it exceeds the maximum encoded length
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
@@ -151,7 +173,7 @@ size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
  * Add section to a double null terminated string
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
@@ -170,10 +192,10 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
  * Add a section to a double null terminated string with printf style formatting
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
- * IF the resulting string would be greater than the maximum encoded length the
+ * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
  *
  * @param s string
@@ -183,22 +205,20 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_add_section_vprintf(
-    sbp_string_t *s, size_t max_encoded_len, const char *fmt, va_list ap);
+    sbp_string_t *s, size_t max_encoded_len, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Append to the last section of a double null terminated string
  *
- * The specified string will be appended to the last section in the double null
- * terminated string.
- *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned.
  *
- * If the string is currently invalid it will be initialised and this function
+ * If the string is currently invalid it will be initialized and this function
  * will behave identically to #sbp_double_null_terminated_string_add_section
  * operating on an empty string
  *
@@ -219,13 +239,13 @@ bool sbp_double_null_terminated_string_append(sbp_string_t *s,
  * null terminated string.
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
- * string will not be modified and false will be return.
+ * string will not be modified and false will be returned.
  *
- * If the string is currently invalid it will be initialised and this function
+ * If the string is currently invalid it will be initialized and this function
  * will behave identically to
  * #sbp_double_null_terminated_string_add_section_vprintf operating on an empty
  * string
@@ -239,7 +259,8 @@ bool sbp_double_null_terminated_string_append(sbp_string_t *s,
 bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
                                                       size_t max_encoded_len,
                                                       const char *fmt,
-                                                      va_list ap);
+                                                      va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Retrive a section from a double null terminated string

@@ -160,7 +160,8 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap);
+    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
@@ -193,7 +194,8 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
  *
  */
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap);
+    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from
@@ -342,6 +344,6 @@ static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &lhs,
   return sbp_msg_csac_telemetry_labels_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H */

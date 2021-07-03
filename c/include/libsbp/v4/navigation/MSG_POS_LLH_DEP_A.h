@@ -212,6 +212,6 @@ static inline bool operator>=(const sbp_msg_pos_llh_dep_a_t &lhs,
   return sbp_msg_pos_llh_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NAVIGATION_MSG_POS_LLH_DEP_A_H */

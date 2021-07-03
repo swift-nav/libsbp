@@ -233,6 +233,6 @@ static inline bool operator>=(const sbp_msg_vel_body_t &lhs,
   return sbp_msg_vel_body_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H */

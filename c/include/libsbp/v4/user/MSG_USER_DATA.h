@@ -181,6 +181,6 @@ static inline bool operator>=(const sbp_msg_user_data_t &lhs,
   return sbp_msg_user_data_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_USER_MSG_USER_DATA_H */

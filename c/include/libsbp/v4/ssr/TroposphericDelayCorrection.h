@@ -172,6 +172,6 @@ static inline bool operator>=(const sbp_tropospheric_delay_correction_t &lhs,
   return sbp_tropospheric_delay_correction_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTION_H */

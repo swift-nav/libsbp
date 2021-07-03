@@ -185,6 +185,6 @@ static inline bool operator>=(const sbp_stec_header_t &lhs,
   return sbp_stec_header_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_STECHEADER_H */

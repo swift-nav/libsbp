@@ -172,6 +172,6 @@ static inline bool operator>=(
   return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_H */

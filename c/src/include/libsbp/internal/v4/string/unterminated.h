@@ -60,7 +60,7 @@ extern "C" {
 #endif
 
 /**
- * Initialise an unterminated string
+ * Initialize an unterminated string
  *
  * @param s string
  */
@@ -68,6 +68,29 @@ void sbp_unterminated_string_init(sbp_string_t *s);
 
 /**
  * Check an unterminated string for validity
+ *
+ * An unterminated string is considered valid if:
+ * - `s->encoded_len` is less than or equal to \p max_encoded_len
+ *
+ * AND one of the following criteria is met:
+ * - `s->data[s->encoded_len]` (the first byte past the end of the encoded
+ * string) is NULL (this criteria ensures compatibility with C standard library
+ * string functions)
+ * - `s->data[s->encoded_len-1]` is NULL (this criteria copes with receiving a
+ * string from the wire representations which erroneously contains a NULL
+ * terminator)
+ *
+ * All other functions which deal with unterminated strings will first check for
+ * validity before proceeding. If the given string object is currently
+ * considered invalid mutator functions (eg: #sbp_unterminated_string_set,
+ * #sbp_unterminated_string_append) will first initialize the string object to
+ * an empty state before performing their task. Accessor functions (eg:
+ * #sbp_unterminated_string_get, #sbp_unterminated_string_strlen) will return 0,
+ * NULL, or whatever value they would normally return for an initialized but
+ * otherwise empty NULL terminated string.
+ *
+ * Attempting to encode an invalid unterminated string will result in no data
+ * being written to the destination.
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length
@@ -105,7 +128,7 @@ size_t sbp_unterminated_string_encoded_len(const sbp_string_t *s,
                                            size_t max_encoded_len);
 
 /**
- * Get available spec in an unterminated string
+ * Get available space in an unterminated string
  *
  * The return value is the maximum number of bytes that can be added to the
  * string without exceeding the maximum encoded length
@@ -156,13 +179,14 @@ bool sbp_unterminated_string_set(sbp_string_t *s, size_t max_encoded_len,
  * @return true on success, false otherwise
  */
 bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
-                                     const char *fmt, va_list ap);
+                                     const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
  * Append an unterminated string
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * The new string will be appended to the current contents of this string. If
@@ -181,7 +205,7 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  * Append to an unterminated string will printf style formatting
  *
  * If the current string's encoded length is less than the maximum encoded
- * length, the function will clear off any previous data before attempting to
+ * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
@@ -195,10 +219,11 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  */
 bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
                                             size_t max_encoded_len,
-                                            const char *fmt, va_list ap);
+                                            const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(3);
 
 /**
- * Get contents
+ * Get contents of an unterminated
  *
  * If the string is invalid NULL will be returned
  *
@@ -213,7 +238,7 @@ const char *sbp_unterminated_string_get(const sbp_string_t *s,
  * Encode an unterminated string
  *
  * If the string is invalid or there is not enough space in the destination
- * buffer to hold the string alse will be returned.
+ * buffer to hold the string false will be returned.
  *
  * @param s string
  * @param max_encoded_len Maximum encoded length

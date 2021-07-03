@@ -177,6 +177,6 @@ static inline bool operator>=(const sbp_msg_bootloader_jump_to_app_t &lhs,
   return sbp_msg_bootloader_jump_to_app_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_JUMP_TO_APP_H */
