@@ -18,15 +18,15 @@ from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
-SBP_MESSAGES_TEMPLATE_NAME = "c/v4/sbp_messages_template.h"
-SBP_PACKAGE_TEMPLATE_NAME = "c/v4/sbp_package_template.h"
-SBP_MSG_TEMPLATE_NAME = "c/v4/sbp_msg_template.h"
-VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
-MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
-SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
-SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/sbp_messages_private_template.h"
-SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/sbp_messages_macros_template.h"
-SBP_MSG_TYPE_TEMPLATE_NAME = "c/sbp_msg_type_template.h"
+SBP_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/v4/package/sbp_messages_template.h"
+SBP_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_package_template.h"
+SBP_MSG_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_msg_template.h"
+VERSION_TEMPLATE_NAME = "c/include/libsbp/sbp_version_template.h"
+MESSAGE_TRAITS_TEMPLATE_NAME = "c/include/libsbp/cpp/message_traits_template.h"
+SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/v4/sbp_messages_template.c"
+SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME = "c/src/include/libsbp/internal/v4/sbp_messages_private_template.h"
+SBP_MESSAGES_MACROS_TEMPLATE_NAME = "c/include/libsbp/sbp_messages_macros_template.h"
+SBP_MSG_TYPE_TEMPLATE_NAME = "c/include/libsbp/sbp_msg_type_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
