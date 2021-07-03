@@ -24,7 +24,7 @@ extern "C" {
  *
  * Up to \p max bytes will be read from \p str.
  *
- * This function returns as soon as it finds a NULL terminated. If no NULL
+ * This function returns as soon as it finds a NULL terminator. If no NULL
  * terminator is found before the maximum number of bytes have been read it will
  * return a value equal to \p max.
  *
@@ -32,12 +32,12 @@ extern "C" {
  * invalid
  *
  * @param str string
- * @param max Max length
+ * @param limit Max length
  * @return string length
  */
-static inline size_t sbp_strnlen(const char *str, size_t max) {
+static inline size_t sbp_strnlen(const char *str, size_t limit) {
   size_t len = 0;
-  while (len < max && str[len]) {
+  while (len < limit && str[len] != 0) {
     len++;
   }
   return len;

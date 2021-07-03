@@ -177,9 +177,10 @@ size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
 /**
  * Add section to a multipart string
  *
- * If the current string's encoded length is less than the maximum encoded
- * length the function will clear off any previous data before attempting to
- * add in a new section.
+ * If the current string's encoded length is greater than the maximum encoded
+ * length (more generally, if the current string is considered to be invalid)
+ * the function will clear off any previous data before attempting to add in a
+ * new section.
  *
  * If the resulting string would be greater than the maximum encoded length the
  * string will not be modified and false will be returned
