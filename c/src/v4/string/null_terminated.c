@@ -14,8 +14,8 @@ static const sbp_string_params_t params = {
     .inject_missing_terminator = true,
 };
 
-static void maybe_init(sbp_string_t *s, size_t max_encoded_len) {
-  if (!sbp_null_terminated_string_valid(s, max_encoded_len) ||
+static void maybe_init(sbp_string_t *s, size_t maxlen) {
+  if (!sbp_null_terminated_string_valid(s, maxlen) ||
       s->encoded_len == 0) {
     sbp_null_terminated_string_init(s);
   }
@@ -27,12 +27,12 @@ void sbp_null_terminated_string_init(sbp_string_t *s) {
 }
 
 bool sbp_null_terminated_string_valid(const sbp_string_t *s,
-                                      size_t max_encoded_len) {
+                                      size_t maxlen) {
   if (s->encoded_len == 0) {
     return false;
   }
   size_t n = sbp_strnlen(s->data, sizeof(s->data));
-  if (n + 1 > max_encoded_len) {
+  if (n + 1 > maxlen) {
     return false;
   }
   if (n + 1 != s->encoded_len) {
@@ -43,55 +43,55 @@ bool sbp_null_terminated_string_valid(const sbp_string_t *s,
 
 int sbp_null_terminated_string_strcmp(const sbp_string_t *a,
                                       const sbp_string_t *b,
-                                      size_t max_encoded_len) {
-  return sbp_string_cmp(a, b, max_encoded_len, &params);
+                                      size_t maxlen) {
+  return sbp_string_cmp(a, b, maxlen, &params);
 }
 
 size_t sbp_null_terminated_string_encoded_len(const sbp_string_t *s,
-                                              size_t max_encoded_len) {
-  if (!sbp_null_terminated_string_valid(s, max_encoded_len)) {
+                                              size_t maxlen) {
+  if (!sbp_null_terminated_string_valid(s, maxlen)) {
     return 1;
   }
   return s->encoded_len;
 }
 
 size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
-                                         size_t max_encoded_len) {
-  return sbp_null_terminated_string_encoded_len(s, max_encoded_len) - 1;
+                                         size_t maxlen) {
+  return sbp_null_terminated_string_encoded_len(s, maxlen) - 1;
 }
 
 size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
-                                                  size_t max_encoded_len) {
-  return max_encoded_len -
-         sbp_null_terminated_string_encoded_len(s, max_encoded_len);
+                                                  size_t maxlen) {
+  return maxlen -
+         sbp_null_terminated_string_encoded_len(s, maxlen);
 }
 
-bool sbp_null_terminated_string_set(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
                                     const char *new_str) {
   size_t copied;
-  if (!sbp_string_copy_to_buf(s->data, &copied, max_encoded_len, new_str)) {
+  if (!sbp_string_copy_to_buf(s->data, &copied, maxlen, new_str)) {
     return false;
   }
   s->encoded_len = copied;
   return true;
 }
 
-bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen,
                                         const char *fmt, va_list ap) {
   size_t copied;
-  if (!sbp_string_vprintf_to_buf(s->data, &copied, max_encoded_len, fmt, ap)) {
+  if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen, fmt, ap)) {
     return false;
   }
   s->encoded_len = copied;
   return true;
 }
 
-bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
                                        const char *new_str) {
-  maybe_init(s, max_encoded_len);
+  maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len - 1, &copied,
-                              max_encoded_len - s->encoded_len + 1, new_str)) {
+                              maxlen - s->encoded_len + 1, new_str)) {
     return false;
   }
   s->encoded_len += copied - 1;
@@ -99,12 +99,12 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t max_encoded_len,
 }
 
 bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
-                                               size_t max_encoded_len,
+                                               size_t maxlen,
                                                const char *fmt, va_list ap) {
-  maybe_init(s, max_encoded_len);
+  maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 1, &copied,
-                                 max_encoded_len - s->encoded_len + 1, fmt,
+                                 maxlen - s->encoded_len + 1, fmt,
                                  ap)) {
     return false;
   }
@@ -113,28 +113,28 @@ bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
 }
 
 const char *sbp_null_terminated_string_get(const sbp_string_t *s,
-                                           size_t max_encoded_len) {
-  if (!sbp_null_terminated_string_valid(s, max_encoded_len)) {
+                                           size_t maxlen) {
+  if (!sbp_null_terminated_string_valid(s, maxlen)) {
     return NULL;
   }
   return s->data;
 }
 
 bool sbp_null_terminated_string_encode(const sbp_string_t *s,
-                                       size_t max_encoded_len,
+                                       size_t maxlen,
                                        sbp_encode_ctx_t *ctx) {
-  return sbp_string_encode(s, max_encoded_len, ctx, &params);
+  return sbp_string_encode(s, maxlen, ctx, &params);
 }
 
-bool sbp_null_terminated_string_decode(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_null_terminated_string_decode(sbp_string_t *s, size_t maxlen,
                                        sbp_decode_ctx_t *ctx) {
   // Find out if we have a valid string. The valid unpack cases are
-  // - A NULL is found up to max_encoded_len into the incoming buffer
-  // - The buffer contains less than max_encoded_len bytes and there is a NULL
+  // - A NULL is found up to maxlen into the incoming buffer
+  // - The buffer contains less than maxlen bytes and there is a NULL
   // terminator in the final byte
-  // - The buffer contains less than max_encoded_len bytes and there is no NULL
+  // - The buffer contains less than maxlen bytes and there is no NULL
   // terminator in the final byte
-  size_t max_copy = max_encoded_len;
+  size_t max_copy = maxlen;
   size_t max_buf_copy = ctx->buf_len - ctx->offset;
   if (max_copy > max_buf_copy) {
     max_copy = max_buf_copy;

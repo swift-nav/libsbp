@@ -32,7 +32,7 @@ typedef struct {
   /**
    * Test a string for validity
    */
-  bool (*valid)(const sbp_string_t *s, size_t max_encoded_len);
+  bool (*valid)(const sbp_string_t *s, size_t maxlen);
 
   /**
    * Initialize a string
@@ -71,11 +71,11 @@ typedef struct {
  *
  * @param a string
  * @param b string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param params string params
  */
 int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
-                   size_t max_encoded_len, const sbp_string_params_t *params);
+                   size_t maxlen, const sbp_string_params_t *params);
 
 /**
  * Copy a string to a buffer
@@ -118,12 +118,12 @@ bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
  * buffer as specified in params
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Encode context
  * @param params String params
  * @return true on success, false otherwise
  */
-bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
+bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
                        sbp_encode_ctx_t *ctx,
                        const sbp_string_params_t *params);
 
@@ -140,12 +140,12 @@ bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
  * to the resulting string if none was available in the source buffer.
  *
  * @param s destination string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Decode context
  * @param params string params
  * @return true on success, false otherwise
  */
-bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
                        sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params);
 

@@ -70,7 +70,7 @@ void sbp_unterminated_string_init(sbp_string_t *s);
  * Check an unterminated string for validity
  *
  * An unterminated string is considered valid if:
- * - `s->encoded_len` is less than or equal to \p max_encoded_len
+ * - `s->encoded_len` is less than or equal to \p maxlen
  *
  * AND one of the following criteria is met:
  * - `s->data[s->encoded_len]` (the first byte past the end of the encoded
@@ -93,11 +93,11 @@ void sbp_unterminated_string_init(sbp_string_t *s);
  * being written to the destination.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return true if valid, false otherwise
  */
 bool sbp_unterminated_string_valid(const sbp_string_t *s,
-                                   size_t max_encoded_len);
+                                   size_t maxlen);
 
 /**
  * Compare two unterminated string
@@ -109,11 +109,11 @@ bool sbp_unterminated_string_valid(const sbp_string_t *s,
  *
  * @param a unterminated string
  * @param b unterminated string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Comparison result
  */
 int sbp_unterminated_string_strcmp(const sbp_string_t *a, const sbp_string_t *b,
-                                   size_t max_encoded_len);
+                                   size_t maxlen);
 
 /**
  * Get encoded length of an unterminated string
@@ -121,11 +121,11 @@ int sbp_unterminated_string_strcmp(const sbp_string_t *a, const sbp_string_t *b,
  * If the string is invalid the returned value is 0
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Encoded length
  */
 size_t sbp_unterminated_string_encoded_len(const sbp_string_t *s,
-                                           size_t max_encoded_len);
+                                           size_t maxlen);
 
 /**
  * Get available space in an unterminated string
@@ -134,11 +134,11 @@ size_t sbp_unterminated_string_encoded_len(const sbp_string_t *s,
  * string without exceeding the maximum encoded length
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Available space
  */
 size_t sbp_unterminated_string_space_remaining(const sbp_string_t *s,
-                                               size_t max_encoded_len);
+                                               size_t maxlen);
 
 /**
  * Get length of an unterminated string.
@@ -146,11 +146,11 @@ size_t sbp_unterminated_string_space_remaining(const sbp_string_t *s,
  * This value is always equal to #sbp_unterminated_string_encoded_len
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return String length
  */
 size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
-                                      size_t max_encoded_len);
+                                      size_t maxlen);
 
 /**
  * Set an unterminated string
@@ -159,11 +159,11 @@ size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
  * be modified and false will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param new_str new string
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_set(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
                                  const char *new_str);
 
 /**
@@ -173,12 +173,12 @@ bool sbp_unterminated_string_set(sbp_string_t *s, size_t max_encoded_len,
  * string will not be modified and false will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen,
                                      const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -194,11 +194,11 @@ bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t max_encoded_len,
  * string will not be modified and false will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param new_str String to append
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_append(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
                                     const char *new_str);
 
 /**
@@ -212,13 +212,13 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t max_encoded_len,
  * string will not be modified and false will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
-                                            size_t max_encoded_len,
+                                            size_t maxlen,
                                             const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -228,11 +228,11 @@ bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
  * If the string is invalid NULL will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return String contents or NULL
  */
 const char *sbp_unterminated_string_get(const sbp_string_t *s,
-                                        size_t max_encoded_len);
+                                        size_t maxlen);
 
 /**
  * Encode an unterminated string
@@ -241,12 +241,12 @@ const char *sbp_unterminated_string_get(const sbp_string_t *s,
  * buffer to hold the string false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
 bool sbp_unterminated_string_encode(const sbp_string_t *s,
-                                    size_t max_encoded_len,
+                                    size_t maxlen,
                                     sbp_encode_ctx_t *ctx);
 
 /**
@@ -255,11 +255,11 @@ bool sbp_unterminated_string_encode(const sbp_string_t *s,
  * All available data will be consumed from the source buffer
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Decode context
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_decode(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_unterminated_string_decode(sbp_string_t *s, size_t maxlen,
                                     sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus

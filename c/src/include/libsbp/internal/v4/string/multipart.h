@@ -42,9 +42,9 @@
  * #sbp_multipart_string_get_section. The returned string will corrospond to the
  * requested section number and will always be represented in C format. For
  * example when operating on the string from the first example above, calling
- * #sbp_multipart_string_get_section(&string, max_encoded_len, 0) will return
+ * #sbp_multipart_string_get_section(&string, maxlen, 0) will return
  * the C string "one". Calling #sbp_multipart_string_get_section(&string,
- * max_encoded_len, 1) will return "two" and so on.
+ * maxlen, 1) will return "two" and so on.
  *
  * Other characteristics of the string such as the number of sections, the
  * length of any given section, or the total encoded length of the multipart
@@ -80,7 +80,7 @@ void sbp_multipart_string_init(sbp_string_t *s);
  * Check a multipart string for validity
  *
  * A multipart string is considered valid if all the following critera are met:
- * - `s->encoded_len` is greater than or equal to \p max_encoded_len
+ * - `s->encoded_len` is greater than or equal to \p maxlen
  * - The final character in `s->data` is NULL
  *
  * All other functions which deal with multipart strings will first check for
@@ -97,10 +97,10 @@ void sbp_multipart_string_init(sbp_string_t *s);
  * sufficient space in the destination buffer).
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return true is the string is valid, false otherwise
  */
-bool sbp_multipart_string_valid(const sbp_string_t *s, size_t max_encoded_len);
+bool sbp_multipart_string_valid(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Compare two multipart strings
@@ -112,11 +112,11 @@ bool sbp_multipart_string_valid(const sbp_string_t *s, size_t max_encoded_len);
  *
  * @param a multipart string
  * @param b multipart string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Comparison result
  */
 int sbp_multipart_string_strcmp(const sbp_string_t *a, const sbp_string_t *b,
-                                size_t max_encoded_len);
+                                size_t maxlen);
 
 /**
  * Get the encoded length of a multipart string
@@ -124,11 +124,11 @@ int sbp_multipart_string_strcmp(const sbp_string_t *a, const sbp_string_t *b,
  * If the string is invalid the returned value is 0
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Encoded length
  */
 size_t sbp_multipart_string_encoded_len(const sbp_string_t *s,
-                                        size_t max_encoded_len);
+                                        size_t maxlen);
 
 /**
  * Get available space in a multipart string
@@ -137,11 +137,11 @@ size_t sbp_multipart_string_encoded_len(const sbp_string_t *s,
  * string before it exceeds the maximum encoded length
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Available space
  */
 size_t sbp_multipart_string_space_remaining(const sbp_string_t *s,
-                                            size_t max_encoded_len);
+                                            size_t maxlen);
 
 /**
  * Count sections in a multipart string
@@ -149,11 +149,11 @@ size_t sbp_multipart_string_space_remaining(const sbp_string_t *s,
  * If the string is invalid the return value is 0
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Number of sections
  */
 size_t sbp_multipart_string_count_sections(const sbp_string_t *s,
-                                           size_t max_encoded_len);
+                                           size_t maxlen);
 
 /**
  * Get length of a section in a multipart string
@@ -166,12 +166,12 @@ size_t sbp_multipart_string_count_sections(const sbp_string_t *s,
  * 0 is returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param section Section number
  * @return Length of section
  */
 size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
-                                           size_t max_encoded_len,
+                                           size_t maxlen,
                                            size_t section);
 
 /**
@@ -186,11 +186,11 @@ size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
  * string will not be modified and false will be returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param str New section string
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_add_section(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_multipart_string_add_section(sbp_string_t *s, size_t maxlen,
                                       const char *str);
 
 /**
@@ -204,13 +204,13 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t max_encoded_len,
  * string will not be modified and false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
-                                              size_t max_encoded_len,
+                                              size_t maxlen,
                                               const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -232,11 +232,11 @@ bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
  * empty string.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param new_str string to append
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_append(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_multipart_string_append(sbp_string_t *s, size_t maxlen,
                                  const char *new_str);
 
 /**
@@ -257,13 +257,13 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t max_encoded_len,
  * operating on an empty string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
-                                         size_t max_encoded_len,
+                                         size_t maxlen,
                                          const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -278,12 +278,12 @@ bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
  * NULL is returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param section Section number
  * @return Requested section, or NULL
  */
 const char *sbp_multipart_string_get_section(const sbp_string_t *s,
-                                             size_t max_encoded_len,
+                                             size_t maxlen,
                                              size_t section);
 
 /**
@@ -293,11 +293,11 @@ const char *sbp_multipart_string_get_section(const sbp_string_t *s,
  * buffer to hold the string false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_encode(const sbp_string_t *s, size_t max_encoded_len,
+bool sbp_multipart_string_encode(const sbp_string_t *s, size_t maxlen,
                                  sbp_encode_ctx_t *ctx);
 
 /**
@@ -309,11 +309,11 @@ bool sbp_multipart_string_encode(const sbp_string_t *s, size_t max_encoded_len,
  * This function will consume all remaining data in the source buffer.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Decode context
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_decode(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_multipart_string_decode(sbp_string_t *s, size_t maxlen,
                                  sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus

@@ -47,8 +47,8 @@
  * corrospond to the requested section number and will always be represented in
  * C format. For example when operating on the string from the first example
  * above, calling `sbp_double_null_terminated_string_get_section(&string,
- * max_encoded_len, 0)` will return the C string "one". Calling
- * `sbp_double_null_terminated_string_get_section(&string, max_encoded_len, 1)`
+ * maxlen, 0)` will return the C string "one". Calling
+ * `sbp_double_null_terminated_string_get_section(&string, maxlen, 1)`
  * will return "two" and so on.
  *
  * Other characteristics of the string such as the number of sections, the
@@ -88,7 +88,7 @@ void sbp_double_null_terminated_string_init(sbp_string_t *s);
  *
  * A double null terminated string is considered valid if it meets all the
  * following criteria:
- * - `s->encoded_len` is less than or equal to \p max_encoded_len
+ * - `s->encoded_len` is less than or equal to \p maxlen
  * - `s->encoded_len` is greater than or equal to 2
  * - The final 2 bytes in `s->data` are both NULL
  *
@@ -108,11 +108,11 @@ void sbp_double_null_terminated_string_init(sbp_string_t *s);
  * is sufficient space in the destination buffer).
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return true is the string is valid for encoding, false otherwise
  */
 bool sbp_double_null_terminated_string_valid(const sbp_string_t *s,
-                                             size_t max_encoded_len);
+                                             size_t maxlen);
 
 /**
  * Compare two double null terminated strings
@@ -124,12 +124,12 @@ bool sbp_double_null_terminated_string_valid(const sbp_string_t *s,
  *
  * @param a string
  * @param b string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Comparison result
  */
 int sbp_double_null_terminated_string_strcmp(const sbp_string_t *a,
                                              const sbp_string_t *b,
-                                             size_t max_encoded_len);
+                                             size_t maxlen);
 
 /**
  * Get encoded length of a double null terminated string
@@ -137,11 +137,11 @@ int sbp_double_null_terminated_string_strcmp(const sbp_string_t *a,
  * If the string is invalid the returned value is 0
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Encoded length
  */
 size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
-                                                     size_t max_encoded_len);
+                                                     size_t maxlen);
 
 /**
  * Get available space in a double null terminated string
@@ -150,12 +150,12 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
  * string before it exceeds the maximum encoded length
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Available space
  */
 size_t
 sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
-                                                  size_t max_encoded_len);
+                                                  size_t maxlen);
 
 /**
  * Count sections in a double null terminated string
@@ -163,11 +163,11 @@ sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
  * If the string is invalid the return value is 0
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @return Number of sections
  */
 size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
-                                                        size_t max_encoded_len);
+                                                        size_t maxlen);
 
 /**
  * Add section to a double null terminated string
@@ -180,12 +180,12 @@ size_t sbp_double_null_terminated_string_count_sections(const sbp_string_t *s,
  * string will not be modified and false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param str New section string
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
-                                                   size_t max_encoded_len,
+                                                   size_t maxlen,
                                                    const char *str);
 
 /**
@@ -199,13 +199,13 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
  * string will not be modified and false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt Printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_add_section_vprintf(
-    sbp_string_t *s, size_t max_encoded_len, const char *fmt, va_list ap)
+    sbp_string_t *s, size_t maxlen, const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
 /**
@@ -223,12 +223,12 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
  * operating on an empty string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param new_str String to append
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_append(sbp_string_t *s,
-                                              size_t max_encoded_len,
+                                              size_t maxlen,
                                               const char *new_str);
 
 /**
@@ -251,13 +251,13 @@ bool sbp_double_null_terminated_string_append(sbp_string_t *s,
  * string
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param fmt Printf style format specification
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
-                                                      size_t max_encoded_len,
+                                                      size_t maxlen,
                                                       const char *fmt,
                                                       va_list ap)
     SBP_ATTR_VFORMAT(3);
@@ -273,12 +273,12 @@ bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
  * NULL is returned
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param section Section number
  * @return Requested section, or NULL
  */
 const char *sbp_double_null_terminated_string_get_section(
-    const sbp_string_t *s, size_t max_encoded_len, size_t section);
+    const sbp_string_t *s, size_t maxlen, size_t section);
 
 /**
  * Get length of a section in a double null terminated string
@@ -291,12 +291,12 @@ const char *sbp_double_null_terminated_string_get_section(
  * 0 is returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param section Section number
  * @return Length of section
  */
 size_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
-                                                        size_t max_encoded_len,
+                                                        size_t maxlen,
                                                         size_t section);
 
 /**
@@ -306,12 +306,12 @@ size_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
  * buffer to hold the string false will be returned.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_encode(const sbp_string_t *s,
-                                              size_t max_encoded_len,
+                                              size_t maxlen,
                                               sbp_encode_ctx_t *ctx);
 
 /**
@@ -323,12 +323,12 @@ bool sbp_double_null_terminated_string_encode(const sbp_string_t *s,
  * This function will consume all remaining data in the source buffer.
  *
  * @param s string
- * @param max_encoded_len Maximum encoded length
+ * @param maxlen Maximum encoded length
  * @param ctx Decode context
  * @return true on success, false otherwise
  */
 bool sbp_double_null_terminated_string_decode(sbp_string_t *s,
-                                              size_t max_encoded_len,
+                                              size_t maxlen,
                                               sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus
