@@ -48,10 +48,6 @@ PRIMITIVE_SIZES = {
 COLLISIONS = set(["GnssSignal", "GPSTime"])
 
 
-def sanitise_path(value):
-    return re.sub("[->.\\[\\]]", "", value)
-
-
 def commentify(value):
     """
     Builds a comment.
@@ -454,7 +450,7 @@ class MsgItem(object):
         self.desc = msg.desc
         self.short_desc = msg.short_desc
         self.fields = []
-        self.sibling_include = []
+        self.type_include = []
         self.is_fixed_size = True
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
@@ -467,7 +463,7 @@ class MsgItem(object):
                     )
             self.fields.append(new_field)
             if new_field.basetype not in PRIMITIVE_TYPES:
-                self.sibling_include.append(
+                self.type_include.append(
                     find_package(package_specs, new_field.basetype_from_spec)
                     + "/"
                     + new_field.basetype_from_spec
@@ -566,7 +562,6 @@ class PackageItem(object):
 
 
 JENV.filters["commentify"] = commentify
-JENV.filters["sanitise_path"] = sanitise_path
 JENV.filters["create_bitfield_macros"] = create_bitfield_macros
 
 
