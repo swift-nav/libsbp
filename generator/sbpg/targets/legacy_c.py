@@ -21,9 +21,10 @@ from jinja2.utils import pass_environment
 from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
-MESSAGES_TEMPLATE_NAME = "c/include/libsbp/sbp_messages_template.h"
-LEGACY_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/legacy/sbp_messages_template.h"
-LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME = "c/include/libsbp/legacy/cpp/message_traits_template.h"
+MESSAGES_TEMPLATE_NAME = "c/sbp_messages_template.h"
+LEGACY_MESSAGES_TEMPLATE_NAME = "c/legacy/sbp_messages_template.h"
+VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
+LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME = "c/legacy/cpp/message_traits_template.h"
 
 
 @pass_environment
@@ -176,6 +177,15 @@ def render_source(output_dir, package_spec):
                                description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))
+
+def render_version(output_dir, release: ReleaseVersion):
+  destination_filename = "%s/version.h" % output_dir
+  py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as output_file:
+    output_file.write(py_template.render(major=release.major,
+                                         minor=release.minor,
+                                         patch=release.patch,
+                                         full_version=release.full_version))
 
 def render_traits(output_dir, package_specs):
   msgs = []
