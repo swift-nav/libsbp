@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/ObservationHeaderDep.h>
 #include <libsbp/v4/observation/PackedObsContentDepC.h>
 #include <libsbp/v4/string/sbp_string.h>

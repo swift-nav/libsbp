@@ -16,8 +16,6 @@
 
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
-
-#include <libsbp/sbp.h>
 #include <libsbp/v4/acquisition.h>
 #include <libsbp/v4/bootload.h>
 #include <libsbp/v4/ext_events.h>
@@ -34,7 +32,6 @@
 #include <libsbp/v4/orientation.h>
 #include <libsbp/v4/piksi.h>
 #include <libsbp/v4/sbas.h>
-#include <libsbp/v4/sbp_msg.h>
 #include <libsbp/v4/settings.h>
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>

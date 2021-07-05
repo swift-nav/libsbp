@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeaderDepA.h>
 #include <libsbp/v4/ssr/STECResidualNoStd.h>
 #include <libsbp/v4/ssr/TroposphericDelayCorrectionNoStd.h>

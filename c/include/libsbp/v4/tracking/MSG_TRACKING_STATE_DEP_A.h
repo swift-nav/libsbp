@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/tracking/TrackingChannelStateDepA.h>
 

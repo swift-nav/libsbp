@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/piksi/Latency.h>
 #include <libsbp/v4/piksi/Period.h>
 #include <libsbp/v4/piksi/UARTChannel.h>

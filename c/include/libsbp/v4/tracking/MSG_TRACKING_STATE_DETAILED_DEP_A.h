@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/CarrierPhase.h>
 #include <libsbp/v4/gnss/GPSTime.h>
 #include <libsbp/v4/gnss/GnssSignal.h>

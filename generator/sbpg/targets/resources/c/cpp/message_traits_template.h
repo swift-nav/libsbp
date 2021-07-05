@@ -17,8 +17,6 @@
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
 
-#include <libsbp/sbp.h>
-#include <libsbp/v4/sbp_msg.h>
 ((*- for i in includes *))
 #include <libsbp/v4/(((i)))>
 ((*- endfor *))

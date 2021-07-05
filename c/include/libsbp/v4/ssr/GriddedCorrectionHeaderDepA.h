@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/string/sbp_string.h>
 

@@ -28,7 +28,6 @@
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/common.h>
 #include <libsbp/v4/acquisition/AcqSvProfile.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
