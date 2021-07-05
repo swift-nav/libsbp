@@ -57,7 +57,7 @@ typedef struct {
    * status is decoded or propagated. WN only valid when week number valid flag
    * is set.
    */
-  sbp_sbp_gps_time_t tot;
+  sbp_v4_gps_time_t tot;
 
   /**
    * Pseudorange observation. Valid only when pseudorange valid flag is set. [2
@@ -91,7 +91,7 @@ typedef struct {
   /**
    * GNSS signal identifier.
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Carrier Doppler frequency. [Hz / 16]

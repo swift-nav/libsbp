@@ -53,7 +53,7 @@ typedef struct {
   /**
    * GNSS signal identifier
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * bit-field indicating validity of the values, LSB indicating tgd validity

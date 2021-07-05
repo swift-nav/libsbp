@@ -48,7 +48,7 @@ typedef struct {
   /**
    * GNSS signal being tracked
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Frequency channel number (GLONASS only)

@@ -47,7 +47,7 @@ typedef struct {
   /**
    * GNSS time of this observation
    */
-  sbp_sbp_gps_time_t t;
+  sbp_v4_gps_time_t t;
 
   /**
    * Total number of observations. First nibble is the size of the sequence (n),

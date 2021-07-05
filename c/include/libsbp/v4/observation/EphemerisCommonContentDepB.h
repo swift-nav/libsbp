@@ -44,7 +44,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Time of Ephemerides

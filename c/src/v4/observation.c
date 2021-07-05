@@ -18,7 +18,7 @@
 
 bool sbp_observation_header_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_observation_header_t *msg) {
-  if (!sbp_sbp_gps_time_encode_internal(ctx, &msg->t)) {
+  if (!sbp_v4_gps_time_encode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_obs)) {
@@ -44,7 +44,7 @@ s8 sbp_observation_header_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_observation_header_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_observation_header_t *msg) {
-  if (!sbp_sbp_gps_time_decode_internal(ctx, &msg->t)) {
+  if (!sbp_v4_gps_time_decode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_obs)) {
@@ -73,7 +73,7 @@ int sbp_observation_header_cmp(const sbp_observation_header_t *a,
                                const sbp_observation_header_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gps_time_cmp(&a->t, &b->t);
+  ret = sbp_v4_gps_time_cmp(&a->t, &b->t);
   if (ret != 0) {
     return ret;
   }
@@ -171,7 +171,7 @@ bool sbp_packed_obs_content_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -212,7 +212,7 @@ bool sbp_packed_obs_content_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -268,7 +268,7 @@ int sbp_packed_obs_content_cmp(const sbp_packed_obs_content_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -289,7 +289,7 @@ bool sbp_packed_osr_content_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->iono_std)) {
@@ -333,7 +333,7 @@ bool sbp_packed_osr_content_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->iono_std)) {
@@ -388,7 +388,7 @@ int sbp_packed_osr_content_cmp(const sbp_packed_osr_content_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -684,7 +684,7 @@ int sbp_msg_base_pos_ecef_cmp(const sbp_msg_base_pos_ecef_t *a,
 
 bool sbp_ephemeris_common_content_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_ephemeris_common_content_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toe)) {
@@ -723,7 +723,7 @@ s8 sbp_ephemeris_common_content_encode(
 
 bool sbp_ephemeris_common_content_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_ephemeris_common_content_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toe)) {
@@ -764,7 +764,7 @@ int sbp_ephemeris_common_content_cmp(const sbp_ephemeris_common_content_t *a,
                                      const sbp_ephemeris_common_content_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -798,7 +798,7 @@ int sbp_ephemeris_common_content_cmp(const sbp_ephemeris_common_content_t *a,
 
 bool sbp_ephemeris_common_content_dep_b_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_ephemeris_common_content_dep_b_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toe)) {
@@ -837,7 +837,7 @@ s8 sbp_ephemeris_common_content_dep_b_encode(
 
 bool sbp_ephemeris_common_content_dep_b_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_ephemeris_common_content_dep_b_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toe)) {
@@ -879,7 +879,7 @@ int sbp_ephemeris_common_content_dep_b_cmp(
     const sbp_ephemeris_common_content_dep_b_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -7497,7 +7497,7 @@ bool sbp_msg_group_delay_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->t_op)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->valid)) {
@@ -7535,7 +7535,7 @@ bool sbp_msg_group_delay_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->t_op)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->valid)) {
@@ -7591,7 +7591,7 @@ int sbp_msg_group_delay_cmp(const sbp_msg_group_delay_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -7620,7 +7620,7 @@ int sbp_msg_group_delay_cmp(const sbp_msg_group_delay_t *a,
 
 bool sbp_almanac_common_content_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_almanac_common_content_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toa)) {
@@ -7659,7 +7659,7 @@ s8 sbp_almanac_common_content_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_almanac_common_content_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_almanac_common_content_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toa)) {
@@ -7700,7 +7700,7 @@ int sbp_almanac_common_content_cmp(const sbp_almanac_common_content_t *a,
                                    const sbp_almanac_common_content_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -8602,7 +8602,7 @@ int sbp_msg_glo_biases_cmp(const sbp_msg_glo_biases_t *a,
 
 bool sbp_sv_az_el_encode_internal(sbp_encode_ctx_t *ctx,
                                   const sbp_sv_az_el_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->az)) {
@@ -8630,7 +8630,7 @@ s8 sbp_sv_az_el_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 }
 
 bool sbp_sv_az_el_decode_internal(sbp_decode_ctx_t *ctx, sbp_sv_az_el_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->az)) {
@@ -8660,7 +8660,7 @@ s8 sbp_sv_az_el_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
 int sbp_sv_az_el_cmp(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }

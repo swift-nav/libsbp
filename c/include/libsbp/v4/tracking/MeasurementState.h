@@ -50,7 +50,7 @@ typedef struct {
    * Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
    * SLOT)
    */
-  sbp_sbp_gnss_signal_t mesid;
+  sbp_v4_gnss_signal_t mesid;
 
   /**
    * Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4]

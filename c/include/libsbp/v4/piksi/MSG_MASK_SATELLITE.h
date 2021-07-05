@@ -53,7 +53,7 @@ typedef struct {
   /**
    * GNSS signal for which the mask is applied
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 } sbp_msg_mask_satellite_t;
 
 /**

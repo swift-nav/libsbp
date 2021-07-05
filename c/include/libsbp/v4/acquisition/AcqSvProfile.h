@@ -69,7 +69,7 @@ typedef struct {
   /**
    * GNSS signal for which acquisition was attempted
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Acq frequency bin width [Hz]

@@ -74,14 +74,14 @@ typedef struct {
    * GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
    * indicates for which signal the object belongs to. Reserved in other cases.
    */
-  sbp_sbp_gnss_signal_t object_sid;
+  sbp_v4_gnss_signal_t object_sid;
 
   /**
    * GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
    * capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV
    * data was decoded. Reserved in other cases.
    */
-  sbp_sbp_gnss_signal_t src_sid;
+  sbp_v4_gnss_signal_t src_sid;
 
   /**
    * A unique identifier of the sending hardware. For v1.0, set to the 2 least

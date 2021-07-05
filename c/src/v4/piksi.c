@@ -1228,7 +1228,7 @@ bool sbp_msg_mask_satellite_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->mask)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -1254,7 +1254,7 @@ bool sbp_msg_mask_satellite_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->mask)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -1299,7 +1299,7 @@ int sbp_msg_mask_satellite_cmp(const sbp_msg_mask_satellite_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -2559,7 +2559,7 @@ bool sbp_msg_specan_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u16_encode(ctx, &msg->channel_tag)) {
     return false;
   }
-  if (!sbp_sbp_gps_time_encode_internal(ctx, &msg->t)) {
+  if (!sbp_v4_gps_time_encode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_float_encode(ctx, &msg->freq_ref)) {
@@ -2602,7 +2602,7 @@ bool sbp_msg_specan_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u16_decode(ctx, &msg->channel_tag)) {
     return false;
   }
-  if (!sbp_sbp_gps_time_decode_internal(ctx, &msg->t)) {
+  if (!sbp_v4_gps_time_decode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_float_decode(ctx, &msg->freq_ref)) {
@@ -2661,7 +2661,7 @@ int sbp_msg_specan_cmp(const sbp_msg_specan_t *a, const sbp_msg_specan_t *b) {
     return ret;
   }
 
-  ret = sbp_sbp_gps_time_cmp(&a->t, &b->t);
+  ret = sbp_v4_gps_time_cmp(&a->t, &b->t);
   if (ret != 0) {
     return ret;
   }

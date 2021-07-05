@@ -65,7 +65,7 @@ typedef struct {
   /**
    * GNSS signal for which acquisition was attempted
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 } sbp_msg_acq_result_t;
 
 /**

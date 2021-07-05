@@ -34,8 +34,8 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sbp_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_sbp_gnss_signal_t *msg);
+bool sbp_v4_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
+                                        const sbp_v4_gnss_signal_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -44,8 +44,8 @@ bool sbp_sbp_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sbp_gnss_signal_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_sbp_gnss_signal_t *msg);
+bool sbp_v4_gnss_signal_decode_internal(sbp_decode_ctx_t *ctx,
+                                        sbp_v4_gnss_signal_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -132,8 +132,8 @@ bool sbp_gps_time_sec_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sbp_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_sbp_gps_time_t *msg);
+bool sbp_v4_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
+                                     const sbp_v4_gps_time_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -142,8 +142,8 @@ bool sbp_sbp_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_sbp_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_sbp_gps_time_t *msg);
+bool sbp_v4_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
+                                     sbp_v4_gps_time_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer

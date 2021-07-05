@@ -33,10 +33,10 @@ bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->data_source)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->object_sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->object_sid)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->src_sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->src_sid)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->original_sender)) {
@@ -77,10 +77,10 @@ bool sbp_msg_ndb_event_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->data_source)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->object_sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->object_sid)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->src_sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->src_sid)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->original_sender)) {
@@ -147,12 +147,12 @@ int sbp_msg_ndb_event_cmp(const sbp_msg_ndb_event_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->object_sid, &b->object_sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->object_sid, &b->object_sid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->src_sid, &b->src_sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->src_sid, &b->src_sid);
   if (ret != 0) {
     return ret;
   }

@@ -842,7 +842,7 @@ bool sbp_msg_ssr_orbit_clock_encode_internal(
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->update_interval)) {
@@ -904,7 +904,7 @@ bool sbp_msg_ssr_orbit_clock_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->update_interval)) {
@@ -985,7 +985,7 @@ int sbp_msg_ssr_orbit_clock_cmp(const sbp_msg_ssr_orbit_clock_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1057,7 +1057,7 @@ bool sbp_msg_ssr_code_biases_encode_internal(
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->update_interval)) {
@@ -1094,7 +1094,7 @@ bool sbp_msg_ssr_code_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->update_interval)) {
@@ -1151,7 +1151,7 @@ int sbp_msg_ssr_code_biases_cmp(const sbp_msg_ssr_code_biases_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1181,7 +1181,7 @@ bool sbp_msg_ssr_phase_biases_encode_internal(
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->update_interval)) {
@@ -1231,7 +1231,7 @@ bool sbp_msg_ssr_phase_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->update_interval)) {
@@ -1300,7 +1300,7 @@ int sbp_msg_ssr_phase_biases_cmp(const sbp_msg_ssr_phase_biases_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1718,7 +1718,7 @@ int sbp_msg_ssr_tile_definition_cmp(const sbp_msg_ssr_tile_definition_t *a,
 
 bool sbp_satellite_apc_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_satellite_apc_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->sat_info)) {
@@ -1757,7 +1757,7 @@ s8 sbp_satellite_apc_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_satellite_apc_decode_internal(sbp_decode_ctx_t *ctx,
                                        sbp_satellite_apc_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->sat_info)) {
@@ -1798,7 +1798,7 @@ int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
                           const sbp_satellite_apc_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1915,7 +1915,7 @@ bool sbp_msg_ssr_orbit_clock_dep_a_encode_internal(
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->update_interval)) {
@@ -1978,7 +1978,7 @@ bool sbp_msg_ssr_orbit_clock_dep_a_decode_internal(
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->update_interval)) {
@@ -2060,7 +2060,7 @@ int sbp_msg_ssr_orbit_clock_dep_a_cmp(
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }

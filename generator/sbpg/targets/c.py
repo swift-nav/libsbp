@@ -80,7 +80,7 @@ def get_v4_basename(identifier):
     """
     s0 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", identifier)
     s1 = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s0).lower()
-    s2 = "sbp_sbp_" + s1 if identifier in COLLISIONS else "sbp_" + s1
+    s2 = "sbp_v4_" + s1 if identifier in COLLISIONS else "sbp_" + s1
     return s2
 
 
