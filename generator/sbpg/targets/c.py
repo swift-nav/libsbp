@@ -266,7 +266,8 @@ def get_max_possible_items(msg, field, package_specs):
 
     The given field must be a variable length array or string otherwise this function will assert
 
-    The maximum number of items will be calculated by summing the sizes of all fields which occur in the message before the specified field and dividing the remainder by the encoded size of a single item in the array
+    The maximum number of items will be calculated by summing the sizes of all fields which occur in the 
+    message before the specified field and dividing the remainder by the encoded size of a single item in the array
     """
     assert field.type_id == "array" or field.type_id == "string"
     assert "size" not in field.options
@@ -344,7 +345,9 @@ def extensions(includes):
 
 
 class FieldItem(object):
-    """FieldItem"""
+    """
+    Describes a single field in a message or embedded type
+    """
 
     def __init__(self, msg, package_specs, field):
         self.name = field.identifier
@@ -372,8 +375,6 @@ class FieldItem(object):
             self.options = field.options
             self.encoding = field.options["encoding"].value
             self.is_fixed_size = False
-            if self.encoding == "sequence":
-                self.terminator = field.options["terminator"].value
         elif type_id == "array" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype_from_spec = field.options["fill"].value
@@ -430,7 +431,11 @@ def find_package(package_specs, type_id):
 
 
 class MsgItem(object):
-    """MsgItem"""
+    """
+    Describes a single SBP message or embedded type.
+
+    Contains all the information required to generate C bindings
+    """
 
     def __init__(self, msg, package_specs):
         self.name = msg.identifier
@@ -489,7 +494,7 @@ def render_file(template, destination_filename, args):
 
 
 def render_all(include_dir, package_specs):
-    all_msgs = []
+    real_messages = []
     all_packages = []
     msg_msgid_len = 0
     for package_spec in package_specs:
@@ -505,7 +510,7 @@ def render_all(include_dir, package_specs):
             new_msg = MsgItem(m, package_specs)
             msgs.append(new_msg)
             if m.is_real_message:
-                all_msgs.append(new_msg)
+                real_messages.append(new_msg)
             destination_filename = "%s/include/libsbp/v4/%s/%s.h" % (
                 include_dir,
                 name,
@@ -570,7 +575,7 @@ def render_all(include_dir, package_specs):
         SBP_MSG_TEMPLATE_NAME,
         destination_filename,
         {
-            "msgs": sorted(all_msgs, key=lambda k: k.type_name),
+            "msgs": sorted(real_messages, key=lambda k: k.type_name),
             "include": extensions(all_packages),
             "filename": "/".join(package_spec.filepath) + ".yaml",
         },
@@ -582,14 +587,14 @@ def render_all(include_dir, package_specs):
         {
             "packages": package_specs,
             "includes": extensions(all_packages),
-            "msgs": sorted(all_msgs, key=lambda k: k.type_name)
+            "msgs": sorted(real_messages, key=lambda k: k.type_name)
         },
     )
     destination_filename = "%s/include/libsbp/sbp_msg_type.h" % include_dir
     render_file(
         SBP_MSG_TYPE_TEMPLATE_NAME,
         destination_filename,
-        {"msgs": sorted(all_msgs, key=lambda k: k.type_name), "packages": all_packages},
+        {"msgs": sorted(real_messages, key=lambda k: k.type_name), "packages": all_packages},
     )
 
 
