@@ -208,11 +208,10 @@ const char *sbp_msg_bootloader_handshake_resp_version_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_bootloader_handshake_resp_t instance
- * @param section Section number
- * @return Length of section
+ * @return Length of string
  */
-size_t sbp_msg_bootloader_handshake_resp_version_section_strlen(
-    const sbp_msg_bootloader_handshake_resp_t *msg, size_t section);
+size_t sbp_msg_bootloader_handshake_resp_version_strlen(
+    const sbp_msg_bootloader_handshake_resp_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_bootloader_handshake_resp_t

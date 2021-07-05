@@ -87,6 +87,11 @@ const char *(((field_prefix)))_get(const (((m.type_name))) *msg)
   return (((string_prefix)))_get(&msg->(((f.name))), (((f.max_items))));
 }
 
+size_t (((field_prefix)))_strlen(const (((m.type_name))) *msg)
+{
+  return (((string_prefix)))_strlen(&msg->(((f.name))), (((f.max_items))));
+}
+
 ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
 size_t (((field_prefix)))_count_sections(const (((m.type_name))) *msg)
 {

@@ -231,11 +231,10 @@ const char *sbp_msg_linux_process_socket_counts_cmdline_get(
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_linux_process_socket_counts_t instance
- * @param section Section number
- * @return Length of section
+ * @return Length of string
  */
-size_t sbp_msg_linux_process_socket_counts_cmdline_section_strlen(
-    const sbp_msg_linux_process_socket_counts_t *msg, size_t section);
+size_t sbp_msg_linux_process_socket_counts_cmdline_strlen(
+    const sbp_msg_linux_process_socket_counts_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_linux_process_socket_counts_t

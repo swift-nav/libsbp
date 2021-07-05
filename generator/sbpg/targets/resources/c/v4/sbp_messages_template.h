@@ -213,10 +213,9 @@ typedef struct {
    * The returned value does not include the NULL terminator.
    *
    * @param msg (((m.type_name))) instance
-   * @param section Section number
-   * @return Length of section
+   * @return Length of string
    */
-  size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
+  size_t (((prefix)))_strlen(const (((m.type_name))) *msg);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   /**
    * Return the number of sections in (((comment_name)))

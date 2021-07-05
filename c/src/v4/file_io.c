@@ -79,6 +79,11 @@ const char *sbp_msg_fileio_read_req_filename_get(
   return sbp_null_terminated_string_get(&msg->filename, 246);
 }
 
+size_t sbp_msg_fileio_read_req_filename_strlen(
+    const sbp_msg_fileio_read_req_t *msg) {
+  return sbp_null_terminated_string_strlen(&msg->filename, 246);
+}
+
 size_t sbp_msg_fileio_read_req_encoded_len(
     const sbp_msg_fileio_read_req_t *msg) {
   size_t encoded_len = 0;
@@ -357,6 +362,11 @@ bool sbp_msg_fileio_read_dir_req_dirname_append_vprintf(
 const char *sbp_msg_fileio_read_dir_req_dirname_get(
     const sbp_msg_fileio_read_dir_req_t *msg) {
   return sbp_null_terminated_string_get(&msg->dirname, 247);
+}
+
+size_t sbp_msg_fileio_read_dir_req_dirname_strlen(
+    const sbp_msg_fileio_read_dir_req_t *msg) {
+  return sbp_null_terminated_string_strlen(&msg->dirname, 247);
 }
 
 size_t sbp_msg_fileio_read_dir_req_encoded_len(
@@ -697,6 +707,11 @@ const char *sbp_msg_fileio_remove_filename_get(
   return sbp_null_terminated_string_get(&msg->filename, 255);
 }
 
+size_t sbp_msg_fileio_remove_filename_strlen(
+    const sbp_msg_fileio_remove_t *msg) {
+  return sbp_null_terminated_string_strlen(&msg->filename, 255);
+}
+
 size_t sbp_msg_fileio_remove_encoded_len(const sbp_msg_fileio_remove_t *msg) {
   size_t encoded_len = 0;
   encoded_len += sbp_null_terminated_string_encoded_len(&msg->filename, 255);
@@ -835,6 +850,11 @@ bool sbp_msg_fileio_write_req_filename_append_vprintf(
 const char *sbp_msg_fileio_write_req_filename_get(
     const sbp_msg_fileio_write_req_t *msg) {
   return sbp_null_terminated_string_get(&msg->filename, 247);
+}
+
+size_t sbp_msg_fileio_write_req_filename_strlen(
+    const sbp_msg_fileio_write_req_t *msg) {
+  return sbp_null_terminated_string_strlen(&msg->filename, 247);
 }
 
 size_t sbp_msg_fileio_write_req_encoded_len(

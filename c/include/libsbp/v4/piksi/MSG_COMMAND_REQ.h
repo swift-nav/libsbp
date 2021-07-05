@@ -199,11 +199,9 @@ const char *sbp_msg_command_req_command_get(const sbp_msg_command_req_t *msg);
  * The returned value does not include the NULL terminator.
  *
  * @param msg sbp_msg_command_req_t instance
- * @param section Section number
- * @return Length of section
+ * @return Length of string
  */
-size_t sbp_msg_command_req_command_section_strlen(
-    const sbp_msg_command_req_t *msg, size_t section);
+size_t sbp_msg_command_req_command_strlen(const sbp_msg_command_req_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_command_req_t
