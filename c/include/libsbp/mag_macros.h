@@ -20,4 +20,4 @@
 
 #define SBP_MSG_MAG_RAW 0x0902
 
-#endif
+#endif /* LIBSBP_MAG_MACROS_H */

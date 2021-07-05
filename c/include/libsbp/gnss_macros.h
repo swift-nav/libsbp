@@ -58,4 +58,4 @@
 #define SBP_GNSSSIGNALDEP__GPS_L1P (5)
 #define SBP_GNSSSIGNALDEP__GPS_L2P (6)
 
-#endif
+#endif /* LIBSBP_GNSS_MACROS_H */

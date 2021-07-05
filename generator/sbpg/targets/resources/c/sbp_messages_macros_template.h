@@ -29,5 +29,5 @@
 ((*- endfor *))
 ((*- endfor *))
 
-#endif
+#endif /* LIBSBP_(((pkg_name|upper)))_MACROS_H */
 

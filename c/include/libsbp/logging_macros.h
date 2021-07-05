@@ -40,4 +40,4 @@
 #define SBP_MSG_FWD 0x0402
 #define SBP_MSG_PRINT_DEP 0x0010
 
-#endif
+#endif /* LIBSBP_LOGGING_MACROS_H */

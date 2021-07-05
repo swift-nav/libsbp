@@ -377,4 +377,4 @@
 #define SBP_MSG_SPECAN 0x0051
 #define SBP_MSG_FRONT_END_GAIN 0x00BF
 
-#endif
+#endif /* LIBSBP_PIKSI_MACROS_H */

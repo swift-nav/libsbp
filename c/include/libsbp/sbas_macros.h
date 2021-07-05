@@ -20,4 +20,4 @@
 
 #define SBP_MSG_SBAS_RAW 0x7777
 
-#endif
+#endif /* LIBSBP_SBAS_MACROS_H */

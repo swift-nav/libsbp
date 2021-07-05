@@ -199,4 +199,4 @@
 #define SBP_MSG_SV_AZ_EL 0x0097
 #define SBP_MSG_OSR 0x0640
 
-#endif
+#endif /* LIBSBP_OBSERVATION_MACROS_H */

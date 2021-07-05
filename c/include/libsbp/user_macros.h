@@ -20,4 +20,4 @@
 
 #define SBP_MSG_USER_DATA 0x0800
 
-#endif
+#endif /* LIBSBP_USER_MACROS_H */

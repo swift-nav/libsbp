@@ -1108,4 +1108,4 @@
                  << (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT)));    \
   } while (0)
 
-#endif
+#endif /* LIBSBP_NAVIGATION_MACROS_H */
