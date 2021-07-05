@@ -217,7 +217,8 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_strlen(
  */
 static inline size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
-  return 0u + sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(msg);
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_ENCODED_OVERHEAD +
+         sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(msg);
 }
 
 /**

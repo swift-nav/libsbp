@@ -229,7 +229,8 @@ size_t sbp_msg_fileio_read_req_filename_strlen(
  */
 static inline size_t sbp_msg_fileio_read_req_encoded_len(
     const sbp_msg_fileio_read_req_t *msg) {
-  return 9u + sbp_msg_fileio_read_req_filename_encoded_len(msg);
+  return SBP_MSG_FILEIO_READ_REQ_ENCODED_OVERHEAD +
+         sbp_msg_fileio_read_req_filename_encoded_len(msg);
 }
 
 /**

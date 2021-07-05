@@ -37,7 +37,51 @@
 #define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
 #define SBP_LOG_LOGGING_LEVEL_INFO (6)
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
+/**
+ * Encoded length of sbp_msg_log_t (V4 API) and
+ * msg_log_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_log_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_LOG_ENCODED_OVERHEAD 1u
+
 #define SBP_MSG_FWD 0x0402
+/**
+ * Encoded length of sbp_msg_fwd_t (V4 API) and
+ * msg_fwd_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_fwd_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_FWD_ENCODED_OVERHEAD 2u
+
 #define SBP_MSG_PRINT_DEP 0x0010
+/**
+ * Encoded length of sbp_msg_print_dep_t (V4 API) and
+ * msg_print_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_print_dep_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_PRINT_DEP_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_LOGGING_MACROS_H */

@@ -75,7 +75,7 @@ typedef struct {
 static inline size_t sbp_msg_linux_socket_usage_encoded_len(
     const sbp_msg_linux_socket_usage_t *msg) {
   (void)msg;
-  return 72u;
+  return SBP_MSG_LINUX_SOCKET_USAGE_ENCODED_LEN;
 }
 
 /**

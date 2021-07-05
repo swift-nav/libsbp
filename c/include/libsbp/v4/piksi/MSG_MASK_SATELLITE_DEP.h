@@ -64,7 +64,7 @@ typedef struct {
 static inline size_t sbp_msg_mask_satellite_dep_encoded_len(
     const sbp_msg_mask_satellite_dep_t *msg) {
   (void)msg;
-  return 5u;
+  return SBP_MSG_MASK_SATELLITE_DEP_ENCODED_LEN;
 }
 
 /**

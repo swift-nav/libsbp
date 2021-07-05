@@ -160,7 +160,8 @@ bool sbp_msg_soln_meta_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->last_used_gnss_vel_tow)) {
     return false;
   }
-  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) / 2);
+  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) /
+                            SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!sbp_solution_input_type_decode_internal(ctx, &msg->sol_in[i])) {
       return false;
@@ -316,7 +317,8 @@ bool sbp_msg_soln_meta_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->age_gnss)) {
     return false;
   }
-  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) / 2);
+  msg->n_sol_in = (uint8_t)((ctx->buf_len - ctx->offset) /
+                            SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_sol_in; i++) {
     if (!sbp_solution_input_type_decode_internal(ctx, &msg->sol_in[i])) {
       return false;

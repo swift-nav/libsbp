@@ -212,7 +212,8 @@ size_t sbp_msg_command_req_command_strlen(const sbp_msg_command_req_t *msg);
  */
 static inline size_t sbp_msg_command_req_encoded_len(
     const sbp_msg_command_req_t *msg) {
-  return 4u + sbp_msg_command_req_command_encoded_len(msg);
+  return SBP_MSG_COMMAND_REQ_ENCODED_OVERHEAD +
+         sbp_msg_command_req_command_encoded_len(msg);
 }
 
 /**

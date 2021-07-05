@@ -273,7 +273,8 @@ size_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
  */
 static inline size_t sbp_msg_linux_process_fd_summary_encoded_len(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  return 4u + sbp_msg_linux_process_fd_summary_most_opened_encoded_len(msg);
+  return SBP_MSG_LINUX_PROCESS_FD_SUMMARY_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_fd_summary_most_opened_encoded_len(msg);
 }
 
 /**

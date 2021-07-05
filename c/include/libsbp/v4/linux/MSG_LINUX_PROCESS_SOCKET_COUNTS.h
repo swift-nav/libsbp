@@ -246,7 +246,8 @@ size_t sbp_msg_linux_process_socket_counts_cmdline_strlen(
  */
 static inline size_t sbp_msg_linux_process_socket_counts_encoded_len(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return 9u + sbp_msg_linux_process_socket_counts_cmdline_encoded_len(msg);
+  return SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_socket_counts_cmdline_encoded_len(msg);
 }
 
 /**

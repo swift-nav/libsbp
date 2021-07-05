@@ -65,7 +65,7 @@ typedef struct {
 static inline size_t sbp_code_biases_content_encoded_len(
     const sbp_code_biases_content_t *msg) {
   (void)msg;
-  return 3u;
+  return SBP_CODE_BIASES_CONTENT_ENCODED_LEN;
 }
 
 /**

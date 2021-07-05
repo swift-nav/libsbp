@@ -227,7 +227,8 @@ size_t sbp_msg_linux_process_fd_count_cmdline_strlen(
  */
 static inline size_t sbp_msg_linux_process_fd_count_encoded_len(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return 5u + sbp_msg_linux_process_fd_count_cmdline_encoded_len(msg);
+  return SBP_MSG_LINUX_PROCESS_FD_COUNT_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_fd_count_cmdline_encoded_len(msg);
 }
 
 /**

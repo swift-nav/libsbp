@@ -75,7 +75,7 @@ typedef struct {
 static inline size_t sbp_msg_sbas_raw_encoded_len(
     const sbp_msg_sbas_raw_t *msg) {
   (void)msg;
-  return 34u;
+  return SBP_MSG_SBAS_RAW_ENCODED_LEN;
 }
 
 /**

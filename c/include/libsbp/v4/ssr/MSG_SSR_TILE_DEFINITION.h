@@ -140,7 +140,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_tile_definition_encoded_len(
     const sbp_msg_ssr_tile_definition_t *msg) {
   (void)msg;
-  return 24u;
+  return SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN;
 }
 
 /**

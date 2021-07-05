@@ -45,6 +45,12 @@
       << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));     \
   } while (0)
 
+/**
+ * Encoded length of sbp_msg_imu_raw_t (V4 API) and
+ * msg_imu_raw_t (legacy API)
+ */
+#define SBP_MSG_IMU_RAW_ENCODED_LEN 17u
+
 #define SBP_MSG_IMU_AUX 0x0901
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
@@ -89,5 +95,10 @@
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__4G (1)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__8G (2)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
+/**
+ * Encoded length of sbp_msg_imu_aux_t (V4 API) and
+ * msg_imu_aux_t (legacy API)
+ */
+#define SBP_MSG_IMU_AUX_ENCODED_LEN 4u
 
 #endif /* LIBSBP_IMU_MACROS_H */

@@ -67,7 +67,7 @@ typedef struct {
 static inline size_t sbp_msg_pps_time_encoded_len(
     const sbp_msg_pps_time_t *msg) {
   (void)msg;
-  return 9u;
+  return SBP_MSG_PPS_TIME_ENCODED_LEN;
 }
 
 /**

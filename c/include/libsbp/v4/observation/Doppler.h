@@ -64,7 +64,7 @@ typedef struct {
  */
 static inline size_t sbp_doppler_encoded_len(const sbp_doppler_t *msg) {
   (void)msg;
-  return 3u;
+  return SBP_DOPPLER_ENCODED_LEN;
 }
 
 /**

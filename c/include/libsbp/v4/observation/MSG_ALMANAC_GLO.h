@@ -98,7 +98,7 @@ typedef struct {
 static inline size_t sbp_msg_almanac_glo_encoded_len(
     const sbp_msg_almanac_glo_t *msg) {
   (void)msg;
-  return 78u;
+  return SBP_MSG_ALMANAC_GLO_ENCODED_LEN;
 }
 
 /**

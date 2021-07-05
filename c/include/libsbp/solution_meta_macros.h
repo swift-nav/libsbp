@@ -50,6 +50,12 @@
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_TICKS (4)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_IMU_SENSOR (6)
+/**
+ * Encoded length of sbp_solution_input_type_t (V4 API) and
+ * solution_input_type_t (legacy API)
+ */
+#define SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN 2u
+
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
@@ -72,6 +78,21 @@
   (3)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS \
   (4)
+/**
+ * Encoded length of sbp_msg_soln_meta_dep_a_t (V4 API) and
+ * msg_soln_meta_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_soln_meta_dep_a_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SOLN_META_DEP_A_ENCODED_OVERHEAD 18u
+
 #define SBP_MSG_SOLN_META 0xFF0E
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
 #define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
@@ -102,6 +123,21 @@
       << (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT))); \
   } while (0)
 
+/**
+ * Encoded length of sbp_msg_soln_meta_t (V4 API) and
+ * msg_soln_meta_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_soln_meta_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SOLN_META_ENCODED_OVERHEAD 16u
+
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK (0x3)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT (0u)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags)      \
@@ -117,6 +153,12 @@
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DOPPLER (1)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DISPLACEMENT \
   (2)
+/**
+ * Encoded length of sbp_gnss_input_type_t (V4 API) and
+ * gnss_input_type_t (legacy API)
+ */
+#define SBP_GNSS_INPUT_TYPE_ENCODED_LEN 1u
+
 #define SBP_IMUINPUTTYPE_TIME_STATUS_MASK (0x3)
 #define SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT (4u)
 #define SBP_IMUINPUTTYPE_TIME_STATUS_GET(flags)      \
@@ -162,6 +204,12 @@
 
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_6_AXIS_MEMS (0)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_OTHER_TYPE (1)
+/**
+ * Encoded length of sbp_imu_input_type_t (V4 API) and
+ * imu_input_type_t (legacy API)
+ */
+#define SBP_IMU_INPUT_TYPE_ENCODED_LEN 1u
+
 #define SBP_ODOINPUTTYPE_RATE_MASK (0x3)
 #define SBP_ODOINPUTTYPE_RATE_SHIFT (4u)
 #define SBP_ODOINPUTTYPE_RATE_GET(flags) \
@@ -203,5 +251,10 @@
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SINGLE_OR_AVERAGED_SPEED (1)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_TICKS (2)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_SPEED (3)
+/**
+ * Encoded length of sbp_odo_input_type_t (V4 API) and
+ * odo_input_type_t (legacy API)
+ */
+#define SBP_ODO_INPUT_TYPE_ENCODED_LEN 1u
 
 #endif /* LIBSBP_SOLUTION_META_MACROS_H */

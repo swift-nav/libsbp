@@ -94,7 +94,7 @@ typedef struct {
 static inline size_t sbp_msg_pos_ecef_encoded_len(
     const sbp_msg_pos_ecef_t *msg) {
   (void)msg;
-  return 32u;
+  return SBP_MSG_POS_ECEF_ENCODED_LEN;
 }
 
 /**

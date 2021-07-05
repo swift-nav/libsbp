@@ -100,7 +100,7 @@ typedef struct {
 static inline size_t sbp_msg_ndb_event_encoded_len(
     const sbp_msg_ndb_event_t *msg) {
   (void)msg;
-  return 18u;
+  return SBP_MSG_NDB_EVENT_ENCODED_LEN;
 }
 
 /**

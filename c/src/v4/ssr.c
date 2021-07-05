@@ -1103,7 +1103,8 @@ bool sbp_msg_ssr_code_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
     return false;
   }
-  msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) / 3);
+  msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) /
+                            SBP_CODE_BIASES_CONTENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_biases; i++) {
     if (!sbp_code_biases_content_decode_internal(ctx, &msg->biases[i])) {
       return false;
@@ -1252,7 +1253,8 @@ bool sbp_msg_ssr_phase_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_s8_decode(ctx, &msg->yaw_rate)) {
     return false;
   }
-  msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) / 8);
+  msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) /
+                            SBP_PHASE_BIASES_CONTENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_biases; i++) {
     if (!sbp_phase_biases_content_decode_internal(ctx, &msg->biases[i])) {
       return false;
@@ -1379,7 +1381,8 @@ bool sbp_msg_ssr_stec_correction_decode_internal(
   if (!sbp_stec_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
-  msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) / 11);
+  msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) /
+                                   SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!sbp_stec_sat_element_decode_internal(ctx, &msg->stec_sat_list[i])) {
       return false;
@@ -1485,7 +1488,8 @@ bool sbp_msg_ssr_gridded_correction_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  msg->n_stec_residuals = (uint8_t)((ctx->buf_len - ctx->offset) / 5);
+  msg->n_stec_residuals =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_STEC_RESIDUAL_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_decode_internal(ctx, &msg->stec_residuals[i])) {
       return false;
@@ -1857,7 +1861,8 @@ s8 sbp_msg_ssr_satellite_apc_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_ssr_satellite_apc_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_satellite_apc_t *msg) {
-  msg->n_apc = (uint8_t)((ctx->buf_len - ctx->offset) / 32);
+  msg->n_apc =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_SATELLITE_APC_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_apc; i++) {
     if (!sbp_satellite_apc_decode_internal(ctx, &msg->apc[i])) {
       return false;
@@ -2492,7 +2497,8 @@ bool sbp_msg_ssr_stec_correction_dep_a_decode_internal(
   if (!sbp_stec_header_dep_a_decode_internal(ctx, &msg->header)) {
     return false;
   }
-  msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) / 11);
+  msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) /
+                                   SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
     if (!sbp_stec_sat_element_decode_internal(ctx, &msg->stec_sat_list[i])) {
       return false;
@@ -2601,7 +2607,8 @@ bool sbp_msg_ssr_gridded_correction_no_std_dep_a_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  msg->n_stec_residuals = (uint8_t)((ctx->buf_len - ctx->offset) / 4);
+  msg->n_stec_residuals = (uint8_t)((ctx->buf_len - ctx->offset) /
+                                    SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_no_std_decode_internal(ctx,
                                                   &msg->stec_residuals[i])) {
@@ -2722,7 +2729,8 @@ bool sbp_msg_ssr_gridded_correction_dep_a_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  msg->n_stec_residuals = (uint8_t)((ctx->buf_len - ctx->offset) / 5);
+  msg->n_stec_residuals =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_STEC_RESIDUAL_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
     if (!sbp_stec_residual_decode_internal(ctx, &msg->stec_residuals[i])) {
       return false;
@@ -2826,7 +2834,8 @@ bool sbp_msg_ssr_grid_definition_dep_a_decode_internal(
   if (!sbp_grid_definition_header_dep_a_decode_internal(ctx, &msg->header)) {
     return false;
   }
-  msg->n_rle_list = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_rle_list =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_rle_list; i++) {
     if (!sbp_u8_decode(ctx, &msg->rle_list[i])) {
       return false;

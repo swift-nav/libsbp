@@ -71,7 +71,7 @@ typedef struct {
 static inline size_t sbp_stec_sat_element_encoded_len(
     const sbp_stec_sat_element_t *msg) {
   (void)msg;
-  return 11u;
+  return SBP_STEC_SAT_ELEMENT_ENCODED_LEN;
 }
 
 /**

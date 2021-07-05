@@ -107,7 +107,7 @@ typedef struct {
 static inline size_t sbp_msg_orient_quat_encoded_len(
     const sbp_msg_orient_quat_t *msg) {
   (void)msg;
-  return 37u;
+  return SBP_MSG_ORIENT_QUAT_ENCODED_LEN;
 }
 
 /**

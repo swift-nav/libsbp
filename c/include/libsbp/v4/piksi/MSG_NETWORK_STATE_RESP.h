@@ -94,7 +94,7 @@ typedef struct {
 static inline size_t sbp_msg_network_state_resp_encoded_len(
     const sbp_msg_network_state_resp_t *msg) {
   (void)msg;
-  return 50u;
+  return SBP_MSG_NETWORK_STATE_RESP_ENCODED_LEN;
 }
 
 /**

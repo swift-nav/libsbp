@@ -93,7 +93,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_status_report_encoded_len(
     const sbp_msg_status_report_t *msg) {
-  return 12u + (msg->n_status * 4u);
+  return SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD +
+         (msg->n_status * SBP_SUB_SYSTEM_REPORT_ENCODED_LEN);
 }
 
 /**

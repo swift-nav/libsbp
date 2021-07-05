@@ -80,7 +80,7 @@ typedef struct {
 static inline size_t sbp_msg_ext_event_encoded_len(
     const sbp_msg_ext_event_t *msg) {
   (void)msg;
-  return 12u;
+  return SBP_MSG_EXT_EVENT_ENCODED_LEN;
 }
 
 /**

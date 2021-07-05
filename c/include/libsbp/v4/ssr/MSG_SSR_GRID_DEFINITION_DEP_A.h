@@ -73,7 +73,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_grid_definition_dep_a_encoded_len(
     const sbp_msg_ssr_grid_definition_dep_a_t *msg) {
-  return 9u + (msg->n_rle_list * 1u);
+  return SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD +
+         (msg->n_rle_list * SBP_ENCODED_LEN_U8);
 }
 
 /**

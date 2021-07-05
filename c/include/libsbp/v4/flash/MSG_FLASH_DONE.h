@@ -60,7 +60,7 @@ typedef struct {
 static inline size_t sbp_msg_flash_done_encoded_len(
     const sbp_msg_flash_done_t *msg) {
   (void)msg;
-  return 1u;
+  return SBP_MSG_FLASH_DONE_ENCODED_LEN;
 }
 
 /**

@@ -82,7 +82,7 @@ typedef struct {
 static inline size_t sbp_network_usage_encoded_len(
     const sbp_network_usage_t *msg) {
   (void)msg;
-  return 40u;
+  return SBP_NETWORK_USAGE_ENCODED_LEN;
 }
 
 /**

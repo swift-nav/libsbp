@@ -71,7 +71,7 @@ typedef struct {
 static inline size_t sbp_msg_tracking_iq_encoded_len(
     const sbp_msg_tracking_iq_t *msg) {
   (void)msg;
-  return 15u;
+  return SBP_MSG_TRACKING_IQ_ENCODED_LEN;
 }
 
 /**

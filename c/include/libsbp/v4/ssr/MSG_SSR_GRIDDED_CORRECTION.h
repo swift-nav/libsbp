@@ -87,7 +87,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_gridded_correction_encoded_len(
     const sbp_msg_ssr_gridded_correction_t *msg) {
-  return 23u + (msg->n_stec_residuals * 5u);
+  return SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD +
+         (msg->n_stec_residuals * SBP_STEC_RESIDUAL_ENCODED_LEN);
 }
 
 /**

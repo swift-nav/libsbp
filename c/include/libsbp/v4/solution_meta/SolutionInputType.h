@@ -68,7 +68,7 @@ typedef struct {
 static inline size_t sbp_solution_input_type_encoded_len(
     const sbp_solution_input_type_t *msg) {
   (void)msg;
-  return 2u;
+  return SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN;
 }
 
 /**

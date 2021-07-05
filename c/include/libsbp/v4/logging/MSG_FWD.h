@@ -80,7 +80,8 @@ typedef struct {
  * @return Length of on-wire representation
  */
 static inline size_t sbp_msg_fwd_encoded_len(const sbp_msg_fwd_t *msg) {
-  return 2u + (msg->n_fwd_payload * 1u);
+  return SBP_MSG_FWD_ENCODED_OVERHEAD +
+         (msg->n_fwd_payload * SBP_ENCODED_LEN_U8);
 }
 
 /**

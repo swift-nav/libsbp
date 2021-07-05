@@ -69,7 +69,7 @@ typedef struct {
 static inline size_t sbp_msg_front_end_gain_encoded_len(
     const sbp_msg_front_end_gain_t *msg) {
   (void)msg;
-  return 16u;
+  return SBP_MSG_FRONT_END_GAIN_ENCODED_LEN;
 }
 
 /**

@@ -18,12 +18,138 @@
 #ifndef LIBSBP_SSR_MACROS_H
 #define LIBSBP_SSR_MACROS_H
 
+/**
+ * Encoded length of sbp_code_biases_content_t (V4 API) and
+ * code_biases_content_t (legacy API)
+ */
+#define SBP_CODE_BIASES_CONTENT_ENCODED_LEN 3u
+
+/**
+ * Encoded length of sbp_phase_biases_content_t (V4 API) and
+ * phase_biases_content_t (legacy API)
+ */
+#define SBP_PHASE_BIASES_CONTENT_ENCODED_LEN 8u
+
+/**
+ * Encoded length of sbp_stec_header_t (V4 API) and
+ * stec_header_t (legacy API)
+ */
+#define SBP_STEC_HEADER_ENCODED_LEN 14u
+
+/**
+ * Encoded length of sbp_gridded_correction_header_t (V4 API) and
+ * gridded_correction_header_t (legacy API)
+ */
+#define SBP_GRIDDED_CORRECTION_HEADER_ENCODED_LEN 17u
+
+/**
+ * Encoded length of sbp_stec_sat_element_t (V4 API) and
+ * stec_sat_element_t (legacy API)
+ */
+#define SBP_STEC_SAT_ELEMENT_ENCODED_LEN 11u
+
+/**
+ * Encoded length of sbp_tropospheric_delay_correction_no_std_t (V4 API) and
+ * tropospheric_delay_correction_no_std_t (legacy API)
+ */
+#define SBP_TROPOSPHERIC_DELAY_CORRECTION_NO_STD_ENCODED_LEN 3u
+
+/**
+ * Encoded length of sbp_tropospheric_delay_correction_t (V4 API) and
+ * tropospheric_delay_correction_t (legacy API)
+ */
+#define SBP_TROPOSPHERIC_DELAY_CORRECTION_ENCODED_LEN 4u
+
+/**
+ * Encoded length of sbp_stec_residual_no_std_t (V4 API) and
+ * stec_residual_no_std_t (legacy API)
+ */
+#define SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN 4u
+
+/**
+ * Encoded length of sbp_stec_residual_t (V4 API) and
+ * stec_residual_t (legacy API)
+ */
+#define SBP_STEC_RESIDUAL_ENCODED_LEN 5u
+
 #define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
+/**
+ * Encoded length of sbp_msg_ssr_orbit_clock_t (V4 API) and
+ * msg_ssr_orbit_clock_t (legacy API)
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_ENCODED_LEN 50u
+
 #define SBP_MSG_SSR_CODE_BIASES 0x05E1
+/**
+ * Encoded length of sbp_msg_ssr_code_biases_t (V4 API) and
+ * msg_ssr_code_biases_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_code_biases_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_CODE_BIASES_ENCODED_OVERHEAD 10u
+
 #define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+/**
+ * Encoded length of sbp_msg_ssr_phase_biases_t (V4 API) and
+ * msg_ssr_phase_biases_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_phase_biases_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_PHASE_BIASES_ENCODED_OVERHEAD 15u
+
 #define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
+/**
+ * Encoded length of sbp_msg_ssr_stec_correction_t (V4 API) and
+ * msg_ssr_stec_correction_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_stec_correction_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD 14u
+
 #define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
+/**
+ * Encoded length of sbp_msg_ssr_gridded_correction_t (V4 API) and
+ * msg_ssr_gridded_correction_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_gridded_correction_encoded_len to determine the actual size of
+ * an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD 23u
+
 #define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
+/**
+ * Encoded length of sbp_msg_ssr_tile_definition_t (V4 API) and
+ * msg_ssr_tile_definition_t (legacy API)
+ */
+#define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 24u
+
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags)      \
@@ -55,11 +181,116 @@
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3G_CAST (17)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3I_CAST (18)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_QZSS (19)
+/**
+ * Encoded length of sbp_satellite_apc_t (V4 API) and
+ * satellite_apc_t (legacy API)
+ */
+#define SBP_SATELLITE_APC_ENCODED_LEN 32u
+
 #define SBP_MSG_SSR_SATELLITE_APC 0x0604
+/**
+ * Encoded length of sbp_msg_ssr_satellite_apc_t (V4 API) and
+ * msg_ssr_satellite_apc_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_satellite_apc_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
+/**
+ * Encoded length of sbp_msg_ssr_orbit_clock_dep_a_t (V4 API) and
+ * msg_ssr_orbit_clock_dep_a_t (legacy API)
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A_ENCODED_LEN 47u
+
+/**
+ * Encoded length of sbp_stec_header_dep_a_t (V4 API) and
+ * stec_header_dep_a_t (legacy API)
+ */
+#define SBP_STEC_HEADER_DEP_A_ENCODED_LEN 10u
+
+/**
+ * Encoded length of sbp_gridded_correction_header_dep_a_t (V4 API) and
+ * gridded_correction_header_dep_a_t (legacy API)
+ */
+#define SBP_GRIDDED_CORRECTION_HEADER_DEP_A_ENCODED_LEN 13u
+
+/**
+ * Encoded length of sbp_grid_definition_header_dep_a_t (V4 API) and
+ * grid_definition_header_dep_a_t (legacy API)
+ */
+#define SBP_GRID_DEFINITION_HEADER_DEP_A_ENCODED_LEN 9u
+
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
+/**
+ * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t (V4 API) and
+ * msg_ssr_stec_correction_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_stec_correction_dep_a_encoded_len to determine the actual size
+ * of an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_ENCODED_OVERHEAD 10u
+
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+/**
+ * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t (V4 API) and
+ * msg_ssr_gridded_correction_no_std_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len to determine the
+ * actual size of an instance of this message. Users of the legacy API are
+ * required to track the encoded message length when interacting with the legacy
+ * type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_ENCODED_OVERHEAD 18u
+
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
+/**
+ * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t (V4 API) and
+ * msg_ssr_gridded_correction_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_gridded_correction_dep_a_encoded_len to determine the actual
+ * size of an instance of this message. Users of the legacy API are required to
+ * track the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_ENCODED_OVERHEAD 19u
+
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
+/**
+ * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t (V4 API) and
+ * msg_ssr_grid_definition_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_grid_definition_dep_a_encoded_len to determine the actual size
+ * of an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD 9u
 
 #endif /* LIBSBP_SSR_MACROS_H */

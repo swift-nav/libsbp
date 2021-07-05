@@ -99,7 +99,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_specan_dep_encoded_len(
     const sbp_msg_specan_dep_t *msg) {
-  return 24u + (msg->n_amplitude_value * 1u);
+  return SBP_MSG_SPECAN_DEP_ENCODED_OVERHEAD +
+         (msg->n_amplitude_value * SBP_ENCODED_LEN_U8);
 }
 
 /**

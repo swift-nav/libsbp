@@ -78,7 +78,7 @@ typedef struct {
  */
 static inline size_t sbp_msg_mag_raw_encoded_len(const sbp_msg_mag_raw_t *msg) {
   (void)msg;
-  return 11u;
+  return SBP_MSG_MAG_RAW_ENCODED_LEN;
 }
 
 /**

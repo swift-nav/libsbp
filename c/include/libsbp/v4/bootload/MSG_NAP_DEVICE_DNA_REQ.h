@@ -63,7 +63,7 @@ typedef struct {
 static inline size_t sbp_msg_nap_device_dna_req_encoded_len(
     const sbp_msg_nap_device_dna_req_t *msg) {
   (void)msg;
-  return 0u;
+  return SBP_MSG_NAP_DEVICE_DNA_REQ_ENCODED_LEN;
 }
 
 /**

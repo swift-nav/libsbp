@@ -59,7 +59,7 @@ typedef struct {
 static inline size_t sbp_gnss_input_type_encoded_len(
     const sbp_gnss_input_type_t *msg) {
   (void)msg;
-  return 1u;
+  return SBP_GNSS_INPUT_TYPE_ENCODED_LEN;
 }
 
 /**

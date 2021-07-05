@@ -65,7 +65,7 @@ typedef struct {
 static inline size_t sbp_observation_header_encoded_len(
     const sbp_observation_header_t *msg) {
   (void)msg;
-  return 11u;
+  return SBP_OBSERVATION_HEADER_ENCODED_LEN;
 }
 
 /**

@@ -71,7 +71,7 @@ typedef struct {
 static inline size_t sbp_msg_thread_state_encoded_len(
     const sbp_msg_thread_state_t *msg) {
   (void)msg;
-  return 26u;
+  return SBP_MSG_THREAD_STATE_ENCODED_LEN;
 }
 
 /**

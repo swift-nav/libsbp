@@ -84,7 +84,7 @@ typedef struct {
 static inline size_t sbp_uart_channel_encoded_len(
     const sbp_uart_channel_t *msg) {
   (void)msg;
-  return 14u;
+  return SBP_UART_CHANNEL_ENCODED_LEN;
 }
 
 /**

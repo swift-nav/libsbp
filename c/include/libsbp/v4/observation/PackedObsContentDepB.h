@@ -83,7 +83,7 @@ typedef struct {
 static inline size_t sbp_packed_obs_content_dep_b_encoded_len(
     const sbp_packed_obs_content_dep_b_t *msg) {
   (void)msg;
-  return 16u;
+  return SBP_PACKED_OBS_CONTENT_DEP_B_ENCODED_LEN;
 }
 
 /**

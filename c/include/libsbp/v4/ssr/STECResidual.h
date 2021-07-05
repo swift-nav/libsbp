@@ -72,7 +72,7 @@ typedef struct {
 static inline size_t sbp_stec_residual_encoded_len(
     const sbp_stec_residual_t *msg) {
   (void)msg;
-  return 5u;
+  return SBP_STEC_RESIDUAL_ENCODED_LEN;
 }
 
 /**

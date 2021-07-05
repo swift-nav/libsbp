@@ -64,7 +64,7 @@ typedef struct {
 static inline size_t sbp_v4_gnss_signal_encoded_len(
     const sbp_v4_gnss_signal_t *msg) {
   (void)msg;
-  return 2u;
+  return SBP_V4_GNSS_SIGNAL_ENCODED_LEN;
 }
 
 /**

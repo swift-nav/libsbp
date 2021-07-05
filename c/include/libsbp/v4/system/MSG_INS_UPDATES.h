@@ -90,7 +90,7 @@ typedef struct {
 static inline size_t sbp_msg_ins_updates_encoded_len(
     const sbp_msg_ins_updates_t *msg) {
   (void)msg;
-  return 10u;
+  return SBP_MSG_INS_UPDATES_ENCODED_LEN;
 }
 
 /**

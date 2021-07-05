@@ -82,7 +82,7 @@ typedef struct {
 static inline size_t sbp_stec_header_dep_a_encoded_len(
     const sbp_stec_header_dep_a_t *msg) {
   (void)msg;
-  return 10u;
+  return SBP_STEC_HEADER_DEP_A_ENCODED_LEN;
 }
 
 /**

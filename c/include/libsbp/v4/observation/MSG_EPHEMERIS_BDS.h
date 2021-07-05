@@ -186,7 +186,7 @@ typedef struct {
 static inline size_t sbp_msg_ephemeris_bds_encoded_len(
     const sbp_msg_ephemeris_bds_t *msg) {
   (void)msg;
-  return 147u;
+  return SBP_MSG_EPHEMERIS_BDS_ENCODED_LEN;
 }
 
 /**

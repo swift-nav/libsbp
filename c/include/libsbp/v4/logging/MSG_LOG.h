@@ -203,7 +203,7 @@ size_t sbp_msg_log_text_strlen(const sbp_msg_log_t *msg);
  * @return Length of on-wire representation
  */
 static inline size_t sbp_msg_log_encoded_len(const sbp_msg_log_t *msg) {
-  return 1u + sbp_msg_log_text_encoded_len(msg);
+  return SBP_MSG_LOG_ENCODED_OVERHEAD + sbp_msg_log_text_encoded_len(msg);
 }
 
 /**

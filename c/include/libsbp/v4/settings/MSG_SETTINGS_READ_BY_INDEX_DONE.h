@@ -59,7 +59,7 @@ typedef struct {
 static inline size_t sbp_msg_settings_read_by_index_done_encoded_len(
     const sbp_msg_settings_read_by_index_done_t *msg) {
   (void)msg;
-  return 0u;
+  return SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN;
 }
 
 /**

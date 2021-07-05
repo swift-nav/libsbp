@@ -43,10 +43,6 @@
  *
  *****************************************************************************/
 
-((*- if m.is_fixed_size and False *))
-#define (((m.encoded_len_macro))) (((m.encoded_len_value)))u
-((*- endif *))
-
 ((*- if m.desc *))
 /** (((m.short_desc)))
  *
@@ -345,12 +341,12 @@ static inline size_t (((m.encoded_len_fn)))(const (((m.type_name))) *msg)
 {
   ((*- if m.is_fixed_size *))
   (void)msg;
-  return (((m.encoded_len_value)))u;
+  return (((m.encoded_len_macro)));
   ((*- else *))
-    return (((m.encoded_len_value)))u 
+    return (((m.encoded_len_macro))) 
     ((*- for f in m.fields *))
     ((*- if f.packing == "variable-array" *))
-    + (msg->(((f.size_fn))) * (((f.encoded_len_value)))u)
+    + (msg->(((f.size_fn))) * (((f.encoded_len_macro))))
     ((*- elif f.packing == "packed-string" *))
     + (((f.fn_prefix)))_encoded_len(msg)
     ((*- endif *))

@@ -94,7 +94,7 @@ typedef struct {
 static inline size_t sbp_almanac_common_content_encoded_len(
     const sbp_almanac_common_content_t *msg) {
   (void)msg;
-  return 22u;
+  return SBP_ALMANAC_COMMON_CONTENT_ENCODED_LEN;
 }
 
 /**

@@ -107,7 +107,7 @@ typedef struct {
 static inline size_t sbp_msg_almanac_gps_dep_encoded_len(
     const sbp_msg_almanac_gps_dep_t *msg) {
   (void)msg;
-  return 96u;
+  return SBP_MSG_ALMANAC_GPS_DEP_ENCODED_LEN;
 }
 
 /**

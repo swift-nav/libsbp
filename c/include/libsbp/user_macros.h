@@ -19,5 +19,19 @@
 #define LIBSBP_USER_MACROS_H
 
 #define SBP_MSG_USER_DATA 0x0800
+/**
+ * Encoded length of sbp_msg_user_data_t (V4 API) and
+ * msg_user_data_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_user_data_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_USER_DATA_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_USER_MACROS_H */

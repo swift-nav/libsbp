@@ -97,7 +97,7 @@ typedef struct {
 static inline size_t sbp_gridded_correction_header_encoded_len(
     const sbp_gridded_correction_header_t *msg) {
   (void)msg;
-  return 17u;
+  return SBP_GRIDDED_CORRECTION_HEADER_ENCODED_LEN;
 }
 
 /**

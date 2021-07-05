@@ -61,7 +61,7 @@ typedef struct {
 static inline size_t sbp_msg_gnss_capb_encoded_len(
     const sbp_msg_gnss_capb_t *msg) {
   (void)msg;
-  return 110u;
+  return SBP_MSG_GNSS_CAPB_ENCODED_LEN;
 }
 
 /**

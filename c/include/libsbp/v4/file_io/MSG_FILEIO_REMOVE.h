@@ -211,7 +211,8 @@ size_t sbp_msg_fileio_remove_filename_strlen(
  */
 static inline size_t sbp_msg_fileio_remove_encoded_len(
     const sbp_msg_fileio_remove_t *msg) {
-  return 0u + sbp_msg_fileio_remove_filename_encoded_len(msg);
+  return SBP_MSG_FILEIO_REMOVE_ENCODED_OVERHEAD +
+         sbp_msg_fileio_remove_filename_encoded_len(msg);
 }
 
 /**

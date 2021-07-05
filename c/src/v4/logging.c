@@ -188,7 +188,8 @@ bool sbp_msg_fwd_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fwd_t *msg) {
   if (!sbp_u8_decode(ctx, &msg->protocol)) {
     return false;
   }
-  msg->n_fwd_payload = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_fwd_payload =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_fwd_payload; i++) {
     if (!sbp_u8_decode(ctx, &msg->fwd_payload[i])) {
       return false;

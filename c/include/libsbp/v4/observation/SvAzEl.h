@@ -68,7 +68,7 @@ typedef struct {
  */
 static inline size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_SV_AZ_EL_ENCODED_LEN;
 }
 
 /**

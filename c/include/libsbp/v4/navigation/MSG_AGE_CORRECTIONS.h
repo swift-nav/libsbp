@@ -64,7 +64,7 @@ typedef struct {
 static inline size_t sbp_msg_age_corrections_encoded_len(
     const sbp_msg_age_corrections_t *msg) {
   (void)msg;
-  return 6u;
+  return SBP_MSG_AGE_CORRECTIONS_ENCODED_LEN;
 }
 
 /**

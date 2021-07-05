@@ -75,7 +75,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_group_meta_encoded_len(
     const sbp_msg_group_meta_t *msg) {
-  return 3u + (msg->n_group_msgs * 2u);
+  return SBP_MSG_GROUP_META_ENCODED_OVERHEAD +
+         (msg->n_group_msgs * SBP_ENCODED_LEN_U16);
 }
 
 /**

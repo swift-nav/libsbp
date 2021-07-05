@@ -117,7 +117,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_soln_meta_dep_a_encoded_len(
     const sbp_msg_soln_meta_dep_a_t *msg) {
-  return 18u + (msg->n_sol_in * 2u);
+  return SBP_MSG_SOLN_META_DEP_A_ENCODED_OVERHEAD +
+         (msg->n_sol_in * SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN);
 }
 
 /**

@@ -61,7 +61,7 @@ typedef struct {
 static inline size_t sbp_msg_stm_unique_id_resp_encoded_len(
     const sbp_msg_stm_unique_id_resp_t *msg) {
   (void)msg;
-  return 12u;
+  return SBP_MSG_STM_UNIQUE_ID_RESP_ENCODED_LEN;
 }
 
 /**

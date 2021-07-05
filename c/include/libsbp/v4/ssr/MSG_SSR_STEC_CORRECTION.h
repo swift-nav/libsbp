@@ -79,7 +79,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_stec_correction_encoded_len(
     const sbp_msg_ssr_stec_correction_t *msg) {
-  return 14u + (msg->n_stec_sat_list * 11u);
+  return SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD +
+         (msg->n_stec_sat_list * SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
 }
 
 /**

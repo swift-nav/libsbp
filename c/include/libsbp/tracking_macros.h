@@ -299,6 +299,12 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RE_ACQUISITION \
   (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RUNNING (1)
+/**
+ * Encoded length of sbp_msg_tracking_state_detailed_dep_a_t (V4 API) and
+ * msg_tracking_state_detailed_dep_a_t (legacy API)
+ */
+#define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A_ENCODED_LEN 57u
+
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP 0x0011
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK (0x7)
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT (0u)
@@ -564,11 +570,89 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RE_ACQUISITION \
   (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RUNNING (1)
+/**
+ * Encoded length of sbp_msg_tracking_state_detailed_dep_t (V4 API) and
+ * msg_tracking_state_detailed_dep_t (legacy API)
+ */
+#define SBP_MSG_TRACKING_STATE_DETAILED_DEP_ENCODED_LEN 55u
+
+/**
+ * Encoded length of sbp_tracking_channel_state_t (V4 API) and
+ * tracking_channel_state_t (legacy API)
+ */
+#define SBP_TRACKING_CHANNEL_STATE_ENCODED_LEN 4u
+
 #define SBP_MSG_TRACKING_STATE 0x0041
+/**
+ * Encoded length of sbp_msg_tracking_state_t (V4 API) and
+ * msg_tracking_state_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_tracking_state_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_TRACKING_STATE_ENCODED_OVERHEAD 0u
+
+/**
+ * Encoded length of sbp_measurement_state_t (V4 API) and
+ * measurement_state_t (legacy API)
+ */
+#define SBP_MEASUREMENT_STATE_ENCODED_LEN 3u
+
 #define SBP_MSG_MEASUREMENT_STATE 0x0061
+/**
+ * Encoded length of sbp_msg_measurement_state_t (V4 API) and
+ * msg_measurement_state_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_measurement_state_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_MEASUREMENT_STATE_ENCODED_OVERHEAD 0u
+
+/**
+ * Encoded length of sbp_tracking_channel_correlation_t (V4 API) and
+ * tracking_channel_correlation_t (legacy API)
+ */
+#define SBP_TRACKING_CHANNEL_CORRELATION_ENCODED_LEN 4u
+
 #define SBP_MSG_TRACKING_IQ 0x002D
+/**
+ * Encoded length of sbp_msg_tracking_iq_t (V4 API) and
+ * msg_tracking_iq_t (legacy API)
+ */
+#define SBP_MSG_TRACKING_IQ_ENCODED_LEN 15u
+
+/**
+ * Encoded length of sbp_tracking_channel_correlation_dep_t (V4 API) and
+ * tracking_channel_correlation_dep_t (legacy API)
+ */
+#define SBP_TRACKING_CHANNEL_CORRELATION_DEP_ENCODED_LEN 8u
+
 #define SBP_MSG_TRACKING_IQ_DEP_B 0x002C
+/**
+ * Encoded length of sbp_msg_tracking_iq_dep_b_t (V4 API) and
+ * msg_tracking_iq_dep_b_t (legacy API)
+ */
+#define SBP_MSG_TRACKING_IQ_DEP_B_ENCODED_LEN 27u
+
 #define SBP_MSG_TRACKING_IQ_DEP_A 0x001C
+/**
+ * Encoded length of sbp_msg_tracking_iq_dep_a_t (V4 API) and
+ * msg_tracking_iq_dep_a_t (legacy API)
+ */
+#define SBP_MSG_TRACKING_IQ_DEP_A_ENCODED_LEN 29u
+
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK (0x3)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT (0u)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_GET(flags)      \
@@ -582,7 +666,28 @@
 
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_RUNNING (1)
+/**
+ * Encoded length of sbp_tracking_channel_state_dep_a_t (V4 API) and
+ * tracking_channel_state_dep_a_t (legacy API)
+ */
+#define SBP_TRACKING_CHANNEL_STATE_DEP_A_ENCODED_LEN 6u
+
 #define SBP_MSG_TRACKING_STATE_DEP_A 0x0016
+/**
+ * Encoded length of sbp_msg_tracking_state_dep_a_t (V4 API) and
+ * msg_tracking_state_dep_a_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_tracking_state_dep_a_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_A_ENCODED_OVERHEAD 0u
+
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK (0x3)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT (0u)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_GET(flags)      \
@@ -596,6 +701,26 @@
 
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_RUNNING (1)
+/**
+ * Encoded length of sbp_tracking_channel_state_dep_b_t (V4 API) and
+ * tracking_channel_state_dep_b_t (legacy API)
+ */
+#define SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN 9u
+
 #define SBP_MSG_TRACKING_STATE_DEP_B 0x0013
+/**
+ * Encoded length of sbp_msg_tracking_state_dep_b_t (V4 API) and
+ * msg_tracking_state_dep_b_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_tracking_state_dep_b_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_B_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_TRACKING_MACROS_H */

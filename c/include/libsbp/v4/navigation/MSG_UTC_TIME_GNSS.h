@@ -99,7 +99,7 @@ typedef struct {
 static inline size_t sbp_msg_utc_time_gnss_encoded_len(
     const sbp_msg_utc_time_gnss_t *msg) {
   (void)msg;
-  return 16u;
+  return SBP_MSG_UTC_TIME_GNSS_ENCODED_LEN;
 }
 
 /**

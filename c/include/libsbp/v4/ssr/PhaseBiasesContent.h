@@ -80,7 +80,7 @@ typedef struct {
 static inline size_t sbp_phase_biases_content_encoded_len(
     const sbp_phase_biases_content_t *msg) {
   (void)msg;
-  return 8u;
+  return SBP_PHASE_BIASES_CONTENT_ENCODED_LEN;
 }
 
 /**

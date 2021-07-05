@@ -103,6 +103,17 @@ def get_v4_typename(identifier):
     return get_v4_basename(identifier) + "_t"
 
 
+def get_legacy_typename(identifier):
+    """
+    Convert an SBP spec identifier in to the correct typename according to the legacy API
+    """
+    typename = get_v4_typename(identifier)
+    if typename[:7] == "sbp_v4_":
+        return "sbp_" + typename[7:]
+    assert typename[:4] == "sbp_"
+    return typename[4:]
+
+
 def get_v4_msg_type(identifier):
     """
     Convert an SBP spec identifier to the msg_type identifier according to the V4 API
@@ -203,14 +214,16 @@ def get_field_encoded_len(field, package_specs):
     return get_encoded_len_value(get_v4_typename(field.type_id), package_specs)
 
 
-def get_encoded_len_macro(typename):
+def get_encoded_len_macro(typename, is_fixed_size):
     """
     Get the macro name which specified the encoded length of a given type
     """
     if typename in PRIMITIVE_TYPES:
         return "SBP_ENCODED_LEN_" + typename.upper()
     assert typename[-2:] == "_t"
-    return "SBP_ENCODED_LEN_" + typename[:-2].upper()
+    if is_fixed_size:
+        return typename[:-2].upper() + "_ENCODED_LEN"
+    return typename[:-2].upper() + "_ENCODED_OVERHEAD"
 
 
 def get_encoded_len_value(typename, package_specs):
@@ -338,13 +351,13 @@ class FieldItem(object):
         if type_id == "string" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype = "char"
+            self.is_fixed_size = True
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
-            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
             self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.cmp_fn = get_cmp_fn(self.basetype)
             self.max_items = field.options["size"].value
-            self.is_fixed_size = True
             self.options = field.options
         elif type_id == "string" or "encoding" in field.options:
             self.packing = "packed-string"
@@ -360,9 +373,9 @@ class FieldItem(object):
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
-            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
-            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.is_fixed_size = True
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.max_items = field.options["size"].value
             self.options = field.options
         elif type_id == "array":
@@ -372,9 +385,9 @@ class FieldItem(object):
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
-            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
-            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.is_fixed_size = False
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.max_items = get_max_possible_items(msg, field, package_specs)
             if "size_fn" in field.options:
                 self.size_fn = field.options["size_fn"].value
@@ -390,9 +403,9 @@ class FieldItem(object):
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
-            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
-            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.is_fixed_size = True
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.max_items = 1
             self.options = field.options
 
@@ -421,6 +434,7 @@ class MsgItem(object):
         self.name = msg.identifier
         self.basename = get_v4_basename(msg.identifier)
         self.type_name = get_v4_typename(msg.identifier)
+        self.legacy_type_name = get_legacy_typename(msg.identifier)
         self.is_real_message = msg.is_real_message
         self.package_name = package.name
         self.package_filepath = package.filepath
@@ -430,8 +444,6 @@ class MsgItem(object):
             self.legacy_msg_type = get_legacy_msg_type(msg.identifier)
             self.union_member_name = get_union_member_name(msg.identifier)
             self.send_fn = get_send_fn(self.type_name)
-        self.encoded_len_macro = get_encoded_len_macro(self.type_name)
-        self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
         self.public_encode_fn = get_public_encode_fn(self.type_name)
         self.public_decode_fn = get_public_decode_fn(self.type_name)
         self.cmp_fn = get_cmp_fn(self.type_name)
@@ -460,6 +472,8 @@ class MsgItem(object):
                     + "/"
                     + new_field.basetype_from_spec
                 )
+        self.encoded_len_macro = get_encoded_len_macro(self.type_name, self.is_fixed_size)
+        self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
 
     def render(self, output_dir):
         # Public header for V4 API - include/libsbp/v4/<package>/<type>.h

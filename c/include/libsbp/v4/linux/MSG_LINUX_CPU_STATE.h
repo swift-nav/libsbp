@@ -239,7 +239,8 @@ size_t sbp_msg_linux_cpu_state_cmdline_strlen(
  */
 static inline size_t sbp_msg_linux_cpu_state_encoded_len(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return 24u + sbp_msg_linux_cpu_state_cmdline_encoded_len(msg);
+  return SBP_MSG_LINUX_CPU_STATE_ENCODED_OVERHEAD +
+         sbp_msg_linux_cpu_state_cmdline_encoded_len(msg);
 }
 
 /**

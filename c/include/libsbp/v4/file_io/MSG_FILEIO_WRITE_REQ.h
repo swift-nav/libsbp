@@ -240,8 +240,9 @@ size_t sbp_msg_fileio_write_req_filename_strlen(
  */
 static inline size_t sbp_msg_fileio_write_req_encoded_len(
     const sbp_msg_fileio_write_req_t *msg) {
-  return 8u + sbp_msg_fileio_write_req_filename_encoded_len(msg) +
-         (msg->n_data * 1u);
+  return SBP_MSG_FILEIO_WRITE_REQ_ENCODED_OVERHEAD +
+         sbp_msg_fileio_write_req_filename_encoded_len(msg) +
+         (msg->n_data * SBP_ENCODED_LEN_U8);
 }
 
 /**

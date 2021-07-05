@@ -177,7 +177,7 @@ typedef struct {
 static inline size_t sbp_msg_ephemeris_gps_dep_e_encoded_len(
     const sbp_msg_ephemeris_gps_dep_e_t *msg) {
   (void)msg;
-  return 185u;
+  return SBP_MSG_EPHEMERIS_GPS_DEP_E_ENCODED_LEN;
 }
 
 /**

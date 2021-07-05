@@ -63,7 +63,7 @@ typedef struct {
 static inline size_t sbp_tracking_channel_correlation_encoded_len(
     const sbp_tracking_channel_correlation_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_TRACKING_CHANNEL_CORRELATION_ENCODED_LEN;
 }
 
 /**

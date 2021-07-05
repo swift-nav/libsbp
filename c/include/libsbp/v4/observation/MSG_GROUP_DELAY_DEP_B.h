@@ -77,7 +77,7 @@ typedef struct {
 static inline size_t sbp_msg_group_delay_dep_b_encoded_len(
     const sbp_msg_group_delay_dep_b_t *msg) {
   (void)msg;
-  return 17u;
+  return SBP_MSG_GROUP_DELAY_DEP_B_ENCODED_LEN;
 }
 
 /**

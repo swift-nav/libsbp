@@ -100,7 +100,7 @@ typedef struct {
  */
 static inline size_t sbp_msg_imu_raw_encoded_len(const sbp_msg_imu_raw_t *msg) {
   (void)msg;
-  return 17u;
+  return SBP_MSG_IMU_RAW_ENCODED_LEN;
 }
 
 /**

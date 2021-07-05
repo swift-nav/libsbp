@@ -2252,7 +2252,8 @@ s8 sbp_msg_network_bandwidth_usage_encode(
 
 bool sbp_msg_network_bandwidth_usage_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_network_bandwidth_usage_t *msg) {
-  msg->n_interfaces = (uint8_t)((ctx->buf_len - ctx->offset) / 40);
+  msg->n_interfaces =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_NETWORK_USAGE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_interfaces; i++) {
     if (!sbp_network_usage_decode_internal(ctx, &msg->interfaces[i])) {
       return false;
@@ -2346,7 +2347,8 @@ bool sbp_msg_cell_modem_status_decode_internal(
   if (!sbp_float_decode(ctx, &msg->signal_error_rate)) {
     return false;
   }
-  msg->n_reserved = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_reserved =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_reserved; i++) {
     if (!sbp_u8_decode(ctx, &msg->reserved[i])) {
       return false;
@@ -2472,7 +2474,8 @@ bool sbp_msg_specan_dep_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_float_decode(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  msg->n_amplitude_value = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_amplitude_value =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!sbp_u8_decode(ctx, &msg->amplitude_value[i])) {
       return false;
@@ -2617,7 +2620,8 @@ bool sbp_msg_specan_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_float_decode(ctx, &msg->amplitude_unit)) {
     return false;
   }
-  msg->n_amplitude_value = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_amplitude_value =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_amplitude_value; i++) {
     if (!sbp_u8_decode(ctx, &msg->amplitude_value[i])) {
       return false;

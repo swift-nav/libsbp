@@ -233,7 +233,8 @@ size_t sbp_msg_linux_mem_state_dep_a_cmdline_strlen(
  */
 static inline size_t sbp_msg_linux_mem_state_dep_a_encoded_len(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return 19u + sbp_msg_linux_mem_state_dep_a_cmdline_encoded_len(msg);
+  return SBP_MSG_LINUX_MEM_STATE_DEP_A_ENCODED_OVERHEAD +
+         sbp_msg_linux_mem_state_dep_a_cmdline_encoded_len(msg);
 }
 
 /**

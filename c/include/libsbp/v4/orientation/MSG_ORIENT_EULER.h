@@ -98,7 +98,7 @@ typedef struct {
 static inline size_t sbp_msg_orient_euler_encoded_len(
     const sbp_msg_orient_euler_t *msg) {
   (void)msg;
-  return 29u;
+  return SBP_MSG_ORIENT_EULER_ENCODED_LEN;
 }
 
 /**

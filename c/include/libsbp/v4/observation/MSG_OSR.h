@@ -74,7 +74,8 @@ typedef struct {
  * @return Length of on-wire representation
  */
 static inline size_t sbp_msg_osr_encoded_len(const sbp_msg_osr_t *msg) {
-  return 11u + (msg->n_obs * 19u);
+  return SBP_MSG_OSR_ENCODED_OVERHEAD +
+         (msg->n_obs * SBP_PACKED_OSR_CONTENT_ENCODED_LEN);
 }
 
 /**

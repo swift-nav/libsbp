@@ -76,7 +76,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_fileio_read_resp_encoded_len(
     const sbp_msg_fileio_read_resp_t *msg) {
-  return 4u + (msg->n_contents * 1u);
+  return SBP_MSG_FILEIO_READ_RESP_ENCODED_OVERHEAD +
+         (msg->n_contents * SBP_ENCODED_LEN_U8);
 }
 
 /**

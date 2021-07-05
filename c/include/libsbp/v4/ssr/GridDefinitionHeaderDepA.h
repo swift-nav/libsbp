@@ -86,7 +86,7 @@ typedef struct {
 static inline size_t sbp_grid_definition_header_dep_a_encoded_len(
     const sbp_grid_definition_header_dep_a_t *msg) {
   (void)msg;
-  return 9u;
+  return SBP_GRID_DEFINITION_HEADER_DEP_A_ENCODED_LEN;
 }
 
 /**

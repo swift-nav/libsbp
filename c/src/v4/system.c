@@ -475,7 +475,8 @@ bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->uptime)) {
     return false;
   }
-  msg->n_status = (uint8_t)((ctx->buf_len - ctx->offset) / 4);
+  msg->n_status = (uint8_t)((ctx->buf_len - ctx->offset) /
+                            SBP_SUB_SYSTEM_REPORT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_status; i++) {
     if (!sbp_sub_system_report_decode_internal(ctx, &msg->status[i])) {
       return false;
@@ -1293,7 +1294,8 @@ bool sbp_msg_group_meta_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->n_group_msgs)) {
     return false;
   }
-  msg->n_group_msgs = (uint8_t)((ctx->buf_len - ctx->offset) / 2);
+  msg->n_group_msgs =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U16);
   for (uint8_t i = 0; i < msg->n_group_msgs; i++) {
     if (!sbp_u16_decode(ctx, &msg->group_msgs[i])) {
       return false;

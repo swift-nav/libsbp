@@ -78,7 +78,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_obs_dep_b_encoded_len(
     const sbp_msg_obs_dep_b_t *msg) {
-  return 7u + (msg->n_obs * 16u);
+  return SBP_MSG_OBS_DEP_B_ENCODED_OVERHEAD +
+         (msg->n_obs * SBP_PACKED_OBS_CONTENT_DEP_B_ENCODED_LEN);
 }
 
 /**

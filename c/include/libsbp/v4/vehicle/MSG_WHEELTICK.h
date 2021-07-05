@@ -89,7 +89,7 @@ typedef struct {
 static inline size_t sbp_msg_wheeltick_encoded_len(
     const sbp_msg_wheeltick_t *msg) {
   (void)msg;
-  return 14u;
+  return SBP_MSG_WHEELTICK_ENCODED_LEN;
 }
 
 /**

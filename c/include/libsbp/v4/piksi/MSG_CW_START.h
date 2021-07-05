@@ -61,7 +61,7 @@ typedef struct {
 static inline size_t sbp_msg_cw_start_encoded_len(
     const sbp_msg_cw_start_t *msg) {
   (void)msg;
-  return 0u;
+  return SBP_MSG_CW_START_ENCODED_LEN;
 }
 
 /**

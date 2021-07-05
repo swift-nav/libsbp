@@ -98,7 +98,8 @@ typedef struct {
  * @return Length of on-wire representation
  */
 static inline size_t sbp_msg_specan_encoded_len(const sbp_msg_specan_t *msg) {
-  return 28u + (msg->n_amplitude_value * 1u);
+  return SBP_MSG_SPECAN_ENCODED_OVERHEAD +
+         (msg->n_amplitude_value * SBP_ENCODED_LEN_U8);
 }
 
 /**

@@ -223,7 +223,8 @@ size_t sbp_msg_bootloader_handshake_resp_version_strlen(
  */
 static inline size_t sbp_msg_bootloader_handshake_resp_encoded_len(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
-  return 4u + sbp_msg_bootloader_handshake_resp_version_encoded_len(msg);
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_ENCODED_OVERHEAD +
+         sbp_msg_bootloader_handshake_resp_version_encoded_len(msg);
 }
 
 /**

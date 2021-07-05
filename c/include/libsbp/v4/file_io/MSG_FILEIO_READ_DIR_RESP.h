@@ -270,7 +270,8 @@ size_t sbp_msg_fileio_read_dir_resp_contents_section_strlen(
  */
 static inline size_t sbp_msg_fileio_read_dir_resp_encoded_len(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
-  return 4u + sbp_msg_fileio_read_dir_resp_contents_encoded_len(msg);
+  return SBP_MSG_FILEIO_READ_DIR_RESP_ENCODED_OVERHEAD +
+         sbp_msg_fileio_read_dir_resp_contents_encoded_len(msg);
 }
 
 /**

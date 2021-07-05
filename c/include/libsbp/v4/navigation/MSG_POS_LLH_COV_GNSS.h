@@ -120,7 +120,7 @@ typedef struct {
 static inline size_t sbp_msg_pos_llh_cov_gnss_encoded_len(
     const sbp_msg_pos_llh_cov_gnss_t *msg) {
   (void)msg;
-  return 54u;
+  return SBP_MSG_POS_LLH_COV_GNSS_ENCODED_LEN;
 }
 
 /**

@@ -19,5 +19,10 @@
 #define LIBSBP_SBAS_MACROS_H
 
 #define SBP_MSG_SBAS_RAW 0x7777
+/**
+ * Encoded length of sbp_msg_sbas_raw_t (V4 API) and
+ * msg_sbas_raw_t (legacy API)
+ */
+#define SBP_MSG_SBAS_RAW_ENCODED_LEN 34u
 
 #endif /* LIBSBP_SBAS_MACROS_H */

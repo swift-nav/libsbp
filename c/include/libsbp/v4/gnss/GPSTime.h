@@ -70,7 +70,7 @@ typedef struct {
  */
 static inline size_t sbp_v4_gps_time_encoded_len(const sbp_v4_gps_time_t *msg) {
   (void)msg;
-  return 10u;
+  return SBP_V4_GPS_TIME_ENCODED_LEN;
 }
 
 /**

@@ -223,7 +223,8 @@ bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->sequence)) {
     return false;
   }
-  msg->n_contents = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_contents =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_decode(ctx, &msg->contents[i])) {
       return false;
@@ -861,7 +862,7 @@ bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_null_terminated_string_decode(&msg->filename, 247, ctx)) {
     return false;
   }
-  msg->n_data = (uint8_t)((ctx->buf_len - ctx->offset) / 1);
+  msg->n_data = (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_data; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;

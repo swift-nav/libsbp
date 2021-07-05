@@ -91,7 +91,7 @@ typedef struct {
  */
 static inline size_t sbp_stec_header_encoded_len(const sbp_stec_header_t *msg) {
   (void)msg;
-  return 14u;
+  return SBP_STEC_HEADER_ENCODED_LEN;
 }
 
 /**

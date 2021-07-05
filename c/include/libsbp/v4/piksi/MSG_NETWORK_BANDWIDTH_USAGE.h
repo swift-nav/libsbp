@@ -69,7 +69,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_network_bandwidth_usage_encoded_len(
     const sbp_msg_network_bandwidth_usage_t *msg) {
-  return 0u + (msg->n_interfaces * 40u);
+  return SBP_MSG_NETWORK_BANDWIDTH_USAGE_ENCODED_OVERHEAD +
+         (msg->n_interfaces * SBP_NETWORK_USAGE_ENCODED_LEN);
 }
 
 /**

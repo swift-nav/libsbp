@@ -118,7 +118,7 @@ typedef struct {
 static inline size_t sbp_msg_vel_ned_cov_encoded_len(
     const sbp_msg_vel_ned_cov_t *msg) {
   (void)msg;
-  return 42u;
+  return SBP_MSG_VEL_NED_COV_ENCODED_LEN;
 }
 
 /**

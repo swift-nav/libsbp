@@ -67,7 +67,7 @@ typedef struct {
 static inline size_t sbp_measurement_state_encoded_len(
     const sbp_measurement_state_t *msg) {
   (void)msg;
-  return 3u;
+  return SBP_MEASUREMENT_STATE_ENCODED_LEN;
 }
 
 /**

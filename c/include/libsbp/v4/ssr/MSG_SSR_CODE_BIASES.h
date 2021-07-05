@@ -95,7 +95,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_code_biases_encoded_len(
     const sbp_msg_ssr_code_biases_t *msg) {
-  return 10u + (msg->n_biases * 3u);
+  return SBP_MSG_SSR_CODE_BIASES_ENCODED_OVERHEAD +
+         (msg->n_biases * SBP_CODE_BIASES_CONTENT_ENCODED_LEN);
 }
 
 /**

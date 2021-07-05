@@ -80,7 +80,7 @@ typedef struct {
 static inline size_t sbp_msg_glo_biases_encoded_len(
     const sbp_msg_glo_biases_t *msg) {
   (void)msg;
-  return 9u;
+  return SBP_MSG_GLO_BIASES_ENCODED_LEN;
 }
 
 /**

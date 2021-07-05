@@ -69,7 +69,7 @@ typedef struct {
  */
 static inline size_t sbp_msg_imu_aux_encoded_len(const sbp_msg_imu_aux_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_MSG_IMU_AUX_ENCODED_LEN;
 }
 
 /**

@@ -19,10 +19,75 @@
 #define LIBSBP_ACQUISITION_MACROS_H
 
 #define SBP_MSG_ACQ_RESULT 0x002F
+/**
+ * Encoded length of sbp_msg_acq_result_t (V4 API) and
+ * msg_acq_result_t (legacy API)
+ */
+#define SBP_MSG_ACQ_RESULT_ENCODED_LEN 14u
+
 #define SBP_MSG_ACQ_RESULT_DEP_C 0x001F
+/**
+ * Encoded length of sbp_msg_acq_result_dep_c_t (V4 API) and
+ * msg_acq_result_dep_c_t (legacy API)
+ */
+#define SBP_MSG_ACQ_RESULT_DEP_C_ENCODED_LEN 16u
+
 #define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
+/**
+ * Encoded length of sbp_msg_acq_result_dep_b_t (V4 API) and
+ * msg_acq_result_dep_b_t (legacy API)
+ */
+#define SBP_MSG_ACQ_RESULT_DEP_B_ENCODED_LEN 16u
+
 #define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
+/**
+ * Encoded length of sbp_msg_acq_result_dep_a_t (V4 API) and
+ * msg_acq_result_dep_a_t (legacy API)
+ */
+#define SBP_MSG_ACQ_RESULT_DEP_A_ENCODED_LEN 13u
+
+/**
+ * Encoded length of sbp_acq_sv_profile_t (V4 API) and
+ * acq_sv_profile_t (legacy API)
+ */
+#define SBP_ACQ_SV_PROFILE_ENCODED_LEN 33u
+
+/**
+ * Encoded length of sbp_acq_sv_profile_dep_t (V4 API) and
+ * acq_sv_profile_dep_t (legacy API)
+ */
+#define SBP_ACQ_SV_PROFILE_DEP_ENCODED_LEN 35u
+
 #define SBP_MSG_ACQ_SV_PROFILE 0x002E
+/**
+ * Encoded length of sbp_msg_acq_sv_profile_t (V4 API) and
+ * msg_acq_sv_profile_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_acq_sv_profile_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_ACQ_SV_PROFILE_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+/**
+ * Encoded length of sbp_msg_acq_sv_profile_dep_t (V4 API) and
+ * msg_acq_sv_profile_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_acq_sv_profile_dep_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_ACQ_SV_PROFILE_DEP_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_ACQUISITION_MACROS_H */

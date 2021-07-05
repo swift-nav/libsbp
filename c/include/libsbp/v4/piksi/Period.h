@@ -76,7 +76,7 @@ typedef struct {
  */
 static inline size_t sbp_period_encoded_len(const sbp_period_t *msg) {
   (void)msg;
-  return 16u;
+  return SBP_PERIOD_ENCODED_LEN;
 }
 
 /**

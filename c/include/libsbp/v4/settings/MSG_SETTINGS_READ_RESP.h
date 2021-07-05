@@ -264,7 +264,8 @@ size_t sbp_msg_settings_read_resp_setting_section_strlen(
  */
 static inline size_t sbp_msg_settings_read_resp_encoded_len(
     const sbp_msg_settings_read_resp_t *msg) {
-  return 0u + sbp_msg_settings_read_resp_setting_encoded_len(msg);
+  return SBP_MSG_SETTINGS_READ_RESP_ENCODED_OVERHEAD +
+         sbp_msg_settings_read_resp_setting_encoded_len(msg);
 }
 
 /**

@@ -69,7 +69,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_tracking_state_dep_b_encoded_len(
     const sbp_msg_tracking_state_dep_b_t *msg) {
-  return 0u + (msg->n_states * 9u);
+  return SBP_MSG_TRACKING_STATE_DEP_B_ENCODED_OVERHEAD +
+         (msg->n_states * SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN);
 }
 
 /**

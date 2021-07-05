@@ -50,6 +50,18 @@ typedef uint64_t u64;
 
 #endif
 
+#define SBP_ENCODED_LEN_U8 1u
+#define SBP_ENCODED_LEN_S8 1u
+#define SBP_ENCODED_LEN_U16 2u
+#define SBP_ENCODED_LEN_S16 2u
+#define SBP_ENCODED_LEN_U32 4u
+#define SBP_ENCODED_LEN_S32 4u
+#define SBP_ENCODED_LEN_U64 8u
+#define SBP_ENCODED_LEN_S64 8u
+#define SBP_ENCODED_LEN_FLOAT 4u
+#define SBP_ENCODED_LEN_DOUBLE 8u
+#define SBP_ENCODED_LEN_CHAR 1u
+
 /**
  * Write callback
  *

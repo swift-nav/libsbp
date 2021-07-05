@@ -78,7 +78,7 @@ typedef struct {
 static inline size_t sbp_msg_gps_time_encoded_len(
     const sbp_msg_gps_time_t *msg) {
   (void)msg;
-  return 11u;
+  return SBP_MSG_GPS_TIME_ENCODED_LEN;
 }
 
 /**

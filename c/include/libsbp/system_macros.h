@@ -45,6 +45,12 @@
 #define SBP_STARTUP__COLD_START (0)
 #define SBP_STARTUP__WARM_START (1)
 #define SBP_STARTUP__HOT_START (2)
+/**
+ * Encoded length of sbp_msg_startup_t (V4 API) and
+ * msg_startup_t (legacy API)
+ */
+#define SBP_MSG_STARTUP_ENCODED_LEN 4u
+
 #define SBP_MSG_DGNSS_STATUS 0xFF02
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
@@ -60,6 +66,21 @@
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_INVALID (0)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_CODE_DIFFERENCE (1)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
+/**
+ * Encoded length of sbp_msg_dgnss_status_t (V4 API) and
+ * msg_dgnss_status_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_dgnss_status_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_DGNSS_STATUS_ENCODED_OVERHEAD 4u
+
 #define SBP_MSG_HEARTBEAT 0xFFFF
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
@@ -149,6 +170,12 @@
 
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
+/**
+ * Encoded length of sbp_msg_heartbeat_t (V4 API) and
+ * msg_heartbeat_t (legacy API)
+ */
+#define SBP_MSG_HEARTBEAT_ENCODED_LEN 4u
+
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags)      \
@@ -183,6 +210,12 @@
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNKNOWN (2)
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
+/**
+ * Encoded length of sbp_sub_system_report_t (V4 API) and
+ * sub_system_report_t (legacy API)
+ */
+#define SBP_SUB_SYSTEM_REPORT_ENCODED_LEN 4u
+
 #define SBP_MSG_STATUS_REPORT 0xFFFE
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
@@ -219,6 +252,21 @@
      (((val) & (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))  \
       << (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
   } while (0)
+
+/**
+ * Encoded length of sbp_msg_status_report_t (V4 API) and
+ * msg_status_report_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_status_report_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD 12u
 
 #define SBP_MSG_INS_STATUS 0xFF03
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
@@ -318,8 +366,44 @@
 #define SBP_INS_STATUS_MODE_FASTSTART_SEEDING (4)
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
+/**
+ * Encoded length of sbp_msg_ins_status_t (V4 API) and
+ * msg_ins_status_t (legacy API)
+ */
+#define SBP_MSG_INS_STATUS_ENCODED_LEN 4u
+
 #define SBP_MSG_CSAC_TELEMETRY 0xFF04
+/**
+ * Encoded length of sbp_msg_csac_telemetry_t (V4 API) and
+ * msg_csac_telemetry_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_csac_telemetry_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_CSAC_TELEMETRY_ENCODED_OVERHEAD 1u
+
 #define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+/**
+ * Encoded length of sbp_msg_csac_telemetry_labels_t (V4 API) and
+ * msg_csac_telemetry_labels_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_csac_telemetry_labels_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_CSAC_TELEMETRY_LABELS_ENCODED_OVERHEAD 1u
+
 #define SBP_MSG_INS_UPDATES 0xFF06
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
@@ -537,7 +621,19 @@
       << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT))); \
   } while (0)
 
+/**
+ * Encoded length of sbp_msg_ins_updates_t (V4 API) and
+ * msg_ins_updates_t (legacy API)
+ */
+#define SBP_MSG_INS_UPDATES_ENCODED_LEN 10u
+
 #define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
+/**
+ * Encoded length of sbp_msg_gnss_time_offset_t (V4 API) and
+ * msg_gnss_time_offset_t (legacy API)
+ */
+#define SBP_MSG_GNSS_TIME_OFFSET_ENCODED_LEN 9u
+
 #define SBP_MSG_PPS_TIME 0xFF08
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT (2u)
@@ -565,6 +661,12 @@
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MILLISECONDS (1)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MICROSECONDS (2)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
+/**
+ * Encoded length of sbp_msg_pps_time_t (V4 API) and
+ * msg_pps_time_t (legacy API)
+ */
+#define SBP_MSG_PPS_TIME_ENCODED_LEN 9u
+
 #define SBP_MSG_GROUP_META 0xFF0A
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
@@ -580,5 +682,19 @@
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_NONE (0)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSS_ONLY (1)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
+/**
+ * Encoded length of sbp_msg_group_meta_t (V4 API) and
+ * msg_group_meta_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_group_meta_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_GROUP_META_ENCODED_OVERHEAD 3u
 
 #endif /* LIBSBP_SYSTEM_MACROS_H */

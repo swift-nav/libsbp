@@ -212,7 +212,7 @@ bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg)
     if (!(((f.decode_fn)))(ctx, &(((field)))[i])) { return false; }
   }
   ((*- elif f.packing == "variable-array" *))
-    msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / (((f.encoded_len_value))));
+    msg->(((f.size_fn))) = (uint8_t)((ctx->buf_len - ctx->offset) / (((f.encoded_len_macro))));
   for (uint8_t i = 0; i < msg->(((f.size_fn))); i++) {
     if (!(((f.decode_fn)))(ctx, &(((field)))[i])) { return false; }
   }

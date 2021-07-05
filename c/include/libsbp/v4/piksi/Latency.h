@@ -75,7 +75,7 @@ typedef struct {
  */
 static inline size_t sbp_latency_encoded_len(const sbp_latency_t *msg) {
   (void)msg;
-  return 16u;
+  return SBP_LATENCY_ENCODED_LEN;
 }
 
 /**

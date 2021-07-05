@@ -83,7 +83,7 @@ typedef struct {
 static inline size_t sbp_satellite_apc_encoded_len(
     const sbp_satellite_apc_t *msg) {
   (void)msg;
-  return 32u;
+  return SBP_SATELLITE_APC_ENCODED_LEN;
 }
 
 /**

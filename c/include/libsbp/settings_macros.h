@@ -19,7 +19,28 @@
 #define LIBSBP_SETTINGS_MACROS_H
 
 #define SBP_MSG_SETTINGS_SAVE 0x00A1
+/**
+ * Encoded length of sbp_msg_settings_save_t (V4 API) and
+ * msg_settings_save_t (legacy API)
+ */
+#define SBP_MSG_SETTINGS_SAVE_ENCODED_LEN 0u
+
 #define SBP_MSG_SETTINGS_WRITE 0x00A0
+/**
+ * Encoded length of sbp_msg_settings_write_t (V4 API) and
+ * msg_settings_write_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_write_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_WRITE_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
@@ -43,12 +64,99 @@
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED \
   (5)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
+/**
+ * Encoded length of sbp_msg_settings_write_resp_t (V4 API) and
+ * msg_settings_write_resp_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_write_resp_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_WRITE_RESP_ENCODED_OVERHEAD 1u
+
 #define SBP_MSG_SETTINGS_READ_REQ 0x00A4
+/**
+ * Encoded length of sbp_msg_settings_read_req_t (V4 API) and
+ * msg_settings_read_req_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_read_req_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_READ_REQ_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_SETTINGS_READ_RESP 0x00A5
+/**
+ * Encoded length of sbp_msg_settings_read_resp_t (V4 API) and
+ * msg_settings_read_resp_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_read_resp_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_READ_RESP_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
+/**
+ * Encoded length of sbp_msg_settings_read_by_index_req_t (V4 API) and
+ * msg_settings_read_by_index_req_t (legacy API)
+ */
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ_ENCODED_LEN 2u
+
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+/**
+ * Encoded length of sbp_msg_settings_read_by_index_resp_t (V4 API) and
+ * msg_settings_read_by_index_resp_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_read_by_index_resp_encoded_len to determine the actual size
+ * of an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_ENCODED_OVERHEAD 2u
+
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
+/**
+ * Encoded length of sbp_msg_settings_read_by_index_done_t (V4 API) and
+ * msg_settings_read_by_index_done_t (legacy API)
+ */
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN 0u
+
 #define SBP_MSG_SETTINGS_REGISTER 0x00AE
+/**
+ * Encoded length of sbp_msg_settings_register_t (V4 API) and
+ * msg_settings_register_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_register_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_REGISTER_ENCODED_OVERHEAD 0u
+
 #define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
@@ -69,5 +177,19 @@
   (2)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE \
   (3)
+/**
+ * Encoded length of sbp_msg_settings_register_resp_t (V4 API) and
+ * msg_settings_register_resp_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_settings_register_resp_encoded_len to determine the actual size of
+ * an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SETTINGS_REGISTER_RESP_ENCODED_OVERHEAD 1u
 
 #endif /* LIBSBP_SETTINGS_MACROS_H */

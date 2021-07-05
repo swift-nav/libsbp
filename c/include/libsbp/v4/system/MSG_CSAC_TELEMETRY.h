@@ -216,7 +216,8 @@ size_t sbp_msg_csac_telemetry_telemetry_strlen(
  */
 static inline size_t sbp_msg_csac_telemetry_encoded_len(
     const sbp_msg_csac_telemetry_t *msg) {
-  return 1u + sbp_msg_csac_telemetry_telemetry_encoded_len(msg);
+  return SBP_MSG_CSAC_TELEMETRY_ENCODED_OVERHEAD +
+         sbp_msg_csac_telemetry_telemetry_encoded_len(msg);
 }
 
 /**

@@ -132,7 +132,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_orbit_clock_encoded_len(
     const sbp_msg_ssr_orbit_clock_t *msg) {
   (void)msg;
-  return 50u;
+  return SBP_MSG_SSR_ORBIT_CLOCK_ENCODED_LEN;
 }
 
 /**

@@ -80,7 +80,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_cell_modem_status_encoded_len(
     const sbp_msg_cell_modem_status_t *msg) {
-  return 5u + (msg->n_reserved * 1u);
+  return SBP_MSG_CELL_MODEM_STATUS_ENCODED_OVERHEAD +
+         (msg->n_reserved * SBP_ENCODED_LEN_U8);
 }
 
 /**

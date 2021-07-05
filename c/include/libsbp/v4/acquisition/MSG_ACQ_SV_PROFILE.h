@@ -70,7 +70,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_acq_sv_profile_encoded_len(
     const sbp_msg_acq_sv_profile_t *msg) {
-  return 0u + (msg->n_acq_sv_profile * 33u);
+  return SBP_MSG_ACQ_SV_PROFILE_ENCODED_OVERHEAD +
+         (msg->n_acq_sv_profile * SBP_ACQ_SV_PROFILE_ENCODED_LEN);
 }
 
 /**

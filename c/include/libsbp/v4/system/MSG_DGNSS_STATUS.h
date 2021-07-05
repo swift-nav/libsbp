@@ -223,7 +223,8 @@ size_t sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg);
  */
 static inline size_t sbp_msg_dgnss_status_encoded_len(
     const sbp_msg_dgnss_status_t *msg) {
-  return 4u + sbp_msg_dgnss_status_source_encoded_len(msg);
+  return SBP_MSG_DGNSS_STATUS_ENCODED_OVERHEAD +
+         sbp_msg_dgnss_status_source_encoded_len(msg);
 }
 
 /**

@@ -80,7 +80,7 @@ typedef struct {
 static inline size_t sbp_msg_device_monitor_encoded_len(
     const sbp_msg_device_monitor_t *msg) {
   (void)msg;
-  return 10u;
+  return SBP_MSG_DEVICE_MONITOR_ENCODED_LEN;
 }
 
 /**

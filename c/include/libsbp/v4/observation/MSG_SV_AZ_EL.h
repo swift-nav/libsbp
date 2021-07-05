@@ -70,7 +70,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_sv_az_el_encoded_len(
     const sbp_msg_sv_az_el_t *msg) {
-  return 0u + (msg->n_azel * 4u);
+  return SBP_MSG_SV_AZ_EL_ENCODED_OVERHEAD +
+         (msg->n_azel * SBP_SV_AZ_EL_ENCODED_LEN);
 }
 
 /**

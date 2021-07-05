@@ -59,7 +59,7 @@ typedef struct {
 static inline size_t sbp_msg_stm_flash_unlock_sector_encoded_len(
     const sbp_msg_stm_flash_unlock_sector_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_MSG_STM_FLASH_UNLOCK_SECTOR_ENCODED_LEN;
 }
 
 /**

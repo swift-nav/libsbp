@@ -71,7 +71,7 @@ typedef struct {
 static inline size_t sbp_tropospheric_delay_correction_encoded_len(
     const sbp_tropospheric_delay_correction_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_TROPOSPHERIC_DELAY_CORRECTION_ENCODED_LEN;
 }
 
 /**

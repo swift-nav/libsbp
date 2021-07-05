@@ -76,7 +76,7 @@ typedef struct {
  */
 static inline size_t sbp_msg_iono_encoded_len(const sbp_msg_iono_t *msg) {
   (void)msg;
-  return 70u;
+  return SBP_MSG_IONO_ENCODED_LEN;
 }
 
 /**

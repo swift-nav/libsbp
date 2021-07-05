@@ -86,7 +86,7 @@ typedef struct {
 static inline size_t sbp_msg_angular_rate_encoded_len(
     const sbp_msg_angular_rate_t *msg) {
   (void)msg;
-  return 17u;
+  return SBP_MSG_ANGULAR_RATE_ENCODED_LEN;
 }
 
 /**

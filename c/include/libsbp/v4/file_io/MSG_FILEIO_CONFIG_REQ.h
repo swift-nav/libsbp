@@ -60,7 +60,7 @@ typedef struct {
 static inline size_t sbp_msg_fileio_config_req_encoded_len(
     const sbp_msg_fileio_config_req_t *msg) {
   (void)msg;
-  return 4u;
+  return SBP_MSG_FILEIO_CONFIG_REQ_ENCODED_LEN;
 }
 
 /**

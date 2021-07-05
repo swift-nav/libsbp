@@ -260,7 +260,8 @@ size_t sbp_msg_settings_register_setting_section_strlen(
  */
 static inline size_t sbp_msg_settings_register_encoded_len(
     const sbp_msg_settings_register_t *msg) {
-  return 0u + sbp_msg_settings_register_setting_encoded_len(msg);
+  return SBP_MSG_SETTINGS_REGISTER_ENCODED_OVERHEAD +
+         sbp_msg_settings_register_setting_encoded_len(msg);
 }
 
 /**

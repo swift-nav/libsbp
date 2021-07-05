@@ -257,7 +257,8 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
  */
 static inline size_t sbp_msg_linux_process_socket_queues_encoded_len(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return 75u + sbp_msg_linux_process_socket_queues_cmdline_encoded_len(msg);
+  return SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_socket_queues_cmdline_encoded_len(msg);
 }
 
 /**

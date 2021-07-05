@@ -69,7 +69,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_user_data_encoded_len(
     const sbp_msg_user_data_t *msg) {
-  return 0u + (msg->n_contents * 1u);
+  return SBP_MSG_USER_DATA_ENCODED_OVERHEAD +
+         (msg->n_contents * SBP_ENCODED_LEN_U8);
 }
 
 /**

@@ -162,7 +162,7 @@ typedef struct {
 static inline size_t sbp_msg_protection_level_encoded_len(
     const sbp_msg_protection_level_t *msg) {
   (void)msg;
-  return 76u;
+  return SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN;
 }
 
 /**

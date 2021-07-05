@@ -822,7 +822,8 @@ s8 sbp_msg_acq_sv_profile_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_acq_sv_profile_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_msg_acq_sv_profile_t *msg) {
-  msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / 33);
+  msg->n_acq_sv_profile =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ACQ_SV_PROFILE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_decode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;
@@ -903,7 +904,8 @@ s8 sbp_msg_acq_sv_profile_dep_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_acq_sv_profile_dep_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_acq_sv_profile_dep_t *msg) {
-  msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) / 35);
+  msg->n_acq_sv_profile = (uint8_t)((ctx->buf_len - ctx->offset) /
+                                    SBP_ACQ_SV_PROFILE_DEP_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_acq_sv_profile; i++) {
     if (!sbp_acq_sv_profile_dep_decode_internal(ctx, &msg->acq_sv_profile[i])) {
       return false;

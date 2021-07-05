@@ -61,7 +61,7 @@ typedef struct {
 static inline size_t sbp_imu_input_type_encoded_len(
     const sbp_imu_input_type_t *msg) {
   (void)msg;
-  return 1u;
+  return SBP_IMU_INPUT_TYPE_ENCODED_LEN;
 }
 
 /**

@@ -59,7 +59,7 @@ typedef struct {
 static inline size_t sbp_msg_m25_flash_write_status_encoded_len(
     const sbp_msg_m25_flash_write_status_t *msg) {
   (void)msg;
-  return 1u;
+  return SBP_MSG_M25_FLASH_WRITE_STATUS_ENCODED_LEN;
 }
 
 /**

@@ -77,7 +77,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_flash_program_encoded_len(
     const sbp_msg_flash_program_t *msg) {
-  return 5u + (msg->addr_len * 1u);
+  return SBP_MSG_FLASH_PROGRAM_ENCODED_OVERHEAD +
+         (msg->addr_len * SBP_ENCODED_LEN_U8);
 }
 
 /**

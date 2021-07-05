@@ -75,7 +75,7 @@ typedef struct {
 static inline size_t sbp_msg_uart_state_depa_encoded_len(
     const sbp_msg_uart_state_depa_t *msg) {
   (void)msg;
-  return 58u;
+  return SBP_MSG_UART_STATE_DEPA_ENCODED_LEN;
 }
 
 /**

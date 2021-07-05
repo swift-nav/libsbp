@@ -66,7 +66,7 @@ typedef struct {
 static inline size_t sbp_carrier_phase_dep_a_encoded_len(
     const sbp_carrier_phase_dep_a_t *msg) {
   (void)msg;
-  return 5u;
+  return SBP_CARRIER_PHASE_DEP_A_ENCODED_LEN;
 }
 
 /**

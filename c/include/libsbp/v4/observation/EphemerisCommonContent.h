@@ -84,7 +84,7 @@ typedef struct {
 static inline size_t sbp_ephemeris_common_content_encoded_len(
     const sbp_ephemeris_common_content_t *msg) {
   (void)msg;
-  return 18u;
+  return SBP_EPHEMERIS_COMMON_CONTENT_ENCODED_LEN;
 }
 
 /**
