@@ -47,28 +47,6 @@ PRIMITIVE_SIZES = {
 
 COLLISIONS = set(["GnssSignal", "GPSTime"])
 
-# REMOVE ME LATER
-
-
-def convert_packed(value):
-    """ """
-    s0 = "Sbp" + value if value in COLLISIONS else value
-    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s0)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower() + "_t"
-
-
-def convert_unpacked(value):
-    """ """
-    return "sbp_" + convert_packed(value)
-
-
-def convert_unpacked_union(value):
-    """ """
-    return convert_unpacked(value)[8:]
-
-
-#
-
 
 def sanitise_path(value):
     return re.sub("[->.\\[\\]]", "", value)

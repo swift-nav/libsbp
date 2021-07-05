@@ -33,8 +33,8 @@ static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
-static int DUMMY_MEMORY_FOR_CALLBACKS = 0xdeadbeef;
-static int DUMMY_MEMORY_FOR_IO = 0xdead0000;
+static void *DUMMY_MEMORY_FOR_CALLBACKS = (void *)0xdeadbeef;
+static void *DUMMY_MEMORY_FOR_IO = (void *)0xdead0000;
 
 static void dummy_reset() {
   dummy_rd = dummy_wr = 0;
@@ -46,7 +46,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
   u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
-  return real_n;
+  return (s32)real_n;
 }
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
@@ -54,7 +54,7 @@ static s32 dummy_read(u8 *buff, u32 n, void *context) {
   u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
-  return real_n;
+  return (s32)real_n;
 }
 
 static void logging_reset() { memset(&last_msg, 0, sizeof(last_msg)); }
@@ -126,7 +126,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
                       &test_msg.settings_read_by_index_resp) == 76,
                   "String not encoded properly");
 
-    sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
+    sbp_message_send(&sbp_state, SbpMsgSettingsReadByIndexResp, 55286,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -144,8 +144,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                                  &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SbpMsgSettingsReadByIndexResp, &last_msg.msg,
+                                  &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -219,7 +219,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
                       &test_msg.settings_read_by_index_resp) == 33,
                   "String not encoded properly");
 
-    sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
+    sbp_message_send(&sbp_state, SbpMsgSettingsReadByIndexResp, 55286,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -237,8 +237,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                                  &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SbpMsgSettingsReadByIndexResp, &last_msg.msg,
+                                  &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -315,7 +315,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
                       &test_msg.settings_read_by_index_resp) == 33,
                   "String not encoded properly");
 
-    sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
+    sbp_message_send(&sbp_state, SbpMsgSettingsReadByIndexResp, 55286,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -333,8 +333,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                                  &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SbpMsgSettingsReadByIndexResp, &last_msg.msg,
+                                  &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -405,7 +405,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
                       &test_msg.settings_read_by_index_resp) == 27,
                   "String not encoded properly");
 
-    sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
+    sbp_message_send(&sbp_state, SbpMsgSettingsReadByIndexResp, 55286,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -423,8 +423,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                                  &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SbpMsgSettingsReadByIndexResp, &last_msg.msg,
+                                  &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
@@ -498,7 +498,7 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
                       &test_msg.settings_read_by_index_resp) == 34,
                   "String not encoded properly");
 
-    sbp_message_send(&sbp_state, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP, 55286,
+    sbp_message_send(&sbp_state, SbpMsgSettingsReadByIndexResp, 55286,
                      &test_msg, &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -516,8 +516,8 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     ck_assert_msg(last_msg.sender_id == 55286,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(sbp_message_cmp(SBP_MSG_SETTINGS_READ_BY_INDEX_RESP,
-                                  &last_msg.msg, &test_msg) == 0,
+    ck_assert_msg(sbp_message_cmp(SbpMsgSettingsReadByIndexResp, &last_msg.msg,
+                                  &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
