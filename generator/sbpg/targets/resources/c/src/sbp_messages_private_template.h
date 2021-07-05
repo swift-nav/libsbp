@@ -39,7 +39,7 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
+bool (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -48,7 +48,7 @@ bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name)
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.prefix)))_decode_internal(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
+bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
 
 ((*- endfor *))
 

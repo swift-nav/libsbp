@@ -46,6 +46,26 @@ PRIMITIVE_SIZES = {
 
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
+# REMOVE ME LATER
+
+def convert_packed(value):
+    """
+    """
+    s0 = "Sbp" + value if value in COLLISIONS else value
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s0)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
+
+def convert_unpacked(value):
+    """
+    """
+    return "sbp_" + convert_packed(value)
+
+def convert_unpacked_union(value):
+    """
+    """
+    return convert_unpacked(value)[8:]
+#
+
 def sanitise_path(value):
     return re.sub('[->.\\[\\]]', '', value)
 
@@ -62,37 +82,214 @@ def commentify(value):
     return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
 
 
-def convert_packed(value):
-  """Converts to a C language appropriate identifier format.
-
-  """
-  s0 = "Sbp" + value if value in COLLISIONS else value
-  s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s0)
-  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
-
-def convert_unpacked(value):
-  """Converts to a C language appropriate identifier format.
-
-  """
-  if value in PRIMITIVE_TYPES:
-      return value
-  return "sbp_" + convert_packed(value)
-
-def convert_unpacked_union(value):
-    """
-    """
-    return value.lower()[4:]
-
-
-def snake_case(value):
-    """
-    """
-    return convert_unpacked(value)[:-2]
-
 def camel_case(value):
+    """ Convert an identifier to CamelCase
     """
+    return ''.join(ele.title() for ele in value.split('_'))
+
+
+def get_v4_basename(identifier):
+    """ 
+    Convert an identifier from the SBP spec to the base component used to construct other related identifiers in the V4 schema
+
+    The basename is the identifier from the SBP spec convertered to snake_case and prefixed with either:
+    "sbp_v4_" for types in the collisions list
+    "sbp_" for everything else
     """
-    return "Sbp" + ''.join(ele.title() for ele in value.split('_'))
+    #print(identifier)
+    s0 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', identifier)
+    #print(s0)
+    s1 = re.sub('([a-z0-9])([A-Z])', r'\1_\2', s0).lower()
+    #print(s1)
+    s2 = "sbp_sbp_" + s1 if identifier in COLLISIONS else "sbp_" + s1
+    #print(s2)
+    return s2
+
+
+def get_union_member_name(identifier):
+    """Convert an identifier to the appropriate name for use in the `sbp_msg_t` union
+    Only works for real messages, calling this with any other typename will assert
+    """
+    basename = get_v4_basename(identifier)
+    dropped = basename[:8]
+    assert dropped == "sbp_msg_"
+    return basename[8:]
+
+
+def get_v4_typename(identifier):
+    """
+    Convert an SBP spec identifier in to the correct typename according to the V4 API
+    """
+    if identifier in PRIMITIVE_TYPES:
+        return identifier
+    return get_v4_basename(identifier) + "_t"
+
+
+def get_v4_msg_type(identifier):
+    """
+    Convert an SBP spec identifier to the msg_type identifier according to the V4 API
+    Only works for real messages will assert when called for any other type
+    """
+
+    assert identifier[:4] == "MSG_"
+    return camel_case("sbp_" + identifier.lower())
+
+
+def get_legacy_msg_type(identifier):
+    """
+    Convert an SBP spec identifier to the message type #define identifier according to the legacy API
+    Only works for real messages, will assert when called for any other type
+    """
+
+    assert identifier[:4] == "MSG_"
+    return "SBP_" + identifier
+
+
+def get_public_encode_fn(typename):
+    """
+    Get the name of the public function which can encode a given type
+    Only valid for real messages
+    """
+    #print(typename)
+    if typename in PRIMITIVE_TYPES:
+        return "sbp_" + typename + "_encode"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_encode"
+
+
+def get_internal_encode_fn(typename):
+    """
+    Get the name of the internal function which can encode a given type
+    """
+    if typename in PRIMITIVE_TYPES:
+        return "sbp_" + typename + "_encode"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_encode_internal"
+
+
+def get_public_decode_fn(typename):
+    """
+    Get the name of the public function which can encode a given type
+    Only valid for real messages
+    """
+    #print(typename)
+    if typename in PRIMITIVE_TYPES:
+        return "sbp_" + typename + "_decode"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_decode"
+
+
+def get_internal_decode_fn(typename):
+    """
+    Get the name of the internalfunction which can decode a given type
+    """
+    if typename in PRIMITIVE_TYPES:
+        return "sbp_" + typename + "_decode"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_decode_internal"
+
+
+def get_send_fn(typename):
+    """
+    Get the name of the public function which can send a given type
+    Only valid for real messages
+    """
+    assert typename[:8] == "sbp_msg_"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_send"
+
+
+def get_cmp_fn(typename):
+    """
+    Get the name of the function which can compare 2 instances of a given type
+    """
+    if typename in PRIMITIVE_TYPES:
+        return "sbp_" + typename + "_cmp"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_cmp"
+
+
+def get_field_encoded_len(field, package_specs):
+    """
+    Get the encoded length of a message field on the wire
+    """
+    if field.type_id == "array":
+        if "size" in field.options:
+            return field.options['size'].value * get_encoded_len_value(get_v4_typename(field.options['fill'].value), package_specs)
+        # Variable length array, can't calculate a length. This will later cause an assert if it's being used from an embedded type
+        return 0
+    if field.type_id == "string":
+        if "size" in field.options:
+            return field.options['size'].value
+        return 0
+    return get_encoded_len_value(get_v4_typename(field.type_id), package_specs)
+
+
+def get_encoded_len_macro(typename):
+    """
+    Get the macro name which specified the encoded length of a given type
+    """
+    if typename in PRIMITIVE_TYPES:
+        return "SBP_ENCODED_LEN_" + typename.upper()
+    #print(typename)
+    assert typename[-2:] == "_t"
+    return "SBP_ENCODED_LEN_" + typename[:-2].upper()
+
+
+def get_encoded_len_value(typename, package_specs):
+    """
+    Get the encoded size of a given type on the wire
+    """
+    print("get_encoded_len_value %s" % typename)
+    if typename in PRIMITIVE_TYPES:
+        return PRIMITIVE_SIZES[typename]
+
+    encoded_len = 0
+    for package in package_specs:
+        for msg in package.definitions:
+            if get_v4_typename(msg.identifier) == typename:
+                for f in msg.fields:
+                    print("  field: %s" % f.identifier)
+                    encoded_len = encoded_len + get_field_encoded_len(f, package_specs)
+                    print(encoded_len)
+    return encoded_len
+
+
+def get_encoded_len_fn(typename):
+    """
+    Get the name of a function which can retrieve the encoded length of a type
+    """
+    #print(typename)
+    assert typename[:4] == "sbp_"
+    assert typename[-2:] == "_t"
+    return typename[:-2] + "_encoded_len"
+
+def get_max_possible_items(msg, field, package_specs):
+    """
+    Calculates the maximum number of items which can be stored in a variable length array or string field
+
+    The given field must be a variable length array or string otherwise this function will assert
+
+    The maximum number of items will be calculated by summing the sizes of all fields which occur in the message before the specified field and dividing the remainder by the encoded size of a single item in the array
+    """
+    assert field.type_id == "array" or field.type_id == "string"
+    assert "size" not in field.options
+    used_space = 0
+    for f in msg.fields:
+        print("consider %s" % f.identifier)
+        if f.identifier == field.identifier:
+            break;
+        el = get_field_encoded_len(f, package_specs)
+        print("%s takes %d bytes" % (f.identifier, el))
+        used_space = used_space + el
+    print(used_space)
+    available_space = 255 - used_space
+    print(available_space)
+    if field.type_id == "string":
+        return available_space
+    elem_size = get_encoded_len_value(get_v4_typename(field.options['fill'].value), package_specs)
+    print(elem_size)
+    return int(available_space / elem_size)
 
 
 def get_bitfield_basename(msg, item):
@@ -137,77 +334,6 @@ def extensions(includes):
     """
     return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
 
-def get_type_packed_size(typename, package_specs):
-    """
-    """
-    if typename in PRIMITIVE_TYPES:
-        return PRIMITIVE_SIZES[typename]
-
-    packed_size = 0
-    for package in package_specs:
-        for msg in package.definitions:
-            if msg.identifier == typename:
-                for f in msg.fields:
-                    packed_size = packed_size + get_field_packed_size(f, package_specs)
-    return packed_size
-
-def get_field_packed_size(field, package_specs):
-    """
-    """
-    if field.type_id == "array":
-        if "size" in field.options:
-            return field.options['size'].value * get_type_packed_size(field.options['fill'].value, package_specs)
-        return 0
-    if field.type_id == "string":
-        if "size" in field.options:
-            return field.options['size'].value
-        return 0
-    return get_type_packed_size(field.type_id, package_specs)
-
-
-def get_max_possible_items(msg, field, basetype, package_specs):
-    """
-    """
-    used_space = 0
-    for f in msg.fields:
-        if f.identifier == field.identifier:
-            break
-        used_space = used_space + get_field_packed_size(f, package_specs)
-    available_space = 255 - used_space
-    return int(available_space / get_type_packed_size(basetype, package_specs))
-
-
-def get_basetype_encode(value):
-    """
-    """
-    if value in PRIMITIVE_TYPES:
-        return "sbp_" + value + "_encode"
-    return convert_unpacked(value)[:-2] + "_encode_internal"
-
-
-def get_basetype_decode(value):
-    """
-    """
-    if value in PRIMITIVE_TYPES:
-        return "sbp_" + value + "_decode"
-    return convert_unpacked(value)[:-2] + "_decode_internal"
-
-
-def get_basetype_encoded_len(value):
-    """
-    """
-    if value in PRIMITIVE_TYPES:
-        return "sbp_" + value + "_encoded_len"
-    return convert_unpacked(value)[:-2] + "_encoded_len"
-
-
-def get_basetype_cmp(value):
-    """
-    """
-    if value in PRIMITIVE_TYPES:
-        return "sbp_" + value + "_cmp"
-    return convert_unpacked(value)[:-2] + "_cmp"
-
 
 class FieldItem(object):
     """FieldItem
@@ -218,49 +344,53 @@ class FieldItem(object):
         #print("Creating field %s" % self.name)
         type_id = field.type_id
         
-        self.packed_size = 0
         self.units = field.units
         self.desc = field.desc
-        self.generate_as_nested = False
+        self.fn_prefix = get_v4_basename(msg.identifier) + "_" + field.identifier
 
         if type_id == "string" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype = "char"
-            self.basetype_encode = get_basetype_encode(self.basetype)
-            self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
-            self.basetype_cmp = get_basetype_cmp(self.basetype)
+            self.encode_fn = get_internal_encode_fn(self.basetype)
+            self.decode_fn = get_internal_decode_fn(self.basetype)
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
+            self.cmp_fn = get_cmp_fn(self.basetype)
             self.max_items = field.options['size'].value
-            self.packed_size = field.options['size'].value
+            self.is_fixed_size = True
             self.options = field.options
         elif type_id == "string" or "encoding" in field.options:
             self.packing = "packed-string"
             self.basetype = "char"
-            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
-            self.packed_size = 0
+            self.max_items = get_max_possible_items(msg, field, package_specs)
             self.options = field.options
             self.encoding = field.options['encoding'].value
+            self.is_fixed_size = False
             if self.encoding == "sequence":
                 self.terminator = field.options['terminator'].value
         elif type_id == "array" and "size" in field.options:
             self.packing = "fixed-array"
-            self.basetype = field.options['fill'].value
-            self.basetype_encode = get_basetype_encode(self.basetype)
-            self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
-            self.basetype_cmp = get_basetype_cmp(self.basetype)
+            self.basetype_from_spec = field.options['fill'].value
+            self.basetype = get_v4_typename(field.options['fill'].value)
+            self.encode_fn = get_internal_encode_fn(self.basetype)
+            self.decode_fn = get_internal_decode_fn(self.basetype)
+            self.cmp_fn = get_cmp_fn(self.basetype)
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
+            self.is_fixed_size = True
             self.max_items = field.options['size'].value
-            self.packed_size = field.options['size'].value * get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
         elif type_id == "array":
             self.packing = "variable-array"
-            self.basetype = field.options['fill'].value
-            self.basetype_encode = get_basetype_encode(self.basetype)
-            self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
-            self.basetype_cmp = get_basetype_cmp(self.basetype)
-            self.max_items = get_max_possible_items(msg, field, self.basetype, package_specs)
-            self.packed_size = 0
+            self.basetype_from_spec = field.options['fill'].value
+            self.basetype = get_v4_typename(field.options['fill'].value)
+            self.encode_fn = get_internal_encode_fn(self.basetype)
+            self.decode_fn = get_internal_decode_fn(self.basetype)
+            self.cmp_fn = get_cmp_fn(self.basetype)
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
+            self.is_fixed_size = False
+            self.max_items = get_max_possible_items(msg, field, package_specs)
             if 'size_fn' in field.options:
                 self.size_fn = field.options['size_fn'].value
                 self.generate_size_fn = False
@@ -270,13 +400,15 @@ class FieldItem(object):
             self.options = field.options
         else:
             self.packing = "single"
-            self.basetype = type_id
-            self.basetype_encode = get_basetype_encode(self.basetype)
-            self.basetype_decode = get_basetype_decode(self.basetype)
-            self.basetype_encoded_len = get_type_packed_size(self.basetype, package_specs)
-            self.basetype_cmp = get_basetype_cmp(self.basetype)
+            self.basetype_from_spec = type_id
+            self.basetype = get_v4_typename(type_id)
+            self.encode_fn = get_internal_encode_fn(self.basetype)
+            self.decode_fn = get_internal_decode_fn(self.basetype)
+            self.cmp_fn = get_cmp_fn(self.basetype)
+            self.encoded_len_macro = get_encoded_len_macro(self.basetype)
+            self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
+            self.is_fixed_size = True
             self.max_items = 1
-            self.packed_size = get_type_packed_size(self.basetype, package_specs)
             self.options = field.options
 
 
@@ -294,38 +426,53 @@ class MsgItem(object):
 
     def __init__(self, msg, package_specs):
         self.name = msg.identifier
-        self.prefix = snake_case(self.name)
-        self.type_name = self.prefix + "_t"
-        self.short_name = self.prefix[8:]
-        self.enum_name = camel_case(self.name)
+        self.basename = get_v4_basename(msg.identifier)
+        self.type_name = get_v4_typename(msg.identifier)
+        self.is_real_message = msg.is_real_message
+        if self.is_real_message:
+            self.v4_msg_type = get_v4_msg_type(msg.identifier)
+            self.legacy_msg_type = get_legacy_msg_type(msg.identifier)
+            self.union_member_name = get_union_member_name(msg.identifier)
+            self.send_fn = get_send_fn(self.type_name)
+        self.encoded_len_macro = get_encoded_len_macro(self.type_name)
+        self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
+        self.public_encode_fn = get_public_encode_fn(self.type_name)
+        self.public_decode_fn = get_public_decode_fn(self.type_name)
+        self.cmp_fn = get_cmp_fn(self.type_name)
+        self.encoded_len_fn = get_encoded_len_fn(self.type_name)
+        self.internal_encode_fn = get_internal_encode_fn(self.type_name)
+        self.internal_decode_fn = get_internal_decode_fn(self.type_name)
         self.sbp_id = msg.sbp_id
         self.desc = msg.desc
         self.short_desc = msg.short_desc
         self.fields = []
-        self.is_real_message = msg.is_real_message
         self.sibling_include = []
-        self.packed_size = 0
         self.is_fixed_size = True
         #print("Creating message %s" % self.name)
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
-            self.packed_size = self.packed_size + new_field.packed_size
-            if new_field.packed_size == 0:
+            if not new_field.is_fixed_size:
                 self.is_fixed_size = False
                 if not self.is_real_message:
                     raise Exception("Field %s in message %s: variable length arrays can only exist in real messages, not in embedded types" % (new_field.name, msg.identifier))
             self.fields.append(new_field)
             if new_field.basetype not in PRIMITIVE_TYPES:
-                self.sibling_include.append(find_package(package_specs, new_field.basetype) + "/" + new_field.basetype)
+                self.sibling_include.append(find_package(package_specs, new_field.basetype_from_spec) + "/" + new_field.basetype_from_spec)
 
-JENV.filters['convert_unpacked'] = convert_unpacked
-JENV.filters['convert_unpacked_union'] = convert_unpacked_union
 JENV.filters['commentify'] = commentify
 JENV.filters['sanitise_path'] = sanitise_path
 JENV.filters['create_bitfield_macros'] = create_bitfield_macros
 
+def render_file(template, destination_filename, args):
+    """
+    Render a file using specific arguments
+    """
+    py_template = JENV.get_template(template)
+    with open(destination_filename, 'w') as f:
+        f.write(py_template.render(**args))
 
-def render_headers(include_dir, package_specs):
+
+def render_all(include_dir, package_specs):
     #print("new_c::render_unpacked_headers")
     all_msgs = []
     all_packages = []
@@ -344,91 +491,35 @@ def render_headers(include_dir, package_specs):
             msgs.append(new_msg)
             if m.is_real_message:
                 all_msgs.append(new_msg)                                                                 
-            destination_filename = "%s/v4/%s/%s.h" % (include_dir, name, new_msg.name)
-            py_template = JENV.get_template(SBP_MESSAGES_TEMPLATE_NAME)
-            with open(destination_filename, 'w') as f:
-                f.write(py_template.render(m = new_msg,
-                    pkg_name = name,
-                    filepath="/".join(package_spec.filepath) + ".yaml",
-                    max_msgid_len=package_spec.max_msgid_len,
-                    include=extensions(package_spec.includes),
-                    sibling_include=new_msg.sibling_include))
-            #print("Adding %s" % new_msg.name)
-        destination_filename = "%s/v4/%s.h" % (include_dir, name)
-        py_template = JENV.get_template(SBP_PACKAGE_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
-        destination_filename = "%s/%s_macros.h" % (include_dir, name)
-        py_template = JENV.get_template(SBP_MESSAGES_MACROS_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
-    destination_filename = "%s/v4/sbp_msg.h" % (include_dir)
-    py_template = JENV.get_template(SBP_MSG_TEMPLATE_NAME)
-    with open(destination_filename, 'w') as f:
-        f.write(py_template.render(msgs = sorted(all_msgs, key=lambda k: k.type_name),
-            include=extensions(all_packages),
-            filepath="/".join(package_spec.filepath) + ".yaml",
-            max_msgid_len=msg_msgid_len))
-    destination_filename = "%s/cpp/message_traits.h" % include_dir
-    py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
-    with open(destination_filename, 'w') as f:
-        f.write(py_template.render(packages=package_specs,
-                               msgs=sorted(all_msgs, key=lambda k: k.type_name),
-                               includes=extensions(all_packages)))
-    destination_filename = "%s/sbp_msg_type.h" % include_dir
-    py_template = JENV.get_template(SBP_MSG_TYPE_TEMPLATE_NAME)
-    with open(destination_filename, 'w') as f:
-        f.write(py_template.render(msgs = sorted(all_msgs, key=lambda k: k.type_name),
-                                   packages=all_packages))
-
-
-def render_sources(output_dir, package_specs):
-    all_msgs = []
-    all_packages = []
-    msg_msgid_len =0
-    for package_spec in package_specs:
-        msgs = []
-        msg_msgid_len = package_spec.max_msgid_len
-        if not package_spec.render_source:
-            continue
-        name = package_spec.identifier.split('.', 2)[2]
-        if name == 'types' or name == 'base':
-            continue                                                                                          
-        all_packages.append(name)                                                                             
-        for m in package_spec.definitions:                                                                    
-            new_msg = MsgItem(m, package_specs)                                                           
-            msgs.append(new_msg)
-            if m.is_real_message:
-                all_msgs.append(new_msg.name)                                                                 
-            #print("Adding %s" % new_msg.name)
-        destination_filename = "%s/v4/%s.c" % (output_dir, name)
-        py_template = JENV.get_template(SBP_MESSAGES_SOURCE_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
-        destination_filename = "%s/include/libsbp/internal/v4/%s.h" % (output_dir, name)
-        py_template = JENV.get_template(SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME)
-        with open(destination_filename, 'w') as f:
-            f.write(py_template.render(msgs = msgs,
-                pkg_name = name,
-                filepath="/".join(package_spec.filepath) + ".yaml",
-                max_msgid_len=package_spec.max_msgid_len,
-                include=extensions(package_spec.includes)))
+            destination_filename = "%s/include/libsbp/v4/%s/%s.h" % (include_dir, name, new_msg.name)
+            render_file(SBP_MESSAGES_TEMPLATE_NAME, destination_filename, {"m": new_msg, "pkg_name": name, "filepath": "/".join(package_spec.filepath) + ".yaml",
+                "include": extensions(package_spec.includes),
+                "sibling_include": new_msg.sibling_include})
+        destination_filename = "%s/include/libsbp/v4/%s.h" % (include_dir, name)
+        render_file(SBP_PACKAGE_TEMPLATE_NAME, destination_filename, {"msgs": msgs, "pkg_name": name, "filepath": "/".join(package_spec.filepath) + ".yaml",
+            "include": extensions(package_spec.includes)})
+        destination_filename = "%s/include/libsbp/%s_macros.h" % (include_dir, name)
+        render_file(SBP_MESSAGES_MACROS_TEMPLATE_NAME, destination_filename, {"msgs": msgs, "pkg_name": name, "filepath": "/".join(package_spec.filepath) + ".yaml",
+                    "include": extensions(package_spec.includes)})
+        destination_filename = "%s/src/v4/%s.c" % (include_dir, name)
+        render_file(SBP_MESSAGES_SOURCE_TEMPLATE_NAME, destination_filename, {"msgs": msgs, "pkg_name": name, "filepath": "/".join(
+            package_spec.filepath) + ".yaml", "include": extensions(package_spec.includes)})
+        destination_filename = "%s/src/include/libsbp/internal/v4/%s.h" % (include_dir, name)
+        render_file(SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME, destination_filename, {"msgs": msgs, "pkg_name": name, "filepath": "/".join(
+            package_spec.filepath) + ".yaml", "include": extensions(package_spec.includes)})
+    destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (include_dir)
+    render_file(SBP_MSG_TEMPLATE_NAME, destination_filename, {"msgs": sorted(all_msgs, key=lambda k: k.type_name),
+        "include": extensions(all_packages),
+        "filename": "/".join(package_spec.filepath) + ".yaml"})
+    destination_filename = "%s/include/libsbp/cpp/message_traits.h" % include_dir
+    render_file(MESSAGE_TRAITS_TEMPLATE_NAME, destination_filename, {"packages": package_specs, "msgs": sorted(all_msgs, key=lambda k: k.type_name),
+        "includes": extensions(all_packages)})
+    destination_filename = "%s/include/libsbp/sbp_msg_type.h" % include_dir
+    render_file(SBP_MSG_TYPE_TEMPLATE_NAME, destination_filename, {"msgs": sorted(all_msgs, key=lambda k: k.type_name), "packages": all_packages})
 
 
 def render_version(output_dir, release: ReleaseVersion):
-  destination_filename = "%s/version.h" % output_dir
+  destination_filename = "%s/include/libsbp/version.h" % output_dir
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as output_file:
     output_file.write(py_template.render(major=release.major,

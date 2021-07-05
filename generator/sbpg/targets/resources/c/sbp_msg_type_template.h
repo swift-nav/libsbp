@@ -28,7 +28,7 @@ extern "C" {
 
 typedef enum {
 ((*- for m in msgs *))
-  (((m.enum_name))) = SBP_(((m.name))),
+  (((m.v4_msg_type))) = (((m.legacy_msg_type))),
 ((*- endfor *))
 } sbp_msg_type_t;
 

@@ -38,7 +38,7 @@
  */
 typedef union {
 ((*- for m in msgs *))
-  (((m.type_name))) (((m.short_name)));
+  (((m.type_name))) (((m.union_member_name)));
 ((*- endfor *))
 } sbp_msg_t;
 
@@ -57,8 +57,8 @@ typedef union {
 static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case (((m.enum_name))):
-      return (((m.prefix)))_encode(buf, len, n_written, &msg->(((m.short_name))));
+    case (((m.v4_msg_type))):
+      return (((m.public_encode_fn)))(buf, len, n_written, &msg->(((m.union_member_name))));
 ((*- endfor *))
     default:
       break;
@@ -80,8 +80,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_writte
 static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_type_t msg_type, sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case (((m.enum_name))):
-      return (((m.prefix)))_decode(buf, len, n_read, &msg->(((m.short_name))));
+    case (((m.v4_msg_type))):
+      return (((m.public_decode_fn)))(buf, len, n_read, &msg->(((m.union_member_name))));
 ((*- endfor *))
     default:
       break;
@@ -98,8 +98,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_
 static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
   switch(msg_type) {
 ((*- for m in msgs *))
-    case (((m.enum_name))):
-      return (((m.prefix)))_encoded_len(&msg->(((m.short_name))));
+    case (((m.v4_msg_type))):
+      return (((m.encoded_len_fn)))(&msg->(((m.union_member_name))));
 ((*- endfor *))
     default:
       break;
@@ -119,8 +119,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_
 static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
   switch(msg_type) {
     ((*- for m in msgs *))
-    case (((m.enum_name))):
-      return (((m.prefix)))_cmp(&a->(((m.short_name))), &b->(((m.short_name))));
+    case (((m.v4_msg_type))):
+      return (((m.cmp_fn)))(&a->(((m.union_member_name))), &b->(((m.union_member_name))));
     ((*- endfor *))
     default:
       break;
