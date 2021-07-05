@@ -11,26 +11,26 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((package.filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
-#define LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
+#ifndef LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
+#define LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
 
 #include <stdbool.h>
 
-#include <libsbp/v4/(((pkg_name))).h>
+#include <libsbp/v4/(((package.name))).h>
 #include <libsbp/internal/v4/common.h>
-((*- for i in include *))
-#include <libsbp/internal/v4/(((i)))>
+((*- for i in package.includes *))
+#include <libsbp/internal/v4/(((i))).h>
 ((*- endfor *))
 
 #ifdef __cplusplus
   extern "C" {
 #endif
 
-((*- for m in msgs *))
+((*- for m in package.msgs *))
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -56,5 +56,5 @@ bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
   }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H */
+#endif /* LIBSBP_INTERNAL_V4_(((package.name|upper)))_H */
 

@@ -11,14 +11,14 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((package.filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_(((pkg_name|upper)))_MACROS_H
-#define LIBSBP_(((pkg_name|upper)))_MACROS_H
+#ifndef LIBSBP_(((package.name|upper)))_MACROS_H
+#define LIBSBP_(((package.name|upper)))_MACROS_H
 
-((* for m in msgs *))
+((* for m in package.msgs *))
 ((*- if m.is_real_message*))
 #define SBP_(((m.name))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
@@ -29,5 +29,5 @@
 ((*- endfor *))
 ((*- endfor *))
 
-#endif /* LIBSBP_(((pkg_name|upper)))_MACROS_H */
+#endif /* LIBSBP_(((package.name|upper)))_MACROS_H */
 

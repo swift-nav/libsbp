@@ -17,8 +17,8 @@
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
 
-((*- for i in includes *))
-#include <libsbp/v4/(((i)))>
+((*- for p in packages *))
+#include <libsbp/v4/(((p.name))).h>
 ((*- endfor *))
 
 namespace sbp {
@@ -32,8 +32,7 @@ namespace sbp {
 template<typename>
 struct MessageTraits;
 
-((* for m in msgs *))
-((*- if m.is_real_message *))
+((* for m in real_messages *))
 template<>
 struct MessageTraits<(((m.type_name)))> {
   static constexpr sbp_msg_type_t id = (((m.v4_msg_type)));
@@ -47,7 +46,6 @@ struct MessageTraits<(((m.type_name)))> {
     return (((m.send_fn)))(state, sender_id, &msg, write);
   }
 };
-((* endif *))
 ((* endfor *))
 
 

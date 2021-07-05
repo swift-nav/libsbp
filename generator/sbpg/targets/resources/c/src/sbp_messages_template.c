@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((package.filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
@@ -9,14 +9,14 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/(((pkg_name))).h>
-#include <libsbp/internal/v4/(((pkg_name))).h>
+#include <libsbp/v4/(((package.name))).h>
+#include <libsbp/internal/v4/(((package.name))).h>
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 
-((*- for m in msgs *))
+((*- for m in package.msgs *))
                                                                                                               
 ((*- for f in m.fields *))
 ((*- if f.packing == "packed-string" *))

@@ -412,14 +412,19 @@ class MsgItem(object):
     """
     Describes a single SBP message or embedded type.
 
-    Contains all the information required to generate C bindings
+    A message is a single type definition from an SBP YAML spec file. It contains
+    all information required to generate the C source and headers related to a
+    single type.
     """
 
-    def __init__(self, msg, package_specs):
+    def __init__(self, msg, package, package_specs):
         self.name = msg.identifier
         self.basename = get_v4_basename(msg.identifier)
         self.type_name = get_v4_typename(msg.identifier)
         self.is_real_message = msg.is_real_message
+        self.package_name = package.name
+        self.package_filepath = package.filepath
+        self.package_includes = package.includes
         if self.is_real_message:
             self.v4_msg_type = get_v4_msg_type(msg.identifier)
             self.legacy_msg_type = get_legacy_msg_type(msg.identifier)
@@ -456,6 +461,95 @@ class MsgItem(object):
                     + new_field.basetype_from_spec
                 )
 
+    def render(self, output_dir):
+        # Public header for V4 API - include/libsbp/v4/<package>/<type>.h
+        destination_filename = "%s/include/libsbp/v4/%s/%s.h" % (
+            output_dir,
+            self.package_name,
+            self.name,
+        )
+        render_file(
+            SBP_MESSAGES_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "m": self,
+            },
+        )
+
+
+class PackageItem(object):
+    """
+    Described an SBP package
+
+    A package is a collection of SBP types defined by a single YAML input. Each type
+    from the SBP is represented as an instance of MsgItem
+    """
+
+    def __init__(self, package, package_specs):
+        self.identifier = package.identifier
+        self.name = package.identifier.split(".", 2)[2]
+        if self.name == "types" or self.name == "base":
+            return
+        self.filepath = "/".join(package.filepath) + ".yaml"
+        self.includes = [i.split(".")[0] for i in package.includes if i != "types.yaml"]
+        self.msgs = []
+        for msg_spec in package.definitions:
+            new_msg = MsgItem(msg_spec, self, package_specs)
+            self.msgs.append(new_msg)
+
+    def render(self, output_dir):
+        # Public headers for all types in this package
+        for m in self.msgs:
+            m.render(output_dir)
+
+        # Public header for the package - include/libsbp/v4/<package>.h
+        # Includes all public message headers, include/libsbp/v4/<package>/*.h
+        destination_filename = "%s/include/libsbp/v4/%s.h" % (output_dir, self.name)
+        render_file(
+            SBP_PACKAGE_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "package": self,
+            },
+        )
+
+        # Public macros header - include/libsbp/<package>_macros.h
+        # Declares certain symbols shared between legacy and V4 APIs such as
+        # message type #define and bitfield macros
+        destination_filename = "%s/include/libsbp/%s_macros.h" % (output_dir, self.name)
+        render_file(
+            SBP_MESSAGES_MACROS_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "package": self,
+            },
+        )
+
+        # Internal header for the package - src/include/libsbp/internal/v4/<package>.h
+        # Declares internal encode/decode functions for all types defined in this package
+        destination_filename = "%s/src/include/libsbp/internal/v4/%s.h" % (
+            output_dir,
+            self.name,
+        )
+        render_file(
+            SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "package": self,
+            },
+        )
+
+        # Source for for the package - src/v4/<package>.h
+        # Implements internal and public encode/decode functions for all types defined in this package
+        destination_filename = "%s/src/v4/%s.c" % (output_dir, self.name)
+        render_file(
+            SBP_MESSAGES_SOURCE_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "package": self,
+            },
+        )
+
 
 JENV.filters["commentify"] = commentify
 JENV.filters["sanitise_path"] = sanitise_path
@@ -471,110 +565,55 @@ def render_file(template, destination_filename, args):
         f.write(py_template.render(**args))
 
 
-def render_all(include_dir, package_specs):
+def render_all(output_dir, package_specs):
     real_messages = []
     all_packages = []
-    msg_msgid_len = 0
+
     for package_spec in package_specs:
-        msgs = []
-        msg_msgid_len = package_spec.max_msgid_len
-        if not package_spec.render_source:
+        new_package = PackageItem(package_spec, package_specs)
+        if new_package.name == "types" or new_package.name == "base":
             continue
-        name = package_spec.identifier.split(".", 2)[2]
-        if name == "types" or name == "base":
-            continue
-        all_packages.append(name)
-        for m in package_spec.definitions:
-            new_msg = MsgItem(m, package_specs)
-            msgs.append(new_msg)
+        all_packages.append(new_package)
+        for m in new_package.msgs:
             if m.is_real_message:
-                real_messages.append(new_msg)
-            destination_filename = "%s/include/libsbp/v4/%s/%s.h" % (
-                include_dir,
-                name,
-                new_msg.name,
-            )
-            render_file(
-                SBP_MESSAGES_TEMPLATE_NAME,
-                destination_filename,
-                {
-                    "m": new_msg,
-                    "pkg_name": name,
-                    "filepath": "/".join(package_spec.filepath) + ".yaml",
-                    "sibling_include": new_msg.sibling_include,
-                },
-            )
-        destination_filename = "%s/include/libsbp/v4/%s.h" % (include_dir, name)
-        render_file(
-            SBP_PACKAGE_TEMPLATE_NAME,
-            destination_filename,
-            {
-                "msgs": msgs,
-                "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml",
-            },
-        )
-        destination_filename = "%s/include/libsbp/%s_macros.h" % (include_dir, name)
-        render_file(
-            SBP_MESSAGES_MACROS_TEMPLATE_NAME,
-            destination_filename,
-            {
-                "msgs": msgs,
-                "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml",
-            },
-        )
-        destination_filename = "%s/src/v4/%s.c" % (include_dir, name)
-        render_file(
-            SBP_MESSAGES_SOURCE_TEMPLATE_NAME,
-            destination_filename,
-            {
-                "msgs": msgs,
-                "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml",
-            },
-        )
-        destination_filename = "%s/src/include/libsbp/internal/v4/%s.h" % (
-            include_dir,
-            name,
-        )
-        render_file(
-            SBP_MESSAGES_PRIVATE_HEADER_TEMPLATE_NAME,
-            destination_filename,
-            {
-                "msgs": msgs,
-                "pkg_name": name,
-                "include": extensions(package_spec.includes),
-                "filepath": "/".join(package_spec.filepath) + ".yaml",
-            },
-        )
-    destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (include_dir)
+                real_messages.append(m)
+
+    real_messages = sorted(real_messages, key=lambda k: k.type_name)
+
+    # Built the entire schema, now render everything
+    for p in all_packages:
+        p.render(output_dir)
+
+    # Render sbp_msg_t type, union of all real messages in V4 API
+    destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (output_dir)
     render_file(
         SBP_MSG_TEMPLATE_NAME,
         destination_filename,
         {
-            "msgs": sorted(real_messages, key=lambda k: k.type_name),
-            "include": extensions(all_packages),
-            "filename": "/".join(package_spec.filepath) + ".yaml",
+            "real_messages": real_messages,
+            "packages": all_packages,
         },
     )
-    destination_filename = "%s/include/libsbp/cpp/message_traits.h" % include_dir
-    render_file(
-        MESSAGE_TRAITS_TEMPLATE_NAME,
-        destination_filename,
-        {
-            "packages": package_specs,
-            "includes": extensions(all_packages),
-            "msgs": sorted(real_messages, key=lambda k: k.type_name),
-        },
-    )
-    destination_filename = "%s/include/libsbp/sbp_msg_type.h" % include_dir
+
+    # Render sbp_msg_type_t type, V4 message type enum
+    destination_filename = "%s/include/libsbp/sbp_msg_type.h" % (output_dir)
     render_file(
         SBP_MSG_TYPE_TEMPLATE_NAME,
         destination_filename,
         {
-            "msgs": sorted(real_messages, key=lambda k: k.type_name),
+            "real_messages": real_messages,
             "packages": all_packages,
+        },
+    )
+
+    # C++ message traits for V4 API
+    destination_filename = "%s/include/libsbp/cpp/message_traits.h" % (output_dir)
+    render_file(
+        MESSAGE_TRAITS_TEMPLATE_NAME,
+        destination_filename,
+        {
+            "packages": all_packages,
+            "real_messages": real_messages,
         },
     )
 

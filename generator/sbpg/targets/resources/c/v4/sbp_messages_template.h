@@ -11,12 +11,12 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((m.package_filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
-#define LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
+#ifndef LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
+#define LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -27,12 +27,9 @@
 
 #include <libsbp/common.h>
 #include <libsbp/v4/string/sbp_string.h>
-#include <libsbp/(((pkg_name)))_macros.h>
+#include <libsbp/(((m.package_name)))_macros.h>
 
-((*- for i in include *))
-#include <libsbp/v4/(((i)))>
-((*- endfor *))
-((*- for i in sibling_include *))
+((*- for i in m.sibling_include *))
 #include <libsbp/v4/(((i))).h>
 ((*- endfor *))
 
@@ -450,6 +447,6 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
 
 #endif // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
+#endif /* LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H */
 
 
