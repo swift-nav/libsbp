@@ -65,17 +65,17 @@ typedef struct {
   /**
    * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
-  double pos[3];
+  double pos[SBP_MSG_EPHEMERIS_GLO_DEP_A_POS_MAX];
 
   /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
-  double vel[3];
+  double vel[SBP_MSG_EPHEMERIS_GLO_DEP_A_VEL_MAX];
 
   /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
-  double acc[3];
+  double acc[SBP_MSG_EPHEMERIS_GLO_DEP_A_ACC_MAX];
 } sbp_msg_ephemeris_glo_dep_a_t;
 
 /**

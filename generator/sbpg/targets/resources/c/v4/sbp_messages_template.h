@@ -63,7 +63,7 @@ typedef struct {
   ((*- elif f.packing == "single" *))
   (((f.basetype))) (((f.name)));
   ((*- else *))
-  (((f.basetype))) (((f.name)))[(((f.max_items)))];
+  (((f.basetype))) (((f.name)))[(((f.max_items_macro)))];
   ((*- if f.generate_size_fn *))
   /**
    * Number of elements in (((f.name)))

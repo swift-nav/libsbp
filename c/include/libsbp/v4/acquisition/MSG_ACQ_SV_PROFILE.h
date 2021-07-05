@@ -48,7 +48,8 @@ typedef struct {
   /**
    * SV profiles during acquisition time
    */
-  sbp_acq_sv_profile_t acq_sv_profile[7];
+  sbp_acq_sv_profile_t
+      acq_sv_profile[SBP_MSG_ACQ_SV_PROFILE_ACQ_SV_PROFILE_MAX];
   /**
    * Number of elements in acq_sv_profile
    *

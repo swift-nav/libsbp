@@ -70,17 +70,17 @@ typedef struct {
   /**
    * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
-  double pos[3];
+  double pos[SBP_MSG_EPHEMERIS_GLO_POS_MAX];
 
   /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
-  double vel[3];
+  double vel[SBP_MSG_EPHEMERIS_GLO_VEL_MAX];
 
   /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
-  float acc[3];
+  float acc[SBP_MSG_EPHEMERIS_GLO_ACC_MAX];
 
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid

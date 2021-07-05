@@ -56,7 +56,7 @@ typedef struct {
   /**
    * Starting address offset to read from [bytes]
    */
-  u8 addr_start[3];
+  u8 addr_start[SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX];
 
   /**
    * Length of set of addresses to read, counting up from starting address

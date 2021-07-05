@@ -48,7 +48,7 @@ typedef struct {
   /**
    * Azimuth and elevation per satellite
    */
-  sbp_sv_az_el_t azel[63];
+  sbp_sv_az_el_t azel[SBP_MSG_SV_AZ_EL_AZEL_MAX];
   /**
    * Number of elements in azel
    *

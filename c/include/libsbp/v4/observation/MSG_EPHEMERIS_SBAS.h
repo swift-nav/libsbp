@@ -48,17 +48,17 @@ typedef struct {
   /**
    * Position of the GEO at time toe [m]
    */
-  double pos[3];
+  double pos[SBP_MSG_EPHEMERIS_SBAS_POS_MAX];
 
   /**
    * Velocity of the GEO at time toe [m/s]
    */
-  float vel[3];
+  float vel[SBP_MSG_EPHEMERIS_SBAS_VEL_MAX];
 
   /**
    * Acceleration of the GEO at time toe [m/s^2]
    */
-  float acc[3];
+  float acc[SBP_MSG_EPHEMERIS_SBAS_ACC_MAX];
 
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time [s]

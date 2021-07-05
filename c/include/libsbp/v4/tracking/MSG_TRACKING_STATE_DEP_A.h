@@ -47,7 +47,8 @@ typedef struct {
   /**
    * Satellite tracking channel state
    */
-  sbp_tracking_channel_state_dep_a_t states[42];
+  sbp_tracking_channel_state_dep_a_t
+      states[SBP_MSG_TRACKING_STATE_DEP_A_STATES_MAX];
   /**
    * Number of elements in states
    *

@@ -59,7 +59,7 @@ typedef struct {
   /**
    * Early, Prompt and Late correlations
    */
-  sbp_tracking_channel_correlation_t corrs[3];
+  sbp_tracking_channel_correlation_t corrs[SBP_MSG_TRACKING_IQ_CORRS_MAX];
 } sbp_msg_tracking_iq_t;
 
 /**

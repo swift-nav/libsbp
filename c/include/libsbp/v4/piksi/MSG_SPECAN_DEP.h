@@ -77,7 +77,7 @@ typedef struct {
   /**
    * Amplitude values (in the above units) of points in this packet
    */
-  u8 amplitude_value[231];
+  u8 amplitude_value[SBP_MSG_SPECAN_DEP_AMPLITUDE_VALUE_MAX];
   /**
    * Number of elements in amplitude_value
    *

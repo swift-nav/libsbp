@@ -20,6 +20,13 @@
 
 #define SBP_MSG_SBAS_RAW 0x7777
 /**
+ * The maximum number of items that can be stored in sbp_msg_sbas_raw_t::data
+ * (V4 API) or msg_sbas_raw_t::data (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SBAS_RAW_DATA_MAX 27u
+
+/**
  * Encoded length of sbp_msg_sbas_raw_t (V4 API) and
  * msg_sbas_raw_t (legacy API)
  */

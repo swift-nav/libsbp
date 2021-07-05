@@ -186,6 +186,13 @@
 
 #define SBP_MSG_OBS 0x004A
 /**
+ * The maximum number of items that can be stored in sbp_msg_obs_t::obs (V4 API)
+ * or msg_obs_t::obs (legacy API) before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_OBS_OBS_MAX 14u
+
+/**
  * Encoded length of sbp_msg_obs_t (V4 API) and
  * msg_obs_t (legacy API)
  *
@@ -283,12 +290,57 @@
 
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A 0x0082
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_a_t::pos (V4 API) or
+ * msg_ephemeris_sbas_dep_a_t::pos (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_A_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_a_t::vel (V4 API) or
+ * msg_ephemeris_sbas_dep_a_t::vel (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_A_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_a_t::acc (V4 API) or
+ * msg_ephemeris_sbas_dep_a_t::acc (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_A_ACC_MAX 3u
+
+/**
  * Encoded length of sbp_msg_ephemeris_sbas_dep_a_t (V4 API) and
  * msg_ephemeris_sbas_dep_a_t (legacy API)
  */
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A_ENCODED_LEN 112u
 
 #define SBP_MSG_EPHEMERIS_GLO_DEP_A 0x0083
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_a_t::pos (V4 API) or msg_ephemeris_glo_dep_a_t::pos
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_A_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_a_t::vel (V4 API) or msg_ephemeris_glo_dep_a_t::vel
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_A_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_a_t::acc (V4 API) or msg_ephemeris_glo_dep_a_t::acc
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_A_ACC_MAX 3u
+
 /**
  * Encoded length of sbp_msg_ephemeris_glo_dep_a_t (V4 API) and
  * msg_ephemeris_glo_dep_a_t (legacy API)
@@ -297,12 +349,57 @@
 
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_B 0x0084
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_b_t::pos (V4 API) or
+ * msg_ephemeris_sbas_dep_b_t::pos (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_B_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_b_t::vel (V4 API) or
+ * msg_ephemeris_sbas_dep_b_t::vel (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_B_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_dep_b_t::acc (V4 API) or
+ * msg_ephemeris_sbas_dep_b_t::acc (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_B_ACC_MAX 3u
+
+/**
  * Encoded length of sbp_msg_ephemeris_sbas_dep_b_t (V4 API) and
  * msg_ephemeris_sbas_dep_b_t (legacy API)
  */
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_B_ENCODED_LEN 110u
 
 #define SBP_MSG_EPHEMERIS_SBAS 0x008C
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_t::pos (V4 API) or msg_ephemeris_sbas_t::pos (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_t::vel (V4 API) or msg_ephemeris_sbas_t::vel (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_sbas_t::acc (V4 API) or msg_ephemeris_sbas_t::acc (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_ACC_MAX 3u
+
 /**
  * Encoded length of sbp_msg_ephemeris_sbas_t (V4 API) and
  * msg_ephemeris_sbas_t (legacy API)
@@ -311,12 +408,54 @@
 
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B 0x0085
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_b_t::pos (V4 API) or msg_ephemeris_glo_dep_b_t::pos
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_B_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_b_t::vel (V4 API) or msg_ephemeris_glo_dep_b_t::vel
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_B_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_b_t::acc (V4 API) or msg_ephemeris_glo_dep_b_t::acc
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_B_ACC_MAX 3u
+
+/**
  * Encoded length of sbp_msg_ephemeris_glo_dep_b_t (V4 API) and
  * msg_ephemeris_glo_dep_b_t (legacy API)
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B_ENCODED_LEN 110u
 
 #define SBP_MSG_EPHEMERIS_GLO_DEP_C 0x0087
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_c_t::pos (V4 API) or msg_ephemeris_glo_dep_c_t::pos
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_C_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_c_t::vel (V4 API) or msg_ephemeris_glo_dep_c_t::vel
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_C_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_c_t::acc (V4 API) or msg_ephemeris_glo_dep_c_t::acc
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_C_ACC_MAX 3u
+
 /**
  * Encoded length of sbp_msg_ephemeris_glo_dep_c_t (V4 API) and
  * msg_ephemeris_glo_dep_c_t (legacy API)
@@ -325,12 +464,54 @@
 
 #define SBP_MSG_EPHEMERIS_GLO_DEP_D 0x0088
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_d_t::pos (V4 API) or msg_ephemeris_glo_dep_d_t::pos
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_D_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_d_t::vel (V4 API) or msg_ephemeris_glo_dep_d_t::vel
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_D_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_dep_d_t::acc (V4 API) or msg_ephemeris_glo_dep_d_t::acc
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_D_ACC_MAX 3u
+
+/**
  * Encoded length of sbp_msg_ephemeris_glo_dep_d_t (V4 API) and
  * msg_ephemeris_glo_dep_d_t (legacy API)
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_D_ENCODED_LEN 120u
 
 #define SBP_MSG_EPHEMERIS_GLO 0x008B
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_t::pos (V4 API) or msg_ephemeris_glo_t::pos (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_POS_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_t::vel (V4 API) or msg_ephemeris_glo_t::vel (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_VEL_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ephemeris_glo_t::acc (V4 API) or msg_ephemeris_glo_t::acc (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_EPHEMERIS_GLO_ACC_MAX 3u
+
 /**
  * Encoded length of sbp_msg_ephemeris_glo_t (V4 API) and
  * msg_ephemeris_glo_t (legacy API)
@@ -397,6 +578,13 @@
 
 #define SBP_MSG_OBS_DEP_A 0x0045
 /**
+ * The maximum number of items that can be stored in sbp_msg_obs_dep_a_t::obs
+ * (V4 API) or msg_obs_dep_a_t::obs (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_OBS_DEP_A_OBS_MAX 19u
+
+/**
  * Encoded length of sbp_msg_obs_dep_a_t (V4 API) and
  * msg_obs_dep_a_t (legacy API)
  *
@@ -413,6 +601,13 @@
 
 #define SBP_MSG_OBS_DEP_B 0x0043
 /**
+ * The maximum number of items that can be stored in sbp_msg_obs_dep_b_t::obs
+ * (V4 API) or msg_obs_dep_b_t::obs (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_OBS_DEP_B_OBS_MAX 15u
+
+/**
  * Encoded length of sbp_msg_obs_dep_b_t (V4 API) and
  * msg_obs_dep_b_t (legacy API)
  *
@@ -428,6 +623,13 @@
 #define SBP_MSG_OBS_DEP_B_ENCODED_OVERHEAD 7u
 
 #define SBP_MSG_OBS_DEP_C 0x0049
+/**
+ * The maximum number of items that can be stored in sbp_msg_obs_dep_c_t::obs
+ * (V4 API) or msg_obs_dep_c_t::obs (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_OBS_DEP_C_OBS_MAX 15u
+
 /**
  * Encoded length of sbp_msg_obs_dep_c_t (V4 API) and
  * msg_obs_dep_c_t (legacy API)
@@ -546,6 +748,13 @@
 
 #define SBP_MSG_SV_AZ_EL 0x0097
 /**
+ * The maximum number of items that can be stored in sbp_msg_sv_az_el_t::azel
+ * (V4 API) or msg_sv_az_el_t::azel (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SV_AZ_EL_AZEL_MAX 63u
+
+/**
  * Encoded length of sbp_msg_sv_az_el_t (V4 API) and
  * msg_sv_az_el_t (legacy API)
  *
@@ -561,6 +770,13 @@
 #define SBP_MSG_SV_AZ_EL_ENCODED_OVERHEAD 0u
 
 #define SBP_MSG_OSR 0x0640
+/**
+ * The maximum number of items that can be stored in sbp_msg_osr_t::obs (V4 API)
+ * or msg_osr_t::obs (legacy API) before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_OSR_OBS_MAX 12u
+
 /**
  * Encoded length of sbp_msg_osr_t (V4 API) and
  * msg_osr_t (legacy API)

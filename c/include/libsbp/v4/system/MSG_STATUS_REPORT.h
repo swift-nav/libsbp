@@ -71,7 +71,7 @@ typedef struct {
   /**
    * Reported status of individual subsystems
    */
-  sbp_sub_system_report_t status[60];
+  sbp_sub_system_report_t status[SBP_MSG_STATUS_REPORT_STATUS_MAX];
   /**
    * Number of elements in status
    *

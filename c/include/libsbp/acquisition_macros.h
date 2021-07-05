@@ -60,6 +60,14 @@
 
 #define SBP_MSG_ACQ_SV_PROFILE 0x002E
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_acq_sv_profile_t::acq_sv_profile (V4 API) or
+ * msg_acq_sv_profile_t::acq_sv_profile (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ACQ_SV_PROFILE_ACQ_SV_PROFILE_MAX 7u
+
+/**
  * Encoded length of sbp_msg_acq_sv_profile_t (V4 API) and
  * msg_acq_sv_profile_t (legacy API)
  *
@@ -75,6 +83,14 @@
 #define SBP_MSG_ACQ_SV_PROFILE_ENCODED_OVERHEAD 0u
 
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_acq_sv_profile_dep_t::acq_sv_profile (V4 API) or
+ * msg_acq_sv_profile_dep_t::acq_sv_profile (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ACQ_SV_PROFILE_DEP_ACQ_SV_PROFILE_MAX 7u
+
 /**
  * Encoded length of sbp_msg_acq_sv_profile_dep_t (V4 API) and
  * msg_acq_sv_profile_dep_t (legacy API)

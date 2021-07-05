@@ -23,66 +23,76 @@ void sbp_msg_linux_cpu_state_dep_a_cmdline_init(
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_valid(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 236);
+  return sbp_unterminated_string_valid(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_cpu_state_dep_a_cmdline_strcmp(
     const sbp_msg_linux_cpu_state_dep_a_t *a,
     const sbp_msg_linux_cpu_state_dep_a_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 236);
+  return sbp_unterminated_string_strcmp(
+      &a->cmdline, &b->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_dep_a_cmdline_encoded_len(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 236);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_dep_a_cmdline_space_remaining(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 236);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_set(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 236, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_printf(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 236, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_vprintf(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 236, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_printf(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 236, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_vprintf(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 236, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_cpu_state_dep_a_cmdline_get(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 236);
+  return sbp_unterminated_string_get(&msg->cmdline,
+                                     SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_dep_a_cmdline_strlen(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 236);
+  return sbp_unterminated_string_strlen(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_cpu_state_dep_a_encode_internal(
@@ -96,12 +106,13 @@ bool sbp_msg_linux_cpu_state_dep_a_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->pcpu)) {
     return false;
   }
-  for (size_t i = 0; i < 15; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 236, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -134,12 +145,13 @@ bool sbp_msg_linux_cpu_state_dep_a_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->pcpu)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 236, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -195,7 +207,8 @@ int sbp_msg_linux_cpu_state_dep_a_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX;
+       i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
@@ -216,66 +229,76 @@ void sbp_msg_linux_mem_state_dep_a_cmdline_init(
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_valid(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 236);
+  return sbp_unterminated_string_valid(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_mem_state_dep_a_cmdline_strcmp(
     const sbp_msg_linux_mem_state_dep_a_t *a,
     const sbp_msg_linux_mem_state_dep_a_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 236);
+  return sbp_unterminated_string_strcmp(
+      &a->cmdline, &b->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_dep_a_cmdline_encoded_len(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 236);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_dep_a_cmdline_space_remaining(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 236);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 bool sbp_msg_linux_mem_state_dep_a_cmdline_set(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 236, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_printf(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 236, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_vprintf(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 236, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_append_printf(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 236, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_mem_state_dep_a_cmdline_append_vprintf(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 236, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_mem_state_dep_a_cmdline_get(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 236);
+  return sbp_unterminated_string_get(&msg->cmdline,
+                                     SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_dep_a_cmdline_strlen(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 236);
+  return sbp_unterminated_string_strlen(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_mem_state_dep_a_encode_internal(
@@ -289,12 +312,13 @@ bool sbp_msg_linux_mem_state_dep_a_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->pmem)) {
     return false;
   }
-  for (size_t i = 0; i < 15; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 236, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -327,12 +351,13 @@ bool sbp_msg_linux_mem_state_dep_a_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->pmem)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 236, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -388,7 +413,8 @@ int sbp_msg_linux_mem_state_dep_a_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX;
+       i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
@@ -538,66 +564,77 @@ void sbp_msg_linux_process_socket_counts_cmdline_init(
 
 bool sbp_msg_linux_process_socket_counts_cmdline_valid(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 246);
+  return sbp_unterminated_string_valid(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_process_socket_counts_cmdline_strcmp(
     const sbp_msg_linux_process_socket_counts_t *a,
     const sbp_msg_linux_process_socket_counts_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 246);
+  return sbp_unterminated_string_strcmp(
+      &a->cmdline, &b->cmdline,
+      SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_counts_cmdline_encoded_len(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 246);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_counts_cmdline_space_remaining(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 246);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 bool sbp_msg_linux_process_socket_counts_cmdline_set(
     sbp_msg_linux_process_socket_counts_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 246, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_process_socket_counts_cmdline_printf(
     sbp_msg_linux_process_socket_counts_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 246, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_socket_counts_cmdline_vprintf(
     sbp_msg_linux_process_socket_counts_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 246, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_process_socket_counts_cmdline_append_printf(
     sbp_msg_linux_process_socket_counts_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 246, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_socket_counts_cmdline_append_vprintf(
     sbp_msg_linux_process_socket_counts_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 246, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_process_socket_counts_cmdline_get(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 246);
+  return sbp_unterminated_string_get(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_counts_cmdline_strlen(
     const sbp_msg_linux_process_socket_counts_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 246);
+  return sbp_unterminated_string_strlen(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_process_socket_counts_encode_internal(
@@ -617,7 +654,9 @@ bool sbp_msg_linux_process_socket_counts_encode_internal(
   if (!sbp_u16_encode(ctx, &msg->socket_states)) {
     return false;
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 246, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -656,7 +695,9 @@ bool sbp_msg_linux_process_socket_counts_decode_internal(
   if (!sbp_u16_decode(ctx, &msg->socket_states)) {
     return false;
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 246, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -736,66 +777,77 @@ void sbp_msg_linux_process_socket_queues_cmdline_init(
 
 bool sbp_msg_linux_process_socket_queues_cmdline_valid(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 180);
+  return sbp_unterminated_string_valid(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_process_socket_queues_cmdline_strcmp(
     const sbp_msg_linux_process_socket_queues_t *a,
     const sbp_msg_linux_process_socket_queues_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 180);
+  return sbp_unterminated_string_strcmp(
+      &a->cmdline, &b->cmdline,
+      SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_queues_cmdline_encoded_len(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 180);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 180);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 bool sbp_msg_linux_process_socket_queues_cmdline_set(
     sbp_msg_linux_process_socket_queues_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 180, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_process_socket_queues_cmdline_printf(
     sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 180, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
     sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 180, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
     sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 180, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
     sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 180, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_process_socket_queues_cmdline_get(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 180);
+  return sbp_unterminated_string_get(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
     const sbp_msg_linux_process_socket_queues_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 180);
+  return sbp_unterminated_string_strlen(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_process_socket_queues_encode_internal(
@@ -818,12 +870,15 @@ bool sbp_msg_linux_process_socket_queues_encode_internal(
   if (!sbp_u16_encode(ctx, &msg->socket_states)) {
     return false;
   }
-  for (size_t i = 0; i < 64; i++) {
+  for (size_t i = 0;
+       i < SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->address_of_largest[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 180, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -865,12 +920,15 @@ bool sbp_msg_linux_process_socket_queues_decode_internal(
   if (!sbp_u16_decode(ctx, &msg->socket_states)) {
     return false;
   }
-  for (uint8_t i = 0; i < 64; i++) {
+  for (uint8_t i = 0;
+       i < SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->address_of_largest[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 180, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -941,7 +999,10 @@ int sbp_msg_linux_process_socket_queues_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 64; i++) {
+  for (uint8_t i = 0;
+       ret == 0 &&
+       i < SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX;
+       i++) {
     ret = sbp_char_cmp(&a->address_of_largest[i], &b->address_of_largest[i]);
   }
   if (ret != 0) {
@@ -963,12 +1024,14 @@ bool sbp_msg_linux_socket_usage_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->max_queue_depth)) {
     return false;
   }
-  for (size_t i = 0; i < 16; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX;
+       i++) {
     if (!sbp_u16_encode(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 16; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX;
+       i++) {
     if (!sbp_u16_encode(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
@@ -1000,12 +1063,14 @@ bool sbp_msg_linux_socket_usage_decode_internal(
   if (!sbp_u32_decode(ctx, &msg->max_queue_depth)) {
     return false;
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX;
+       i++) {
     if (!sbp_u16_decode(ctx, &msg->socket_state_counts[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 16; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX;
+       i++) {
     if (!sbp_u16_decode(ctx, &msg->socket_type_counts[i])) {
       return false;
     }
@@ -1057,14 +1122,17 @@ int sbp_msg_linux_socket_usage_cmp(const sbp_msg_linux_socket_usage_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0;
+       ret == 0 && i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX;
+       i++) {
     ret = sbp_u16_cmp(&a->socket_state_counts[i], &b->socket_state_counts[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 16; i++) {
+  for (uint8_t i = 0;
+       ret == 0 && i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX; i++) {
     ret = sbp_u16_cmp(&a->socket_type_counts[i], &b->socket_type_counts[i]);
   }
   if (ret != 0) {
@@ -1080,66 +1148,76 @@ void sbp_msg_linux_process_fd_count_cmdline_init(
 
 bool sbp_msg_linux_process_fd_count_cmdline_valid(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 250);
+  return sbp_unterminated_string_valid(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_process_fd_count_cmdline_strcmp(
     const sbp_msg_linux_process_fd_count_t *a,
     const sbp_msg_linux_process_fd_count_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 250);
+  return sbp_unterminated_string_strcmp(
+      &a->cmdline, &b->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_fd_count_cmdline_encoded_len(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 250);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 250);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 bool sbp_msg_linux_process_fd_count_cmdline_set(
     sbp_msg_linux_process_fd_count_t *msg, const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 250, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_process_fd_count_cmdline_printf(
     sbp_msg_linux_process_fd_count_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 250, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_fd_count_cmdline_vprintf(
     sbp_msg_linux_process_fd_count_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 250, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_process_fd_count_cmdline_append_printf(
     sbp_msg_linux_process_fd_count_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 250, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_fd_count_cmdline_append_vprintf(
     sbp_msg_linux_process_fd_count_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 250, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_process_fd_count_cmdline_get(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 250);
+  return sbp_unterminated_string_get(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_process_fd_count_cmdline_strlen(
     const sbp_msg_linux_process_fd_count_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 250);
+  return sbp_unterminated_string_strlen(
+      &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_process_fd_count_encode_internal(
@@ -1153,7 +1231,8 @@ bool sbp_msg_linux_process_fd_count_encode_internal(
   if (!sbp_u16_encode(ctx, &msg->fd_count)) {
     return false;
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 250, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1186,7 +1265,8 @@ bool sbp_msg_linux_process_fd_count_decode_internal(
   if (!sbp_u16_decode(ctx, &msg->fd_count)) {
     return false;
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 250, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1256,36 +1336,40 @@ void sbp_msg_linux_process_fd_summary_most_opened_init(
 
 bool sbp_msg_linux_process_fd_summary_most_opened_valid(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  return sbp_double_null_terminated_string_valid(&msg->most_opened, 251);
+  return sbp_double_null_terminated_string_valid(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX);
 }
 
 int sbp_msg_linux_process_fd_summary_most_opened_strcmp(
     const sbp_msg_linux_process_fd_summary_t *a,
     const sbp_msg_linux_process_fd_summary_t *b) {
-  return sbp_double_null_terminated_string_strcmp(&a->most_opened,
-                                                  &b->most_opened, 251);
+  return sbp_double_null_terminated_string_strcmp(
+      &a->most_opened, &b->most_opened,
+      SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX);
 }
 
 size_t sbp_msg_linux_process_fd_summary_most_opened_encoded_len(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  return sbp_double_null_terminated_string_encoded_len(&msg->most_opened, 251);
+  return sbp_double_null_terminated_string_encoded_len(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX);
 }
 
 size_t sbp_msg_linux_process_fd_summary_most_opened_space_remaining(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  return sbp_double_null_terminated_string_space_remaining(&msg->most_opened,
-                                                           251);
+  return sbp_double_null_terminated_string_space_remaining(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX);
 }
 size_t sbp_msg_linux_process_fd_summary_most_opened_count_sections(
     const sbp_msg_linux_process_fd_summary_t *msg) {
-  return sbp_double_null_terminated_string_count_sections(&msg->most_opened,
-                                                          251);
+  return sbp_double_null_terminated_string_count_sections(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX);
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section(
     sbp_msg_linux_process_fd_summary_t *msg, const char *new_str) {
-  return sbp_double_null_terminated_string_add_section(&msg->most_opened, 251,
-                                                       new_str);
+  return sbp_double_null_terminated_string_add_section(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX,
+      new_str);
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
@@ -1293,7 +1377,8 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_double_null_terminated_string_add_section_vprintf(
-      &msg->most_opened, 251, fmt, ap);
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
@@ -1301,40 +1386,46 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section_vprintf(
     sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap) {
   return sbp_double_null_terminated_string_add_section_vprintf(
-      &msg->most_opened, 251, fmt, ap);
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX, fmt,
+      ap);
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_append(
     sbp_msg_linux_process_fd_summary_t *msg, const char *str) {
-  return sbp_double_null_terminated_string_append(&msg->most_opened, 251, str);
+  return sbp_double_null_terminated_string_append(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX, str);
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_append_printf(
     sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_double_null_terminated_string_append_vprintf(&msg->most_opened,
-                                                              251, fmt, ap);
+  bool ret = sbp_double_null_terminated_string_append_vprintf(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_process_fd_summary_most_opened_append_vprintf(
     sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap) {
-  return sbp_double_null_terminated_string_append_vprintf(&msg->most_opened,
-                                                          251, fmt, ap);
+  return sbp_double_null_terminated_string_append_vprintf(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX, fmt,
+      ap);
 }
 
 const char *sbp_msg_linux_process_fd_summary_most_opened_get_section(
     const sbp_msg_linux_process_fd_summary_t *msg, size_t section) {
-  return sbp_double_null_terminated_string_get_section(&msg->most_opened, 251,
-                                                       section);
+  return sbp_double_null_terminated_string_get_section(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX,
+      section);
 }
 
 size_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
     const sbp_msg_linux_process_fd_summary_t *msg, size_t section) {
-  return sbp_double_null_terminated_string_section_strlen(&msg->most_opened,
-                                                          251, section);
+  return sbp_double_null_terminated_string_section_strlen(
+      &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX,
+      section);
 }
 
 bool sbp_msg_linux_process_fd_summary_encode_internal(
@@ -1342,7 +1433,9 @@ bool sbp_msg_linux_process_fd_summary_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->sys_fd_count)) {
     return false;
   }
-  if (!sbp_double_null_terminated_string_encode(&msg->most_opened, 251, ctx)) {
+  if (!sbp_double_null_terminated_string_encode(
+          &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -1369,7 +1462,9 @@ bool sbp_msg_linux_process_fd_summary_decode_internal(
   if (!sbp_u32_decode(ctx, &msg->sys_fd_count)) {
     return false;
   }
-  if (!sbp_double_null_terminated_string_decode(&msg->most_opened, 251, ctx)) {
+  if (!sbp_double_null_terminated_string_decode(
+          &msg->most_opened, SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX,
+          ctx)) {
     return false;
   }
   return true;
@@ -1428,65 +1523,75 @@ void sbp_msg_linux_cpu_state_cmdline_init(sbp_msg_linux_cpu_state_t *msg) {
 
 bool sbp_msg_linux_cpu_state_cmdline_valid(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 231);
+  return sbp_unterminated_string_valid(&msg->cmdline,
+                                       SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_cpu_state_cmdline_strcmp(const sbp_msg_linux_cpu_state_t *a,
                                            const sbp_msg_linux_cpu_state_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 231);
+  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline,
+                                        SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_cmdline_encoded_len(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 231);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 231);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 bool sbp_msg_linux_cpu_state_cmdline_set(sbp_msg_linux_cpu_state_t *msg,
                                          const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 231, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_cpu_state_cmdline_printf(sbp_msg_linux_cpu_state_t *msg,
                                             const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 231, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_cpu_state_cmdline_vprintf(sbp_msg_linux_cpu_state_t *msg,
                                              const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 231, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_cpu_state_cmdline_append_printf(
     sbp_msg_linux_cpu_state_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 231, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_cpu_state_cmdline_append_vprintf(
     sbp_msg_linux_cpu_state_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 231, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_cpu_state_cmdline_get(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 231);
+  return sbp_unterminated_string_get(&msg->cmdline,
+                                     SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_cpu_state_cmdline_strlen(
     const sbp_msg_linux_cpu_state_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 231);
+  return sbp_unterminated_string_strlen(&msg->cmdline,
+                                        SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_cpu_state_encode_internal(
@@ -1506,12 +1611,13 @@ bool sbp_msg_linux_cpu_state_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  for (size_t i = 0; i < 15; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_TNAME_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 231, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1549,12 +1655,13 @@ bool sbp_msg_linux_cpu_state_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_TNAME_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 231, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1619,7 +1726,7 @@ int sbp_msg_linux_cpu_state_cmp(const sbp_msg_linux_cpu_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_CPU_STATE_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {
@@ -1639,65 +1746,75 @@ void sbp_msg_linux_mem_state_cmdline_init(sbp_msg_linux_mem_state_t *msg) {
 
 bool sbp_msg_linux_mem_state_cmdline_valid(
     const sbp_msg_linux_mem_state_t *msg) {
-  return sbp_unterminated_string_valid(&msg->cmdline, 231);
+  return sbp_unterminated_string_valid(&msg->cmdline,
+                                       SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 
 int sbp_msg_linux_mem_state_cmdline_strcmp(const sbp_msg_linux_mem_state_t *a,
                                            const sbp_msg_linux_mem_state_t *b) {
-  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline, 231);
+  return sbp_unterminated_string_strcmp(&a->cmdline, &b->cmdline,
+                                        SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_cmdline_encoded_len(
     const sbp_msg_linux_mem_state_t *msg) {
-  return sbp_unterminated_string_encoded_len(&msg->cmdline, 231);
+  return sbp_unterminated_string_encoded_len(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_cmdline_space_remaining(
     const sbp_msg_linux_mem_state_t *msg) {
-  return sbp_unterminated_string_space_remaining(&msg->cmdline, 231);
+  return sbp_unterminated_string_space_remaining(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 bool sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
                                          const char *new_str) {
-  return sbp_unterminated_string_set(&msg->cmdline, 231, new_str);
+  return sbp_unterminated_string_set(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, new_str);
 }
 
 bool sbp_msg_linux_mem_state_cmdline_printf(sbp_msg_linux_mem_state_t *msg,
                                             const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(&msg->cmdline, 231, fmt, ap);
+  bool ret = sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_mem_state_cmdline_vprintf(sbp_msg_linux_mem_state_t *msg,
                                              const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(&msg->cmdline, 231, fmt, ap);
+  return sbp_unterminated_string_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, fmt, ap);
 }
 
 bool sbp_msg_linux_mem_state_cmdline_append_printf(
     sbp_msg_linux_mem_state_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  bool ret =
-      sbp_unterminated_string_append_vprintf(&msg->cmdline, 231, fmt, ap);
+  bool ret = sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_linux_mem_state_cmdline_append_vprintf(
     sbp_msg_linux_mem_state_t *msg, const char *fmt, va_list ap) {
-  return sbp_unterminated_string_append_vprintf(&msg->cmdline, 231, fmt, ap);
+  return sbp_unterminated_string_append_vprintf(
+      &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, fmt, ap);
 }
 
 const char *sbp_msg_linux_mem_state_cmdline_get(
     const sbp_msg_linux_mem_state_t *msg) {
-  return sbp_unterminated_string_get(&msg->cmdline, 231);
+  return sbp_unterminated_string_get(&msg->cmdline,
+                                     SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 
 size_t sbp_msg_linux_mem_state_cmdline_strlen(
     const sbp_msg_linux_mem_state_t *msg) {
-  return sbp_unterminated_string_strlen(&msg->cmdline, 231);
+  return sbp_unterminated_string_strlen(&msg->cmdline,
+                                        SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
 
 bool sbp_msg_linux_mem_state_encode_internal(
@@ -1717,12 +1834,13 @@ bool sbp_msg_linux_mem_state_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  for (size_t i = 0; i < 15; i++) {
+  for (size_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_TNAME_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_encode(&msg->cmdline, 231, ctx)) {
+  if (!sbp_unterminated_string_encode(
+          &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1760,12 +1878,13 @@ bool sbp_msg_linux_mem_state_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  for (uint8_t i = 0; i < 15; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_TNAME_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->tname[i])) {
       return false;
     }
   }
-  if (!sbp_unterminated_string_decode(&msg->cmdline, 231, ctx)) {
+  if (!sbp_unterminated_string_decode(
+          &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX, ctx)) {
     return false;
   }
   return true;
@@ -1830,7 +1949,7 @@ int sbp_msg_linux_mem_state_cmp(const sbp_msg_linux_mem_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 15; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_MEM_STATE_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
   }
   if (ret != 0) {

@@ -54,7 +54,7 @@ typedef struct {
   /**
    * Contents of read file
    */
-  u8 contents[251];
+  u8 contents[SBP_MSG_FILEIO_READ_RESP_CONTENTS_MAX];
   /**
    * Number of elements in contents
    *

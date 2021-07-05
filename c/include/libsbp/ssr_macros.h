@@ -43,6 +43,13 @@
 #define SBP_GRIDDED_CORRECTION_HEADER_ENCODED_LEN 17u
 
 /**
+ * The maximum number of items that can be stored in
+ * sbp_stec_sat_element_t::stec_coeff (V4 API) or stec_sat_element_t::stec_coeff
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX 4u
+
+/**
  * Encoded length of sbp_stec_sat_element_t (V4 API) and
  * stec_sat_element_t (legacy API)
  */
@@ -81,6 +88,13 @@
 
 #define SBP_MSG_SSR_CODE_BIASES 0x05E1
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_code_biases_t::biases (V4 API) or msg_ssr_code_biases_t::biases
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_CODE_BIASES_BIASES_MAX 81u
+
+/**
  * Encoded length of sbp_msg_ssr_code_biases_t (V4 API) and
  * msg_ssr_code_biases_t (legacy API)
  *
@@ -96,6 +110,13 @@
 #define SBP_MSG_SSR_CODE_BIASES_ENCODED_OVERHEAD 10u
 
 #define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_phase_biases_t::biases (V4 API) or msg_ssr_phase_biases_t::biases
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_PHASE_BIASES_BIASES_MAX 30u
+
 /**
  * Encoded length of sbp_msg_ssr_phase_biases_t (V4 API) and
  * msg_ssr_phase_biases_t (legacy API)
@@ -113,6 +134,14 @@
 
 #define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_stec_correction_t::stec_sat_list (V4 API) or
+ * msg_ssr_stec_correction_t::stec_sat_list (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX 21u
+
+/**
  * Encoded length of sbp_msg_ssr_stec_correction_t (V4 API) and
  * msg_ssr_stec_correction_t (legacy API)
  *
@@ -128,6 +157,14 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD 14u
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_gridded_correction_t::stec_residuals (V4 API) or
+ * msg_ssr_gridded_correction_t::stec_residuals (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_STEC_RESIDUALS_MAX 46u
+
 /**
  * Encoded length of sbp_msg_ssr_gridded_correction_t (V4 API) and
  * msg_ssr_gridded_correction_t (legacy API)
@@ -182,12 +219,33 @@
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3I_CAST (18)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_QZSS (19)
 /**
+ * The maximum number of items that can be stored in sbp_satellite_apc_t::pco
+ * (V4 API) or satellite_apc_t::pco (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_SATELLITE_APC_PCO_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in sbp_satellite_apc_t::pcv
+ * (V4 API) or satellite_apc_t::pcv (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_SATELLITE_APC_PCV_MAX 21u
+
+/**
  * Encoded length of sbp_satellite_apc_t (V4 API) and
  * satellite_apc_t (legacy API)
  */
 #define SBP_SATELLITE_APC_ENCODED_LEN 32u
 
 #define SBP_MSG_SSR_SATELLITE_APC 0x0604
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_satellite_apc_t::apc (V4 API) or msg_ssr_satellite_apc_t::apc
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_SATELLITE_APC_APC_MAX 7u
+
 /**
  * Encoded length of sbp_msg_ssr_satellite_apc_t (V4 API) and
  * msg_ssr_satellite_apc_t (legacy API)
@@ -230,6 +288,14 @@
 
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_stec_correction_dep_a_t::stec_sat_list (V4 API) or
+ * msg_ssr_stec_correction_dep_a_t::stec_sat_list (legacy API) before the
+ * maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_STEC_SAT_LIST_MAX 22u
+
+/**
  * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t (V4 API) and
  * msg_ssr_stec_correction_dep_a_t (legacy API)
  *
@@ -245,6 +311,14 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_ENCODED_OVERHEAD 10u
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_gridded_correction_no_std_dep_a_t::stec_residuals (V4 API) or
+ * msg_ssr_gridded_correction_no_std_dep_a_t::stec_residuals (legacy API) before
+ * the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_STEC_RESIDUALS_MAX 59u
+
 /**
  * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t (V4 API) and
  * msg_ssr_gridded_correction_no_std_dep_a_t (legacy API)
@@ -263,6 +337,14 @@
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_gridded_correction_dep_a_t::stec_residuals (V4 API) or
+ * msg_ssr_gridded_correction_dep_a_t::stec_residuals (legacy API) before the
+ * maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_STEC_RESIDUALS_MAX 47u
+
+/**
  * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t (V4 API) and
  * msg_ssr_gridded_correction_dep_a_t (legacy API)
  *
@@ -278,6 +360,14 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_ENCODED_OVERHEAD 19u
 
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_grid_definition_dep_a_t::rle_list (V4 API) or
+ * msg_ssr_grid_definition_dep_a_t::rle_list (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_RLE_LIST_MAX 246u
+
 /**
  * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t (V4 API) and
  * msg_ssr_grid_definition_dep_a_t (legacy API)

@@ -92,7 +92,7 @@ typedef struct {
    * consists of flags containing (meta)data pertaining to that specific single
    * sensor. Refer to each (XX)InputType descriptor in the present doc.
    */
-  sbp_solution_input_type_t sol_in[119];
+  sbp_solution_input_type_t sol_in[SBP_MSG_SOLN_META_SOL_IN_MAX];
   /**
    * Number of elements in sol_in
    *

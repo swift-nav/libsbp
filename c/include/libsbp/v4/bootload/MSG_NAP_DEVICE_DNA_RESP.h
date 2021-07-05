@@ -51,7 +51,7 @@ typedef struct {
   /**
    * 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
    */
-  u8 dna[8];
+  u8 dna[SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX];
 } sbp_msg_nap_device_dna_resp_t;
 
 /**

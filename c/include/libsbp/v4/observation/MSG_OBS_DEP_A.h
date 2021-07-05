@@ -53,7 +53,7 @@ typedef struct {
   /**
    * Pseudorange and carrier phase observation for a satellite being tracked.
    */
-  sbp_packed_obs_content_dep_a_t obs[19];
+  sbp_packed_obs_content_dep_a_t obs[SBP_MSG_OBS_DEP_A_OBS_MAX];
   /**
    * Number of elements in obs
    *

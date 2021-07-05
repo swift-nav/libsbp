@@ -59,7 +59,7 @@ typedef struct {
   /**
    * variable length wrapped binary message
    */
-  u8 fwd_payload[253];
+  u8 fwd_payload[SBP_MSG_FWD_FWD_PAYLOAD_MAX];
   /**
    * Number of elements in fwd_payload
    *

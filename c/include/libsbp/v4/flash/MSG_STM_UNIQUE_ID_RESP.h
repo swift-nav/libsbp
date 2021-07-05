@@ -49,7 +49,7 @@ typedef struct {
   /**
    * Device unique ID
    */
-  u8 stm_id[12];
+  u8 stm_id[SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX];
 } sbp_msg_stm_unique_id_resp_t;
 
 /**

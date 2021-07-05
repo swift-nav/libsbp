@@ -73,7 +73,7 @@ typedef struct {
   /**
    * Code biases for the different satellite signals
    */
-  sbp_code_biases_content_t biases[81];
+  sbp_code_biases_content_t biases[SBP_MSG_SSR_CODE_BIASES_BIASES_MAX];
   /**
    * Number of elements in biases
    *

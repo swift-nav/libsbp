@@ -72,7 +72,7 @@ typedef struct {
   /**
    * fixed length string representing the thread name
    */
-  char tname[15];
+  char tname[SBP_MSG_LINUX_MEM_STATE_TNAME_MAX];
 
   /**
    * the command line (as much as it fits in the remaining packet)

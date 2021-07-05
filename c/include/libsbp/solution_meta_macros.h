@@ -79,6 +79,13 @@
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS \
   (4)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_soln_meta_dep_a_t::sol_in (V4 API) or msg_soln_meta_dep_a_t::sol_in
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SOLN_META_DEP_A_SOL_IN_MAX 118u
+
+/**
  * Encoded length of sbp_msg_soln_meta_dep_a_t (V4 API) and
  * msg_soln_meta_dep_a_t (legacy API)
  *
@@ -122,6 +129,13 @@
        (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK))      \
       << (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT))); \
   } while (0)
+
+/**
+ * The maximum number of items that can be stored in sbp_msg_soln_meta_t::sol_in
+ * (V4 API) or msg_soln_meta_t::sol_in (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_SOLN_META_SOL_IN_MAX 119u
 
 /**
  * Encoded length of sbp_msg_soln_meta_t (V4 API) and

@@ -58,7 +58,7 @@ typedef struct {
   /**
    * Unspecified data TBD for this schema
    */
-  u8 reserved[250];
+  u8 reserved[SBP_MSG_CELL_MODEM_STATUS_RESERVED_MAX];
   /**
    * Number of elements in reserved
    *

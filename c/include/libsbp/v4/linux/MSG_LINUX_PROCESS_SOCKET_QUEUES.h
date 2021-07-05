@@ -81,7 +81,8 @@ typedef struct {
    * Address of the largest queue, remote or local depending on the
    * directionality of the connection.
    */
-  char address_of_largest[64];
+  char address_of_largest
+      [SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX];
 
   /**
    * the command line of the process in question

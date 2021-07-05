@@ -27,7 +27,7 @@ bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->message_type)) {
     return false;
   }
-  for (size_t i = 0; i < 27; i++) {
+  for (size_t i = 0; i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->data[i])) {
       return false;
     }
@@ -61,7 +61,7 @@ bool sbp_msg_sbas_raw_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->message_type)) {
     return false;
   }
-  for (uint8_t i = 0; i < 27; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;
     }
@@ -115,7 +115,7 @@ int sbp_msg_sbas_raw_cmp(const sbp_msg_sbas_raw_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 27; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {

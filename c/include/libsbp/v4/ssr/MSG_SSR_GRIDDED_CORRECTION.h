@@ -65,7 +65,8 @@ typedef struct {
   /**
    * STEC residuals for each satellite (mean, stddev).
    */
-  sbp_stec_residual_t stec_residuals[46];
+  sbp_stec_residual_t
+      stec_residuals[SBP_MSG_SSR_GRIDDED_CORRECTION_STEC_RESIDUALS_MAX];
   /**
    * Number of elements in stec_residuals
    *

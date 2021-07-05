@@ -457,7 +457,7 @@ bool sbp_stec_sat_element_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->stec_quality_indicator)) {
     return false;
   }
-  for (size_t i = 0; i < 4; i++) {
+  for (size_t i = 0; i < SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX; i++) {
     if (!sbp_s16_encode(ctx, &msg->stec_coeff[i])) {
       return false;
     }
@@ -488,7 +488,7 @@ bool sbp_stec_sat_element_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->stec_quality_indicator)) {
     return false;
   }
-  for (uint8_t i = 0; i < 4; i++) {
+  for (uint8_t i = 0; i < SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX; i++) {
     if (!sbp_s16_decode(ctx, &msg->stec_coeff[i])) {
       return false;
     }
@@ -525,7 +525,8 @@ int sbp_stec_sat_element_cmp(const sbp_stec_sat_element_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 4; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX;
+       i++) {
     ret = sbp_s16_cmp(&a->stec_coeff[i], &b->stec_coeff[i]);
   }
   if (ret != 0) {
@@ -1731,12 +1732,12 @@ bool sbp_satellite_apc_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u16_encode(ctx, &msg->svn)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_SATELLITE_APC_PCO_MAX; i++) {
     if (!sbp_s16_encode(ctx, &msg->pco[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 21; i++) {
+  for (size_t i = 0; i < SBP_SATELLITE_APC_PCV_MAX; i++) {
     if (!sbp_s8_encode(ctx, &msg->pcv[i])) {
       return false;
     }
@@ -1770,12 +1771,12 @@ bool sbp_satellite_apc_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u16_decode(ctx, &msg->svn)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_SATELLITE_APC_PCO_MAX; i++) {
     if (!sbp_s16_decode(ctx, &msg->pco[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 21; i++) {
+  for (uint8_t i = 0; i < SBP_SATELLITE_APC_PCV_MAX; i++) {
     if (!sbp_s8_decode(ctx, &msg->pcv[i])) {
       return false;
     }
@@ -1817,14 +1818,14 @@ int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_SATELLITE_APC_PCO_MAX; i++) {
     ret = sbp_s16_cmp(&a->pco[i], &b->pco[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 21; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_SATELLITE_APC_PCV_MAX; i++) {
     ret = sbp_s8_cmp(&a->pcv[i], &b->pcv[i]);
   }
   if (ret != 0) {

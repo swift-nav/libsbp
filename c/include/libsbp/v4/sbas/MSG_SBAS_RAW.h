@@ -63,7 +63,7 @@ typedef struct {
   /**
    * Raw SBAS data field of 212 bits (last byte padded with zeros).
    */
-  u8 data[27];
+  u8 data[SBP_MSG_SBAS_RAW_DATA_MAX];
 } sbp_msg_sbas_raw_t;
 
 /**

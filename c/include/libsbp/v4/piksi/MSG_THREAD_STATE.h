@@ -48,7 +48,7 @@ typedef struct {
   /**
    * Thread name (NULL terminated)
    */
-  char name[20];
+  char name[SBP_MSG_THREAD_STATE_NAME_MAX];
 
   /**
    * Percentage cpu use for this thread. Values range from 0 - 1000 and needs to

@@ -47,7 +47,8 @@ typedef struct {
   /**
    * Usage measurement array
    */
-  sbp_network_usage_t interfaces[6];
+  sbp_network_usage_t
+      interfaces[SBP_MSG_NETWORK_BANDWIDTH_USAGE_INTERFACES_MAX];
   /**
    * Number of elements in interfaces
    *

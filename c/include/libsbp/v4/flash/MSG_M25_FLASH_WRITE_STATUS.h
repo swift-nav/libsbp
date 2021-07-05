@@ -47,7 +47,7 @@ typedef struct {
   /**
    * Byte to write to the M25 flash status register
    */
-  u8 status[1];
+  u8 status[SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX];
 } sbp_msg_m25_flash_write_status_t;
 
 /**

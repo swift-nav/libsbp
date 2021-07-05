@@ -47,7 +47,7 @@ typedef struct {
   /**
    * IPv4 address (all zero when unavailable)
    */
-  u8 ipv4_address[4];
+  u8 ipv4_address[SBP_MSG_NETWORK_STATE_RESP_IPV4_ADDRESS_MAX];
 
   /**
    * IPv4 netmask CIDR notation
@@ -57,7 +57,7 @@ typedef struct {
   /**
    * IPv6 address (all zero when unavailable)
    */
-  u8 ipv6_address[16];
+  u8 ipv6_address[SBP_MSG_NETWORK_STATE_RESP_IPV6_ADDRESS_MAX];
 
   /**
    * IPv6 netmask CIDR notation
@@ -77,7 +77,7 @@ typedef struct {
   /**
    * Interface Name
    */
-  char interface_name[16];
+  char interface_name[SBP_MSG_NETWORK_STATE_RESP_INTERFACE_NAME_MAX];
 
   /**
    * Interface flags from SIOCGIFFLAGS

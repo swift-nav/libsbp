@@ -27,6 +27,13 @@
 
 #define SBP_MSG_SETTINGS_WRITE 0x00A0
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_write_t::setting (V4 API) or msg_settings_write_t::setting
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SETTINGS_WRITE_SETTING_MAX 255u
+
+/**
  * Encoded length of sbp_msg_settings_write_t (V4 API) and
  * msg_settings_write_t (legacy API)
  *
@@ -65,6 +72,14 @@
   (5)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_write_resp_t::setting (V4 API) or
+ * msg_settings_write_resp_t::setting (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX 254u
+
+/**
  * Encoded length of sbp_msg_settings_write_resp_t (V4 API) and
  * msg_settings_write_resp_t (legacy API)
  *
@@ -81,6 +96,14 @@
 
 #define SBP_MSG_SETTINGS_READ_REQ 0x00A4
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_read_req_t::setting (V4 API) or
+ * msg_settings_read_req_t::setting (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX 255u
+
+/**
  * Encoded length of sbp_msg_settings_read_req_t (V4 API) and
  * msg_settings_read_req_t (legacy API)
  *
@@ -96,6 +119,14 @@
 #define SBP_MSG_SETTINGS_READ_REQ_ENCODED_OVERHEAD 0u
 
 #define SBP_MSG_SETTINGS_READ_RESP 0x00A5
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_read_resp_t::setting (V4 API) or
+ * msg_settings_read_resp_t::setting (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX 255u
+
 /**
  * Encoded length of sbp_msg_settings_read_resp_t (V4 API) and
  * msg_settings_read_resp_t (legacy API)
@@ -120,6 +151,14 @@
 
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_read_by_index_resp_t::setting (V4 API) or
+ * msg_settings_read_by_index_resp_t::setting (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX 253u
+
+/**
  * Encoded length of sbp_msg_settings_read_by_index_resp_t (V4 API) and
  * msg_settings_read_by_index_resp_t (legacy API)
  *
@@ -142,6 +181,14 @@
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN 0u
 
 #define SBP_MSG_SETTINGS_REGISTER 0x00AE
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_register_t::setting (V4 API) or
+ * msg_settings_register_t::setting (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SETTINGS_REGISTER_SETTING_MAX 255u
+
 /**
  * Encoded length of sbp_msg_settings_register_t (V4 API) and
  * msg_settings_register_t (legacy API)
@@ -177,6 +224,14 @@
   (2)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE \
   (3)
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_settings_register_resp_t::setting (V4 API) or
+ * msg_settings_register_resp_t::setting (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX 254u
+
 /**
  * Encoded length of sbp_msg_settings_register_resp_t (V4 API) and
  * msg_settings_register_resp_t (legacy API)

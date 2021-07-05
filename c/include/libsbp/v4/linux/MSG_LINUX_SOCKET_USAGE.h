@@ -57,13 +57,13 @@ typedef struct {
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
-  u16 socket_state_counts[16];
+  u16 socket_state_counts[SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX];
 
   /**
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
-  u16 socket_type_counts[16];
+  u16 socket_type_counts[SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX];
 } sbp_msg_linux_socket_usage_t;
 
 /**

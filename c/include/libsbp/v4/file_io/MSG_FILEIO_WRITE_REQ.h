@@ -66,7 +66,7 @@ typedef struct {
   /**
    * Variable-length array of data to write
    */
-  u8 data[247];
+  u8 data[SBP_MSG_FILEIO_WRITE_REQ_DATA_MAX];
   /**
    * Number of elements in data
    *
