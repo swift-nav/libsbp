@@ -244,7 +244,7 @@ def get_max_possible_items(msg, field, package_specs):
 
     The given field must be a variable length array or string otherwise this function will assert
 
-    The maximum number of items will be calculated by summing the sizes of all fields which occur in the 
+    The maximum number of items will be calculated by summing the sizes of all fields which occur in the
     message before the specified field and dividing the remainder by the encoded size of a single item in the array
     """
     assert field.type_id == "array" or field.type_id == "string"
@@ -511,7 +511,7 @@ def render_all(include_dir, package_specs):
             {
                 "msgs": msgs,
                 "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml"
+                "filepath": "/".join(package_spec.filepath) + ".yaml",
             },
         )
         destination_filename = "%s/include/libsbp/%s_macros.h" % (include_dir, name)
@@ -521,7 +521,7 @@ def render_all(include_dir, package_specs):
             {
                 "msgs": msgs,
                 "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml"
+                "filepath": "/".join(package_spec.filepath) + ".yaml",
             },
         )
         destination_filename = "%s/src/v4/%s.c" % (include_dir, name)
@@ -531,7 +531,7 @@ def render_all(include_dir, package_specs):
             {
                 "msgs": msgs,
                 "pkg_name": name,
-                "filepath": "/".join(package_spec.filepath) + ".yaml"
+                "filepath": "/".join(package_spec.filepath) + ".yaml",
             },
         )
         destination_filename = "%s/src/include/libsbp/internal/v4/%s.h" % (
@@ -545,7 +545,7 @@ def render_all(include_dir, package_specs):
                 "msgs": msgs,
                 "pkg_name": name,
                 "include": extensions(package_spec.includes),
-                "filepath": "/".join(package_spec.filepath) + ".yaml"
+                "filepath": "/".join(package_spec.filepath) + ".yaml",
             },
         )
     destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (include_dir)
@@ -565,14 +565,17 @@ def render_all(include_dir, package_specs):
         {
             "packages": package_specs,
             "includes": extensions(all_packages),
-            "msgs": sorted(real_messages, key=lambda k: k.type_name)
+            "msgs": sorted(real_messages, key=lambda k: k.type_name),
         },
     )
     destination_filename = "%s/include/libsbp/sbp_msg_type.h" % include_dir
     render_file(
         SBP_MSG_TYPE_TEMPLATE_NAME,
         destination_filename,
-        {"msgs": sorted(real_messages, key=lambda k: k.type_name), "packages": all_packages},
+        {
+            "msgs": sorted(real_messages, key=lambda k: k.type_name),
+            "packages": all_packages,
+        },
     )
 
 
