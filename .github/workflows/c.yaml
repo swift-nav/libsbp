@@ -181,8 +181,11 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -G "Visual Studio 16 2019" -S c -B build -Dlibsbp_ENABLE_TESTS=false -Dlibsbp_ENABLE_EXAMPLES=false
+        run: cmake -G "Visual Studio 16 2019" -S c -B build -D gtest_force_shared_crt=true
 
       - name: Build
         run: cmake --build build --target ALL_BUILD
+
+      - name: Test
+        run: cmake --build build --target do-all-tests
 
