@@ -1,5 +1,5 @@
 find_package(Threads)
-set(TEST_LIBS ${TEST_LIBS} check Threads::Threads sbp m)
+set(TEST_LIBS ${TEST_LIBS} check Threads::Threads sbp)
 
 # Check needs to be linked against Librt on Linux
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -25,29 +25,31 @@ if(APPLE)
   list(APPEND TEST_INCLUDES "-L/usr/local/lib")
 endif()
 
-swift_add_test(test-libsbp-legacy
-  UNIT_TEST
-  SRCS
-    check_main_legacy.c
-    check_edc.c
-    check_sbp.c
-    check_bitfield_macros.c
-    ${generated_legacy_c_sources}
-  INCLUDE
-    ${TEST_INCLUDES}
-  LINK
-    ${TEST_LIBS}
+if (NOT CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+  swift_add_test(test-libsbp-legacy
+    UNIT_TEST
+    SRCS
+      check_main_legacy.c
+      check_edc.c
+      check_sbp.c
+      check_bitfield_macros.c
+      ${generated_legacy_c_sources}
+    INCLUDE
+      ${TEST_INCLUDES}
+    LINK
+      ${TEST_LIBS}
+    )
+  swift_set_compile_options(test-libsbp-legacy
+    REMOVE
+      -Wconversion
+      -Wpointer-arith
+      -Wformat
+      -Wformat-security
+      -Wformat-y2k
+    ADD
+      -Wformat=0
   )
-swift_set_compile_options(test-libsbp-legacy
-  REMOVE 
-    -Wconversion 
-    -Wpointer-arith
-    -Wformat
-    -Wformat-security
-    -Wformat-y2k
-  ADD
-    -Wformat=0
-)
+endif()
 
 swift_add_test(test-libsbp-v4
   UNIT_TEST
@@ -74,5 +76,8 @@ swift_set_compile_options(test-libsbp-v4
 )
 
 add_subdirectory(cpp)
-add_subdirectory(legacy/cpp)
 add_subdirectory(string)
+
+if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  add_subdirectory(legacy/cpp)
+endif()
