@@ -3274,17 +3274,17 @@ bool sbp_msg_ephemeris_sbas_dep_a_encode_internal(
   if (!sbp_ephemeris_common_content_dep_a_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3319,17 +3319,17 @@ bool sbp_msg_ephemeris_sbas_dep_a_decode_internal(
   if (!sbp_ephemeris_common_content_dep_a_decode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3382,21 +3382,24 @@ int sbp_msg_ephemeris_sbas_dep_a_cmp(const sbp_msg_ephemeris_sbas_dep_a_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_A_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3426,17 +3429,17 @@ bool sbp_msg_ephemeris_glo_dep_a_encode_internal(
   if (!sbp_double_encode(ctx, &msg->tau)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3471,17 +3474,17 @@ bool sbp_msg_ephemeris_glo_dep_a_decode_internal(
   if (!sbp_double_decode(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_A_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3538,21 +3541,24 @@ int sbp_msg_ephemeris_glo_dep_a_cmp(const sbp_msg_ephemeris_glo_dep_a_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_A_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_A_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_A_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3566,17 +3572,17 @@ bool sbp_msg_ephemeris_sbas_dep_b_encode_internal(
   if (!sbp_ephemeris_common_content_dep_b_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3611,17 +3617,17 @@ bool sbp_msg_ephemeris_sbas_dep_b_decode_internal(
   if (!sbp_ephemeris_common_content_dep_b_decode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3674,21 +3680,24 @@ int sbp_msg_ephemeris_sbas_dep_b_cmp(const sbp_msg_ephemeris_sbas_dep_b_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_DEP_B_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3712,17 +3721,17 @@ bool sbp_msg_ephemeris_sbas_encode_internal(
   if (!sbp_ephemeris_common_content_encode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_VEL_MAX; i++) {
     if (!sbp_float_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_ACC_MAX; i++) {
     if (!sbp_float_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3756,17 +3765,17 @@ bool sbp_msg_ephemeris_sbas_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_ephemeris_common_content_decode_internal(ctx, &msg->common)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_VEL_MAX; i++) {
     if (!sbp_float_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_SBAS_ACC_MAX; i++) {
     if (!sbp_float_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3819,21 +3828,21 @@ int sbp_msg_ephemeris_sbas_cmp(const sbp_msg_ephemeris_sbas_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_POS_MAX; i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_VEL_MAX; i++) {
     ret = sbp_float_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_SBAS_ACC_MAX; i++) {
     ret = sbp_float_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -3863,17 +3872,17 @@ bool sbp_msg_ephemeris_glo_dep_b_encode_internal(
   if (!sbp_double_encode(ctx, &msg->tau)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3908,17 +3917,17 @@ bool sbp_msg_ephemeris_glo_dep_b_decode_internal(
   if (!sbp_double_decode(ctx, &msg->tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_B_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -3975,21 +3984,24 @@ int sbp_msg_ephemeris_glo_dep_b_cmp(const sbp_msg_ephemeris_glo_dep_b_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_B_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_B_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_B_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4012,17 +4024,17 @@ bool sbp_msg_ephemeris_glo_dep_c_encode_internal(
   if (!sbp_double_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4063,17 +4075,17 @@ bool sbp_msg_ephemeris_glo_dep_c_decode_internal(
   if (!sbp_double_decode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_C_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4138,21 +4150,24 @@ int sbp_msg_ephemeris_glo_dep_c_cmp(const sbp_msg_ephemeris_glo_dep_c_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_C_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_C_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_C_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4180,17 +4195,17 @@ bool sbp_msg_ephemeris_glo_dep_d_encode_internal(
   if (!sbp_double_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_ACC_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4234,17 +4249,17 @@ bool sbp_msg_ephemeris_glo_dep_d_decode_internal(
   if (!sbp_double_decode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_DEP_D_ACC_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4312,21 +4327,24 @@ int sbp_msg_ephemeris_glo_dep_d_cmp(const sbp_msg_ephemeris_glo_dep_d_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_D_POS_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_D_VEL_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_DEP_D_ACC_MAX;
+       i++) {
     ret = sbp_double_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {
@@ -4359,17 +4377,17 @@ bool sbp_msg_ephemeris_glo_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_float_encode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_POS_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_VEL_MAX; i++) {
     if (!sbp_double_encode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_ACC_MAX; i++) {
     if (!sbp_float_encode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4412,17 +4430,17 @@ bool sbp_msg_ephemeris_glo_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_float_decode(ctx, &msg->d_tau)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_POS_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->pos[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_VEL_MAX; i++) {
     if (!sbp_double_decode(ctx, &msg->vel[i])) {
       return false;
     }
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_EPHEMERIS_GLO_ACC_MAX; i++) {
     if (!sbp_float_decode(ctx, &msg->acc[i])) {
       return false;
     }
@@ -4489,21 +4507,21 @@ int sbp_msg_ephemeris_glo_cmp(const sbp_msg_ephemeris_glo_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_POS_MAX; i++) {
     ret = sbp_double_cmp(&a->pos[i], &b->pos[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_VEL_MAX; i++) {
     ret = sbp_double_cmp(&a->vel[i], &b->vel[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_EPHEMERIS_GLO_ACC_MAX; i++) {
     ret = sbp_float_cmp(&a->acc[i], &b->acc[i]);
   }
   if (ret != 0) {

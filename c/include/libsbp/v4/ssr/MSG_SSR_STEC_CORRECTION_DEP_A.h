@@ -49,7 +49,8 @@ typedef struct {
   /**
    * Array of STEC information for each space vehicle
    */
-  sbp_stec_sat_element_t stec_sat_list[22];
+  sbp_stec_sat_element_t
+      stec_sat_list[SBP_MSG_SSR_STEC_CORRECTION_DEP_A_STEC_SAT_LIST_MAX];
   /**
    * Number of elements in stec_sat_list
    *

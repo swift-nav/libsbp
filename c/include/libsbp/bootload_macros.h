@@ -63,6 +63,14 @@
   } while (0)
 
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_bootloader_handshake_resp_t::version (V4 API) or
+ * msg_bootloader_handshake_resp_t::version (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX 251u
+
+/**
  * Encoded length of sbp_msg_bootloader_handshake_resp_t (V4 API) and
  * msg_bootloader_handshake_resp_t (legacy API)
  *
@@ -93,12 +101,27 @@
 
 #define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_nap_device_dna_resp_t::dna (V4 API) or msg_nap_device_dna_resp_t::dna
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX 8u
+
+/**
  * Encoded length of sbp_msg_nap_device_dna_resp_t (V4 API) and
  * msg_nap_device_dna_resp_t (legacy API)
  */
 #define SBP_MSG_NAP_DEVICE_DNA_RESP_ENCODED_LEN 8u
 
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_bootloader_handshake_dep_a_t::handshake (V4 API) or
+ * msg_bootloader_handshake_dep_a_t::handshake (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX 255u
+
 /**
  * Encoded length of sbp_msg_bootloader_handshake_dep_a_t (V4 API) and
  * msg_bootloader_handshake_dep_a_t (legacy API)

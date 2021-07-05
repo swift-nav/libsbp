@@ -995,7 +995,7 @@ bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_TRACKING_IQ_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_encode_internal(ctx,
                                                           &msg->corrs[i])) {
       return false;
@@ -1027,7 +1027,7 @@ bool sbp_msg_tracking_iq_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_TRACKING_IQ_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_decode_internal(ctx,
                                                           &msg->corrs[i])) {
       return false;
@@ -1079,7 +1079,7 @@ int sbp_msg_tracking_iq_cmp(const sbp_msg_tracking_iq_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_TRACKING_IQ_CORRS_MAX; i++) {
     ret = sbp_tracking_channel_correlation_cmp(&a->corrs[i], &b->corrs[i]);
   }
   if (ret != 0) {
@@ -1167,7 +1167,7 @@ bool sbp_msg_tracking_iq_dep_b_encode_internal(
   if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_dep_encode_internal(ctx,
                                                               &msg->corrs[i])) {
       return false;
@@ -1200,7 +1200,7 @@ bool sbp_msg_tracking_iq_dep_b_decode_internal(
   if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_dep_decode_internal(ctx,
                                                               &msg->corrs[i])) {
       return false;
@@ -1253,7 +1253,8 @@ int sbp_msg_tracking_iq_dep_b_cmp(const sbp_msg_tracking_iq_dep_b_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX;
+       i++) {
     ret = sbp_tracking_channel_correlation_dep_cmp(&a->corrs[i], &b->corrs[i]);
   }
   if (ret != 0) {
@@ -1270,7 +1271,7 @@ bool sbp_msg_tracking_iq_dep_a_encode_internal(
   if (!sbp_gnss_signal_dep_encode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_dep_encode_internal(ctx,
                                                               &msg->corrs[i])) {
       return false;
@@ -1303,7 +1304,7 @@ bool sbp_msg_tracking_iq_dep_a_decode_internal(
   if (!sbp_gnss_signal_dep_decode_internal(ctx, &msg->sid)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX; i++) {
     if (!sbp_tracking_channel_correlation_dep_decode_internal(ctx,
                                                               &msg->corrs[i])) {
       return false;
@@ -1356,7 +1357,8 @@ int sbp_msg_tracking_iq_dep_a_cmp(const sbp_msg_tracking_iq_dep_a_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX;
+       i++) {
     ret = sbp_tracking_channel_correlation_dep_cmp(&a->corrs[i], &b->corrs[i]);
   }
   if (ret != 0) {

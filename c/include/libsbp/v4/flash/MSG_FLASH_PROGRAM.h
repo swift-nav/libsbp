@@ -55,7 +55,7 @@ typedef struct {
   /**
    * Starting address offset to program [bytes]
    */
-  u8 addr_start[3];
+  u8 addr_start[SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX];
 
   /**
    * Length of set of addresses to program, counting up from starting address
@@ -66,7 +66,7 @@ typedef struct {
   /**
    * Data to program addresses with, with length N=addr_len
    */
-  u8 data[250];
+  u8 data[SBP_MSG_FLASH_PROGRAM_DATA_MAX];
 } sbp_msg_flash_program_t;
 
 /**

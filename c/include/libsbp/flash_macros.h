@@ -33,6 +33,21 @@
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_flash_program_t::addr_start (V4 API) or
+ * msg_flash_program_t::addr_start (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX 3u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_flash_program_t::data (V4 API) or msg_flash_program_t::data (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_FLASH_PROGRAM_DATA_MAX 250u
+
+/**
  * Encoded length of sbp_msg_flash_program_t (V4 API) and
  * msg_flash_program_t (legacy API)
  *
@@ -86,6 +101,14 @@
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_flash_read_req_t::addr_start (V4 API) or
+ * msg_flash_read_req_t::addr_start (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX 3u
+
+/**
  * Encoded length of sbp_msg_flash_read_req_t (V4 API) and
  * msg_flash_read_req_t (legacy API)
  */
@@ -105,6 +128,14 @@
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_M25 (1)
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_flash_read_resp_t::addr_start (V4 API) or
+ * msg_flash_read_resp_t::addr_start (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX 3u
+
 /**
  * Encoded length of sbp_msg_flash_read_resp_t (V4 API) and
  * msg_flash_read_resp_t (legacy API)
@@ -154,12 +185,28 @@
 
 #define SBP_MSG_STM_UNIQUE_ID_RESP 0x00E5
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_stm_unique_id_resp_t::stm_id (V4 API) or
+ * msg_stm_unique_id_resp_t::stm_id (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX 12u
+
+/**
  * Encoded length of sbp_msg_stm_unique_id_resp_t (V4 API) and
  * msg_stm_unique_id_resp_t (legacy API)
  */
 #define SBP_MSG_STM_UNIQUE_ID_RESP_ENCODED_LEN 12u
 
 #define SBP_MSG_M25_FLASH_WRITE_STATUS 0x00F3
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_m25_flash_write_status_t::status (V4 API) or
+ * msg_m25_flash_write_status_t::status (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX 1u
+
 /**
  * Encoded length of sbp_msg_m25_flash_write_status_t (V4 API) and
  * msg_m25_flash_write_status_t (legacy API)

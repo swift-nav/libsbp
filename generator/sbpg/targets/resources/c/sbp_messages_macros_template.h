@@ -26,6 +26,13 @@
 ((*- if f.options.fields *))
 (((f|create_bitfield_macros(m.name))))
 ((*- endif*))
+((*- if f.packing != "single" *))
+/**
+ * The maximum number of items that can be stored in (((m.type_name)))::(((f.name))) (V4 API) or (((m.legacy_type_name)))::(((f.name))) (legacy API) before the maximum SBP message size is exceeded
+ */
+#define (((f.max_items_macro))) (((f.max_items)))u
+
+((* endif *))
 ((*- endfor *))
 /**
  * Encoded length of (((m.type_name))) (V4 API) and 

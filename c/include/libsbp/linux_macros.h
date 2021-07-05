@@ -20,6 +20,22 @@
 
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A 0x7F00
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_cpu_state_dep_a_t::tname (V4 API) or
+ * msg_linux_cpu_state_dep_a_t::tname (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX 15u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_cpu_state_dep_a_t::cmdline (V4 API) or
+ * msg_linux_cpu_state_dep_a_t::cmdline (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX 236u
+
+/**
  * Encoded length of sbp_msg_linux_cpu_state_dep_a_t (V4 API) and
  * msg_linux_cpu_state_dep_a_t (legacy API)
  *
@@ -35,6 +51,22 @@
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A_ENCODED_OVERHEAD 19u
 
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A 0x7F01
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_mem_state_dep_a_t::tname (V4 API) or
+ * msg_linux_mem_state_dep_a_t::tname (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX 15u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_mem_state_dep_a_t::cmdline (V4 API) or
+ * msg_linux_mem_state_dep_a_t::cmdline (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX 236u
+
 /**
  * Encoded length of sbp_msg_linux_mem_state_dep_a_t (V4 API) and
  * msg_linux_mem_state_dep_a_t (legacy API)
@@ -59,6 +91,14 @@
 
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS 0x7F03
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_process_socket_counts_t::cmdline (V4 API) or
+ * msg_linux_process_socket_counts_t::cmdline (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX 246u
+
+/**
  * Encoded length of sbp_msg_linux_process_socket_counts_t (V4 API) and
  * msg_linux_process_socket_counts_t (legacy API)
  *
@@ -74,6 +114,22 @@
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_ENCODED_OVERHEAD 9u
 
 #define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES 0x7F04
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_process_socket_queues_t::address_of_largest (V4 API) or
+ * msg_linux_process_socket_queues_t::address_of_largest (legacy API) before the
+ * maximum SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX 64u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_process_socket_queues_t::cmdline (V4 API) or
+ * msg_linux_process_socket_queues_t::cmdline (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX 180u
+
 /**
  * Encoded length of sbp_msg_linux_process_socket_queues_t (V4 API) and
  * msg_linux_process_socket_queues_t (legacy API)
@@ -91,12 +147,36 @@
 
 #define SBP_MSG_LINUX_SOCKET_USAGE 0x7F05
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_socket_usage_t::socket_state_counts (V4 API) or
+ * msg_linux_socket_usage_t::socket_state_counts (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX 16u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_socket_usage_t::socket_type_counts (V4 API) or
+ * msg_linux_socket_usage_t::socket_type_counts (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX 16u
+
+/**
  * Encoded length of sbp_msg_linux_socket_usage_t (V4 API) and
  * msg_linux_socket_usage_t (legacy API)
  */
 #define SBP_MSG_LINUX_SOCKET_USAGE_ENCODED_LEN 72u
 
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT 0x7F06
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_process_fd_count_t::cmdline (V4 API) or
+ * msg_linux_process_fd_count_t::cmdline (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX 250u
+
 /**
  * Encoded length of sbp_msg_linux_process_fd_count_t (V4 API) and
  * msg_linux_process_fd_count_t (legacy API)
@@ -113,6 +193,14 @@
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT_ENCODED_OVERHEAD 5u
 
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY 0x7F07
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_process_fd_summary_t::most_opened (V4 API) or
+ * msg_linux_process_fd_summary_t::most_opened (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX 251u
+
 /**
  * Encoded length of sbp_msg_linux_process_fd_summary_t (V4 API) and
  * msg_linux_process_fd_summary_t (legacy API)
@@ -143,6 +231,20 @@
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_cpu_state_t::tname (V4 API) or msg_linux_cpu_state_t::tname
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_CPU_STATE_TNAME_MAX 15u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_cpu_state_t::cmdline (V4 API) or msg_linux_cpu_state_t::cmdline
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX 231u
+
+/**
  * Encoded length of sbp_msg_linux_cpu_state_t (V4 API) and
  * msg_linux_cpu_state_t (legacy API)
  *
@@ -171,6 +273,20 @@
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_mem_state_t::tname (V4 API) or msg_linux_mem_state_t::tname
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_MEM_STATE_TNAME_MAX 15u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_linux_mem_state_t::cmdline (V4 API) or msg_linux_mem_state_t::cmdline
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX 231u
+
 /**
  * Encoded length of sbp_msg_linux_mem_state_t (V4 API) and
  * msg_linux_mem_state_t (legacy API)

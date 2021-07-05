@@ -52,12 +52,12 @@ typedef struct {
   /**
    * RF gain for each frontend channel [percent]
    */
-  s8 rf_gain[8];
+  s8 rf_gain[SBP_MSG_FRONT_END_GAIN_RF_GAIN_MAX];
 
   /**
    * Intermediate frequency gain for each frontend channel [percent]
    */
-  s8 if_gain[8];
+  s8 if_gain[SBP_MSG_FRONT_END_GAIN_IF_GAIN_MAX];
 } sbp_msg_front_end_gain_t;
 
 /**

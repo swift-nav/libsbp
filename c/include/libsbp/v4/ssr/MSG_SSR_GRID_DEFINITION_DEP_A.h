@@ -51,7 +51,7 @@ typedef struct {
    * quadrants that contain transitions between valid and invalid (and vice
    * versa) are encoded as u8 integers.
    */
-  u8 rle_list[246];
+  u8 rle_list[SBP_MSG_SSR_GRID_DEFINITION_DEP_A_RLE_LIST_MAX];
   /**
    * Number of elements in rle_list
    *

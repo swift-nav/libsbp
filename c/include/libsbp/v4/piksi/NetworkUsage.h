@@ -70,7 +70,7 @@ typedef struct {
   /**
    * Interface Name
    */
-  char interface_name[16];
+  char interface_name[SBP_NETWORK_USAGE_INTERFACE_NAME_MAX];
 } sbp_network_usage_t;
 
 /**

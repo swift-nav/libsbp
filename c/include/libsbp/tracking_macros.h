@@ -584,6 +584,13 @@
 
 #define SBP_MSG_TRACKING_STATE 0x0041
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_state_t::states (V4 API) or msg_tracking_state_t::states
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_TRACKING_STATE_STATES_MAX 63u
+
+/**
  * Encoded length of sbp_msg_tracking_state_t (V4 API) and
  * msg_tracking_state_t (legacy API)
  *
@@ -605,6 +612,14 @@
 #define SBP_MEASUREMENT_STATE_ENCODED_LEN 3u
 
 #define SBP_MSG_MEASUREMENT_STATE 0x0061
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_measurement_state_t::states (V4 API) or
+ * msg_measurement_state_t::states (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_MEASUREMENT_STATE_STATES_MAX 85u
+
 /**
  * Encoded length of sbp_msg_measurement_state_t (V4 API) and
  * msg_measurement_state_t (legacy API)
@@ -628,6 +643,13 @@
 
 #define SBP_MSG_TRACKING_IQ 0x002D
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_iq_t::corrs (V4 API) or msg_tracking_iq_t::corrs (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_TRACKING_IQ_CORRS_MAX 3u
+
+/**
  * Encoded length of sbp_msg_tracking_iq_t (V4 API) and
  * msg_tracking_iq_t (legacy API)
  */
@@ -641,12 +663,26 @@
 
 #define SBP_MSG_TRACKING_IQ_DEP_B 0x002C
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_iq_dep_b_t::corrs (V4 API) or msg_tracking_iq_dep_b_t::corrs
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX 3u
+
+/**
  * Encoded length of sbp_msg_tracking_iq_dep_b_t (V4 API) and
  * msg_tracking_iq_dep_b_t (legacy API)
  */
 #define SBP_MSG_TRACKING_IQ_DEP_B_ENCODED_LEN 27u
 
 #define SBP_MSG_TRACKING_IQ_DEP_A 0x001C
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_iq_dep_a_t::corrs (V4 API) or msg_tracking_iq_dep_a_t::corrs
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX 3u
+
 /**
  * Encoded length of sbp_msg_tracking_iq_dep_a_t (V4 API) and
  * msg_tracking_iq_dep_a_t (legacy API)
@@ -673,6 +709,14 @@
 #define SBP_TRACKING_CHANNEL_STATE_DEP_A_ENCODED_LEN 6u
 
 #define SBP_MSG_TRACKING_STATE_DEP_A 0x0016
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_state_dep_a_t::states (V4 API) or
+ * msg_tracking_state_dep_a_t::states (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_A_STATES_MAX 42u
+
 /**
  * Encoded length of sbp_msg_tracking_state_dep_a_t (V4 API) and
  * msg_tracking_state_dep_a_t (legacy API)
@@ -708,6 +752,14 @@
 #define SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN 9u
 
 #define SBP_MSG_TRACKING_STATE_DEP_B 0x0013
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_tracking_state_dep_b_t::states (V4 API) or
+ * msg_tracking_state_dep_b_t::states (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_B_STATES_MAX 28u
+
 /**
  * Encoded length of sbp_msg_tracking_state_dep_b_t (V4 API) and
  * msg_tracking_state_dep_b_t (legacy API)

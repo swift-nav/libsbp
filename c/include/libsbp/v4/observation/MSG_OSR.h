@@ -53,7 +53,7 @@ typedef struct {
   /**
    * Network correction for a satellite signal.
    */
-  sbp_packed_osr_content_t obs[12];
+  sbp_packed_osr_content_t obs[SBP_MSG_OSR_OBS_MAX];
   /**
    * Number of elements in obs
    *

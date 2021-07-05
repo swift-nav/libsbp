@@ -43,7 +43,7 @@ typedef struct {
   /**
    * Satellite antenna phase center corrections
    */
-  sbp_satellite_apc_t apc[7];
+  sbp_satellite_apc_t apc[SBP_MSG_SSR_SATELLITE_APC_APC_MAX];
   /**
    * Number of elements in apc
    *

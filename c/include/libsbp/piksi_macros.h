@@ -103,6 +103,13 @@
 
 #define SBP_MSG_THREAD_STATE 0x0017
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_thread_state_t::name (V4 API) or msg_thread_state_t::name (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_THREAD_STATE_NAME_MAX 20u
+
+/**
  * Encoded length of sbp_msg_thread_state_t (V4 API) and
  * msg_thread_state_t (legacy API)
  */
@@ -226,6 +233,13 @@
 
 #define SBP_MSG_COMMAND_REQ 0x00B8
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_command_req_t::command (V4 API) or msg_command_req_t::command (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_COMMAND_REQ_COMMAND_MAX 251u
+
+/**
  * Encoded length of sbp_msg_command_req_t (V4 API) and
  * msg_command_req_t (legacy API)
  *
@@ -249,6 +263,13 @@
 
 #define SBP_MSG_COMMAND_OUTPUT 0x00BC
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_command_output_t::line (V4 API) or msg_command_output_t::line (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_COMMAND_OUTPUT_LINE_MAX 251u
+
+/**
  * Encoded length of sbp_msg_command_output_t (V4 API) and
  * msg_command_output_t (legacy API)
  *
@@ -271,6 +292,30 @@
 #define SBP_MSG_NETWORK_STATE_REQ_ENCODED_LEN 0u
 
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_network_state_resp_t::ipv4_address (V4 API) or
+ * msg_network_state_resp_t::ipv4_address (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_NETWORK_STATE_RESP_IPV4_ADDRESS_MAX 4u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_network_state_resp_t::ipv6_address (V4 API) or
+ * msg_network_state_resp_t::ipv6_address (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_NETWORK_STATE_RESP_IPV6_ADDRESS_MAX 16u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_network_state_resp_t::interface_name (V4 API) or
+ * msg_network_state_resp_t::interface_name (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_NETWORK_STATE_RESP_INTERFACE_NAME_MAX 16u
+
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
@@ -528,12 +573,28 @@
 #define SBP_MSG_NETWORK_STATE_RESP_ENCODED_LEN 50u
 
 /**
+ * The maximum number of items that can be stored in
+ * sbp_network_usage_t::interface_name (V4 API) or
+ * network_usage_t::interface_name (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_NETWORK_USAGE_INTERFACE_NAME_MAX 16u
+
+/**
  * Encoded length of sbp_network_usage_t (V4 API) and
  * network_usage_t (legacy API)
  */
 #define SBP_NETWORK_USAGE_ENCODED_LEN 40u
 
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_network_bandwidth_usage_t::interfaces (V4 API) or
+ * msg_network_bandwidth_usage_t::interfaces (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_NETWORK_BANDWIDTH_USAGE_INTERFACES_MAX 6u
+
 /**
  * Encoded length of sbp_msg_network_bandwidth_usage_t (V4 API) and
  * msg_network_bandwidth_usage_t (legacy API)
@@ -551,6 +612,14 @@
 
 #define SBP_MSG_CELL_MODEM_STATUS 0x00BE
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_cell_modem_status_t::reserved (V4 API) or
+ * msg_cell_modem_status_t::reserved (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_CELL_MODEM_STATUS_RESERVED_MAX 250u
+
+/**
  * Encoded length of sbp_msg_cell_modem_status_t (V4 API) and
  * msg_cell_modem_status_t (legacy API)
  *
@@ -566,6 +635,14 @@
 #define SBP_MSG_CELL_MODEM_STATUS_ENCODED_OVERHEAD 5u
 
 #define SBP_MSG_SPECAN_DEP 0x0050
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_specan_dep_t::amplitude_value (V4 API) or
+ * msg_specan_dep_t::amplitude_value (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SPECAN_DEP_AMPLITUDE_VALUE_MAX 231u
+
 /**
  * Encoded length of sbp_msg_specan_dep_t (V4 API) and
  * msg_specan_dep_t (legacy API)
@@ -583,6 +660,13 @@
 
 #define SBP_MSG_SPECAN 0x0051
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_specan_t::amplitude_value (V4 API) or msg_specan_t::amplitude_value
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SPECAN_AMPLITUDE_VALUE_MAX 227u
+
+/**
  * Encoded length of sbp_msg_specan_t (V4 API) and
  * msg_specan_t (legacy API)
  *
@@ -598,6 +682,20 @@
 #define SBP_MSG_SPECAN_ENCODED_OVERHEAD 28u
 
 #define SBP_MSG_FRONT_END_GAIN 0x00BF
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_front_end_gain_t::rf_gain (V4 API) or msg_front_end_gain_t::rf_gain
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_FRONT_END_GAIN_RF_GAIN_MAX 8u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_front_end_gain_t::if_gain (V4 API) or msg_front_end_gain_t::if_gain
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_FRONT_END_GAIN_IF_GAIN_MAX 8u
+
 /**
  * Encoded length of sbp_msg_front_end_gain_t (V4 API) and
  * msg_front_end_gain_t (legacy API)

@@ -273,6 +273,19 @@ def get_max_possible_items(msg, field, package_specs):
     return int(available_space / elem_size)
 
 
+def get_max_possible_items_macro(msg, field):
+    """
+    Get the name of the macro which will define the maximum number of items that can be stored in a field
+    """
+    assert field.type_id == "array" or field.type_id == "string"
+    macro_name = get_v4_basename(msg.identifier)
+    if macro_name[:7] == "sbp_v4_":
+        macro_name = "sbp_" + macro_name[7:]
+    macro_name = macro_name + "_" + field.identifier + "_MAX"
+    return macro_name.upper()
+
+
+
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get("desc", "").replace(" ", "_").upper()
     base_string = "SBP_{}_{}".format(msg.upper().replace("MSG_", ""), bitfield_name)
@@ -354,11 +367,13 @@ class FieldItem(object):
             self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.cmp_fn = get_cmp_fn(self.basetype)
             self.max_items = field.options["size"].value
+            self.max_items_macro = get_max_possible_items_macro(msg, field)
             self.options = field.options
         elif type_id == "string" or "encoding" in field.options:
             self.packing = "packed-string"
             self.basetype = "char"
             self.max_items = get_max_possible_items(msg, field, package_specs)
+            self.max_items_macro = get_max_possible_items_macro(msg, field)
             self.options = field.options
             self.encoding = field.options["encoding"].value
             self.is_fixed_size = False
@@ -373,6 +388,7 @@ class FieldItem(object):
             self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
             self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.max_items = field.options["size"].value
+            self.max_items_macro = get_max_possible_items_macro(msg, field)
             self.options = field.options
         elif type_id == "array":
             self.packing = "variable-array"
@@ -385,6 +401,7 @@ class FieldItem(object):
             self.encoded_len_macro = get_encoded_len_macro(self.basetype, True)
             self.encoded_len_value = get_encoded_len_value(self.basetype, package_specs)
             self.max_items = get_max_possible_items(msg, field, package_specs)
+            self.max_items_macro = get_max_possible_items_macro(msg, field)
             if "size_fn" in field.options:
                 self.size_fn = field.options["size_fn"].value
                 self.generate_size_fn = False

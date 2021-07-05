@@ -95,7 +95,7 @@ typedef struct {
   /**
    * Phase biases corrections for a satellite being tracked.
    */
-  sbp_phase_biases_content_t biases[30];
+  sbp_phase_biases_content_t biases[SBP_MSG_SSR_PHASE_BIASES_BIASES_MAX];
   /**
    * Number of elements in biases
    *

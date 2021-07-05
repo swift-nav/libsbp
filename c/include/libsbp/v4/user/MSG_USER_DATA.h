@@ -47,7 +47,7 @@ typedef struct {
   /**
    * User data payload
    */
-  u8 contents[255];
+  u8 contents[SBP_MSG_USER_DATA_CONTENTS_MAX];
   /**
    * Number of elements in contents
    *

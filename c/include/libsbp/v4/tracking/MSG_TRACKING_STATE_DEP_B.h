@@ -47,7 +47,8 @@ typedef struct {
   /**
    * Signal tracking channel state
    */
-  sbp_tracking_channel_state_dep_b_t states[28];
+  sbp_tracking_channel_state_dep_b_t
+      states[SBP_MSG_TRACKING_STATE_DEP_B_STATES_MAX];
   /**
    * Number of elements in states
    *

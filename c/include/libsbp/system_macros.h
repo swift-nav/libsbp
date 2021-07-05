@@ -67,6 +67,13 @@
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_CODE_DIFFERENCE (1)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_dgnss_status_t::source (V4 API) or msg_dgnss_status_t::source (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_DGNSS_STATUS_SOURCE_MAX 251u
+
+/**
  * Encoded length of sbp_msg_dgnss_status_t (V4 API) and
  * msg_dgnss_status_t (legacy API)
  *
@@ -254,6 +261,13 @@
   } while (0)
 
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_status_report_t::status (V4 API) or msg_status_report_t::status
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_STATUS_REPORT_STATUS_MAX 60u
+
+/**
  * Encoded length of sbp_msg_status_report_t (V4 API) and
  * msg_status_report_t (legacy API)
  *
@@ -374,6 +388,14 @@
 
 #define SBP_MSG_CSAC_TELEMETRY 0xFF04
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_csac_telemetry_t::telemetry (V4 API) or
+ * msg_csac_telemetry_t::telemetry (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX 254u
+
+/**
  * Encoded length of sbp_msg_csac_telemetry_t (V4 API) and
  * msg_csac_telemetry_t (legacy API)
  *
@@ -389,6 +411,14 @@
 #define SBP_MSG_CSAC_TELEMETRY_ENCODED_OVERHEAD 1u
 
 #define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_csac_telemetry_labels_t::telemetry_labels (V4 API) or
+ * msg_csac_telemetry_labels_t::telemetry_labels (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX 254u
+
 /**
  * Encoded length of sbp_msg_csac_telemetry_labels_t (V4 API) and
  * msg_csac_telemetry_labels_t (legacy API)
@@ -682,6 +712,13 @@
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_NONE (0)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSS_ONLY (1)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_group_meta_t::group_msgs (V4 API) or msg_group_meta_t::group_msgs
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_GROUP_META_GROUP_MSGS_MAX 126u
+
 /**
  * Encoded length of sbp_msg_group_meta_t (V4 API) and
  * msg_group_meta_t (legacy API)

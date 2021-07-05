@@ -20,6 +20,13 @@
 
 #define SBP_MSG_USER_DATA 0x0800
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_user_data_t::contents (V4 API) or msg_user_data_t::contents (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_USER_DATA_CONTENTS_MAX 255u
+
+/**
  * Encoded length of sbp_msg_user_data_t (V4 API) and
  * msg_user_data_t (legacy API)
  *

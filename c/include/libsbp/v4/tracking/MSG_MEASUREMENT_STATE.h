@@ -49,7 +49,7 @@ typedef struct {
   /**
    * ME signal tracking channel state
    */
-  sbp_measurement_state_t states[85];
+  sbp_measurement_state_t states[SBP_MSG_MEASUREMENT_STATE_STATES_MAX];
   /**
    * Number of elements in states
    *
