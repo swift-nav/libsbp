@@ -16,5 +16,5 @@
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
-#include <libsbp/legacy/cpp/message_handler.h>
 #include <libsbp/legacy/cpp/message_traits.h>
+#include <libsbp/legacy/cpp/payload_handler.h>

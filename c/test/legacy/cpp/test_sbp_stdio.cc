@@ -12,7 +12,7 @@
 
 #include <gtest/gtest.h>
 
-#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/cpp/sbp_stdio.h>
 
 namespace {

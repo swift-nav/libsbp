@@ -10,8 +10,8 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_LEGACY_CPP_MESSAGE_HANDLER_H_
-#define SBP_LEGACY_CPP_MESSAGE_HANDLER_H_
+#ifndef SBP_LEGACY_CPP_PAYLOAD_HANDLER_H_
+#define SBP_LEGACY_CPP_PAYLOAD_HANDLER_H_
 
 #include <cassert>
 #include <array>
@@ -171,4 +171,4 @@ template<typename... MsgTypes>
 
 } /* namespace sbp */
 
-#endif /* SBP_LEGACY_CPP_MESSAGE_HANDLER_H_ */
+#endif /* SBP_LEGACY_CPP_PAYLOAD_HANDLER_H_ */
