@@ -64,7 +64,7 @@ typedef struct {
    * An inorder list of message types included in the Solution Group, including
    * GROUP_META itself
    */
-  u16 group_msgs[126];
+  u16 group_msgs[SBP_MSG_GROUP_META_GROUP_MSGS_MAX];
 } sbp_msg_group_meta_t;
 
 /**
@@ -73,7 +73,11 @@ typedef struct {
  * @param msg sbp_msg_group_meta_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_group_meta_encoded_len(const sbp_msg_group_meta_t *msg);
+static inline size_t sbp_msg_group_meta_encoded_len(
+    const sbp_msg_group_meta_t *msg) {
+  return SBP_MSG_GROUP_META_ENCODED_OVERHEAD +
+         (msg->n_group_msgs * SBP_ENCODED_LEN_U16);
+}
 
 /**
  * Encode an instance of sbp_msg_group_meta_t to wire representation
@@ -185,6 +189,6 @@ static inline bool operator>=(const sbp_msg_group_meta_t &lhs,
   return sbp_msg_group_meta_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_GROUP_META_H */

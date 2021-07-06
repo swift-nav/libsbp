@@ -167,7 +167,8 @@ bool sbp_msg_linux_process_fd_summary_most_opened_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_add_section_vprintf(
-    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append a string to the last section in
@@ -232,7 +233,8 @@ bool sbp_msg_linux_process_fd_summary_most_opened_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_fd_summary_most_opened_append_vprintf(
-    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_process_fd_summary_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain a section from sbp_msg_linux_process_fd_summary_t::most_opened
@@ -269,8 +271,11 @@ size_t sbp_msg_linux_process_fd_summary_most_opened_section_strlen(
  * @param msg sbp_msg_linux_process_fd_summary_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_process_fd_summary_encoded_len(
-    const sbp_msg_linux_process_fd_summary_t *msg);
+static inline size_t sbp_msg_linux_process_fd_summary_encoded_len(
+    const sbp_msg_linux_process_fd_summary_t *msg) {
+  return SBP_MSG_LINUX_PROCESS_FD_SUMMARY_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_fd_summary_most_opened_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_linux_process_fd_summary_t to wire
@@ -389,6 +394,6 @@ static inline bool operator>=(const sbp_msg_linux_process_fd_summary_t &lhs,
   return sbp_msg_linux_process_fd_summary_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_FD_SUMMARY_H */

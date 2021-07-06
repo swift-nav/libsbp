@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/gnss/GnssSignalDep.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -92,8 +91,11 @@ typedef struct {
  * @param msg sbp_almanac_common_content_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_almanac_common_content_dep_encoded_len(
-    const sbp_almanac_common_content_dep_t *msg);
+static inline size_t sbp_almanac_common_content_dep_encoded_len(
+    const sbp_almanac_common_content_dep_t *msg) {
+  (void)msg;
+  return SBP_ALMANAC_COMMON_CONTENT_DEP_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_almanac_common_content_dep_t to wire representation
@@ -191,6 +193,6 @@ static inline bool operator>=(const sbp_almanac_common_content_dep_t &lhs,
   return sbp_almanac_common_content_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_ALMANACCOMMONCONTENTDEP_H */

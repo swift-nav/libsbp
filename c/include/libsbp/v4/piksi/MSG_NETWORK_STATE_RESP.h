@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -48,7 +47,7 @@ typedef struct {
   /**
    * IPv4 address (all zero when unavailable)
    */
-  u8 ipv4_address[4];
+  u8 ipv4_address[SBP_MSG_NETWORK_STATE_RESP_IPV4_ADDRESS_MAX];
 
   /**
    * IPv4 netmask CIDR notation
@@ -58,7 +57,7 @@ typedef struct {
   /**
    * IPv6 address (all zero when unavailable)
    */
-  u8 ipv6_address[16];
+  u8 ipv6_address[SBP_MSG_NETWORK_STATE_RESP_IPV6_ADDRESS_MAX];
 
   /**
    * IPv6 netmask CIDR notation
@@ -78,7 +77,7 @@ typedef struct {
   /**
    * Interface Name
    */
-  char interface_name[16];
+  char interface_name[SBP_MSG_NETWORK_STATE_RESP_INTERFACE_NAME_MAX];
 
   /**
    * Interface flags from SIOCGIFFLAGS
@@ -92,8 +91,11 @@ typedef struct {
  * @param msg sbp_msg_network_state_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_network_state_resp_encoded_len(
-    const sbp_msg_network_state_resp_t *msg);
+static inline size_t sbp_msg_network_state_resp_encoded_len(
+    const sbp_msg_network_state_resp_t *msg) {
+  (void)msg;
+  return SBP_MSG_NETWORK_STATE_RESP_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_network_state_resp_t to wire representation
@@ -208,6 +210,6 @@ static inline bool operator>=(const sbp_msg_network_state_resp_t &lhs,
   return sbp_msg_network_state_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_NETWORK_STATE_RESP_H */

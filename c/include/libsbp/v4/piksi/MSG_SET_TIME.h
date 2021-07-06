@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -58,7 +57,11 @@ typedef struct {
  * @param msg sbp_msg_set_time_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_set_time_encoded_len(const sbp_msg_set_time_t *msg);
+static inline size_t sbp_msg_set_time_encoded_len(
+    const sbp_msg_set_time_t *msg) {
+  (void)msg;
+  return SBP_MSG_SET_TIME_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_set_time_t to wire representation
@@ -169,6 +172,6 @@ static inline bool operator>=(const sbp_msg_set_time_t &lhs,
   return sbp_msg_set_time_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_SET_TIME_H */

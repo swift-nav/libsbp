@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/EphemerisCommonContent.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -71,17 +70,17 @@ typedef struct {
   /**
    * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
-  double pos[3];
+  double pos[SBP_MSG_EPHEMERIS_GLO_POS_MAX];
 
   /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
-  double vel[3];
+  double vel[SBP_MSG_EPHEMERIS_GLO_VEL_MAX];
 
   /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
-  float acc[3];
+  float acc[SBP_MSG_EPHEMERIS_GLO_ACC_MAX];
 
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
@@ -100,7 +99,11 @@ typedef struct {
  * @param msg sbp_msg_ephemeris_glo_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ephemeris_glo_encoded_len(const sbp_msg_ephemeris_glo_t *msg);
+static inline size_t sbp_msg_ephemeris_glo_encoded_len(
+    const sbp_msg_ephemeris_glo_t *msg) {
+  (void)msg;
+  return SBP_MSG_EPHEMERIS_GLO_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_ephemeris_glo_t to wire representation
@@ -212,6 +215,6 @@ static inline bool operator>=(const sbp_msg_ephemeris_glo_t &lhs,
   return sbp_msg_ephemeris_glo_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_GLO_H */

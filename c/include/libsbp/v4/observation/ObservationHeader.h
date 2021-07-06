@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTime.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -48,7 +47,7 @@ typedef struct {
   /**
    * GNSS time of this observation
    */
-  sbp_sbp_gps_time_t t;
+  sbp_v4_gps_time_t t;
 
   /**
    * Total number of observations. First nibble is the size of the sequence (n),
@@ -63,7 +62,11 @@ typedef struct {
  * @param msg sbp_observation_header_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_observation_header_encoded_len(const sbp_observation_header_t *msg);
+static inline size_t sbp_observation_header_encoded_len(
+    const sbp_observation_header_t *msg) {
+  (void)msg;
+  return SBP_OBSERVATION_HEADER_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_observation_header_t to wire representation
@@ -157,6 +160,6 @@ static inline bool operator>=(const sbp_observation_header_t &lhs,
   return sbp_observation_header_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_OBSERVATIONHEADER_H */

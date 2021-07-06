@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -69,8 +68,11 @@ typedef struct {
  * @param msg sbp_tropospheric_delay_correction_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_tropospheric_delay_correction_encoded_len(
-    const sbp_tropospheric_delay_correction_t *msg);
+static inline size_t sbp_tropospheric_delay_correction_encoded_len(
+    const sbp_tropospheric_delay_correction_t *msg) {
+  (void)msg;
+  return SBP_TROPOSPHERIC_DELAY_CORRECTION_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_tropospheric_delay_correction_t to wire
@@ -169,6 +171,6 @@ static inline bool operator>=(const sbp_tropospheric_delay_correction_t &lhs,
   return sbp_tropospheric_delay_correction_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTION_H */

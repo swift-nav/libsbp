@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -90,7 +89,10 @@ typedef struct {
  * @param msg sbp_stec_header_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_stec_header_encoded_len(const sbp_stec_header_t *msg);
+static inline size_t sbp_stec_header_encoded_len(const sbp_stec_header_t *msg) {
+  (void)msg;
+  return SBP_STEC_HEADER_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_stec_header_t to wire representation
@@ -182,6 +184,6 @@ static inline bool operator>=(const sbp_stec_header_t &lhs,
   return sbp_stec_header_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_STECHEADER_H */

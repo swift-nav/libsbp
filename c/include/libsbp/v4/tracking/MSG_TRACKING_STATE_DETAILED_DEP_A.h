@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/CarrierPhase.h>
 #include <libsbp/v4/gnss/GPSTime.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
@@ -58,7 +57,7 @@ typedef struct {
    * status is decoded or propagated. WN only valid when week number valid flag
    * is set.
    */
-  sbp_sbp_gps_time_t tot;
+  sbp_v4_gps_time_t tot;
 
   /**
    * Pseudorange observation. Valid only when pseudorange valid flag is set. [2
@@ -92,7 +91,7 @@ typedef struct {
   /**
    * GNSS signal identifier.
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Carrier Doppler frequency. [Hz / 16]
@@ -169,8 +168,11 @@ typedef struct {
  * @param msg sbp_msg_tracking_state_detailed_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_tracking_state_detailed_dep_a_encoded_len(
-    const sbp_msg_tracking_state_detailed_dep_a_t *msg);
+static inline size_t sbp_msg_tracking_state_detailed_dep_a_encoded_len(
+    const sbp_msg_tracking_state_detailed_dep_a_t *msg) {
+  (void)msg;
+  return SBP_MSG_TRACKING_STATE_DETAILED_DEP_A_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_tracking_state_detailed_dep_a_t to wire
@@ -296,6 +298,6 @@ static inline bool operator>=(
   return sbp_msg_tracking_state_detailed_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H */

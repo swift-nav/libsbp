@@ -11,26 +11,26 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((package.filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
-#define LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H
+#ifndef LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
+#define LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
 
 #include <stdbool.h>
 
-#include <libsbp/v4/(((pkg_name))).h>
+#include <libsbp/v4/(((package.name))).h>
 #include <libsbp/internal/v4/common.h>
-((*- for i in include *))
-#include <libsbp/internal/v4/(((i)))>
+((*- for i in package.includes *))
+#include <libsbp/internal/v4/(((i))).h>
 ((*- endfor *))
 
 #ifdef __cplusplus
   extern "C" {
 #endif
 
-((*- for m in msgs *))
+((*- for m in package.msgs *))
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -39,7 +39,7 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
+bool (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -48,7 +48,7 @@ bool (((m.prefix)))_encode_internal(sbp_encode_ctx_t *ctx, const (((m.type_name)
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.prefix)))_decode_internal(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
+bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
 
 ((*- endfor *))
 
@@ -56,5 +56,5 @@ bool (((m.prefix)))_decode_internal(sbp_decode_ctx_t *ctx, (((m.type_name))) *ms
   }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_(((pkg_name|upper)))_H */
+#endif /* LIBSBP_INTERNAL_V4_(((package.name|upper)))_H */
 

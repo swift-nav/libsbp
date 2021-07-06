@@ -49,7 +49,7 @@ typedef struct {
   /**
    * Device unique ID
    */
-  u8 stm_id[12];
+  u8 stm_id[SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX];
 } sbp_msg_stm_unique_id_resp_t;
 
 /**
@@ -58,8 +58,11 @@ typedef struct {
  * @param msg sbp_msg_stm_unique_id_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_stm_unique_id_resp_encoded_len(
-    const sbp_msg_stm_unique_id_resp_t *msg);
+static inline size_t sbp_msg_stm_unique_id_resp_encoded_len(
+    const sbp_msg_stm_unique_id_resp_t *msg) {
+  (void)msg;
+  return SBP_MSG_STM_UNIQUE_ID_RESP_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_stm_unique_id_resp_t to wire representation
@@ -174,6 +177,6 @@ static inline bool operator>=(const sbp_msg_stm_unique_id_resp_t &lhs,
   return sbp_msg_stm_unique_id_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_STM_UNIQUE_ID_RESP_H */

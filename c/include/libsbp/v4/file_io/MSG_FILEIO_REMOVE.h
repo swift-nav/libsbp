@@ -148,7 +148,8 @@ bool sbp_msg_fileio_remove_filename_printf(sbp_msg_fileio_remove_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_remove_filename_vprintf(sbp_msg_fileio_remove_t *msg,
-                                            const char *fmt, va_list ap);
+                                            const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_fileio_remove_t::filename with printf style formatting
@@ -179,7 +180,8 @@ bool sbp_msg_fileio_remove_filename_append_printf(sbp_msg_fileio_remove_t *msg,
  *
  */
 bool sbp_msg_fileio_remove_filename_append_vprintf(sbp_msg_fileio_remove_t *msg,
-                                                   const char *fmt, va_list ap);
+                                                   const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_fileio_remove_t::filename
@@ -207,7 +209,11 @@ size_t sbp_msg_fileio_remove_filename_strlen(
  * @param msg sbp_msg_fileio_remove_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_remove_encoded_len(const sbp_msg_fileio_remove_t *msg);
+static inline size_t sbp_msg_fileio_remove_encoded_len(
+    const sbp_msg_fileio_remove_t *msg) {
+  return SBP_MSG_FILEIO_REMOVE_ENCODED_OVERHEAD +
+         sbp_msg_fileio_remove_filename_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_remove_t to wire representation
@@ -319,6 +325,6 @@ static inline bool operator>=(const sbp_msg_fileio_remove_t &lhs,
   return sbp_msg_fileio_remove_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_REMOVE_H */

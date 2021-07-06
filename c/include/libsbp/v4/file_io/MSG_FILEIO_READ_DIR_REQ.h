@@ -165,7 +165,8 @@ bool sbp_msg_fileio_read_dir_req_dirname_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_req_dirname_vprintf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
@@ -196,7 +197,8 @@ bool sbp_msg_fileio_read_dir_req_dirname_append_printf(
  *
  */
 bool sbp_msg_fileio_read_dir_req_dirname_append_vprintf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_fileio_read_dir_req_t::dirname
@@ -224,8 +226,11 @@ size_t sbp_msg_fileio_read_dir_req_dirname_strlen(
  * @param msg sbp_msg_fileio_read_dir_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_read_dir_req_encoded_len(
-    const sbp_msg_fileio_read_dir_req_t *msg);
+static inline size_t sbp_msg_fileio_read_dir_req_encoded_len(
+    const sbp_msg_fileio_read_dir_req_t *msg) {
+  return SBP_MSG_FILEIO_READ_DIR_REQ_ENCODED_OVERHEAD +
+         sbp_msg_fileio_read_dir_req_dirname_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_read_dir_req_t to wire representation
@@ -340,6 +345,6 @@ static inline bool operator>=(const sbp_msg_fileio_read_dir_req_t &lhs,
   return sbp_msg_fileio_read_dir_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_DIR_REQ_H */

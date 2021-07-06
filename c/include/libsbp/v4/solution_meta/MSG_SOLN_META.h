@@ -92,7 +92,7 @@ typedef struct {
    * consists of flags containing (meta)data pertaining to that specific single
    * sensor. Refer to each (XX)InputType descriptor in the present doc.
    */
-  sbp_solution_input_type_t sol_in[119];
+  sbp_solution_input_type_t sol_in[SBP_MSG_SOLN_META_SOL_IN_MAX];
   /**
    * Number of elements in sol_in
    *
@@ -112,7 +112,11 @@ typedef struct {
  * @param msg sbp_msg_soln_meta_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_soln_meta_encoded_len(const sbp_msg_soln_meta_t *msg);
+static inline size_t sbp_msg_soln_meta_encoded_len(
+    const sbp_msg_soln_meta_t *msg) {
+  return SBP_MSG_SOLN_META_ENCODED_OVERHEAD +
+         (msg->n_sol_in * SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_soln_meta_t to wire representation
@@ -223,6 +227,6 @@ static inline bool operator>=(const sbp_msg_soln_meta_t &lhs,
   return sbp_msg_soln_meta_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_H */

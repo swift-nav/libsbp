@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -51,7 +50,7 @@ typedef struct {
    * Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
    * SLOT)
    */
-  sbp_sbp_gnss_signal_t mesid;
+  sbp_v4_gnss_signal_t mesid;
 
   /**
    * Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4]
@@ -65,7 +64,11 @@ typedef struct {
  * @param msg sbp_measurement_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_measurement_state_encoded_len(const sbp_measurement_state_t *msg);
+static inline size_t sbp_measurement_state_encoded_len(
+    const sbp_measurement_state_t *msg) {
+  (void)msg;
+  return SBP_MEASUREMENT_STATE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_measurement_state_t to wire representation
@@ -158,6 +161,6 @@ static inline bool operator>=(const sbp_measurement_state_t &lhs,
   return sbp_measurement_state_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MEASUREMENTSTATE_H */

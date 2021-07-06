@@ -63,7 +63,11 @@ typedef struct {
  * @param msg sbp_msg_flash_erase_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_flash_erase_encoded_len(const sbp_msg_flash_erase_t *msg);
+static inline size_t sbp_msg_flash_erase_encoded_len(
+    const sbp_msg_flash_erase_t *msg) {
+  (void)msg;
+  return SBP_MSG_FLASH_ERASE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_flash_erase_t to wire representation
@@ -175,6 +179,6 @@ static inline bool operator>=(const sbp_msg_flash_erase_t &lhs,
   return sbp_msg_flash_erase_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_FLASH_ERASE_H */

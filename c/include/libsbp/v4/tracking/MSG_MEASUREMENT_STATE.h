@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/tracking/MeasurementState.h>
 
@@ -50,7 +49,7 @@ typedef struct {
   /**
    * ME signal tracking channel state
    */
-  sbp_measurement_state_t states[85];
+  sbp_measurement_state_t states[SBP_MSG_MEASUREMENT_STATE_STATES_MAX];
   /**
    * Number of elements in states
    *
@@ -70,8 +69,11 @@ typedef struct {
  * @param msg sbp_msg_measurement_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_measurement_state_encoded_len(
-    const sbp_msg_measurement_state_t *msg);
+static inline size_t sbp_msg_measurement_state_encoded_len(
+    const sbp_msg_measurement_state_t *msg) {
+  return SBP_MSG_MEASUREMENT_STATE_ENCODED_OVERHEAD +
+         (msg->n_states * SBP_MEASUREMENT_STATE_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_measurement_state_t to wire representation
@@ -185,6 +187,6 @@ static inline bool operator>=(const sbp_msg_measurement_state_t &lhs,
   return sbp_msg_measurement_state_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_MEASUREMENT_STATE_H */

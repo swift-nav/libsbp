@@ -172,19 +172,12 @@ gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf 
 gen-quicktype: gen-quicktype-typescript gen-quicktype-elm
 
 gen-c:
-	$(call announce-begin,"Generating C headers")
+	$(call announce-begin,"Generating C headers and sources")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
+		       -o $(SWIFTNAV_ROOT)/c \
 		       -r $(SBP_VERSION) \
 	               --c
-
-	$(call announce-begin,"Generating C headers")
-	cd $(SWIFTNAV_ROOT)/generator; \
-	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/c/src \
-		       -r $(SBP_VERSION) \
-	               --c-sources
 
 	$(call announce-begin,"Generating C tests")
 	cd $(SWIFTNAV_ROOT)/generator; \

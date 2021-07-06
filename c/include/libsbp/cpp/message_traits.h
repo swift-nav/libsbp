@@ -16,8 +16,7 @@
 
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
-
-#include <libsbp/sbp.h>
+#include <libsbp/sbp_msg_type.h>
 #include <libsbp/v4/acquisition.h>
 #include <libsbp/v4/bootload.h>
 #include <libsbp/v4/ext_events.h>

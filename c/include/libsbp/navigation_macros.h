@@ -32,6 +32,12 @@
 #define SBP_GPS_TIME_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_TIME_SOURCE_PROPAGATED (2)
+/**
+ * Encoded length of sbp_msg_gps_time_t (V4 API) and
+ * msg_gps_time_t (legacy API)
+ */
+#define SBP_MSG_GPS_TIME_ENCODED_LEN 11u
+
 #define SBP_MSG_GPS_TIME_GNSS 0x0104
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
@@ -47,6 +53,12 @@
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+/**
+ * Encoded length of sbp_msg_gps_time_gnss_t (V4 API) and
+ * msg_gps_time_gnss_t (legacy API)
+ */
+#define SBP_MSG_GPS_TIME_GNSS_ENCODED_LEN 11u
+
 #define SBP_MSG_UTC_TIME 0x0103
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT (3u)
@@ -75,6 +87,12 @@
 #define SBP_UTC_TIME_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_TIME_SOURCE_PROPAGATED (2)
+/**
+ * Encoded length of sbp_msg_utc_time_t (V4 API) and
+ * msg_utc_time_t (legacy API)
+ */
+#define SBP_MSG_UTC_TIME_ENCODED_LEN 16u
+
 #define SBP_MSG_UTC_TIME_GNSS 0x0105
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
@@ -104,6 +122,12 @@
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_NONE (0)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
 #define SBP_UTC_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+/**
+ * Encoded length of sbp_msg_utc_time_gnss_t (V4 API) and
+ * msg_utc_time_gnss_t (legacy API)
+ */
+#define SBP_MSG_UTC_TIME_GNSS_ENCODED_LEN 16u
+
 #define SBP_MSG_DOPS 0x0208
 #define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
@@ -133,6 +157,12 @@
 #define SBP_DOPS_FIX_MODE_FIXED_RTK (4)
 #define SBP_DOPS_FIX_MODE_UNDEFINED (5)
 #define SBP_DOPS_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_dops_t (V4 API) and
+ * msg_dops_t (legacy API)
+ */
+#define SBP_MSG_DOPS_ENCODED_LEN 15u
+
 #define SBP_MSG_POS_ECEF 0x0209
 #define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
 #define SBP_POS_ECEF_TOW_TYPE_SHIFT (5u)
@@ -176,6 +206,12 @@
 #define SBP_POS_ECEF_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_ecef_t (V4 API) and
+ * msg_pos_ecef_t (legacy API)
+ */
+#define SBP_MSG_POS_ECEF_ENCODED_LEN 32u
+
 #define SBP_MSG_POS_ECEF_COV 0x0214
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -221,6 +257,12 @@
 #define SBP_POS_ECEF_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_ECEF_COV_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_ecef_cov_t (V4 API) and
+ * msg_pos_ecef_cov_t (legacy API)
+ */
+#define SBP_MSG_POS_ECEF_COV_ENCODED_LEN 54u
+
 #define SBP_MSG_POS_LLH 0x020A
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -265,6 +307,12 @@
 #define SBP_POS_LLH_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_llh_t (V4 API) and
+ * msg_pos_llh_t (legacy API)
+ */
+#define SBP_MSG_POS_LLH_ENCODED_LEN 34u
+
 #define SBP_MSG_POS_LLH_COV 0x0211
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -309,6 +357,12 @@
 #define SBP_POS_LLH_COV_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_llh_cov_t (V4 API) and
+ * msg_pos_llh_cov_t (legacy API)
+ */
+#define SBP_MSG_POS_LLH_COV_ENCODED_LEN 54u
+
 #define SBP_MSG_BASELINE_ECEF 0x020B
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
@@ -325,6 +379,12 @@
 #define SBP_BASELINE_ECEF_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_ECEF_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_ECEF_FIX_MODE_FIXED_RTK (4)
+/**
+ * Encoded length of sbp_msg_baseline_ecef_t (V4 API) and
+ * msg_baseline_ecef_t (legacy API)
+ */
+#define SBP_MSG_BASELINE_ECEF_ENCODED_LEN 20u
+
 #define SBP_MSG_BASELINE_NED 0x020C
 #define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_NED_FIX_MODE_SHIFT (0u)
@@ -341,6 +401,12 @@
 #define SBP_BASELINE_NED_FIX_MODE_DIFFERENTIAL_GNSS (2)
 #define SBP_BASELINE_NED_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_NED_FIX_MODE_FIXED_RTK (4)
+/**
+ * Encoded length of sbp_msg_baseline_ned_t (V4 API) and
+ * msg_baseline_ned_t (legacy API)
+ */
+#define SBP_MSG_BASELINE_NED_ENCODED_LEN 22u
+
 #define SBP_MSG_VEL_ECEF 0x020D
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -383,6 +449,12 @@
 #define SBP_VEL_ECEF_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_ecef_t (V4 API) and
+ * msg_vel_ecef_t (legacy API)
+ */
+#define SBP_MSG_VEL_ECEF_ENCODED_LEN 20u
+
 #define SBP_MSG_VEL_ECEF_COV 0x0215
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -425,6 +497,12 @@
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_ECEF_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_ecef_cov_t (V4 API) and
+ * msg_vel_ecef_cov_t (legacy API)
+ */
+#define SBP_MSG_VEL_ECEF_COV_ENCODED_LEN 42u
+
 #define SBP_MSG_VEL_NED 0x020E
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -467,6 +545,12 @@
 #define SBP_VEL_NED_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_ned_t (V4 API) and
+ * msg_vel_ned_t (legacy API)
+ */
+#define SBP_MSG_VEL_NED_ENCODED_LEN 22u
+
 #define SBP_MSG_VEL_NED_COV 0x0212
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
@@ -509,6 +593,12 @@
 #define SBP_VEL_NED_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_NED_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_ned_cov_t (V4 API) and
+ * msg_vel_ned_cov_t (legacy API)
+ */
+#define SBP_MSG_VEL_NED_COV_ENCODED_LEN 42u
+
 #define SBP_MSG_POS_ECEF_GNSS 0x0229
 #define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
@@ -527,6 +617,12 @@
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_ecef_gnss_t (V4 API) and
+ * msg_pos_ecef_gnss_t (legacy API)
+ */
+#define SBP_MSG_POS_ECEF_GNSS_ENCODED_LEN 32u
+
 #define SBP_MSG_POS_ECEF_COV_GNSS 0x0234
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT (0u)
@@ -545,6 +641,12 @@
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_ecef_cov_gnss_t (V4 API) and
+ * msg_pos_ecef_cov_gnss_t (legacy API)
+ */
+#define SBP_MSG_POS_ECEF_COV_GNSS_ENCODED_LEN 54u
+
 #define SBP_MSG_POS_LLH_GNSS 0x022A
 #define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
@@ -563,6 +665,12 @@
 #define SBP_POS_LLH_GNSS_FIX_MODE_FLOAT_RTK (3)
 #define SBP_POS_LLH_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_llh_gnss_t (V4 API) and
+ * msg_pos_llh_gnss_t (legacy API)
+ */
+#define SBP_MSG_POS_LLH_GNSS_ENCODED_LEN 34u
+
 #define SBP_MSG_POS_LLH_COV_GNSS 0x0231
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT (0u)
@@ -582,6 +690,12 @@
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_FIXED_RTK (4)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_DEAD_RECKONING (5)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+/**
+ * Encoded length of sbp_msg_pos_llh_cov_gnss_t (V4 API) and
+ * msg_pos_llh_cov_gnss_t (legacy API)
+ */
+#define SBP_MSG_POS_LLH_COV_GNSS_ENCODED_LEN 54u
+
 #define SBP_MSG_VEL_ECEF_GNSS 0x022D
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
@@ -597,6 +711,12 @@
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+/**
+ * Encoded length of sbp_msg_vel_ecef_gnss_t (V4 API) and
+ * msg_vel_ecef_gnss_t (legacy API)
+ */
+#define SBP_MSG_VEL_ECEF_GNSS_ENCODED_LEN 20u
+
 #define SBP_MSG_VEL_ECEF_COV_GNSS 0x0235
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
@@ -612,6 +732,12 @@
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+/**
+ * Encoded length of sbp_msg_vel_ecef_cov_gnss_t (V4 API) and
+ * msg_vel_ecef_cov_gnss_t (legacy API)
+ */
+#define SBP_MSG_VEL_ECEF_COV_GNSS_ENCODED_LEN 42u
+
 #define SBP_MSG_VEL_NED_GNSS 0x022E
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
@@ -627,6 +753,12 @@
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+/**
+ * Encoded length of sbp_msg_vel_ned_gnss_t (V4 API) and
+ * msg_vel_ned_gnss_t (legacy API)
+ */
+#define SBP_MSG_VEL_NED_GNSS_ENCODED_LEN 22u
+
 #define SBP_MSG_VEL_NED_COV_GNSS 0x0232
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
@@ -642,6 +774,12 @@
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_INVALID (0)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+/**
+ * Encoded length of sbp_msg_vel_ned_cov_gnss_t (V4 API) and
+ * msg_vel_ned_cov_gnss_t (legacy API)
+ */
+#define SBP_MSG_VEL_NED_COV_GNSS_ENCODED_LEN 42u
+
 #define SBP_MSG_VEL_BODY 0x0213
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT (3u)
@@ -671,9 +809,33 @@
 #define SBP_VEL_BODY_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
 #define SBP_VEL_BODY_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
 #define SBP_VEL_BODY_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_body_t (V4 API) and
+ * msg_vel_body_t (legacy API)
+ */
+#define SBP_MSG_VEL_BODY_ENCODED_LEN 42u
+
 #define SBP_MSG_AGE_CORRECTIONS 0x0210
+/**
+ * Encoded length of sbp_msg_age_corrections_t (V4 API) and
+ * msg_age_corrections_t (legacy API)
+ */
+#define SBP_MSG_AGE_CORRECTIONS_ENCODED_LEN 6u
+
 #define SBP_MSG_GPS_TIME_DEP_A 0x0100
+/**
+ * Encoded length of sbp_msg_gps_time_dep_a_t (V4 API) and
+ * msg_gps_time_dep_a_t (legacy API)
+ */
+#define SBP_MSG_GPS_TIME_DEP_A_ENCODED_LEN 11u
+
 #define SBP_MSG_DOPS_DEP_A 0x0206
+/**
+ * Encoded length of sbp_msg_dops_dep_a_t (V4 API) and
+ * msg_dops_dep_a_t (legacy API)
+ */
+#define SBP_MSG_DOPS_DEP_A_ENCODED_LEN 14u
+
 #define SBP_MSG_POS_ECEF_DEP_A 0x0200
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
@@ -716,6 +878,12 @@
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (2)
+/**
+ * Encoded length of sbp_msg_pos_ecef_dep_a_t (V4 API) and
+ * msg_pos_ecef_dep_a_t (legacy API)
+ */
+#define SBP_MSG_POS_ECEF_DEP_A_ENCODED_LEN 32u
+
 #define SBP_MSG_POS_LLH_DEP_A 0x0201
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT (5u)
@@ -771,6 +939,12 @@
 #define SBP_POS_LLH_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FIXED_RTK (1)
 #define SBP_POS_LLH_DEP_A_FIX_MODE_FLOAT_RTK (2)
+/**
+ * Encoded length of sbp_msg_pos_llh_dep_a_t (V4 API) and
+ * msg_pos_llh_dep_a_t (legacy API)
+ */
+#define SBP_MSG_POS_LLH_DEP_A_ENCODED_LEN 34u
+
 #define SBP_MSG_BASELINE_ECEF_DEP_A 0x0202
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
@@ -815,6 +989,12 @@
 
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
+/**
+ * Encoded length of sbp_msg_baseline_ecef_dep_a_t (V4 API) and
+ * msg_baseline_ecef_dep_a_t (legacy API)
+ */
+#define SBP_MSG_BASELINE_ECEF_DEP_A_ENCODED_LEN 20u
+
 #define SBP_MSG_BASELINE_NED_DEP_A 0x0203
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
@@ -859,8 +1039,26 @@
 
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_NED_DEP_A_FIX_MODE_FIXED_RTK (1)
+/**
+ * Encoded length of sbp_msg_baseline_ned_dep_a_t (V4 API) and
+ * msg_baseline_ned_dep_a_t (legacy API)
+ */
+#define SBP_MSG_BASELINE_NED_DEP_A_ENCODED_LEN 22u
+
 #define SBP_MSG_VEL_ECEF_DEP_A 0x0204
+/**
+ * Encoded length of sbp_msg_vel_ecef_dep_a_t (V4 API) and
+ * msg_vel_ecef_dep_a_t (legacy API)
+ */
+#define SBP_MSG_VEL_ECEF_DEP_A_ENCODED_LEN 20u
+
 #define SBP_MSG_VEL_NED_DEP_A 0x0205
+/**
+ * Encoded length of sbp_msg_vel_ned_dep_a_t (V4 API) and
+ * msg_vel_ned_dep_a_t (legacy API)
+ */
+#define SBP_MSG_VEL_NED_DEP_A_ENCODED_LEN 22u
+
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
@@ -905,6 +1103,12 @@
 
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FLOAT_RTK (0)
 #define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FIXED_RTK (1)
+/**
+ * Encoded length of sbp_msg_baseline_heading_dep_a_t (V4 API) and
+ * msg_baseline_heading_dep_a_t (legacy API)
+ */
+#define SBP_MSG_BASELINE_HEADING_DEP_A_ENCODED_LEN 10u
+
 #define SBP_MSG_PROTECTION_LEVEL_DEP_A 0x0216
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
@@ -929,6 +1133,12 @@
   (2)
 #define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 \
   (3)
+/**
+ * Encoded length of sbp_msg_protection_level_dep_a_t (V4 API) and
+ * msg_protection_level_dep_a_t (legacy API)
+ */
+#define SBP_MSG_PROTECTION_LEVEL_DEP_A_ENCODED_LEN 33u
+
 #define SBP_MSG_PROTECTION_LEVEL 0x0217
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
@@ -1108,4 +1318,10 @@
                  << (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT)));    \
   } while (0)
 
-#endif
+/**
+ * Encoded length of sbp_msg_protection_level_t (V4 API) and
+ * msg_protection_level_t (legacy API)
+ */
+#define SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN 76u
+
+#endif /* LIBSBP_NAVIGATION_MACROS_H */

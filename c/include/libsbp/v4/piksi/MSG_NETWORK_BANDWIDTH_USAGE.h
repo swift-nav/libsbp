@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/piksi/NetworkUsage.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -48,7 +47,8 @@ typedef struct {
   /**
    * Usage measurement array
    */
-  sbp_network_usage_t interfaces[6];
+  sbp_network_usage_t
+      interfaces[SBP_MSG_NETWORK_BANDWIDTH_USAGE_INTERFACES_MAX];
   /**
    * Number of elements in interfaces
    *
@@ -68,8 +68,11 @@ typedef struct {
  * @param msg sbp_msg_network_bandwidth_usage_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_network_bandwidth_usage_encoded_len(
-    const sbp_msg_network_bandwidth_usage_t *msg);
+static inline size_t sbp_msg_network_bandwidth_usage_encoded_len(
+    const sbp_msg_network_bandwidth_usage_t *msg) {
+  return SBP_MSG_NETWORK_BANDWIDTH_USAGE_ENCODED_OVERHEAD +
+         (msg->n_interfaces * SBP_NETWORK_USAGE_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_network_bandwidth_usage_t to wire
@@ -188,6 +191,6 @@ static inline bool operator>=(const sbp_msg_network_bandwidth_usage_t &lhs,
   return sbp_msg_network_bandwidth_usage_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_NETWORK_BANDWIDTH_USAGE_H */

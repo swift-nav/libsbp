@@ -83,7 +83,11 @@ typedef struct {
  * @param msg sbp_msg_angular_rate_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_angular_rate_encoded_len(const sbp_msg_angular_rate_t *msg);
+static inline size_t sbp_msg_angular_rate_encoded_len(
+    const sbp_msg_angular_rate_t *msg) {
+  (void)msg;
+  return SBP_MSG_ANGULAR_RATE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_angular_rate_t to wire representation
@@ -195,6 +199,6 @@ static inline bool operator>=(const sbp_msg_angular_rate_t &lhs,
   return sbp_msg_angular_rate_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ORIENTATION_MSG_ANGULAR_RATE_H */

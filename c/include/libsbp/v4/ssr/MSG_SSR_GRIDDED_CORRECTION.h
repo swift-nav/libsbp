@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeader.h>
 #include <libsbp/v4/ssr/STECResidual.h>
 #include <libsbp/v4/ssr/TroposphericDelayCorrection.h>
@@ -66,7 +65,8 @@ typedef struct {
   /**
    * STEC residuals for each satellite (mean, stddev).
    */
-  sbp_stec_residual_t stec_residuals[46];
+  sbp_stec_residual_t
+      stec_residuals[SBP_MSG_SSR_GRIDDED_CORRECTION_STEC_RESIDUALS_MAX];
   /**
    * Number of elements in stec_residuals
    *
@@ -86,8 +86,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_gridded_correction_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_gridded_correction_encoded_len(
-    const sbp_msg_ssr_gridded_correction_t *msg);
+static inline size_t sbp_msg_ssr_gridded_correction_encoded_len(
+    const sbp_msg_ssr_gridded_correction_t *msg) {
+  return SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD +
+         (msg->n_stec_residuals * SBP_STEC_RESIDUAL_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_gridded_correction_t to wire representation
@@ -205,6 +208,6 @@ static inline bool operator>=(const sbp_msg_ssr_gridded_correction_t &lhs,
   return sbp_msg_ssr_gridded_correction_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_H */

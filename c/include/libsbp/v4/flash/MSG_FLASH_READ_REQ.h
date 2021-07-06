@@ -56,7 +56,7 @@ typedef struct {
   /**
    * Starting address offset to read from [bytes]
    */
-  u8 addr_start[3];
+  u8 addr_start[SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX];
 
   /**
    * Length of set of addresses to read, counting up from starting address
@@ -71,7 +71,11 @@ typedef struct {
  * @param msg sbp_msg_flash_read_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_flash_read_req_encoded_len(const sbp_msg_flash_read_req_t *msg);
+static inline size_t sbp_msg_flash_read_req_encoded_len(
+    const sbp_msg_flash_read_req_t *msg) {
+  (void)msg;
+  return SBP_MSG_FLASH_READ_REQ_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_flash_read_req_t to wire representation
@@ -184,6 +188,6 @@ static inline bool operator>=(const sbp_msg_flash_read_req_t &lhs,
   return sbp_msg_flash_read_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_FLASH_READ_REQ_H */

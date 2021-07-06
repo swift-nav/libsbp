@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/SvAzEl.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -49,7 +48,7 @@ typedef struct {
   /**
    * Azimuth and elevation per satellite
    */
-  sbp_sv_az_el_t azel[63];
+  sbp_sv_az_el_t azel[SBP_MSG_SV_AZ_EL_AZEL_MAX];
   /**
    * Number of elements in azel
    *
@@ -69,7 +68,11 @@ typedef struct {
  * @param msg sbp_msg_sv_az_el_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_sv_az_el_encoded_len(const sbp_msg_sv_az_el_t *msg);
+static inline size_t sbp_msg_sv_az_el_encoded_len(
+    const sbp_msg_sv_az_el_t *msg) {
+  return SBP_MSG_SV_AZ_EL_ENCODED_OVERHEAD +
+         (msg->n_azel * SBP_SV_AZ_EL_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_sv_az_el_t to wire representation
@@ -180,6 +183,6 @@ static inline bool operator>=(const sbp_msg_sv_az_el_t &lhs,
   return sbp_msg_sv_az_el_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_SV_AZ_EL_H */

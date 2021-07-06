@@ -44,7 +44,7 @@ extern "C" {
 #define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR           (-6)
-/** Return value indicating an error while encoding an SBP message to wire format */
+/** Return value indicating an error while encoding an SBP message to the wire format */
 #define SBP_ENCODE_ERROR (-7)
 /** Return value indicating an error while decoding an SBP message from wire format */
 #define SBP_DECODE_ERROR (-8)
@@ -90,8 +90,14 @@ typedef union {
 /** SBP callback type enum:
  * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing args
  * SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as args.
+ * SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw) messages
+ *
  * This enum is stored on each sbp_msg_callback_node struct to identify how
  * to cast the callback function pointer stored within.
+ *
+ * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp API. They
+ * are both deprecated and should not be used in new code. SBP_DECODED_CALLBACK should
+ * be used for all new development.
  */
 enum sbp_cb_type {
   SBP_MSG_CALLBACK = 0,

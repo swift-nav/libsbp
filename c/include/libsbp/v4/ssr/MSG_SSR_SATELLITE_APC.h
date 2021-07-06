@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/ssr/SatelliteAPC.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -44,7 +43,7 @@ typedef struct {
   /**
    * Satellite antenna phase center corrections
    */
-  sbp_satellite_apc_t apc[7];
+  sbp_satellite_apc_t apc[SBP_MSG_SSR_SATELLITE_APC_APC_MAX];
   /**
    * Number of elements in apc
    *
@@ -64,8 +63,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_satellite_apc_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_satellite_apc_encoded_len(
-    const sbp_msg_ssr_satellite_apc_t *msg);
+static inline size_t sbp_msg_ssr_satellite_apc_encoded_len(
+    const sbp_msg_ssr_satellite_apc_t *msg) {
+  return SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD +
+         (msg->n_apc * SBP_SATELLITE_APC_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_satellite_apc_t to wire representation
@@ -179,6 +181,6 @@ static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &lhs,
   return sbp_msg_ssr_satellite_apc_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_SATELLITE_APC_H */

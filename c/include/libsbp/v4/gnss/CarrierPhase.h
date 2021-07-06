@@ -62,7 +62,11 @@ typedef struct {
  * @param msg sbp_carrier_phase_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_carrier_phase_encoded_len(const sbp_carrier_phase_t *msg);
+static inline size_t sbp_carrier_phase_encoded_len(
+    const sbp_carrier_phase_t *msg) {
+  (void)msg;
+  return SBP_CARRIER_PHASE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_carrier_phase_t to wire representation
@@ -155,6 +159,6 @@ static inline bool operator>=(const sbp_carrier_phase_t &lhs,
   return sbp_carrier_phase_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_CARRIERPHASE_H */

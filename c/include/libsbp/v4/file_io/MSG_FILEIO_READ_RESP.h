@@ -54,7 +54,7 @@ typedef struct {
   /**
    * Contents of read file
    */
-  u8 contents[251];
+  u8 contents[SBP_MSG_FILEIO_READ_RESP_CONTENTS_MAX];
   /**
    * Number of elements in contents
    *
@@ -74,8 +74,11 @@ typedef struct {
  * @param msg sbp_msg_fileio_read_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_read_resp_encoded_len(
-    const sbp_msg_fileio_read_resp_t *msg);
+static inline size_t sbp_msg_fileio_read_resp_encoded_len(
+    const sbp_msg_fileio_read_resp_t *msg) {
+  return SBP_MSG_FILEIO_READ_RESP_ENCODED_OVERHEAD +
+         (msg->n_contents * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_read_resp_t to wire representation
@@ -189,6 +192,6 @@ static inline bool operator>=(const sbp_msg_fileio_read_resp_t &lhs,
   return sbp_msg_fileio_read_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_READ_RESP_H */

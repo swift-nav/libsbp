@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -56,7 +55,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Update interval between consecutive corrections. Encoded following RTCM
@@ -130,8 +129,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_orbit_clock_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_orbit_clock_encoded_len(
-    const sbp_msg_ssr_orbit_clock_t *msg);
+static inline size_t sbp_msg_ssr_orbit_clock_encoded_len(
+    const sbp_msg_ssr_orbit_clock_t *msg) {
+  (void)msg;
+  return SBP_MSG_SSR_ORBIT_CLOCK_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_orbit_clock_t to wire representation
@@ -244,6 +246,6 @@ static inline bool operator>=(const sbp_msg_ssr_orbit_clock_t &lhs,
   return sbp_msg_ssr_orbit_clock_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_ORBIT_CLOCK_H */

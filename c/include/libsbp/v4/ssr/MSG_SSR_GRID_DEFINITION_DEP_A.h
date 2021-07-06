@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/ssr/GridDefinitionHeaderDepA.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -52,7 +51,7 @@ typedef struct {
    * quadrants that contain transitions between valid and invalid (and vice
    * versa) are encoded as u8 integers.
    */
-  u8 rle_list[246];
+  u8 rle_list[SBP_MSG_SSR_GRID_DEFINITION_DEP_A_RLE_LIST_MAX];
   /**
    * Number of elements in rle_list
    *
@@ -72,8 +71,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_grid_definition_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_grid_definition_dep_a_encoded_len(
-    const sbp_msg_ssr_grid_definition_dep_a_t *msg);
+static inline size_t sbp_msg_ssr_grid_definition_dep_a_encoded_len(
+    const sbp_msg_ssr_grid_definition_dep_a_t *msg) {
+  return SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD +
+         (msg->n_rle_list * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_grid_definition_dep_a_t to wire
@@ -192,6 +194,6 @@ static inline bool operator>=(const sbp_msg_ssr_grid_definition_dep_a_t &lhs,
   return sbp_msg_ssr_grid_definition_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_GRID_DEFINITION_DEP_A_H */

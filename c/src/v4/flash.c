@@ -16,21 +16,12 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/flash.h>
 
-size_t sbp_msg_flash_program_encoded_len(const sbp_msg_flash_program_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->target);
-  encoded_len += (3 * sbp_u8_encoded_len(&msg->addr_start[0]));
-  encoded_len += sbp_u8_encoded_len(&msg->addr_len);
-  encoded_len += (msg->addr_len * sbp_u8_encoded_len(&msg->data[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_flash_program_encode_internal(sbp_encode_ctx_t *ctx,
                                            const sbp_msg_flash_program_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->target)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -66,7 +57,7 @@ bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -74,8 +65,7 @@ bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->addr_len)) {
     return false;
   }
-  msg->addr_len = (uint8_t)((ctx->buf_len - ctx->offset) /
-                            sbp_u8_encoded_len(&msg->data[0]));
+  msg->addr_len = (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->addr_len; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;
@@ -122,7 +112,8 @@ int sbp_msg_flash_program_cmp(const sbp_msg_flash_program_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -142,12 +133,6 @@ int sbp_msg_flash_program_cmp(const sbp_msg_flash_program_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_flash_done_encoded_len(const sbp_msg_flash_done_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->response);
-  return encoded_len;
 }
 
 bool sbp_msg_flash_done_encode_internal(sbp_encode_ctx_t *ctx,
@@ -221,20 +206,12 @@ int sbp_msg_flash_done_cmp(const sbp_msg_flash_done_t *a,
   return ret;
 }
 
-size_t sbp_msg_flash_read_req_encoded_len(const sbp_msg_flash_read_req_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->target);
-  encoded_len += (3 * sbp_u8_encoded_len(&msg->addr_start[0]));
-  encoded_len += sbp_u8_encoded_len(&msg->addr_len);
-  return encoded_len;
-}
-
 bool sbp_msg_flash_read_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_req_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->target)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -265,7 +242,7 @@ bool sbp_msg_flash_read_req_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -315,7 +292,8 @@ int sbp_msg_flash_read_req_cmp(const sbp_msg_flash_read_req_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -329,21 +307,12 @@ int sbp_msg_flash_read_req_cmp(const sbp_msg_flash_read_req_t *a,
   return ret;
 }
 
-size_t sbp_msg_flash_read_resp_encoded_len(
-    const sbp_msg_flash_read_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->target);
-  encoded_len += (3 * sbp_u8_encoded_len(&msg->addr_start[0]));
-  encoded_len += sbp_u8_encoded_len(&msg->addr_len);
-  return encoded_len;
-}
-
 bool sbp_msg_flash_read_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_flash_read_resp_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->target)) {
     return false;
   }
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -374,7 +343,7 @@ bool sbp_msg_flash_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->target)) {
     return false;
   }
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->addr_start[i])) {
       return false;
     }
@@ -424,7 +393,8 @@ int sbp_msg_flash_read_resp_cmp(const sbp_msg_flash_read_resp_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 3; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
   }
   if (ret != 0) {
@@ -436,13 +406,6 @@ int sbp_msg_flash_read_resp_cmp(const sbp_msg_flash_read_resp_t *a,
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_flash_erase_encoded_len(const sbp_msg_flash_erase_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u8_encoded_len(&msg->target);
-  encoded_len += sbp_u32_encoded_len(&msg->sector_num);
-  return encoded_len;
 }
 
 bool sbp_msg_flash_erase_encode_internal(sbp_encode_ctx_t *ctx,
@@ -527,13 +490,6 @@ int sbp_msg_flash_erase_cmp(const sbp_msg_flash_erase_t *a,
   return ret;
 }
 
-size_t sbp_msg_stm_flash_lock_sector_encoded_len(
-    const sbp_msg_stm_flash_lock_sector_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sector);
-  return encoded_len;
-}
-
 bool sbp_msg_stm_flash_lock_sector_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_stm_flash_lock_sector_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->sector)) {
@@ -606,13 +562,6 @@ int sbp_msg_stm_flash_lock_sector_cmp(
     return ret;
   }
   return ret;
-}
-
-size_t sbp_msg_stm_flash_unlock_sector_encoded_len(
-    const sbp_msg_stm_flash_unlock_sector_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u32_encoded_len(&msg->sector);
-  return encoded_len;
 }
 
 bool sbp_msg_stm_flash_unlock_sector_encode_internal(
@@ -689,12 +638,6 @@ int sbp_msg_stm_flash_unlock_sector_cmp(
   return ret;
 }
 
-size_t sbp_msg_stm_unique_id_req_encoded_len(
-    const sbp_msg_stm_unique_id_req_t *msg) {
-  (void)msg;
-  return 0;
-}
-
 bool sbp_msg_stm_unique_id_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_req_t *msg) {
   (void)ctx;
@@ -763,16 +706,9 @@ int sbp_msg_stm_unique_id_req_cmp(const sbp_msg_stm_unique_id_req_t *a,
   return ret;
 }
 
-size_t sbp_msg_stm_unique_id_resp_encoded_len(
-    const sbp_msg_stm_unique_id_resp_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (12 * sbp_u8_encoded_len(&msg->stm_id[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_stm_unique_id_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_stm_unique_id_resp_t *msg) {
-  for (size_t i = 0; i < 12; i++) {
+  for (size_t i = 0; i < SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->stm_id[i])) {
       return false;
     }
@@ -798,7 +734,7 @@ s8 sbp_msg_stm_unique_id_resp_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_stm_unique_id_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_stm_unique_id_resp_t *msg) {
-  for (uint8_t i = 0; i < 12; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->stm_id[i])) {
       return false;
     }
@@ -840,7 +776,8 @@ int sbp_msg_stm_unique_id_resp_cmp(const sbp_msg_stm_unique_id_resp_t *a,
                                    const sbp_msg_stm_unique_id_resp_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; ret == 0 && i < 12; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->stm_id[i], &b->stm_id[i]);
   }
   if (ret != 0) {
@@ -849,16 +786,9 @@ int sbp_msg_stm_unique_id_resp_cmp(const sbp_msg_stm_unique_id_resp_t *a,
   return ret;
 }
 
-size_t sbp_msg_m25_flash_write_status_encoded_len(
-    const sbp_msg_m25_flash_write_status_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += (1 * sbp_u8_encoded_len(&msg->status[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_m25_flash_write_status_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_m25_flash_write_status_t *msg) {
-  for (size_t i = 0; i < 1; i++) {
+  for (size_t i = 0; i < SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->status[i])) {
       return false;
     }
@@ -884,7 +814,7 @@ s8 sbp_msg_m25_flash_write_status_encode(
 
 bool sbp_msg_m25_flash_write_status_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_m25_flash_write_status_t *msg) {
-  for (uint8_t i = 0; i < 1; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->status[i])) {
       return false;
     }
@@ -927,7 +857,8 @@ int sbp_msg_m25_flash_write_status_cmp(
     const sbp_msg_m25_flash_write_status_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; ret == 0 && i < 1; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->status[i], &b->status[i]);
   }
   if (ret != 0) {

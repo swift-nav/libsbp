@@ -50,6 +50,18 @@ typedef uint64_t u64;
 
 #endif
 
+#define SBP_ENCODED_LEN_U8 1u
+#define SBP_ENCODED_LEN_S8 1u
+#define SBP_ENCODED_LEN_U16 2u
+#define SBP_ENCODED_LEN_S16 2u
+#define SBP_ENCODED_LEN_U32 4u
+#define SBP_ENCODED_LEN_S32 4u
+#define SBP_ENCODED_LEN_U64 8u
+#define SBP_ENCODED_LEN_S64 8u
+#define SBP_ENCODED_LEN_FLOAT 4u
+#define SBP_ENCODED_LEN_DOUBLE 8u
+#define SBP_ENCODED_LEN_CHAR 1u
+
 /**
  * Write callback
  *
@@ -68,11 +80,13 @@ typedef s32 (*sbp_write_fn_t)(u8 *buff, u32 n, void *context);
 /**
  * Read callback
  *
- * The user of libsbp must provide a read callback confirming to this type when calling #sbp_process. This function will be called once per invocation of #sbp_process in order to read data from an input source. Once the entire frame has been read any registered callbacks will be invoked.
+ * The user of libsbp must provide a read callback conforming to this type when
+ * calling #sbp_process. This function will be called once per invocation of 
+ * #sbp_process in order to read data from an input source. Once the entire 
+ * frame has been read any registered callbacks will be invoked.
  *
  * @param buff Destination buffer
  * @param n Length of \p buff, maximum number of bytes to read
- * @param
  * @context User provided context, see #sbp_state_set_io_context
  * @return Number of bytes read, or -1 to indicate error
  */
@@ -94,6 +108,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) DO_PRAGMA(message (msg))
 #define SBP_DEPRECATED __attribute__((deprecated))
 #define SBP_ATTR_FORMAT(fmt,args) __attribute__((format(printf,fmt,args)))
+#define SBP_ATTR_VFORMAT(fmt) __attribute__((format(printf,fmt,0)))
 
 #elif defined(_MSC_VER)
 
@@ -103,6 +118,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) /* Intentionally empty */
 #define SBP_DEPRECATED __declspec(deprecated)
 #define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_ATTR_VFORMAT(fmt)
 
 #elif defined(__ghs__)
 
@@ -112,6 +128,7 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #define SBP_MESSAGE(msg) /* Intentionally empty */
 #define SBP_DEPRECATED /* Intentionally empty */
 #define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_ATTR_VFORMAT(fmt)
 
 #else
 

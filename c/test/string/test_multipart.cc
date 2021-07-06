@@ -6,14 +6,14 @@ TEST(TestMultipartString, InitialState) {
   sbp_string_t s;
   memset(&s, 0, sizeof(s));
 
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
 
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 10);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 10);
 
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 }
 
 TEST(TestMultipartString, InvalidState) {
@@ -29,11 +29,11 @@ TEST(TestMultipartString, InvalidState) {
   EXPECT_FALSE(sbp_multipart_string_valid(&s, short_params));
   EXPECT_TRUE(sbp_multipart_string_valid(&s, long_params));
   
-  // In this case the short max_encoded_len should force a packed size of 0, but the long max_encoded_len will be valid
+  // In this case the short maxlen should force a packed size of 0, but the long maxlen will be valid
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, short_params), 0);
   EXPECT_EQ(sbp_multipart_string_encoded_len(&s, long_params), 14);
 
-  // Likewise, the space remaining should be the full buffer for short max_encoded_len (minus the 3 required NULL terminators) and the correct value for long_params
+  // Likewise, the space remaining should be the full buffer for short maxlen (minus the 3 required NULL terminators) and the correct value for long_params
   EXPECT_EQ(sbp_multipart_string_space_remaining(&s, short_params), 10);
   EXPECT_EQ(sbp_multipart_string_space_remaining(&s, long_params), 6);
 
@@ -78,329 +78,329 @@ TEST(TestMultipartString, Init)
 {
   // Test the init function. It should be able to reset everything no matter what state it's in
   sbp_string_t s;
-  size_t max_encoded_len = 16;
+  size_t maxlen = 16;
 
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 
   // Put in a valid string
   memcpy(s.data, "one\0two\0three\0", 14);
   s.encoded_len = 14;
 
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 2), "three");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 2), "three");
 
   // And reinitialise
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 
   // Put in an invalid string
   memcpy(s.data, "one\0two\0three\0four\0", 19);
   s.encoded_len = 18;
-  EXPECT_FALSE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
+  EXPECT_FALSE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
 
   // And reinitialise
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 }
 
 TEST(TestMultipartString, AddSection)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 10);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 10);
 
   // Add a valid section
-  EXPECT_TRUE(sbp_multipart_string_add_section(&s, max_encoded_len, "one"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
+  EXPECT_TRUE(sbp_multipart_string_add_section(&s, maxlen, "one"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 6);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
 
   // Add another valid section
-  EXPECT_TRUE(sbp_multipart_string_add_section(&s, max_encoded_len, "two"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 2);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
+  EXPECT_TRUE(sbp_multipart_string_add_section(&s, maxlen, "two"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 2);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
 
   // This section is too long for the remaining space
-  EXPECT_FALSE(sbp_multipart_string_add_section(&s, max_encoded_len, "three"));
+  EXPECT_FALSE(sbp_multipart_string_add_section(&s, maxlen, "three"));
   // No changes to the string
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 2);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 2);
 
   // Set up an invalid string buffer
   memcpy(s.data, "one\0two\0three\0", 14);
   s.encoded_len = 13;
 
-  EXPECT_FALSE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_FALSE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 
   // Adding a new section should reset the entire string
-  EXPECT_TRUE(sbp_multipart_string_add_section(&s, max_encoded_len, "four"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 4);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "four");
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 5);
+  EXPECT_TRUE(sbp_multipart_string_add_section(&s, maxlen, "four"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 4);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "four");
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 5);
 }
 
 TEST(TestMultipartString, AddSectionPrintf)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
-  auto vprintf_wrapper = [&s,&max_encoded_len](const char *fmt, ...) {
+  auto vprintf_wrapper = [&s,&maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_multipart_string_add_section_vprintf(&s, max_encoded_len, fmt, ap);
+    bool ret = sbp_multipart_string_add_section_vprintf(&s, maxlen, fmt, ap);
     va_end(ap);
     return ret;
   };
 
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 10);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 10);
 
   // Add a valid section
   EXPECT_TRUE(vprintf_wrapper("%s", "one"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 6);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
 
   // Add another valid section
   EXPECT_TRUE(vprintf_wrapper("%d", 222));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 2);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "222");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 2);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "222");
 
   // This section is too long for the remaining space
   EXPECT_FALSE(vprintf_wrapper("%c%s%c", 't', "hre", 'e'));
   // No changes to the string
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 2);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 2);
 
   // Set up an invalid string buffer
   memcpy(s.data, "one\0two\0three\0", 14);
   s.encoded_len = 13;
 
-  EXPECT_FALSE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
+  EXPECT_FALSE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
 
   // Adding a new section should reset the entire string
   EXPECT_TRUE(vprintf_wrapper("%d%d%d%d", 4, 4, 4, 4));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 4);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "4444");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 4);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "4444");
 }
 
 TEST(TestMultipartString, Append)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 10);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 10);
 
   // Appending to an empty buffer starts a new section
-  EXPECT_TRUE(sbp_multipart_string_append(&s, max_encoded_len, "one"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
+  EXPECT_TRUE(sbp_multipart_string_append(&s, maxlen, "one"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 6);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
 
   // Append another string to the first section
-  EXPECT_TRUE(sbp_multipart_string_append(&s, max_encoded_len, "111"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 7);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one111");
+  EXPECT_TRUE(sbp_multipart_string_append(&s, maxlen, "111"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 7);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one111");
 
   // Set up an invalid string buffer
   memcpy(s.data, "one\0two\0three\0", 14);
   s.encoded_len = 13;
 
-  EXPECT_FALSE(sbp_multipart_string_valid(&s, max_encoded_len));
+  EXPECT_FALSE(sbp_multipart_string_valid(&s, maxlen));
 
   // Appending over an invalid buffer will clear it
-  EXPECT_TRUE(sbp_multipart_string_append(&s, max_encoded_len, "re"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
+  EXPECT_TRUE(sbp_multipart_string_append(&s, maxlen, "re"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
 
   // Start a new section
-  EXPECT_TRUE(sbp_multipart_string_add_section(&s, max_encoded_len, "a"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 1);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "a");
+  EXPECT_TRUE(sbp_multipart_string_add_section(&s, maxlen, "a"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 1);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "a");
 
   // And append to the last section up to maximum
-  EXPECT_TRUE(sbp_multipart_string_append(&s, max_encoded_len, "bcdef"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 0);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "abcdef");
+  EXPECT_TRUE(sbp_multipart_string_append(&s, maxlen, "bcdef"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 10);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 0);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "abcdef");
 
   // This one will push it over the limit
-  EXPECT_FALSE(sbp_multipart_string_append(&s, max_encoded_len, "g"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 0);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "abcdef");
+  EXPECT_FALSE(sbp_multipart_string_append(&s, maxlen, "g"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 10);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 0);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "abcdef");
 }
 
 TEST(TestMultipartString, AppendPrintf)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
-  auto vprintf_wrapper = [&s, max_encoded_len](const char *fmt, ...) {
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_multipart_string_append_vprintf(&s, max_encoded_len, fmt, ap);
+    bool ret = sbp_multipart_string_append_vprintf(&s, maxlen, fmt, ap);
     va_end(ap);
     return ret;
   };
 
   sbp_multipart_string_init(&s);
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 10);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 10);
 
   // Appending to an empty buffer starts a new section
   EXPECT_TRUE(vprintf_wrapper("%s", "one"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 6);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
 
   // Append another string to the first section
   EXPECT_TRUE(vprintf_wrapper("%d%d", 11, 1));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 7);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one111");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 7);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one111");
 
   // Set up an invalid string buffer
   memcpy(s.data, "one\0two\0three\0", 14);
   s.encoded_len = 13;
 
-  EXPECT_FALSE(sbp_multipart_string_valid(&s, max_encoded_len));
+  EXPECT_FALSE(sbp_multipart_string_valid(&s, maxlen));
 
   // Appending over an invalid buffer will clear it
   EXPECT_TRUE(vprintf_wrapper("%c%c", 'r', 'e'));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 1);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
 
   // Start a new section
-  EXPECT_TRUE(sbp_multipart_string_add_section(&s, max_encoded_len, "a"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 1);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "a");
+  EXPECT_TRUE(sbp_multipart_string_add_section(&s, maxlen, "a"));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 1);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "a");
 
   // And append to the last section up to maximum
   EXPECT_TRUE(vprintf_wrapper("%s", "bcdef"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 0);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "abcdef");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 10);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 0);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "abcdef");
 
   // This one will push it over the limit
   EXPECT_FALSE(vprintf_wrapper("%s", "g"));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 6);
-  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, max_encoded_len), 0);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "re");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "abcdef");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 10);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 6);
+  EXPECT_EQ(sbp_multipart_string_space_remaining(&s, maxlen), 0);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "re");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "abcdef");
 }
 
 TEST(TestMultipartString, Pack)
@@ -514,7 +514,7 @@ TEST(TestMultipartString, Pack)
 TEST(TestMultipartString, Unpack)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
   uint8_t payload[40];
   sbp_decode_ctx_t ctx;
@@ -525,16 +525,16 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload, "one\0two\0", 8);
   ctx.buf_len = 8;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
   EXPECT_EQ(ctx.offset, 8);
 
   // Unpack in to an initialised but empty buffer
@@ -542,35 +542,35 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload, "one\0two\0", 8);
   ctx.buf_len = 8;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
   EXPECT_EQ(ctx.offset, 8);
 
   // Overwrite a previously valid string
   sbp_multipart_string_init(&s);
-  sbp_multipart_string_add_section(&s, max_encoded_len, "old");
-  sbp_multipart_string_add_section(&s, max_encoded_len, "data");
+  sbp_multipart_string_add_section(&s, maxlen, "old");
+  sbp_multipart_string_add_section(&s, maxlen, "data");
   memcpy(payload, "one\0two\0", 8);
   ctx.buf_len = 8;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 9);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 9);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
   EXPECT_EQ(ctx.offset, 8);
 
   // Unpack a string of maximum length
@@ -578,16 +578,16 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload, "10\0bytes.\0", 10);
   ctx.buf_len = 10;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 10);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 6);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "10");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "bytes.");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 10);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 6);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "10");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "bytes.");
   EXPECT_EQ(ctx.offset, 10);
 
   // Unpack a string without a final NULL terminator
@@ -595,16 +595,16 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload, "ab\0cd", 5);
   ctx.buf_len = 5;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 2);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "ab");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "cd");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 2);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "ab");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "cd");
   EXPECT_EQ(ctx.offset, 5);
 
   // fail to unpack a string where there is extra data in buffer
@@ -612,11 +612,11 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload, "two\0sections\0with lots of extra data", 36);
   ctx.buf_len = 36;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_FALSE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_FALSE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
   EXPECT_EQ(ctx.offset, 0);
 
   // Unpack from an offset in the payload buffer
@@ -625,16 +625,16 @@ TEST(TestMultipartString, Unpack)
   memcpy(payload + 5, "one\0two\0", 8);
   ctx.buf_len = 13;
   ctx.offset = 5;
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 0);
-  EXPECT_TRUE(sbp_multipart_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_multipart_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_multipart_string_count_sections(&s, max_encoded_len), 2);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 0), 3);
-  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, max_encoded_len, 1), 3);
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 0), "one");
-  EXPECT_STREQ(sbp_multipart_string_get_section(&s, max_encoded_len, 1), "two");
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 0);
+  EXPECT_TRUE(sbp_multipart_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_multipart_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_multipart_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_multipart_string_count_sections(&s, maxlen), 2);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 0), 3);
+  EXPECT_EQ(sbp_multipart_string_section_strlen(&s, maxlen, 1), 3);
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 0), "one");
+  EXPECT_STREQ(sbp_multipart_string_get_section(&s, maxlen, 1), "two");
   EXPECT_EQ(ctx.offset, 13);
 }
 

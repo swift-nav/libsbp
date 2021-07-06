@@ -71,7 +71,7 @@ typedef struct {
   /**
    * Reported status of individual subsystems
    */
-  sbp_sub_system_report_t status[60];
+  sbp_sub_system_report_t status[SBP_MSG_STATUS_REPORT_STATUS_MAX];
   /**
    * Number of elements in status
    *
@@ -91,7 +91,11 @@ typedef struct {
  * @param msg sbp_msg_status_report_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_status_report_encoded_len(const sbp_msg_status_report_t *msg);
+static inline size_t sbp_msg_status_report_encoded_len(
+    const sbp_msg_status_report_t *msg) {
+  return SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD +
+         (msg->n_status * SBP_SUB_SYSTEM_REPORT_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_status_report_t to wire representation
@@ -203,6 +207,6 @@ static inline bool operator>=(const sbp_msg_status_report_t &lhs,
   return sbp_msg_status_report_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_STATUS_REPORT_H */

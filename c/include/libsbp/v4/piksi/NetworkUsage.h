@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -71,7 +70,7 @@ typedef struct {
   /**
    * Interface Name
    */
-  char interface_name[16];
+  char interface_name[SBP_NETWORK_USAGE_INTERFACE_NAME_MAX];
 } sbp_network_usage_t;
 
 /**
@@ -80,7 +79,11 @@ typedef struct {
  * @param msg sbp_network_usage_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_network_usage_encoded_len(const sbp_network_usage_t *msg);
+static inline size_t sbp_network_usage_encoded_len(
+    const sbp_network_usage_t *msg) {
+  (void)msg;
+  return SBP_NETWORK_USAGE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_network_usage_t to wire representation
@@ -173,6 +176,6 @@ static inline bool operator>=(const sbp_network_usage_t &lhs,
   return sbp_network_usage_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_NETWORKUSAGE_H */

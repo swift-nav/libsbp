@@ -160,7 +160,8 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap);
+    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
@@ -193,7 +194,8 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
  *
  */
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap);
+    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from
@@ -222,8 +224,11 @@ size_t sbp_msg_csac_telemetry_labels_telemetry_labels_strlen(
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_csac_telemetry_labels_encoded_len(
-    const sbp_msg_csac_telemetry_labels_t *msg);
+static inline size_t sbp_msg_csac_telemetry_labels_encoded_len(
+    const sbp_msg_csac_telemetry_labels_t *msg) {
+  return SBP_MSG_CSAC_TELEMETRY_LABELS_ENCODED_OVERHEAD +
+         sbp_msg_csac_telemetry_labels_telemetry_labels_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_csac_telemetry_labels_t to wire representation
@@ -340,6 +345,6 @@ static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &lhs,
   return sbp_msg_csac_telemetry_labels_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H */

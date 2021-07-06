@@ -61,7 +61,11 @@ typedef struct {
  * @param msg sbp_gps_time_sec_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_gps_time_sec_encoded_len(const sbp_gps_time_sec_t *msg);
+static inline size_t sbp_gps_time_sec_encoded_len(
+    const sbp_gps_time_sec_t *msg) {
+  (void)msg;
+  return SBP_GPS_TIME_SEC_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_gps_time_sec_t to wire representation
@@ -154,6 +158,6 @@ static inline bool operator>=(const sbp_gps_time_sec_t &lhs,
   return sbp_gps_time_sec_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_GNSS_GPSTIMESEC_H */

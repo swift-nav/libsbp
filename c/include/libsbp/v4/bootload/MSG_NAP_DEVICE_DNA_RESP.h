@@ -51,7 +51,7 @@ typedef struct {
   /**
    * 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
    */
-  u8 dna[8];
+  u8 dna[SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX];
 } sbp_msg_nap_device_dna_resp_t;
 
 /**
@@ -60,8 +60,11 @@ typedef struct {
  * @param msg sbp_msg_nap_device_dna_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_nap_device_dna_resp_encoded_len(
-    const sbp_msg_nap_device_dna_resp_t *msg);
+static inline size_t sbp_msg_nap_device_dna_resp_encoded_len(
+    const sbp_msg_nap_device_dna_resp_t *msg) {
+  (void)msg;
+  return SBP_MSG_NAP_DEVICE_DNA_RESP_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_nap_device_dna_resp_t to wire representation
@@ -176,6 +179,6 @@ static inline bool operator>=(const sbp_msg_nap_device_dna_resp_t &lhs,
   return sbp_msg_nap_device_dna_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_NAP_DEVICE_DNA_RESP_H */

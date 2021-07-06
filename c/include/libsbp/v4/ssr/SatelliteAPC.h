@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -49,7 +48,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Additional satellite information
@@ -65,14 +64,14 @@ typedef struct {
    * Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
    * description for coordinate system definition. [1 mm]
    */
-  s16 pco[3];
+  s16 pco[SBP_SATELLITE_APC_PCO_MAX];
 
   /**
    * Elevation dependent phase center variations. First element is 0 degrees
    * separation from the Z axis, subsequent elements represent elevation
    * variations in 1 degree increments. [1 mm]
    */
-  s8 pcv[21];
+  s8 pcv[SBP_SATELLITE_APC_PCV_MAX];
 } sbp_satellite_apc_t;
 
 /**
@@ -81,7 +80,11 @@ typedef struct {
  * @param msg sbp_satellite_apc_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_satellite_apc_encoded_len(const sbp_satellite_apc_t *msg);
+static inline size_t sbp_satellite_apc_encoded_len(
+    const sbp_satellite_apc_t *msg) {
+  (void)msg;
+  return SBP_SATELLITE_APC_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_satellite_apc_t to wire representation
@@ -174,6 +177,6 @@ static inline bool operator>=(const sbp_satellite_apc_t &lhs,
   return sbp_satellite_apc_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_SATELLITEAPC_H */

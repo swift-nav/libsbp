@@ -9,16 +9,16 @@
 #include <libsbp/v4/string/sbp_string.h>
 
 int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
-                   size_t max_encoded_len, const sbp_string_params_t *params) {
-  bool avalid = params->valid(a, max_encoded_len);
-  bool bvalid = params->valid(b, max_encoded_len);
+                   size_t maxlen, const sbp_string_params_t *params) {
+  bool avalid = params->valid(a, maxlen);
+  bool bvalid = params->valid(b, maxlen);
   if (!avalid) {
     return bvalid ? -1 : 0;
   }
   if (!bvalid) {
     return avalid ? 1 : 0;
   }
-  size_t cmp_len = max_encoded_len;
+  size_t cmp_len = maxlen;
   if (a->encoded_len < cmp_len) {
     cmp_len = a->encoded_len;
   }
@@ -60,12 +60,12 @@ bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
   return copy_str(buf, copied, max, tmp, (size_t)n);
 }
 
-bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
+bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
                        sbp_encode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
   const char *src;
   size_t copy_len;
-  if (params->valid(s, max_encoded_len)) {
+  if (params->valid(s, maxlen)) {
     src = s->data;
     copy_len = s->encoded_len;
   } else {
@@ -80,13 +80,13 @@ bool sbp_string_encode(const sbp_string_t *s, size_t max_encoded_len,
   return true;
 }
 
-bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
+bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
                        sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
   params->init(s);
   size_t available = ctx->buf_len - ctx->offset;
   // Take everything or nothing
-  if (available > max_encoded_len) {
+  if (available > maxlen) {
     return false;
   }
   memcpy(s->data, ctx->buf + ctx->offset, available);
@@ -97,7 +97,7 @@ bool sbp_string_decode(sbp_string_t *s, size_t max_encoded_len,
       s->data[s->encoded_len - 1] = 0;
     }
   }
-  if (!params->valid(s, max_encoded_len)) {
+  if (!params->valid(s, maxlen)) {
     params->init(s);
     return false;
   }

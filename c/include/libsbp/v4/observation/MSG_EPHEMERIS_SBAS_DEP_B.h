@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/EphemerisCommonContentDepB.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -54,17 +53,17 @@ typedef struct {
   /**
    * Position of the GEO at time toe [m]
    */
-  double pos[3];
+  double pos[SBP_MSG_EPHEMERIS_SBAS_DEP_B_POS_MAX];
 
   /**
    * Velocity of the GEO at time toe [m/s]
    */
-  double vel[3];
+  double vel[SBP_MSG_EPHEMERIS_SBAS_DEP_B_VEL_MAX];
 
   /**
    * Acceleration of the GEO at time toe [m/s^2]
    */
-  double acc[3];
+  double acc[SBP_MSG_EPHEMERIS_SBAS_DEP_B_ACC_MAX];
 
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time [s]
@@ -83,8 +82,11 @@ typedef struct {
  * @param msg sbp_msg_ephemeris_sbas_dep_b_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ephemeris_sbas_dep_b_encoded_len(
-    const sbp_msg_ephemeris_sbas_dep_b_t *msg);
+static inline size_t sbp_msg_ephemeris_sbas_dep_b_encoded_len(
+    const sbp_msg_ephemeris_sbas_dep_b_t *msg) {
+  (void)msg;
+  return SBP_MSG_EPHEMERIS_SBAS_DEP_B_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_ephemeris_sbas_dep_b_t to wire representation
@@ -199,6 +201,6 @@ static inline bool operator>=(const sbp_msg_ephemeris_sbas_dep_b_t &lhs,
   return sbp_msg_ephemeris_sbas_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_EPHEMERIS_SBAS_DEP_B_H */

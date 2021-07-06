@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/tracking/TrackingChannelCorrelation.h>
@@ -55,12 +54,12 @@ typedef struct {
   /**
    * GNSS signal identifier
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Early, Prompt and Late correlations
    */
-  sbp_tracking_channel_correlation_t corrs[3];
+  sbp_tracking_channel_correlation_t corrs[SBP_MSG_TRACKING_IQ_CORRS_MAX];
 } sbp_msg_tracking_iq_t;
 
 /**
@@ -69,7 +68,11 @@ typedef struct {
  * @param msg sbp_msg_tracking_iq_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_tracking_iq_encoded_len(const sbp_msg_tracking_iq_t *msg);
+static inline size_t sbp_msg_tracking_iq_encoded_len(
+    const sbp_msg_tracking_iq_t *msg) {
+  (void)msg;
+  return SBP_MSG_TRACKING_IQ_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_tracking_iq_t to wire representation
@@ -181,6 +184,6 @@ static inline bool operator>=(const sbp_msg_tracking_iq_t &lhs,
   return sbp_msg_tracking_iq_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_H */

@@ -47,7 +47,7 @@ typedef struct {
   /**
    * Byte to write to the M25 flash status register
    */
-  u8 status[1];
+  u8 status[SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX];
 } sbp_msg_m25_flash_write_status_t;
 
 /**
@@ -56,8 +56,11 @@ typedef struct {
  * @param msg sbp_msg_m25_flash_write_status_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_m25_flash_write_status_encoded_len(
-    const sbp_msg_m25_flash_write_status_t *msg);
+static inline size_t sbp_msg_m25_flash_write_status_encoded_len(
+    const sbp_msg_m25_flash_write_status_t *msg) {
+  (void)msg;
+  return SBP_MSG_M25_FLASH_WRITE_STATUS_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_m25_flash_write_status_t to wire representation
@@ -175,6 +178,6 @@ static inline bool operator>=(const sbp_msg_m25_flash_write_status_t &lhs,
   return sbp_msg_m25_flash_write_status_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_M25_FLASH_WRITE_STATUS_H */

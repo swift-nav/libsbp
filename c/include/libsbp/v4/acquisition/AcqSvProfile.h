@@ -27,7 +27,6 @@
 
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/common.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -70,7 +69,7 @@ typedef struct {
   /**
    * GNSS signal for which acquisition was attempted
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Acq frequency bin width [Hz]
@@ -114,7 +113,11 @@ typedef struct {
  * @param msg sbp_acq_sv_profile_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_acq_sv_profile_encoded_len(const sbp_acq_sv_profile_t *msg);
+static inline size_t sbp_acq_sv_profile_encoded_len(
+    const sbp_acq_sv_profile_t *msg) {
+  (void)msg;
+  return SBP_ACQ_SV_PROFILE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_acq_sv_profile_t to wire representation
@@ -207,6 +210,6 @@ static inline bool operator>=(const sbp_acq_sv_profile_t &lhs,
   return sbp_acq_sv_profile_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_ACQSVPROFILE_H */

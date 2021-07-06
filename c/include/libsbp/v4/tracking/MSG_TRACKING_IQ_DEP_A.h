@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignalDep.h>
 #include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/tracking/TrackingChannelCorrelationDep.h>
@@ -59,7 +58,8 @@ typedef struct {
   /**
    * Early, Prompt and Late correlations
    */
-  sbp_tracking_channel_correlation_dep_t corrs[3];
+  sbp_tracking_channel_correlation_dep_t
+      corrs[SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX];
 } sbp_msg_tracking_iq_dep_a_t;
 
 /**
@@ -68,8 +68,11 @@ typedef struct {
  * @param msg sbp_msg_tracking_iq_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_tracking_iq_dep_a_encoded_len(
-    const sbp_msg_tracking_iq_dep_a_t *msg);
+static inline size_t sbp_msg_tracking_iq_dep_a_encoded_len(
+    const sbp_msg_tracking_iq_dep_a_t *msg) {
+  (void)msg;
+  return SBP_MSG_TRACKING_IQ_DEP_A_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_tracking_iq_dep_a_t to wire representation
@@ -183,6 +186,6 @@ static inline bool operator>=(const sbp_msg_tracking_iq_dep_a_t &lhs,
   return sbp_msg_tracking_iq_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_DEP_A_H */

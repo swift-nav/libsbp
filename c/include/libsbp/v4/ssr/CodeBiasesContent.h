@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -63,8 +62,11 @@ typedef struct {
  * @param msg sbp_code_biases_content_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_code_biases_content_encoded_len(
-    const sbp_code_biases_content_t *msg);
+static inline size_t sbp_code_biases_content_encoded_len(
+    const sbp_code_biases_content_t *msg) {
+  (void)msg;
+  return SBP_CODE_BIASES_CONTENT_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_code_biases_content_t to wire representation
@@ -158,6 +160,6 @@ static inline bool operator>=(const sbp_code_biases_content_t &lhs,
   return sbp_code_biases_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_CODEBIASESCONTENT_H */

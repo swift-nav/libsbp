@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -59,7 +58,7 @@ typedef struct {
   /**
    * Unspecified data TBD for this schema
    */
-  u8 reserved[250];
+  u8 reserved[SBP_MSG_CELL_MODEM_STATUS_RESERVED_MAX];
   /**
    * Number of elements in reserved
    *
@@ -79,8 +78,11 @@ typedef struct {
  * @param msg sbp_msg_cell_modem_status_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_cell_modem_status_encoded_len(
-    const sbp_msg_cell_modem_status_t *msg);
+static inline size_t sbp_msg_cell_modem_status_encoded_len(
+    const sbp_msg_cell_modem_status_t *msg) {
+  return SBP_MSG_CELL_MODEM_STATUS_ENCODED_OVERHEAD +
+         (msg->n_reserved * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_cell_modem_status_t to wire representation
@@ -194,6 +196,6 @@ static inline bool operator>=(const sbp_msg_cell_modem_status_t &lhs,
   return sbp_msg_cell_modem_status_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_CELL_MODEM_STATUS_H */

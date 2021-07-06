@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/ssr/CodeBiasesContent.h>
@@ -57,7 +56,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Update interval between consecutive corrections. Encoded following RTCM
@@ -74,7 +73,7 @@ typedef struct {
   /**
    * Code biases for the different satellite signals
    */
-  sbp_code_biases_content_t biases[81];
+  sbp_code_biases_content_t biases[SBP_MSG_SSR_CODE_BIASES_BIASES_MAX];
   /**
    * Number of elements in biases
    *
@@ -94,8 +93,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_code_biases_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_code_biases_encoded_len(
-    const sbp_msg_ssr_code_biases_t *msg);
+static inline size_t sbp_msg_ssr_code_biases_encoded_len(
+    const sbp_msg_ssr_code_biases_t *msg) {
+  return SBP_MSG_SSR_CODE_BIASES_ENCODED_OVERHEAD +
+         (msg->n_biases * SBP_CODE_BIASES_CONTENT_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_code_biases_t to wire representation
@@ -208,6 +210,6 @@ static inline bool operator>=(const sbp_msg_ssr_code_biases_t &lhs,
   return sbp_msg_ssr_code_biases_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_CODE_BIASES_H */

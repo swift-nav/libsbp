@@ -65,8 +65,11 @@ typedef struct {
  * @param msg sbp_solution_input_type_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_solution_input_type_encoded_len(
-    const sbp_solution_input_type_t *msg);
+static inline size_t sbp_solution_input_type_encoded_len(
+    const sbp_solution_input_type_t *msg) {
+  (void)msg;
+  return SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_solution_input_type_t to wire representation
@@ -160,6 +163,6 @@ static inline bool operator>=(const sbp_solution_input_type_t &lhs,
   return sbp_solution_input_type_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SOLUTION_META_SOLUTIONINPUTTYPE_H */

@@ -51,12 +51,12 @@ TEST(TestNullTerminatedString, InvalidState) {
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_params));
 
-  // In this case the short max_encoded_len should force a packed size of 1 whereas the others with both be the full string
+  // In this case the short maxlen should force a packed size of 1 whereas the others with both be the full string
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, short_params), 1);
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 11);
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_params), 11);
 
-  // Likewise, the space remaining should be the full buffer for short max_encoded_len and the correct value for the others
+  // Likewise, the space remaining should be the full buffer for short maxlen and the correct value for the others
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, short_params), 9);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, long_params), 89);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_params), 244);
@@ -93,53 +93,53 @@ TEST(TestNullTerminatedString, Init) {
   // Test the init function. It should be able to reset everything no matter what state it's in
   sbp_string_t s;
 
-  size_t max_encoded_len = 10;
+  size_t maxlen = 10;
 
   sbp_null_terminated_string_init(&s);
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 9);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 9);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "");
   EXPECT_EQ(s.encoded_len, 1);
 
   // Put in a valid string
   strcpy(s.data, "abcd");
   s.encoded_len = 5;
 
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abcd");
 
   // And reinitialise
   sbp_null_terminated_string_init(&s);
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 9);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 9);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "");
   EXPECT_EQ(s.encoded_len, 1);
 
   // Put in an invalid string
   strcpy(s.data, "aaaaaaaaaa");
   s.encoded_len = 11;
 
-  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 9);
-  EXPECT_EQ(sbp_null_terminated_string_get(&s, max_encoded_len), nullptr);
+  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 9);
+  EXPECT_EQ(sbp_null_terminated_string_get(&s, maxlen), nullptr);
   EXPECT_EQ(s.encoded_len, 11);
 
   // And reinitialise
   sbp_null_terminated_string_init(&s);
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 9);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 9);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "");
   EXPECT_EQ(s.encoded_len, 1);
 }
 
@@ -148,46 +148,46 @@ TEST(TestNullTerminatedString, Set)
   // A variety of cases for the set function
   sbp_string_t s;
 
-  size_t max_encoded_len = 20;
+  size_t maxlen = 20;
 
   sbp_null_terminated_string_init(&s);
 
   // Put in a valid string
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "Hello, World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "Hello, World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 
   // Overwrite with another valid string
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "Goodbye, World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 16);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 15);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Goodbye, World!");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "Goodbye, World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 15);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Goodbye, World!");
 
   // Try to overwrite with an invalid string, it should fail and leave the original string intact
-  EXPECT_FALSE(sbp_null_terminated_string_set(&s, max_encoded_len, "A string which is far too long for the buffer"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 16);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 15);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Goodbye, World!");
+  EXPECT_FALSE(sbp_null_terminated_string_set(&s, maxlen, "A string which is far too long for the buffer"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 15);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Goodbye, World!");
 
   // Setting an invalid buffer clears everything
   strcpy(s.data, "A string which is longer than the max packed len");
   s.encoded_len = 49;
-  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_get(&s, max_encoded_len), nullptr);
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "Hello, World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_get(&s, maxlen), nullptr);
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "Hello, World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 }
 
 TEST(TestNullTerminatedString, Printf)
@@ -196,49 +196,49 @@ TEST(TestNullTerminatedString, Printf)
 
   sbp_string_t s;
 
-  size_t max_encoded_len = 20;
+  size_t maxlen = 20;
 
   sbp_null_terminated_string_init(&s);
 
-  auto vprintf_wrapper = [&s, max_encoded_len](const char *fmt, ...) {
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_null_terminated_string_vprintf(&s, max_encoded_len, fmt, ap);
+    bool ret = sbp_null_terminated_string_vprintf(&s, maxlen, fmt, ap);
     va_end(ap);
     return ret;
   };
 
   // A valid string
   EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 
   // Overwrite with another valid string
   EXPECT_TRUE(vprintf_wrapper("%d %d %d %d", 1, 2, 3, 4));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 12);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
 
   // Overwrite with something which would be too long, expect no change
   EXPECT_FALSE(vprintf_wrapper("%d %d %d %d %d %d %d %d %d %d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 12);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
 
   // Printing in to an invalid buffer clears everything
   EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 }
 
 TEST(TestNullTerminatedString, Append)
@@ -246,42 +246,42 @@ TEST(TestNullTerminatedString, Append)
   // Some cases for appending a string to a buffer
   sbp_string_t s;
 
-  size_t max_encoded_len = 20;
+  size_t maxlen = 20;
 
   sbp_null_terminated_string_init(&s);
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set
-  EXPECT_TRUE(sbp_null_terminated_string_append(&s, max_encoded_len, "Hello"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello");
+  EXPECT_TRUE(sbp_null_terminated_string_append(&s, maxlen, "Hello"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello");
 
   // Similarly, appending to an uninitialised buffer will initialise it
   memset(&s, 0, sizeof(s));
-  EXPECT_TRUE(sbp_null_terminated_string_append(&s, max_encoded_len, "Hello"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 5);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello");
+  EXPECT_TRUE(sbp_null_terminated_string_append(&s, maxlen, "Hello"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello");
 
   // Appending a valid string
-  EXPECT_TRUE(sbp_null_terminated_string_append(&s, max_encoded_len, ", World!"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_TRUE(sbp_null_terminated_string_append(&s, maxlen, ", World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 
   // But it isn't allowed to overrun
-  EXPECT_FALSE(sbp_null_terminated_string_append(&s, max_encoded_len, "1234567"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 14);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 6);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 13);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "Hello, World!");
+  EXPECT_FALSE(sbp_null_terminated_string_append(&s, maxlen, "1234567"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 }
 
 TEST(TestNullTerminatedString, AppendPrintf)
@@ -289,67 +289,67 @@ TEST(TestNullTerminatedString, AppendPrintf)
   // Some cases for appending a formatted string to a buffer
   sbp_string_t s;
 
-  size_t max_encoded_len = 20;
+  size_t maxlen = 20;
 
   sbp_null_terminated_string_init(&s);
 
-  auto vprintf_wrapper = [&s, max_encoded_len](const char *fmt, ...) {
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_null_terminated_string_append_vprintf(&s, max_encoded_len, fmt, ap);
+    bool ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, fmt, ap);
     va_end(ap);
     return ret;
   };
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set
   EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 16);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2");
 
   // Similarly, appending to an uninitialised buffer will initialise it
   memset(&s, 0, sizeof(s));
   EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 16);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2");
 
   // Appending a valid string
   EXPECT_TRUE(vprintf_wrapper(" %d %d", 3, 4));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 12);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
 
   // Up to the maximum
   EXPECT_TRUE(vprintf_wrapper(" %d %d %d %d %d %x", 5, 6, 7, 8, 9, 10));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 20);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 0);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 19);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4 5 6 7 8 9 a");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 a");
 
   // But isn't allowed to overrun
   // Wind back a little bit
   s.encoded_len = 8;
   s.data[7] = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 12);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
 
   EXPECT_FALSE(vprintf_wrapper(" %d %d %d %d %d %d", 5, 6, 7, 8, 9, 10));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 8);
-  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, max_encoded_len), 12);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 7);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "1 2 3 4");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
 }
 
 TEST(TestNullTerminatedString, Pack)
@@ -460,7 +460,7 @@ TEST(TestNullTerminatedString, Pack)
 TEST(TestNullTerminatedString, Unpack)
 {
   sbp_string_t s;
-  size_t max_encoded_len = 5;
+  size_t maxlen = 5;
 
   uint8_t payload[10];
   sbp_decode_ctx_t ctx;
@@ -471,12 +471,12 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abcd\0", 5);
   ctx.buf_len = 5;
   ctx.offset = 0;
-  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
+  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 4);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abcd");
   EXPECT_EQ(ctx.offset, 5);
 
   // Pack in to an initialised but empty buffer
@@ -484,89 +484,89 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.buf_len = 5;
   ctx.offset = 0;
   sbp_null_terminated_string_init(&s);
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 4);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abcd");
   EXPECT_EQ(ctx.offset, 5);
 
   // Overwrite a previously valid string
   memcpy(payload, "abcd\0", 5);
   ctx.buf_len = 5;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 4);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abcd");
   EXPECT_EQ(ctx.offset, 5);
 
   // Unpack a string when there is more data in the payload buffer
   memcpy(payload, "abcd\0more", 9);
   ctx.buf_len = 9;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 5);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 4);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abcd");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 4);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abcd");
   EXPECT_EQ(ctx.offset, 5);
 
   // Unpack a short string
   memcpy(payload, "ab\0", 3);
   ctx.buf_len = 3;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 3);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 2);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "ab");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 2);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "ab");
   EXPECT_EQ(ctx.offset, 3);
 
   // Unpack a payload without a NULL terminator
   memcpy(payload, "abc", 3);
   ctx.buf_len = 3;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "abc");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "abc");
   EXPECT_EQ(ctx.offset, 3);
 
   // Fail to unpack a string where no NULL terminator is found and there is more data in the buffer
   memcpy(payload, "abcdefghi", 10);
   ctx.buf_len = 10;
   ctx.offset = 0;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_FALSE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 1);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 0);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_FALSE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 0);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "");
   EXPECT_EQ(ctx.offset, 0); // No data consumed
 
   // Unpack from an offset in the payload buffer
   memcpy(payload, "abcdefg\0i", 10);
   ctx.buf_len = 10;
   ctx.offset = 4;
-  EXPECT_TRUE(sbp_null_terminated_string_set(&s, max_encoded_len, "zzzz"));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, max_encoded_len, &ctx));
-  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, max_encoded_len));
-  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, max_encoded_len), 4);
-  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, max_encoded_len), 3);
-  EXPECT_STREQ(sbp_null_terminated_string_get(&s, max_encoded_len), "efg");
+  EXPECT_TRUE(sbp_null_terminated_string_set(&s, maxlen, "zzzz"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "efg");
   EXPECT_EQ(ctx.offset, 8);
 }

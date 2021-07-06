@@ -255,4 +255,4 @@ typedef enum {
 }
 #endif
 
-#endif
+#endif /* LIBSBP_SBP_MSG_TYPE_H */

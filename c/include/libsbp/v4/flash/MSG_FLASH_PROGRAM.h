@@ -55,7 +55,7 @@ typedef struct {
   /**
    * Starting address offset to program [bytes]
    */
-  u8 addr_start[3];
+  u8 addr_start[SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX];
 
   /**
    * Length of set of addresses to program, counting up from starting address
@@ -66,7 +66,7 @@ typedef struct {
   /**
    * Data to program addresses with, with length N=addr_len
    */
-  u8 data[250];
+  u8 data[SBP_MSG_FLASH_PROGRAM_DATA_MAX];
 } sbp_msg_flash_program_t;
 
 /**
@@ -75,7 +75,11 @@ typedef struct {
  * @param msg sbp_msg_flash_program_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_flash_program_encoded_len(const sbp_msg_flash_program_t *msg);
+static inline size_t sbp_msg_flash_program_encoded_len(
+    const sbp_msg_flash_program_t *msg) {
+  return SBP_MSG_FLASH_PROGRAM_ENCODED_OVERHEAD +
+         (msg->addr_len * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_flash_program_t to wire representation
@@ -187,6 +191,6 @@ static inline bool operator>=(const sbp_msg_flash_program_t &lhs,
   return sbp_msg_flash_program_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FLASH_MSG_FLASH_PROGRAM_H */

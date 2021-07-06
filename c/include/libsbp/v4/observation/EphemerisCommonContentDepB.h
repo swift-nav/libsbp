@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -45,7 +44,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Time of Ephemerides
@@ -81,8 +80,11 @@ typedef struct {
  * @param msg sbp_ephemeris_common_content_dep_b_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_ephemeris_common_content_dep_b_encoded_len(
-    const sbp_ephemeris_common_content_dep_b_t *msg);
+static inline size_t sbp_ephemeris_common_content_dep_b_encoded_len(
+    const sbp_ephemeris_common_content_dep_b_t *msg) {
+  (void)msg;
+  return SBP_EPHEMERIS_COMMON_CONTENT_DEP_B_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_ephemeris_common_content_dep_b_t to wire
@@ -182,6 +184,6 @@ static inline bool operator>=(const sbp_ephemeris_common_content_dep_b_t &lhs,
   return sbp_ephemeris_common_content_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_EPHEMERISCOMMONCONTENTDEPB_H */

@@ -27,7 +27,6 @@
 
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/common.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -66,7 +65,7 @@ typedef struct {
   /**
    * GNSS signal for which acquisition was attempted
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 } sbp_msg_acq_result_t;
 
 /**
@@ -75,7 +74,11 @@ typedef struct {
  * @param msg sbp_msg_acq_result_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_acq_result_encoded_len(const sbp_msg_acq_result_t *msg);
+static inline size_t sbp_msg_acq_result_encoded_len(
+    const sbp_msg_acq_result_t *msg) {
+  (void)msg;
+  return SBP_MSG_ACQ_RESULT_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_acq_result_t to wire representation
@@ -187,6 +190,6 @@ static inline bool operator>=(const sbp_msg_acq_result_t &lhs,
   return sbp_msg_acq_result_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_RESULT_H */

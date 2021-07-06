@@ -102,55 +102,11 @@ def mk_size(field):
   else:
     return '%s;' % field.identifier
 
-def get_bitfield_basename(msg, item):
-    bitfield_name = item.get('desc', '').replace(" ", "_").upper()
-    base_string = "SBP_{}_{}".format(msg.upper().replace('MSG_', ''), bitfield_name)
-    base_string = re.sub('[^A-Za-z0-9_]+', '', base_string)
-    return base_string
-
-
-def create_bitfield_macros(field, msg):
-  ret_list = []
-  for item in field.options['fields'].value:
-    base_string = get_bitfield_basename(msg, item)
-    if not base_string.endswith("RESERVED"):
-      nbits = item.get('len')
-      bitrange = (item.get('range')).split(':')
-      start_bit = int(bitrange[0])
-      ret_list.append("#define {}_MASK ({})".format(base_string, hex((1 << nbits) - 1)))
-      ret_list.append("#define {}_SHIFT ({}u)".format(base_string, start_bit))
-      ret_list.append("""#define {}_GET(flags) \\
-                             (((flags) >> {}_SHIFT) \\
-                             & {}_MASK)""".format(base_string, base_string, base_string))
-      ret_list.append("""#define {}_SET(flags, val) \\
-                             do {{((flags) |= \\
-                             (((val) & ({}_MASK)) \\
-                             << ({}_SHIFT)));}} while(0)
-                             """.format(base_string, base_string, base_string))
-      ret_list.append("")
-      for value_obj in item.get('vals', []):
-        value_numerical = int(value_obj.get('value'))
-        value_description = value_obj.get('desc', None).upper()
-        value_description = re.sub(r'\([^)]*\)', '', value_description)
-        value_description = re.sub('[ \-]+', '_', value_description.strip())
-        value_description = re.sub('[^A-Za-z0-9_]+', '', value_description)
-        if value_description and value_description.upper() != 'RESERVED':
-          # backwards compatibility
-          if base_string in ["SBP_IMU_AUX_GYROSCOPE_RANGE", "SBP_IMU_AUX_ACCELEROMETER_RANGE", "SBP_STARTUP", "SBP_PPS_TIME_TIME_UNCERTAINTY"]:
-            ret_list.append("#define {}_{} ({})".format(base_string, value_description,
-                                                        value_numerical))
-          base_string = re.sub('__+', '_', base_string).strip('_')
-          value_description = re.sub('__+', '_', value_description).strip('_')
-          ret_list.append("#define {}_{} ({})".format(base_string, value_description,
-                                                      value_numerical))
-  return "\n".join(ret_list)
-
 JENV.filters['commentify'] = commentify
 JENV.filters['commentify_field'] = commentify_field
 JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
-JENV.filters['create_bitfield_macros'] = create_bitfield_macros
 
 def render_source(output_dir, package_spec):
   """

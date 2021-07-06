@@ -90,8 +90,11 @@ typedef struct {
  * @param msg sbp_msg_linux_sys_state_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_sys_state_encoded_len(
-    const sbp_msg_linux_sys_state_t *msg);
+static inline size_t sbp_msg_linux_sys_state_encoded_len(
+    const sbp_msg_linux_sys_state_t *msg) {
+  (void)msg;
+  return SBP_MSG_LINUX_SYS_STATE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_linux_sys_state_t to wire representation
@@ -204,6 +207,6 @@ static inline bool operator>=(const sbp_msg_linux_sys_state_t &lhs,
   return sbp_msg_linux_sys_state_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_SYS_STATE_H */

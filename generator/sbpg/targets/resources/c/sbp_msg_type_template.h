@@ -19,7 +19,7 @@
 #define LIBSBP_SBP_MSG_TYPE_H
 
 ((* for p in packages *))
-#include <libsbp/(((p)))_macros.h>
+#include <libsbp/(((p.name)))_macros.h>
 ((*- endfor *))
 
 #ifdef __cplusplus
@@ -27,8 +27,8 @@ extern "C" {
 #endif
 
 typedef enum {
-((*- for m in msgs *))
-  (((m.enum_name))) = SBP_(((m.name))),
+((*- for m in real_messages *))
+  (((m.v4_msg_type))) = (((m.legacy_msg_type))),
 ((*- endfor *))
 } sbp_msg_type_t;
 
@@ -36,5 +36,5 @@ typedef enum {
 }
 #endif
 
-#endif
+#endif /* LIBSBP_SBP_MSG_TYPE_H */
 

@@ -158,7 +158,8 @@ bool sbp_msg_bootloader_handshake_resp_version_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_resp_version_vprintf(
-    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_bootloader_handshake_resp_t::version with printf style
@@ -191,7 +192,8 @@ bool sbp_msg_bootloader_handshake_resp_version_append_printf(
  *
  */
 bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
-    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap);
+    sbp_msg_bootloader_handshake_resp_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_bootloader_handshake_resp_t::version
@@ -219,8 +221,11 @@ size_t sbp_msg_bootloader_handshake_resp_version_strlen(
  * @param msg sbp_msg_bootloader_handshake_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_bootloader_handshake_resp_encoded_len(
-    const sbp_msg_bootloader_handshake_resp_t *msg);
+static inline size_t sbp_msg_bootloader_handshake_resp_encoded_len(
+    const sbp_msg_bootloader_handshake_resp_t *msg) {
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_ENCODED_OVERHEAD +
+         sbp_msg_bootloader_handshake_resp_version_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_bootloader_handshake_resp_t to wire
@@ -339,6 +344,6 @@ static inline bool operator>=(const sbp_msg_bootloader_handshake_resp_t &lhs,
   return sbp_msg_bootloader_handshake_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_RESP_H */

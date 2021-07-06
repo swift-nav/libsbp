@@ -156,7 +156,7 @@ def main():
           js.render_source(output_dir, parsed)
         elif args.c:
           import sbpg.targets.legacy_c as legacy_c
-          legacy_c.render_source(output_dir, parsed)
+          legacy_c.render_source(output_dir + "/include/libsbp", parsed)
         elif args.test_c:
           import sbpg.targets.test_legacy_c as test_legacy_c
           test_legacy_c.render_source(output_dir, parsed)
@@ -188,12 +188,8 @@ def main():
         import sbpg.targets.c as c
         c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
-        legacy_c.render_traits(output_dir, parsed)
-        c.render_headers(output_dir, parsed)
-      elif args.c_sources:
-        import sbpg.targets.c as c
-        parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
-        c.render_sources(output_dir, parsed)
+        legacy_c.render_traits(output_dir + "/include/libsbp", parsed)
+        c.render_all(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

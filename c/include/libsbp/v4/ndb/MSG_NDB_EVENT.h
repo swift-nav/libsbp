@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ndb_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -75,14 +74,14 @@ typedef struct {
    * GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
    * indicates for which signal the object belongs to. Reserved in other cases.
    */
-  sbp_sbp_gnss_signal_t object_sid;
+  sbp_v4_gnss_signal_t object_sid;
 
   /**
    * GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
    * capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV
    * data was decoded. Reserved in other cases.
    */
-  sbp_sbp_gnss_signal_t src_sid;
+  sbp_v4_gnss_signal_t src_sid;
 
   /**
    * A unique identifier of the sending hardware. For v1.0, set to the 2 least
@@ -98,7 +97,11 @@ typedef struct {
  * @param msg sbp_msg_ndb_event_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ndb_event_encoded_len(const sbp_msg_ndb_event_t *msg);
+static inline size_t sbp_msg_ndb_event_encoded_len(
+    const sbp_msg_ndb_event_t *msg) {
+  (void)msg;
+  return SBP_MSG_NDB_EVENT_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_ndb_event_t to wire representation
@@ -209,6 +212,6 @@ static inline bool operator>=(const sbp_msg_ndb_event_t &lhs,
   return sbp_msg_ndb_event_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NDB_MSG_NDB_EVENT_H */

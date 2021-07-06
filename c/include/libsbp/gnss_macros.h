@@ -40,6 +40,18 @@
 #define SBP_GNSSSIGNAL__GAL_E1B (14)
 #define SBP_GNSSSIGNAL__GAL_E7I (20)
 #define SBP_GNSSSIGNAL__BDS3_B2A (47)
+/**
+ * Encoded length of sbp_v4_gnss_signal_t (V4 API) and
+ * sbp_gnss_signal_t (legacy API)
+ */
+#define SBP_V4_GNSS_SIGNAL_ENCODED_LEN 2u
+
+/**
+ * Encoded length of sbp_sv_id_t (V4 API) and
+ * sv_id_t (legacy API)
+ */
+#define SBP_SV_ID_ENCODED_LEN 2u
+
 #define SBP_GNSSSIGNALDEP__MASK (0xff)
 #define SBP_GNSSSIGNALDEP__SHIFT (0u)
 #define SBP_GNSSSIGNALDEP__GET(flags) \
@@ -57,5 +69,34 @@
 #define SBP_GNSSSIGNALDEP__GLO_L2CA (4)
 #define SBP_GNSSSIGNALDEP__GPS_L1P (5)
 #define SBP_GNSSSIGNALDEP__GPS_L2P (6)
+/**
+ * Encoded length of sbp_gnss_signal_dep_t (V4 API) and
+ * gnss_signal_dep_t (legacy API)
+ */
+#define SBP_GNSS_SIGNAL_DEP_ENCODED_LEN 4u
 
-#endif
+/**
+ * Encoded length of sbp_gps_time_dep_t (V4 API) and
+ * gps_time_dep_t (legacy API)
+ */
+#define SBP_GPS_TIME_DEP_ENCODED_LEN 6u
+
+/**
+ * Encoded length of sbp_gps_time_sec_t (V4 API) and
+ * gps_time_sec_t (legacy API)
+ */
+#define SBP_GPS_TIME_SEC_ENCODED_LEN 6u
+
+/**
+ * Encoded length of sbp_v4_gps_time_t (V4 API) and
+ * sbp_gps_time_t (legacy API)
+ */
+#define SBP_V4_GPS_TIME_ENCODED_LEN 10u
+
+/**
+ * Encoded length of sbp_carrier_phase_t (V4 API) and
+ * carrier_phase_t (legacy API)
+ */
+#define SBP_CARRIER_PHASE_ENCODED_LEN 5u
+
+#endif /* LIBSBP_GNSS_MACROS_H */

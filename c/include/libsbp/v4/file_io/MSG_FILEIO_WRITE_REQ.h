@@ -66,7 +66,7 @@ typedef struct {
   /**
    * Variable-length array of data to write
    */
-  u8 data[247];
+  u8 data[SBP_MSG_FILEIO_WRITE_REQ_DATA_MAX];
   /**
    * Number of elements in data
    *
@@ -177,7 +177,8 @@ bool sbp_msg_fileio_write_req_filename_printf(sbp_msg_fileio_write_req_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_write_req_filename_vprintf(sbp_msg_fileio_write_req_t *msg,
-                                               const char *fmt, va_list ap);
+                                               const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_fileio_write_req_t::filename with printf style formatting
@@ -208,7 +209,8 @@ bool sbp_msg_fileio_write_req_filename_append_printf(
  *
  */
 bool sbp_msg_fileio_write_req_filename_append_vprintf(
-    sbp_msg_fileio_write_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_fileio_write_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_fileio_write_req_t::filename
@@ -236,8 +238,12 @@ size_t sbp_msg_fileio_write_req_filename_strlen(
  * @param msg sbp_msg_fileio_write_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_write_req_encoded_len(
-    const sbp_msg_fileio_write_req_t *msg);
+static inline size_t sbp_msg_fileio_write_req_encoded_len(
+    const sbp_msg_fileio_write_req_t *msg) {
+  return SBP_MSG_FILEIO_WRITE_REQ_ENCODED_OVERHEAD +
+         sbp_msg_fileio_write_req_filename_encoded_len(msg) +
+         (msg->n_data * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_write_req_t to wire representation
@@ -351,6 +357,6 @@ static inline bool operator>=(const sbp_msg_fileio_write_req_t &lhs,
   return sbp_msg_fileio_write_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_WRITE_REQ_H */

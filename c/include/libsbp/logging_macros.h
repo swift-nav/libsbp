@@ -37,7 +37,72 @@
 #define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
 #define SBP_LOG_LOGGING_LEVEL_INFO (6)
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
-#define SBP_MSG_FWD 0x0402
-#define SBP_MSG_PRINT_DEP 0x0010
+/**
+ * The maximum number of items that can be stored in sbp_msg_log_t::text (V4
+ * API) or msg_log_t::text (legacy API) before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_LOG_TEXT_MAX 254u
 
-#endif
+/**
+ * Encoded length of sbp_msg_log_t (V4 API) and
+ * msg_log_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_log_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_LOG_ENCODED_OVERHEAD 1u
+
+#define SBP_MSG_FWD 0x0402
+/**
+ * The maximum number of items that can be stored in sbp_msg_fwd_t::fwd_payload
+ * (V4 API) or msg_fwd_t::fwd_payload (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_FWD_FWD_PAYLOAD_MAX 253u
+
+/**
+ * Encoded length of sbp_msg_fwd_t (V4 API) and
+ * msg_fwd_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_fwd_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_FWD_ENCODED_OVERHEAD 2u
+
+#define SBP_MSG_PRINT_DEP 0x0010
+/**
+ * The maximum number of items that can be stored in sbp_msg_print_dep_t::text
+ * (V4 API) or msg_print_dep_t::text (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_PRINT_DEP_TEXT_MAX 255u
+
+/**
+ * Encoded length of sbp_msg_print_dep_t (V4 API) and
+ * msg_print_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_print_dep_encoded_len to determine the actual size of an instance
+ * of this message. Users of the legacy API are required to track the encoded
+ * message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_PRINT_DEP_ENCODED_OVERHEAD 0u
+
+#endif /* LIBSBP_LOGGING_MACROS_H */

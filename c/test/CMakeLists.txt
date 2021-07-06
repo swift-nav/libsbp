@@ -66,7 +66,6 @@ swift_add_test(test-libsbp-v4
   )
 swift_set_compile_options(test-libsbp-v4
   REMOVE 
-    -Wconversion 
     -Wpointer-arith
     -Wformat
     -Wformat-security

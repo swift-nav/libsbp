@@ -28,7 +28,6 @@
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/common.h>
 #include <libsbp/v4/acquisition/AcqSvProfileDep.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -48,7 +47,8 @@ typedef struct {
   /**
    * SV profiles during acquisition time
    */
-  sbp_acq_sv_profile_dep_t acq_sv_profile[7];
+  sbp_acq_sv_profile_dep_t
+      acq_sv_profile[SBP_MSG_ACQ_SV_PROFILE_DEP_ACQ_SV_PROFILE_MAX];
   /**
    * Number of elements in acq_sv_profile
    *
@@ -68,8 +68,11 @@ typedef struct {
  * @param msg sbp_msg_acq_sv_profile_dep_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_acq_sv_profile_dep_encoded_len(
-    const sbp_msg_acq_sv_profile_dep_t *msg);
+static inline size_t sbp_msg_acq_sv_profile_dep_encoded_len(
+    const sbp_msg_acq_sv_profile_dep_t *msg) {
+  return SBP_MSG_ACQ_SV_PROFILE_DEP_ENCODED_OVERHEAD +
+         (msg->n_acq_sv_profile * SBP_ACQ_SV_PROFILE_DEP_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_acq_sv_profile_dep_t to wire representation
@@ -184,6 +187,6 @@ static inline bool operator>=(const sbp_msg_acq_sv_profile_dep_t &lhs,
   return sbp_msg_acq_sv_profile_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H */

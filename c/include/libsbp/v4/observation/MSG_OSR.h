@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/observation/ObservationHeader.h>
 #include <libsbp/v4/observation/PackedOsrContent.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -54,7 +53,7 @@ typedef struct {
   /**
    * Network correction for a satellite signal.
    */
-  sbp_packed_osr_content_t obs[12];
+  sbp_packed_osr_content_t obs[SBP_MSG_OSR_OBS_MAX];
   /**
    * Number of elements in obs
    *
@@ -74,7 +73,10 @@ typedef struct {
  * @param msg sbp_msg_osr_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_osr_encoded_len(const sbp_msg_osr_t *msg);
+static inline size_t sbp_msg_osr_encoded_len(const sbp_msg_osr_t *msg) {
+  return SBP_MSG_OSR_ENCODED_OVERHEAD +
+         (msg->n_obs * SBP_PACKED_OSR_CONTENT_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_osr_t to wire representation
@@ -184,6 +186,6 @@ static inline bool operator>=(const sbp_msg_osr_t &lhs,
   return sbp_msg_osr_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_OSR_H */

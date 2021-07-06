@@ -17,11 +17,11 @@
 #ifndef LIBSBP_CPP_MESSAGE_TRAITS_H
 #define LIBSBP_CPP_MESSAGE_TRAITS_H
 
-#include <libsbp/sbp.h>
-#include <libsbp/v4/sbp_msg.h>
-((*- for i in includes *))
-#include <libsbp/v4/(((i)))>
+((*- for p in packages *))
+#include <libsbp/v4/(((p.name))).h>
 ((*- endfor *))
+#include <libsbp/v4/sbp_msg.h>
+#include <libsbp/sbp_msg_type.h>
 
 namespace sbp {
 
@@ -34,22 +34,20 @@ namespace sbp {
 template<typename>
 struct MessageTraits;
 
-((* for m in msgs *))
-((*- if m.is_real_message *))
+((* for m in real_messages *))
 template<>
 struct MessageTraits<(((m.type_name)))> {
-  static constexpr sbp_msg_type_t id = (((m.enum_name)));
+  static constexpr sbp_msg_type_t id = (((m.v4_msg_type)));
   static const (((m.type_name)))& get(const sbp_msg_t &msg) {
-    return msg.(((m.short_name)));
+    return msg.(((m.union_member_name)));
   }
   static (((m.type_name)))& get(sbp_msg_t &msg) {
-    return msg.(((m.short_name)));
+    return msg.(((m.union_member_name)));
   }
   static s8 send(sbp_state_t *state, u16 sender_id, const (((m.type_name))) &msg, sbp_write_fn_t write) {
-    return (((m.prefix)))_send(state, sender_id, &msg, write);
+    return (((m.send_fn)))(state, sender_id, &msg, write);
   }
 };
-((* endif *))
 ((* endfor *))
 
 

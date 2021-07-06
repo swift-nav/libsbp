@@ -62,7 +62,7 @@ typedef struct {
   /**
    * fixed length string representing the thread name
    */
-  char tname[15];
+  char tname[SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX];
 
   /**
    * the command line (as much as it fits in the remaining packet)
@@ -170,7 +170,8 @@ bool sbp_msg_linux_cpu_state_dep_a_cmdline_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_vprintf(
-    sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_linux_cpu_state_dep_a_t::cmdline with printf style formatting
@@ -201,7 +202,8 @@ bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_printf(
  *
  */
 bool sbp_msg_linux_cpu_state_dep_a_cmdline_append_vprintf(
-    sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_cpu_state_dep_a_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_linux_cpu_state_dep_a_t::cmdline
@@ -229,8 +231,11 @@ size_t sbp_msg_linux_cpu_state_dep_a_cmdline_strlen(
  * @param msg sbp_msg_linux_cpu_state_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_cpu_state_dep_a_encoded_len(
-    const sbp_msg_linux_cpu_state_dep_a_t *msg);
+static inline size_t sbp_msg_linux_cpu_state_dep_a_encoded_len(
+    const sbp_msg_linux_cpu_state_dep_a_t *msg) {
+  return SBP_MSG_LINUX_CPU_STATE_DEP_A_ENCODED_OVERHEAD +
+         sbp_msg_linux_cpu_state_dep_a_cmdline_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_linux_cpu_state_dep_a_t to wire representation
@@ -347,6 +352,6 @@ static inline bool operator>=(const sbp_msg_linux_cpu_state_dep_a_t &lhs,
   return sbp_msg_linux_cpu_state_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_CPU_STATE_DEP_A_H */

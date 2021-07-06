@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/CarrierPhase.h>
 #include <libsbp/v4/gnss/GnssSignalDep.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -82,8 +81,11 @@ typedef struct {
  * @param msg sbp_packed_obs_content_dep_c_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_obs_content_dep_c_encoded_len(
-    const sbp_packed_obs_content_dep_c_t *msg);
+static inline size_t sbp_packed_obs_content_dep_c_encoded_len(
+    const sbp_packed_obs_content_dep_c_t *msg) {
+  (void)msg;
+  return SBP_PACKED_OBS_CONTENT_DEP_C_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_packed_obs_content_dep_c_t to wire representation
@@ -178,6 +180,6 @@ static inline bool operator>=(const sbp_packed_obs_content_dep_c_t &lhs,
   return sbp_packed_obs_content_dep_c_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENTDEPC_H */

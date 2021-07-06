@@ -59,7 +59,7 @@ typedef struct {
   /**
    * variable length wrapped binary message
    */
-  u8 fwd_payload[253];
+  u8 fwd_payload[SBP_MSG_FWD_FWD_PAYLOAD_MAX];
   /**
    * Number of elements in fwd_payload
    *
@@ -79,7 +79,10 @@ typedef struct {
  * @param msg sbp_msg_fwd_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fwd_encoded_len(const sbp_msg_fwd_t *msg);
+static inline size_t sbp_msg_fwd_encoded_len(const sbp_msg_fwd_t *msg) {
+  return SBP_MSG_FWD_ENCODED_OVERHEAD +
+         (msg->n_fwd_payload * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_fwd_t to wire representation
@@ -189,6 +192,6 @@ static inline bool operator>=(const sbp_msg_fwd_t &lhs,
   return sbp_msg_fwd_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LOGGING_MSG_FWD_H */

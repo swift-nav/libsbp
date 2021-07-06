@@ -16,18 +16,9 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/sbas.h>
 
-size_t sbp_msg_sbas_raw_encoded_len(const sbp_msg_sbas_raw_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->sid);
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_u8_encoded_len(&msg->message_type);
-  encoded_len += (27 * sbp_u8_encoded_len(&msg->data[0]));
-  return encoded_len;
-}
-
 bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_msg_sbas_raw_t *msg) {
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u32_encode(ctx, &msg->tow)) {
@@ -36,7 +27,7 @@ bool sbp_msg_sbas_raw_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->message_type)) {
     return false;
   }
-  for (size_t i = 0; i < 27; i++) {
+  for (size_t i = 0; i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->data[i])) {
       return false;
     }
@@ -61,7 +52,7 @@ s8 sbp_msg_sbas_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_sbas_raw_decode_internal(sbp_decode_ctx_t *ctx,
                                       sbp_msg_sbas_raw_t *msg) {
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u32_decode(ctx, &msg->tow)) {
@@ -70,7 +61,7 @@ bool sbp_msg_sbas_raw_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->message_type)) {
     return false;
   }
-  for (uint8_t i = 0; i < 27; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {
       return false;
     }
@@ -109,7 +100,7 @@ int sbp_msg_sbas_raw_cmp(const sbp_msg_sbas_raw_t *a,
                          const sbp_msg_sbas_raw_t *b) {
   int ret = 0;
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -124,7 +115,7 @@ int sbp_msg_sbas_raw_cmp(const sbp_msg_sbas_raw_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < 27; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
   }
   if (ret != 0) {

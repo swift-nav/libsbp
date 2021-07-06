@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -53,12 +52,12 @@ typedef struct {
   /**
    * RF gain for each frontend channel [percent]
    */
-  s8 rf_gain[8];
+  s8 rf_gain[SBP_MSG_FRONT_END_GAIN_RF_GAIN_MAX];
 
   /**
    * Intermediate frequency gain for each frontend channel [percent]
    */
-  s8 if_gain[8];
+  s8 if_gain[SBP_MSG_FRONT_END_GAIN_IF_GAIN_MAX];
 } sbp_msg_front_end_gain_t;
 
 /**
@@ -67,7 +66,11 @@ typedef struct {
  * @param msg sbp_msg_front_end_gain_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_front_end_gain_encoded_len(const sbp_msg_front_end_gain_t *msg);
+static inline size_t sbp_msg_front_end_gain_encoded_len(
+    const sbp_msg_front_end_gain_t *msg) {
+  (void)msg;
+  return SBP_MSG_FRONT_END_GAIN_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_front_end_gain_t to wire representation
@@ -180,6 +183,6 @@ static inline bool operator>=(const sbp_msg_front_end_gain_t &lhs,
   return sbp_msg_front_end_gain_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_FRONT_END_GAIN_H */

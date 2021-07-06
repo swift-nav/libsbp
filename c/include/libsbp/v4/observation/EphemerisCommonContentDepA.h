@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTimeDep.h>
 #include <libsbp/v4/gnss/GnssSignalDep.h>
 #include <libsbp/v4/string/sbp_string.h>
@@ -82,8 +81,11 @@ typedef struct {
  * @param msg sbp_ephemeris_common_content_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_ephemeris_common_content_dep_a_encoded_len(
-    const sbp_ephemeris_common_content_dep_a_t *msg);
+static inline size_t sbp_ephemeris_common_content_dep_a_encoded_len(
+    const sbp_ephemeris_common_content_dep_a_t *msg) {
+  (void)msg;
+  return SBP_EPHEMERIS_COMMON_CONTENT_DEP_A_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_ephemeris_common_content_dep_a_t to wire
@@ -183,6 +185,6 @@ static inline bool operator>=(const sbp_ephemeris_common_content_dep_a_t &lhs,
   return sbp_ephemeris_common_content_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_EPHEMERISCOMMONCONTENTDEPA_H */

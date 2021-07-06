@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GPSTime.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -53,7 +52,7 @@ typedef struct {
   /**
    * Receiver time of this observation
    */
-  sbp_sbp_gps_time_t t;
+  sbp_v4_gps_time_t t;
 
   /**
    * Reference frequency of this packet [MHz]
@@ -78,7 +77,7 @@ typedef struct {
   /**
    * Amplitude values (in the above units) of points in this packet
    */
-  u8 amplitude_value[227];
+  u8 amplitude_value[SBP_MSG_SPECAN_AMPLITUDE_VALUE_MAX];
   /**
    * Number of elements in amplitude_value
    *
@@ -98,7 +97,10 @@ typedef struct {
  * @param msg sbp_msg_specan_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_specan_encoded_len(const sbp_msg_specan_t *msg);
+static inline size_t sbp_msg_specan_encoded_len(const sbp_msg_specan_t *msg) {
+  return SBP_MSG_SPECAN_ENCODED_OVERHEAD +
+         (msg->n_amplitude_value * SBP_ENCODED_LEN_U8);
+}
 
 /**
  * Encode an instance of sbp_msg_specan_t to wire representation
@@ -208,6 +210,6 @@ static inline bool operator>=(const sbp_msg_specan_t &lhs,
   return sbp_msg_specan_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_SPECAN_H */

@@ -160,7 +160,8 @@ bool sbp_msg_settings_read_req_setting_add_section_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_req_setting_add_section_vprintf(
-    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append a string to the last section in sbp_msg_settings_read_req_t::setting
@@ -224,7 +225,8 @@ bool sbp_msg_settings_read_req_setting_append_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_settings_read_req_setting_append_vprintf(
-    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap);
+    sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain a section from sbp_msg_settings_read_req_t::setting
@@ -260,8 +262,11 @@ size_t sbp_msg_settings_read_req_setting_section_strlen(
  * @param msg sbp_msg_settings_read_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_settings_read_req_encoded_len(
-    const sbp_msg_settings_read_req_t *msg);
+static inline size_t sbp_msg_settings_read_req_encoded_len(
+    const sbp_msg_settings_read_req_t *msg) {
+  return SBP_MSG_SETTINGS_READ_REQ_ENCODED_OVERHEAD +
+         sbp_msg_settings_read_req_setting_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_settings_read_req_t to wire representation
@@ -375,6 +380,6 @@ static inline bool operator>=(const sbp_msg_settings_read_req_t &lhs,
   return sbp_msg_settings_read_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_REQ_H */

@@ -16,19 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/ndb.h>
 
-size_t sbp_msg_ndb_event_encoded_len(const sbp_msg_ndb_event_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u64_encoded_len(&msg->recv_time);
-  encoded_len += sbp_u8_encoded_len(&msg->event);
-  encoded_len += sbp_u8_encoded_len(&msg->object_type);
-  encoded_len += sbp_u8_encoded_len(&msg->result);
-  encoded_len += sbp_u8_encoded_len(&msg->data_source);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->object_sid);
-  encoded_len += sbp_sbp_gnss_signal_encoded_len(&msg->src_sid);
-  encoded_len += sbp_u16_encoded_len(&msg->original_sender);
-  return encoded_len;
-}
-
 bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_ndb_event_t *msg) {
   if (!sbp_u64_encode(ctx, &msg->recv_time)) {
@@ -46,10 +33,10 @@ bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->data_source)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->object_sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->object_sid)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_encode_internal(ctx, &msg->src_sid)) {
+  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->src_sid)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->original_sender)) {
@@ -90,10 +77,10 @@ bool sbp_msg_ndb_event_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->data_source)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->object_sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->object_sid)) {
     return false;
   }
-  if (!sbp_sbp_gnss_signal_decode_internal(ctx, &msg->src_sid)) {
+  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->src_sid)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->original_sender)) {
@@ -160,12 +147,12 @@ int sbp_msg_ndb_event_cmp(const sbp_msg_ndb_event_t *a,
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->object_sid, &b->object_sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->object_sid, &b->object_sid);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_sbp_gnss_signal_cmp(&a->src_sid, &b->src_sid);
+  ret = sbp_v4_gnss_signal_cmp(&a->src_sid, &b->src_sid);
   if (ret != 0) {
     return ret;
   }

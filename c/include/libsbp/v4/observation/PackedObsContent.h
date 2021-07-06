@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/CarrierPhase.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/observation/Doppler.h>
@@ -89,7 +88,7 @@ typedef struct {
   /**
    * GNSS signal identifier (16 bit)
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 } sbp_packed_obs_content_t;
 
 /**
@@ -98,7 +97,11 @@ typedef struct {
  * @param msg sbp_packed_obs_content_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_packed_obs_content_encoded_len(const sbp_packed_obs_content_t *msg);
+static inline size_t sbp_packed_obs_content_encoded_len(
+    const sbp_packed_obs_content_t *msg) {
+  (void)msg;
+  return SBP_PACKED_OBS_CONTENT_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_packed_obs_content_t to wire representation
@@ -192,6 +195,6 @@ static inline bool operator>=(const sbp_packed_obs_content_t &lhs,
   return sbp_packed_obs_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENT_H */

@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeaderDepA.h>
 #include <libsbp/v4/ssr/STECResidualNoStd.h>
 #include <libsbp/v4/ssr/TroposphericDelayCorrectionNoStd.h>
@@ -61,7 +60,8 @@ typedef struct {
   /**
    * STEC residuals for each satellite
    */
-  sbp_stec_residual_no_std_t stec_residuals[59];
+  sbp_stec_residual_no_std_t stec_residuals
+      [SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_STEC_RESIDUALS_MAX];
   /**
    * Number of elements in stec_residuals
    *
@@ -82,8 +82,11 @@ typedef struct {
  * @param msg sbp_msg_ssr_gridded_correction_no_std_dep_a_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len(
-    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg);
+static inline size_t sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len(
+    const sbp_msg_ssr_gridded_correction_no_std_dep_a_t *msg) {
+  return SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_ENCODED_OVERHEAD +
+         (msg->n_stec_residuals * SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN);
+}
 
 /**
  * Encode an instance of sbp_msg_ssr_gridded_correction_no_std_dep_a_t to wire
@@ -211,6 +214,6 @@ static inline bool operator>=(
   return sbp_msg_ssr_gridded_correction_no_std_dep_a_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_H */

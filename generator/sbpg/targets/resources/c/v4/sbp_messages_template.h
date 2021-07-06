@@ -11,12 +11,12 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
+ * Automatically generated from yaml/(((m.package_filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
-#define LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H
+#ifndef LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
+#define LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -27,12 +27,9 @@
 
 #include <libsbp/common.h>
 #include <libsbp/v4/string/sbp_string.h>
-#include <libsbp/(((pkg_name)))_macros.h>
+#include <libsbp/(((m.package_name)))_macros.h>
 
-((*- for i in include *))
-#include <libsbp/v4/(((i)))>
-((*- endfor *))
-((*- for i in sibling_include *))
+((*- for i in m.type_include *))
 #include <libsbp/v4/(((i))).h>
 ((*- endfor *))
 
@@ -64,9 +61,9 @@ typedef struct {
   ((*- if f.packing == "packed-string" *))
   sbp_string_t (((f.name)));
   ((*- elif f.packing == "single" *))
-  (((f.basetype|convert_unpacked))) (((f.name)));
+  (((f.basetype))) (((f.name)));
   ((*- else *))
-  (((f.basetype|convert_unpacked))) (((f.name)))[(((f.max_items)))];
+  (((f.basetype))) (((f.name)))[(((f.max_items_macro)))];
   ((*- if f.generate_size_fn *))
   /**
    * Number of elements in (((f.name)))
@@ -89,7 +86,6 @@ typedef struct {
 
 ((* for f in m.fields *))
   ((*- if f.packing == "packed-string" *))
-  ((*- set prefix = m.prefix + "_" + f.name *))
   ((*- set comment_name = m.type_name + "::" + f.name *))
   ((*- if f.packing == "packed-string" *))
   /**
@@ -97,7 +93,7 @@ typedef struct {
    *
    * @param msg (((m.type_name))) instance
    */
-  void (((prefix)))_init( (((-m.type_name))) *msg);
+  void (((f.fn_prefix)))_init( (((-m.type_name))) *msg);
 
   /**
    * Test (((comment_name))) for validity
@@ -105,7 +101,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return true is (((comment_name))) is valid for encoding purposes, false otherwise
    */
-  bool (((prefix)))_valid(const (((m.type_name))) *msg);
+  bool (((f.fn_prefix)))_valid(const (((m.type_name))) *msg);
 
   /**
    * Tests 2 instances of (((comment_name))) for equality
@@ -116,7 +112,7 @@ typedef struct {
    * @param b (((m.type_name))) instance
    * @return 0 if equal, <0 if a<b, >0 if a>b
    */
-  int (((prefix)))_strcmp(const (((m.type_name))) *a, const (((m.type_name))) *b);
+  int (((f.fn_prefix)))_strcmp(const (((m.type_name))) *a, const (((m.type_name))) *b);
 
   /**
    * Get the encoded size of (((comment_name)))
@@ -124,7 +120,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Size of (((comment_name))) in wire representation
    */
-  size_t (((prefix)))_encoded_len(const (((m.type_name))) *msg);
+  size_t (((f.fn_prefix)))_encoded_len(const (((m.type_name))) *msg);
 
   /**
    * Query (((comment_name))) for remaining space
@@ -134,7 +130,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Maximum number of bytes that can be appended to the existing string
    */
-  size_t (((prefix)))_space_remaining(const (((m.type_name))) *msg);
+  size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg);
 
   ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
   /**
@@ -148,7 +144,7 @@ typedef struct {
    * @param new_str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_set( (((-m.type_name))) *msg, const char *new_str);
+  bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str);
 
   /**
    * Set (((comment_name))) with printf style formatting
@@ -161,19 +157,19 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Set (((comment_name))) with printf style formatting
    *
-   * Identical to #(((prefix)))_printf except it takes a va_list argument
+   * Identical to #(((f.fn_prefix)))_printf except it takes a va_list argument
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -184,12 +180,12 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Append (((comment_name))) with printf style formatting
    *
-   * Identical to #(((prefix)))_append_printf except it takes a va_list argument
+   * Identical to #(((f.fn_prefix)))_append_printf except it takes a va_list argument
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
@@ -197,7 +193,7 @@ typedef struct {
    * @return true on success, false otherwise
    *
    */
-  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Obtain the string value from (((comment_name)))
@@ -205,7 +201,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return String contents
    */
-  const char *(((prefix)))_get(const (((m.type_name))) *msg);
+  const char *(((f.fn_prefix)))_get(const (((m.type_name))) *msg);
 
   /**
    * Obtain the length of (((comment_name)))
@@ -215,7 +211,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Length of string
    */
-  size_t (((prefix)))_strlen(const (((m.type_name))) *msg);
+  size_t (((f.fn_prefix)))_strlen(const (((m.type_name))) *msg);
   ((*- elif f.encoding == "multipart" or f.encoding == "double_null_terminated" *))
   /**
    * Return the number of sections in (((comment_name)))
@@ -223,7 +219,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @return Number of sections in string
    */
-  size_t (((prefix)))_count_sections(const (((m.type_name))) *msg);
+  size_t (((f.fn_prefix)))_count_sections(const (((m.type_name))) *msg);
 
   /**
    * Add a section to (((comment_name)))
@@ -234,7 +230,7 @@ typedef struct {
    * @param new_str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str);
+  bool (((f.fn_prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
@@ -245,24 +241,24 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((f.fn_prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
    *
-   * Identical to #(((prefix)))_add_section_printf except it takes a va_list argument
+   * Identical to #(((f.fn_prefix)))_add_section_printf except it takes a va_list argument
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((f.fn_prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Append a string to the last section in (((comment_name)))
    *
-   * If the field is currently empty this function will behave exactly like #(((prefix)))_add_section
+   * If the field is currently empty this function will behave exactly like #(((f.fn_prefix)))_add_section
    *
    * If the field already contains one or more sections the given string will be appended on to the last section in the string. 
    *
@@ -272,12 +268,12 @@ typedef struct {
    * @param str New string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append( (((-m.type_name))) *msg, const char *str);
+  bool (((f.fn_prefix)))_append( (((-m.type_name))) *msg, const char *str);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
    *
-   * If the field is currently empty this function will behave exactly like #(((prefix)))_add_section_printf
+   * If the field is currently empty this function will behave exactly like #(((f.fn_prefix)))_add_section_printf
    *
    * If the field already contains one or more sections the given string will be appended on to the last section in the string.
    *
@@ -287,12 +283,12 @@ typedef struct {
    * @param fmt printf style format string
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
    *
-   * If the field is currently empty this function will behave exactly like #(((prefix)))_add_section_vprintf
+   * If the field is currently empty this function will behave exactly like #(((f.fn_prefix)))_add_section_vprintf
    *
    * If the field already contains one or more sections the given string will be sppended on to the last section in the string.
    *
@@ -303,18 +299,18 @@ typedef struct {
    * @param ap Argument list
    * @return true on success, false otherwise
    */
-  bool (((prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap);
+  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Obtain a section from (((comment_name)))
    *
-   * Returns a pointer to the given subsection in the field. Sections are 0-indexed, the \p section parameters must be less than the value returned from #(((prefix)))_count_sections.
+   * Returns a pointer to the given subsection in the field. Sections are 0-indexed, the \p section parameters must be less than the value returned from #(((f.fn_prefix)))_count_sections.
    *
    * @param msg (((m.type_name))) instance
    * @param section Section number
    * @return Pointer to C string, NULL on error
    */
-  const char *(((prefix)))_get_section(const (((m.type_name))) *msg, size_t section);
+  const char *(((f.fn_prefix)))_get_section(const (((m.type_name))) *msg, size_t section);
 
   /**
    * Obtain the length of a section in (((comment_name)))
@@ -327,7 +323,7 @@ typedef struct {
    * @param section Section number
    * @return Length of section
    */
-  size_t (((prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
+  size_t (((f.fn_prefix)))_section_strlen(const (((m.type_name))) *msg, size_t section);
   ((*- else *))
   **** INVALID STRING ENCODING : (((f.encoding))) ****
   ((* endif *))
@@ -341,7 +337,23 @@ typedef struct {
  * @param msg (((m.type_name))) instance
  * @return Length of on-wire representation
  */
-size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg);
+static inline size_t (((m.encoded_len_fn)))(const (((m.type_name))) *msg) 
+{
+  ((*- if m.is_fixed_size *))
+  (void)msg;
+  return (((m.encoded_len_macro)));
+  ((*- else *))
+    return (((m.encoded_len_macro))) 
+    ((*- for f in m.fields *))
+    ((*- if f.packing == "variable-array" *))
+    + (msg->(((f.size_fn))) * (((f.encoded_len_macro))))
+    ((*- elif f.packing == "packed-string" *))
+    + (((f.fn_prefix)))_encoded_len(msg)
+    ((*- endif *))
+    ((*- endfor *))
+    ;
+  ((*- endif *))
+}
 
 /**
  * Encode an instance of (((m.type_name))) to wire representation
@@ -356,7 +368,7 @@ size_t (((m.prefix)))_encoded_len(const (((m.type_name))) *msg);
  * @param msg Instance of (((m.type_name))) to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 (((m.prefix)))_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.type_name))) *msg);
+s8 (((m.public_encode_fn)))(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.type_name))) *msg);
 
 /**
  * Decode an instance of (((m.type_name))) from wire representation
@@ -369,7 +381,7 @@ s8 (((m.prefix)))_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const ((
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.type_name))) *msg);
+s8 (((m.public_decode_fn)))(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.type_name))) *msg);
 ((*- if m.is_real_message *))
 /**
  * Send an instance of (((m.type_name))) with the given write function
@@ -384,7 +396,7 @@ s8 (((m.prefix)))_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 (((m.prefix)))_send(sbp_state_t  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
+s8 (((m.send_fn)))(sbp_state_t  *s, u16 sender_id, const (((m.type_name))) *msg, sbp_write_fn_t write);
 ((*- endif *))
 
 /**
@@ -400,37 +412,37 @@ s8 (((m.prefix)))_send(sbp_state_t  *s, u16 sender_id, const (((m.type_name))) *
  * @param b (((m.type_name))) instance
  * @return 0, <0, >0
  */
-int (((m.prefix)))_cmp(const (((m.type_name))) *a, const (((m.type_name))) *b);
+int (((m.cmp_fn)))(const (((m.type_name))) *a, const (((m.type_name))) *b);
 
 #ifdef __cplusplus
   }
 
 static inline bool operator==(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) == 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) == 0;
 }
 
 static inline bool operator!=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) != 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) != 0;
 }
 
 static inline bool operator<(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) < 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) < 0;
 }
 
 static inline bool operator<=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) <= 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) <= 0;
 }
 
 static inline bool operator>(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) > 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) > 0;
 }
 
 static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name))) &rhs) {
-  return (((m.prefix)))_cmp(&lhs, &rhs) >= 0;
+  return (((m.cmp_fn)))(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_(((pkg_name|upper)))_(((m.name|upper)))_H */
+#endif /* LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H */
 
 

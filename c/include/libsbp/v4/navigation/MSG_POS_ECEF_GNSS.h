@@ -91,7 +91,11 @@ typedef struct {
  * @param msg sbp_msg_pos_ecef_gnss_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_pos_ecef_gnss_encoded_len(const sbp_msg_pos_ecef_gnss_t *msg);
+static inline size_t sbp_msg_pos_ecef_gnss_encoded_len(
+    const sbp_msg_pos_ecef_gnss_t *msg) {
+  (void)msg;
+  return SBP_MSG_POS_ECEF_GNSS_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_pos_ecef_gnss_t to wire representation
@@ -203,6 +207,6 @@ static inline bool operator>=(const sbp_msg_pos_ecef_gnss_t &lhs,
   return sbp_msg_pos_ecef_gnss_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_NAVIGATION_MSG_POS_ECEF_GNSS_H */

@@ -16,16 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/ext_events.h>
 
-size_t sbp_msg_ext_event_encoded_len(const sbp_msg_ext_event_t *msg) {
-  size_t encoded_len = 0;
-  encoded_len += sbp_u16_encoded_len(&msg->wn);
-  encoded_len += sbp_u32_encoded_len(&msg->tow);
-  encoded_len += sbp_s32_encoded_len(&msg->ns_residual);
-  encoded_len += sbp_u8_encoded_len(&msg->flags);
-  encoded_len += sbp_u8_encoded_len(&msg->pin);
-  return encoded_len;
-}
-
 bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_ext_event_t *msg) {
   if (!sbp_u16_encode(ctx, &msg->wn)) {

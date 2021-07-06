@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -48,7 +47,7 @@ typedef struct {
   /**
    * GNSS signal identifier
    */
-  sbp_sbp_gnss_signal_t sid;
+  sbp_v4_gnss_signal_t sid;
 
   /**
    * Azimuth angle (range 0..179) [deg * 2]
@@ -67,7 +66,10 @@ typedef struct {
  * @param msg sbp_sv_az_el_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg);
+static inline size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg) {
+  (void)msg;
+  return SBP_SV_AZ_EL_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_sv_az_el_t to wire representation
@@ -159,6 +161,6 @@ static inline bool operator>=(const sbp_sv_az_el_t &lhs,
   return sbp_sv_az_el_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_SVAZEL_H */

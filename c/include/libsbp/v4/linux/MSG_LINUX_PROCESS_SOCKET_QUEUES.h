@@ -81,7 +81,8 @@ typedef struct {
    * Address of the largest queue, remote or local depending on the
    * directionality of the connection.
    */
-  char address_of_largest[64];
+  char address_of_largest
+      [SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX];
 
   /**
    * the command line of the process in question
@@ -192,7 +193,8 @@ bool sbp_msg_linux_process_socket_queues_cmdline_printf(
  * @return true on success, false otherwise
  */
 bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
-    sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_linux_process_socket_queues_t::cmdline with printf style
@@ -225,7 +227,8 @@ bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
  *
  */
 bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
-    sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap);
+    sbp_msg_linux_process_socket_queues_t *msg, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_linux_process_socket_queues_t::cmdline
@@ -253,8 +256,11 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
  * @param msg sbp_msg_linux_process_socket_queues_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_process_socket_queues_encoded_len(
-    const sbp_msg_linux_process_socket_queues_t *msg);
+static inline size_t sbp_msg_linux_process_socket_queues_encoded_len(
+    const sbp_msg_linux_process_socket_queues_t *msg) {
+  return SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ENCODED_OVERHEAD +
+         sbp_msg_linux_process_socket_queues_cmdline_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_linux_process_socket_queues_t to wire
@@ -378,6 +384,6 @@ static inline bool operator>=(
   return sbp_msg_linux_process_socket_queues_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H */

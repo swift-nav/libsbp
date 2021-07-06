@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/piksi_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -152,7 +151,8 @@ bool sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
  * @return true on success, false otherwise
  */
 bool sbp_msg_command_req_command_vprintf(sbp_msg_command_req_t *msg,
-                                         const char *fmt, va_list ap);
+                                         const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Append sbp_msg_command_req_t::command with printf style formatting
@@ -183,7 +183,8 @@ bool sbp_msg_command_req_command_append_printf(sbp_msg_command_req_t *msg,
  *
  */
 bool sbp_msg_command_req_command_append_vprintf(sbp_msg_command_req_t *msg,
-                                                const char *fmt, va_list ap);
+                                                const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(2);
 
 /**
  * Obtain the string value from sbp_msg_command_req_t::command
@@ -209,7 +210,11 @@ size_t sbp_msg_command_req_command_strlen(const sbp_msg_command_req_t *msg);
  * @param msg sbp_msg_command_req_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_command_req_encoded_len(const sbp_msg_command_req_t *msg);
+static inline size_t sbp_msg_command_req_encoded_len(
+    const sbp_msg_command_req_t *msg) {
+  return SBP_MSG_COMMAND_REQ_ENCODED_OVERHEAD +
+         sbp_msg_command_req_command_encoded_len(msg);
+}
 
 /**
  * Encode an instance of sbp_msg_command_req_t to wire representation
@@ -321,6 +326,6 @@ static inline bool operator>=(const sbp_msg_command_req_t &lhs,
   return sbp_msg_command_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_PIKSI_MSG_COMMAND_REQ_H */

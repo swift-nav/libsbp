@@ -73,8 +73,11 @@ typedef struct {
  * @param msg sbp_msg_fileio_config_resp_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_fileio_config_resp_encoded_len(
-    const sbp_msg_fileio_config_resp_t *msg);
+static inline size_t sbp_msg_fileio_config_resp_encoded_len(
+    const sbp_msg_fileio_config_resp_t *msg) {
+  (void)msg;
+  return SBP_MSG_FILEIO_CONFIG_RESP_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_fileio_config_resp_t to wire representation
@@ -189,6 +192,6 @@ static inline bool operator>=(const sbp_msg_fileio_config_resp_t &lhs,
   return sbp_msg_fileio_config_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_CONFIG_RESP_H */

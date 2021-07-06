@@ -57,13 +57,13 @@ typedef struct {
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
-  u16 socket_state_counts[16];
+  u16 socket_state_counts[SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX];
 
   /**
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
-  u16 socket_type_counts[16];
+  u16 socket_type_counts[SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX];
 } sbp_msg_linux_socket_usage_t;
 
 /**
@@ -72,8 +72,11 @@ typedef struct {
  * @param msg sbp_msg_linux_socket_usage_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_msg_linux_socket_usage_encoded_len(
-    const sbp_msg_linux_socket_usage_t *msg);
+static inline size_t sbp_msg_linux_socket_usage_encoded_len(
+    const sbp_msg_linux_socket_usage_t *msg) {
+  (void)msg;
+  return SBP_MSG_LINUX_SOCKET_USAGE_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_msg_linux_socket_usage_t to wire representation
@@ -188,6 +191,6 @@ static inline bool operator>=(const sbp_msg_linux_socket_usage_t &lhs,
   return sbp_msg_linux_socket_usage_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_LINUX_MSG_LINUX_SOCKET_USAGE_H */

@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/gnss/SvId.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -60,7 +59,7 @@ typedef struct {
    * Coefficents of the STEC polynomial in the order of C00, C01, C10, C11 [C00
    * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
    */
-  s16 stec_coeff[4];
+  s16 stec_coeff[SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX];
 } sbp_stec_sat_element_t;
 
 /**
@@ -69,7 +68,11 @@ typedef struct {
  * @param msg sbp_stec_sat_element_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_stec_sat_element_encoded_len(const sbp_stec_sat_element_t *msg);
+static inline size_t sbp_stec_sat_element_encoded_len(
+    const sbp_stec_sat_element_t *msg) {
+  (void)msg;
+  return SBP_STEC_SAT_ELEMENT_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_stec_sat_element_t to wire representation
@@ -162,6 +165,6 @@ static inline bool operator>=(const sbp_stec_sat_element_t &lhs,
   return sbp_stec_sat_element_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_SSR_STECSATELEMENT_H */

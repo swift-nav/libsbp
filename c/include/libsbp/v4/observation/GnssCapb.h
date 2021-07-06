@@ -27,7 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/observation_macros.h>
-#include <libsbp/v4/gnss.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -124,7 +123,10 @@ typedef struct {
  * @param msg sbp_gnss_capb_t instance
  * @return Length of on-wire representation
  */
-size_t sbp_gnss_capb_encoded_len(const sbp_gnss_capb_t *msg);
+static inline size_t sbp_gnss_capb_encoded_len(const sbp_gnss_capb_t *msg) {
+  (void)msg;
+  return SBP_GNSS_CAPB_ENCODED_LEN;
+}
 
 /**
  * Encode an instance of sbp_gnss_capb_t to wire representation
@@ -216,6 +218,6 @@ static inline bool operator>=(const sbp_gnss_capb_t &lhs,
   return sbp_gnss_capb_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif
+#endif  // ifdef __cplusplus
 
 #endif /* LIBSBP_V4_OBSERVATION_GNSSCAPB_H */
