@@ -689,8 +689,9 @@ definitions:
                   desc: Confidence level
                   values:
                     - 0: reserved
-                    - 1: 68.27%
-                    - 2: 95.45%
+                    - 1: 39.35%
+                    - 2: 68.27%
+                    - 3: 95.45%
         - n_sats:
             type: u8
             desc: Number of satellites used in solution.
