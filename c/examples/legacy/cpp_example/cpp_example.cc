@@ -2,7 +2,7 @@
 #include <fstream>
 
 #include <libsbp/cpp/state.h>
-#include <libsbp/legacy/cpp/message_handler.h>
+#include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/cpp/frame_handler.h>
 
 void usage(char *prog_name) {

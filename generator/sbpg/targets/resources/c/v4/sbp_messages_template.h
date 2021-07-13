@@ -147,6 +147,19 @@ typedef struct {
   bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str);
 
   /**
+   * Set (((comment_name))), truncating if necessary
+   *
+   * Erase any existing content and replace with as much of the specified string as possible
+   *
+   * This function will return the number of characters that were written from the new string. If the specified string is longer than can be represented in wire encoding this function will write as many characters as possible
+   *
+   * @param msg (((m.type_name))) instance
+   * @param new_str New string
+   * @return true on success, false otherwise
+   */
+  size_t (((f.fn_prefix)))_set_truncating( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len);
+
+  /**
    * Set (((comment_name))) with printf style formatting
    *
    * Erase any existing content and replace with the formatted string
