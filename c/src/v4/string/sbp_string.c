@@ -40,7 +40,8 @@ static bool copy_str(char *buf, size_t *copied, size_t max, const char *str,
   if (str_len >= max) {
     return false;
   }
-  memcpy(buf, str, str_len + 1);
+  memcpy(buf, str, str_len);
+  buf[str_len] = '\0';
   *copied = str_len + 1;
   return true;
 }
@@ -48,6 +49,10 @@ static bool copy_str(char *buf, size_t *copied, size_t max, const char *str,
 bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
                             const char *str) {
   return copy_str(buf, copied, max, str, sbp_strnlen(str, max));
+}
+
+bool sbp_string_copy_n_to_buf(char *buf, size_t *copied, size_t max, const char *str, size_t n) {
+  return copy_str(buf, copied, max, str, n);
 }
 
 bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,

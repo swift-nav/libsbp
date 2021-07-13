@@ -190,6 +190,44 @@ TEST(TestNullTerminatedString, Set)
   EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
 }
 
+TEST(TestNullTerminatedString, SetTruncating)
+{
+  // A variety of cases for the set function
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_null_terminated_string_init(&s);
+
+  char non_terminated[] = {'H', 'E', 'L', 'L', 'O'};
+
+  // Put in a valid string that fits with space remaining
+  EXPECT_EQ(sbp_null_terminated_string_set_truncating(&s, maxlen, non_terminated, 5), 5);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HELLO");
+
+  maxlen = 3;
+  // Put in a valid string that doesn't fit and will be truncated
+  EXPECT_EQ(sbp_null_terminated_string_set_truncating(&s, maxlen, non_terminated, 5), 2);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 2);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HE");
+
+  maxlen = 6;
+  // Put in a valid string that fits exactly
+  EXPECT_EQ(sbp_null_terminated_string_set_truncating(&s, maxlen, non_terminated, 5), 5);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HELLO");
+}
+
 TEST(TestNullTerminatedString, Printf)
 {
   // Some test cases for the printf function

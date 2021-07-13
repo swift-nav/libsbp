@@ -76,6 +76,18 @@ bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
   return true;
 }
 
+size_t sbp_null_terminated_string_set_truncating(sbp_string_t *s, size_t maxlen,
+                                 const char *new_str, size_t new_str_len) {
+  size_t copied;
+  size_t truncated_len = (maxlen - 1) > new_str_len ? new_str_len : (maxlen - 1);
+  if (!sbp_string_copy_n_to_buf(s->data, &copied, maxlen,
+                              new_str, truncated_len)) {
+    return 0;
+  }
+  s->encoded_len = copied;
+  return s->encoded_len - 1;
+}
+
 bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen,
                                         const char *fmt, va_list ap) {
   size_t copied;

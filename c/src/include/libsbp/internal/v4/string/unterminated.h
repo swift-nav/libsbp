@@ -167,6 +167,20 @@ bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
                                  const char *new_str);
 
 /**
+ * Set an unterminated string, truncating if necessary
+ *
+ * If the new string contents are larger than can be stored, then the string
+ * will be written with as much as it can hold.
+ *
+ * @param s string
+ * @param maxlen Maximum encoded length
+ * @param new_str new string
+ * @param new_str_len Length of the new string, not including NULL terminator (if present)
+ * @return Number of characters written from new_str to s
+ */
+size_t sbp_unterminated_string_set_truncating(sbp_string_t *s, size_t maxlen,
+                                 const char *new_str, size_t new_str_len);
+/**
  * Set an unterminated string with printf style formatting
  *
  * If the resulting string would be greater than the maximum encoded length the
