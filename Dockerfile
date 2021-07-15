@@ -15,10 +15,14 @@ FROM ubuntu:bionic
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV NODE_VERSION=v12.22.0
+ENV NODE_VERSION=v14.17.3
+ENV JAVA_VERSION=11.0.11.hs-adpt
+ENV GRADLE_VERSION=7.1.1
 
 ENV RUSTUP_HOME=/rust
 ENV CARGO_HOME=/cargo
+
+ENV SDKMAN_DIR=/opt/sdkman
 
 ENV PATH=/usr/lib/ccache:/cargo/bin:/rust/bin:${PATH}
 
@@ -31,11 +35,15 @@ RUN \
       apt-utils \
       wget \
       curl \
+      libudev-dev \
+      uuid-dev \
+      libgmp-dev \
+      zlib1g-dev \
+      zip unzip \
       build-essential \
       pandoc \
       llvm \
       clang \
-      gradle \
       texlive-science \
       texlive-fonts-extra \
       check \
@@ -45,13 +53,20 @@ RUN \
       graphviz \
       texlive-latex-base \
       imagemagick \
-      libudev-dev \
-      uuid-dev \
-      libgmp-dev \
-      zlib1g-dev \
-      clang-format-6.0
+      clang-format-6.0 \
+  && rm -rf /var/lib/apt/lists/* \
+  && curl -s "https://get.sdkman.io" | bash \
+  && bash -c "source $SDKMAN_DIR/bin/sdkman-init.sh; \
+              sdk install java $JAVA_VERSION; sdk install gradle $GRADLE_VERSION; \
+	      which java; which gradle"
 
-RUN add-apt-repository ppa:deadsnakes/ppa \
+ENV PATH=${SDKMAN_DIR}/candidates/java/current/bin:${PATH}
+ENV PATH=${SDKMAN_DIR}/candidates/gradle/current/bin:${PATH}
+
+RUN \
+     java --version \
+  && gradle --version \
+  && add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
   && apt-get install -y \
       python-pip \
@@ -66,32 +81,39 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/*
 
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+ARG KITWARE_KEY_URL=https://apt.kitware.com/keys/kitware-archive-latest.asc
+
+RUN \
+     wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
   && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' \ 
   && apt-get update \
   && apt-get install -y \
     cmake
 
-ENV NVM_DIR /opt/nvm
+ENV NVM_DIR=/opt/nvm
 
-RUN mkdir -p $NVM_DIR \
+RUN \
+     mkdir -p $NVM_DIR \
   && curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash \
   && . $NVM_DIR/nvm.sh \
   && nvm install $NODE_VERSION
 
-ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+ENV NODE_PATH=$NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
+ENV PATH=$NVM_DIR/versions/node/$NODE_VERSION/bin:${PATH}
 
 RUN npm install npm@latest mocha quicktype -g
+
+ARG UID=1000
 
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might
 # be different for Mac users. Might need to add more.
-RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev \
-    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers \
-    && find $NVM_DIR -exec chmod a+rw {} \; \
-    && find $RUSTUP_HOME -exec chmod a+rw {} \; \
-    && find $CARGO_HOME -exec chmod a+rw {} \;
+RUN \
+     useradd -u ${UID} -ms /bin/bash -G sudo dockerdev \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers \
+  && find $NVM_DIR -exec chmod a+rw {} \; \
+  && find $RUSTUP_HOME -exec chmod a+rw {} \; \
+  && find $CARGO_HOME -exec chmod a+rw {} \;
 
 WORKDIR /mnt/workspace
 USER dockerdev
