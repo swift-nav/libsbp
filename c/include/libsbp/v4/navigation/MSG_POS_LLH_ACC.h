@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_POS_LLH_COV_H
-#define LIBSBP_V4_NAVIGATION_MSG_POS_LLH_COV_H
+#ifndef LIBSBP_V4_NAVIGATION_MSG_POS_LLH_ACC_H
+#define LIBSBP_V4_NAVIGATION_MSG_POS_LLH_ACC_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/navigation_macros.h>
+#include <libsbp/v4/navigation/EstimatedHorizontalErrorEllipse.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -35,19 +36,18 @@ extern "C" {
 
 /******************************************************************************
  *
- * SBP_MSG_POS_LLH_COV
+ * SBP_MSG_POS_LLH_ACC
  *
  *****************************************************************************/
-/** Geodetic Position
+/** Geodetic Position and Accuracy
  *
  * This position solution message reports the absolute geodetic coordinates and
  * the status (single point vs pseudo-absolute RTK) of the position solution as
- * well as the upper triangle of the 3x3 covariance matrix.  The position
- * information and Fix Mode flags follow the MSG_POS_LLH message.  Since the
- * covariance matrix is computed in the local-level North, East, Down frame, the
- * covariance terms follow that convention. Thus, covariances are reported
- * against the "downward" measurement and care should be taken with the sign
- * convention.
+ * well as the estimated horizontal, vertical, cross-track and along-track
+ * errors.  The position information and Fix Mode flags  follow the MSG_POS_LLH
+ * message. Since the covariance matrix is computed in the local-level North,
+ * East, Down frame, the estimated error terms follow that convention.
+ *
  */
 typedef struct {
   /**
@@ -71,34 +71,39 @@ typedef struct {
   double height;
 
   /**
-   * Estimated variance of northing [m^2]
+   * Estimated horizontal error at the user-configured confidence level; zero
+   * implies invalid. [m]
    */
-  float cov_n_n;
+  float h_accuracy;
 
   /**
-   * Covariance of northing and easting [m^2]
+   * Estimated vertical error at the user-configured confidence level; zero
+   * implies invalid. [m]
    */
-  float cov_n_e;
+  float v_accuracy;
 
   /**
-   * Covariance of northing and downward measurement [m^2]
+   * Estimated cross-track error at the user-configured confidence level; zero
+   * implies invalid. [m]
    */
-  float cov_n_d;
+  float ct_accuracy;
 
   /**
-   * Estimated variance of easting [m^2]
+   * Estimated along-track error at the user-configured confidence level; zero
+   * implies invalid. [m]
    */
-  float cov_e_e;
+  float at_accuracy;
 
   /**
-   * Covariance of easting and downward measurement [m^2]
+   * The estimated horizontal error ellipse at the user-configured confidence
+   * level.
    */
-  float cov_e_d;
+  sbp_estimated_horizontal_error_ellipse_t h_ellipse;
 
   /**
-   * Estimated variance of downward measurement [m^2]
+   * Configured confidence level for the estimated position error
    */
-  float cov_d_d;
+  u8 confidence;
 
   /**
    * Number of satellites used in solution.
@@ -109,22 +114,22 @@ typedef struct {
    * Status flags
    */
   u8 flags;
-} sbp_msg_pos_llh_cov_t;
+} sbp_msg_pos_llh_acc_t;
 
 /**
- * Get encoded size of an instance of sbp_msg_pos_llh_cov_t
+ * Get encoded size of an instance of sbp_msg_pos_llh_acc_t
  *
- * @param msg sbp_msg_pos_llh_cov_t instance
+ * @param msg sbp_msg_pos_llh_acc_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_pos_llh_cov_encoded_len(
-    const sbp_msg_pos_llh_cov_t *msg) {
+static inline size_t sbp_msg_pos_llh_acc_encoded_len(
+    const sbp_msg_pos_llh_acc_t *msg) {
   (void)msg;
-  return SBP_MSG_POS_LLH_COV_ENCODED_LEN;
+  return SBP_MSG_POS_LLH_ACC_ENCODED_LEN;
 }
 
 /**
- * Encode an instance of sbp_msg_pos_llh_cov_t to wire representation
+ * Encode an instance of sbp_msg_pos_llh_acc_t to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -139,34 +144,34 @@ static inline size_t sbp_msg_pos_llh_cov_encoded_len(
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_msg_pos_llh_cov_t to encode
+ * @param msg Instance of sbp_msg_pos_llh_acc_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_pos_llh_cov_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                              const sbp_msg_pos_llh_cov_t *msg);
+s8 sbp_msg_pos_llh_acc_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                              const sbp_msg_pos_llh_acc_t *msg);
 
 /**
- * Decode an instance of sbp_msg_pos_llh_cov_t from wire representation
+ * Decode an instance of sbp_msg_pos_llh_acc_t from wire representation
  *
- * This function decodes the wire representation of a sbp_msg_pos_llh_cov_t
+ * This function decodes the wire representation of a sbp_msg_pos_llh_acc_t
  * message to the given instance. The caller must specify the length of the
  * buffer in the \p len parameter. If non-null the number of bytes read from the
  * buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_msg_pos_llh_cov_t instance
+ * @param buf Wire representation of the sbp_msg_pos_llh_acc_t instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_pos_llh_cov_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                              sbp_msg_pos_llh_cov_t *msg);
+s8 sbp_msg_pos_llh_acc_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                              sbp_msg_pos_llh_acc_t *msg);
 /**
- * Send an instance of sbp_msg_pos_llh_cov_t with the given write function
+ * Send an instance of sbp_msg_pos_llh_acc_t with the given write function
  *
  * An equivalent of #sbp_message_send which operates specifically on
- * sbp_msg_pos_llh_cov_t
+ * sbp_msg_pos_llh_acc_t
  *
  * The given message will be encoded to wire representation and passed in to the
  * given write function callback. The write callback will be called several
@@ -178,12 +183,12 @@ s8 sbp_msg_pos_llh_cov_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_pos_llh_cov_send(sbp_state_t *s, u16 sender_id,
-                            const sbp_msg_pos_llh_cov_t *msg,
+s8 sbp_msg_pos_llh_acc_send(sbp_state_t *s, u16 sender_id,
+                            const sbp_msg_pos_llh_acc_t *msg,
                             sbp_write_fn_t write);
 
 /**
- * Compare two instances of sbp_msg_pos_llh_cov_t
+ * Compare two instances of sbp_msg_pos_llh_acc_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -193,46 +198,46 @@ s8 sbp_msg_pos_llh_cov_send(sbp_state_t *s, u16 sender_id,
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_msg_pos_llh_cov_t instance
- * @param b sbp_msg_pos_llh_cov_t instance
+ * @param a sbp_msg_pos_llh_acc_t instance
+ * @param b sbp_msg_pos_llh_acc_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_pos_llh_cov_cmp(const sbp_msg_pos_llh_cov_t *a,
-                            const sbp_msg_pos_llh_cov_t *b);
+int sbp_msg_pos_llh_acc_cmp(const sbp_msg_pos_llh_acc_t *a,
+                            const sbp_msg_pos_llh_acc_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_msg_pos_llh_cov_t &lhs,
-                              const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_msg_pos_llh_acc_t &lhs,
+                              const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_pos_llh_cov_t &lhs,
-                              const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_msg_pos_llh_acc_t &lhs,
+                              const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_pos_llh_cov_t &lhs,
-                             const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_msg_pos_llh_acc_t &lhs,
+                             const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_pos_llh_cov_t &lhs,
-                              const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_msg_pos_llh_acc_t &lhs,
+                              const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_pos_llh_cov_t &lhs,
-                             const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_msg_pos_llh_acc_t &lhs,
+                             const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_pos_llh_cov_t &lhs,
-                              const sbp_msg_pos_llh_cov_t &rhs) {
-  return sbp_msg_pos_llh_cov_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_msg_pos_llh_acc_t &lhs,
+                              const sbp_msg_pos_llh_acc_t &rhs) {
+  return sbp_msg_pos_llh_acc_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NAVIGATION_MSG_POS_LLH_COV_H */
+#endif /* LIBSBP_V4_NAVIGATION_MSG_POS_LLH_ACC_H */

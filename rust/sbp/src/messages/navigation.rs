@@ -48,6 +48,69 @@ use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct EstimatedHorizontalErrorEllipse {
+    /// The semi major axis of the estimated horizontal error ellipse at the
+    /// user-configured confidence level; zero implies invalid.
+    pub semi_major: f32,
+    /// The semi minor axis of the estimated horizontal error ellipse at the
+    /// user-configured confidence level; zero implies invalid.
+    pub semi_minor: f32,
+    /// The orientation of the semi major axis of the estimated horizontal error
+    /// ellipse with respect to North.
+    pub orientation: f32,
+}
+
+impl EstimatedHorizontalErrorEllipse {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<EstimatedHorizontalErrorEllipse, crate::Error> {
+        Ok( EstimatedHorizontalErrorEllipse{
+            semi_major: _buf.read_f32::<LittleEndian>()?,
+            semi_minor: _buf.read_f32::<LittleEndian>()?,
+            orientation: _buf.read_f32::<LittleEndian>()?,
+        } )
+    }
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for EstimatedHorizontalErrorEllipse {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.semi_major.append_to_sbp_buffer(buf);
+        self.semi_minor.append_to_sbp_buffer(buf);
+        self.orientation.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.semi_major.sbp_size();
+        size += self.semi_minor.sbp_size();
+        size += self.orientation.sbp_size();
+        size
+    }
+}
+
 /// Age of corrections
 ///
 /// This message reports the Age of the corrections used for the current
@@ -2169,16 +2232,175 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
     }
 }
 
+/// Geodetic Position and Accuracy
+///
+/// This position solution message reports the absolute geodetic coordinates
+/// and the status (single point vs pseudo-absolute RTK) of the position
+/// solution as well as the estimated horizontal, vertical, cross-track and
+/// along-track errors.  The position information and Fix Mode flags  follow
+/// the MSG_POS_LLH message. Since the covariance matrix is computed in the
+/// local-level North, East, Down frame, the estimated error terms follow that
+/// convention.
+///
+/// The estimated errors are reported at a user-configurable confidence level.
+/// The user-configured percentile is encoded in the percentile field.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgPosLLHAcc {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Latitude
+    pub lat: f64,
+    /// Longitude
+    pub lon: f64,
+    /// Height above WGS84 ellipsoid
+    pub height: f64,
+    /// Estimated horizontal error at the user-configured confidence level; zero
+    /// implies invalid.
+    pub h_accuracy: f32,
+    /// Estimated vertical error at the user-configured confidence level; zero
+    /// implies invalid.
+    pub v_accuracy: f32,
+    /// Estimated cross-track error at the user-configured confidence level;
+    /// zero implies invalid.
+    pub ct_accuracy: f32,
+    /// Estimated along-track error at the user-configured confidence level;
+    /// zero implies invalid.
+    pub at_accuracy: f32,
+    /// The estimated horizontal error ellipse at the user-configured confidence
+    /// level.
+    pub h_ellipse: EstimatedHorizontalErrorEllipse,
+    /// Configured confidence level for the estimated position error
+    pub confidence: u8,
+    /// Number of satellites used in solution.
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgPosLLHAcc {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHAcc, crate::Error> {
+        Ok( MsgPosLLHAcc{
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            lat: _buf.read_f64::<LittleEndian>()?,
+            lon: _buf.read_f64::<LittleEndian>()?,
+            height: _buf.read_f64::<LittleEndian>()?,
+            h_accuracy: _buf.read_f32::<LittleEndian>()?,
+            v_accuracy: _buf.read_f32::<LittleEndian>()?,
+            ct_accuracy: _buf.read_f32::<LittleEndian>()?,
+            at_accuracy: _buf.read_f32::<LittleEndian>()?,
+            h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
+            confidence: _buf.read_u8()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgPosLLHAcc {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH_ACC"
+    }
+
+    fn get_message_type(&self) -> u16 {
+        536
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::ConcreteMessage for MsgPosLLHAcc {
+    const MESSAGE_TYPE: u16 = 536;
+    const MESSAGE_NAME: &'static str = "MSG_POS_LLH_ACC";
+}
+impl TryFrom<super::SBP> for MsgPosLLHAcc {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgPosLLHAcc(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.ct_accuracy.append_to_sbp_buffer(buf);
+        self.at_accuracy.append_to_sbp_buffer(buf);
+        self.h_ellipse.append_to_sbp_buffer(buf);
+        self.confidence.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.ct_accuracy.sbp_size();
+        size += self.at_accuracy.sbp_size();
+        size += self.h_ellipse.sbp_size();
+        size += self.confidence.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
 /// and the status (single point vs pseudo-absolute RTK) of the position
 /// solution as well as the upper triangle of the 3x3 covariance matrix.  The
-/// position information and Fix Mode flags should follow the MSG_POS_LLH
-/// message.  Since the covariance matrix is computed in the local-level
-/// North, East, Down frame, the covariance terms follow with that convention.
-/// Thus, covariances are reported against the "downward" measurement and care
-/// should be taken with the sign convention.
+/// position information and Fix Mode flags follow the MSG_POS_LLH message.
+/// Since the covariance matrix is computed in the local-level North, East,
+/// Down frame, the covariance terms follow that convention. Thus, covariances
+/// are reported against the "downward" measurement and care should be taken
+/// with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
