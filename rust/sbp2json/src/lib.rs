@@ -67,7 +67,9 @@ where
         sink.send_all(source)?;
     } else {
         while let Some(msg) = source.next() {
-            sink.send(msg?)?;
+            if let Ok(msg) = msg {
+                sink.send(msg)?;
+            }
         }
     }
 
