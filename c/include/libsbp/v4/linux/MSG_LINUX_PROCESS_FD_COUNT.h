@@ -131,7 +131,7 @@ size_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_fd_count_cmdline_set(
+size_t sbp_msg_linux_process_fd_count_cmdline_set(
     sbp_msg_linux_process_fd_count_t *msg, const char *new_str,
     size_t new_str_len, bool truncate);
 

@@ -121,9 +121,9 @@ size_t sbp_msg_csac_telemetry_telemetry_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_csac_telemetry_telemetry_set(sbp_msg_csac_telemetry_t *msg,
-                                          const char *new_str,
-                                          size_t new_str_len, bool truncate);
+size_t sbp_msg_csac_telemetry_telemetry_set(sbp_msg_csac_telemetry_t *msg,
+                                            const char *new_str,
+                                            size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_csac_telemetry_t::telemetry with printf style formatting

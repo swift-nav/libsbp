@@ -125,7 +125,7 @@ size_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_bootloader_handshake_resp_version_set(
+size_t sbp_msg_bootloader_handshake_resp_version_set(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *new_str,
     size_t new_str_len, bool truncate);
 

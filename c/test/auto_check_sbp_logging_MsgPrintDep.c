@@ -105,10 +105,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n",
+            strlen("INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n"),
+            false) == strlen("INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 43,
                   "String not encoded properly");
 
@@ -167,10 +169,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n",
+            strlen("INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n"),
+            false) == strlen("INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 42,
                   "String not encoded properly");
 
@@ -228,10 +232,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: Disabling channel 0 (PRN 11)\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: Disabling channel 0 (PRN 11)\n",
+            strlen("INFO: Disabling channel 0 (PRN 11)\n"),
+            false) == strlen("INFO: Disabling channel 0 (PRN 11)\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,
                   "String not encoded properly");
 
@@ -290,10 +296,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n",
+            strlen("INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n"),
+            false) == strlen("INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 41,
                   "String not encoded properly");
 
@@ -352,10 +360,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n",
+            strlen("INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n"),
+            false) == strlen("INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 42,
                   "String not encoded properly");
 
@@ -413,10 +423,12 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: Disabling channel 1 (PRN 15)\n") == true,
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(
+            &test_msg.print_dep, "INFO: Disabling channel 1 (PRN 15)\n",
+            strlen("INFO: Disabling channel 1 (PRN 15)\n"),
+            false) == strlen("INFO: Disabling channel 1 (PRN 15)\n"),
+        "Can't assign text");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,
                   "String not encoded properly");
 

@@ -144,7 +144,7 @@ typedef struct {
    * @param new_str New string
    * @return true on success, false otherwise
    */
-  bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool truncate);
+  size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool truncate);
 
   /**
    * Set (((comment_name))) with printf style formatting

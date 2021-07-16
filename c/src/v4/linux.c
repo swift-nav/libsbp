@@ -45,7 +45,7 @@ size_t sbp_msg_linux_cpu_state_dep_a_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX);
 }
-bool sbp_msg_linux_cpu_state_dep_a_cmdline_set(
+size_t sbp_msg_linux_cpu_state_dep_a_cmdline_set(
     sbp_msg_linux_cpu_state_dep_a_t *msg, const char *new_str,
     size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(&msg->cmdline,
@@ -253,7 +253,7 @@ size_t sbp_msg_linux_mem_state_dep_a_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX);
 }
-bool sbp_msg_linux_mem_state_dep_a_cmdline_set(
+size_t sbp_msg_linux_mem_state_dep_a_cmdline_set(
     sbp_msg_linux_mem_state_dep_a_t *msg, const char *new_str,
     size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(&msg->cmdline,
@@ -591,7 +591,7 @@ size_t sbp_msg_linux_process_socket_counts_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX);
 }
-bool sbp_msg_linux_process_socket_counts_cmdline_set(
+size_t sbp_msg_linux_process_socket_counts_cmdline_set(
     sbp_msg_linux_process_socket_counts_t *msg, const char *new_str,
     size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(
@@ -806,7 +806,7 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX);
 }
-bool sbp_msg_linux_process_socket_queues_cmdline_set(
+size_t sbp_msg_linux_process_socket_queues_cmdline_set(
     sbp_msg_linux_process_socket_queues_t *msg, const char *new_str,
     size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(
@@ -1178,7 +1178,7 @@ size_t sbp_msg_linux_process_fd_count_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX);
 }
-bool sbp_msg_linux_process_fd_count_cmdline_set(
+size_t sbp_msg_linux_process_fd_count_cmdline_set(
     sbp_msg_linux_process_fd_count_t *msg, const char *new_str,
     size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(&msg->cmdline,
@@ -1554,9 +1554,9 @@ size_t sbp_msg_linux_cpu_state_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX);
 }
-bool sbp_msg_linux_cpu_state_cmdline_set(sbp_msg_linux_cpu_state_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool truncate) {
+size_t sbp_msg_linux_cpu_state_cmdline_set(sbp_msg_linux_cpu_state_t *msg,
+                                           const char *new_str,
+                                           size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(&msg->cmdline,
                                      SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX,
                                      truncate, new_str, new_str_len);
@@ -1779,9 +1779,9 @@ size_t sbp_msg_linux_mem_state_cmdline_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->cmdline, SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX);
 }
-bool sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool truncate) {
+size_t sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
+                                           const char *new_str,
+                                           size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(&msg->cmdline,
                                      SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX,
                                      truncate, new_str, new_str_len);

@@ -144,9 +144,9 @@ size_t sbp_msg_linux_mem_state_cmdline_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool truncate);
+size_t sbp_msg_linux_mem_state_cmdline_set(sbp_msg_linux_mem_state_t *msg,
+                                           const char *new_str,
+                                           size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_linux_mem_state_t::cmdline with printf style formatting

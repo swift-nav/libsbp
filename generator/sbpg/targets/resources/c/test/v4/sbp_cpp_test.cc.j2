@@ -123,7 +123,7 @@ TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)
     EXPECT_TRUE( (((- value.fn_prefix)))_add_section(&(((root_path))), "(((value.sections[loop.index0])))"));
     ((*- endfor *))
     ((*- else *))
-    EXPECT_TRUE( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))"));
+    EXPECT_EQ( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))", strlen("(((value.text)))"), false), strlen("(((value.text)))"));
     ((*- endif *))
     EXPECT_EQ( (((- value.fn_prefix)))_encoded_len(&(((root_path)))), (((value.encoded_len))));
     ((*- endmacro *))

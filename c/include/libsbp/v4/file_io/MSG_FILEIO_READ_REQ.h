@@ -134,9 +134,9 @@ size_t sbp_msg_fileio_read_req_filename_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_fileio_read_req_filename_set(sbp_msg_fileio_read_req_t *msg,
-                                          const char *new_str,
-                                          size_t new_str_len, bool truncate);
+size_t sbp_msg_fileio_read_req_filename_set(sbp_msg_fileio_read_req_t *msg,
+                                            const char *new_str,
+                                            size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_fileio_read_req_t::filename with printf style formatting

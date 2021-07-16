@@ -1532,9 +1532,9 @@ size_t sbp_msg_command_req_command_space_remaining(
   return sbp_null_terminated_string_space_remaining(
       &msg->command, SBP_MSG_COMMAND_REQ_COMMAND_MAX);
 }
-bool sbp_msg_command_req_command_set(sbp_msg_command_req_t *msg,
-                                     const char *new_str, size_t new_str_len,
-                                     bool truncate) {
+size_t sbp_msg_command_req_command_set(sbp_msg_command_req_t *msg,
+                                       const char *new_str, size_t new_str_len,
+                                       bool truncate) {
   return sbp_null_terminated_string_set(&msg->command,
                                         SBP_MSG_COMMAND_REQ_COMMAND_MAX,
                                         truncate, new_str, new_str_len);
@@ -1774,9 +1774,9 @@ size_t sbp_msg_command_output_line_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->line, SBP_MSG_COMMAND_OUTPUT_LINE_MAX);
 }
-bool sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
-                                     const char *new_str, size_t new_str_len,
-                                     bool truncate) {
+size_t sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
+                                       const char *new_str, size_t new_str_len,
+                                       bool truncate) {
   return sbp_unterminated_string_set(&msg->line,
                                      SBP_MSG_COMMAND_OUTPUT_LINE_MAX, truncate,
                                      new_str, new_str_len);

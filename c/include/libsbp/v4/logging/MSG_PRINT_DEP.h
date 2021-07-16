@@ -110,8 +110,8 @@ size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
-                                size_t new_str_len, bool truncate);
+size_t sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
+                                  size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_print_dep_t::text with printf style formatting

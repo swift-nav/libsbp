@@ -119,9 +119,9 @@ size_t sbp_msg_command_output_line_space_remaining(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
-                                     const char *new_str, size_t new_str_len,
-                                     bool truncate);
+size_t sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
+                                       const char *new_str, size_t new_str_len,
+                                       bool truncate);
 
 /**
  * Set sbp_msg_command_output_t::line with printf style formatting
