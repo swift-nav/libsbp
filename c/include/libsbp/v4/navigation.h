@@ -17,6 +17,7 @@
 
 #ifndef LIBSBP_V4_NAVIGATION_MESSAGES_H
 #define LIBSBP_V4_NAVIGATION_MESSAGES_H
+#include <libsbp/v4/navigation/EstimatedHorizontalErrorEllipse.h>
 #include <libsbp/v4/navigation/MSG_AGE_CORRECTIONS.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_ECEF.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_ECEF_DEP_A.h>
@@ -34,6 +35,7 @@
 #include <libsbp/v4/navigation/MSG_POS_ECEF_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF_GNSS.h>
 #include <libsbp/v4/navigation/MSG_POS_LLH.h>
+#include <libsbp/v4/navigation/MSG_POS_LLH_ACC.h>
 #include <libsbp/v4/navigation/MSG_POS_LLH_COV.h>
 #include <libsbp/v4/navigation/MSG_POS_LLH_COV_GNSS.h>
 #include <libsbp/v4/navigation/MSG_POS_LLH_DEP_A.h>
