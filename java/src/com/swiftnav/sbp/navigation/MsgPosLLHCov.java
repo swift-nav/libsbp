@@ -26,10 +26,10 @@ import org.json.JSONObject;
  *
  * <p>This position solution message reports the absolute geodetic coordinates and the status
  * (single point vs pseudo-absolute RTK) of the position solution as well as the upper triangle of
- * the 3x3 covariance matrix. The position information and Fix Mode flags should follow the
- * MSG_POS_LLH message. Since the covariance matrix is computed in the local-level North, East, Down
- * frame, the covariance terms follow with that convention. Thus, covariances are reported against
- * the "downward" measurement and care should be taken with the sign convention.
+ * the 3x3 covariance matrix. The position information and Fix Mode flags follow the MSG_POS_LLH
+ * message. Since the covariance matrix is computed in the local-level North, East, Down frame, the
+ * covariance terms follow that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
  */
 public class MsgPosLLHCov extends SBPMessage {
     public static final int TYPE = 0x0211;

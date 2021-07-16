@@ -229,11 +229,11 @@ typedef struct SBP_ATTR_PACKED {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the upper triangle of the 3x3 covariance matrix.  The
- * position information and Fix Mode flags should follow the MSG_POS_LLH
- * message.  Since the covariance matrix is computed in the local-level North,
- * East, Down frame, the covariance terms follow with that convention. Thus,
- * covariances are reported against the "downward" measurement and care should
- * be taken with the sign convention.
+ * position information and Fix Mode flags follow the MSG_POS_LLH message.
+ * Since the covariance matrix is computed in the local-level North, East,
+ * Down frame, the covariance terms follow that convention. Thus, covariances
+ * are reported against the "downward" measurement and care should be taken
+ * with the sign convention.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -250,6 +250,58 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution. */
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_t;
+
+typedef struct SBP_ATTR_PACKED {
+  float semi_major;  /**< The semi major axis of the estimated horizontal
+                          error ellipse at the user-configured confidence
+                          level; zero implies invalid. [m] */
+  float semi_minor;  /**< The semi minor axis of the estimated horizontal
+                          error ellipse at the user-configured confidence
+                          level; zero implies invalid. [m] */
+  float orientation; /**< The orientation of the semi major axis of the
+                          estimated horizontal error ellipse with respect
+                          to North. [deg] */
+} estimated_horizontal_error_ellipse_t;
+
+/** Geodetic Position and Accuracy
+ *
+ * This position solution message reports the absolute geodetic coordinates
+ * and the status (single point vs pseudo-absolute RTK) of the position
+ * solution as well as the estimated horizontal, vertical, cross-track and
+ * along-track errors.  The position information and Fix Mode flags  follow
+ * the MSG_POS_LLH message. Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the estimated error terms follow that
+ * convention.
+ *
+ * The estimated errors are reported at a user-configurable confidence level.
+ * The user-configured percentile is encoded in the percentile field.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;           /**< GPS Time of Week [ms] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height above WGS84 ellipsoid [m] */
+  float h_accuracy;  /**< Estimated horizontal error at the user-configured
+                          confidence level; zero implies invalid. [m] */
+  float v_accuracy;  /**< Estimated vertical error at the user-configured
+                          confidence level; zero implies invalid. [m] */
+  float ct_accuracy; /**< Estimated cross-track error at the user-
+                          configured confidence level; zero implies
+                          invalid. [m] */
+  float at_accuracy; /**< Estimated along-track error at the user-
+                          configured confidence level; zero implies
+                          invalid. [m] */
+  estimated_horizontal_error_ellipse_t h_ellipse; /**< The estimated
+                                                       horizontal error
+                                                       ellipse at the
+                                                       user-configured
+                                                       confidence level. */
+  u8 confidence; /**< Configured confidence level for the estimated
+                      position error */
+  u8 n_sats;     /**< Number of satellites used in solution. */
+  u8 flags;      /**< Status flags */
+} msg_pos_llh_acc_t;
 
 /** Baseline Position in ECEF
  *
