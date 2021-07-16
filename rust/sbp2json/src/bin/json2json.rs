@@ -28,6 +28,10 @@ struct Options {
     /// Buffer output before flushing
     #[structopt(short, long)]
     buffered: bool,
+
+    /// Stop on first error encountered
+    #[structopt(long)]
+    fatal_errors: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -43,8 +47,20 @@ fn main() -> sbp::Result<()> {
     let stdout = io::stdout();
 
     if options.float_compat {
-        json2json(stdin, stdout, HaskellishFloatFormatter {}, options.buffered)
+        json2json(
+            stdin,
+            stdout,
+            HaskellishFloatFormatter {},
+            options.buffered,
+            options.fatal_errors,
+        )
     } else {
-        json2json(stdin, stdout, CompactFormatter {}, options.buffered)
+        json2json(
+            stdin,
+            stdout,
+            CompactFormatter {},
+            options.buffered,
+            options.fatal_errors,
+        )
     }
 }
