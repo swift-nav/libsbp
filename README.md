@@ -110,14 +110,14 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.06.18``
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-07-16 /bin/bash
 
 This will mount your local copy of the libsbp repository onto the image.
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 Alternatively, you could run
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master``
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master /bin/bash
 
 if you are facing issues with compilation and the tags are out of date as well.
 
@@ -147,7 +147,7 @@ This could take several hours to run.  Alternately, the docker image will run
 the `make all` command by default, so you can kick off the `make all` process
 by simply running the following command:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:latest
+    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2021-07-16
 
 When you are finished, quit Docker so that it would not unnecessarily use up
 resources on your machine.
