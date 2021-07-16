@@ -119,7 +119,8 @@ size_t sbp_msg_command_req_command_space_remaining(
  * @return true on success, false otherwise
  */
 bool sbp_msg_command_req_command_set(sbp_msg_command_req_t *msg,
-                                     const char *new_str);
+                                     const char *new_str, size_t new_str_len,
+                                     bool truncate);
 
 /**
  * Set sbp_msg_command_req_t::command with printf style formatting

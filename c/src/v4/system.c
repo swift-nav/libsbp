@@ -134,9 +134,11 @@ size_t sbp_msg_dgnss_status_source_space_remaining(
       &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX);
 }
 bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
-                                     const char *new_str) {
+                                     const char *new_str, size_t new_str_len,
+                                     bool truncate) {
   return sbp_unterminated_string_set(&msg->source,
-                                     SBP_MSG_DGNSS_STATUS_SOURCE_MAX, new_str);
+                                     SBP_MSG_DGNSS_STATUS_SOURCE_MAX, truncate,
+                                     new_str, new_str_len);
 }
 
 bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
@@ -660,9 +662,11 @@ size_t sbp_msg_csac_telemetry_telemetry_space_remaining(
       &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX);
 }
 bool sbp_msg_csac_telemetry_telemetry_set(sbp_msg_csac_telemetry_t *msg,
-                                          const char *new_str) {
-  return sbp_unterminated_string_set(
-      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, new_str);
+                                          const char *new_str,
+                                          size_t new_str_len, bool truncate) {
+  return sbp_unterminated_string_set(&msg->telemetry,
+                                     SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX,
+                                     truncate, new_str, new_str_len);
 }
 
 bool sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
@@ -828,10 +832,12 @@ size_t sbp_msg_csac_telemetry_labels_telemetry_labels_space_remaining(
       SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX);
 }
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_set(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *new_str) {
+    sbp_msg_csac_telemetry_labels_t *msg, const char *new_str,
+    size_t new_str_len, bool truncate) {
   return sbp_unterminated_string_set(
       &msg->telemetry_labels,
-      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, new_str);
+      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, truncate, new_str,
+      new_str_len);
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(

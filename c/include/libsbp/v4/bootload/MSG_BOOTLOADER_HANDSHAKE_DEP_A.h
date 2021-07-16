@@ -118,7 +118,8 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str,
+    size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style

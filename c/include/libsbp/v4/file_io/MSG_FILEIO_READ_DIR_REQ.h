@@ -133,7 +133,8 @@ size_t sbp_msg_fileio_read_dir_req_dirname_space_remaining(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_read_dir_req_dirname_set(sbp_msg_fileio_read_dir_req_t *msg,
-                                             const char *new_str);
+                                             const char *new_str,
+                                             size_t new_str_len, bool truncate);
 
 /**
  * Set sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting

@@ -130,7 +130,8 @@ size_t sbp_msg_dgnss_status_source_space_remaining(
  * @return true on success, false otherwise
  */
 bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
-                                     const char *new_str);
+                                     const char *new_str, size_t new_str_len,
+                                     bool truncate);
 
 /**
  * Set sbp_msg_dgnss_status_t::source with printf style formatting

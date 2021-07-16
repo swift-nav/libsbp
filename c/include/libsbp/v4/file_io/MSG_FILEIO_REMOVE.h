@@ -116,7 +116,8 @@ size_t sbp_msg_fileio_remove_filename_space_remaining(
  * @return true on success, false otherwise
  */
 bool sbp_msg_fileio_remove_filename_set(sbp_msg_fileio_remove_t *msg,
-                                        const char *new_str);
+                                        const char *new_str, size_t new_str_len,
+                                        bool truncate);
 
 /**
  * Set sbp_msg_fileio_remove_t::filename with printf style formatting

@@ -44,9 +44,11 @@ size_t sbp_msg_fileio_read_req_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX);
 }
 bool sbp_msg_fileio_read_req_filename_set(sbp_msg_fileio_read_req_t *msg,
-                                          const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, new_str);
+                                          const char *new_str,
+                                          size_t new_str_len, bool truncate) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX,
+                                        truncate, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_read_req_filename_printf(sbp_msg_fileio_read_req_t *msg,
@@ -323,9 +325,12 @@ size_t sbp_msg_fileio_read_dir_req_dirname_space_remaining(
       &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX);
 }
 bool sbp_msg_fileio_read_dir_req_dirname_set(sbp_msg_fileio_read_dir_req_t *msg,
-                                             const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, new_str);
+                                             const char *new_str,
+                                             size_t new_str_len,
+                                             bool truncate) {
+  return sbp_null_terminated_string_set(&msg->dirname,
+                                        SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX,
+                                        truncate, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_printf(
@@ -673,9 +678,11 @@ size_t sbp_msg_fileio_remove_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX);
 }
 bool sbp_msg_fileio_remove_filename_set(sbp_msg_fileio_remove_t *msg,
-                                        const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, new_str);
+                                        const char *new_str, size_t new_str_len,
+                                        bool truncate) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_REMOVE_FILENAME_MAX,
+                                        truncate, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_remove_filename_printf(sbp_msg_fileio_remove_t *msg,
@@ -824,9 +831,11 @@ size_t sbp_msg_fileio_write_req_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX);
 }
 bool sbp_msg_fileio_write_req_filename_set(sbp_msg_fileio_write_req_t *msg,
-                                           const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, new_str);
+                                           const char *new_str,
+                                           size_t new_str_len, bool truncate) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX,
+                                        truncate, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_write_req_filename_printf(sbp_msg_fileio_write_req_t *msg,
