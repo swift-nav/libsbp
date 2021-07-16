@@ -113,7 +113,7 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
 
   size_t copied;
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
-    if (!sbp_string_copy_to_buf(s->data, &copied, maxlen - 1, str)) {
+    if (!sbp_string_copy_to_buf(s->data, &copied, maxlen - 1, str, sbp_strnlen(str, maxlen))) {
       return false;
     }
     s->encoded_len = copied + 1;  // Extra null terminator
@@ -121,7 +121,7 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
   }
 
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len - 1, &copied,
-                              maxlen - s->encoded_len + 1, str)) {
+                              maxlen - s->encoded_len + 1, str, sbp_strnlen(str, maxlen))) {
     return false;
   }
   s->encoded_len += copied;
@@ -162,7 +162,7 @@ bool sbp_double_null_terminated_string_append(sbp_string_t *s,
 
   size_t copied;
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len - 2, &copied,
-                              maxlen - s->encoded_len + 1, new_str)) {
+                              maxlen - s->encoded_len + 1, new_str, sbp_strnlen(new_str, maxlen))) {
     return false;
   }
   s->encoded_len += copied - 1;

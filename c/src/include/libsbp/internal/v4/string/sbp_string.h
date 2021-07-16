@@ -78,21 +78,6 @@ int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
                    size_t maxlen, const sbp_string_params_t *params);
 
 /**
- * Copy a string to a buffer
- *
- * If the destination buffer can't store the entire source string no data will
- * be copied and false will be returned.
- *
- * @param buf destination buffer
- * @param copied On return will be set to the number of bytes copied
- * @param max Maximum number of bytes to copy
- * @param str Source string
- * @return true on success, false otherwise
- */
-bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
-                            const char *str);
-
-/**
  * Copy exactly n bytes from str to buf.
  *
  * If the destination buffer can't store the entire source string no data will
@@ -105,7 +90,8 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
  * @param n Number of bytes to copy from str to buf
  * @return true on success, false otherwise
  */
-bool sbp_string_copy_n_to_buf(char *buf, size_t *copied, size_t max, const char *str, size_t n);
+bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
+                            const char *str, size_t n);
 
 /**
  * Printf to a buffer

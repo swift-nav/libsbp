@@ -61,23 +61,15 @@ size_t sbp_unterminated_string_space_remaining(const sbp_string_t *s,
          sbp_unterminated_string_encoded_len(s, maxlen);
 }
 
-bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
-                                 const char *new_str) {
-  size_t copied;
-  if (!sbp_string_copy_to_buf(s->data, &copied, maxlen + 1u,
-                              new_str)) {
-    return false;
-  }
-  s->encoded_len = copied - 1;
-  return true;
-}
-
-size_t sbp_unterminated_string_set_truncating(sbp_string_t *s, size_t maxlen,
-                                 const char *new_str, size_t new_str_len) {
+size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
+                                   bool truncate, const char *new_str,
+                                   size_t new_str_len) {
   size_t copied;
   size_t truncated_len = maxlen > new_str_len ? new_str_len : maxlen;
-  if (!sbp_string_copy_n_to_buf(s->data, &copied, maxlen + 1,
-                              new_str, truncated_len)) {
+  size_t len = truncate ? truncated_len : new_str_len;
+
+  if (!sbp_string_copy_to_buf(s->data, &copied, maxlen + 1u,
+                              new_str, len)) {
     return 0;
   }
   s->encoded_len = copied - 1;
@@ -100,7 +92,7 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
   maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len, &copied,
-                              maxlen - s->encoded_len + 1, new_str)) {
+                              maxlen - s->encoded_len + 1, new_str, sbp_strnlen(new_str, maxlen))) {
     return false;
   }
   s->encoded_len += copied - 1;

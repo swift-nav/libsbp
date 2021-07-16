@@ -155,16 +155,22 @@ size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
 /**
  * Set an unterminated string
  *
- * If the new string contents are larger than can be stored the string will not
- * be modified and false will be returned
+ * If the truncate parameter is true, and new string contents are larger than
+ * can be stored, then as much as possible will be written from new_str to s
+ *
+ * If the truncate parameter is false, and new string contents are larger than
+ * can be stored, the string will not be modified and false will be returned
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param new_str new string
- * @return true on success, false otherwise
+ * @param truncate Whether the new_str can be truncated to fit in s
+ * @param new_str New string contents
+ * @param new_str_len Length of the new string, not including NULL terminator (if present)
+ * @return Number of characters written from new_str to s
  */
-bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
-                                 const char *new_str);
+size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
+                                   bool truncate, const char *new_str,
+                                   size_t new_str_len);
 
 /**
  * Set an unterminated string, truncating if necessary
