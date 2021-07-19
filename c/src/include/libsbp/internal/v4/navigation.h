@@ -213,46 +213,6 @@ bool sbp_msg_pos_llh_cov_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_estimated_horizontal_error_ellipse_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_estimated_horizontal_error_ellipse_t *msg);
-
-/**
- * Internal function to decode an SBP type from a buffer
- *
- * @param ctx Decode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_estimated_horizontal_error_ellipse_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_estimated_horizontal_error_ellipse_t *msg);
-
-/**
- * Internal function to encode an SBP type to a buffer
- *
- * @param ctx Encode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_msg_pos_llh_acc_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_pos_llh_acc_t *msg);
-
-/**
- * Internal function to decode an SBP type from a buffer
- *
- * @param ctx Decode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_msg_pos_llh_acc_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_pos_llh_acc_t *msg);
-
-/**
- * Internal function to encode an SBP type to a buffer
- *
- * @param ctx Encode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
 bool sbp_msg_baseline_ecef_encode_internal(sbp_encode_ctx_t *ctx,
                                            const sbp_msg_baseline_ecef_t *msg);
 

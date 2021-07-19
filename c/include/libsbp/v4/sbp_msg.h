@@ -183,7 +183,6 @@ typedef union {
   sbp_msg_pos_ecef_dep_a_t pos_ecef_dep_a;
   sbp_msg_pos_ecef_gnss_t pos_ecef_gnss;
   sbp_msg_pos_ecef_t pos_ecef;
-  sbp_msg_pos_llh_acc_t pos_llh_acc;
   sbp_msg_pos_llh_cov_gnss_t pos_llh_cov_gnss;
   sbp_msg_pos_llh_cov_t pos_llh_cov;
   sbp_msg_pos_llh_dep_a_t pos_llh_dep_a;
@@ -622,8 +621,6 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
                                           &msg->pos_ecef_gnss);
     case SbpMsgPosEcef:
       return sbp_msg_pos_ecef_encode(buf, len, n_written, &msg->pos_ecef);
-    case SbpMsgPosLlhAcc:
-      return sbp_msg_pos_llh_acc_encode(buf, len, n_written, &msg->pos_llh_acc);
     case SbpMsgPosLlhCovGnss:
       return sbp_msg_pos_llh_cov_gnss_encode(buf, len, n_written,
                                              &msg->pos_llh_cov_gnss);
@@ -1183,8 +1180,6 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
                                           &msg->pos_ecef_gnss);
     case SbpMsgPosEcef:
       return sbp_msg_pos_ecef_decode(buf, len, n_read, &msg->pos_ecef);
-    case SbpMsgPosLlhAcc:
-      return sbp_msg_pos_llh_acc_decode(buf, len, n_read, &msg->pos_llh_acc);
     case SbpMsgPosLlhCovGnss:
       return sbp_msg_pos_llh_cov_gnss_decode(buf, len, n_read,
                                              &msg->pos_llh_cov_gnss);
@@ -1669,8 +1664,6 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_pos_ecef_gnss_encoded_len(&msg->pos_ecef_gnss);
     case SbpMsgPosEcef:
       return sbp_msg_pos_ecef_encoded_len(&msg->pos_ecef);
-    case SbpMsgPosLlhAcc:
-      return sbp_msg_pos_llh_acc_encoded_len(&msg->pos_llh_acc);
     case SbpMsgPosLlhCovGnss:
       return sbp_msg_pos_llh_cov_gnss_encoded_len(&msg->pos_llh_cov_gnss);
     case SbpMsgPosLlhCov:
@@ -2171,8 +2164,6 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_pos_ecef_gnss_cmp(&a->pos_ecef_gnss, &b->pos_ecef_gnss);
     case SbpMsgPosEcef:
       return sbp_msg_pos_ecef_cmp(&a->pos_ecef, &b->pos_ecef);
-    case SbpMsgPosLlhAcc:
-      return sbp_msg_pos_llh_acc_cmp(&a->pos_llh_acc, &b->pos_llh_acc);
     case SbpMsgPosLlhCovGnss:
       return sbp_msg_pos_llh_cov_gnss_cmp(&a->pos_llh_cov_gnss,
                                           &b->pos_llh_cov_gnss);

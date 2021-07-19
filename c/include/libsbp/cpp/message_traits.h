@@ -1916,19 +1916,6 @@ struct MessageTraits<sbp_msg_pos_ecef_t> {
 };
 
 template <>
-struct MessageTraits<sbp_msg_pos_llh_acc_t> {
-  static constexpr sbp_msg_type_t id = SbpMsgPosLlhAcc;
-  static const sbp_msg_pos_llh_acc_t &get(const sbp_msg_t &msg) {
-    return msg.pos_llh_acc;
-  }
-  static sbp_msg_pos_llh_acc_t &get(sbp_msg_t &msg) { return msg.pos_llh_acc; }
-  static s8 send(sbp_state_t *state, u16 sender_id,
-                 const sbp_msg_pos_llh_acc_t &msg, sbp_write_fn_t write) {
-    return sbp_msg_pos_llh_acc_send(state, sender_id, &msg, write);
-  }
-};
-
-template <>
 struct MessageTraits<sbp_msg_pos_llh_cov_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhCovGnss;
   static const sbp_msg_pos_llh_cov_gnss_t &get(const sbp_msg_t &msg) {

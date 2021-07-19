@@ -174,7 +174,6 @@ typedef enum {
   SbpMsgPosEcefDepA = SBP_MSG_POS_ECEF_DEP_A,
   SbpMsgPosEcefGnss = SBP_MSG_POS_ECEF_GNSS,
   SbpMsgPosEcef = SBP_MSG_POS_ECEF,
-  SbpMsgPosLlhAcc = SBP_MSG_POS_LLH_ACC,
   SbpMsgPosLlhCovGnss = SBP_MSG_POS_LLH_COV_GNSS,
   SbpMsgPosLlhCov = SBP_MSG_POS_LLH_COV,
   SbpMsgPosLlhDepA = SBP_MSG_POS_LLH_DEP_A,

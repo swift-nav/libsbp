@@ -183,7 +183,6 @@ data SBPMsg =
    | SBPMsgPosEcefDepA MsgPosEcefDepA Msg
    | SBPMsgPosEcefGnss MsgPosEcefGnss Msg
    | SBPMsgPosLlh MsgPosLlh Msg
-   | SBPMsgPosLlhAcc MsgPosLlhAcc Msg
    | SBPMsgPosLlhCov MsgPosLlhCov Msg
    | SBPMsgPosLlhCovGnss MsgPosLlhCovGnss Msg
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
@@ -398,7 +397,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefGnss = SBPMsgPosEcefGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgPosLlhAcc = SBPMsgPosLlhAcc (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhCov = SBPMsgPosLlhCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -605,7 +603,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgPosEcefDepA _ m) = put m
       encoder (SBPMsgPosEcefGnss _ m) = put m
       encoder (SBPMsgPosLlh _ m) = put m
-      encoder (SBPMsgPosLlhAcc _ m) = put m
       encoder (SBPMsgPosLlhCov _ m) = put m
       encoder (SBPMsgPosLlhCovGnss _ m) = put m
       encoder (SBPMsgPosLlhDepA _ m) = put m
@@ -816,7 +813,6 @@ instance FromJSON SBPMsg where
         | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefGnss = SBPMsgPosEcefGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgPosLlhAcc = SBPMsgPosLlhAcc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhCov = SBPMsgPosLlhCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1028,7 +1024,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPosEcefDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgPosLlhAcc n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
@@ -1234,7 +1229,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPosEcefDepA n m) = SBPMsgPosEcefDepA n <$> f m
   msg f (SBPMsgPosEcefGnss n m) = SBPMsgPosEcefGnss n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
-  msg f (SBPMsgPosLlhAcc n m) = SBPMsgPosLlhAcc n <$> f m
   msg f (SBPMsgPosLlhCov n m) = SBPMsgPosLlhCov n <$> f m
   msg f (SBPMsgPosLlhCovGnss n m) = SBPMsgPosLlhCovGnss n <$> f m
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m

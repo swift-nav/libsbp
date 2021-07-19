@@ -79,7 +79,6 @@ import com.swiftnav.sbp.navigation.MsgPosECEFCovGnss;
 import com.swiftnav.sbp.navigation.MsgPosECEFDepA;
 import com.swiftnav.sbp.navigation.MsgPosECEFGnss;
 import com.swiftnav.sbp.navigation.MsgPosLLH;
-import com.swiftnav.sbp.navigation.MsgPosLLHAcc;
 import com.swiftnav.sbp.navigation.MsgPosLLHCov;
 import com.swiftnav.sbp.navigation.MsgPosLLHCovGnss;
 import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
@@ -335,8 +334,6 @@ final class MessageTable {
                 return new MsgPosLLH(msg);
             case MsgPosLLHCov.TYPE:
                 return new MsgPosLLHCov(msg);
-            case MsgPosLLHAcc.TYPE:
-                return new MsgPosLLHAcc(msg);
             case MsgBaselineECEF.TYPE:
                 return new MsgBaselineECEF(msg);
             case MsgBaselineNED.TYPE:
