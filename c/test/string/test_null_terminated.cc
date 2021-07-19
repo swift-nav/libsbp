@@ -143,7 +143,7 @@ TEST(TestNullTerminatedString, Init) {
   EXPECT_EQ(s.encoded_len, 1);
 }
 
-TEST(TestNullTerminatedString, Set)
+TEST(TestNullTerminatedString, SetNotTruncating)
 {
   // A variety of cases for the set function
   sbp_string_t s;
@@ -202,6 +202,56 @@ TEST(TestNullTerminatedString, SetTruncating)
 
   sbp_null_terminated_string_init(&s);
 
+  // Put in a valid string
+  const char str[] = "Hello, World!";
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, str), strlen(str));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
+
+  // Overwrite with another valid string
+  const char str2[] = "Goodbye, World!";
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, str2), strlen(str2));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 15);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Goodbye, World!");
+
+  // Try to overwrite with an invalid string, it should fail and leave the original string intact
+  const char str3[] = "A string which is far too long for the buffer";
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, str3), 19);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "A string which is f");
+
+  // Setting an invalid buffer clears everything
+  strcpy(s.data, "A string which is longer than the max packed len");
+  s.encoded_len = 49;
+  EXPECT_FALSE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
+  EXPECT_EQ(sbp_null_terminated_string_get(&s, maxlen), nullptr);
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, str), strlen(str));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
+}
+
+TEST(TestNullTerminatedString, SetRawTruncating)
+{
+  // A variety of cases for the set function
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_null_terminated_string_init(&s);
+
   char non_terminated[] = {'H', 'E', 'L', 'L', 'O'};
 
   // Put in a valid string that fits with space remaining
@@ -229,6 +279,43 @@ TEST(TestNullTerminatedString, SetTruncating)
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
   EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HELLO");
+}
+
+TEST(TestNullTerminatedString, SetRawNotTruncating)
+{
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_null_terminated_string_init(&s);
+
+  char non_terminated[] = {'H', 'E', 'L', 'L', 'O'};
+
+  // Put in a valid string that fits with space remaining
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, false, non_terminated, 5), 5);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HELLO");
+
+  // Put in a valid string that doesn't fit
+  const char str3[] = "A string which is far too long for the buffer";
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, false, str3, strlen(str3)), 0);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "HELLO");
+
+  // Put in a valid string that fits exactly
+  char non_terminated3[] = "ABCDEFGHIJKLMNOPQRS";
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, false, non_terminated3, 19), 19);
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "ABCDEFGHIJKLMNOPQRS");
 }
 
 TEST(TestNullTerminatedString, Printf)

@@ -143,7 +143,52 @@ TEST(TestUnterminatedString, Init) {
   EXPECT_EQ(s.encoded_len, 0);
 }
 
-TEST(TestUnterminatedString, Set)
+TEST(TestUnterminatedString, SetTruncating)
+{
+  // A variety of cases for the set function
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_unterminated_string_init(&s);
+
+  // Put in a valid string
+  const char str[] = "Hello, World!";
+  EXPECT_EQ(sbp_unterminated_string_set(&s, maxlen, true, str), strlen(str));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "Hello, World!");
+
+  // Overwrite with another valid string
+  const char str2[] = "Goodbye, World!";
+  EXPECT_EQ(sbp_unterminated_string_set(&s, maxlen, true, str2), strlen(str2));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 15);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 5);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 15);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "Goodbye, World!");
+
+  // Try to overwrite with an long string, it should write as much as possible
+  const char str3[] = "A string which is far too long for the buffer";
+  EXPECT_EQ(sbp_unterminated_string_set(&s, maxlen, true, str3), 20);
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 20);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "A string which is fa");
+
+  // Setting an invalid buffer clears everything
+  EXPECT_EQ(sbp_unterminated_string_set(&s, maxlen, true, str), strlen(str));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "Hello, World!");
+}
+
+TEST(TestUnterminatedString, SetNotTruncating)
 {
   // A variety of cases for the set function
   sbp_string_t s;
@@ -189,7 +234,7 @@ TEST(TestUnterminatedString, Set)
 }
 
 
-TEST(TestUnterminatedString, SetTruncating)
+TEST(TestUnterminatedString, SetRawTruncating)
 {
   sbp_string_t s;
 
@@ -224,6 +269,43 @@ TEST(TestUnterminatedString, SetTruncating)
   EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 5);
   EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "HELLO");
+}
+
+TEST(TestUnterminatedString, SetRawNotTruncating)
+{
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_unterminated_string_init(&s);
+
+  char non_terminated[] = {'H', 'E', 'L', 'L', 'O'};
+
+  // Put in a valid string that fits with space remaining
+  EXPECT_EQ(sbp_unterminated_string_set_raw(&s, maxlen, false, non_terminated, 5), 5);
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 15);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "HELLO");
+
+  // Put in a valid string that doesn't fit
+  const char str3[] = "A string which is far too long for the buffer";
+  EXPECT_EQ(sbp_unterminated_string_set_raw(&s, maxlen, false, str3, strlen(str3)), 0);
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 5);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 15);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 5);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "HELLO");
+
+  // Put in a valid string that fits exactly
+  char non_terminated3[] = "ABCDEFGHIJKLMNOPQRST";
+  EXPECT_EQ(sbp_unterminated_string_set_raw(&s, maxlen, false, non_terminated3, 20), 20);
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 20);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "ABCDEFGHIJKLMNOPQRST");
 }
 
 TEST(TestUnterminatedString, Printf)
