@@ -566,6 +566,8 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * @field lat number (float, 8 bytes) Latitude
  * @field lon number (float, 8 bytes) Longitude
  * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
+ * @field orthometric_height number (float, 8 bytes) Height above the geoid (i.e. height above mean sea level). See flags for geoid
+ *   model used.
  * @field h_accuracy number (float, 4 bytes) Estimated horizontal error at the user-configured confidence level; zero implies
  *   invalid.
  * @field v_accuracy number (float, 4 bytes) Estimated vertical error at the user-configured confidence level; zero implies
@@ -598,6 +600,7 @@ MsgPosLlhAcc.prototype.parser = new Parser()
   .doublele('lat')
   .doublele('lon')
   .doublele('height')
+  .doublele('orthometric_height')
   .floatle('h_accuracy')
   .floatle('v_accuracy')
   .floatle('ct_accuracy')
@@ -611,6 +614,7 @@ MsgPosLlhAcc.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['orthometric_height', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['h_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['v_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['ct_accuracy', 'writeFloatLE', 4]);

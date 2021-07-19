@@ -580,6 +580,19 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_3935 (1)
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_6827 (2)
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_9545 (3)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_MASK (0x3)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT (6u)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_GET(flags)      \
+  (((flags) >> SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT) & \
+   SBP_POS_LLH_ACC_GEOID_MODEL_MASK)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_SET(flags, val)           \
+  do {                                                        \
+    ((flags) |= (((val) & (SBP_POS_LLH_ACC_GEOID_MODEL_MASK)) \
+                 << (SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT)));    \
+  } while (0)
+
+#define SBP_POS_LLH_ACC_GEOID_MODEL_EGM96 (0)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_EGM2008 (1)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_ACC_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -625,25 +638,34 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_POS_LLH_ACC_FIX_MODE_SBAS_POSITION (6)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;           /**< GPS Time of Week [ms] */
-  double lat;        /**< Latitude [deg] */
-  double lon;        /**< Longitude [deg] */
-  double height;     /**< Height above WGS84 ellipsoid [m] */
-  float h_accuracy;  /**< Estimated horizontal error at the user-configured
-                          confidence level; zero implies invalid. [m] */
-  float v_accuracy;  /**< Estimated vertical error at the user-configured
-                          confidence level; zero implies invalid. [m] */
-  float ct_accuracy; /**< Estimated cross-track error at the user-
-                          configured confidence level; zero implies
-                          invalid. [m] */
-  float at_accuracy; /**< Estimated along-track error at the user-
-                          configured confidence level; zero implies
-                          invalid. [m] */
-  estimated_horizontal_error_ellipse_t h_ellipse; /**< The estimated
-                                                       horizontal error
-                                                       ellipse at the
-                                                       user-configured
-                                                       confidence level. */
+  u32 tow;                   /**< GPS Time of Week [ms] */
+  double lat;                /**< Latitude [deg] */
+  double lon;                /**< Longitude [deg] */
+  double height;             /**< Height above WGS84 ellipsoid [m] */
+  double orthometric_height; /**< Height above the geoid (i.e. height above
+                                  mean sea level). See flags for geoid
+                                  model used. [m] */
+  float h_accuracy;          /**< Estimated horizontal error at the user-
+                                  configured confidence level; zero implies
+                                  invalid. [m] */
+  float v_accuracy;          /**< Estimated vertical error at the user-
+                                  configured confidence level; zero implies
+                                  invalid. [m] */
+  float ct_accuracy;         /**< Estimated cross-track error at the user-
+                                  configured confidence level; zero implies
+                                  invalid. [m] */
+  float at_accuracy;         /**< Estimated along-track error at the user-
+                                  configured confidence level; zero implies
+                                  invalid. [m] */
+  estimated_horizontal_error_ellipse_t h_ellipse; /**< The
+                                                       estimated
+                                                       horizontal
+                                                       error
+                                                       ellipse at
+                                                       the user-
+                                                       configured
+                                                       confidence
+                                                       level. */
   u8 confidence; /**< Configured confidence level for the estimated
                       position error */
   u8 n_sats;     /**< Number of satellites used in solution. */

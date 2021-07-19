@@ -2259,6 +2259,9 @@ pub struct MsgPosLLHAcc {
     pub lon: f64,
     /// Height above WGS84 ellipsoid
     pub height: f64,
+    /// Height above the geoid (i.e. height above mean sea level). See flags for
+    /// geoid model used.
+    pub orthometric_height: f64,
     /// Estimated horizontal error at the user-configured confidence level; zero
     /// implies invalid.
     pub h_accuracy: f32,
@@ -2291,6 +2294,7 @@ impl MsgPosLLHAcc {
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
             height: _buf.read_f64::<LittleEndian>()?,
+            orthometric_height: _buf.read_f64::<LittleEndian>()?,
             h_accuracy: _buf.read_f32::<LittleEndian>()?,
             v_accuracy: _buf.read_f32::<LittleEndian>()?,
             ct_accuracy: _buf.read_f32::<LittleEndian>()?,
@@ -2363,6 +2367,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         self.lat.append_to_sbp_buffer(buf);
         self.lon.append_to_sbp_buffer(buf);
         self.height.append_to_sbp_buffer(buf);
+        self.orthometric_height.append_to_sbp_buffer(buf);
         self.h_accuracy.append_to_sbp_buffer(buf);
         self.v_accuracy.append_to_sbp_buffer(buf);
         self.ct_accuracy.append_to_sbp_buffer(buf);
@@ -2379,6 +2384,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         size += self.lat.sbp_size();
         size += self.lon.sbp_size();
         size += self.height.sbp_size();
+        size += self.orthometric_height.sbp_size();
         size += self.h_accuracy.sbp_size();
         size += self.v_accuracy.sbp_size();
         size += self.ct_accuracy.sbp_size();

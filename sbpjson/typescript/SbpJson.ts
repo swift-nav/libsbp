@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridDefinitionHeader, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGridDefinition, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridDefinitionHeader, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGridDefinition, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -8,6 +8,7 @@
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
+//   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
 //   const gNSSInputType = Convert.toGNSSInputType(json);
 //   const gnssCapb = Convert.toGnssCapb(json);
 //   const gnssSignal = Convert.toGnssSignal(json);
@@ -112,6 +113,7 @@
 //   const msgPosECEFCovGnss = Convert.toMsgPosECEFCovGnss(json);
 //   const msgPosECEFGnss = Convert.toMsgPosECEFGnss(json);
 //   const msgPosLLH = Convert.toMsgPosLLH(json);
+//   const msgPosLLHAcc = Convert.toMsgPosLLHAcc(json);
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
 //   const msgPosLLHCovGnss = Convert.toMsgPosLLHCovGnss(json);
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
@@ -1550,12 +1552,45 @@ export interface MsgPosLLH {
 
 /**
  * This position solution message reports the absolute geodetic coordinates and the status
+ * (single point vs pseudo-absolute RTK) of the position solution as well as the estimated
+ * horizontal, vertical, cross-track and along-track errors.  The position information and
+ * Fix Mode flags  follow the MSG_POS_LLH message. Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the estimated error terms follow that
+ * convention.,
+ * ,
+ * The estimated errors are reported at a user-configurable confidence level. The
+ * user-configured percentile is encoded in the percentile field.
+ */
+export interface MsgPosLLHAcc {
+    at_accuracy:        number;
+    confidence:         number;
+    ct_accuracy:        number;
+    flags:              number;
+    h_accuracy:         number;
+    h_ellipse:          EstimatedHorizontalErrorEllipse;
+    height:             number;
+    lat:                number;
+    lon:                number;
+    n_sats:             number;
+    orthometric_height: number;
+    tow:                number;
+    v_accuracy:         number;
+}
+
+export interface EstimatedHorizontalErrorEllipse {
+    orientation: number;
+    semi_major:  number;
+    semi_minor:  number;
+}
+
+/**
+ * This position solution message reports the absolute geodetic coordinates and the status
  * (single point vs pseudo-absolute RTK) of the position solution as well as the upper
  * triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
- * should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
- * local-level North, East, Down frame, the covariance terms follow with that convention.
- * Thus, covariances are reported against the "downward" measurement and care should be
- * taken with the sign convention.
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the covariance terms follow that convention. Thus,
+ * covariances are reported against the "downward" measurement and care should be taken with
+ * the sign convention.
  */
 export interface MsgPosLLHCov {
     cov_d_d: number;
@@ -2550,6 +2585,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("EphemerisCommonContent")), null, 2);
     }
 
+    public static toEstimatedHorizontalErrorEllipse(json: string): EstimatedHorizontalErrorEllipse {
+        return cast(JSON.parse(json), r("EstimatedHorizontalErrorEllipse"));
+    }
+
+    public static estimatedHorizontalErrorEllipseToJson(value: EstimatedHorizontalErrorEllipse): string {
+        return JSON.stringify(uncast(value, r("EstimatedHorizontalErrorEllipse")), null, 2);
+    }
+
     public static toGNSSInputType(json: string): GNSSInputType {
         return cast(JSON.parse(json), r("GNSSInputType"));
     }
@@ -3380,6 +3423,14 @@ export class Convert {
 
     public static msgPosLLHToJson(value: MsgPosLLH): string {
         return JSON.stringify(uncast(value, r("MsgPosLLH")), null, 2);
+    }
+
+    public static toMsgPosLLHAcc(json: string): MsgPosLLHAcc {
+        return cast(JSON.parse(json), r("MsgPosLLHAcc"));
+    }
+
+    public static msgPosLLHAccToJson(value: MsgPosLLHAcc): string {
+        return JSON.stringify(uncast(value, r("MsgPosLLHAcc")), null, 2);
     }
 
     public static toMsgPosLLHCov(json: string): MsgPosLLHCov {
@@ -4841,6 +4892,26 @@ const typeMap: any = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
+    "MsgPosLLHAcc": o([
+        { json: "at_accuracy", js: "at_accuracy", typ: 3.14 },
+        { json: "confidence", js: "confidence", typ: 0 },
+        { json: "ct_accuracy", js: "ct_accuracy", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 3.14 },
+        { json: "h_ellipse", js: "h_ellipse", typ: r("EstimatedHorizontalErrorEllipse") },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "orthometric_height", js: "orthometric_height", typ: 3.14 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 3.14 },
+    ], "any"),
+    "EstimatedHorizontalErrorEllipse": o([
+        { json: "orientation", js: "orientation", typ: 3.14 },
+        { json: "semi_major", js: "semi_major", typ: 3.14 },
+        { json: "semi_minor", js: "semi_minor", typ: 3.14 },
     ], "any"),
     "MsgPosLLHCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },

@@ -1292,6 +1292,9 @@ class MsgPosLLHAcc(SBP):
     Longitude
   height : double
     Height above WGS84 ellipsoid
+  orthometric_height : double
+    Height above the geoid (i.e. height above mean sea level). See flags for
+    geoid model used.
   h_accuracy : float
     Estimated horizontal error at the user-configured confidence level; zero
     implies invalid.
@@ -1322,6 +1325,7 @@ class MsgPosLLHAcc(SBP):
                    'lat' / construct.Float64l,
                    'lon' / construct.Float64l,
                    'height' / construct.Float64l,
+                   'orthometric_height' / construct.Float64l,
                    'h_accuracy' / construct.Float32l,
                    'v_accuracy' / construct.Float32l,
                    'ct_accuracy' / construct.Float32l,
@@ -1335,6 +1339,7 @@ class MsgPosLLHAcc(SBP):
                'lat',
                'lon',
                'height',
+               'orthometric_height',
                'h_accuracy',
                'v_accuracy',
                'ct_accuracy',
@@ -1359,6 +1364,7 @@ class MsgPosLLHAcc(SBP):
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
+      self.orthometric_height = kwargs.pop('orthometric_height')
       self.h_accuracy = kwargs.pop('h_accuracy')
       self.v_accuracy = kwargs.pop('v_accuracy')
       self.ct_accuracy = kwargs.pop('ct_accuracy')

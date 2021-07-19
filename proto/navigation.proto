@@ -258,14 +258,15 @@ message MsgPosLlhAcc {
     double lat = 2;
     double lon = 3;
     double height = 4;
-    float h_accuracy = 5;
-    float v_accuracy = 6;
-    float ct_accuracy = 7;
-    float at_accuracy = 8;
-    EstimatedHorizontalErrorEllipse h_ellipse = 9;
-    uint32 confidence = 10;
-    uint32 n_sats = 11;
-    uint32 flags = 12;
+    double orthometric_height = 5;
+    float h_accuracy = 6;
+    float v_accuracy = 7;
+    float ct_accuracy = 8;
+    float at_accuracy = 9;
+    EstimatedHorizontalErrorEllipse h_ellipse = 10;
+    uint32 confidence = 11;
+    uint32 n_sats = 12;
+    uint32 flags = 13;
 }
 
 /** Baseline Position in ECEF

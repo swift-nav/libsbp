@@ -48,6 +48,11 @@ public class MsgPosLLHAcc extends SBPMessage {
     /** Height above WGS84 ellipsoid */
     public double height;
 
+    /**
+     * Height above the geoid (i.e. height above mean sea level). See flags for geoid model used.
+     */
+    public double orthometric_height;
+
     /** Estimated horizontal error at the user-configured confidence level; zero implies invalid. */
     public float h_accuracy;
 
@@ -96,6 +101,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         lat = parser.getDouble();
         lon = parser.getDouble();
         height = parser.getDouble();
+        orthometric_height = parser.getDouble();
         h_accuracy = parser.getFloat();
         v_accuracy = parser.getFloat();
         ct_accuracy = parser.getFloat();
@@ -112,6 +118,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         builder.putDouble(lat);
         builder.putDouble(lon);
         builder.putDouble(height);
+        builder.putDouble(orthometric_height);
         builder.putFloat(h_accuracy);
         builder.putFloat(v_accuracy);
         builder.putFloat(ct_accuracy);
@@ -129,6 +136,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         obj.put("lat", lat);
         obj.put("lon", lon);
         obj.put("height", height);
+        obj.put("orthometric_height", orthometric_height);
         obj.put("h_accuracy", h_accuracy);
         obj.put("v_accuracy", v_accuracy);
         obj.put("ct_accuracy", ct_accuracy);
