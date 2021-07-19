@@ -138,13 +138,17 @@ typedef struct {
    *
    * Erase any existing content and replace with the specified string
    *
-   * This function will return true if the new string was successfully applied. If the specified string is longer than can be represented in wire encoding this function will return false
+   * If the should_trunc parameter is set to false and the specified string is
+   * longer than can be represented in wire encoding, this function will return
+   * 0. Otherwise, if should_trunc is set to true, then as much as possible will
+   * be read from the new_str as can fit in the msg.
    *
    * @param msg (((m.type_name))) instance
    * @param new_str New string
+   * @param should_trunc Whether the new_str can be truncated to fit in msg
    * @return true on success, false otherwise
    */
-  size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool truncate);
+  size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, bool should_trunc);
 
   /**
    * Set (((comment_name))) with printf style formatting

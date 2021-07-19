@@ -48,9 +48,9 @@ size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg)
 }
 
 ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
- size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool truncate)
+ size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, bool should_trunc)
 {
-  return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), truncate, new_str, new_str_len);
+  return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, new_str);
 }
 
 bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) 

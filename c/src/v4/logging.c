@@ -38,9 +38,9 @@ size_t sbp_msg_log_text_space_remaining(const sbp_msg_log_t *msg) {
                                                  SBP_MSG_LOG_TEXT_MAX);
 }
 size_t sbp_msg_log_text_set(sbp_msg_log_t *msg, const char *new_str,
-                            size_t new_str_len, bool truncate) {
-  return sbp_unterminated_string_set(&msg->text, SBP_MSG_LOG_TEXT_MAX, truncate,
-                                     new_str, new_str_len);
+                            bool should_trunc) {
+  return sbp_unterminated_string_set(&msg->text, SBP_MSG_LOG_TEXT_MAX,
+                                     should_trunc, new_str);
 }
 
 bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, const char *fmt, ...) {
@@ -280,9 +280,9 @@ size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg) {
                                                  SBP_MSG_PRINT_DEP_TEXT_MAX);
 }
 size_t sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
-                                  size_t new_str_len, bool truncate) {
+                                  bool should_trunc) {
   return sbp_unterminated_string_set(&msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX,
-                                     truncate, new_str, new_str_len);
+                                     should_trunc, new_str);
 }
 
 bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, const char *fmt,

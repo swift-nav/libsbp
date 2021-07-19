@@ -105,8 +105,8 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     test_msg.bootloader_handshake_resp.flags = 0;
 
     ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_set(
-                      &test_msg.bootloader_handshake_resp, "v1.2\n",
-                      strlen("v1.2\n"), false) == strlen("v1.2\n"),
+                      &test_msg.bootloader_handshake_resp, "v1.2\n", false) ==
+                      strlen("v1.2\n"),
                   "Can't assign text");
     ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_encoded_len(
                       &test_msg.bootloader_handshake_resp) == 5,
@@ -173,8 +173,8 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     memset(&test_msg, 0, sizeof(test_msg));
 
     ck_assert_msg(sbp_msg_bootloader_handshake_dep_a_handshake_set(
-                      &test_msg.bootloader_handshake_dep_a, "v1.2",
-                      strlen("v1.2"), false) == strlen("v1.2"),
+                      &test_msg.bootloader_handshake_dep_a, "v1.2", false) ==
+                      strlen("v1.2"),
                   "Can't assign text");
     ck_assert_msg(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(
                       &test_msg.bootloader_handshake_dep_a) == 4,

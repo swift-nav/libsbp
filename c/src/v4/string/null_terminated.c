@@ -66,19 +66,26 @@ size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
          sbp_null_terminated_string_encoded_len(s, maxlen);
 }
 
-size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool truncate, const char *new_str,
+
+
+size_t sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, const char *new_str,
                                       size_t new_str_len) {
   size_t copied;
   size_t truncated_len =
       (maxlen - 1) > new_str_len ? new_str_len : (maxlen - 1);
-  size_t len = truncate ? truncated_len : new_str_len;
+  size_t len = should_trunc ? truncated_len : new_str_len;
   if (!sbp_string_copy_to_buf(s->data, &copied, maxlen, new_str, len)) {
     return 0;
   }
 
   s->encoded_len = copied;
   return s->encoded_len - 1;
+}
+
+size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, const char *new_str) {
+  return sbp_null_terminated_string_set_raw(s, maxlen, should_trunc, new_str, sbp_strnlen(new_str, maxlen));
 }
 
 bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen,

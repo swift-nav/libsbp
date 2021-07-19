@@ -153,39 +153,44 @@ size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
                                       size_t maxlen);
 
 /**
- * Set an unterminated string
+ * Set an unterminated string from a raw buffer
  *
- * If the truncate parameter is true, and new string contents are larger than
+ * If the should_trunc parameter is true, and new string contents are larger than
  * can be stored, then as much as possible will be written from new_str to s
  *
- * If the truncate parameter is false, and new string contents are larger than
+ * If the should_trunc parameter is false, and new string contents are larger than
  * can be stored, the string will not be modified and false will be returned
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param truncate Whether the new_str can be truncated to fit in s
- * @param new_str New string contents
- * @param new_str_len Length of the new string, not including NULL terminator (if present)
- * @return Number of characters written from new_str to s
+ * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param new_buf New buffer contents
+ * @param new_buf_len Length of the new buffer, not including NULL terminator (if present)
+ * @return Number of characters written from new_buf to s
  */
-size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
-                                   bool truncate, const char *new_str,
-                                   size_t new_str_len);
+size_t sbp_unterminated_string_set_raw(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, const char *new_buf,
+                                      size_t new_buf_len);
 
 /**
- * Set an unterminated string, truncating if necessary
+ * Set an unterminated string
  *
- * If the new string contents are larger than can be stored, then the string
- * will be written with as much as it can hold.
+ * If the should_trunc parameter is true, and new string contents are larger
+ * than can be stored, then as much as possible will be written from new_str to
+ * s
+ *
+ * If the should_trunc parameter is false, and new string contents are larger
+ * than can be stored, the string will not be modified and false will be
+ * returned
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param new_str new string
- * @param new_str_len Length of the new string, not including NULL terminator (if present)
+ * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param new_str New string contents
  * @return Number of characters written from new_str to s
  */
-size_t sbp_unterminated_string_set_truncating(sbp_string_t *s, size_t maxlen,
-                                 const char *new_str, size_t new_str_len);
+size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, const char *new_str);
 /**
  * Set an unterminated string with printf style formatting
  *

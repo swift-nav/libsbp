@@ -154,7 +154,7 @@ TEST(TestNullTerminatedString, Set)
 
   // Put in a valid string
   const char str[] = "Hello, World!";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
@@ -163,7 +163,7 @@ TEST(TestNullTerminatedString, Set)
 
   // Overwrite with another valid string
   const char str2[] = "Goodbye, World!";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str2, strlen(str2)), strlen(str2));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str2), strlen(str2));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 16);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 4);
@@ -172,7 +172,7 @@ TEST(TestNullTerminatedString, Set)
 
   // Try to overwrite with an invalid string, it should fail and leave the original string intact
   const char str3[] = "A string which is far too long for the buffer";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str3, strlen(str3)), 0);
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str3), 0);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 16);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 4);
@@ -185,7 +185,7 @@ TEST(TestNullTerminatedString, Set)
   EXPECT_FALSE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 1);
   EXPECT_EQ(sbp_null_terminated_string_get(&s, maxlen), nullptr);
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
@@ -205,7 +205,7 @@ TEST(TestNullTerminatedString, SetTruncating)
   char non_terminated[] = {'H', 'E', 'L', 'L', 'O'};
 
   // Put in a valid string that fits with space remaining
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, non_terminated, 5), 5);
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, true, non_terminated, 5), 5);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 14);
@@ -214,7 +214,7 @@ TEST(TestNullTerminatedString, SetTruncating)
 
   maxlen = 3;
   // Put in a valid string that doesn't fit and will be truncated
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, non_terminated, 5), 2);
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, true, non_terminated, 5), 2);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 3);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
@@ -223,7 +223,7 @@ TEST(TestNullTerminatedString, SetTruncating)
 
   maxlen = 6;
   // Put in a valid string that fits exactly
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, true, non_terminated, 5), 5);
+  EXPECT_EQ(sbp_null_terminated_string_set_raw(&s, maxlen, true, non_terminated, 5), 5);
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 6);
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
@@ -437,7 +437,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.buf_len = 30;
 
   const char str[] = "Hello, World!";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
   EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
@@ -451,7 +451,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.buf_len = 30;
 
   const char str2[] = "Hello, World!!!!!!!";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str2, strlen(str2)), strlen(str2));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str2), strlen(str2));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 20);
   EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
@@ -464,7 +464,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 14;
 
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
   EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
@@ -477,7 +477,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.offset = 0;
   ctx.buf_len = 10;
 
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
   EXPECT_FALSE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
@@ -490,7 +490,7 @@ TEST(TestNullTerminatedString, Pack)
   ctx.offset = 10;
   ctx.buf_len = 30;
 
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, long_params, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, long_params));
   EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, long_params), 14);
   EXPECT_TRUE(sbp_null_terminated_string_encode(&s, long_params, &ctx));
@@ -540,7 +540,7 @@ TEST(TestNullTerminatedString, Unpack)
   ctx.buf_len = 5;
   ctx.offset = 0;
   const char str[] = "zzzz";
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
@@ -553,7 +553,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abcd\0more", 9);
   ctx.buf_len = 9;
   ctx.offset = 0;
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
@@ -566,7 +566,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "ab\0", 3);
   ctx.buf_len = 3;
   ctx.offset = 0;
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
@@ -579,7 +579,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abc", 3);
   ctx.buf_len = 3;
   ctx.offset = 0;
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
@@ -592,7 +592,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abcdefghi", 10);
   ctx.buf_len = 10;
   ctx.offset = 0;
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_FALSE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
@@ -605,7 +605,7 @@ TEST(TestNullTerminatedString, Unpack)
   memcpy(payload, "abcdefg\0i", 10);
   ctx.buf_len = 10;
   ctx.offset = 4;
-  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str, strlen(str)), strlen(str));
+  EXPECT_EQ(sbp_null_terminated_string_set(&s, maxlen, false, str), strlen(str));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
   EXPECT_TRUE(sbp_null_terminated_string_decode(&s, maxlen, &ctx));
   EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
