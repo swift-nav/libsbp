@@ -138,6 +138,26 @@ size_t sbp_msg_fileio_read_dir_req_dirname_set(
     sbp_msg_fileio_read_dir_req_t *msg, const char *new_str, bool should_trunc);
 
 /**
+ * Set sbp_msg_fileio_read_dir_req_t::dirname from a raw buffer
+ *
+ * Erase any existing content and replace with the specified raw buffer
+ *
+ * If the should_trunc parameter is set to false and the specified string is
+ * longer than can be represented in wire encoding, this function will return
+ * 0. Otherwise, if should_trunc is set to true, then as much as possible will
+ * be read from the new_str as can fit in the msg.
+ *
+ * @param msg sbp_msg_fileio_read_dir_req_t instance
+ * @param new_buf New buffer
+ * @param new_buf_len New buffer length
+ * @param should_trunc Whether the new_str can be truncated to fit in msg
+ * @return true on success, false otherwise
+ */
+size_t sbp_msg_fileio_read_dir_req_dirname_set_raw(
+    sbp_msg_fileio_read_dir_req_t *msg, const char *new_buf, size_t new_buf_len,
+    bool should_trunc);
+
+/**
  * Set sbp_msg_fileio_read_dir_req_t::dirname with printf style formatting
  *
  * Erase any existing content and replace with the formatted string

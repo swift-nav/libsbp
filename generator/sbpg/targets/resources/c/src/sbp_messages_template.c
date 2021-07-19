@@ -53,6 +53,12 @@ size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg)
   return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, new_str);
 }
 
+ size_t (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool should_trunc)
+{
+  return (((string_prefix)))_set_raw(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, new_str, new_str_len);
+}
+
+
 bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
 {
   va_list ap;

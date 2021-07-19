@@ -43,6 +43,12 @@ size_t sbp_msg_log_text_set(sbp_msg_log_t *msg, const char *new_str,
                                      should_trunc, new_str);
 }
 
+size_t sbp_msg_log_text_set_raw(sbp_msg_log_t *msg, const char *new_str,
+                                size_t new_str_len, bool should_trunc) {
+  return sbp_unterminated_string_set_raw(&msg->text, SBP_MSG_LOG_TEXT_MAX,
+                                         should_trunc, new_str, new_str_len);
+}
+
 bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -283,6 +289,13 @@ size_t sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
                                   bool should_trunc) {
   return sbp_unterminated_string_set(&msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX,
                                      should_trunc, new_str);
+}
+
+size_t sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
+                                      const char *new_str, size_t new_str_len,
+                                      bool should_trunc) {
+  return sbp_unterminated_string_set_raw(&msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX,
+                                         should_trunc, new_str, new_str_len);
 }
 
 bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, const char *fmt,
