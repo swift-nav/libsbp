@@ -660,6 +660,10 @@ definitions:
             type: double
             units: m
             desc: Height above WGS84 ellipsoid
+        - orthometric_height:
+            type: double
+            units: m
+            desc: Height above the geoid (i.e. height above mean sea level). See flags for geoid model used.
         - h_accuracy:
             type: float
             units: m
@@ -700,7 +704,10 @@ definitions:
             desc: Status flags
             fields:
               - 6-7:
-                  desc: Reserved
+                  desc: Geoid model
+                  values:
+                    - 0: EGM96
+                    - 1: EGM2008
               - 5-5:
                   desc: Type of reported TOW
                   values:
