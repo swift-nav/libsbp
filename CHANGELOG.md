@@ -1,5 +1,26 @@
 # Change Log
 
+## [v3.4.9](https://github.com/swift-nav/libsbp/tree/v3.4.9) (2021-07-14)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.8...v3.4.9)
+
+**Merged pull requests:**
+
+- change SBP table to use decimal instead of hex [\#1043](https://github.com/swift-nav/libsbp/pull/1043) ([silverjam](https://github.com/silverjam))
+- Define new message for unbounded accuracy [\#1038](https://github.com/swift-nav/libsbp/pull/1038) ([richarddeurloo](https://github.com/richarddeurloo))
+- build.gradle: Fix gradle 4 compatibility [\#1037](https://github.com/swift-nav/libsbp/pull/1037) ([jayvdb](https://github.com/jayvdb))
+- build.gradle: Add coverage reporting [\#1036](https://github.com/swift-nav/libsbp/pull/1036) ([jayvdb](https://github.com/jayvdb))
+- Reformat java using AOSP style [\#1035](https://github.com/swift-nav/libsbp/pull/1035) ([jayvdb](https://github.com/jayvdb))
+- Add SonarCloud Github Action [\#1034](https://github.com/swift-nav/libsbp/pull/1034) ([jayvdb](https://github.com/jayvdb))
+- Auto submodule update: cmake - memcheck\_xml2junit\_converter.py: Remove redundancy [\#1033](https://github.com/swift-nav/libsbp/pull/1033) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Java CI: Add GITHUB\_TOKEN to sonarqube task [\#1032](https://github.com/swift-nav/libsbp/pull/1032) ([jayvdb](https://github.com/jayvdb))
+- build.gradle: Add sonarcloud [\#1030](https://github.com/swift-nav/libsbp/pull/1030) ([jayvdb](https://github.com/jayvdb))
+- javascript: Replace var with let [\#1029](https://github.com/swift-nav/libsbp/pull/1029) ([jayvdb](https://github.com/jayvdb))
+- Javascript tests: Remove code duplication [\#1028](https://github.com/swift-nav/libsbp/pull/1028) ([jayvdb](https://github.com/jayvdb))
+- Javascript lint fixes [\#1027](https://github.com/swift-nav/libsbp/pull/1027) ([jayvdb](https://github.com/jayvdb))
+- Python lint fixes 2 [\#1026](https://github.com/swift-nav/libsbp/pull/1026) ([jayvdb](https://github.com/jayvdb))
+- Python lint fixes [\#1025](https://github.com/swift-nav/libsbp/pull/1025) ([jayvdb](https://github.com/jayvdb))
+
 ## [v3.4.8](https://github.com/swift-nav/libsbp/tree/v3.4.8) (2021-06-18)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.7...v3.4.8)
