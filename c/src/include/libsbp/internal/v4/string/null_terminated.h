@@ -194,9 +194,9 @@ size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param should_trunc Whether the new string should be truncated to fit in s
  * @param fmt print style format specification
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of characters written to s
  */
-bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
+size_t sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
                                         const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(4);
 
@@ -236,9 +236,9 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
  * @param should_trunc Whether the new string should be truncated to fit in s
  * @param fmt printf style format specification
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of characters written to s
  */
-bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
+size_t sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
                                                size_t maxlen, bool should_trunc,
                                                const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(4);

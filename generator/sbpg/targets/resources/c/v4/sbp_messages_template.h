@@ -146,7 +146,7 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @param new_str New string
    * @param should_trunc Whether the new_str can be truncated to fit in msg
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s on success or -1 otherwise
    */
   size_t (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, bool should_trunc);
 
@@ -164,7 +164,7 @@ typedef struct {
    * @param new_buf New buffer
    * @param new_buf_len New buffer length
    * @param should_trunc Whether the new_str can be truncated to fit in msg
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s
    */
   size_t (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_buf, size_t new_buf_len, bool should_trunc);
 
@@ -182,9 +182,9 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @param should_trunc Whether the input string should be truncated to fit
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s
    */
-  bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg,  bool should_trunc,  const char *fmt, ...) SBP_ATTR_FORMAT(3,4);
+  size_t (((f.fn_prefix)))_printf( (((-m.type_name))) *msg,  bool should_trunc,  const char *fmt, ...) SBP_ATTR_FORMAT(3,4);
 
   /**
    * Set (((comment_name))) with printf style formatting
@@ -195,9 +195,9 @@ typedef struct {
    * @param should_trunc Whether the input string should be truncated to fit
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s
    */
-  bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
+  size_t (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -211,9 +211,9 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @param should_trunc Whether the input string should be truncated to fit
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s
    */
-  bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, ...) SBP_ATTR_FORMAT(3,4);
+  size_t (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, ...) SBP_ATTR_FORMAT(3,4);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -224,10 +224,10 @@ typedef struct {
    * @param should_trunc Whether the input string should be truncated to fit
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return Number of bytes written from new_str to s
    *
    */
-  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
+  size_t (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 
   /**
    * Obtain the string value from (((comment_name)))

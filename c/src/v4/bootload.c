@@ -130,7 +130,7 @@ size_t sbp_msg_bootloader_handshake_resp_version_set_raw(
       should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_printf(
+size_t sbp_msg_bootloader_handshake_resp_version_printf(
     sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
     const char *fmt, ...) {
   va_list ap;
@@ -142,7 +142,7 @@ bool sbp_msg_bootloader_handshake_resp_version_printf(
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_vprintf(
+size_t sbp_msg_bootloader_handshake_resp_version_vprintf(
     sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
     const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
@@ -150,7 +150,7 @@ bool sbp_msg_bootloader_handshake_resp_version_vprintf(
       should_trunc, fmt, ap);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_append_printf(
+size_t sbp_msg_bootloader_handshake_resp_version_append_printf(
     sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
     const char *fmt, ...) {
   va_list ap;
@@ -162,7 +162,7 @@ bool sbp_msg_bootloader_handshake_resp_version_append_printf(
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
+size_t sbp_msg_bootloader_handshake_resp_version_append_vprintf(
     sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
     const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
@@ -537,7 +537,7 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
       should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, ...) {
   va_list ap;
@@ -549,7 +549,7 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
@@ -557,7 +557,7 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
       should_trunc, fmt, ap);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, ...) {
   va_list ap;
@@ -569,7 +569,7 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(

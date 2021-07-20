@@ -1547,9 +1547,9 @@ size_t sbp_msg_command_req_command_set_raw(sbp_msg_command_req_t *msg,
                                             should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
-                                        bool should_trunc, const char *fmt,
-                                        ...) {
+size_t sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
+                                          bool should_trunc, const char *fmt,
+                                          ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
@@ -1558,16 +1558,16 @@ bool sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
   return ret;
 }
 
-bool sbp_msg_command_req_command_vprintf(sbp_msg_command_req_t *msg,
-                                         bool should_trunc, const char *fmt,
-                                         va_list ap) {
+size_t sbp_msg_command_req_command_vprintf(sbp_msg_command_req_t *msg,
+                                           bool should_trunc, const char *fmt,
+                                           va_list ap) {
   return sbp_null_terminated_string_vprintf(
       &msg->command, SBP_MSG_COMMAND_REQ_COMMAND_MAX, should_trunc, fmt, ap);
 }
 
-bool sbp_msg_command_req_command_append_printf(sbp_msg_command_req_t *msg,
-                                               bool should_trunc,
-                                               const char *fmt, ...) {
+size_t sbp_msg_command_req_command_append_printf(sbp_msg_command_req_t *msg,
+                                                 bool should_trunc,
+                                                 const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
@@ -1576,9 +1576,9 @@ bool sbp_msg_command_req_command_append_printf(sbp_msg_command_req_t *msg,
   return ret;
 }
 
-bool sbp_msg_command_req_command_append_vprintf(sbp_msg_command_req_t *msg,
-                                                bool should_trunc,
-                                                const char *fmt, va_list ap) {
+size_t sbp_msg_command_req_command_append_vprintf(sbp_msg_command_req_t *msg,
+                                                  bool should_trunc,
+                                                  const char *fmt, va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
       &msg->command, SBP_MSG_COMMAND_REQ_COMMAND_MAX, should_trunc, fmt, ap);
 }
@@ -1800,9 +1800,9 @@ size_t sbp_msg_command_output_line_set_raw(sbp_msg_command_output_t *msg,
                                          should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
-                                        bool should_trunc, const char *fmt,
-                                        ...) {
+size_t sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
+                                          bool should_trunc, const char *fmt,
+                                          ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -1811,16 +1811,16 @@ bool sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
   return ret;
 }
 
-bool sbp_msg_command_output_line_vprintf(sbp_msg_command_output_t *msg,
-                                         bool should_trunc, const char *fmt,
-                                         va_list ap) {
+size_t sbp_msg_command_output_line_vprintf(sbp_msg_command_output_t *msg,
+                                           bool should_trunc, const char *fmt,
+                                           va_list ap) {
   return sbp_unterminated_string_vprintf(
       &msg->line, SBP_MSG_COMMAND_OUTPUT_LINE_MAX, should_trunc, fmt, ap);
 }
 
-bool sbp_msg_command_output_line_append_printf(sbp_msg_command_output_t *msg,
-                                               bool should_trunc,
-                                               const char *fmt, ...) {
+size_t sbp_msg_command_output_line_append_printf(sbp_msg_command_output_t *msg,
+                                                 bool should_trunc,
+                                                 const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -1829,9 +1829,9 @@ bool sbp_msg_command_output_line_append_printf(sbp_msg_command_output_t *msg,
   return ret;
 }
 
-bool sbp_msg_command_output_line_append_vprintf(sbp_msg_command_output_t *msg,
-                                                bool should_trunc,
-                                                const char *fmt, va_list ap) {
+size_t sbp_msg_command_output_line_append_vprintf(sbp_msg_command_output_t *msg,
+                                                  bool should_trunc,
+                                                  const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->line, SBP_MSG_COMMAND_OUTPUT_LINE_MAX, should_trunc, fmt, ap);
 }

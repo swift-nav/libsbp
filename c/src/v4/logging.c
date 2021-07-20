@@ -49,8 +49,8 @@ size_t sbp_msg_log_text_set_raw(sbp_msg_log_t *msg, const char *new_str,
                                          should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, bool should_trunc,
-                             const char *fmt, ...) {
+size_t sbp_msg_log_text_printf(sbp_msg_log_t *msg, bool should_trunc,
+                               const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(&msg->text, SBP_MSG_LOG_TEXT_MAX,
@@ -59,14 +59,14 @@ bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, bool should_trunc,
   return ret;
 }
 
-bool sbp_msg_log_text_vprintf(sbp_msg_log_t *msg, bool should_trunc,
-                              const char *fmt, va_list ap) {
+size_t sbp_msg_log_text_vprintf(sbp_msg_log_t *msg, bool should_trunc,
+                                const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(&msg->text, SBP_MSG_LOG_TEXT_MAX,
                                          should_trunc, fmt, ap);
 }
 
-bool sbp_msg_log_text_append_printf(sbp_msg_log_t *msg, bool should_trunc,
-                                    const char *fmt, ...) {
+size_t sbp_msg_log_text_append_printf(sbp_msg_log_t *msg, bool should_trunc,
+                                      const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -75,8 +75,8 @@ bool sbp_msg_log_text_append_printf(sbp_msg_log_t *msg, bool should_trunc,
   return ret;
 }
 
-bool sbp_msg_log_text_append_vprintf(sbp_msg_log_t *msg, bool should_trunc,
-                                     const char *fmt, va_list ap) {
+size_t sbp_msg_log_text_append_vprintf(sbp_msg_log_t *msg, bool should_trunc,
+                                       const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->text, SBP_MSG_LOG_TEXT_MAX, should_trunc, fmt, ap);
 }
@@ -301,8 +301,8 @@ size_t sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
                                          should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, bool should_trunc,
-                                   const char *fmt, ...) {
+size_t sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg,
+                                     bool should_trunc, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -311,15 +311,16 @@ bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, bool should_trunc,
   return ret;
 }
 
-bool sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg, bool should_trunc,
-                                    const char *fmt, va_list ap) {
+size_t sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg,
+                                      bool should_trunc, const char *fmt,
+                                      va_list ap) {
   return sbp_unterminated_string_vprintf(&msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX,
                                          should_trunc, fmt, ap);
 }
 
-bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
-                                          bool should_trunc, const char *fmt,
-                                          ...) {
+size_t sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
+                                            bool should_trunc, const char *fmt,
+                                            ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -328,9 +329,9 @@ bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
   return ret;
 }
 
-bool sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
-                                           bool should_trunc, const char *fmt,
-                                           va_list ap) {
+size_t sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
+                                             bool should_trunc, const char *fmt,
+                                             va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX, should_trunc, fmt, ap);
 }

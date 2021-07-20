@@ -203,9 +203,9 @@ size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of characters written to s
  */
-bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
+size_t sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
                                      const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(4);
 
@@ -244,9 +244,9 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
  * @param maxlen Maximum encoded length
  * @param fmt printf style format specification
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of characters written to s
  */
-bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
+size_t sbp_unterminated_string_append_vprintf(sbp_string_t *s,
                                             size_t maxlen, bool should_trunc,
                                             const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(4);

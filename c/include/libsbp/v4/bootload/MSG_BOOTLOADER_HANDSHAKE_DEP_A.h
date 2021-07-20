@@ -117,7 +117,7 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @param new_str New string
  * @param should_trunc Whether the new_str can be truncated to fit in msg
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s on success or -1 otherwise
  */
 size_t sbp_msg_bootloader_handshake_dep_a_handshake_set(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str,
@@ -137,7 +137,7 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_set(
  * @param new_buf New buffer
  * @param new_buf_len New buffer length
  * @param should_trunc Whether the new_str can be truncated to fit in msg
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s
  */
 size_t sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_buf,
@@ -158,9 +158,9 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s
  */
-bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, ...) SBP_ATTR_FORMAT(3, 4);
 
@@ -175,9 +175,9 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
  * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s
  */
-bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 
@@ -194,9 +194,9 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s
  */
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, ...) SBP_ATTR_FORMAT(3, 4);
 
@@ -211,10 +211,10 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
  * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return Number of bytes written from new_str to s
  *
  */
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
+size_t sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
     sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
     const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 

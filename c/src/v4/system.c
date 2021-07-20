@@ -148,9 +148,9 @@ size_t sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
                                          should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
-                                        bool should_trunc, const char *fmt,
-                                        ...) {
+size_t sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
+                                          bool should_trunc, const char *fmt,
+                                          ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -159,16 +159,16 @@ bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
   return ret;
 }
 
-bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
-                                         bool should_trunc, const char *fmt,
-                                         va_list ap) {
+size_t sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
+                                           bool should_trunc, const char *fmt,
+                                           va_list ap) {
   return sbp_unterminated_string_vprintf(
       &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
 }
 
-bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
-                                               bool should_trunc,
-                                               const char *fmt, ...) {
+size_t sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
+                                                 bool should_trunc,
+                                                 const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
@@ -177,9 +177,9 @@ bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
   return ret;
 }
 
-bool sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
-                                                bool should_trunc,
-                                                const char *fmt, va_list ap) {
+size_t sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
+                                                  bool should_trunc,
+                                                  const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
 }
@@ -689,9 +689,9 @@ size_t sbp_msg_csac_telemetry_telemetry_set_raw(sbp_msg_csac_telemetry_t *msg,
                                          should_trunc, new_str, new_str_len);
 }
 
-bool sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
-                                             bool should_trunc, const char *fmt,
-                                             ...) {
+size_t sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
+                                               bool should_trunc,
+                                               const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
@@ -701,15 +701,15 @@ bool sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
   return ret;
 }
 
-bool sbp_msg_csac_telemetry_telemetry_vprintf(sbp_msg_csac_telemetry_t *msg,
-                                              bool should_trunc,
-                                              const char *fmt, va_list ap) {
+size_t sbp_msg_csac_telemetry_telemetry_vprintf(sbp_msg_csac_telemetry_t *msg,
+                                                bool should_trunc,
+                                                const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(&msg->telemetry,
                                          SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX,
                                          should_trunc, fmt, ap);
 }
 
-bool sbp_msg_csac_telemetry_telemetry_append_printf(
+size_t sbp_msg_csac_telemetry_telemetry_append_printf(
     sbp_msg_csac_telemetry_t *msg, bool should_trunc, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
@@ -720,7 +720,7 @@ bool sbp_msg_csac_telemetry_telemetry_append_printf(
   return ret;
 }
 
-bool sbp_msg_csac_telemetry_telemetry_append_vprintf(
+size_t sbp_msg_csac_telemetry_telemetry_append_vprintf(
     sbp_msg_csac_telemetry_t *msg, bool should_trunc, const char *fmt,
     va_list ap) {
   return sbp_unterminated_string_append_vprintf(
@@ -876,7 +876,7 @@ size_t sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
       new_str_len);
 }
 
-bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
     sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
     ...) {
   va_list ap;
@@ -889,7 +889,7 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
   return ret;
 }
 
-bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
     sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
     va_list ap) {
   return sbp_unterminated_string_vprintf(
@@ -898,7 +898,7 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
       ap);
 }
 
-bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
     sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
     ...) {
   va_list ap;
@@ -911,7 +911,7 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
   return ret;
 }
 
-bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
+size_t sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
     sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
     va_list ap) {
   return sbp_unterminated_string_append_vprintf(
