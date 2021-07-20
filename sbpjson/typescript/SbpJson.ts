@@ -1562,19 +1562,19 @@ export interface MsgPosLLH {
  * user-configured percentile is encoded in the percentile field.
  */
 export interface MsgPosLLHAcc {
-    at_accuracy:        number;
-    confidence:         number;
-    ct_accuracy:        number;
-    flags:              number;
-    h_accuracy:         number;
-    h_ellipse:          EstimatedHorizontalErrorEllipse;
-    height:             number;
-    lat:                number;
-    lon:                number;
-    n_sats:             number;
-    orthometric_height: number;
-    tow:                number;
-    v_accuracy:         number;
+    at_accuracy:          number;
+    confidence_and_geoid: number;
+    ct_accuracy:          number;
+    flags:                number;
+    h_accuracy:           number;
+    h_ellipse:            EstimatedHorizontalErrorEllipse;
+    height:               number;
+    lat:                  number;
+    lon:                  number;
+    n_sats:               number;
+    orthometric_height:   number;
+    tow:                  number;
+    v_accuracy:           number;
 }
 
 export interface EstimatedHorizontalErrorEllipse {
@@ -4895,7 +4895,7 @@ const typeMap: any = {
     ], "any"),
     "MsgPosLLHAcc": o([
         { json: "at_accuracy", js: "at_accuracy", typ: 3.14 },
-        { json: "confidence", js: "confidence", typ: 0 },
+        { json: "confidence_and_geoid", js: "confidence_and_geoid", typ: 0 },
         { json: "ct_accuracy", js: "ct_accuracy", typ: 3.14 },
         { json: "flags", js: "flags", typ: 0 },
         { json: "h_accuracy", js: "h_accuracy", typ: 3.14 },

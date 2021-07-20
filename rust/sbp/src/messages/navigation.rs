@@ -2259,8 +2259,8 @@ pub struct MsgPosLLHAcc {
     pub lon: f64,
     /// Height above WGS84 ellipsoid
     pub height: f64,
-    /// Height above the geoid (i.e. height above mean sea level). See flags for
-    /// geoid model used.
+    /// Height above the geoid (i.e. height above mean sea level). See
+    /// confidence_and_geoid for geoid model used.
     pub orthometric_height: f64,
     /// Estimated horizontal error at the user-configured confidence level; zero
     /// implies invalid.
@@ -2278,7 +2278,7 @@ pub struct MsgPosLLHAcc {
     /// level.
     pub h_ellipse: EstimatedHorizontalErrorEllipse,
     /// Configured confidence level for the estimated position error
-    pub confidence: u8,
+    pub confidence_and_geoid: u8,
     /// Number of satellites used in solution.
     pub n_sats: u8,
     /// Status flags
@@ -2300,7 +2300,7 @@ impl MsgPosLLHAcc {
             ct_accuracy: _buf.read_f32::<LittleEndian>()?,
             at_accuracy: _buf.read_f32::<LittleEndian>()?,
             h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
-            confidence: _buf.read_u8()?,
+            confidence_and_geoid: _buf.read_u8()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         } )
@@ -2373,7 +2373,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         self.ct_accuracy.append_to_sbp_buffer(buf);
         self.at_accuracy.append_to_sbp_buffer(buf);
         self.h_ellipse.append_to_sbp_buffer(buf);
-        self.confidence.append_to_sbp_buffer(buf);
+        self.confidence_and_geoid.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
     }
@@ -2390,7 +2390,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         size += self.ct_accuracy.sbp_size();
         size += self.at_accuracy.sbp_size();
         size += self.h_ellipse.sbp_size();
-        size += self.confidence.sbp_size();
+        size += self.confidence_and_geoid.sbp_size();
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size

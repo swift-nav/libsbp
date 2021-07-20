@@ -614,37 +614,37 @@ msgPosLlhAcc = 0x0218
 -- The estimated errors are reported at a user-configurable confidence level.
 -- The user-configured percentile is encoded in the percentile field.
 data MsgPosLlhAcc = MsgPosLlhAcc
-  { _msgPosLlhAcc_tow              :: !Word32
+  { _msgPosLlhAcc_tow                :: !Word32
     -- ^ GPS Time of Week
-  , _msgPosLlhAcc_lat              :: !Double
+  , _msgPosLlhAcc_lat                :: !Double
     -- ^ Latitude
-  , _msgPosLlhAcc_lon              :: !Double
+  , _msgPosLlhAcc_lon                :: !Double
     -- ^ Longitude
-  , _msgPosLlhAcc_height           :: !Double
+  , _msgPosLlhAcc_height             :: !Double
     -- ^ Height above WGS84 ellipsoid
   , _msgPosLlhAcc_orthometric_height :: !Double
-    -- ^ Height above the geoid (i.e. height above mean sea level). See flags
-    -- for geoid model used.
-  , _msgPosLlhAcc_h_accuracy       :: !Float
+    -- ^ Height above the geoid (i.e. height above mean sea level). See
+    -- confidence_and_geoid for geoid model used.
+  , _msgPosLlhAcc_h_accuracy         :: !Float
     -- ^ Estimated horizontal error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_v_accuracy       :: !Float
+  , _msgPosLlhAcc_v_accuracy         :: !Float
     -- ^ Estimated vertical error at the user-configured confidence level; zero
     -- implies invalid.
-  , _msgPosLlhAcc_ct_accuracy      :: !Float
+  , _msgPosLlhAcc_ct_accuracy        :: !Float
     -- ^ Estimated cross-track error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_at_accuracy      :: !Float
+  , _msgPosLlhAcc_at_accuracy        :: !Float
     -- ^ Estimated along-track error at the user-configured confidence level;
     -- zero implies invalid.
-  , _msgPosLlhAcc_h_ellipse        :: !EstimatedHorizontalErrorEllipse
+  , _msgPosLlhAcc_h_ellipse          :: !EstimatedHorizontalErrorEllipse
     -- ^ The estimated horizontal error ellipse at the user-configured
     -- confidence level.
-  , _msgPosLlhAcc_confidence       :: !Word8
+  , _msgPosLlhAcc_confidence_and_geoid :: !Word8
     -- ^ Configured confidence level for the estimated position error
-  , _msgPosLlhAcc_n_sats           :: !Word8
+  , _msgPosLlhAcc_n_sats             :: !Word8
     -- ^ Number of satellites used in solution.
-  , _msgPosLlhAcc_flags            :: !Word8
+  , _msgPosLlhAcc_flags              :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -660,7 +660,7 @@ instance Binary MsgPosLlhAcc where
     _msgPosLlhAcc_ct_accuracy <- getFloat32le
     _msgPosLlhAcc_at_accuracy <- getFloat32le
     _msgPosLlhAcc_h_ellipse <- get
-    _msgPosLlhAcc_confidence <- getWord8
+    _msgPosLlhAcc_confidence_and_geoid <- getWord8
     _msgPosLlhAcc_n_sats <- getWord8
     _msgPosLlhAcc_flags <- getWord8
     pure MsgPosLlhAcc {..}
@@ -676,7 +676,7 @@ instance Binary MsgPosLlhAcc where
     putFloat32le _msgPosLlhAcc_ct_accuracy
     putFloat32le _msgPosLlhAcc_at_accuracy
     put _msgPosLlhAcc_h_ellipse
-    putWord8 _msgPosLlhAcc_confidence
+    putWord8 _msgPosLlhAcc_confidence_and_geoid
     putWord8 _msgPosLlhAcc_n_sats
     putWord8 _msgPosLlhAcc_flags
 

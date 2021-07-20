@@ -2045,7 +2045,7 @@ user-configured percentile is encoded in the percentile field.
 -}
 type alias MsgPosLLHAcc =
     { atAccuracy : Float
-    , confidence : Int
+    , confidenceAndGeoid : Int
     , ctAccuracy : Float
     , flags : Int
     , hAccuracy : Float
@@ -5489,7 +5489,7 @@ msgPosLLHAcc : Jdec.Decoder MsgPosLLHAcc
 msgPosLLHAcc =
     Jpipe.decode MsgPosLLHAcc
         |> Jpipe.required "at_accuracy" Jdec.float
-        |> Jpipe.required "confidence" Jdec.int
+        |> Jpipe.required "confidence_and_geoid" Jdec.int
         |> Jpipe.required "ct_accuracy" Jdec.float
         |> Jpipe.required "flags" Jdec.int
         |> Jpipe.required "h_accuracy" Jdec.float
@@ -5506,7 +5506,7 @@ encodeMsgPosLLHAcc : MsgPosLLHAcc -> Jenc.Value
 encodeMsgPosLLHAcc x =
     Jenc.object
         [ ("at_accuracy", Jenc.float x.atAccuracy)
-        , ("confidence", Jenc.int x.confidence)
+        , ("confidence_and_geoid", Jenc.int x.confidenceAndGeoid)
         , ("ct_accuracy", Jenc.float x.ctAccuracy)
         , ("flags", Jenc.int x.flags)
         , ("h_accuracy", Jenc.float x.hAccuracy)

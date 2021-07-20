@@ -26,7 +26,7 @@
     "ct_accuracy": {"type": "number"},
     "at_accuracy": {"type": "number"},
     "h_ellipse": {"$ref": "EstimatedHorizontalErrorEllipse.json"},
-    "confidence": {"type": "integer"},
+    "confidence_and_geoid": {"type": "integer"},
     "n_sats": {"type": "integer"},
     "flags": {"type": "integer"}
   },
@@ -41,7 +41,7 @@
     "ct_accuracy",
     "at_accuracy",
     "h_ellipse",
-    "confidence",
+    "confidence_and_geoid",
     "n_sats",
     "flags"
   ]

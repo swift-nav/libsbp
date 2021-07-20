@@ -264,7 +264,7 @@ message MsgPosLlhAcc {
     float ct_accuracy = 8;
     float at_accuracy = 9;
     EstimatedHorizontalErrorEllipse h_ellipse = 10;
-    uint32 confidence = 11;
+    uint32 confidence_and_geoid = 11;
     uint32 n_sats = 12;
     uint32 flags = 13;
 }
