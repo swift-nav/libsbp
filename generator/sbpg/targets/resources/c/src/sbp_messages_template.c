@@ -59,32 +59,32 @@ size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg)
 }
 
 
-bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
+bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, bool should_trunc, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  bool ret = (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, fmt, ap);
   va_end(ap);
   return ret;
 }
 
- bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
+ bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg, bool should_trunc, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  return (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, fmt, ap);
 }
 
-bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
+bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, bool should_trunc, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
+  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  bool should_trunc, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, fmt, ap);
 }
 
 const char *(((f.fn_prefix)))_get(const (((m.type_name))) *msg)

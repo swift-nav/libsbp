@@ -117,7 +117,7 @@ bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
   maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len, &copied,
-                                 maxlen - s->encoded_len, fmt, ap)) {
+                                 maxlen - s->encoded_len, false, fmt, ap)) {
     return false;
   }
   s->encoded_len += copied;
@@ -149,7 +149,7 @@ bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
   }
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 1, &copied,
-                                 maxlen - s->encoded_len + 1, fmt,
+                                 maxlen - s->encoded_len + 1, false, fmt,
                                  ap)) {
     return false;
   }

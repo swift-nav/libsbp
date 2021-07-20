@@ -134,7 +134,7 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
 
   size_t copied;
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
-    if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen - 1, fmt,
+    if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen - 1, false, fmt,
                                    ap)) {
       return false;
     }
@@ -143,7 +143,7 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
   }
 
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 1, &copied,
-                                 maxlen - s->encoded_len + 1, fmt,
+                                 maxlen - s->encoded_len + 1, false, fmt,
                                  ap)) {
     return false;
   }
@@ -181,7 +181,7 @@ bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
 
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 2, &copied,
-                                 maxlen - s->encoded_len + 1, fmt,
+                                 maxlen - s->encoded_len + 1, false, fmt,
                                  ap)) {
     return false;
   }

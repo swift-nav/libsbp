@@ -149,35 +149,39 @@ size_t sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
 }
 
 bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
-                                        const char *fmt, ...) {
+                                        bool should_trunc, const char *fmt,
+                                        ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
-      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, fmt, ap);
+      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
-                                         const char *fmt, va_list ap) {
+                                         bool should_trunc, const char *fmt,
+                                         va_list ap) {
   return sbp_unterminated_string_vprintf(
-      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, fmt, ap);
+      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
 }
 
 bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
+                                               bool should_trunc,
                                                const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
-      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, fmt, ap);
+      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
+                                                bool should_trunc,
                                                 const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
-      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, fmt, ap);
+      &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, fmt, ap);
 }
 
 const char *sbp_msg_dgnss_status_source_get(const sbp_msg_dgnss_status_t *msg) {
@@ -686,35 +690,42 @@ size_t sbp_msg_csac_telemetry_telemetry_set_raw(sbp_msg_csac_telemetry_t *msg,
 }
 
 bool sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
-                                             const char *fmt, ...) {
+                                             bool should_trunc, const char *fmt,
+                                             ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
-      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, fmt, ap);
+      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, should_trunc, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_csac_telemetry_telemetry_vprintf(sbp_msg_csac_telemetry_t *msg,
+                                              bool should_trunc,
                                               const char *fmt, va_list ap) {
-  return sbp_unterminated_string_vprintf(
-      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, fmt, ap);
+  return sbp_unterminated_string_vprintf(&msg->telemetry,
+                                         SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX,
+                                         should_trunc, fmt, ap);
 }
 
 bool sbp_msg_csac_telemetry_telemetry_append_printf(
-    sbp_msg_csac_telemetry_t *msg, const char *fmt, ...) {
+    sbp_msg_csac_telemetry_t *msg, bool should_trunc, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
-      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, fmt, ap);
+      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, should_trunc, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_csac_telemetry_telemetry_append_vprintf(
-    sbp_msg_csac_telemetry_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_csac_telemetry_t *msg, bool should_trunc, const char *fmt,
+    va_list ap) {
   return sbp_unterminated_string_append_vprintf(
-      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, fmt, ap);
+      &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, should_trunc, fmt,
+      ap);
 }
 
 const char *sbp_msg_csac_telemetry_telemetry_get(
@@ -866,39 +877,47 @@ size_t sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, ...) {
+    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
+    ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_vprintf(
       &msg->telemetry_labels,
-      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, fmt, ap);
+      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, should_trunc, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
+    va_list ap) {
   return sbp_unterminated_string_vprintf(
       &msg->telemetry_labels,
-      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, fmt, ap);
+      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, should_trunc, fmt,
+      ap);
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, ...) {
+    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
+    ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_unterminated_string_append_vprintf(
       &msg->telemetry_labels,
-      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, fmt, ap);
+      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, should_trunc, fmt,
+      ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, const char *fmt,
+    va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->telemetry_labels,
-      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, fmt, ap);
+      SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, should_trunc, fmt,
+      ap);
 }
 
 const char *sbp_msg_csac_telemetry_labels_telemetry_labels_get(

@@ -194,8 +194,10 @@ size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
 /**
  * Set an unterminated string with printf style formatting
  *
- * If the resulting string would be greater than the maximum encoded length the
- * string will not be modified and false will be returned
+ * If the new string would be greater than the maximum encoded length, and
+ * should trunc is set to false, the original contents will not be modified and
+ * false will be returned. Otherwise, if should trunc is set true, the new
+ * string will be truncated so that it can fit in s.
  *
  * @param s string
  * @param maxlen Maximum encoded length
@@ -203,9 +205,9 @@ size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen,
+bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
                                      const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(3);
+    SBP_ATTR_VFORMAT(4);
 
 /**
  * Append an unterminated string
@@ -233,8 +235,10 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
  * length the function will clear off any previous data before attempting to
  * add in a new section.
  *
- * If the resulting string would be greater than the maximum encoded length the
- * string will not be modified and false will be returned
+ * If the new string would be greater than the maximum encoded length, and
+ * should trunc is set to false, the original contents will not be modified and
+ * false will be returned. Otherwise, if should trunc is set true, the new
+ * string will be truncated so that it can fit in s.
  *
  * @param s string
  * @param maxlen Maximum encoded length
@@ -243,9 +247,9 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
  * @return true on success, false otherwise
  */
 bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
-                                            size_t maxlen,
+                                            size_t maxlen, bool should_trunc,
                                             const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(3);
+    SBP_ATTR_VFORMAT(4);
 
 /**
  * Get contents of an unterminated

@@ -51,14 +51,16 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
   return copy_str(buf, copied, max, str, n);
 }
 
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
+bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_truncate,
                                const char *fmt, va_list ap) {
   char tmp[256];
   int n = vsnprintf(tmp, sizeof(tmp), fmt, ap);
   if (n < 0) {
     return false;
   }
-  return copy_str(buf, copied, max, tmp, (size_t)n);
+  size_t trunc_len = (max - 1) < (size_t)n ? (max - 1) : (size_t)n;
+  size_t len = should_truncate ? trunc_len : (size_t)n;
+  return copy_str(buf, copied, max, tmp, len);
 }
 
 bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,

@@ -149,18 +149,20 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
  *
  * Erase any existing content and replace with the formatted string
  *
- * This function will return true if the new string was successfully applied. If
- * the operation would end up overflowing the maximum size of this field in wire
- * encoding the existing contents will be erased and this function will return
- * false.
+ * This function will return true if the new string was successfully applied.
+ * If should_trunc is set true, and the operation would end up overflowing the
+ * maximum size of this field in wire encoding the existing contents will be
+ * erased and this function will return false. Otherwise, if should_trunc is
+ * set true, the input formatted string will be truncated to fit.
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    const char *fmt, ...) SBP_ATTR_FORMAT(3, 4);
 
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -170,30 +172,33 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
  * takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(2);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
  * formatting
  *
  * The new string will be appended to the existing contents of the string (if
- * any). If the operation would end up overflowing the maximum size of this
- * field in wire encoding the existing contents will be unmodified and this
- * function will return false.
+ * any). If should trunc is false and the operation would end up overflowing
+ * the maximum size of this field in wire encoding, the existing contents will
+ * be unmodified and this function will return false. Otherwise, if
+ * should_trunc is true, the input string will be truncated to fit.
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    const char *fmt, ...) SBP_ATTR_FORMAT(3, 4);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -203,14 +208,15 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
  * except it takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
  * @param fmt printf style format string
  * @param ap Argument list
  * @return true on success, false otherwise
  *
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(2);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(3);
 
 /**
  * Obtain the string value from sbp_msg_bootloader_handshake_dep_a_t::handshake

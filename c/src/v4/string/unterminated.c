@@ -81,10 +81,10 @@ size_t sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
   return sbp_unterminated_string_set_raw(s, maxlen, should_truncate, new_str, sbp_strnlen(new_str, maxlen+1));
 }
 
-bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen,
+bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
                                      const char *fmt, va_list ap) {
   size_t copied;
-  if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen + 1u, fmt,
+  if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen + 1u, should_trunc, fmt,
                                  ap)) {
     return false;
   }
@@ -105,12 +105,12 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
 }
 
 bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
-                                            size_t maxlen,
+                                            size_t maxlen, bool should_trunc,
                                             const char *fmt, va_list ap) {
   maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len, &copied,
-                                 maxlen - s->encoded_len + 1, fmt,
+                                 maxlen - s->encoded_len + 1, should_trunc, fmt,
                                  ap)) {
     return false;
   }

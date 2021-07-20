@@ -321,7 +321,7 @@ TEST(TestUnterminatedString, Printf)
   auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_unterminated_string_vprintf(&s, maxlen, fmt, ap);
+    bool ret = sbp_unterminated_string_vprintf(&s, maxlen, false, fmt, ap);
     va_end(ap);
     return ret;
   };
@@ -349,6 +349,65 @@ TEST(TestUnterminatedString, Printf)
   EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 13);
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 7);
   EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Printing in to an invalid buffer clears everything
+  EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "Hello, World!");
+}
+
+TEST(TestUnterminatedString, PrintfTruncating)
+{
+  // Some test cases for the printf function
+
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_unterminated_string_init(&s);
+
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    bool ret = sbp_unterminated_string_vprintf(&s, maxlen, true, fmt, ap);
+    va_end(ap);
+    return ret;
+  };
+
+  // A valid string
+  EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "Hello, World!");
+
+  // Overwrite with another valid string
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d", 1, 2, 3, 4));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Overwrite with something which fits exactly
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d %d %d %d %d %d %d.", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 20);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 10");
+
+  // Overwrite with something which should truncate
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d %d %d %d %d %d %d.", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10000));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 20);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 10");
 
   // Printing in to an invalid buffer clears everything
   EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
@@ -414,7 +473,7 @@ TEST(TestUnterminatedString, AppendPrintf)
   auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_unterminated_string_append_vprintf(&s, maxlen, fmt, ap);
+    bool ret = sbp_unterminated_string_append_vprintf(&s, maxlen, false, fmt, ap);
     va_end(ap);
     return ret;
   };
@@ -469,6 +528,58 @@ TEST(TestUnterminatedString, AppendPrintf)
   EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 7);
   EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4");
 }
+
+TEST(TestUnterminatedString, AppendPrintfTruncating)
+{
+  // Some cases for appending a formatted string to a buffer
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_unterminated_string_init(&s);
+
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    bool ret = sbp_unterminated_string_append_vprintf(&s, maxlen, true, fmt, ap);
+    va_end(ap);
+    return ret;
+  };
+
+  // Appending in to an empty buffer is a valid operation, essentially the same as calling set
+  EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 17);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2");
+
+  // Similarly, appending to an uninitialised buffer will initialise it
+  memset(&s, 0, sizeof(s));
+  EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 3);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 17);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2");
+
+  // Appending a valid string
+  EXPECT_TRUE(vprintf_wrapper(" %d %d", 3, 4));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 7);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 13);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Up to the maximum
+  EXPECT_TRUE(vprintf_wrapper(" %d %d %d %d %d %d", 5, 6, 7, 8, 9, 1000));
+  EXPECT_TRUE(sbp_unterminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_unterminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_unterminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_unterminated_string_strlen(&s, maxlen), 20);
+  EXPECT_STREQ(sbp_unterminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 10");
+}
+
 
 TEST(TestUnterminatedString, Pack)
 {

@@ -96,18 +96,22 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
 /**
  * Printf to a buffer
  *
- * If the destination buffer can't store the entire formatted string no data
- * will be written and false will be returned.
+ * If the destination buffer can't store the entire formatted string, and
+ * should_trunc is false, no data will be written and false will be returned.
+ * Otherwise, if should_trunc is true, the formatted message will be truncated
+ * to fit in the destination buffer.
  *
  * @param buf Destination buffer
  * @param copied On return will be set to the number of bytes written
  * @param max Maximum number of bytes to write
+ * @param should_trunc Whether the formatted string should be formatted to fit
+ * in the destination buffer
  * @param fmt Printf style format string
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
-                               const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
+bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_trunc,
+                               const char *fmt, va_list ap) SBP_ATTR_VFORMAT(5);
 
 /**
  * Write a string to a buffer

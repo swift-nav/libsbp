@@ -331,7 +331,7 @@ TEST(TestNullTerminatedString, Printf)
   auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_null_terminated_string_vprintf(&s, maxlen, fmt, ap);
+    bool ret = sbp_null_terminated_string_vprintf(&s, maxlen, false, fmt, ap);
     va_end(ap);
     return ret;
   };
@@ -359,6 +359,65 @@ TEST(TestNullTerminatedString, Printf)
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
   EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Printing in to an invalid buffer clears everything
+  EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
+}
+
+TEST(TestNullTerminatedString, PrintfTruncating)
+{
+  // Some test cases for the printf function
+
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_null_terminated_string_init(&s);
+
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    bool ret = sbp_null_terminated_string_vprintf(&s, maxlen, true, fmt, ap);
+    va_end(ap);
+    return ret;
+  };
+
+  // A valid string
+  EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 14);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 6);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 13);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "Hello, World!");
+
+  // Overwrite with another valid string
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d", 1, 2, 3, 4));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Overwrite with something which would be too long, expect truncation
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d %d %d %d %d %d %d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 1");
+
+  // Overwrite with something which would be too long, expect truncation
+  EXPECT_TRUE(vprintf_wrapper("%d %d %d %d %d %d %d %d %d %d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 100000));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 1");
 
   // Printing in to an invalid buffer clears everything
   EXPECT_TRUE(vprintf_wrapper("%s", "Hello, World!"));
@@ -424,7 +483,7 @@ TEST(TestNullTerminatedString, AppendPrintf)
   auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    bool ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, fmt, ap);
+    bool ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, false, fmt, ap);
     va_end(ap);
     return ret;
   };
@@ -478,6 +537,57 @@ TEST(TestNullTerminatedString, AppendPrintf)
   EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
   EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
   EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
+}
+
+TEST(TestNullTerminatedString, AppendPrintfTruncating)
+{
+  // Some cases for appending a formatted string to a buffer
+  sbp_string_t s;
+
+  size_t maxlen = 20;
+
+  sbp_null_terminated_string_init(&s);
+
+  auto vprintf_wrapper = [&s, maxlen](const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    bool ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, true, fmt, ap);
+    va_end(ap);
+    return ret;
+  };
+
+  // Appending in to an empty buffer is a valid operation, essentially the same as calling set
+  EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2");
+
+  // Similarly, appending to an uninitialised buffer will initialise it
+  memset(&s, 0, sizeof(s));
+  EXPECT_TRUE(vprintf_wrapper("%d %d", 1, 2));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 4);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 16);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 3);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2");
+
+  // Appending a valid string
+  EXPECT_TRUE(vprintf_wrapper(" %d %d", 3, 4));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 8);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 12);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 7);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4");
+
+  // Up to the maximum, should truncate
+  EXPECT_TRUE(vprintf_wrapper(" %d %d %d %d %d %d", 5, 6, 7, 8, 9, 10));
+  EXPECT_TRUE(sbp_null_terminated_string_valid(&s, maxlen));
+  EXPECT_EQ(sbp_null_terminated_string_encoded_len(&s, maxlen), 20);
+  EXPECT_EQ(sbp_null_terminated_string_space_remaining(&s, maxlen), 0);
+  EXPECT_EQ(sbp_null_terminated_string_strlen(&s, maxlen), 19);
+  EXPECT_STREQ(sbp_null_terminated_string_get(&s, maxlen), "1 2 3 4 5 6 7 8 9 1");
 }
 
 TEST(TestNullTerminatedString, Pack)
