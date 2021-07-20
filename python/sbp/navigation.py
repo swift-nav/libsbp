@@ -1311,7 +1311,9 @@ class MsgPosLLHAcc(SBP):
     The estimated horizontal error ellipse at the user-configured confidence
     level.
   confidence_and_geoid : int
-    Configured confidence level for the estimated position error
+    The lower bits describe the configured confidence level for the estimated
+    position error. The middle bits describe the geoid model used to calculate
+    the orthometric height.
   n_sats : int
     Number of satellites used in solution.
   flags : int

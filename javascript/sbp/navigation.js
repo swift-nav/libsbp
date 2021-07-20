@@ -577,7 +577,9 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * @field at_accuracy number (float, 4 bytes) Estimated along-track error at the user-configured confidence level; zero
  *   implies invalid.
  * @field h_ellipse EstimatedHorizontalErrorEllipse The estimated horizontal error ellipse at the user-configured confidence level.
- * @field confidence_and_geoid number (unsigned 8-bit int, 1 byte) Configured confidence level for the estimated position error
+ * @field confidence_and_geoid number (unsigned 8-bit int, 1 byte) The lower bits describe the configured confidence level for the estimated
+ *   position error. The middle bits describe the geoid model used to calculate the
+ *   orthometric height.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *

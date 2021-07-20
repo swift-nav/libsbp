@@ -73,7 +73,10 @@ public class MsgPosLLHAcc extends SBPMessage {
     /** The estimated horizontal error ellipse at the user-configured confidence level. */
     public EstimatedHorizontalErrorEllipse h_ellipse;
 
-    /** Configured confidence level for the estimated position error */
+    /**
+     * The lower bits describe the configured confidence level for the estimated position error. The
+     * middle bits describe the geoid model used to calculate the orthometric height.
+     */
     public int confidence_and_geoid;
 
     /** Number of satellites used in solution. */

@@ -566,7 +566,7 @@ typedef struct SBP_ATTR_PACKED {
  * The user-configured percentile is encoded in the percentile field.
  */
 #define SBP_MSG_POS_LLH_ACC 0x0218
-#define SBP_POS_LLH_ACC_GEOID_MODEL_MASK (0xf)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_MASK (0x7)
 #define SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT (4u)
 #define SBP_POS_LLH_ACC_GEOID_MODEL_GET(flags)      \
   (((flags) >> SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT) & \
@@ -669,8 +669,11 @@ typedef struct SBP_ATTR_PACKED {
                                                        configured
                                                        confidence
                                                        level. */
-  u8 confidence_and_geoid; /**< Configured confidence level for the
-                                estimated position error */
+  u8 confidence_and_geoid; /**< The lower bits describe the configured
+                                confidence level for the estimated position
+                                error. The middle bits describe the geoid
+                                model used to calculate the orthometric
+                                height. */
   u8 n_sats;               /**< Number of satellites used in solution. */
   u8 flags;                /**< Status flags */
 } msg_pos_llh_acc_t;

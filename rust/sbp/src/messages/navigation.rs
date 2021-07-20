@@ -2277,7 +2277,9 @@ pub struct MsgPosLLHAcc {
     /// The estimated horizontal error ellipse at the user-configured confidence
     /// level.
     pub h_ellipse: EstimatedHorizontalErrorEllipse,
-    /// Configured confidence level for the estimated position error
+    /// The lower bits describe the configured confidence level for the
+    /// estimated position error. The middle bits describe the geoid model used
+    /// to calculate the orthometric height.
     pub confidence_and_geoid: u8,
     /// Number of satellites used in solution.
     pub n_sats: u8,
