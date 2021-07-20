@@ -685,11 +685,11 @@ definitions:
             desc: The estimated horizontal error ellipse at the user-configured confidence level.
         - confidence_and_geoid:
             type: u8
-            desc: Configured confidence level for the estimated position error
+            desc: The lower bits describe the configured confidence level for the estimated position error. The middle bits describe the geoid model used to calculate the orthometric height.
             fields:
               - 7-7:
                   desc: Reserved
-              - 4-7:
+              - 4-6:
                   desc: Geoid model
                   values:
                     - 0: No model
