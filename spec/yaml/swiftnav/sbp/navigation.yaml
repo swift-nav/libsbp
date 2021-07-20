@@ -663,7 +663,7 @@ definitions:
         - orthometric_height:
             type: double
             units: m
-            desc: Height above the geoid (i.e. height above mean sea level). See flags for geoid model used.
+            desc: Height above the geoid (i.e. height above mean sea level). See confidence_and_geoid for geoid model used.
         - h_accuracy:
             type: float
             units: m
@@ -683,12 +683,18 @@ definitions:
         - h_ellipse:
             type: EstimatedHorizontalErrorEllipse
             desc: The estimated horizontal error ellipse at the user-configured confidence level.
-        - confidence:
+        - confidence_and_geoid:
             type: u8
             desc: Configured confidence level for the estimated position error
             fields:
-              - 4-7:
+              - 7-7:
                   desc: Reserved
+              - 4-7:
+                  desc: Geoid model
+                  values:
+                    - 0: No model
+                    - 1: EGM96
+                    - 2: EGM2008
               - 0-3:
                   desc: Confidence level
                   values:
@@ -704,10 +710,7 @@ definitions:
             desc: Status flags
             fields:
               - 6-7:
-                  desc: Geoid model
-                  values:
-                    - 0: EGM96
-                    - 1: EGM2008
+                  desc: Reserved
               - 5-5:
                   desc: Type of reported TOW
                   values:
