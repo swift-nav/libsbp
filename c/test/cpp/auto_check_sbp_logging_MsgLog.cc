@@ -83,10 +83,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgLog0, Test) {
   sbp_msg_log_t test_msg{};
   test_msg.level = 6;
 
-  EXPECT_EQ(
-      sbp_msg_log_text_set(
-          &test_msg, "Filtered all obs from 2314 at tow 83.539019", false),
-      strlen("Filtered all obs from 2314 at tow 83.539019"));
+  size_t written;
+  EXPECT_TRUE(sbp_msg_log_text_set(
+      &test_msg, "Filtered all obs from 2314 at tow 83.539019", false,
+      &written));
+  EXPECT_EQ(written, strlen("Filtered all obs from 2314 at tow 83.539019"));
   EXPECT_EQ(sbp_msg_log_text_encoded_len(&test_msg), 43);
 
   EXPECT_EQ(send_message(2314, test_msg), SBP_OK);

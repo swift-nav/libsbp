@@ -126,7 +126,9 @@ START_TEST( test_(((s.suite_name))) )
     ck_assert_msg( (((- value.fn_prefix)))_add_section(&(((root_path))), "(((value.sections[loop.index0])))") == true, "Can't assign section (((loop.index0)))");
     ((*- endfor *))
     ((*- else *))
-    ck_assert_msg( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))", false) == strlen("(((value.text)))"), "Can't assign text");
+    size_t written;
+    ck_assert_msg( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))", false, &written), "Can't assign text");
+    ck_assert_msg(written == strlen("(((value.text)))"), "Wrote different to expected");
     ((*- endif *))
     ck_assert_msg( (((- value.fn_prefix)))_encoded_len(&(((root_path)))) == (((value.encoded_len))), "String not encoded properly");
     ((*- endmacro *))

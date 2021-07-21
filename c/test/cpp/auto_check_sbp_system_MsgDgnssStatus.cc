@@ -85,8 +85,10 @@ TEST_F(Test_auto_check_sbp_system_MsgDgnssStatus0, Test) {
   test_msg.latency = 50;
   test_msg.num_signals = 12;
 
-  EXPECT_EQ(sbp_msg_dgnss_status_source_set(&test_msg, "Skylark", false),
-            strlen("Skylark"));
+  size_t written;
+  EXPECT_TRUE(
+      sbp_msg_dgnss_status_source_set(&test_msg, "Skylark", false, &written));
+  EXPECT_EQ(written, strlen("Skylark"));
   EXPECT_EQ(sbp_msg_dgnss_status_source_encoded_len(&test_msg), 7);
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);

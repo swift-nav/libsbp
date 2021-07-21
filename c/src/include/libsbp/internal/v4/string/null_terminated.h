@@ -152,13 +152,15 @@ size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
  * @param s string
  * @param maxlen Maximum encoded length
  * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to s
  * @param new_buf New buffer contents
  * @param new_buf_len Length of the new buffer, not including NULL terminator
  * (if present)
- * @return Number of characters written from new_buf to s
+ * @return true on success, false otherwise
  */
-size_t sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, const char *new_buf,
+bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, size_t *n_written, const char *new_buf,
                                       size_t new_buf_len);
 
 /**
@@ -175,11 +177,13 @@ size_t sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
  * @param s string
  * @param maxlen Maximum encoded length
  * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to s
  * @param new_str New string contents
- * @return Number of characters written from new_str to s
+ * @return true on success, false otherwise
  */
-size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, const char *new_str);
+bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, size_t *n_written, const char *new_str);
 
 /**
  * Set a null terminated string with printf style formatting
@@ -192,13 +196,15 @@ size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param s string
  * @param maxlen Maximum encoded length
  * @param should_trunc Whether the new string should be truncated to fit in s
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to s
  * @param fmt print style format specification
  * @param ap Argument list
- * @return Number of characters written to s
+ * @return true on success, false otherwise
  */
-size_t sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
+bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc, size_t *n_written,
                                         const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(4);
+    SBP_ATTR_VFORMAT(5);
 
 /**
  * Append to a null terminated string.
@@ -223,8 +229,8 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
  * Append to a null terminated string with printf style formatting
  *
  * If the current string's encoded length is less than the maximum encoded
- * length the function will clear off any previous data before attempting to
- * add in a new section.
+ * length the function will clear off any previous data before attempting to add
+ * in a new section.
  *
  * If the new string would be greater than the maximum encoded length, and
  * should trunc is set to false, the original contents will not be modified and
@@ -234,14 +240,16 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
  * @param s string
  * @param maxlen Maximum encoded length
  * @param should_trunc Whether the new string should be truncated to fit in s
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to s
  * @param fmt printf style format specification
  * @param ap Argument list
- * @return Number of characters written to s
+ * @return true on success, false otherwise
  */
-size_t sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
-                                               size_t maxlen, bool should_trunc,
+bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
+                                               size_t maxlen, bool should_trunc, size_t *n_written,
                                                const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(4);
+    SBP_ATTR_VFORMAT(5);
 
 /**
  * Get contents

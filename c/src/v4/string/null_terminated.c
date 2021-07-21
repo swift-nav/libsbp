@@ -68,34 +68,41 @@ size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
 
 
 
-size_t sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, const char *new_str,
+bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, size_t *n_written, const char *new_str,
                                       size_t new_str_len) {
   size_t copied;
   size_t truncated_len =
       (maxlen - 1) > new_str_len ? new_str_len : (maxlen - 1);
   size_t len = should_trunc ? truncated_len : new_str_len;
   if (!sbp_string_copy_to_buf(s->data, &copied, maxlen, new_str, len)) {
-    return 0;
+    return false;
   }
 
   s->encoded_len = copied;
-  return s->encoded_len - 1;
+  if (n_written != NULL) {
+    *n_written = s->encoded_len - 1;
+  }
+  return true;
 }
 
-size_t sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, const char *new_str) {
-  return sbp_null_terminated_string_set_raw(s, maxlen, should_trunc, new_str, sbp_strnlen(new_str, maxlen));
+bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
+                                      bool should_trunc, size_t *n_written, const char *new_str) {
+  return sbp_null_terminated_string_set_raw(s, maxlen, should_trunc, n_written, new_str, sbp_strnlen(new_str, maxlen));
 }
 
-size_t sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc,
+bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc, size_t *n_written,
                                         const char *fmt, va_list ap) {
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen, should_trunc, fmt, ap)) {
-    return 0;
+    return false;
   }
+
   s->encoded_len = copied;
-  return copied - 1;
+  if (n_written != NULL) {
+    *n_written = copied - 1;
+  }
+  return true;
 }
 
 bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
@@ -110,18 +117,22 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
   return true;
 }
 
-size_t sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
-                                               size_t maxlen, bool should_trunc,
+bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
+                                               size_t maxlen, bool should_trunc, size_t *n_written,
                                                const char *fmt, va_list ap) {
   maybe_init(s, maxlen);
   size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 1, &copied,
                                  maxlen - s->encoded_len + 1, should_trunc, fmt,
                                  ap)) {
-    return 0;
+    return false;
   }
   s->encoded_len += copied - 1;
-  return copied - 1;
+
+  if (n_written != NULL) {
+    *n_written = copied -1;
+  }
+  return true;
 }
 
 const char *sbp_null_terminated_string_get(const sbp_string_t *s,
