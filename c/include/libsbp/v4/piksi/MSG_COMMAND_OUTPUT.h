@@ -113,8 +113,8 @@ size_t sbp_msg_command_output_line_space_remaining(
  *
  * If the should_trunc parameter is set to false and the specified string is
  * longer than can be represented in wire encoding, this function will return
- * 0. Otherwise, if should_trunc is set to true, then as much as possible will
- * be read from the new_str as can fit in the msg.
+ * false. Otherwise, if should_trunc is set to true, then as much as possible
+ * will be read from the new_str as can fit in the msg.
  *
  * @param msg sbp_msg_command_output_t instance
  * @param new_str New string
@@ -134,8 +134,8 @@ bool sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
  *
  * If the should_trunc parameter is set to false and the specified string is
  * longer than can be represented in wire encoding, this function will return
- * 0. Otherwise, if should_trunc is set to true, then as much as possible will
- * be read from the new_str as can fit in the msg.
+ * false. Otherwise, if should_trunc is set to true, then as much as possible
+ * will be read from the new_str as can fit in the msg.
  *
  * @param msg sbp_msg_command_output_t instance
  * @param new_buf New buffer
@@ -156,7 +156,7 @@ bool sbp_msg_command_output_line_set_raw(sbp_msg_command_output_t *msg,
  * Erase any existing content and replace with the formatted string
  *
  * This function will return true if the new string was successfully applied.
- * If should_trunc is set true, and the operation would end up overflowing the
+ * If should_trunc is set false, and the operation would end up overflowing the
  * maximum size of this field in wire encoding the existing contents will be
  * erased and this function will return false. Otherwise, if should_trunc is
  * set true, the input formatted string will be truncated to fit.
