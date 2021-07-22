@@ -150,7 +150,7 @@ pub(crate) fn write_frame<M: SBPMessage>(
     Ok(())
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, Clone, thiserror::Error)]
 pub enum FramerError {
     #[error("Message is too large to fit into an SBP frame")]
     TooLarge,
@@ -165,7 +165,7 @@ mod swiftnav_rs_conversions {
 
     use crate::messages;
 
-    #[derive(Debug, thiserror::Error)]
+    #[derive(Debug, Clone, thiserror::Error)]
     pub enum GpsTimeError {
         #[error(transparent)]
         InvalidGpsTime(#[from] swiftnav_rs::time::InvalidGpsTime),
