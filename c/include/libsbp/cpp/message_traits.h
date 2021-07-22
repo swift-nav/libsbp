@@ -62,6 +62,15 @@ struct MessageTraits<sbp_msg_acq_result_dep_a_t> {
   static sbp_msg_acq_result_dep_a_t &get(sbp_msg_t &msg) {
     return msg.acq_result_dep_a;
   }
+  static void to_sbp_msg(const sbp_msg_acq_result_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_result_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_result_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_result_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_result_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_acq_result_dep_a_send(state, sender_id, &msg, write);
@@ -76,6 +85,15 @@ struct MessageTraits<sbp_msg_acq_result_dep_b_t> {
   }
   static sbp_msg_acq_result_dep_b_t &get(sbp_msg_t &msg) {
     return msg.acq_result_dep_b;
+  }
+  static void to_sbp_msg(const sbp_msg_acq_result_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_result_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_result_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_result_dep_b = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_result_dep_b_t &msg, sbp_write_fn_t write) {
@@ -92,6 +110,15 @@ struct MessageTraits<sbp_msg_acq_result_dep_c_t> {
   static sbp_msg_acq_result_dep_c_t &get(sbp_msg_t &msg) {
     return msg.acq_result_dep_c;
   }
+  static void to_sbp_msg(const sbp_msg_acq_result_dep_c_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_result_dep_c = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_result_dep_c_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_result_dep_c = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_result_dep_c_t &msg, sbp_write_fn_t write) {
     return sbp_msg_acq_result_dep_c_send(state, sender_id, &msg, write);
@@ -105,6 +132,14 @@ struct MessageTraits<sbp_msg_acq_result_t> {
     return msg.acq_result;
   }
   static sbp_msg_acq_result_t &get(sbp_msg_t &msg) { return msg.acq_result; }
+  static void to_sbp_msg(const sbp_msg_acq_result_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_result = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_result_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_result = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_result_t &msg, sbp_write_fn_t write) {
     return sbp_msg_acq_result_send(state, sender_id, &msg, write);
@@ -119,6 +154,15 @@ struct MessageTraits<sbp_msg_acq_sv_profile_dep_t> {
   }
   static sbp_msg_acq_sv_profile_dep_t &get(sbp_msg_t &msg) {
     return msg.acq_sv_profile_dep;
+  }
+  static void to_sbp_msg(const sbp_msg_acq_sv_profile_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_sv_profile_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_sv_profile_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_sv_profile_dep = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_sv_profile_dep_t &msg,
@@ -136,6 +180,15 @@ struct MessageTraits<sbp_msg_acq_sv_profile_t> {
   static sbp_msg_acq_sv_profile_t &get(sbp_msg_t &msg) {
     return msg.acq_sv_profile;
   }
+  static void to_sbp_msg(const sbp_msg_acq_sv_profile_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->acq_sv_profile = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acq_sv_profile_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acq_sv_profile = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_acq_sv_profile_t &msg, sbp_write_fn_t write) {
     return sbp_msg_acq_sv_profile_send(state, sender_id, &msg, write);
@@ -150,6 +203,15 @@ struct MessageTraits<sbp_msg_age_corrections_t> {
   }
   static sbp_msg_age_corrections_t &get(sbp_msg_t &msg) {
     return msg.age_corrections;
+  }
+  static void to_sbp_msg(const sbp_msg_age_corrections_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->age_corrections = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_age_corrections_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.age_corrections = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_age_corrections_t &msg, sbp_write_fn_t write) {
@@ -166,6 +228,15 @@ struct MessageTraits<sbp_msg_almanac_glo_dep_t> {
   static sbp_msg_almanac_glo_dep_t &get(sbp_msg_t &msg) {
     return msg.almanac_glo_dep;
   }
+  static void to_sbp_msg(const sbp_msg_almanac_glo_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->almanac_glo_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_almanac_glo_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.almanac_glo_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_almanac_glo_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_almanac_glo_dep_send(state, sender_id, &msg, write);
@@ -179,6 +250,14 @@ struct MessageTraits<sbp_msg_almanac_glo_t> {
     return msg.almanac_glo;
   }
   static sbp_msg_almanac_glo_t &get(sbp_msg_t &msg) { return msg.almanac_glo; }
+  static void to_sbp_msg(const sbp_msg_almanac_glo_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->almanac_glo = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_almanac_glo_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.almanac_glo = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_almanac_glo_t &msg, sbp_write_fn_t write) {
     return sbp_msg_almanac_glo_send(state, sender_id, &msg, write);
@@ -194,6 +273,15 @@ struct MessageTraits<sbp_msg_almanac_gps_dep_t> {
   static sbp_msg_almanac_gps_dep_t &get(sbp_msg_t &msg) {
     return msg.almanac_gps_dep;
   }
+  static void to_sbp_msg(const sbp_msg_almanac_gps_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->almanac_gps_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_almanac_gps_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.almanac_gps_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_almanac_gps_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_almanac_gps_dep_send(state, sender_id, &msg, write);
@@ -207,6 +295,14 @@ struct MessageTraits<sbp_msg_almanac_gps_t> {
     return msg.almanac_gps;
   }
   static sbp_msg_almanac_gps_t &get(sbp_msg_t &msg) { return msg.almanac_gps; }
+  static void to_sbp_msg(const sbp_msg_almanac_gps_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->almanac_gps = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_almanac_gps_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.almanac_gps = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_almanac_gps_t &msg, sbp_write_fn_t write) {
     return sbp_msg_almanac_gps_send(state, sender_id, &msg, write);
@@ -220,6 +316,14 @@ struct MessageTraits<sbp_msg_almanac_t> {
     return msg.almanac;
   }
   static sbp_msg_almanac_t &get(sbp_msg_t &msg) { return msg.almanac; }
+  static void to_sbp_msg(const sbp_msg_almanac_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->almanac = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_almanac_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.almanac = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_almanac_t &msg, sbp_write_fn_t write) {
     return sbp_msg_almanac_send(state, sender_id, &msg, write);
@@ -234,6 +338,15 @@ struct MessageTraits<sbp_msg_angular_rate_t> {
   }
   static sbp_msg_angular_rate_t &get(sbp_msg_t &msg) {
     return msg.angular_rate;
+  }
+  static void to_sbp_msg(const sbp_msg_angular_rate_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->angular_rate = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_angular_rate_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.angular_rate = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_angular_rate_t &msg, sbp_write_fn_t write) {
@@ -250,6 +363,15 @@ struct MessageTraits<sbp_msg_base_pos_ecef_t> {
   static sbp_msg_base_pos_ecef_t &get(sbp_msg_t &msg) {
     return msg.base_pos_ecef;
   }
+  static void to_sbp_msg(const sbp_msg_base_pos_ecef_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->base_pos_ecef = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_base_pos_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.base_pos_ecef = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_base_pos_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_base_pos_ecef_send(state, sender_id, &msg, write);
@@ -265,6 +387,15 @@ struct MessageTraits<sbp_msg_base_pos_llh_t> {
   static sbp_msg_base_pos_llh_t &get(sbp_msg_t &msg) {
     return msg.base_pos_llh;
   }
+  static void to_sbp_msg(const sbp_msg_base_pos_llh_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->base_pos_llh = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_base_pos_llh_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.base_pos_llh = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_base_pos_llh_t &msg, sbp_write_fn_t write) {
     return sbp_msg_base_pos_llh_send(state, sender_id, &msg, write);
@@ -279,6 +410,15 @@ struct MessageTraits<sbp_msg_baseline_ecef_dep_a_t> {
   }
   static sbp_msg_baseline_ecef_dep_a_t &get(sbp_msg_t &msg) {
     return msg.baseline_ecef_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_baseline_ecef_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_ecef_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_ecef_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_ecef_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_ecef_dep_a_t &msg,
@@ -296,6 +436,15 @@ struct MessageTraits<sbp_msg_baseline_ecef_t> {
   static sbp_msg_baseline_ecef_t &get(sbp_msg_t &msg) {
     return msg.baseline_ecef;
   }
+  static void to_sbp_msg(const sbp_msg_baseline_ecef_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_ecef = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_ecef = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_baseline_ecef_send(state, sender_id, &msg, write);
@@ -310,6 +459,15 @@ struct MessageTraits<sbp_msg_baseline_heading_dep_a_t> {
   }
   static sbp_msg_baseline_heading_dep_a_t &get(sbp_msg_t &msg) {
     return msg.baseline_heading_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_baseline_heading_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_heading_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_heading_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_heading_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_heading_dep_a_t &msg,
@@ -327,6 +485,15 @@ struct MessageTraits<sbp_msg_baseline_heading_t> {
   static sbp_msg_baseline_heading_t &get(sbp_msg_t &msg) {
     return msg.baseline_heading;
   }
+  static void to_sbp_msg(const sbp_msg_baseline_heading_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_heading = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_heading_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_heading = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_heading_t &msg, sbp_write_fn_t write) {
     return sbp_msg_baseline_heading_send(state, sender_id, &msg, write);
@@ -341,6 +508,15 @@ struct MessageTraits<sbp_msg_baseline_ned_dep_a_t> {
   }
   static sbp_msg_baseline_ned_dep_a_t &get(sbp_msg_t &msg) {
     return msg.baseline_ned_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_baseline_ned_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_ned_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_ned_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_ned_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_ned_dep_a_t &msg,
@@ -358,6 +534,15 @@ struct MessageTraits<sbp_msg_baseline_ned_t> {
   static sbp_msg_baseline_ned_t &get(sbp_msg_t &msg) {
     return msg.baseline_ned;
   }
+  static void to_sbp_msg(const sbp_msg_baseline_ned_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->baseline_ned = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_baseline_ned_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.baseline_ned = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_baseline_ned_t &msg, sbp_write_fn_t write) {
     return sbp_msg_baseline_ned_send(state, sender_id, &msg, write);
@@ -372,6 +557,15 @@ struct MessageTraits<sbp_msg_bootloader_handshake_dep_a_t> {
   }
   static sbp_msg_bootloader_handshake_dep_a_t &get(sbp_msg_t &msg) {
     return msg.bootloader_handshake_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_bootloader_handshake_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->bootloader_handshake_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_bootloader_handshake_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.bootloader_handshake_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_bootloader_handshake_dep_a_t &msg,
@@ -390,6 +584,15 @@ struct MessageTraits<sbp_msg_bootloader_handshake_req_t> {
   static sbp_msg_bootloader_handshake_req_t &get(sbp_msg_t &msg) {
     return msg.bootloader_handshake_req;
   }
+  static void to_sbp_msg(const sbp_msg_bootloader_handshake_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->bootloader_handshake_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_bootloader_handshake_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.bootloader_handshake_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_bootloader_handshake_req_t &msg,
                  sbp_write_fn_t write) {
@@ -405,6 +608,15 @@ struct MessageTraits<sbp_msg_bootloader_handshake_resp_t> {
   }
   static sbp_msg_bootloader_handshake_resp_t &get(sbp_msg_t &msg) {
     return msg.bootloader_handshake_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_bootloader_handshake_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->bootloader_handshake_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_bootloader_handshake_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.bootloader_handshake_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_bootloader_handshake_resp_t &msg,
@@ -423,6 +635,15 @@ struct MessageTraits<sbp_msg_bootloader_jump_to_app_t> {
   static sbp_msg_bootloader_jump_to_app_t &get(sbp_msg_t &msg) {
     return msg.bootloader_jump_to_app;
   }
+  static void to_sbp_msg(const sbp_msg_bootloader_jump_to_app_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->bootloader_jump_to_app = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_bootloader_jump_to_app_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.bootloader_jump_to_app = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_bootloader_jump_to_app_t &msg,
                  sbp_write_fn_t write) {
@@ -439,6 +660,15 @@ struct MessageTraits<sbp_msg_cell_modem_status_t> {
   static sbp_msg_cell_modem_status_t &get(sbp_msg_t &msg) {
     return msg.cell_modem_status;
   }
+  static void to_sbp_msg(const sbp_msg_cell_modem_status_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->cell_modem_status = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_cell_modem_status_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.cell_modem_status = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_cell_modem_status_t &msg, sbp_write_fn_t write) {
     return sbp_msg_cell_modem_status_send(state, sender_id, &msg, write);
@@ -454,6 +684,15 @@ struct MessageTraits<sbp_msg_command_output_t> {
   static sbp_msg_command_output_t &get(sbp_msg_t &msg) {
     return msg.command_output;
   }
+  static void to_sbp_msg(const sbp_msg_command_output_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->command_output = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_command_output_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.command_output = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_command_output_t &msg, sbp_write_fn_t write) {
     return sbp_msg_command_output_send(state, sender_id, &msg, write);
@@ -467,6 +706,14 @@ struct MessageTraits<sbp_msg_command_req_t> {
     return msg.command_req;
   }
   static sbp_msg_command_req_t &get(sbp_msg_t &msg) { return msg.command_req; }
+  static void to_sbp_msg(const sbp_msg_command_req_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->command_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_command_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.command_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_command_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_command_req_send(state, sender_id, &msg, write);
@@ -482,6 +729,15 @@ struct MessageTraits<sbp_msg_command_resp_t> {
   static sbp_msg_command_resp_t &get(sbp_msg_t &msg) {
     return msg.command_resp;
   }
+  static void to_sbp_msg(const sbp_msg_command_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->command_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_command_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.command_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_command_resp_t &msg, sbp_write_fn_t write) {
     return sbp_msg_command_resp_send(state, sender_id, &msg, write);
@@ -496,6 +752,15 @@ struct MessageTraits<sbp_msg_csac_telemetry_labels_t> {
   }
   static sbp_msg_csac_telemetry_labels_t &get(sbp_msg_t &msg) {
     return msg.csac_telemetry_labels;
+  }
+  static void to_sbp_msg(const sbp_msg_csac_telemetry_labels_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->csac_telemetry_labels = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_csac_telemetry_labels_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.csac_telemetry_labels = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_csac_telemetry_labels_t &msg,
@@ -513,6 +778,15 @@ struct MessageTraits<sbp_msg_csac_telemetry_t> {
   static sbp_msg_csac_telemetry_t &get(sbp_msg_t &msg) {
     return msg.csac_telemetry;
   }
+  static void to_sbp_msg(const sbp_msg_csac_telemetry_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->csac_telemetry = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_csac_telemetry_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.csac_telemetry = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_csac_telemetry_t &msg, sbp_write_fn_t write) {
     return sbp_msg_csac_telemetry_send(state, sender_id, &msg, write);
@@ -526,6 +800,14 @@ struct MessageTraits<sbp_msg_cw_results_t> {
     return msg.cw_results;
   }
   static sbp_msg_cw_results_t &get(sbp_msg_t &msg) { return msg.cw_results; }
+  static void to_sbp_msg(const sbp_msg_cw_results_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->cw_results = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_cw_results_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.cw_results = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_cw_results_t &msg, sbp_write_fn_t write) {
     return sbp_msg_cw_results_send(state, sender_id, &msg, write);
@@ -539,6 +821,14 @@ struct MessageTraits<sbp_msg_cw_start_t> {
     return msg.cw_start;
   }
   static sbp_msg_cw_start_t &get(sbp_msg_t &msg) { return msg.cw_start; }
+  static void to_sbp_msg(const sbp_msg_cw_start_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->cw_start = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_cw_start_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.cw_start = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_cw_start_t &msg, sbp_write_fn_t write) {
     return sbp_msg_cw_start_send(state, sender_id, &msg, write);
@@ -553,6 +843,15 @@ struct MessageTraits<sbp_msg_device_monitor_t> {
   }
   static sbp_msg_device_monitor_t &get(sbp_msg_t &msg) {
     return msg.device_monitor;
+  }
+  static void to_sbp_msg(const sbp_msg_device_monitor_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->device_monitor = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_device_monitor_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.device_monitor = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_device_monitor_t &msg, sbp_write_fn_t write) {
@@ -569,6 +868,15 @@ struct MessageTraits<sbp_msg_dgnss_status_t> {
   static sbp_msg_dgnss_status_t &get(sbp_msg_t &msg) {
     return msg.dgnss_status;
   }
+  static void to_sbp_msg(const sbp_msg_dgnss_status_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->dgnss_status = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_dgnss_status_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.dgnss_status = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_dgnss_status_t &msg, sbp_write_fn_t write) {
     return sbp_msg_dgnss_status_send(state, sender_id, &msg, write);
@@ -582,6 +890,14 @@ struct MessageTraits<sbp_msg_dops_dep_a_t> {
     return msg.dops_dep_a;
   }
   static sbp_msg_dops_dep_a_t &get(sbp_msg_t &msg) { return msg.dops_dep_a; }
+  static void to_sbp_msg(const sbp_msg_dops_dep_a_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->dops_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_dops_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.dops_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_dops_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_dops_dep_a_send(state, sender_id, &msg, write);
@@ -593,6 +909,14 @@ struct MessageTraits<sbp_msg_dops_t> {
   static constexpr sbp_msg_type_t id = SbpMsgDops;
   static const sbp_msg_dops_t &get(const sbp_msg_t &msg) { return msg.dops; }
   static sbp_msg_dops_t &get(sbp_msg_t &msg) { return msg.dops; }
+  static void to_sbp_msg(const sbp_msg_dops_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->dops = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_dops_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.dops = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_dops_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_dops_send(state, sender_id, &msg, write);
@@ -607,6 +931,15 @@ struct MessageTraits<sbp_msg_ephemeris_bds_t> {
   }
   static sbp_msg_ephemeris_bds_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_bds;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_bds_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_bds = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_bds_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_bds = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_bds_t &msg, sbp_write_fn_t write) {
@@ -623,6 +956,15 @@ struct MessageTraits<sbp_msg_ephemeris_dep_a_t> {
   static sbp_msg_ephemeris_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_dep_a;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_dep_a_send(state, sender_id, &msg, write);
@@ -637,6 +979,15 @@ struct MessageTraits<sbp_msg_ephemeris_dep_b_t> {
   }
   static sbp_msg_ephemeris_dep_b_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_dep_b;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_dep_b = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_dep_b_t &msg, sbp_write_fn_t write) {
@@ -653,6 +1004,15 @@ struct MessageTraits<sbp_msg_ephemeris_dep_c_t> {
   static sbp_msg_ephemeris_dep_c_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_dep_c;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_dep_c_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_dep_c = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_dep_c_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_dep_c = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_dep_c_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_dep_c_send(state, sender_id, &msg, write);
@@ -668,6 +1028,15 @@ struct MessageTraits<sbp_msg_ephemeris_dep_d_t> {
   static sbp_msg_ephemeris_dep_d_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_dep_d;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_dep_d_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_dep_d = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_dep_d_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_dep_d = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_dep_d_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_dep_d_send(state, sender_id, &msg, write);
@@ -682,6 +1051,15 @@ struct MessageTraits<sbp_msg_ephemeris_gal_dep_a_t> {
   }
   static sbp_msg_ephemeris_gal_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_gal_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gal_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gal_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gal_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gal_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_gal_dep_a_t &msg,
@@ -699,6 +1077,15 @@ struct MessageTraits<sbp_msg_ephemeris_gal_t> {
   static sbp_msg_ephemeris_gal_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_gal;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gal_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gal = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gal_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gal = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_gal_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_gal_send(state, sender_id, &msg, write);
@@ -713,6 +1100,15 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_a_t> {
   }
   static sbp_msg_ephemeris_glo_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_glo_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_glo_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_glo_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_glo_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_glo_dep_a_t &msg,
@@ -730,6 +1126,15 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_b_t> {
   static sbp_msg_ephemeris_glo_dep_b_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_b;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_glo_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_glo_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_glo_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_glo_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_glo_dep_b_t &msg,
                  sbp_write_fn_t write) {
@@ -745,6 +1150,15 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_c_t> {
   }
   static sbp_msg_ephemeris_glo_dep_c_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_c;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_glo_dep_c_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_glo_dep_c = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_glo_dep_c_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_glo_dep_c = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_glo_dep_c_t &msg,
@@ -762,6 +1176,15 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_d_t> {
   static sbp_msg_ephemeris_glo_dep_d_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_d;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_glo_dep_d_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_glo_dep_d = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_glo_dep_d_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_glo_dep_d = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_glo_dep_d_t &msg,
                  sbp_write_fn_t write) {
@@ -778,6 +1201,15 @@ struct MessageTraits<sbp_msg_ephemeris_glo_t> {
   static sbp_msg_ephemeris_glo_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_glo;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_glo_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_glo = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_glo_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_glo = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_glo_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_glo_send(state, sender_id, &msg, write);
@@ -792,6 +1224,15 @@ struct MessageTraits<sbp_msg_ephemeris_gps_dep_e_t> {
   }
   static sbp_msg_ephemeris_gps_dep_e_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_gps_dep_e;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gps_dep_e_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gps_dep_e = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gps_dep_e_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gps_dep_e = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_gps_dep_e_t &msg,
@@ -809,6 +1250,15 @@ struct MessageTraits<sbp_msg_ephemeris_gps_dep_f_t> {
   static sbp_msg_ephemeris_gps_dep_f_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_gps_dep_f;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gps_dep_f_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gps_dep_f = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gps_dep_f_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gps_dep_f = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_gps_dep_f_t &msg,
                  sbp_write_fn_t write) {
@@ -825,6 +1275,15 @@ struct MessageTraits<sbp_msg_ephemeris_gps_t> {
   static sbp_msg_ephemeris_gps_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_gps;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gps_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gps = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gps_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gps = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_gps_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_gps_send(state, sender_id, &msg, write);
@@ -840,6 +1299,15 @@ struct MessageTraits<sbp_msg_ephemeris_qzss_t> {
   static sbp_msg_ephemeris_qzss_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_qzss;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_qzss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_qzss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_qzss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_qzss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_qzss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_qzss_send(state, sender_id, &msg, write);
@@ -854,6 +1322,15 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_dep_a_t> {
   }
   static sbp_msg_ephemeris_sbas_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_sbas_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_sbas_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_sbas_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_sbas_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_sbas_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_sbas_dep_a_t &msg,
@@ -871,6 +1348,15 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_dep_b_t> {
   static sbp_msg_ephemeris_sbas_dep_b_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_sbas_dep_b;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_sbas_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_sbas_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_sbas_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_sbas_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_sbas_dep_b_t &msg,
                  sbp_write_fn_t write) {
@@ -887,6 +1373,15 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_t> {
   static sbp_msg_ephemeris_sbas_t &get(sbp_msg_t &msg) {
     return msg.ephemeris_sbas;
   }
+  static void to_sbp_msg(const sbp_msg_ephemeris_sbas_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_sbas = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_sbas_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_sbas = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ephemeris_sbas_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ephemeris_sbas_send(state, sender_id, &msg, write);
@@ -900,6 +1395,14 @@ struct MessageTraits<sbp_msg_ext_event_t> {
     return msg.ext_event;
   }
   static sbp_msg_ext_event_t &get(sbp_msg_t &msg) { return msg.ext_event; }
+  static void to_sbp_msg(const sbp_msg_ext_event_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->ext_event = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ext_event_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ext_event = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ext_event_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ext_event_send(state, sender_id, &msg, write);
@@ -915,6 +1418,15 @@ struct MessageTraits<sbp_msg_fileio_config_req_t> {
   static sbp_msg_fileio_config_req_t &get(sbp_msg_t &msg) {
     return msg.fileio_config_req;
   }
+  static void to_sbp_msg(const sbp_msg_fileio_config_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_config_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_config_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_config_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_config_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_fileio_config_req_send(state, sender_id, &msg, write);
@@ -929,6 +1441,15 @@ struct MessageTraits<sbp_msg_fileio_config_resp_t> {
   }
   static sbp_msg_fileio_config_resp_t &get(sbp_msg_t &msg) {
     return msg.fileio_config_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_fileio_config_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_config_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_config_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_config_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_config_resp_t &msg,
@@ -946,6 +1467,15 @@ struct MessageTraits<sbp_msg_fileio_read_dir_req_t> {
   static sbp_msg_fileio_read_dir_req_t &get(sbp_msg_t &msg) {
     return msg.fileio_read_dir_req;
   }
+  static void to_sbp_msg(const sbp_msg_fileio_read_dir_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_read_dir_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_read_dir_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_read_dir_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_read_dir_req_t &msg,
                  sbp_write_fn_t write) {
@@ -961,6 +1491,15 @@ struct MessageTraits<sbp_msg_fileio_read_dir_resp_t> {
   }
   static sbp_msg_fileio_read_dir_resp_t &get(sbp_msg_t &msg) {
     return msg.fileio_read_dir_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_fileio_read_dir_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_read_dir_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_read_dir_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_read_dir_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_read_dir_resp_t &msg,
@@ -978,6 +1517,15 @@ struct MessageTraits<sbp_msg_fileio_read_req_t> {
   static sbp_msg_fileio_read_req_t &get(sbp_msg_t &msg) {
     return msg.fileio_read_req;
   }
+  static void to_sbp_msg(const sbp_msg_fileio_read_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_read_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_read_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_read_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_read_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_fileio_read_req_send(state, sender_id, &msg, write);
@@ -992,6 +1540,15 @@ struct MessageTraits<sbp_msg_fileio_read_resp_t> {
   }
   static sbp_msg_fileio_read_resp_t &get(sbp_msg_t &msg) {
     return msg.fileio_read_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_fileio_read_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_read_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_read_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_read_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_read_resp_t &msg, sbp_write_fn_t write) {
@@ -1008,6 +1565,15 @@ struct MessageTraits<sbp_msg_fileio_remove_t> {
   static sbp_msg_fileio_remove_t &get(sbp_msg_t &msg) {
     return msg.fileio_remove;
   }
+  static void to_sbp_msg(const sbp_msg_fileio_remove_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_remove = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_remove_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_remove = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_remove_t &msg, sbp_write_fn_t write) {
     return sbp_msg_fileio_remove_send(state, sender_id, &msg, write);
@@ -1022,6 +1588,15 @@ struct MessageTraits<sbp_msg_fileio_write_req_t> {
   }
   static sbp_msg_fileio_write_req_t &get(sbp_msg_t &msg) {
     return msg.fileio_write_req;
+  }
+  static void to_sbp_msg(const sbp_msg_fileio_write_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_write_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_write_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_write_req = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_write_req_t &msg, sbp_write_fn_t write) {
@@ -1038,6 +1613,15 @@ struct MessageTraits<sbp_msg_fileio_write_resp_t> {
   static sbp_msg_fileio_write_resp_t &get(sbp_msg_t &msg) {
     return msg.fileio_write_resp;
   }
+  static void to_sbp_msg(const sbp_msg_fileio_write_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->fileio_write_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fileio_write_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fileio_write_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_fileio_write_resp_t &msg, sbp_write_fn_t write) {
     return sbp_msg_fileio_write_resp_send(state, sender_id, &msg, write);
@@ -1051,6 +1635,14 @@ struct MessageTraits<sbp_msg_flash_done_t> {
     return msg.flash_done;
   }
   static sbp_msg_flash_done_t &get(sbp_msg_t &msg) { return msg.flash_done; }
+  static void to_sbp_msg(const sbp_msg_flash_done_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->flash_done = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_flash_done_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.flash_done = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_flash_done_t &msg, sbp_write_fn_t write) {
     return sbp_msg_flash_done_send(state, sender_id, &msg, write);
@@ -1064,6 +1656,14 @@ struct MessageTraits<sbp_msg_flash_erase_t> {
     return msg.flash_erase;
   }
   static sbp_msg_flash_erase_t &get(sbp_msg_t &msg) { return msg.flash_erase; }
+  static void to_sbp_msg(const sbp_msg_flash_erase_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->flash_erase = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_flash_erase_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.flash_erase = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_flash_erase_t &msg, sbp_write_fn_t write) {
     return sbp_msg_flash_erase_send(state, sender_id, &msg, write);
@@ -1078,6 +1678,15 @@ struct MessageTraits<sbp_msg_flash_program_t> {
   }
   static sbp_msg_flash_program_t &get(sbp_msg_t &msg) {
     return msg.flash_program;
+  }
+  static void to_sbp_msg(const sbp_msg_flash_program_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->flash_program = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_flash_program_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.flash_program = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_flash_program_t &msg, sbp_write_fn_t write) {
@@ -1094,6 +1703,15 @@ struct MessageTraits<sbp_msg_flash_read_req_t> {
   static sbp_msg_flash_read_req_t &get(sbp_msg_t &msg) {
     return msg.flash_read_req;
   }
+  static void to_sbp_msg(const sbp_msg_flash_read_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->flash_read_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_flash_read_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.flash_read_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_flash_read_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_flash_read_req_send(state, sender_id, &msg, write);
@@ -1108,6 +1726,15 @@ struct MessageTraits<sbp_msg_flash_read_resp_t> {
   }
   static sbp_msg_flash_read_resp_t &get(sbp_msg_t &msg) {
     return msg.flash_read_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_flash_read_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->flash_read_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_flash_read_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.flash_read_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_flash_read_resp_t &msg, sbp_write_fn_t write) {
@@ -1124,6 +1751,15 @@ struct MessageTraits<sbp_msg_front_end_gain_t> {
   static sbp_msg_front_end_gain_t &get(sbp_msg_t &msg) {
     return msg.front_end_gain;
   }
+  static void to_sbp_msg(const sbp_msg_front_end_gain_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->front_end_gain = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_front_end_gain_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.front_end_gain = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_front_end_gain_t &msg, sbp_write_fn_t write) {
     return sbp_msg_front_end_gain_send(state, sender_id, &msg, write);
@@ -1135,6 +1771,14 @@ struct MessageTraits<sbp_msg_fwd_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFwd;
   static const sbp_msg_fwd_t &get(const sbp_msg_t &msg) { return msg.fwd; }
   static sbp_msg_fwd_t &get(sbp_msg_t &msg) { return msg.fwd; }
+  static void to_sbp_msg(const sbp_msg_fwd_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->fwd = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_fwd_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.fwd = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_fwd_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_fwd_send(state, sender_id, &msg, write);
@@ -1148,6 +1792,14 @@ struct MessageTraits<sbp_msg_glo_biases_t> {
     return msg.glo_biases;
   }
   static sbp_msg_glo_biases_t &get(sbp_msg_t &msg) { return msg.glo_biases; }
+  static void to_sbp_msg(const sbp_msg_glo_biases_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->glo_biases = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_glo_biases_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.glo_biases = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_glo_biases_t &msg, sbp_write_fn_t write) {
     return sbp_msg_glo_biases_send(state, sender_id, &msg, write);
@@ -1161,6 +1813,14 @@ struct MessageTraits<sbp_msg_gnss_capb_t> {
     return msg.gnss_capb;
   }
   static sbp_msg_gnss_capb_t &get(sbp_msg_t &msg) { return msg.gnss_capb; }
+  static void to_sbp_msg(const sbp_msg_gnss_capb_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->gnss_capb = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_gnss_capb_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gnss_capb = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gnss_capb_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gnss_capb_send(state, sender_id, &msg, write);
@@ -1175,6 +1835,15 @@ struct MessageTraits<sbp_msg_gnss_time_offset_t> {
   }
   static sbp_msg_gnss_time_offset_t &get(sbp_msg_t &msg) {
     return msg.gnss_time_offset;
+  }
+  static void to_sbp_msg(const sbp_msg_gnss_time_offset_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->gnss_time_offset = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_gnss_time_offset_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gnss_time_offset = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gnss_time_offset_t &msg, sbp_write_fn_t write) {
@@ -1191,6 +1860,15 @@ struct MessageTraits<sbp_msg_gps_time_dep_a_t> {
   static sbp_msg_gps_time_dep_a_t &get(sbp_msg_t &msg) {
     return msg.gps_time_dep_a;
   }
+  static void to_sbp_msg(const sbp_msg_gps_time_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->gps_time_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_gps_time_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gps_time_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gps_time_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gps_time_dep_a_send(state, sender_id, &msg, write);
@@ -1206,6 +1884,15 @@ struct MessageTraits<sbp_msg_gps_time_gnss_t> {
   static sbp_msg_gps_time_gnss_t &get(sbp_msg_t &msg) {
     return msg.gps_time_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_gps_time_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->gps_time_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_gps_time_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gps_time_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gps_time_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gps_time_gnss_send(state, sender_id, &msg, write);
@@ -1219,6 +1906,14 @@ struct MessageTraits<sbp_msg_gps_time_t> {
     return msg.gps_time;
   }
   static sbp_msg_gps_time_t &get(sbp_msg_t &msg) { return msg.gps_time; }
+  static void to_sbp_msg(const sbp_msg_gps_time_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->gps_time = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_gps_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gps_time = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gps_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gps_time_send(state, sender_id, &msg, write);
@@ -1233,6 +1928,15 @@ struct MessageTraits<sbp_msg_group_delay_dep_a_t> {
   }
   static sbp_msg_group_delay_dep_a_t &get(sbp_msg_t &msg) {
     return msg.group_delay_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_group_delay_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->group_delay_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_group_delay_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.group_delay_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_group_delay_dep_a_t &msg, sbp_write_fn_t write) {
@@ -1249,6 +1953,15 @@ struct MessageTraits<sbp_msg_group_delay_dep_b_t> {
   static sbp_msg_group_delay_dep_b_t &get(sbp_msg_t &msg) {
     return msg.group_delay_dep_b;
   }
+  static void to_sbp_msg(const sbp_msg_group_delay_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->group_delay_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_group_delay_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.group_delay_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_group_delay_dep_b_t &msg, sbp_write_fn_t write) {
     return sbp_msg_group_delay_dep_b_send(state, sender_id, &msg, write);
@@ -1262,6 +1975,14 @@ struct MessageTraits<sbp_msg_group_delay_t> {
     return msg.group_delay;
   }
   static sbp_msg_group_delay_t &get(sbp_msg_t &msg) { return msg.group_delay; }
+  static void to_sbp_msg(const sbp_msg_group_delay_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->group_delay = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_group_delay_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.group_delay = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_group_delay_t &msg, sbp_write_fn_t write) {
     return sbp_msg_group_delay_send(state, sender_id, &msg, write);
@@ -1275,6 +1996,14 @@ struct MessageTraits<sbp_msg_group_meta_t> {
     return msg.group_meta;
   }
   static sbp_msg_group_meta_t &get(sbp_msg_t &msg) { return msg.group_meta; }
+  static void to_sbp_msg(const sbp_msg_group_meta_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->group_meta = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_group_meta_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.group_meta = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_group_meta_t &msg, sbp_write_fn_t write) {
     return sbp_msg_group_meta_send(state, sender_id, &msg, write);
@@ -1288,6 +2017,14 @@ struct MessageTraits<sbp_msg_heartbeat_t> {
     return msg.heartbeat;
   }
   static sbp_msg_heartbeat_t &get(sbp_msg_t &msg) { return msg.heartbeat; }
+  static void to_sbp_msg(const sbp_msg_heartbeat_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->heartbeat = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_heartbeat_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.heartbeat = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_heartbeat_t &msg, sbp_write_fn_t write) {
     return sbp_msg_heartbeat_send(state, sender_id, &msg, write);
@@ -1301,6 +2038,14 @@ struct MessageTraits<sbp_msg_iar_state_t> {
     return msg.iar_state;
   }
   static sbp_msg_iar_state_t &get(sbp_msg_t &msg) { return msg.iar_state; }
+  static void to_sbp_msg(const sbp_msg_iar_state_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->iar_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_iar_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.iar_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_iar_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_iar_state_send(state, sender_id, &msg, write);
@@ -1314,6 +2059,14 @@ struct MessageTraits<sbp_msg_imu_aux_t> {
     return msg.imu_aux;
   }
   static sbp_msg_imu_aux_t &get(sbp_msg_t &msg) { return msg.imu_aux; }
+  static void to_sbp_msg(const sbp_msg_imu_aux_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->imu_aux = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_imu_aux_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.imu_aux = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_imu_aux_t &msg, sbp_write_fn_t write) {
     return sbp_msg_imu_aux_send(state, sender_id, &msg, write);
@@ -1327,6 +2080,14 @@ struct MessageTraits<sbp_msg_imu_raw_t> {
     return msg.imu_raw;
   }
   static sbp_msg_imu_raw_t &get(sbp_msg_t &msg) { return msg.imu_raw; }
+  static void to_sbp_msg(const sbp_msg_imu_raw_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->imu_raw = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_imu_raw_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.imu_raw = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_imu_raw_t &msg, sbp_write_fn_t write) {
     return sbp_msg_imu_raw_send(state, sender_id, &msg, write);
@@ -1342,6 +2103,15 @@ struct MessageTraits<sbp_msg_init_base_dep_t> {
   static sbp_msg_init_base_dep_t &get(sbp_msg_t &msg) {
     return msg.init_base_dep;
   }
+  static void to_sbp_msg(const sbp_msg_init_base_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->init_base_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_init_base_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.init_base_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_init_base_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_init_base_dep_send(state, sender_id, &msg, write);
@@ -1355,6 +2125,14 @@ struct MessageTraits<sbp_msg_ins_status_t> {
     return msg.ins_status;
   }
   static sbp_msg_ins_status_t &get(sbp_msg_t &msg) { return msg.ins_status; }
+  static void to_sbp_msg(const sbp_msg_ins_status_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->ins_status = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ins_status_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ins_status = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ins_status_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ins_status_send(state, sender_id, &msg, write);
@@ -1368,6 +2146,14 @@ struct MessageTraits<sbp_msg_ins_updates_t> {
     return msg.ins_updates;
   }
   static sbp_msg_ins_updates_t &get(sbp_msg_t &msg) { return msg.ins_updates; }
+  static void to_sbp_msg(const sbp_msg_ins_updates_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->ins_updates = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ins_updates_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ins_updates = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ins_updates_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ins_updates_send(state, sender_id, &msg, write);
@@ -1379,6 +2165,14 @@ struct MessageTraits<sbp_msg_iono_t> {
   static constexpr sbp_msg_type_t id = SbpMsgIono;
   static const sbp_msg_iono_t &get(const sbp_msg_t &msg) { return msg.iono; }
   static sbp_msg_iono_t &get(sbp_msg_t &msg) { return msg.iono; }
+  static void to_sbp_msg(const sbp_msg_iono_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->iono = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_iono_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.iono = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_iono_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_iono_send(state, sender_id, &msg, write);
@@ -1393,6 +2187,15 @@ struct MessageTraits<sbp_msg_linux_cpu_state_dep_a_t> {
   }
   static sbp_msg_linux_cpu_state_dep_a_t &get(sbp_msg_t &msg) {
     return msg.linux_cpu_state_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_linux_cpu_state_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_cpu_state_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_cpu_state_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_cpu_state_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_cpu_state_dep_a_t &msg,
@@ -1410,6 +2213,15 @@ struct MessageTraits<sbp_msg_linux_cpu_state_t> {
   static sbp_msg_linux_cpu_state_t &get(sbp_msg_t &msg) {
     return msg.linux_cpu_state;
   }
+  static void to_sbp_msg(const sbp_msg_linux_cpu_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_cpu_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_cpu_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_cpu_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_cpu_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_linux_cpu_state_send(state, sender_id, &msg, write);
@@ -1424,6 +2236,15 @@ struct MessageTraits<sbp_msg_linux_mem_state_dep_a_t> {
   }
   static sbp_msg_linux_mem_state_dep_a_t &get(sbp_msg_t &msg) {
     return msg.linux_mem_state_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_linux_mem_state_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_mem_state_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_mem_state_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_mem_state_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_mem_state_dep_a_t &msg,
@@ -1441,6 +2262,15 @@ struct MessageTraits<sbp_msg_linux_mem_state_t> {
   static sbp_msg_linux_mem_state_t &get(sbp_msg_t &msg) {
     return msg.linux_mem_state;
   }
+  static void to_sbp_msg(const sbp_msg_linux_mem_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_mem_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_mem_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_mem_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_mem_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_linux_mem_state_send(state, sender_id, &msg, write);
@@ -1455,6 +2285,15 @@ struct MessageTraits<sbp_msg_linux_process_fd_count_t> {
   }
   static sbp_msg_linux_process_fd_count_t &get(sbp_msg_t &msg) {
     return msg.linux_process_fd_count;
+  }
+  static void to_sbp_msg(const sbp_msg_linux_process_fd_count_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_process_fd_count = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_process_fd_count_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_process_fd_count = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_process_fd_count_t &msg,
@@ -1472,6 +2311,15 @@ struct MessageTraits<sbp_msg_linux_process_fd_summary_t> {
   static sbp_msg_linux_process_fd_summary_t &get(sbp_msg_t &msg) {
     return msg.linux_process_fd_summary;
   }
+  static void to_sbp_msg(const sbp_msg_linux_process_fd_summary_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_process_fd_summary = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_process_fd_summary_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_process_fd_summary = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_process_fd_summary_t &msg,
                  sbp_write_fn_t write) {
@@ -1488,6 +2336,16 @@ struct MessageTraits<sbp_msg_linux_process_socket_counts_t> {
   }
   static sbp_msg_linux_process_socket_counts_t &get(sbp_msg_t &msg) {
     return msg.linux_process_socket_counts;
+  }
+  static void to_sbp_msg(const sbp_msg_linux_process_socket_counts_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_process_socket_counts = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_linux_process_socket_counts_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_process_socket_counts = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_process_socket_counts_t &msg,
@@ -1507,6 +2365,16 @@ struct MessageTraits<sbp_msg_linux_process_socket_queues_t> {
   static sbp_msg_linux_process_socket_queues_t &get(sbp_msg_t &msg) {
     return msg.linux_process_socket_queues;
   }
+  static void to_sbp_msg(const sbp_msg_linux_process_socket_queues_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_process_socket_queues = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_linux_process_socket_queues_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_process_socket_queues = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_process_socket_queues_t &msg,
                  sbp_write_fn_t write) {
@@ -1524,6 +2392,15 @@ struct MessageTraits<sbp_msg_linux_socket_usage_t> {
   static sbp_msg_linux_socket_usage_t &get(sbp_msg_t &msg) {
     return msg.linux_socket_usage;
   }
+  static void to_sbp_msg(const sbp_msg_linux_socket_usage_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_socket_usage = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_socket_usage_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_socket_usage = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_socket_usage_t &msg,
                  sbp_write_fn_t write) {
@@ -1539,6 +2416,15 @@ struct MessageTraits<sbp_msg_linux_sys_state_dep_a_t> {
   }
   static sbp_msg_linux_sys_state_dep_a_t &get(sbp_msg_t &msg) {
     return msg.linux_sys_state_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_linux_sys_state_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_sys_state_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_sys_state_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_sys_state_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_sys_state_dep_a_t &msg,
@@ -1556,6 +2442,15 @@ struct MessageTraits<sbp_msg_linux_sys_state_t> {
   static sbp_msg_linux_sys_state_t &get(sbp_msg_t &msg) {
     return msg.linux_sys_state;
   }
+  static void to_sbp_msg(const sbp_msg_linux_sys_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->linux_sys_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_linux_sys_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.linux_sys_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_linux_sys_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_linux_sys_state_send(state, sender_id, &msg, write);
@@ -1567,6 +2462,14 @@ struct MessageTraits<sbp_msg_log_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLog;
   static const sbp_msg_log_t &get(const sbp_msg_t &msg) { return msg.log; }
   static sbp_msg_log_t &get(sbp_msg_t &msg) { return msg.log; }
+  static void to_sbp_msg(const sbp_msg_log_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->log = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_log_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.log = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_log_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_log_send(state, sender_id, &msg, write);
@@ -1582,6 +2485,15 @@ struct MessageTraits<sbp_msg_m25_flash_write_status_t> {
   static sbp_msg_m25_flash_write_status_t &get(sbp_msg_t &msg) {
     return msg.m25_flash_write_status;
   }
+  static void to_sbp_msg(const sbp_msg_m25_flash_write_status_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->m25_flash_write_status = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_m25_flash_write_status_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.m25_flash_write_status = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_m25_flash_write_status_t &msg,
                  sbp_write_fn_t write) {
@@ -1596,6 +2508,14 @@ struct MessageTraits<sbp_msg_mag_raw_t> {
     return msg.mag_raw;
   }
   static sbp_msg_mag_raw_t &get(sbp_msg_t &msg) { return msg.mag_raw; }
+  static void to_sbp_msg(const sbp_msg_mag_raw_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->mag_raw = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_mag_raw_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.mag_raw = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_mag_raw_t &msg, sbp_write_fn_t write) {
     return sbp_msg_mag_raw_send(state, sender_id, &msg, write);
@@ -1610,6 +2530,15 @@ struct MessageTraits<sbp_msg_mask_satellite_dep_t> {
   }
   static sbp_msg_mask_satellite_dep_t &get(sbp_msg_t &msg) {
     return msg.mask_satellite_dep;
+  }
+  static void to_sbp_msg(const sbp_msg_mask_satellite_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->mask_satellite_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_mask_satellite_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.mask_satellite_dep = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_mask_satellite_dep_t &msg,
@@ -1627,6 +2556,15 @@ struct MessageTraits<sbp_msg_mask_satellite_t> {
   static sbp_msg_mask_satellite_t &get(sbp_msg_t &msg) {
     return msg.mask_satellite;
   }
+  static void to_sbp_msg(const sbp_msg_mask_satellite_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->mask_satellite = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_mask_satellite_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.mask_satellite = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_mask_satellite_t &msg, sbp_write_fn_t write) {
     return sbp_msg_mask_satellite_send(state, sender_id, &msg, write);
@@ -1642,6 +2580,15 @@ struct MessageTraits<sbp_msg_measurement_state_t> {
   static sbp_msg_measurement_state_t &get(sbp_msg_t &msg) {
     return msg.measurement_state;
   }
+  static void to_sbp_msg(const sbp_msg_measurement_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->measurement_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_measurement_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.measurement_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_measurement_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_measurement_state_send(state, sender_id, &msg, write);
@@ -1656,6 +2603,15 @@ struct MessageTraits<sbp_msg_nap_device_dna_req_t> {
   }
   static sbp_msg_nap_device_dna_req_t &get(sbp_msg_t &msg) {
     return msg.nap_device_dna_req;
+  }
+  static void to_sbp_msg(const sbp_msg_nap_device_dna_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->nap_device_dna_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_nap_device_dna_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.nap_device_dna_req = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_nap_device_dna_req_t &msg,
@@ -1673,6 +2629,15 @@ struct MessageTraits<sbp_msg_nap_device_dna_resp_t> {
   static sbp_msg_nap_device_dna_resp_t &get(sbp_msg_t &msg) {
     return msg.nap_device_dna_resp;
   }
+  static void to_sbp_msg(const sbp_msg_nap_device_dna_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->nap_device_dna_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_nap_device_dna_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.nap_device_dna_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_nap_device_dna_resp_t &msg,
                  sbp_write_fn_t write) {
@@ -1687,6 +2652,14 @@ struct MessageTraits<sbp_msg_ndb_event_t> {
     return msg.ndb_event;
   }
   static sbp_msg_ndb_event_t &get(sbp_msg_t &msg) { return msg.ndb_event; }
+  static void to_sbp_msg(const sbp_msg_ndb_event_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->ndb_event = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ndb_event_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ndb_event = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ndb_event_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ndb_event_send(state, sender_id, &msg, write);
@@ -1701,6 +2674,15 @@ struct MessageTraits<sbp_msg_network_bandwidth_usage_t> {
   }
   static sbp_msg_network_bandwidth_usage_t &get(sbp_msg_t &msg) {
     return msg.network_bandwidth_usage;
+  }
+  static void to_sbp_msg(const sbp_msg_network_bandwidth_usage_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->network_bandwidth_usage = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_network_bandwidth_usage_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.network_bandwidth_usage = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_network_bandwidth_usage_t &msg,
@@ -1718,6 +2700,15 @@ struct MessageTraits<sbp_msg_network_state_req_t> {
   static sbp_msg_network_state_req_t &get(sbp_msg_t &msg) {
     return msg.network_state_req;
   }
+  static void to_sbp_msg(const sbp_msg_network_state_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->network_state_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_network_state_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.network_state_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_network_state_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_network_state_req_send(state, sender_id, &msg, write);
@@ -1733,6 +2724,15 @@ struct MessageTraits<sbp_msg_network_state_resp_t> {
   static sbp_msg_network_state_resp_t &get(sbp_msg_t &msg) {
     return msg.network_state_resp;
   }
+  static void to_sbp_msg(const sbp_msg_network_state_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->network_state_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_network_state_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.network_state_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_network_state_resp_t &msg,
                  sbp_write_fn_t write) {
@@ -1747,6 +2747,14 @@ struct MessageTraits<sbp_msg_obs_dep_a_t> {
     return msg.obs_dep_a;
   }
   static sbp_msg_obs_dep_a_t &get(sbp_msg_t &msg) { return msg.obs_dep_a; }
+  static void to_sbp_msg(const sbp_msg_obs_dep_a_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->obs_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_obs_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.obs_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_obs_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_obs_dep_a_send(state, sender_id, &msg, write);
@@ -1760,6 +2768,14 @@ struct MessageTraits<sbp_msg_obs_dep_b_t> {
     return msg.obs_dep_b;
   }
   static sbp_msg_obs_dep_b_t &get(sbp_msg_t &msg) { return msg.obs_dep_b; }
+  static void to_sbp_msg(const sbp_msg_obs_dep_b_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->obs_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_obs_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.obs_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_obs_dep_b_t &msg, sbp_write_fn_t write) {
     return sbp_msg_obs_dep_b_send(state, sender_id, &msg, write);
@@ -1773,6 +2789,14 @@ struct MessageTraits<sbp_msg_obs_dep_c_t> {
     return msg.obs_dep_c;
   }
   static sbp_msg_obs_dep_c_t &get(sbp_msg_t &msg) { return msg.obs_dep_c; }
+  static void to_sbp_msg(const sbp_msg_obs_dep_c_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->obs_dep_c = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_obs_dep_c_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.obs_dep_c = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_obs_dep_c_t &msg, sbp_write_fn_t write) {
     return sbp_msg_obs_dep_c_send(state, sender_id, &msg, write);
@@ -1784,6 +2808,14 @@ struct MessageTraits<sbp_msg_obs_t> {
   static constexpr sbp_msg_type_t id = SbpMsgObs;
   static const sbp_msg_obs_t &get(const sbp_msg_t &msg) { return msg.obs; }
   static sbp_msg_obs_t &get(sbp_msg_t &msg) { return msg.obs; }
+  static void to_sbp_msg(const sbp_msg_obs_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->obs = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_obs_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.obs = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_obs_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_obs_send(state, sender_id, &msg, write);
@@ -1797,6 +2829,14 @@ struct MessageTraits<sbp_msg_odometry_t> {
     return msg.odometry;
   }
   static sbp_msg_odometry_t &get(sbp_msg_t &msg) { return msg.odometry; }
+  static void to_sbp_msg(const sbp_msg_odometry_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->odometry = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_odometry_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.odometry = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_odometry_t &msg, sbp_write_fn_t write) {
     return sbp_msg_odometry_send(state, sender_id, &msg, write);
@@ -1812,6 +2852,15 @@ struct MessageTraits<sbp_msg_orient_euler_t> {
   static sbp_msg_orient_euler_t &get(sbp_msg_t &msg) {
     return msg.orient_euler;
   }
+  static void to_sbp_msg(const sbp_msg_orient_euler_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->orient_euler = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_orient_euler_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.orient_euler = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_orient_euler_t &msg, sbp_write_fn_t write) {
     return sbp_msg_orient_euler_send(state, sender_id, &msg, write);
@@ -1825,6 +2874,14 @@ struct MessageTraits<sbp_msg_orient_quat_t> {
     return msg.orient_quat;
   }
   static sbp_msg_orient_quat_t &get(sbp_msg_t &msg) { return msg.orient_quat; }
+  static void to_sbp_msg(const sbp_msg_orient_quat_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->orient_quat = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_orient_quat_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.orient_quat = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_orient_quat_t &msg, sbp_write_fn_t write) {
     return sbp_msg_orient_quat_send(state, sender_id, &msg, write);
@@ -1836,6 +2893,14 @@ struct MessageTraits<sbp_msg_osr_t> {
   static constexpr sbp_msg_type_t id = SbpMsgOsr;
   static const sbp_msg_osr_t &get(const sbp_msg_t &msg) { return msg.osr; }
   static sbp_msg_osr_t &get(sbp_msg_t &msg) { return msg.osr; }
+  static void to_sbp_msg(const sbp_msg_osr_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->osr = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_osr_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.osr = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_osr_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_osr_send(state, sender_id, &msg, write);
@@ -1850,6 +2915,15 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_gnss_t> {
   }
   static sbp_msg_pos_ecef_cov_gnss_t &get(sbp_msg_t &msg) {
     return msg.pos_ecef_cov_gnss;
+  }
+  static void to_sbp_msg(const sbp_msg_pos_ecef_cov_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_ecef_cov_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_ecef_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_cov_gnss = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_cov_gnss_t &msg, sbp_write_fn_t write) {
@@ -1866,6 +2940,15 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_t> {
   static sbp_msg_pos_ecef_cov_t &get(sbp_msg_t &msg) {
     return msg.pos_ecef_cov;
   }
+  static void to_sbp_msg(const sbp_msg_pos_ecef_cov_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_ecef_cov = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_ecef_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_cov = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_cov_send(state, sender_id, &msg, write);
@@ -1880,6 +2963,15 @@ struct MessageTraits<sbp_msg_pos_ecef_dep_a_t> {
   }
   static sbp_msg_pos_ecef_dep_a_t &get(sbp_msg_t &msg) {
     return msg.pos_ecef_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_pos_ecef_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_ecef_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_ecef_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_dep_a_t &msg, sbp_write_fn_t write) {
@@ -1896,6 +2988,15 @@ struct MessageTraits<sbp_msg_pos_ecef_gnss_t> {
   static sbp_msg_pos_ecef_gnss_t &get(sbp_msg_t &msg) {
     return msg.pos_ecef_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_pos_ecef_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_ecef_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_ecef_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_gnss_send(state, sender_id, &msg, write);
@@ -1909,6 +3010,14 @@ struct MessageTraits<sbp_msg_pos_ecef_t> {
     return msg.pos_ecef;
   }
   static sbp_msg_pos_ecef_t &get(sbp_msg_t &msg) { return msg.pos_ecef; }
+  static void to_sbp_msg(const sbp_msg_pos_ecef_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_ecef = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_send(state, sender_id, &msg, write);
@@ -1922,6 +3031,14 @@ struct MessageTraits<sbp_msg_pos_llh_acc_t> {
     return msg.pos_llh_acc;
   }
   static sbp_msg_pos_llh_acc_t &get(sbp_msg_t &msg) { return msg.pos_llh_acc; }
+  static void to_sbp_msg(const sbp_msg_pos_llh_acc_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh_acc = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_acc_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_acc = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_acc_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_acc_send(state, sender_id, &msg, write);
@@ -1937,6 +3054,15 @@ struct MessageTraits<sbp_msg_pos_llh_cov_gnss_t> {
   static sbp_msg_pos_llh_cov_gnss_t &get(sbp_msg_t &msg) {
     return msg.pos_llh_cov_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_pos_llh_cov_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh_cov_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_cov_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_cov_gnss_send(state, sender_id, &msg, write);
@@ -1950,6 +3076,14 @@ struct MessageTraits<sbp_msg_pos_llh_cov_t> {
     return msg.pos_llh_cov;
   }
   static sbp_msg_pos_llh_cov_t &get(sbp_msg_t &msg) { return msg.pos_llh_cov; }
+  static void to_sbp_msg(const sbp_msg_pos_llh_cov_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh_cov = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_cov = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_cov_send(state, sender_id, &msg, write);
@@ -1964,6 +3098,15 @@ struct MessageTraits<sbp_msg_pos_llh_dep_a_t> {
   }
   static sbp_msg_pos_llh_dep_a_t &get(sbp_msg_t &msg) {
     return msg.pos_llh_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_pos_llh_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_dep_a_t &msg, sbp_write_fn_t write) {
@@ -1980,6 +3123,15 @@ struct MessageTraits<sbp_msg_pos_llh_gnss_t> {
   static sbp_msg_pos_llh_gnss_t &get(sbp_msg_t &msg) {
     return msg.pos_llh_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_pos_llh_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_gnss_send(state, sender_id, &msg, write);
@@ -1993,6 +3145,14 @@ struct MessageTraits<sbp_msg_pos_llh_t> {
     return msg.pos_llh;
   }
   static sbp_msg_pos_llh_t &get(sbp_msg_t &msg) { return msg.pos_llh; }
+  static void to_sbp_msg(const sbp_msg_pos_llh_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->pos_llh = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pos_llh_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_send(state, sender_id, &msg, write);
@@ -2006,6 +3166,14 @@ struct MessageTraits<sbp_msg_pps_time_t> {
     return msg.pps_time;
   }
   static sbp_msg_pps_time_t &get(sbp_msg_t &msg) { return msg.pps_time; }
+  static void to_sbp_msg(const sbp_msg_pps_time_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->pps_time = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pps_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pps_time = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pps_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pps_time_send(state, sender_id, &msg, write);
@@ -2019,6 +3187,14 @@ struct MessageTraits<sbp_msg_print_dep_t> {
     return msg.print_dep;
   }
   static sbp_msg_print_dep_t &get(sbp_msg_t &msg) { return msg.print_dep; }
+  static void to_sbp_msg(const sbp_msg_print_dep_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->print_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_print_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.print_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_print_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_print_dep_send(state, sender_id, &msg, write);
@@ -2033,6 +3209,15 @@ struct MessageTraits<sbp_msg_protection_level_dep_a_t> {
   }
   static sbp_msg_protection_level_dep_a_t &get(sbp_msg_t &msg) {
     return msg.protection_level_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_protection_level_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->protection_level_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_protection_level_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.protection_level_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_protection_level_dep_a_t &msg,
@@ -2050,6 +3235,15 @@ struct MessageTraits<sbp_msg_protection_level_t> {
   static sbp_msg_protection_level_t &get(sbp_msg_t &msg) {
     return msg.protection_level;
   }
+  static void to_sbp_msg(const sbp_msg_protection_level_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->protection_level = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_protection_level_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.protection_level = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_protection_level_t &msg, sbp_write_fn_t write) {
     return sbp_msg_protection_level_send(state, sender_id, &msg, write);
@@ -2063,6 +3257,14 @@ struct MessageTraits<sbp_msg_reset_dep_t> {
     return msg.reset_dep;
   }
   static sbp_msg_reset_dep_t &get(sbp_msg_t &msg) { return msg.reset_dep; }
+  static void to_sbp_msg(const sbp_msg_reset_dep_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->reset_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_reset_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.reset_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_reset_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_reset_dep_send(state, sender_id, &msg, write);
@@ -2078,6 +3280,15 @@ struct MessageTraits<sbp_msg_reset_filters_t> {
   static sbp_msg_reset_filters_t &get(sbp_msg_t &msg) {
     return msg.reset_filters;
   }
+  static void to_sbp_msg(const sbp_msg_reset_filters_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->reset_filters = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_reset_filters_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.reset_filters = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_reset_filters_t &msg, sbp_write_fn_t write) {
     return sbp_msg_reset_filters_send(state, sender_id, &msg, write);
@@ -2089,6 +3300,14 @@ struct MessageTraits<sbp_msg_reset_t> {
   static constexpr sbp_msg_type_t id = SbpMsgReset;
   static const sbp_msg_reset_t &get(const sbp_msg_t &msg) { return msg.reset; }
   static sbp_msg_reset_t &get(sbp_msg_t &msg) { return msg.reset; }
+  static void to_sbp_msg(const sbp_msg_reset_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->reset = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_reset_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.reset = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_reset_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_reset_send(state, sender_id, &msg, write);
@@ -2102,6 +3321,14 @@ struct MessageTraits<sbp_msg_sbas_raw_t> {
     return msg.sbas_raw;
   }
   static sbp_msg_sbas_raw_t &get(sbp_msg_t &msg) { return msg.sbas_raw; }
+  static void to_sbp_msg(const sbp_msg_sbas_raw_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->sbas_raw = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_sbas_raw_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.sbas_raw = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_sbas_raw_t &msg, sbp_write_fn_t write) {
     return sbp_msg_sbas_raw_send(state, sender_id, &msg, write);
@@ -2115,6 +3342,14 @@ struct MessageTraits<sbp_msg_set_time_t> {
     return msg.set_time;
   }
   static sbp_msg_set_time_t &get(sbp_msg_t &msg) { return msg.set_time; }
+  static void to_sbp_msg(const sbp_msg_set_time_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->set_time = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_set_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.set_time = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_set_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_set_time_send(state, sender_id, &msg, write);
@@ -2130,6 +3365,16 @@ struct MessageTraits<sbp_msg_settings_read_by_index_done_t> {
   }
   static sbp_msg_settings_read_by_index_done_t &get(sbp_msg_t &msg) {
     return msg.settings_read_by_index_done;
+  }
+  static void to_sbp_msg(const sbp_msg_settings_read_by_index_done_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_read_by_index_done = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_settings_read_by_index_done_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_read_by_index_done = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_read_by_index_done_t &msg,
@@ -2147,6 +3392,15 @@ struct MessageTraits<sbp_msg_settings_read_by_index_req_t> {
   }
   static sbp_msg_settings_read_by_index_req_t &get(sbp_msg_t &msg) {
     return msg.settings_read_by_index_req;
+  }
+  static void to_sbp_msg(const sbp_msg_settings_read_by_index_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_read_by_index_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_read_by_index_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_read_by_index_req = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_read_by_index_req_t &msg,
@@ -2166,6 +3420,16 @@ struct MessageTraits<sbp_msg_settings_read_by_index_resp_t> {
   static sbp_msg_settings_read_by_index_resp_t &get(sbp_msg_t &msg) {
     return msg.settings_read_by_index_resp;
   }
+  static void to_sbp_msg(const sbp_msg_settings_read_by_index_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_read_by_index_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_settings_read_by_index_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_read_by_index_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_read_by_index_resp_t &msg,
                  sbp_write_fn_t write) {
@@ -2183,6 +3447,15 @@ struct MessageTraits<sbp_msg_settings_read_req_t> {
   static sbp_msg_settings_read_req_t &get(sbp_msg_t &msg) {
     return msg.settings_read_req;
   }
+  static void to_sbp_msg(const sbp_msg_settings_read_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_read_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_read_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_read_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_read_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_settings_read_req_send(state, sender_id, &msg, write);
@@ -2197,6 +3470,15 @@ struct MessageTraits<sbp_msg_settings_read_resp_t> {
   }
   static sbp_msg_settings_read_resp_t &get(sbp_msg_t &msg) {
     return msg.settings_read_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_settings_read_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_read_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_read_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_read_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_read_resp_t &msg,
@@ -2214,6 +3496,15 @@ struct MessageTraits<sbp_msg_settings_register_resp_t> {
   static sbp_msg_settings_register_resp_t &get(sbp_msg_t &msg) {
     return msg.settings_register_resp;
   }
+  static void to_sbp_msg(const sbp_msg_settings_register_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_register_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_register_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_register_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_register_resp_t &msg,
                  sbp_write_fn_t write) {
@@ -2230,6 +3521,15 @@ struct MessageTraits<sbp_msg_settings_register_t> {
   static sbp_msg_settings_register_t &get(sbp_msg_t &msg) {
     return msg.settings_register;
   }
+  static void to_sbp_msg(const sbp_msg_settings_register_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_register = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_register_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_register = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_register_t &msg, sbp_write_fn_t write) {
     return sbp_msg_settings_register_send(state, sender_id, &msg, write);
@@ -2245,6 +3545,15 @@ struct MessageTraits<sbp_msg_settings_save_t> {
   static sbp_msg_settings_save_t &get(sbp_msg_t &msg) {
     return msg.settings_save;
   }
+  static void to_sbp_msg(const sbp_msg_settings_save_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_save = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_save_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_save = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_save_t &msg, sbp_write_fn_t write) {
     return sbp_msg_settings_save_send(state, sender_id, &msg, write);
@@ -2259,6 +3568,15 @@ struct MessageTraits<sbp_msg_settings_write_resp_t> {
   }
   static sbp_msg_settings_write_resp_t &get(sbp_msg_t &msg) {
     return msg.settings_write_resp;
+  }
+  static void to_sbp_msg(const sbp_msg_settings_write_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_write_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_write_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_write_resp = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_write_resp_t &msg,
@@ -2276,6 +3594,15 @@ struct MessageTraits<sbp_msg_settings_write_t> {
   static sbp_msg_settings_write_t &get(sbp_msg_t &msg) {
     return msg.settings_write;
   }
+  static void to_sbp_msg(const sbp_msg_settings_write_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->settings_write = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_settings_write_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.settings_write = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_settings_write_t &msg, sbp_write_fn_t write) {
     return sbp_msg_settings_write_send(state, sender_id, &msg, write);
@@ -2291,6 +3618,15 @@ struct MessageTraits<sbp_msg_soln_meta_dep_a_t> {
   static sbp_msg_soln_meta_dep_a_t &get(sbp_msg_t &msg) {
     return msg.soln_meta_dep_a;
   }
+  static void to_sbp_msg(const sbp_msg_soln_meta_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->soln_meta_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_soln_meta_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.soln_meta_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_soln_meta_dep_a_t &msg, sbp_write_fn_t write) {
     return sbp_msg_soln_meta_dep_a_send(state, sender_id, &msg, write);
@@ -2304,6 +3640,14 @@ struct MessageTraits<sbp_msg_soln_meta_t> {
     return msg.soln_meta;
   }
   static sbp_msg_soln_meta_t &get(sbp_msg_t &msg) { return msg.soln_meta; }
+  static void to_sbp_msg(const sbp_msg_soln_meta_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->soln_meta = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_soln_meta_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.soln_meta = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_soln_meta_t &msg, sbp_write_fn_t write) {
     return sbp_msg_soln_meta_send(state, sender_id, &msg, write);
@@ -2317,6 +3661,14 @@ struct MessageTraits<sbp_msg_specan_dep_t> {
     return msg.specan_dep;
   }
   static sbp_msg_specan_dep_t &get(sbp_msg_t &msg) { return msg.specan_dep; }
+  static void to_sbp_msg(const sbp_msg_specan_dep_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->specan_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_specan_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.specan_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_specan_dep_t &msg, sbp_write_fn_t write) {
     return sbp_msg_specan_dep_send(state, sender_id, &msg, write);
@@ -2330,6 +3682,14 @@ struct MessageTraits<sbp_msg_specan_t> {
     return msg.specan;
   }
   static sbp_msg_specan_t &get(sbp_msg_t &msg) { return msg.specan; }
+  static void to_sbp_msg(const sbp_msg_specan_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->specan = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_specan_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.specan = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_specan_t &msg,
                  sbp_write_fn_t write) {
     return sbp_msg_specan_send(state, sender_id, &msg, write);
@@ -2345,6 +3705,15 @@ struct MessageTraits<sbp_msg_ssr_code_biases_t> {
   static sbp_msg_ssr_code_biases_t &get(sbp_msg_t &msg) {
     return msg.ssr_code_biases;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_code_biases_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_code_biases = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_code_biases_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_code_biases = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_code_biases_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ssr_code_biases_send(state, sender_id, &msg, write);
@@ -2359,6 +3728,15 @@ struct MessageTraits<sbp_msg_ssr_grid_definition_dep_a_t> {
   }
   static sbp_msg_ssr_grid_definition_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ssr_grid_definition_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_grid_definition_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_grid_definition_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_grid_definition_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_grid_definition_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_grid_definition_dep_a_t &msg,
@@ -2378,6 +3756,16 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_dep_a_t> {
   static sbp_msg_ssr_gridded_correction_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ssr_gridded_correction_dep_a;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_gridded_correction_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_gridded_correction_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_ssr_gridded_correction_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_gridded_correction_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_gridded_correction_dep_a_t &msg,
                  sbp_write_fn_t write) {
@@ -2396,6 +3784,17 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_no_std_dep_a_t> {
   static sbp_msg_ssr_gridded_correction_no_std_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ssr_gridded_correction_no_std_dep_a;
   }
+  static void to_sbp_msg(
+      const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &msg,
+      sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_gridded_correction_no_std_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_gridded_correction_no_std_dep_a = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &msg,
                  sbp_write_fn_t write) {
@@ -2413,6 +3812,15 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_t> {
   static sbp_msg_ssr_gridded_correction_t &get(sbp_msg_t &msg) {
     return msg.ssr_gridded_correction;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_gridded_correction_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_gridded_correction = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_gridded_correction_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_gridded_correction = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_gridded_correction_t &msg,
                  sbp_write_fn_t write) {
@@ -2428,6 +3836,15 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_dep_a_t> {
   }
   static sbp_msg_ssr_orbit_clock_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ssr_orbit_clock_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_orbit_clock_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_orbit_clock_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_orbit_clock_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_orbit_clock_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_orbit_clock_dep_a_t &msg,
@@ -2445,6 +3862,15 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_t> {
   static sbp_msg_ssr_orbit_clock_t &get(sbp_msg_t &msg) {
     return msg.ssr_orbit_clock;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_orbit_clock_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_orbit_clock = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_orbit_clock_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_orbit_clock = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_orbit_clock_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ssr_orbit_clock_send(state, sender_id, &msg, write);
@@ -2459,6 +3885,15 @@ struct MessageTraits<sbp_msg_ssr_phase_biases_t> {
   }
   static sbp_msg_ssr_phase_biases_t &get(sbp_msg_t &msg) {
     return msg.ssr_phase_biases;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_phase_biases_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_phase_biases = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_phase_biases_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_phase_biases = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_phase_biases_t &msg, sbp_write_fn_t write) {
@@ -2475,6 +3910,15 @@ struct MessageTraits<sbp_msg_ssr_satellite_apc_t> {
   static sbp_msg_ssr_satellite_apc_t &get(sbp_msg_t &msg) {
     return msg.ssr_satellite_apc;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_satellite_apc_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_satellite_apc = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_satellite_apc_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_satellite_apc = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_satellite_apc_t &msg, sbp_write_fn_t write) {
     return sbp_msg_ssr_satellite_apc_send(state, sender_id, &msg, write);
@@ -2489,6 +3933,15 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_dep_a_t> {
   }
   static sbp_msg_ssr_stec_correction_dep_a_t &get(sbp_msg_t &msg) {
     return msg.ssr_stec_correction_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_stec_correction_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_stec_correction_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_stec_correction_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_stec_correction_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_stec_correction_dep_a_t &msg,
@@ -2507,6 +3960,15 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_t> {
   static sbp_msg_ssr_stec_correction_t &get(sbp_msg_t &msg) {
     return msg.ssr_stec_correction;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_stec_correction_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_stec_correction = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_stec_correction_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_stec_correction = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_stec_correction_t &msg,
                  sbp_write_fn_t write) {
@@ -2523,6 +3985,15 @@ struct MessageTraits<sbp_msg_ssr_tile_definition_t> {
   static sbp_msg_ssr_tile_definition_t &get(sbp_msg_t &msg) {
     return msg.ssr_tile_definition;
   }
+  static void to_sbp_msg(const sbp_msg_ssr_tile_definition_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_tile_definition = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_tile_definition_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_tile_definition = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_ssr_tile_definition_t &msg,
                  sbp_write_fn_t write) {
@@ -2537,6 +4008,14 @@ struct MessageTraits<sbp_msg_startup_t> {
     return msg.startup;
   }
   static sbp_msg_startup_t &get(sbp_msg_t &msg) { return msg.startup; }
+  static void to_sbp_msg(const sbp_msg_startup_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->startup = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_startup_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.startup = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_startup_t &msg, sbp_write_fn_t write) {
     return sbp_msg_startup_send(state, sender_id, &msg, write);
@@ -2552,6 +4031,15 @@ struct MessageTraits<sbp_msg_status_report_t> {
   static sbp_msg_status_report_t &get(sbp_msg_t &msg) {
     return msg.status_report;
   }
+  static void to_sbp_msg(const sbp_msg_status_report_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->status_report = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_status_report_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.status_report = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_status_report_t &msg, sbp_write_fn_t write) {
     return sbp_msg_status_report_send(state, sender_id, &msg, write);
@@ -2566,6 +4054,15 @@ struct MessageTraits<sbp_msg_stm_flash_lock_sector_t> {
   }
   static sbp_msg_stm_flash_lock_sector_t &get(sbp_msg_t &msg) {
     return msg.stm_flash_lock_sector;
+  }
+  static void to_sbp_msg(const sbp_msg_stm_flash_lock_sector_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->stm_flash_lock_sector = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_stm_flash_lock_sector_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.stm_flash_lock_sector = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_stm_flash_lock_sector_t &msg,
@@ -2583,6 +4080,15 @@ struct MessageTraits<sbp_msg_stm_flash_unlock_sector_t> {
   static sbp_msg_stm_flash_unlock_sector_t &get(sbp_msg_t &msg) {
     return msg.stm_flash_unlock_sector;
   }
+  static void to_sbp_msg(const sbp_msg_stm_flash_unlock_sector_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->stm_flash_unlock_sector = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_stm_flash_unlock_sector_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.stm_flash_unlock_sector = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_stm_flash_unlock_sector_t &msg,
                  sbp_write_fn_t write) {
@@ -2599,6 +4105,15 @@ struct MessageTraits<sbp_msg_stm_unique_id_req_t> {
   static sbp_msg_stm_unique_id_req_t &get(sbp_msg_t &msg) {
     return msg.stm_unique_id_req;
   }
+  static void to_sbp_msg(const sbp_msg_stm_unique_id_req_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->stm_unique_id_req = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_stm_unique_id_req_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.stm_unique_id_req = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_stm_unique_id_req_t &msg, sbp_write_fn_t write) {
     return sbp_msg_stm_unique_id_req_send(state, sender_id, &msg, write);
@@ -2614,6 +4129,15 @@ struct MessageTraits<sbp_msg_stm_unique_id_resp_t> {
   static sbp_msg_stm_unique_id_resp_t &get(sbp_msg_t &msg) {
     return msg.stm_unique_id_resp;
   }
+  static void to_sbp_msg(const sbp_msg_stm_unique_id_resp_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->stm_unique_id_resp = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_stm_unique_id_resp_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.stm_unique_id_resp = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_stm_unique_id_resp_t &msg,
                  sbp_write_fn_t write) {
@@ -2628,6 +4152,14 @@ struct MessageTraits<sbp_msg_sv_az_el_t> {
     return msg.sv_az_el;
   }
   static sbp_msg_sv_az_el_t &get(sbp_msg_t &msg) { return msg.sv_az_el; }
+  static void to_sbp_msg(const sbp_msg_sv_az_el_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->sv_az_el = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_sv_az_el_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.sv_az_el = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_sv_az_el_t &msg, sbp_write_fn_t write) {
     return sbp_msg_sv_az_el_send(state, sender_id, &msg, write);
@@ -2642,6 +4174,15 @@ struct MessageTraits<sbp_msg_sv_configuration_gps_dep_t> {
   }
   static sbp_msg_sv_configuration_gps_dep_t &get(sbp_msg_t &msg) {
     return msg.sv_configuration_gps_dep;
+  }
+  static void to_sbp_msg(const sbp_msg_sv_configuration_gps_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->sv_configuration_gps_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_sv_configuration_gps_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.sv_configuration_gps_dep = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_sv_configuration_gps_dep_t &msg,
@@ -2659,6 +4200,15 @@ struct MessageTraits<sbp_msg_thread_state_t> {
   static sbp_msg_thread_state_t &get(sbp_msg_t &msg) {
     return msg.thread_state;
   }
+  static void to_sbp_msg(const sbp_msg_thread_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->thread_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_thread_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.thread_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_thread_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_thread_state_send(state, sender_id, &msg, write);
@@ -2673,6 +4223,15 @@ struct MessageTraits<sbp_msg_tracking_iq_dep_a_t> {
   }
   static sbp_msg_tracking_iq_dep_a_t &get(sbp_msg_t &msg) {
     return msg.tracking_iq_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_tracking_iq_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_iq_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_iq_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_iq_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_iq_dep_a_t &msg, sbp_write_fn_t write) {
@@ -2689,6 +4248,15 @@ struct MessageTraits<sbp_msg_tracking_iq_dep_b_t> {
   static sbp_msg_tracking_iq_dep_b_t &get(sbp_msg_t &msg) {
     return msg.tracking_iq_dep_b;
   }
+  static void to_sbp_msg(const sbp_msg_tracking_iq_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_iq_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_iq_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_iq_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_iq_dep_b_t &msg, sbp_write_fn_t write) {
     return sbp_msg_tracking_iq_dep_b_send(state, sender_id, &msg, write);
@@ -2702,6 +4270,14 @@ struct MessageTraits<sbp_msg_tracking_iq_t> {
     return msg.tracking_iq;
   }
   static sbp_msg_tracking_iq_t &get(sbp_msg_t &msg) { return msg.tracking_iq; }
+  static void to_sbp_msg(const sbp_msg_tracking_iq_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_iq = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_iq_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_iq = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_iq_t &msg, sbp_write_fn_t write) {
     return sbp_msg_tracking_iq_send(state, sender_id, &msg, write);
@@ -2716,6 +4292,15 @@ struct MessageTraits<sbp_msg_tracking_state_dep_a_t> {
   }
   static sbp_msg_tracking_state_dep_a_t &get(sbp_msg_t &msg) {
     return msg.tracking_state_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_tracking_state_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_state_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_state_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_state_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_state_dep_a_t &msg,
@@ -2733,6 +4318,15 @@ struct MessageTraits<sbp_msg_tracking_state_dep_b_t> {
   static sbp_msg_tracking_state_dep_b_t &get(sbp_msg_t &msg) {
     return msg.tracking_state_dep_b;
   }
+  static void to_sbp_msg(const sbp_msg_tracking_state_dep_b_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_state_dep_b = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_state_dep_b_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_state_dep_b = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_state_dep_b_t &msg,
                  sbp_write_fn_t write) {
@@ -2749,6 +4343,16 @@ struct MessageTraits<sbp_msg_tracking_state_detailed_dep_a_t> {
   }
   static sbp_msg_tracking_state_detailed_dep_a_t &get(sbp_msg_t &msg) {
     return msg.tracking_state_detailed_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_tracking_state_detailed_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_state_detailed_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_tracking_state_detailed_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_state_detailed_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_state_detailed_dep_a_t &msg,
@@ -2768,6 +4372,16 @@ struct MessageTraits<sbp_msg_tracking_state_detailed_dep_t> {
   static sbp_msg_tracking_state_detailed_dep_t &get(sbp_msg_t &msg) {
     return msg.tracking_state_detailed_dep;
   }
+  static void to_sbp_msg(const sbp_msg_tracking_state_detailed_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_state_detailed_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_tracking_state_detailed_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_state_detailed_dep = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_state_detailed_dep_t &msg,
                  sbp_write_fn_t write) {
@@ -2785,6 +4399,15 @@ struct MessageTraits<sbp_msg_tracking_state_t> {
   static sbp_msg_tracking_state_t &get(sbp_msg_t &msg) {
     return msg.tracking_state;
   }
+  static void to_sbp_msg(const sbp_msg_tracking_state_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->tracking_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tracking_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tracking_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_tracking_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_tracking_state_send(state, sender_id, &msg, write);
@@ -2800,6 +4423,15 @@ struct MessageTraits<sbp_msg_uart_state_depa_t> {
   static sbp_msg_uart_state_depa_t &get(sbp_msg_t &msg) {
     return msg.uart_state_depa;
   }
+  static void to_sbp_msg(const sbp_msg_uart_state_depa_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->uart_state_depa = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_uart_state_depa_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.uart_state_depa = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_uart_state_depa_t &msg, sbp_write_fn_t write) {
     return sbp_msg_uart_state_depa_send(state, sender_id, &msg, write);
@@ -2813,6 +4445,14 @@ struct MessageTraits<sbp_msg_uart_state_t> {
     return msg.uart_state;
   }
   static sbp_msg_uart_state_t &get(sbp_msg_t &msg) { return msg.uart_state; }
+  static void to_sbp_msg(const sbp_msg_uart_state_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->uart_state = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_uart_state_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.uart_state = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_uart_state_t &msg, sbp_write_fn_t write) {
     return sbp_msg_uart_state_send(state, sender_id, &msg, write);
@@ -2826,6 +4466,14 @@ struct MessageTraits<sbp_msg_user_data_t> {
     return msg.user_data;
   }
   static sbp_msg_user_data_t &get(sbp_msg_t &msg) { return msg.user_data; }
+  static void to_sbp_msg(const sbp_msg_user_data_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->user_data = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_user_data_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.user_data = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_user_data_t &msg, sbp_write_fn_t write) {
     return sbp_msg_user_data_send(state, sender_id, &msg, write);
@@ -2841,6 +4489,15 @@ struct MessageTraits<sbp_msg_utc_time_gnss_t> {
   static sbp_msg_utc_time_gnss_t &get(sbp_msg_t &msg) {
     return msg.utc_time_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_utc_time_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->utc_time_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_utc_time_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.utc_time_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_utc_time_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_utc_time_gnss_send(state, sender_id, &msg, write);
@@ -2854,6 +4511,14 @@ struct MessageTraits<sbp_msg_utc_time_t> {
     return msg.utc_time;
   }
   static sbp_msg_utc_time_t &get(sbp_msg_t &msg) { return msg.utc_time; }
+  static void to_sbp_msg(const sbp_msg_utc_time_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->utc_time = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_utc_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.utc_time = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_utc_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_utc_time_send(state, sender_id, &msg, write);
@@ -2867,6 +4532,14 @@ struct MessageTraits<sbp_msg_vel_body_t> {
     return msg.vel_body;
   }
   static sbp_msg_vel_body_t &get(sbp_msg_t &msg) { return msg.vel_body; }
+  static void to_sbp_msg(const sbp_msg_vel_body_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_body = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_body_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_body = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_body_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_body_send(state, sender_id, &msg, write);
@@ -2881,6 +4554,15 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_gnss_t> {
   }
   static sbp_msg_vel_ecef_cov_gnss_t &get(sbp_msg_t &msg) {
     return msg.vel_ecef_cov_gnss;
+  }
+  static void to_sbp_msg(const sbp_msg_vel_ecef_cov_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ecef_cov_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ecef_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_cov_gnss = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_cov_gnss_t &msg, sbp_write_fn_t write) {
@@ -2897,6 +4579,15 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_t> {
   static sbp_msg_vel_ecef_cov_t &get(sbp_msg_t &msg) {
     return msg.vel_ecef_cov;
   }
+  static void to_sbp_msg(const sbp_msg_vel_ecef_cov_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ecef_cov = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ecef_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_cov = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_cov_send(state, sender_id, &msg, write);
@@ -2911,6 +4602,15 @@ struct MessageTraits<sbp_msg_vel_ecef_dep_a_t> {
   }
   static sbp_msg_vel_ecef_dep_a_t &get(sbp_msg_t &msg) {
     return msg.vel_ecef_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_vel_ecef_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ecef_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ecef_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_dep_a_t &msg, sbp_write_fn_t write) {
@@ -2927,6 +4627,15 @@ struct MessageTraits<sbp_msg_vel_ecef_gnss_t> {
   static sbp_msg_vel_ecef_gnss_t &get(sbp_msg_t &msg) {
     return msg.vel_ecef_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_vel_ecef_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ecef_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ecef_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_gnss_send(state, sender_id, &msg, write);
@@ -2940,6 +4649,14 @@ struct MessageTraits<sbp_msg_vel_ecef_t> {
     return msg.vel_ecef;
   }
   static sbp_msg_vel_ecef_t &get(sbp_msg_t &msg) { return msg.vel_ecef; }
+  static void to_sbp_msg(const sbp_msg_vel_ecef_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ecef = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_send(state, sender_id, &msg, write);
@@ -2955,6 +4672,15 @@ struct MessageTraits<sbp_msg_vel_ned_cov_gnss_t> {
   static sbp_msg_vel_ned_cov_gnss_t &get(sbp_msg_t &msg) {
     return msg.vel_ned_cov_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_vel_ned_cov_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ned_cov_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ned_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_cov_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_cov_gnss_send(state, sender_id, &msg, write);
@@ -2968,6 +4694,14 @@ struct MessageTraits<sbp_msg_vel_ned_cov_t> {
     return msg.vel_ned_cov;
   }
   static sbp_msg_vel_ned_cov_t &get(sbp_msg_t &msg) { return msg.vel_ned_cov; }
+  static void to_sbp_msg(const sbp_msg_vel_ned_cov_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ned_cov = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ned_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_cov = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_cov_send(state, sender_id, &msg, write);
@@ -2982,6 +4716,15 @@ struct MessageTraits<sbp_msg_vel_ned_dep_a_t> {
   }
   static sbp_msg_vel_ned_dep_a_t &get(sbp_msg_t &msg) {
     return msg.vel_ned_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_vel_ned_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ned_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ned_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_dep_a = msg;
+    return sbp_msg;
   }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_dep_a_t &msg, sbp_write_fn_t write) {
@@ -2998,6 +4741,15 @@ struct MessageTraits<sbp_msg_vel_ned_gnss_t> {
   static sbp_msg_vel_ned_gnss_t &get(sbp_msg_t &msg) {
     return msg.vel_ned_gnss;
   }
+  static void to_sbp_msg(const sbp_msg_vel_ned_gnss_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ned_gnss = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ned_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_gnss = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_gnss_send(state, sender_id, &msg, write);
@@ -3011,6 +4763,14 @@ struct MessageTraits<sbp_msg_vel_ned_t> {
     return msg.vel_ned;
   }
   static sbp_msg_vel_ned_t &get(sbp_msg_t &msg) { return msg.vel_ned; }
+  static void to_sbp_msg(const sbp_msg_vel_ned_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_ned = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_ned_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_send(state, sender_id, &msg, write);
@@ -3024,6 +4784,14 @@ struct MessageTraits<sbp_msg_wheeltick_t> {
     return msg.wheeltick;
   }
   static sbp_msg_wheeltick_t &get(sbp_msg_t &msg) { return msg.wheeltick; }
+  static void to_sbp_msg(const sbp_msg_wheeltick_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->wheeltick = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_wheeltick_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.wheeltick = msg;
+    return sbp_msg;
+  }
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_wheeltick_t &msg, sbp_write_fn_t write) {
     return sbp_msg_wheeltick_send(state, sender_id, &msg, write);
