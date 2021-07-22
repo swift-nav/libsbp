@@ -44,8 +44,8 @@ struct MessageTraits<(((m.type_name)))> {
   static (((m.type_name)))& get(sbp_msg_t &msg) {
     return msg.(((m.union_member_name)));
   }
-  static void to_sbp_msg(const (((m.type_name)))& msg, sbp_msg_t &sbp_msg) {
-    sbp_msg.(((m.union_member_name))) = msg;
+  static void to_sbp_msg(const (((m.type_name)))& msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->(((m.union_member_name))) = msg;
   }
   static sbp_msg_t to_sbp_msg(const (((m.type_name)))& msg) {
     sbp_msg_t sbp_msg;
