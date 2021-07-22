@@ -566,6 +566,8 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * @field lat number (float, 8 bytes) Latitude
  * @field lon number (float, 8 bytes) Longitude
  * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
+ * @field orthometric_height number (float, 8 bytes) Height above the geoid (i.e. height above mean sea level). See
+ *   confidence_and_geoid for geoid model used.
  * @field h_accuracy number (float, 4 bytes) Estimated horizontal error at the user-configured confidence level; zero implies
  *   invalid.
  * @field v_accuracy number (float, 4 bytes) Estimated vertical error at the user-configured confidence level; zero implies
@@ -575,7 +577,9 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  * @field at_accuracy number (float, 4 bytes) Estimated along-track error at the user-configured confidence level; zero
  *   implies invalid.
  * @field h_ellipse EstimatedHorizontalErrorEllipse The estimated horizontal error ellipse at the user-configured confidence level.
- * @field confidence number (unsigned 8-bit int, 1 byte) Configured confidence level for the estimated position error
+ * @field confidence_and_geoid number (unsigned 8-bit int, 1 byte) The lower bits describe the configured confidence level for the estimated
+ *   position error. The middle bits describe the geoid model used to calculate the
+ *   orthometric height.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -598,12 +602,13 @@ MsgPosLlhAcc.prototype.parser = new Parser()
   .doublele('lat')
   .doublele('lon')
   .doublele('height')
+  .doublele('orthometric_height')
   .floatle('h_accuracy')
   .floatle('v_accuracy')
   .floatle('ct_accuracy')
   .floatle('at_accuracy')
   .nest('h_ellipse', { type: EstimatedHorizontalErrorEllipse.prototype.parser })
-  .uint8('confidence')
+  .uint8('confidence_and_geoid')
   .uint8('n_sats')
   .uint8('flags');
 MsgPosLlhAcc.prototype.fieldSpec = [];
@@ -611,12 +616,13 @@ MsgPosLlhAcc.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['orthometric_height', 'writeDoubleLE', 8]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['h_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['v_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['ct_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['at_accuracy', 'writeFloatLE', 4]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['h_ellipse', EstimatedHorizontalErrorEllipse.prototype.fieldSpec]);
-MsgPosLlhAcc.prototype.fieldSpec.push(['confidence', 'writeUInt8', 1]);
+MsgPosLlhAcc.prototype.fieldSpec.push(['confidence_and_geoid', 'writeUInt8', 1]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgPosLlhAcc.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
