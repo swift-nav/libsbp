@@ -11,15 +11,17 @@ set(libsbp_SRCS
   ${generated_c_sources}
   )
 
-add_library(sbp ${libsbp_SRCS})
+swift_add_library(sbp
+  C_STANDARD 99
+  SOURCES ${libsbp_SRCS}
+  ADD_COMPILE_OPTIONS
+    -pedantic
+)
 add_library(swiftnav::sbp ALIAS sbp)
 
 target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
-target_code_coverage(sbp AUTO ALL)
-swift_set_language_standards(sbp C 99)
-swift_set_compile_options(sbp ADD -pedantic)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")
