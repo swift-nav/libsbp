@@ -28,7 +28,7 @@
 #define SBP_PATCH_VERSION 10
 
 /** Full SBP version string. */
-#define SBP_VERSION "3.4.10"
+#define SBP_VERSION "3.4.11-alpha"
 
 /** \} */
 
