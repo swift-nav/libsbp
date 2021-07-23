@@ -85,6 +85,10 @@ class State {
     return sbp_payload_process(&state_, sender_id, msg_type, msg_length, const_cast<u8 *>(payload));
   }
 
+  s8 process_message(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
+    return sbp_message_process(&state_, sender_id, msg_type, msg);
+  }
+
   template<typename T>
   s8 send_message(u16 sender_id, const T &msg) {
     return sbp::MessageTraits<T>::send(&state_, sender_id, msg, &write_func);
