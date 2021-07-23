@@ -8,6 +8,7 @@
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
+//   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
 //   const gNSSInputType = Convert.toGNSSInputType(json);
 //   const gnssCapb = Convert.toGnssCapb(json);
 //   const gnssSignal = Convert.toGnssSignal(json);
@@ -112,6 +113,7 @@
 //   const msgPosECEFCovGnss = Convert.toMsgPosECEFCovGnss(json);
 //   const msgPosECEFGnss = Convert.toMsgPosECEFGnss(json);
 //   const msgPosLLH = Convert.toMsgPosLLH(json);
+//   const msgPosLLHAcc = Convert.toMsgPosLLHAcc(json);
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
 //   const msgPosLLHCovGnss = Convert.toMsgPosLLHCovGnss(json);
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
@@ -239,6 +241,14 @@ function toEphemerisCommonContent(json) {
 
 function ephemerisCommonContentToJson(value) {
     return JSON.stringify(uncast(value, r("EphemerisCommonContent")), null, 2);
+}
+
+function toEstimatedHorizontalErrorEllipse(json) {
+    return cast(JSON.parse(json), r("EstimatedHorizontalErrorEllipse"));
+}
+
+function estimatedHorizontalErrorEllipseToJson(value) {
+    return JSON.stringify(uncast(value, r("EstimatedHorizontalErrorEllipse")), null, 2);
 }
 
 function toGNSSInputType(json) {
@@ -1071,6 +1081,14 @@ function toMsgPosLLH(json) {
 
 function msgPosLLHToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPosLLH")), null, 2);
+}
+
+function toMsgPosLLHAcc(json) {
+    return cast(JSON.parse(json), r("MsgPosLLHAcc"));
+}
+
+function msgPosLLHAccToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgPosLLHAcc")), null, 2);
 }
 
 function toMsgPosLLHCov(json) {
@@ -2177,7 +2195,7 @@ const typeMap = {
         { json: "rf_gain", js: "rf_gain", typ: a(0) },
     ], "any"),
     "MsgFwd": o([
-        { json: "fwd_payload", js: "fwd_payload", typ: "" },
+        { json: "fwd_payload", js: "fwd_payload", typ: a(0) },
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),
@@ -2531,6 +2549,26 @@ const typeMap = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
+    "MsgPosLLHAcc": o([
+        { json: "at_accuracy", js: "at_accuracy", typ: 3.14 },
+        { json: "confidence_and_geoid", js: "confidence_and_geoid", typ: 0 },
+        { json: "ct_accuracy", js: "ct_accuracy", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 3.14 },
+        { json: "h_ellipse", js: "h_ellipse", typ: r("EstimatedHorizontalErrorEllipse") },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "orthometric_height", js: "orthometric_height", typ: 3.14 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 3.14 },
+    ], "any"),
+    "EstimatedHorizontalErrorEllipse": o([
+        { json: "orientation", js: "orientation", typ: 3.14 },
+        { json: "semi_major", js: "semi_major", typ: 3.14 },
+        { json: "semi_minor", js: "semi_minor", typ: 3.14 },
     ], "any"),
     "MsgPosLLHCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
@@ -3043,6 +3081,8 @@ module.exports = {
     "toDoppler": toDoppler,
     "ephemerisCommonContentToJson": ephemerisCommonContentToJson,
     "toEphemerisCommonContent": toEphemerisCommonContent,
+    "estimatedHorizontalErrorEllipseToJson": estimatedHorizontalErrorEllipseToJson,
+    "toEstimatedHorizontalErrorEllipse": toEstimatedHorizontalErrorEllipse,
     "gNSSInputTypeToJson": gNSSInputTypeToJson,
     "toGNSSInputType": toGNSSInputType,
     "gnssCapbToJson": gnssCapbToJson,
@@ -3251,6 +3291,8 @@ module.exports = {
     "toMsgPosECEFGnss": toMsgPosECEFGnss,
     "msgPosLLHToJson": msgPosLLHToJson,
     "toMsgPosLLH": toMsgPosLLH,
+    "msgPosLLHAccToJson": msgPosLLHAccToJson,
+    "toMsgPosLLHAcc": toMsgPosLLHAcc,
     "msgPosLLHCovToJson": msgPosLLHCovToJson,
     "toMsgPosLLHCov": toMsgPosLLHCov,
     "msgPosLLHCovGnssToJson": msgPosLLHCovGnssToJson,
