@@ -82,8 +82,10 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
   sbp_msg_bootloader_handshake_resp_t test_msg{};
   test_msg.flags = 0;
 
-  EXPECT_TRUE(
-      sbp_msg_bootloader_handshake_resp_version_set(&test_msg, "v1.2\n"));
+  size_t written;
+  EXPECT_TRUE(sbp_msg_bootloader_handshake_resp_version_set(&test_msg, "v1.2\n",
+                                                            false, &written));
+  EXPECT_EQ(written, strlen("v1.2\n"));
   EXPECT_EQ(sbp_msg_bootloader_handshake_resp_version_encoded_len(&test_msg),
             5);
 
@@ -171,8 +173,10 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
 
   sbp_msg_bootloader_handshake_dep_a_t test_msg{};
 
-  EXPECT_TRUE(
-      sbp_msg_bootloader_handshake_dep_a_handshake_set(&test_msg, "v1.2"));
+  size_t written;
+  EXPECT_TRUE(sbp_msg_bootloader_handshake_dep_a_handshake_set(
+      &test_msg, "v1.2", false, &written));
+  EXPECT_EQ(written, strlen("v1.2"));
   EXPECT_EQ(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(&test_msg),
             4);
 

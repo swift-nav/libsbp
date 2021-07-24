@@ -40,24 +40,27 @@ static bool copy_str(char *buf, size_t *copied, size_t max, const char *str,
   if (str_len >= max) {
     return false;
   }
-  memcpy(buf, str, str_len + 1);
+  memcpy(buf, str, str_len);
+  buf[str_len] = '\0';
   *copied = str_len + 1;
   return true;
 }
 
 bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
-                            const char *str) {
-  return copy_str(buf, copied, max, str, sbp_strnlen(str, max));
+                            const char *str, size_t n) {
+  return copy_str(buf, copied, max, str, n);
 }
 
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
+bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_truncate,
                                const char *fmt, va_list ap) {
   char tmp[256];
   int n = vsnprintf(tmp, sizeof(tmp), fmt, ap);
   if (n < 0) {
     return false;
   }
-  return copy_str(buf, copied, max, tmp, (size_t)n);
+  size_t trunc_len = (max - 1) < (size_t)n ? (max - 1) : (size_t)n;
+  size_t len = should_truncate ? trunc_len : (size_t)n;
+  return copy_str(buf, copied, max, tmp, len);
 }
 
 bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,

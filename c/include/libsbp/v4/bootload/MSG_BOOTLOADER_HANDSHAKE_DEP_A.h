@@ -109,16 +109,43 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
  *
  * Erase any existing content and replace with the specified string
  *
- * This function will return true if the new string was successfully applied. If
- * the specified string is longer than can be represented in wire encoding this
- * function will return false
+ * If the should_trunc parameter is set to false and the specified string is
+ * longer than can be represented in wire encoding, this function will return
+ * false. Otherwise, if should_trunc is set to true, then as much as possible
+ * will be read from the new_str as can fit in the msg.
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
  * @param new_str New string
+ * @param should_trunc Whether the new_str can be truncated to fit in msg
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str,
+    bool should_trunc, size_t *n_written);
+
+/**
+ * Set sbp_msg_bootloader_handshake_dep_a_t::handshake from a raw buffer
+ *
+ * Erase any existing content and replace with the specified raw buffer
+ *
+ * If the should_trunc parameter is set to false and the specified string is
+ * longer than can be represented in wire encoding, this function will return
+ * false. Otherwise, if should_trunc is set to true, then as much as possible
+ * will be read from the new_str as can fit in the msg.
+ *
+ * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param new_buf New buffer
+ * @param new_buf_len New buffer length
+ * @param should_trunc Whether the new_str can be truncated to fit in msg
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
+    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_buf,
+    size_t new_buf_len, bool should_trunc, size_t *n_written);
 
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -126,18 +153,22 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
  *
  * Erase any existing content and replace with the formatted string
  *
- * This function will return true if the new string was successfully applied. If
- * the operation would end up overflowing the maximum size of this field in wire
- * encoding the existing contents will be erased and this function will return
- * false.
+ * This function will return true if the new string was successfully applied.
+ * If should_trunc is set false, and the operation would end up overflowing the
+ * maximum size of this field in wire encoding the existing contents will be
+ * erased and this function will return false. Otherwise, if should_trunc is
+ * set true, the input formatted string will be truncated to fit.
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
 /**
  * Set sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -147,30 +178,37 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
  * takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
  * @param fmt printf style format string
  * @param ap Argument list
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(2);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
  * formatting
  *
  * The new string will be appended to the existing contents of the string (if
- * any). If the operation would end up overflowing the maximum size of this
- * field in wire encoding the existing contents will be unmodified and this
- * function will return false.
+ * any). If should_trunc is false and the operation would end up overflowing
+ * the maximum size of this field in wire encoding, the existing contents will
+ * be unmodified and this function will return false. Otherwise, if
+ * should_trunc is true, the input string will be truncated to fit.
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
 /**
  * Append sbp_msg_bootloader_handshake_dep_a_t::handshake with printf style
@@ -180,14 +218,16 @@ bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
  * except it takes a va_list argument
  *
  * @param msg sbp_msg_bootloader_handshake_dep_a_t instance
+ * @param should_trunc Whether the input string should be truncated to fit
+ * @param n_written If not null, on success will be set to the number of bytes
+ * written to msg
  * @param fmt printf style format string
  * @param ap Argument list
  * @return true on success, false otherwise
- *
  */
 bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(2);
+    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+    size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Obtain the string value from sbp_msg_bootloader_handshake_dep_a_t::handshake
