@@ -682,7 +682,7 @@ s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, cons
   return send_payload(s, msg_type, sender_id, payload_len, payload, write);
 }
 
-s8 sbp_process_message(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
+s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
                        const sbp_msg_t *msg) {
   sbp_msg_callbacks_node_t *node;
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
