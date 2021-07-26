@@ -452,7 +452,7 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint8('group_id')
   .uint8('flags')
   .uint8('n_group_msgs')
-  .array('group_msgs', { type: 'uint16', length: 'n_group_msgs' });
+  .array('group_msgs', { type: 'uint16le', length: 'n_group_msgs' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
