@@ -42,9 +42,11 @@
     ((flags) |= (((val) & (SBP_STARTUP__MASK)) << (SBP_STARTUP__SHIFT))); \
   } while (0)
 
-#define SBP_STARTUP__COLD_START (0)
-#define SBP_STARTUP__WARM_START (1)
-#define SBP_STARTUP__HOT_START (2)
+#define SBP_STARTUP_COLD_START (0)
+#define SBP_STARTUP_WARM_START (1)
+#define SBP_STARTUP_WARM_START (1)
+#define SBP_STARTUP_HOT_START (2)
+#define SBP_STARTUP_HOT_START (2)
 /**
  * Encoded length of sbp_msg_startup_t (V4 API) and
  * msg_startup_t (legacy API)
@@ -688,9 +690,13 @@
   } while (0)
 
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_UNKNOWN (0)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_UNKNOWN (0)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MILLISECONDS (1)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_10_MILLISECONDS (1)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MICROSECONDS (2)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_10_MICROSECONDS (2)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_1_MICROSECONDS (3)
 /**
  * Encoded length of sbp_msg_pps_time_t (V4 API) and
  * msg_pps_time_t (legacy API)
