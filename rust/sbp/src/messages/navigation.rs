@@ -2259,6 +2259,9 @@ pub struct MsgPosLLHAcc {
     pub lon: f64,
     /// Height above WGS84 ellipsoid
     pub height: f64,
+    /// Height above the geoid (i.e. height above mean sea level). See
+    /// confidence_and_geoid for geoid model used.
+    pub orthometric_height: f64,
     /// Estimated horizontal error at the user-configured confidence level; zero
     /// implies invalid.
     pub h_accuracy: f32,
@@ -2274,8 +2277,10 @@ pub struct MsgPosLLHAcc {
     /// The estimated horizontal error ellipse at the user-configured confidence
     /// level.
     pub h_ellipse: EstimatedHorizontalErrorEllipse,
-    /// Configured confidence level for the estimated position error
-    pub confidence: u8,
+    /// The lower bits describe the configured confidence level for the
+    /// estimated position error. The middle bits describe the geoid model used
+    /// to calculate the orthometric height.
+    pub confidence_and_geoid: u8,
     /// Number of satellites used in solution.
     pub n_sats: u8,
     /// Status flags
@@ -2291,12 +2296,13 @@ impl MsgPosLLHAcc {
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
             height: _buf.read_f64::<LittleEndian>()?,
+            orthometric_height: _buf.read_f64::<LittleEndian>()?,
             h_accuracy: _buf.read_f32::<LittleEndian>()?,
             v_accuracy: _buf.read_f32::<LittleEndian>()?,
             ct_accuracy: _buf.read_f32::<LittleEndian>()?,
             at_accuracy: _buf.read_f32::<LittleEndian>()?,
             h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
-            confidence: _buf.read_u8()?,
+            confidence_and_geoid: _buf.read_u8()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         } )
@@ -2363,12 +2369,13 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         self.lat.append_to_sbp_buffer(buf);
         self.lon.append_to_sbp_buffer(buf);
         self.height.append_to_sbp_buffer(buf);
+        self.orthometric_height.append_to_sbp_buffer(buf);
         self.h_accuracy.append_to_sbp_buffer(buf);
         self.v_accuracy.append_to_sbp_buffer(buf);
         self.ct_accuracy.append_to_sbp_buffer(buf);
         self.at_accuracy.append_to_sbp_buffer(buf);
         self.h_ellipse.append_to_sbp_buffer(buf);
-        self.confidence.append_to_sbp_buffer(buf);
+        self.confidence_and_geoid.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
     }
@@ -2379,12 +2386,13 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
         size += self.lat.sbp_size();
         size += self.lon.sbp_size();
         size += self.height.sbp_size();
+        size += self.orthometric_height.sbp_size();
         size += self.h_accuracy.sbp_size();
         size += self.v_accuracy.sbp_size();
         size += self.ct_accuracy.sbp_size();
         size += self.at_accuracy.sbp_size();
         size += self.h_ellipse.sbp_size();
-        size += self.confidence.sbp_size();
+        size += self.confidence_and_geoid.sbp_size();
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size

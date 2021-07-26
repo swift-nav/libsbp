@@ -1,11 +1,15 @@
 # Change Log
 
-## [v3.4.9](https://github.com/swift-nav/libsbp/tree/v3.4.9) (2021-07-14)
+## [v3.4.10](https://github.com/swift-nav/libsbp/tree/v3.4.10) (2021-07-23)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.8...v3.4.9)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.8...v3.4.10)
 
 **Merged pull requests:**
 
+- rust: Derive clone for GpsTimeError [\#1052](https://github.com/swift-nav/libsbp/pull/1052) ([notoriaga](https://github.com/notoriaga))
+- Add orthometric height to MSG\_POS\_LLH\_ACC [\#1050](https://github.com/swift-nav/libsbp/pull/1050) ([jbangelo](https://github.com/jbangelo))
+- don't stop converters when they encounter an error [\#1049](https://github.com/swift-nav/libsbp/pull/1049) ([notoriaga](https://github.com/notoriaga))
+- docker: sync with github actions [\#1047](https://github.com/swift-nav/libsbp/pull/1047) ([silverjam](https://github.com/silverjam))
 - change SBP table to use decimal instead of hex [\#1043](https://github.com/swift-nav/libsbp/pull/1043) ([silverjam](https://github.com/silverjam))
 - Define new message for unbounded accuracy [\#1038](https://github.com/swift-nav/libsbp/pull/1038) ([richarddeurloo](https://github.com/richarddeurloo))
 - build.gradle: Fix gradle 4 compatibility [\#1037](https://github.com/swift-nav/libsbp/pull/1037) ([jayvdb](https://github.com/jayvdb))
@@ -20,6 +24,10 @@
 - Javascript lint fixes [\#1027](https://github.com/swift-nav/libsbp/pull/1027) ([jayvdb](https://github.com/jayvdb))
 - Python lint fixes 2 [\#1026](https://github.com/swift-nav/libsbp/pull/1026) ([jayvdb](https://github.com/jayvdb))
 - Python lint fixes [\#1025](https://github.com/swift-nav/libsbp/pull/1025) ([jayvdb](https://github.com/jayvdb))
+
+## [v3.4.9](https://github.com/swift-nav/libsbp/tree/v3.4.9-yanked) (2021-07-14)
+
+Release yanked, do not use.
 
 ## [v3.4.8](https://github.com/swift-nav/libsbp/tree/v3.4.8) (2021-06-18)
 

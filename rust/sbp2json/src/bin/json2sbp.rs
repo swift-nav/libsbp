@@ -23,6 +23,10 @@ struct Options {
     /// Buffer output before flushing
     #[structopt(short, long)]
     buffered: bool,
+
+    /// Stop on first error encountered
+    #[structopt(long)]
+    fatal_errors: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -37,5 +41,5 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    json2sbp(stdin, stdout, options.buffered)
+    json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
 }

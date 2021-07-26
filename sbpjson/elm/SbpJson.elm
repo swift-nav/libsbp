@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridDefinitionHeader, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGridDefinition, msgSsrGriddedCorrection, msgSsrGriddedCorrectionNoStd, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridDefinitionHeader, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGridDefinition, msgSsrGriddedCorrection, msgSsrGriddedCorrectionNoStd, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -15,6 +15,7 @@
 --     decodeString codeBiasesContent myJsonString
 --     decodeString doppler myJsonString
 --     decodeString ephemerisCommonContent myJsonString
+--     decodeString estimatedHorizontalErrorEllipse myJsonString
 --     decodeString gnssInputType myJsonString
 --     decodeString gnssCapb myJsonString
 --     decodeString gnssSignal myJsonString
@@ -119,6 +120,7 @@
 --     decodeString msgPosECEFCovGnss myJsonString
 --     decodeString msgPosECEFGnss myJsonString
 --     decodeString msgPosLLH myJsonString
+--     decodeString msgPosLLHAcc myJsonString
 --     decodeString msgPosLLHCov myJsonString
 --     decodeString msgPosLLHCovGnss myJsonString
 --     decodeString msgPosLLHGnss myJsonString
@@ -214,6 +216,9 @@ module SbpJson exposing
     , EphemerisCommonContent
     , ephemerisCommonContentToString
     , ephemerisCommonContent
+    , EstimatedHorizontalErrorEllipse
+    , estimatedHorizontalErrorEllipseToString
+    , estimatedHorizontalErrorEllipse
     , GNSSInputType
     , gnssInputTypeToString
     , gnssInputType
@@ -526,6 +531,9 @@ module SbpJson exposing
     , MsgPosLLH
     , msgPosLLHToString
     , msgPosLLH
+    , MsgPosLLHAcc
+    , msgPosLLHAccToString
+    , msgPosLLHAcc
     , MsgPosLLHCov
     , msgPosLLHCovToString
     , msgPosLLHCov
@@ -2026,12 +2034,44 @@ type alias MsgPosLLH =
     }
 
 {-| This position solution message reports the absolute geodetic coordinates and the status
+(single point vs pseudo-absolute RTK) of the position solution as well as the estimated
+horizontal, vertical, cross-track and along-track errors.  The position information and
+Fix Mode flags  follow the MSG_POS_LLH message. Since the covariance matrix is computed
+in the local-level North, East, Down frame, the estimated error terms follow that
+convention.,
+,
+The estimated errors are reported at a user-configurable confidence level. The
+user-configured percentile is encoded in the percentile field.
+-}
+type alias MsgPosLLHAcc =
+    { atAccuracy : Float
+    , confidenceAndGeoid : Int
+    , ctAccuracy : Float
+    , flags : Int
+    , hAccuracy : Float
+    , hEllipse : EstimatedHorizontalErrorEllipse
+    , height : Float
+    , lat : Float
+    , lon : Float
+    , nSats : Int
+    , orthometricHeight : Float
+    , tow : Int
+    , vAccuracy : Float
+    }
+
+type alias EstimatedHorizontalErrorEllipse =
+    { orientation : Float
+    , semiMajor : Float
+    , semiMinor : Float
+    }
+
+{-| This position solution message reports the absolute geodetic coordinates and the status
 (single point vs pseudo-absolute RTK) of the position solution as well as the upper
 triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags
-should follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
-local-level North, East, Down frame, the covariance terms follow with that convention.
-Thus, covariances are reported against the "downward" measurement and care should be
-taken with the sign convention.
+follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the
+local-level North, East, Down frame, the covariance terms follow that convention. Thus,
+covariances are reported against the "downward" measurement and care should be taken with
+the sign convention.
 -}
 type alias MsgPosLLHCov =
     { covDD : Float
@@ -2910,6 +2950,9 @@ dopplerToString r = Jenc.encode 0 (encodeDoppler r)
 ephemerisCommonContentToString : EphemerisCommonContent -> String
 ephemerisCommonContentToString r = Jenc.encode 0 (encodeEphemerisCommonContent r)
 
+estimatedHorizontalErrorEllipseToString : EstimatedHorizontalErrorEllipse -> String
+estimatedHorizontalErrorEllipseToString r = Jenc.encode 0 (encodeEstimatedHorizontalErrorEllipse r)
+
 gnssInputTypeToString : GNSSInputType -> String
 gnssInputTypeToString r = Jenc.encode 0 (encodeGNSSInputType r)
 
@@ -3239,6 +3282,9 @@ msgPosECEFGnssToString r = Jenc.encode 0 (encodeMsgPosECEFGnss r)
 
 msgPosLLHToString : MsgPosLLH -> String
 msgPosLLHToString r = Jenc.encode 0 (encodeMsgPosLLH r)
+
+msgPosLLHAccToString : MsgPosLLHAcc -> String
+msgPosLLHAccToString r = Jenc.encode 0 (encodeMsgPosLLHAcc r)
 
 msgPosLLHCovToString : MsgPosLLHCov -> String
 msgPosLLHCovToString r = Jenc.encode 0 (encodeMsgPosLLHCov r)
@@ -5437,6 +5483,56 @@ encodeMsgPosLLH x =
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
         , ("v_accuracy", Jenc.int x.vAccuracy)
+        ]
+
+msgPosLLHAcc : Jdec.Decoder MsgPosLLHAcc
+msgPosLLHAcc =
+    Jpipe.decode MsgPosLLHAcc
+        |> Jpipe.required "at_accuracy" Jdec.float
+        |> Jpipe.required "confidence_and_geoid" Jdec.int
+        |> Jpipe.required "ct_accuracy" Jdec.float
+        |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "h_accuracy" Jdec.float
+        |> Jpipe.required "h_ellipse" estimatedHorizontalErrorEllipse
+        |> Jpipe.required "height" Jdec.float
+        |> Jpipe.required "lat" Jdec.float
+        |> Jpipe.required "lon" Jdec.float
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "orthometric_height" Jdec.float
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "v_accuracy" Jdec.float
+
+encodeMsgPosLLHAcc : MsgPosLLHAcc -> Jenc.Value
+encodeMsgPosLLHAcc x =
+    Jenc.object
+        [ ("at_accuracy", Jenc.float x.atAccuracy)
+        , ("confidence_and_geoid", Jenc.int x.confidenceAndGeoid)
+        , ("ct_accuracy", Jenc.float x.ctAccuracy)
+        , ("flags", Jenc.int x.flags)
+        , ("h_accuracy", Jenc.float x.hAccuracy)
+        , ("h_ellipse", encodeEstimatedHorizontalErrorEllipse x.hEllipse)
+        , ("height", Jenc.float x.height)
+        , ("lat", Jenc.float x.lat)
+        , ("lon", Jenc.float x.lon)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("orthometric_height", Jenc.float x.orthometricHeight)
+        , ("tow", Jenc.int x.tow)
+        , ("v_accuracy", Jenc.float x.vAccuracy)
+        ]
+
+estimatedHorizontalErrorEllipse : Jdec.Decoder EstimatedHorizontalErrorEllipse
+estimatedHorizontalErrorEllipse =
+    Jpipe.decode EstimatedHorizontalErrorEllipse
+        |> Jpipe.required "orientation" Jdec.float
+        |> Jpipe.required "semi_major" Jdec.float
+        |> Jpipe.required "semi_minor" Jdec.float
+
+encodeEstimatedHorizontalErrorEllipse : EstimatedHorizontalErrorEllipse -> Jenc.Value
+encodeEstimatedHorizontalErrorEllipse x =
+    Jenc.object
+        [ ("orientation", Jenc.float x.orientation)
+        , ("semi_major", Jenc.float x.semiMajor)
+        , ("semi_minor", Jenc.float x.semiMinor)
         ]
 
 msgPosLLHCov : Jdec.Decoder MsgPosLLHCov

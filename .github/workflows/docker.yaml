@@ -18,15 +18,11 @@ jobs:
 
       - name: Build image
         run: |
-          mkdir docker-build
-          cd docker-build
-          docker build -f ../Dockerfile -t libsbp-build .
-          cd ..
+          docker build -t libsbp-build --build-arg UID=$(id -u) - <Dockerfile
 
       - name: List images
         run: docker images
 
       - name: Run make all inside image
-        # javascript fails due to permissions
-        # rust fails due to missing stdbool.h
-        run: docker run --rm -v $PWD:/mnt/workspace -t libsbp-build:latest sudo --preserve-env=PATH,RUSTUP_HOME,CARGO_HOME,NVM_DIR,NODE_PATH make c python gen-javascript java docs haskell protobuf rust jsonschema quicktype
+        run: |
+          docker run --rm -v $PWD:/mnt/workspace -t libsbp-build:latest make all

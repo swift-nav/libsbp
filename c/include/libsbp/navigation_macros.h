@@ -370,6 +370,20 @@
 #define SBP_ESTIMATED_HORIZONTAL_ERROR_ELLIPSE_ENCODED_LEN 12u
 
 #define SBP_MSG_POS_LLH_ACC 0x0218
+#define SBP_POS_LLH_ACC_GEOID_MODEL_MASK (0x7)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT (4u)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_GET(flags)      \
+  (((flags) >> SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT) & \
+   SBP_POS_LLH_ACC_GEOID_MODEL_MASK)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_SET(flags, val)           \
+  do {                                                        \
+    ((flags) |= (((val) & (SBP_POS_LLH_ACC_GEOID_MODEL_MASK)) \
+                 << (SBP_POS_LLH_ACC_GEOID_MODEL_SHIFT)));    \
+  } while (0)
+
+#define SBP_POS_LLH_ACC_GEOID_MODEL_NO_MODEL (0)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_EGM96 (1)
+#define SBP_POS_LLH_ACC_GEOID_MODEL_EGM2008 (2)
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_MASK (0xf)
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_SHIFT (0u)
 #define SBP_POS_LLH_ACC_CONFIDENCE_LEVEL_GET(flags)      \
@@ -431,7 +445,7 @@
  * Encoded length of sbp_msg_pos_llh_acc_t (V4 API) and
  * msg_pos_llh_acc_t (legacy API)
  */
-#define SBP_MSG_POS_LLH_ACC_ENCODED_LEN 59u
+#define SBP_MSG_POS_LLH_ACC_ENCODED_LEN 67u
 
 #define SBP_MSG_BASELINE_ECEF 0x020B
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
