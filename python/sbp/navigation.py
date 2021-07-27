@@ -1292,6 +1292,9 @@ class MsgPosLLHAcc(SBP):
     Longitude
   height : double
     Height above WGS84 ellipsoid
+  orthometric_height : double
+    Height above the geoid (i.e. height above mean sea level). See
+    confidence_and_geoid for geoid model used.
   h_accuracy : float
     Estimated horizontal error at the user-configured confidence level; zero
     implies invalid.
@@ -1307,8 +1310,10 @@ class MsgPosLLHAcc(SBP):
   h_ellipse : EstimatedHorizontalErrorEllipse
     The estimated horizontal error ellipse at the user-configured confidence
     level.
-  confidence : int
-    Configured confidence level for the estimated position error
+  confidence_and_geoid : int
+    The lower bits describe the configured confidence level for the estimated
+    position error. The middle bits describe the geoid model used to calculate
+    the orthometric height.
   n_sats : int
     Number of satellites used in solution.
   flags : int
@@ -1322,12 +1327,13 @@ class MsgPosLLHAcc(SBP):
                    'lat' / construct.Float64l,
                    'lon' / construct.Float64l,
                    'height' / construct.Float64l,
+                   'orthometric_height' / construct.Float64l,
                    'h_accuracy' / construct.Float32l,
                    'v_accuracy' / construct.Float32l,
                    'ct_accuracy' / construct.Float32l,
                    'at_accuracy' / construct.Float32l,
                    'h_ellipse' / EstimatedHorizontalErrorEllipse._parser,
-                   'confidence' / construct.Int8ul,
+                   'confidence_and_geoid' / construct.Int8ul,
                    'n_sats' / construct.Int8ul,
                    'flags' / construct.Int8ul,)
   __slots__ = [
@@ -1335,12 +1341,13 @@ class MsgPosLLHAcc(SBP):
                'lat',
                'lon',
                'height',
+               'orthometric_height',
                'h_accuracy',
                'v_accuracy',
                'ct_accuracy',
                'at_accuracy',
                'h_ellipse',
-               'confidence',
+               'confidence_and_geoid',
                'n_sats',
                'flags',
               ]
@@ -1359,12 +1366,13 @@ class MsgPosLLHAcc(SBP):
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
+      self.orthometric_height = kwargs.pop('orthometric_height')
       self.h_accuracy = kwargs.pop('h_accuracy')
       self.v_accuracy = kwargs.pop('v_accuracy')
       self.ct_accuracy = kwargs.pop('ct_accuracy')
       self.at_accuracy = kwargs.pop('at_accuracy')
       self.h_ellipse = kwargs.pop('h_ellipse')
-      self.confidence = kwargs.pop('confidence')
+      self.confidence_and_geoid = kwargs.pop('confidence_and_geoid')
       self.n_sats = kwargs.pop('n_sats')
       self.flags = kwargs.pop('flags')
 

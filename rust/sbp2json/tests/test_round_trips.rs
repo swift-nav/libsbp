@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader},
+    io::{BufRead, BufReader, Cursor},
 };
 
 #[macro_use]
@@ -10,6 +10,38 @@ use common::{
     find_project_root, run_json2json, run_json2sbp, run_sbp2json, test_round_trip,
     DeleteTestOutput, ThirdTransform,
 };
+
+use serde_json::ser::CompactFormatter;
+
+#[test]
+fn test_stop_on_error() {
+    let root = find_project_root().unwrap();
+    let root = root.as_path();
+    let input_path = root.join(format!("test_data/{}", "short.sbp"));
+
+    let source = File::open(input_path).unwrap();
+    let mut sink = Cursor::new(vec![]);
+
+    let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, true);
+
+    sink.set_position(0);
+    assert_eq!(sbp::iter_messages(&mut sink).count(), 1);
+}
+
+#[test]
+fn test_continue_on_error() {
+    let root = find_project_root().unwrap();
+    let root = root.as_path();
+    let input_path = root.join(format!("test_data/{}", "short.sbp"));
+
+    let source = File::open(input_path).unwrap();
+    let mut sink = Cursor::new(vec![]);
+
+    let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, false);
+
+    sink.set_position(0);
+    assert_eq!(sbp::iter_messages(&mut sink).count(), 355);
+}
 
 #[test]
 fn test_sbp2json() {

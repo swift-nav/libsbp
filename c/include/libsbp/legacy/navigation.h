@@ -278,29 +278,43 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;           /**< GPS Time of Week [ms] */
-  double lat;        /**< Latitude [deg] */
-  double lon;        /**< Longitude [deg] */
-  double height;     /**< Height above WGS84 ellipsoid [m] */
-  float h_accuracy;  /**< Estimated horizontal error at the user-configured
-                          confidence level; zero implies invalid. [m] */
-  float v_accuracy;  /**< Estimated vertical error at the user-configured
-                          confidence level; zero implies invalid. [m] */
-  float ct_accuracy; /**< Estimated cross-track error at the user-
-                          configured confidence level; zero implies
-                          invalid. [m] */
-  float at_accuracy; /**< Estimated along-track error at the user-
-                          configured confidence level; zero implies
-                          invalid. [m] */
-  estimated_horizontal_error_ellipse_t h_ellipse; /**< The estimated
-                                                       horizontal error
-                                                       ellipse at the
-                                                       user-configured
-                                                       confidence level. */
-  u8 confidence; /**< Configured confidence level for the estimated
-                      position error */
-  u8 n_sats;     /**< Number of satellites used in solution. */
-  u8 flags;      /**< Status flags */
+  u32 tow;                   /**< GPS Time of Week [ms] */
+  double lat;                /**< Latitude [deg] */
+  double lon;                /**< Longitude [deg] */
+  double height;             /**< Height above WGS84 ellipsoid [m] */
+  double orthometric_height; /**< Height above the geoid (i.e. height
+                                  above mean sea level). See
+                                  confidence_and_geoid for geoid model
+                                  used. [m] */
+  float h_accuracy;          /**< Estimated horizontal error at the user-
+                                  configured confidence level; zero
+                                  implies invalid. [m] */
+  float v_accuracy;          /**< Estimated vertical error at the user-
+                                  configured confidence level; zero
+                                  implies invalid. [m] */
+  float ct_accuracy;         /**< Estimated cross-track error at the user-
+                                  configured confidence level; zero
+                                  implies invalid. [m] */
+  float at_accuracy;         /**< Estimated along-track error at the user-
+                                  configured confidence level; zero
+                                  implies invalid. [m] */
+  estimated_horizontal_error_ellipse_t h_ellipse; /**< The
+                                                       estimated
+                                                       horizontal
+                                                       error
+                                                       ellipse
+                                                       at the
+                                                       user-
+                                                       configured
+                                                       confidence
+                                                       level. */
+  u8 confidence_and_geoid; /**< The lower bits describe the configured
+                                confidence level for the estimated position
+                                error. The middle bits describe the geoid
+                                model used to calculate the orthometric
+                                height. */
+  u8 n_sats;               /**< Number of satellites used in solution. */
+  u8 flags;                /**< Status flags */
 } msg_pos_llh_acc_t;
 
 /** Baseline Position in ECEF

@@ -285,7 +285,6 @@ def get_max_possible_items_macro(msg, field):
     return macro_name.upper()
 
 
-
 def get_bitfield_basename(msg, item):
     bitfield_name = item.get("desc", "").replace(" ", "_").upper()
     base_string = "SBP_{}_{}".format(msg.upper().replace("MSG_", ""), bitfield_name)
@@ -329,6 +328,20 @@ def create_bitfield_macros(field, msg):
                 value_description = re.sub("[ \-]+", "_", value_description.strip())
                 value_description = re.sub("[^A-Za-z0-9_]+", "", value_description)
                 if value_description and value_description.upper() != "RESERVED":
+                    # backwards compatibility
+                    if base_string in [
+                        "SBP_IMU_AUX_GYROSCOPE_RANGE",
+                        "SBP_IMU_AUX_ACCELEROMETER_RANGE",
+                        "SBP_STARTUP",
+                        "SBP_PPS_TIME_TIME_UNCERTAINTY",
+                    ]:
+                        ret_list.append(
+                            "#define {}_{} ({})".format(
+                                base_string, value_description, value_numerical
+                            )
+                        )
+                    base_string = re.sub("__+", "_", base_string).strip("_")
+                    value_description = re.sub("__+", "_", value_description).strip("_")
                     ret_list.append(
                         "#define {}_{} ({})".format(
                             base_string, value_description, value_numerical
@@ -485,7 +498,9 @@ class MsgItem(object):
                     + "/"
                     + new_field.basetype_from_spec
                 )
-        self.encoded_len_macro = get_encoded_len_macro(self.type_name, self.is_fixed_size)
+        self.encoded_len_macro = get_encoded_len_macro(
+            self.type_name, self.is_fixed_size
+        )
         self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
 
     def render(self, output_dir):

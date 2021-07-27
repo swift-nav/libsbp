@@ -71,6 +71,12 @@ typedef struct {
   double height;
 
   /**
+   * Height above the geoid (i.e. height above mean sea level). See
+   * confidence_and_geoid for geoid model used. [m]
+   */
+  double orthometric_height;
+
+  /**
    * Estimated horizontal error at the user-configured confidence level; zero
    * implies invalid. [m]
    */
@@ -101,9 +107,11 @@ typedef struct {
   sbp_estimated_horizontal_error_ellipse_t h_ellipse;
 
   /**
-   * Configured confidence level for the estimated position error
+   * The lower bits describe the configured confidence level for the estimated
+   * position error. The middle bits describe the geoid model used to calculate
+   * the orthometric height.
    */
-  u8 confidence;
+  u8 confidence_and_geoid;
 
   /**
    * Number of satellites used in solution.

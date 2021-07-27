@@ -48,37 +48,43 @@ size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg)
 }
 
 ((*- if f.encoding == "unterminated" or f.encoding == "null_terminated" *))
- bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str)
+ bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, bool should_trunc, size_t *n_written)
 {
-  return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), new_str);
+  return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, new_str);
 }
 
-bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
+ bool (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool should_trunc, size_t *n_written)
+{
+  return (((string_prefix)))_set_raw(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, new_str, new_str_len);
+}
+
+
+bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg, bool should_trunc, size_t *n_written, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  bool ret = (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
- bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
+ bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg, bool should_trunc, size_t *n_written, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  return (((string_prefix)))_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, fmt, ap);
 }
 
-bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) 
+bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, bool should_trunc, size_t *n_written, const char *fmt, ...) 
 {
   va_list ap;
   va_start(ap, fmt);
-  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  bool ret = (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap)
+  bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  bool should_trunc, size_t *n_written, const char *fmt, va_list ap)
 {
-  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), fmt, ap);
+  return (((string_prefix)))_append_vprintf(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, fmt, ap);
 }
 
 const char *(((f.fn_prefix)))_get(const (((m.type_name))) *msg)

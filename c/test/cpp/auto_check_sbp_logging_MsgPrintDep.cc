@@ -84,8 +84,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep0, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n"));
+      &test_msg, "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n", false,
+      &written));
+  EXPECT_EQ(written, strlen("INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 43);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
@@ -169,8 +172,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep1, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n"));
+      &test_msg, "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n", false,
+      &written));
+  EXPECT_EQ(written, strlen("INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 42);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
@@ -254,8 +260,10 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep2, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: Disabling channel 0 (PRN 11)\n"));
+      &test_msg, "INFO: Disabling channel 0 (PRN 11)\n", false, &written));
+  EXPECT_EQ(written, strlen("INFO: Disabling channel 0 (PRN 11)\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 35);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
@@ -340,8 +348,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep3, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n"));
+      &test_msg, "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n", false,
+      &written));
+  EXPECT_EQ(written, strlen("INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 41);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
@@ -426,8 +437,11 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep4, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n"));
+      &test_msg, "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n", false,
+      &written));
+  EXPECT_EQ(written, strlen("INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 42);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);
@@ -511,8 +525,10 @@ TEST_F(Test_auto_check_sbp_logging_MsgPrintDep5, Test) {
 
   sbp_msg_print_dep_t test_msg{};
 
+  size_t written;
   EXPECT_TRUE(sbp_msg_print_dep_text_set(
-      &test_msg, "INFO: Disabling channel 1 (PRN 15)\n"));
+      &test_msg, "INFO: Disabling channel 1 (PRN 15)\n", false, &written));
+  EXPECT_EQ(written, strlen("INFO: Disabling channel 1 (PRN 15)\n"));
   EXPECT_EQ(sbp_msg_print_dep_text_encoded_len(&test_msg), 35);
 
   EXPECT_EQ(send_message(8738, test_msg), SBP_OK);

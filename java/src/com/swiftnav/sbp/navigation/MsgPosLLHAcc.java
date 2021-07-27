@@ -48,6 +48,12 @@ public class MsgPosLLHAcc extends SBPMessage {
     /** Height above WGS84 ellipsoid */
     public double height;
 
+    /**
+     * Height above the geoid (i.e. height above mean sea level). See confidence_and_geoid for geoid
+     * model used.
+     */
+    public double orthometric_height;
+
     /** Estimated horizontal error at the user-configured confidence level; zero implies invalid. */
     public float h_accuracy;
 
@@ -67,8 +73,11 @@ public class MsgPosLLHAcc extends SBPMessage {
     /** The estimated horizontal error ellipse at the user-configured confidence level. */
     public EstimatedHorizontalErrorEllipse h_ellipse;
 
-    /** Configured confidence level for the estimated position error */
-    public int confidence;
+    /**
+     * The lower bits describe the configured confidence level for the estimated position error. The
+     * middle bits describe the geoid model used to calculate the orthometric height.
+     */
+    public int confidence_and_geoid;
 
     /** Number of satellites used in solution. */
     public int n_sats;
@@ -96,12 +105,13 @@ public class MsgPosLLHAcc extends SBPMessage {
         lat = parser.getDouble();
         lon = parser.getDouble();
         height = parser.getDouble();
+        orthometric_height = parser.getDouble();
         h_accuracy = parser.getFloat();
         v_accuracy = parser.getFloat();
         ct_accuracy = parser.getFloat();
         at_accuracy = parser.getFloat();
         h_ellipse = new EstimatedHorizontalErrorEllipse().parse(parser);
-        confidence = parser.getU8();
+        confidence_and_geoid = parser.getU8();
         n_sats = parser.getU8();
         flags = parser.getU8();
     }
@@ -112,12 +122,13 @@ public class MsgPosLLHAcc extends SBPMessage {
         builder.putDouble(lat);
         builder.putDouble(lon);
         builder.putDouble(height);
+        builder.putDouble(orthometric_height);
         builder.putFloat(h_accuracy);
         builder.putFloat(v_accuracy);
         builder.putFloat(ct_accuracy);
         builder.putFloat(at_accuracy);
         h_ellipse.build(builder);
-        builder.putU8(confidence);
+        builder.putU8(confidence_and_geoid);
         builder.putU8(n_sats);
         builder.putU8(flags);
     }
@@ -129,12 +140,13 @@ public class MsgPosLLHAcc extends SBPMessage {
         obj.put("lat", lat);
         obj.put("lon", lon);
         obj.put("height", height);
+        obj.put("orthometric_height", orthometric_height);
         obj.put("h_accuracy", h_accuracy);
         obj.put("v_accuracy", v_accuracy);
         obj.put("ct_accuracy", ct_accuracy);
         obj.put("at_accuracy", at_accuracy);
         obj.put("h_ellipse", h_ellipse.toJSON());
-        obj.put("confidence", confidence);
+        obj.put("confidence_and_geoid", confidence_and_geoid);
         obj.put("n_sats", n_sats);
         obj.put("flags", flags);
         return obj;

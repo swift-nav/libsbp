@@ -452,12 +452,12 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint8('group_id')
   .uint8('flags')
   .uint8('n_group_msgs')
-  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
+  .array('group_msgs', { type: 'uint16le', length: 'n_group_msgs' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['n_group_msgs', 'writeUInt8', 1]);
-MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, null]);
+MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, 'n_group_msgs']);
 
 module.exports = {
   0xFF00: MsgStartup,

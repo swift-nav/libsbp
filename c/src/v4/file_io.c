@@ -44,41 +44,64 @@ size_t sbp_msg_fileio_read_req_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX);
 }
 bool sbp_msg_fileio_read_req_filename_set(sbp_msg_fileio_read_req_t *msg,
-                                          const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, new_str);
+                                          const char *new_str,
+                                          bool should_trunc,
+                                          size_t *n_written) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX,
+                                        should_trunc, n_written, new_str);
+}
+
+bool sbp_msg_fileio_read_req_filename_set_raw(sbp_msg_fileio_read_req_t *msg,
+                                              const char *new_str,
+                                              size_t new_str_len,
+                                              bool should_trunc,
+                                              size_t *n_written) {
+  return sbp_null_terminated_string_set_raw(
+      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, should_trunc,
+      n_written, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_read_req_filename_printf(sbp_msg_fileio_read_req_t *msg,
-                                             const char *fmt, ...) {
+                                             bool should_trunc,
+                                             size_t *n_written, const char *fmt,
+                                             ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_read_req_filename_vprintf(sbp_msg_fileio_read_req_t *msg,
+                                              bool should_trunc,
+                                              size_t *n_written,
                                               const char *fmt, va_list ap) {
   return sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 bool sbp_msg_fileio_read_req_filename_append_printf(
-    sbp_msg_fileio_read_req_t *msg, const char *fmt, ...) {
+    sbp_msg_fileio_read_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_read_req_filename_append_vprintf(
-    sbp_msg_fileio_read_req_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_fileio_read_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_READ_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 const char *sbp_msg_fileio_read_req_filename_get(
@@ -323,41 +346,60 @@ size_t sbp_msg_fileio_read_dir_req_dirname_space_remaining(
       &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX);
 }
 bool sbp_msg_fileio_read_dir_req_dirname_set(sbp_msg_fileio_read_dir_req_t *msg,
-                                             const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, new_str);
+                                             const char *new_str,
+                                             bool should_trunc,
+                                             size_t *n_written) {
+  return sbp_null_terminated_string_set(&msg->dirname,
+                                        SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX,
+                                        should_trunc, n_written, new_str);
+}
+
+bool sbp_msg_fileio_read_dir_req_dirname_set_raw(
+    sbp_msg_fileio_read_dir_req_t *msg, const char *new_str, size_t new_str_len,
+    bool should_trunc, size_t *n_written) {
+  return sbp_null_terminated_string_set_raw(
+      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, should_trunc,
+      n_written, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_printf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, ...) {
+    sbp_msg_fileio_read_dir_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, fmt, ap);
+      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_vprintf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_fileio_read_dir_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
   return sbp_null_terminated_string_vprintf(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, fmt, ap);
+      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_append_printf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, ...) {
+    sbp_msg_fileio_read_dir_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, fmt, ap);
+      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_read_dir_req_dirname_append_vprintf(
-    sbp_msg_fileio_read_dir_req_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_fileio_read_dir_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
-      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, fmt, ap);
+      &msg->dirname, SBP_MSG_FILEIO_READ_DIR_REQ_DIRNAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 const char *sbp_msg_fileio_read_dir_req_dirname_get(
@@ -673,42 +715,65 @@ size_t sbp_msg_fileio_remove_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX);
 }
 bool sbp_msg_fileio_remove_filename_set(sbp_msg_fileio_remove_t *msg,
-                                        const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, new_str);
+                                        const char *new_str, bool should_trunc,
+                                        size_t *n_written) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_REMOVE_FILENAME_MAX,
+                                        should_trunc, n_written, new_str);
+}
+
+bool sbp_msg_fileio_remove_filename_set_raw(sbp_msg_fileio_remove_t *msg,
+                                            const char *new_str,
+                                            size_t new_str_len,
+                                            bool should_trunc,
+                                            size_t *n_written) {
+  return sbp_null_terminated_string_set_raw(
+      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, should_trunc,
+      n_written, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_remove_filename_printf(sbp_msg_fileio_remove_t *msg,
+                                           bool should_trunc, size_t *n_written,
                                            const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_remove_filename_vprintf(sbp_msg_fileio_remove_t *msg,
-                                            const char *fmt, va_list ap) {
-  return sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, fmt, ap);
+                                            bool should_trunc,
+                                            size_t *n_written, const char *fmt,
+                                            va_list ap) {
+  return sbp_null_terminated_string_vprintf(&msg->filename,
+                                            SBP_MSG_FILEIO_REMOVE_FILENAME_MAX,
+                                            should_trunc, n_written, fmt, ap);
 }
 
 bool sbp_msg_fileio_remove_filename_append_printf(sbp_msg_fileio_remove_t *msg,
+                                                  bool should_trunc,
+                                                  size_t *n_written,
                                                   const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_remove_filename_append_vprintf(sbp_msg_fileio_remove_t *msg,
+                                                   bool should_trunc,
+                                                   size_t *n_written,
                                                    const char *fmt,
                                                    va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_REMOVE_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 const char *sbp_msg_fileio_remove_filename_get(
@@ -824,41 +889,64 @@ size_t sbp_msg_fileio_write_req_filename_space_remaining(
       &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX);
 }
 bool sbp_msg_fileio_write_req_filename_set(sbp_msg_fileio_write_req_t *msg,
-                                           const char *new_str) {
-  return sbp_null_terminated_string_set(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, new_str);
+                                           const char *new_str,
+                                           bool should_trunc,
+                                           size_t *n_written) {
+  return sbp_null_terminated_string_set(&msg->filename,
+                                        SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX,
+                                        should_trunc, n_written, new_str);
+}
+
+bool sbp_msg_fileio_write_req_filename_set_raw(sbp_msg_fileio_write_req_t *msg,
+                                               const char *new_str,
+                                               size_t new_str_len,
+                                               bool should_trunc,
+                                               size_t *n_written) {
+  return sbp_null_terminated_string_set_raw(
+      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, should_trunc,
+      n_written, new_str, new_str_len);
 }
 
 bool sbp_msg_fileio_write_req_filename_printf(sbp_msg_fileio_write_req_t *msg,
+                                              bool should_trunc,
+                                              size_t *n_written,
                                               const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_write_req_filename_vprintf(sbp_msg_fileio_write_req_t *msg,
+                                               bool should_trunc,
+                                               size_t *n_written,
                                                const char *fmt, va_list ap) {
   return sbp_null_terminated_string_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 bool sbp_msg_fileio_write_req_filename_append_printf(
-    sbp_msg_fileio_write_req_t *msg, const char *fmt, ...) {
+    sbp_msg_fileio_write_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   bool ret = sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
 bool sbp_msg_fileio_write_req_filename_append_vprintf(
-    sbp_msg_fileio_write_req_t *msg, const char *fmt, va_list ap) {
+    sbp_msg_fileio_write_req_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
   return sbp_null_terminated_string_append_vprintf(
-      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, fmt, ap);
+      &msg->filename, SBP_MSG_FILEIO_WRITE_REQ_FILENAME_MAX, should_trunc,
+      n_written, fmt, ap);
 }
 
 const char *sbp_msg_fileio_write_req_filename_get(

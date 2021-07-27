@@ -107,10 +107,15 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
 
     test_msg.log.level = 6;
 
-    ck_assert_msg(sbp_msg_log_text_set(
-                      &test_msg.log,
-                      "Filtered all obs from 2314 at tow 83.539019") == true,
-                  "Can't assign text");
+    size_t written;
+    ck_assert_msg(
+        sbp_msg_log_text_set(&test_msg.log,
+                             "Filtered all obs from 2314 at tow 83.539019",
+                             false, &written),
+        "Can't assign text");
+    ck_assert_msg(
+        written == strlen("Filtered all obs from 2314 at tow 83.539019"),
+        "Wrote different to expected");
     ck_assert_msg(sbp_msg_log_text_encoded_len(&test_msg.log) == 43,
                   "String not encoded properly");
 
