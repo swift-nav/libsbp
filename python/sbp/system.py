@@ -595,7 +595,7 @@ class MsgCsacTelemetry(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention
+    Index representing the type of telemetry in use.  It is implementation
     defined.
   telemetry : string
     Comma separated list of values as defined by the index
@@ -692,7 +692,7 @@ class MsgCsacTelemetryLabels(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention
+    Index representing the type of telemetry in use.  It is implementation
     defined.
   telemetry_labels : string
     Comma separated list of telemetry field values
@@ -780,7 +780,7 @@ class MsgInsUpdates(SBP):
   of its fields.
 
   
-  The INS update status message contains informations about executed and
+  The INS update status message contains information about executed and
   rejected INS updates. This message is expected to be extended in the future
   as new types of measurements are being added.
 
@@ -1126,8 +1126,8 @@ class MsgGroupMeta(SBP):
   n_group_msgs : int
     Size of list group_msgs
   group_msgs : array
-    An inorder list of message types included in the Solution Group, including
-    GROUP_META itself
+    An in-order list of message types included in the Solution Group,
+    including GROUP_META itself
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

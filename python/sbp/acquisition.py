@@ -532,8 +532,8 @@ class MsgAcqResultDepA(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently dimensonless, but will have units of dB Hz in
-    the revision of this message.
+    SNR of best point. Currently dimensionless, but will have units of dB Hz
+    in the revision of this message.
   cp : float
     Code phase of best point
   cf : float

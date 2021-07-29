@@ -82,7 +82,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
 
 typedef struct SBP_ATTR_PACKED {
-  float snr; /**< SNR of best point. Currently dimensonless, but will have
+  float snr; /**< SNR of best point. Currently dimensionless, but will have
                   units of dB Hz in the revision of this message. */
   float cp;  /**< Code phase of best point [chips] */
   float cf;  /**< Carrier frequency of best point [hz] */

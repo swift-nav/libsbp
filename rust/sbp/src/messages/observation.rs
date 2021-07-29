@@ -1160,7 +1160,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
 pub struct MsgBasePosECEF {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// ECEF X coodinate
+    /// ECEF X coordinate
     pub x: f64,
     /// ECEF Y coordinate
     pub y: f64,
@@ -4945,7 +4945,7 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
 pub struct MsgIono {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Navigation Message Correction Table Valitidy Time
+    /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
     pub a0: f64,
     pub a1: f64,
@@ -5253,7 +5253,7 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
 /// This observation message has been deprecated in favor of observations that
 /// are more interoperable. This message should be used for observations
 /// referenced to a nominal pseudorange which are not interoperable with most
-/// 3rd party GNSS receievers or typical RTCMv3 observations.
+/// 3rd party GNSS receivers or typical RTCMv3 observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -5643,7 +5643,7 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 pub struct MsgSvConfigurationGPSDep {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Navigation Message Correction Table Valitidy Time
+    /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
     /// L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
     pub l2c_mask: u32,
@@ -5840,7 +5840,7 @@ impl crate::serialize::SbpSerialize for ObservationHeaderDep {
 ///
 /// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
 /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
-/// currently peformed.
+/// currently performed.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]

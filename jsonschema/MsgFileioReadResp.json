@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioReadResp",
   "title":"MsgFileioReadResp",
-  "description":"The file read message reads a certain length (up to 255 bytes) from a given offset into a file, and returns the data in a message where the message length field indicates how many bytes were succesfully read. The sequence number in the response is preserved from the request.\n",
+  "description":"The file read message reads a certain length (up to 255 bytes) from a given offset into a file, and returns the data in a message where the message length field indicates how many bytes were successfully read. The sequence number in the response is preserved from the request.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

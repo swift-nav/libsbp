@@ -41,7 +41,7 @@ public class MsgGroupMeta extends SBPMessage {
     public int n_group_msgs;
 
     /**
-     * An inorder list of message types included in the Solution Group, including GROUP_META itself
+     * An in-order list of message types included in the Solution Group, including GROUP_META itself
      */
     public int[] group_msgs;
 

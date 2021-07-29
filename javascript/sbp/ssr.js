@@ -148,7 +148,7 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment GriddedCorrectionHeader
  *
- * The LPP message contains nested variable length arrays which are not suppported
+ * The LPP message contains nested variable length arrays which are not supported
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -204,7 +204,7 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  * @field sv_id SvId Unique space vehicle identifier
  * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specification but in
  *   units of TECU instead of m.
- * @field stec_coeff array Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+ * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -596,8 +596,8 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
  * messages.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field header STECHeader Header of a STEC polynomial coeffcient message.
- * @field stec_sat_list array Array of STEC polynomial coeffcients for each space vehicle.
+ * @field header STECHeader Header of a STEC polynomial coefficient message.
+ * @field stec_sat_list array Array of STEC polynomial coefficients for each space vehicle.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -734,8 +734,8 @@ MsgSsrTileDefinition.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
  * @field sid GnssSignal GNSS signal identifier (16 bit)
  * @field sat_info number (unsigned 8-bit int, 1 byte) Additional satellite information
  * @field svn number (unsigned 16-bit int, 2 bytes) Satellite Code, as defined by IGS. Typically the space vehicle number.
- * @field pco array Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
- *   description for coordinate system definition.
+ * @field pco array Mean phase center offset, X Y and Z axes. See IGS ANTEX file format description
+ *   for coordinate system definition.
  * @field pcv array Elevation dependent phase center variations. First element is 0 degrees
  *   separation from the Z axis, subsequent elements represent elevation variations
  *   in 1 degree increments.
@@ -903,7 +903,7 @@ STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment GriddedCorrectionHeaderDepA
  *
- * The 3GPP message contains nested variable length arrays which are not suppported
+ * The 3GPP message contains nested variable length arrays which are not supported
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -913,7 +913,7 @@ STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
- * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specification in
  *   units of m.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -957,7 +957,7 @@ GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['tropo_quality_indicator',
  * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
  * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

@@ -259,7 +259,7 @@ msgStmUniqueIdReq = 0x00E8
 
 -- | SBP class for message MSG_STM_UNIQUE_ID_REQ (0x00E8).
 --
--- This message reads the device's hardcoded unique ID. The host requests the
+-- This message reads the device's hard-coded unique ID. The host requests the
 -- ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 -- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 data MsgStmUniqueIdReq = MsgStmUniqueIdReq
@@ -280,7 +280,7 @@ msgStmUniqueIdResp = 0x00E5
 
 -- | SBP class for message MSG_STM_UNIQUE_ID_RESP (0x00E5).
 --
--- This message reads the device's hardcoded unique ID. The host requests the
+-- This message reads the device's hard-coded unique ID. The host requests the
 -- ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 -- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 data MsgStmUniqueIdResp = MsgStmUniqueIdResp

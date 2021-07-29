@@ -172,7 +172,7 @@ MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string', null]);
 /**
  * SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
  *
- * The setting message wich which the device responds after a MSG_SETTING_READ_REQ
+ * The setting message which which the device responds after a MSG_SETTING_READ_REQ
  * is sent to device. The string field is a NULL-terminated and NULL-delimited
  * string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape
  * sequence denotes the NULL character and where quotation marks are omitted. An

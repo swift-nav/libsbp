@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_INS_UPDATES inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>The INS update status message contains informations about executed and rejected INS updates.
+ * <p>The INS update status message contains information about executed and rejected INS updates.
  * This message is expected to be extended in the future as new types of measurements are being
  * added.
  */

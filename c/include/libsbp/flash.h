@@ -204,19 +204,19 @@ typedef struct SBP_ATTR_PACKED {
   u32 sector; /**< Flash sector number to unlock */
 } msg_stm_flash_unlock_sector_t;
 
-/** Read device's hardcoded unique ID request (host => device)
+/** Read device's hard-coded unique ID request (host => device)
 
  *
- * This message reads the device's hardcoded unique ID. The host requests the
+ * This message reads the device's hard-coded unique ID. The host requests the
  * ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  */
 #define SBP_MSG_STM_UNIQUE_ID_REQ 0x00E8
 
-/** Read device's hardcoded unique ID response (host <= device)
+/** Read device's hard-coded unique ID response (host <= device)
 
  *
- * This message reads the device's hardcoded unique ID. The host requests the
+ * This message reads the device's hard-coded unique ID. The host requests the
  * ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  */

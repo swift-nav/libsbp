@@ -103,7 +103,7 @@ definitions:
         - snr:
             type: float
             desc: >
-              SNR of best point. Currently dimensonless, but will have
+              SNR of best point. Currently dimensionless, but will have
               units of dB Hz in the revision of this message.
         - cp:
             type: float

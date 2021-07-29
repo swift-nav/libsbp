@@ -62,7 +62,7 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
  * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
- * peformed.
+ * performed.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -154,7 +154,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASE_POS_ECEF 0x0048
 
 typedef struct SBP_ATTR_PACKED {
-  double x; /**< ECEF X coodinate [m] */
+  double x; /**< ECEF X coordinate [m] */
   double y; /**< ECEF Y coordinate [m] */
   double z; /**< ECEF Z coordinate [m] */
 } msg_base_pos_ecef_t;
@@ -972,7 +972,7 @@ typedef struct SBP_ATTR_PACKED {
  * This observation message has been deprecated in favor of observations that
  * are more interoperable. This message should be used for observations
  * referenced to a nominal pseudorange which are not interoperable with most
- * 3rd party GNSS receievers or typical RTCMv3 observations.
+ * 3rd party GNSS receivers or typical RTCMv3 observations.
  */
 #define SBP_MSG_OBS_DEP_B 0x0043
 
@@ -1010,7 +1010,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_IONO 0x0090
 
 typedef struct SBP_ATTR_PACKED {
-  gps_time_sec_t t_nmct; /**< Navigation Message Correction Table Valitidy
+  gps_time_sec_t t_nmct; /**< Navigation Message Correction Table Validity
                               Time */
   double a0;
   double a1;
@@ -1030,7 +1030,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct; /**< Navigation Message Correction Table
-                              Valitidy Time */
+                              Validity Time */
   u32 l2c_mask; /**< L2C capability mask, SV32 bit being MSB, SV1 bit being
                      LSB */
 } msg_sv_configuration_gps_dep_t;

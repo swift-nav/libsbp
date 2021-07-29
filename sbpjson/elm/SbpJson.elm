@@ -1297,7 +1297,7 @@ type alias MsgFileioReadDirResp =
 
 {-| The file read message reads a certain length (up to 255 bytes) from a given offset into a
 file, and returns the data in a MSG_FILEIO_READ_RESP message where the message length
-field indicates how many bytes were succesfully read.The sequence number in the request
+field indicates how many bytes were successfully read.The sequence number in the request
 will be returned in the response. If the message is invalid, a followup MSG_PRINT message
 will print "Invalid fileio read message". A device will only respond to this message when
 it is received from sender ID 0x42.
@@ -1311,7 +1311,7 @@ type alias MsgFileioReadReq =
 
 {-| The file read message reads a certain length (up to 255 bytes) from a given offset into a
 file, and returns the data in a message where the message length field indicates how many
-bytes were succesfully read. The sequence number in the response is preserved from the
+bytes were successfully read. The sequence number in the response is preserved from the
 request.
 -}
 type alias MsgFileioReadResp =
@@ -1589,7 +1589,7 @@ type alias MsgInsStatus =
     { flags : Int
     }
 
-{-| The INS update status message contains informations about executed and rejected INS
+{-| The INS update status message contains information about executed and rejected INS
 updates. This message is expected to be extended in the future as new types of
 measurements are being added.
 -}
@@ -1751,7 +1751,7 @@ type alias MeasurementState =
 
 {-| The device message from the host reads a unique device identifier from the SwiftNAP, an
 FPGA. The host requests the ID by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+responds with a MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
 that this ID is tied to the FPGA, and not related to the Piksi's serial number.
 -}
 type alias MsgNapDeviceDnaResp =
@@ -1836,7 +1836,7 @@ are interoperable with 3rd party receivers and conform with typical RTCM 3.1 mes
 GPS/GLO observations.,
 ,
 Carrier phase observations are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3
-MSM reference signal and no 1/4 cycle adjustments are currently peformed.
+MSM reference signal and no 1/4 cycle adjustments are currently performed.
 -}
 type alias PackedObsContent =
     { cn0 : Int
@@ -2227,7 +2227,7 @@ type alias MsgSettingsReadReq =
     { setting : String
     }
 
-{-| The setting message wich which the device responds after a MSG_SETTING_READ_REQ is sent
+{-| The setting message which which the device responds after a MSG_SETTING_READ_REQ is sent
 to device. The string field is a NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
 character and where quotation marks are omitted. An example string that could be sent
@@ -2278,13 +2278,13 @@ type alias MsgSettingsWriteResp =
     }
 
 {-| This message contains all metadata about the sensors received and/or used in computing
-the sensorfusion solution. It focuses primarly, but not only, on GNSS metadata. Regarding
-the age of the last received valid GNSS solution, the highest two bits are time status,
-indicating whether age gnss can or can not be used to retrieve time of measurement (noted
-TOM, also known as time of validity) If it can, substract 'age gnss' from 'tow' in
-navigation messages to get TOM. Can be used before alignment is complete in the Fusion
-Engine, when output solution is the last received valid GNSS solution and its tow is not
-a TOM.
+the sensorfusion solution. It focuses primarily, but not only, on GNSS metadata.
+Regarding the age of the last received valid GNSS solution, the highest two bits are time
+status, indicating whether age gnss can or can not be used to retrieve time of
+measurement (noted TOM, also known as time of validity) If it can, subtract 'age gnss'
+from 'tow' in navigation messages to get TOM. Can be used before alignment is complete in
+the Fusion Engine, when output solution is the last received valid GNSS solution and its
+tow is not a TOM.
 -}
 type alias MsgSolnMeta =
     { ageCorrections : Int
@@ -2396,8 +2396,8 @@ type alias TroposphericDelayCorrection =
     , wet : Int
     }
 
-{-| The LPP message contains nested variable length arrays which are not suppported in SBP,
-so each grid point will be identified by the index.
+{-| The LPP message contains nested variable length arrays which are not supported in SBP, so
+each grid point will be identified by the index.
 -}
 type alias GriddedCorrectionHeader =
     { iodAtmo : Int
@@ -2597,7 +2597,7 @@ type alias MsgStmFlashUnlockSector =
     { sector : Int
     }
 
-{-| This message reads the device's hardcoded unique ID. The host requests the ID by sending
+{-| This message reads the device's hard-coded unique ID. The host requests the ID by sending
 a MSG_STM_UNIQUE_ID_REQ. The device responds with a MSG_STM_UNIQUE_ID_RESP with the
 12-byte unique ID in the payload.
 -}

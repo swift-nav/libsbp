@@ -722,7 +722,7 @@ class MsgStmUniqueIdReq(SBP):
   of its fields.
 
   
-  This message reads the device's hardcoded unique ID. The host requests the
+  This message reads the device's hard-coded unique ID. The host requests the
   ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
   MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 
@@ -768,7 +768,7 @@ class MsgStmUniqueIdResp(SBP):
   of its fields.
 
   
-  This message reads the device's hardcoded unique ID. The host requests the
+  This message reads the device's hard-coded unique ID. The host requests the
   ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
   MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 

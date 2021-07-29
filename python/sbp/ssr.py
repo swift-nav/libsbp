@@ -185,7 +185,7 @@ class GriddedCorrectionHeader(object):
   """GriddedCorrectionHeader.
   
   The LPP message contains nested variable length arrays which are not
-  suppported in SBP, so each grid point will be identified by the index.
+  supported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -263,7 +263,7 @@ class STECSatElement(object):
     Quality of the STEC data. Encoded following RTCM DF389 specification but
     in units of TECU instead of m.
   stec_coeff : array
-    Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
 
   """
   _parser = construct.Struct(
@@ -546,7 +546,7 @@ class SatelliteAPC(object):
   svn : int
     Satellite Code, as defined by IGS. Typically the space vehicle number.
   pco : array
-    Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
     description for coordinate system definition.
   pcv : array
     Elevation dependent phase center variations. First element is 0 degrees
@@ -644,7 +644,7 @@ class GriddedCorrectionHeaderDepA(object):
   """GriddedCorrectionHeaderDepA.
   
   The 3GPP message contains nested variable length arrays which are not
-  suppported in SBP, so each grid point will be identified by the index.
+  supported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -660,8 +660,8 @@ class GriddedCorrectionHeaderDepA(object):
   iod_atmo : int
     IOD of the SSR atmospheric correction
   tropo_quality_indicator : int
-    Quality of the troposphere data. Encoded following RTCM DF389 specifcation
-    in units of m.
+    Quality of the troposphere data. Encoded following RTCM DF389
+    specification in units of m.
 
   """
   _parser = construct.Struct(
@@ -719,7 +719,7 @@ class GridDefinitionHeaderDepA(object):
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
-    Postion of this message in the dataset
+    Position of this message in the dataset
 
   """
   _parser = construct.Struct(
@@ -1184,9 +1184,9 @@ class MsgSsrStecCorrection(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   header : STECHeader
-    Header of a STEC polynomial coeffcient message.
+    Header of a STEC polynomial coefficient message.
   stec_sat_list : array
-    Array of STEC polynomial coeffcients for each space vehicle.
+    Array of STEC polynomial coefficients for each space vehicle.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

@@ -81,7 +81,7 @@ typedef struct SBP_ATTR_PACKED {
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
  * The LPP message contains nested variable length arrays which are not
- * suppported in SBP, so each grid point will be identified by the index.
+ * supported in SBP, so each grid point will be identified by the index.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -112,7 +112,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 stec_quality_indicator; /**< Quality of the STEC data. Encoded
                                   following RTCM DF389 specification but in
                                   units of TECU instead of m. */
-  s16 stec_coeff[4];         /**< Coefficents of the STEC polynomial in
+  s16 stec_coeff[4];         /**< Coefficients of the STEC polynomial in
                                   the order of C00, C01, C10, C11 [C00 = 0.05 TECU,
                                 C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
 } stec_sat_element_t;
@@ -288,7 +288,7 @@ typedef struct SBP_ATTR_PACKED {
                                          a satellite being tracked. */
 } msg_ssr_phase_biases_t;
 
-/** STEC correction polynomial coeffcients
+/** STEC correction polynomial coefficients
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the
@@ -300,10 +300,10 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
 
 typedef struct SBP_ATTR_PACKED {
-  stec_header_t header; /**< Header of a STEC polynomial coeffcient
+  stec_header_t header; /**< Header of a STEC polynomial coefficient
                              message. */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
-                                            coeffcients for each space
+                                            coefficients for each space
                                             vehicle. */
 } msg_ssr_stec_correction_t;
 
@@ -409,7 +409,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 sat_info;           /**< Additional satellite information */
   u16 svn;    /**< Satellite Code, as defined by IGS. Typically the space
                    vehicle number. */
-  s16 pco[3]; /**< Mean phase center offset, X Y and Z axises. See IGS
+  s16 pco[3]; /**< Mean phase center offset, X Y and Z axes. See IGS
                    ANTEX file format description for coordinate system
                    definition. [1 mm] */
   s8 pcv[21]; /**< Elevation dependent phase center variations. First
@@ -470,7 +470,7 @@ typedef struct SBP_ATTR_PACKED {
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
  * The 3GPP message contains nested variable length arrays which are not
- * suppported in SBP, so each grid point will be identified by the index.
+ * supported in SBP, so each grid point will be identified by the index.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -483,7 +483,7 @@ typedef struct SBP_ATTR_PACKED {
                                    DF391 specification. */
   u8 iod_atmo;                /**< IOD of the SSR atmospheric correction */
   u8 tropo_quality_indicator; /**< Quality of the troposphere data. Encoded
-                                   following RTCM DF389 specifcation in
+                                   following RTCM DF389 specification in
                                    units of m. */
 } gridded_correction_header_dep_a_t;
 
@@ -504,7 +504,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 lon_nw_corner_enc;  /**< North-West corner longitude (deg) =
                                region_size * lon_nw_corner_enc - 180 */
   u8 num_msgs;            /**< Number of messages in the dataset */
-  u8 seq_num;             /**< Postion of this message in the dataset */
+  u8 seq_num;             /**< Position of this message in the dataset */
 } grid_definition_header_dep_a_t;
 
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB

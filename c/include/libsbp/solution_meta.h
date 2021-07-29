@@ -49,8 +49,8 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  *
  * This message contains all metadata about the sensors received and/or used
- * in computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
- * metadata.
+ * in computing the Fuzed Solution. It focuses primarily, but not only, on
+ * GNSS metadata.
  */
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
@@ -116,11 +116,11 @@ typedef struct SBP_ATTR_PACKED {
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used
- * in computing the sensorfusion solution. It focuses primarly, but not only,
+ * in computing the sensorfusion solution. It focuses primarily, but not only,
  * on GNSS metadata. Regarding the age of the last received valid GNSS
  * solution, the highest two bits are time status, indicating whether age gnss
  * can or can not be used to retrieve time of measurement (noted TOM, also
- * known as time of validity) If it can, substract 'age gnss' from 'tow' in
+ * known as time of validity) If it can, subtract 'age gnss' from 'tow' in
  * navigation messages to get TOM. Can be used before alignment is complete in
  * the Fusion Engine, when output solution is the last received valid GNSS
  * solution and its tow is not a TOM.

@@ -425,7 +425,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;             /**< Index representing the type of telemetry in use.  It
-                          is implemention defined. */
+                          is implementation defined. */
   char telemetry[0]; /**< Comma separated list of values as defined by the
                           index */
 } msg_csac_telemetry_t;
@@ -440,14 +440,14 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;                    /**< Index representing the type of telemetry in
-                                 use.  It is implemention defined. */
+                                 use.  It is implementation defined. */
   char telemetry_labels[0]; /**< Comma separated list of telemetry field
                                  values */
 } msg_csac_telemetry_labels_t;
 
 /** Inertial Navigation System update status message
  *
- * The INS update status message contains informations about executed and
+ * The INS update status message contains information about executed and
  * rejected INS updates. This message is expected to be extended in the future
  * as new types of measurements are being added.
  */
@@ -772,7 +772,7 @@ typedef struct SBP_ATTR_PACKED {
                           is Gnss */
   u8 flags;          /**< Status flags (reserved) */
   u8 n_group_msgs;   /**< Size of list group_msgs */
-  u16 group_msgs[0]; /**< An inorder list of message types included in the
+  u16 group_msgs[0]; /**< An in-order list of message types included in the
                           Solution Group, including GROUP_META itself */
 } msg_group_meta_t;
 

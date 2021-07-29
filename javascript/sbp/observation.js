@@ -100,7 +100,7 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  * observations are interoperable with 3rd party receivers and conform with typical
  * RTCM 3.1 message GPS/GLO observations.  Carrier phase observations are not
  * guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference signal and no
- * 1/4 cycle adjustments are currently peformed.
+ * 1/4 cycle adjustments are currently performed.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
@@ -279,7 +279,7 @@ MsgBasePosLlh.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
  * pseudo-absolute position output.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field x number (float, 8 bytes) ECEF X coodinate
+ * @field x number (float, 8 bytes) ECEF X coordinate
  * @field y number (float, 8 bytes) ECEF Y coordinate
  * @field z number (float, 8 bytes) ECEF Z coordinate
  *
@@ -2133,7 +2133,7 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
  * This observation message has been deprecated in favor of observations that are
  * more interoperable. This message should be used for observations referenced to a
  * nominal pseudorange which are not interoperable with most 3rd party GNSS
- * receievers or typical RTCMv3 observations.
+ * receivers or typical RTCMv3 observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeaderDep Header of a GPS observation message
@@ -2203,7 +2203,7 @@ MsgObsDepC.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepC.protot
  * see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct GPSTimeSec Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
  * @field a0 number (float, 8 bytes)
  * @field a1 number (float, 8 bytes)
  * @field a2 number (float, 8 bytes)
@@ -2254,7 +2254,7 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct GPSTimeSec Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
  * @field l2c_mask number (unsigned 32-bit int, 4 bytes) L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
  *
  * @param sbp An SBP object with a payload to be decoded.

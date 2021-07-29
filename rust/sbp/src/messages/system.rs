@@ -37,7 +37,7 @@ use crate::SbpString;
 pub struct MsgCsacTelemetry {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Index representing the type of telemetry in use.  It is implemention
+    /// Index representing the type of telemetry in use.  It is implementation
     /// defined.
     pub id: u8,
     /// Comma separated list of values as defined by the index
@@ -123,7 +123,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 pub struct MsgCsacTelemetryLabels {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Index representing the type of telemetry in use.  It is implemention
+    /// Index representing the type of telemetry in use.  It is implementation
     /// defined.
     pub id: u8,
     /// Comma separated list of telemetry field values
@@ -405,7 +405,7 @@ pub struct MsgGroupMeta {
     pub flags: u8,
     /// Size of list group_msgs
     pub n_group_msgs: u8,
-    /// An inorder list of message types included in the Solution Group,
+    /// An in-order list of message types included in the Solution Group,
     /// including GROUP_META itself
     pub group_msgs: Vec<u16>,
 }
@@ -650,7 +650,7 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 
 /// Inertial Navigation System update status message
 ///
-/// The INS update status message contains informations about executed and
+/// The INS update status message contains information about executed and
 /// rejected INS updates. This message is expected to be extended in the
 /// future as new types of measurements are being added.
 ///

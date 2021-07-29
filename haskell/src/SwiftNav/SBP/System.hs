@@ -244,7 +244,7 @@ msgCsacTelemetry = 0xFF04
 -- It is intended to be a low rate message for status purposes.
 data MsgCsacTelemetry = MsgCsacTelemetry
   { _msgCsacTelemetry_id      :: !Word8
-    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- ^ Index representing the type of telemetry in use.  It is implementation
     -- defined.
   , _msgCsacTelemetry_telemetry :: !Text
     -- ^ Comma separated list of values as defined by the index
@@ -274,7 +274,7 @@ msgCsacTelemetryLabels = 0xFF05
 -- lower rate than the MSG_CSAC_TELEMETRY.
 data MsgCsacTelemetryLabels = MsgCsacTelemetryLabels
   { _msgCsacTelemetryLabels_id             :: !Word8
-    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- ^ Index representing the type of telemetry in use.  It is implementation
     -- defined.
   , _msgCsacTelemetryLabels_telemetry_labels :: !Text
     -- ^ Comma separated list of telemetry field values
@@ -299,7 +299,7 @@ msgInsUpdates = 0xFF06
 
 -- | SBP class for message MSG_INS_UPDATES (0xFF06).
 --
--- The INS update status message contains informations about executed and
+-- The INS update status message contains information about executed and
 -- rejected INS updates. This message is expected to be extended in the future
 -- as new types of measurements are being added.
 data MsgInsUpdates = MsgInsUpdates
@@ -433,7 +433,7 @@ data MsgGroupMeta = MsgGroupMeta
   , _msgGroupMeta_n_group_msgs :: !Word8
     -- ^ Size of list group_msgs
   , _msgGroupMeta_group_msgs :: ![Word16]
-    -- ^ An inorder list of message types included in the Solution Group,
+    -- ^ An in-order list of message types included in the Solution Group,
     -- including GROUP_META itself
   } deriving ( Show, Read, Eq )
 

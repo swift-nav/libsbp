@@ -147,7 +147,7 @@ $(makeLenses ''STECHeader)
 -- | GriddedCorrectionHeader.
 --
 -- The LPP message contains nested variable length arrays which are not
--- suppported in SBP, so each grid point will be identified by the index.
+-- supported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeader = GriddedCorrectionHeader
   { _griddedCorrectionHeader_tile_set_id           :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
@@ -204,7 +204,7 @@ data STECSatElement = STECSatElement
     -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification
     -- but in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
-    -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElement where
@@ -576,9 +576,9 @@ msgSsrStecCorrection = 0x05FB
 -- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 data MsgSsrStecCorrection = MsgSsrStecCorrection
   { _msgSsrStecCorrection_header      :: !STECHeader
-    -- ^ Header of a STEC polynomial coeffcient message.
+    -- ^ Header of a STEC polynomial coefficient message.
   , _msgSsrStecCorrection_stec_sat_list :: ![STECSatElement]
-    -- ^ Array of STEC polynomial coeffcients for each space vehicle.
+    -- ^ Array of STEC polynomial coefficients for each space vehicle.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrStecCorrection where
@@ -734,7 +734,7 @@ data SatelliteAPC = SatelliteAPC
   , _satelliteAPC_svn    :: !Word16
     -- ^ Satellite Code, as defined by IGS. Typically the space vehicle number.
   , _satelliteAPC_pco    :: ![Int16]
-    -- ^ Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    -- ^ Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
     -- description for coordinate system definition.
   , _satelliteAPC_pcv    :: ![Int8]
     -- ^ Elevation dependent phase center variations. First element is 0 degrees
@@ -896,7 +896,7 @@ $(makeLenses ''STECHeaderDepA)
 -- | GriddedCorrectionHeaderDepA.
 --
 -- The 3GPP message contains nested variable length arrays which are not
--- suppported in SBP, so each grid point will be identified by the index.
+-- supported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeaderDepA = GriddedCorrectionHeaderDepA
   { _griddedCorrectionHeaderDepA_time                  :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -911,7 +911,7 @@ data GriddedCorrectionHeaderDepA = GriddedCorrectionHeaderDepA
     -- ^ IOD of the SSR atmospheric correction
   , _griddedCorrectionHeaderDepA_tropo_quality_indicator :: !Word8
     -- ^ Quality of the troposphere data. Encoded following RTCM DF389
-    -- specifcation in units of m.
+    -- specification in units of m.
   } deriving ( Show, Read, Eq )
 
 instance Binary GriddedCorrectionHeaderDepA where
@@ -953,7 +953,7 @@ data GridDefinitionHeaderDepA = GridDefinitionHeaderDepA
   , _gridDefinitionHeaderDepA_num_msgs          :: !Word8
     -- ^ Number of messages in the dataset
   , _gridDefinitionHeaderDepA_seq_num           :: !Word8
-    -- ^ Postion of this message in the dataset
+    -- ^ Position of this message in the dataset
   } deriving ( Show, Read, Eq )
 
 instance Binary GridDefinitionHeaderDepA where

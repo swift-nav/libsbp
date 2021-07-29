@@ -153,8 +153,8 @@ msgAcqResultDepA = 0x0015
 -- Deprecated.
 data MsgAcqResultDepA = MsgAcqResultDepA
   { _msgAcqResultDepA_snr :: !Float
-    -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
-    -- in the revision of this message.
+    -- ^ SNR of best point. Currently dimensionless, but will have units of dB
+    -- Hz in the revision of this message.
   , _msgAcqResultDepA_cp :: !Float
     -- ^ Code phase of best point
   , _msgAcqResultDepA_cf :: !Float

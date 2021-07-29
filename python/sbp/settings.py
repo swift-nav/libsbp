@@ -393,7 +393,7 @@ class MsgSettingsReadResp(SBP):
   of its fields.
 
   
-  The setting message wich which the device responds after a
+  The setting message which which the device responds after a
   MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
   terminated and NULL-delimited string with contents
   "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes

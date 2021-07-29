@@ -43,7 +43,7 @@ class MsgFileioReadReq(SBP):
   
   The file read message reads a certain length (up to 255 bytes) from a given
   offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message
-  where the message length field indicates how many bytes were succesfully
+  where the message length field indicates how many bytes were successfully
   read.The sequence number in the request will be returned in the response. If
   the message is invalid, a followup MSG_PRINT message will print "Invalid
   fileio read message". A device will only respond to this message when it is
@@ -153,7 +153,7 @@ class MsgFileioReadResp(SBP):
   
   The file read message reads a certain length (up to 255 bytes) from a given
   offset into a file, and returns the data in a message where the message
-  length field indicates how many bytes were succesfully read. The sequence
+  length field indicates how many bytes were successfully read. The sequence
   number in the response is preserved from the request.
 
   Parameters

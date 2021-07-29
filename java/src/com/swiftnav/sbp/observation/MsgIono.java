@@ -32,7 +32,7 @@ import org.json.JSONObject;
 public class MsgIono extends SBPMessage {
     public static final int TYPE = 0x0090;
 
-    /** Navigation Message Correction Table Valitidy Time */
+    /** Navigation Message Correction Table Validity Time */
     public GPSTimeSec t_nmct;
 
     public double a0;

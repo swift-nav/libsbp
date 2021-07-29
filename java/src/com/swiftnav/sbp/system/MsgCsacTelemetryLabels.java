@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class MsgCsacTelemetryLabels extends SBPMessage {
     public static final int TYPE = 0xFF05;
 
-    /** Index representing the type of telemetry in use. It is implemention defined. */
+    /** Index representing the type of telemetry in use. It is implementation defined. */
     public int id;
 
     /** Comma separated list of telemetry field values */

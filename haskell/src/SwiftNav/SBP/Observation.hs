@@ -95,7 +95,7 @@ $(makeLenses ''Doppler)
 --
 -- Carrier phase observations are not guaranteed to be aligned to the RINEX 3
 -- or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
--- peformed.
+-- performed.
 data PackedObsContent = PackedObsContent
   { _packedObsContent_P   :: !Word32
     -- ^ Pseudorange observation
@@ -274,7 +274,7 @@ msgBasePosEcef = 0x0048
 -- in an error in the pseudo-absolute position output.
 data MsgBasePosEcef = MsgBasePosEcef
   { _msgBasePosEcef_x :: !Double
-    -- ^ ECEF X coodinate
+    -- ^ ECEF X coordinate
   , _msgBasePosEcef_y :: !Double
     -- ^ ECEF Y coordinate
   , _msgBasePosEcef_z :: !Double
@@ -2379,7 +2379,7 @@ msgObsDepB = 0x0043
 -- This observation message has been deprecated in favor of observations that
 -- are more interoperable. This message should be used for observations
 -- referenced to a nominal pseudorange which are not interoperable with most
--- 3rd party GNSS receievers or typical RTCMv3 observations.
+-- 3rd party GNSS receivers or typical RTCMv3 observations.
 data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
@@ -2445,7 +2445,7 @@ msgIono = 0x0090
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 data MsgIono = MsgIono
   { _msgIono_t_nmct :: !GpsTimeSec
-    -- ^ Navigation Message Correction Table Valitidy Time
+    -- ^ Navigation Message Correction Table Validity Time
   , _msgIono_a0   :: !Double
   , _msgIono_a1   :: !Double
   , _msgIono_a2   :: !Double
@@ -2492,7 +2492,7 @@ msgSvConfigurationGpsDep = 0x0091
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgSvConfigurationGpsDep = MsgSvConfigurationGpsDep
   { _msgSvConfigurationGpsDep_t_nmct :: !GpsTimeSec
-    -- ^ Navigation Message Correction Table Valitidy Time
+    -- ^ Navigation Message Correction Table Validity Time
   , _msgSvConfigurationGpsDep_l2c_mask :: !Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
   } deriving ( Show, Read, Eq )

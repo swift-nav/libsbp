@@ -112,7 +112,7 @@ class PackedObsContent(object):
 
   Carrier phase observations are not guaranteed to be aligned to the RINEX 3
   or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-  peformed.
+  performed.
   
   Parameters
   ----------
@@ -1157,7 +1157,7 @@ class MsgBasePosECEF(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   x : double
-    ECEF X coodinate
+    ECEF X coordinate
   y : double
     ECEF Y coordinate
   z : double
@@ -4661,7 +4661,7 @@ class MsgObsDepB(SBP):
   This observation message has been deprecated in favor of observations that
   are more interoperable. This message should be used for observations
   referenced to a nominal pseudorange which are not interoperable with most
-  3rd party GNSS receievers or typical RTCMv3 observations.
+  3rd party GNSS receivers or typical RTCMv3 observations.
 
   Parameters
   ----------
@@ -4863,7 +4863,7 @@ class MsgIono(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   t_nmct : GPSTimeSec
-    Navigation Message Correction Table Valitidy Time
+    Navigation Message Correction Table Validity Time
   a0 : double
   a1 : double
   a2 : double
@@ -4984,7 +4984,7 @@ class MsgSvConfigurationGPSDep(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   t_nmct : GPSTimeSec
-    Navigation Message Correction Table Valitidy Time
+    Navigation Message Correction Table Validity Time
   l2c_mask : int
     L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
   sender : int

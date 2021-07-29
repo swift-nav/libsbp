@@ -37,7 +37,7 @@ public class GridDefinitionHeaderDepA extends SBPStruct {
     /** Number of messages in the dataset */
     public int num_msgs;
 
-    /** Postion of this message in the dataset */
+    /** Position of this message in the dataset */
     public int seq_num;
 
     public GridDefinitionHeaderDepA() {}

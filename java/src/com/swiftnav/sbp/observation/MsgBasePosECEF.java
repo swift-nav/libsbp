@@ -33,7 +33,7 @@ import org.json.JSONObject;
 public class MsgBasePosECEF extends SBPMessage {
     public static final int TYPE = 0x0048;
 
-    /** ECEF X coodinate */
+    /** ECEF X coordinate */
     public double x;
 
     /** ECEF Y coordinate */

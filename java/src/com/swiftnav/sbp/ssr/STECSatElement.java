@@ -32,7 +32,7 @@ public class STECSatElement extends SBPStruct {
      */
     public int stec_quality_indicator;
 
-    /** Coefficents of the STEC polynomial in the order of C00, C01, C10, C11 */
+    /** Coefficients of the STEC polynomial in the order of C00, C01, C10, C11 */
     public int[] stec_coeff;
 
     public STECSatElement() {}

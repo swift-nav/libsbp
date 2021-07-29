@@ -39,7 +39,9 @@ public class GriddedCorrectionHeaderDepA extends SBPStruct {
     /** IOD of the SSR atmospheric correction */
     public int iod_atmo;
 
-    /** Quality of the troposphere data. Encoded following RTCM DF389 specifcation in units of m. */
+    /**
+     * Quality of the troposphere data. Encoded following RTCM DF389 specification in units of m.
+     */
     public int tropo_quality_indicator;
 
     public GriddedCorrectionHeaderDepA() {}

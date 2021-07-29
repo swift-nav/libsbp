@@ -28,7 +28,7 @@ import org.json.JSONObject;
  * <p>Deprecated.
  *
  * <p>This message contains all metadata about the sensors received and/or used in computing the
- * Fuzed Solution. It focuses primarly, but not only, on GNSS metadata.
+ * Fuzed Solution. It focuses primarily, but not only, on GNSS metadata.
  */
 public class MsgSolnMetaDepA extends SBPMessage {
     public static final int TYPE = 0xFF0F;

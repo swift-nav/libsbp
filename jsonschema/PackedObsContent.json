@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#PackedObsContent",
   "title":"PackedObsContent",
-  "description":"Pseudorange and carrier phase observation for a satellite being tracked. The observations are interoperable with 3rd party receivers and conform with typical RTCM 3.1 message GPS/GLO observations.,\n,\nCarrier phase observations are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently peformed.\n",
+  "description":"Pseudorange and carrier phase observation for a satellite being tracked. The observations are interoperable with 3rd party receivers and conform with typical RTCM 3.1 message GPS/GLO observations.,\n,\nCarrier phase observations are not guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently performed.\n",
   "type": "object",
   "properties": {
     "P": {"type": "integer"},

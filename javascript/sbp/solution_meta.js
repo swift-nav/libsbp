@@ -61,7 +61,7 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
  *
  * Deprecated.  This message contains all metadata about the sensors received
- * and/or used in computing the Fuzed Solution. It focuses primarly, but not only,
+ * and/or used in computing the Fuzed Solution. It focuses primarily, but not only,
  * on GNSS metadata.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -121,13 +121,13 @@ MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.p
  * SBP class for message MSG_SOLN_META (0xFF0E).
  *
  * This message contains all metadata about the sensors received and/or used in
- * computing the sensorfusion solution. It focuses primarly, but not only, on GNSS
+ * computing the sensorfusion solution. It focuses primarily, but not only, on GNSS
  * metadata. Regarding the age of the last received valid GNSS solution, the
  * highest two bits are time status, indicating whether age gnss can or can not be
  * used to retrieve time of measurement (noted TOM, also known as time of validity)
- * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM.
- * Can be used before alignment is complete in the Fusion Engine, when output
- * solution is the last received valid GNSS solution and its tow is not a TOM.
+ * If it can, subtract 'age gnss' from 'tow' in navigation messages to get TOM. Can
+ * be used before alignment is complete in the Fusion Engine, when output solution
+ * is the last received valid GNSS solution and its tow is not a TOM.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond

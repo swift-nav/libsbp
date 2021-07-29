@@ -60,7 +60,7 @@ definitions:
 
       Carrier phase observations are not guaranteed to be aligned to the RINEX 3
       or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-      peformed.
+      performed.
 
     fields:
         - P:
@@ -255,7 +255,7 @@ definitions:
         - x:
             type: double
             units: m
-            desc: ECEF X coodinate
+            desc: ECEF X coordinate
         - y:
             type: double
             units: m
@@ -2020,7 +2020,7 @@ definitions:
       observations that are more interoperable. This message
       should be used for observations referenced to
       a nominal pseudorange which are not interoperable with
-      most 3rd party GNSS receievers or typical RTCMv3
+      most 3rd party GNSS receivers or typical RTCMv3
       observations.
     public: False
     replaced_by:
@@ -2073,7 +2073,7 @@ definitions:
     fields:
       - t_nmct:
           type: GPSTimeSec
-          desc: Navigation Message Correction Table Valitidy Time
+          desc: Navigation Message Correction Table Validity Time
       - a0:
           type: double
           units: s
@@ -2107,7 +2107,7 @@ definitions:
     fields:
       - t_nmct:
           type: GPSTimeSec
-          desc: Navigation Message Correction Table Valitidy Time
+          desc: Navigation Message Correction Table Validity Time
       - l2c_mask:
           type: u32
           desc: L2C capability mask, SV32 bit being MSB, SV1 bit being LSB

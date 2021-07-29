@@ -62,7 +62,7 @@ message STECHeader {
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
  * The LPP message contains nested variable length arrays which are not
- * suppported in SBP, so each grid point will be identified by the index.
+ * supported in SBP, so each grid point will be identified by the index.
  */
 message GriddedCorrectionHeader {
     uint32 tile_set_id = 1;
@@ -204,7 +204,7 @@ message MsgSsrPhaseBiases {
     repeated PhaseBiasesContent biases = 9;
 }
 
-/** STEC correction polynomial coeffcients
+/** STEC correction polynomial coefficients
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the

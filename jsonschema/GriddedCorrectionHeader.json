@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#GriddedCorrectionHeader",
   "title":"GriddedCorrectionHeader",
-  "description":"The LPP message contains nested variable length arrays which are not suppported in SBP, so each grid point will be identified by the index.\n",
+  "description":"The LPP message contains nested variable length arrays which are not supported in SBP, so each grid point will be identified by the index.\n",
   "type": "object",
   "properties": {
     "tile_set_id": {"type": "integer"},

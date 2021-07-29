@@ -123,7 +123,7 @@ message MsgCsacTelemetryLabels {
 
 /** Inertial Navigation System update status message
  *
- * The INS update status message contains informations about executed and
+ * The INS update status message contains information about executed and
  * rejected INS updates. This message is expected to be extended in the future
  * as new types of measurements are being added.
  */
