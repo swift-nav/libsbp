@@ -255,6 +255,6 @@ HOWTO for instructions on updating these schemas.
 
 ## LICENSE
 
-Copyright © 2020 Swift Navigation
+Copyright © 2021 Swift Navigation
 
 Distributed under MIT.

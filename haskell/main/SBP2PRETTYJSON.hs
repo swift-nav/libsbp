@@ -5,7 +5,7 @@
 
 -- |
 -- Module:      SBP2PRETTYJSON
--- Copyright:   Copyright (C) 2019 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2019-2021 Swift Navigation, Inc.
 -- License:     LGPL-3
 -- Maintainer:  Pasi Miettinen <dev@swiftnav.com>
 -- Stability:   experimental

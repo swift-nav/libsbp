@@ -773,7 +773,7 @@ export interface MsgFileioReadDirResp {
 /**
  * The file read message reads a certain length (up to 255 bytes) from a given offset into a
  * file, and returns the data in a MSG_FILEIO_READ_RESP message where the message length
- * field indicates how many bytes were successfully read.The sequence number in the request
+ * field indicates how many bytes were successfully read. The sequence number in the request
  * will be returned in the response. If the message is invalid, a followup MSG_PRINT message
  * will print "Invalid fileio read message". A device will only respond to this message when
  * it is received from sender ID 0x42.
@@ -1788,7 +1788,7 @@ export interface MsgSettingsReadReq {
 }
 
 /**
- * The setting message which which the device responds after a MSG_SETTING_READ_REQ is sent
+ * The setting message with which the device responds after a MSG_SETTING_READ_REQ is sent
  * to device. The string field is a NULL-terminated and NULL-delimited string with contents
  * "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes the NULL
  * character and where quotation marks are omitted. An example string that could be sent

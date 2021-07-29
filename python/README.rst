@@ -77,7 +77,7 @@ To run the tests without suppressing stdout output:
 License
 -------
 
-Copyright © 2015 Swift Navigation
+Copyright © 2015-2021 Swift Navigation
 
 Distributed under MIT.
 

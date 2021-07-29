@@ -1,7 +1,7 @@
 # CMake Toolchain file for the gcc-arm-embedded toolchain.
 # https://launchpad.net/gcc-arm-embedded
 #
-# Copyright (c) 2013 Swift Navigation Inc.
+# Copyright (c) 2013-2021 Swift Navigation Inc.
 # Contact: Fergus Noble <fergus@swift-nav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must

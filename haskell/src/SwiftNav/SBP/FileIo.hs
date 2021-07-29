@@ -5,7 +5,7 @@
 
 -- |
 -- Module:      SwiftNav.SBP.FileIo
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
@@ -50,7 +50,7 @@ msgFileioReadReq = 0x00A8
 -- The file read message reads a certain length (up to 255 bytes) from a given
 -- offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message
 -- where the message length field indicates how many bytes were successfully
--- read.The sequence number in the request will be returned in the response.
+-- read. The sequence number in the request will be returned in the response.
 -- If the message is invalid, a followup MSG_PRINT message will print "Invalid
 -- fileio read message". A device will only respond to this message when it is
 -- received from sender ID 0x42.

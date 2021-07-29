@@ -48,6 +48,6 @@ usage: ./libsbp_example [-p serial port]
 
 ## LICENSE
 
-Copyright © 2015 Swift Navigation
+Copyright © 2015-2021 Swift Navigation
 
 Distributed under MIT.

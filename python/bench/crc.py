@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-# Copyright (C) 2019 Swift Navigation Inc.
+# Copyright (C) 2019-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must

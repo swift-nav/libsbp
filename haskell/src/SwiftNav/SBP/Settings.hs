@@ -5,7 +5,7 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Settings
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
@@ -177,7 +177,7 @@ msgSettingsReadResp = 0x00A5
 
 -- | SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
 --
--- The setting message which which the device responds after a
+-- The setting message with which the device responds after a
 -- MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
 -- terminated and NULL-delimited string with contents
 -- "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes

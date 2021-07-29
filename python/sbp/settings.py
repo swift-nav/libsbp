@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -393,7 +393,7 @@ class MsgSettingsReadResp(SBP):
   of its fields.
 
   
-  The setting message which which the device responds after a
+  The setting message with which the device responds after a
   MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
   terminated and NULL-delimited string with contents
   "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
