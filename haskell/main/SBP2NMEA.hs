@@ -4,7 +4,7 @@
 -- |
 -- Module:      SBP2JNMEA
 -- Copyright:   Copyright (C) 2020-2021 Swift Navigation, Inc.
--- License:     LGPL-3
+-- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
