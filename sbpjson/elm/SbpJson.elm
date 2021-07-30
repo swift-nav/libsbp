@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridDefinitionHeader, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGridDefinition, msgSsrGriddedCorrection, msgSsrGriddedCorrectionNoStd, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -21,7 +21,6 @@
 --     decodeString gnssSignal myJsonString
 --     decodeString gpsTime myJsonString
 --     decodeString gpsTimeSEC myJsonString
---     decodeString gridDefinitionHeader myJsonString
 --     decodeString gridElement myJsonString
 --     decodeString gridElementNoStd myJsonString
 --     decodeString griddedCorrectionHeader myJsonString
@@ -143,9 +142,7 @@
 --     decodeString msgSolnMeta myJsonString
 --     decodeString msgSpecan myJsonString
 --     decodeString msgSsrCodeBiases myJsonString
---     decodeString msgSsrGridDefinition myJsonString
 --     decodeString msgSsrGriddedCorrection myJsonString
---     decodeString msgSsrGriddedCorrectionNoStd myJsonString
 --     decodeString msgSsrOrbitClock myJsonString
 --     decodeString msgSsrPhaseBiases myJsonString
 --     decodeString msgSsrSatelliteApc myJsonString
@@ -234,9 +231,6 @@ module SbpJson exposing
     , GpsTimeSEC
     , gpsTimeSECToString
     , gpsTimeSEC
-    , GridDefinitionHeader
-    , gridDefinitionHeaderToString
-    , gridDefinitionHeader
     , GridElement
     , gridElementToString
     , gridElement
@@ -600,15 +594,9 @@ module SbpJson exposing
     , MsgSsrCodeBiases
     , msgSsrCodeBiasesToString
     , msgSsrCodeBiases
-    , MsgSsrGridDefinition
-    , msgSsrGridDefinitionToString
-    , msgSsrGridDefinition
     , MsgSsrGriddedCorrection
     , msgSsrGriddedCorrectionToString
     , msgSsrGriddedCorrection
-    , MsgSsrGriddedCorrectionNoStd
-    , msgSsrGriddedCorrectionNoStdToString
-    , msgSsrGriddedCorrectionNoStd
     , MsgSsrOrbitClock
     , msgSsrOrbitClockToString
     , msgSsrOrbitClock
@@ -792,6 +780,31 @@ sol_in[N].flags in a MSG_SOLN_META.
 -}
 type alias GNSSInputType =
     { flags : Int
+    }
+
+{-| Contains one tropo delay, plus STEC residuals for each satellite at the grid point. -}
+type alias GridElementNoStd =
+    { index : Int
+    , stecResiduals : Array STECResidualNoStd
+    , tropoDelayCorrection : TroposphericDelayCorrectionNoStd
+    }
+
+{-| STEC residual for the given satellite at the grid point. -}
+type alias STECResidualNoStd =
+    { residual : Int
+    , svID : SvID
+    }
+
+{-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
+type alias SvID =
+    { constellation : Int
+    , satID : Int
+    }
+
+{-| Troposphere vertical delays at the grid point. -}
+type alias TroposphericDelayCorrectionNoStd =
+    { hydro : Int
+    , wet : Int
     }
 
 {-| Metadata around the IMU sensors involved in the fuzed solution. Accessible through
@@ -2338,26 +2351,6 @@ type alias CodeBiasesContent =
     , value : Int
     }
 
-{-| Based on the 3GPP proposal R2-1906781 which is in turn based on,
-OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
--}
-type alias MsgSsrGridDefinition =
-    { header : GridDefinitionHeader
-    , rleList : Array Int
-    }
-
-{-| Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.,
-Also includes an RLE encoded validity list.
--}
-type alias GridDefinitionHeader =
-    { areaWidth : Int
-    , latNwCornerEnc : Int
-    , lonNwCornerEnc : Int
-    , numMsgs : Int
-    , regionSizeInverse : Int
-    , seqNum : Int
-    }
-
 {-| STEC residuals are per space vehicle, troposphere is not.,
 ,
 It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
@@ -2383,12 +2376,6 @@ type alias STECResidual =
     , svID : SvID
     }
 
-{-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
-type alias SvID =
-    { constellation : Int
-    , satID : Int
-    }
-
 {-| Troposphere vertical delays (mean and standard deviation) at the grid point. -}
 type alias TroposphericDelayCorrection =
     { hydro : Int
@@ -2408,33 +2395,6 @@ type alias GriddedCorrectionHeader =
     , time : GpsTimeSEC
     , tropoQualityIndicator : Int
     , updateInterval : Int
-    }
-
-{-| This message was deprecated when variances (stddev),
-were added.
--}
-type alias MsgSsrGriddedCorrectionNoStd =
-    { element : GridElementNoStd
-    , header : GriddedCorrectionHeader
-    }
-
-{-| Contains one tropo delay, plus STEC residuals for each satellite at the grid point. -}
-type alias GridElementNoStd =
-    { index : Int
-    , stecResiduals : Array STECResidualNoStd
-    , tropoDelayCorrection : TroposphericDelayCorrectionNoStd
-    }
-
-{-| STEC residual for the given satellite at the grid point. -}
-type alias STECResidualNoStd =
-    { residual : Int
-    , svID : SvID
-    }
-
-{-| Troposphere vertical delays at the grid point. -}
-type alias TroposphericDelayCorrectionNoStd =
-    { hydro : Int
-    , wet : Int
     }
 
 {-| The precise orbit and clock correction message is to be applied as a delta correction to
@@ -2968,9 +2928,6 @@ gpsTimeToString r = Jenc.encode 0 (encodeGpsTime r)
 gpsTimeSECToString : GpsTimeSEC -> String
 gpsTimeSECToString r = Jenc.encode 0 (encodeGpsTimeSEC r)
 
-gridDefinitionHeaderToString : GridDefinitionHeader -> String
-gridDefinitionHeaderToString r = Jenc.encode 0 (encodeGridDefinitionHeader r)
-
 gridElementToString : GridElement -> String
 gridElementToString r = Jenc.encode 0 (encodeGridElement r)
 
@@ -3361,14 +3318,8 @@ msgSpecanToString r = Jenc.encode 0 (encodeMsgSpecan r)
 msgSsrCodeBiasesToString : MsgSsrCodeBiases -> String
 msgSsrCodeBiasesToString r = Jenc.encode 0 (encodeMsgSsrCodeBiases r)
 
-msgSsrGridDefinitionToString : MsgSsrGridDefinition -> String
-msgSsrGridDefinitionToString r = Jenc.encode 0 (encodeMsgSsrGridDefinition r)
-
 msgSsrGriddedCorrectionToString : MsgSsrGriddedCorrection -> String
 msgSsrGriddedCorrectionToString r = Jenc.encode 0 (encodeMsgSsrGriddedCorrection r)
-
-msgSsrGriddedCorrectionNoStdToString : MsgSsrGriddedCorrectionNoStd -> String
-msgSsrGriddedCorrectionNoStdToString r = Jenc.encode 0 (encodeMsgSsrGriddedCorrectionNoStd r)
 
 msgSsrOrbitClockToString : MsgSsrOrbitClock -> String
 msgSsrOrbitClockToString r = Jenc.encode 0 (encodeMsgSsrOrbitClock r)
@@ -3532,6 +3483,60 @@ encodeGNSSInputType : GNSSInputType -> Jenc.Value
 encodeGNSSInputType x =
     Jenc.object
         [ ("flags", Jenc.int x.flags)
+        ]
+
+gridElementNoStd : Jdec.Decoder GridElementNoStd
+gridElementNoStd =
+    Jpipe.decode GridElementNoStd
+        |> Jpipe.required "index" Jdec.int
+        |> Jpipe.required "stec_residuals" (Jdec.array stecResidualNoStd)
+        |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrectionNoStd
+
+encodeGridElementNoStd : GridElementNoStd -> Jenc.Value
+encodeGridElementNoStd x =
+    Jenc.object
+        [ ("index", Jenc.int x.index)
+        , ("stec_residuals", makeArrayEncoder encodeSTECResidualNoStd x.stecResiduals)
+        , ("tropo_delay_correction", encodeTroposphericDelayCorrectionNoStd x.tropoDelayCorrection)
+        ]
+
+stecResidualNoStd : Jdec.Decoder STECResidualNoStd
+stecResidualNoStd =
+    Jpipe.decode STECResidualNoStd
+        |> Jpipe.required "residual" Jdec.int
+        |> Jpipe.required "sv_id" svID
+
+encodeSTECResidualNoStd : STECResidualNoStd -> Jenc.Value
+encodeSTECResidualNoStd x =
+    Jenc.object
+        [ ("residual", Jenc.int x.residual)
+        , ("sv_id", encodeSvID x.svID)
+        ]
+
+svID : Jdec.Decoder SvID
+svID =
+    Jpipe.decode SvID
+        |> Jpipe.required "constellation" Jdec.int
+        |> Jpipe.required "satId" Jdec.int
+
+encodeSvID : SvID -> Jenc.Value
+encodeSvID x =
+    Jenc.object
+        [ ("constellation", Jenc.int x.constellation)
+        , ("satId", Jenc.int x.satID)
+        ]
+
+troposphericDelayCorrectionNoStd : Jdec.Decoder TroposphericDelayCorrectionNoStd
+troposphericDelayCorrectionNoStd =
+    Jpipe.decode TroposphericDelayCorrectionNoStd
+        |> Jpipe.required "hydro" Jdec.int
+        |> Jpipe.required "wet" Jdec.int
+
+encodeTroposphericDelayCorrectionNoStd : TroposphericDelayCorrectionNoStd -> Jenc.Value
+encodeTroposphericDelayCorrectionNoStd x =
+    Jenc.object
+        [ ("hydro", Jenc.int x.hydro)
+        , ("wet", Jenc.int x.wet)
         ]
 
 imuInputType : Jdec.Decoder IMUInputType
@@ -5914,40 +5919,6 @@ encodeCodeBiasesContent x =
         , ("value", Jenc.int x.value)
         ]
 
-msgSsrGridDefinition : Jdec.Decoder MsgSsrGridDefinition
-msgSsrGridDefinition =
-    Jpipe.decode MsgSsrGridDefinition
-        |> Jpipe.required "header" gridDefinitionHeader
-        |> Jpipe.required "rle_list" (Jdec.array Jdec.int)
-
-encodeMsgSsrGridDefinition : MsgSsrGridDefinition -> Jenc.Value
-encodeMsgSsrGridDefinition x =
-    Jenc.object
-        [ ("header", encodeGridDefinitionHeader x.header)
-        , ("rle_list", makeArrayEncoder Jenc.int x.rleList)
-        ]
-
-gridDefinitionHeader : Jdec.Decoder GridDefinitionHeader
-gridDefinitionHeader =
-    Jpipe.decode GridDefinitionHeader
-        |> Jpipe.required "area_width" Jdec.int
-        |> Jpipe.required "lat_nw_corner_enc" Jdec.int
-        |> Jpipe.required "lon_nw_corner_enc" Jdec.int
-        |> Jpipe.required "num_msgs" Jdec.int
-        |> Jpipe.required "region_size_inverse" Jdec.int
-        |> Jpipe.required "seq_num" Jdec.int
-
-encodeGridDefinitionHeader : GridDefinitionHeader -> Jenc.Value
-encodeGridDefinitionHeader x =
-    Jenc.object
-        [ ("area_width", Jenc.int x.areaWidth)
-        , ("lat_nw_corner_enc", Jenc.int x.latNwCornerEnc)
-        , ("lon_nw_corner_enc", Jenc.int x.lonNwCornerEnc)
-        , ("num_msgs", Jenc.int x.numMsgs)
-        , ("region_size_inverse", Jenc.int x.regionSizeInverse)
-        , ("seq_num", Jenc.int x.seqNum)
-        ]
-
 msgSsrGriddedCorrection : Jdec.Decoder MsgSsrGriddedCorrection
 msgSsrGriddedCorrection =
     Jpipe.decode MsgSsrGriddedCorrection
@@ -5991,19 +5962,6 @@ encodeSTECResidual x =
         , ("sv_id", encodeSvID x.svID)
         ]
 
-svID : Jdec.Decoder SvID
-svID =
-    Jpipe.decode SvID
-        |> Jpipe.required "constellation" Jdec.int
-        |> Jpipe.required "satId" Jdec.int
-
-encodeSvID : SvID -> Jenc.Value
-encodeSvID x =
-    Jenc.object
-        [ ("constellation", Jenc.int x.constellation)
-        , ("satId", Jenc.int x.satID)
-        ]
-
 troposphericDelayCorrection : Jdec.Decoder TroposphericDelayCorrection
 troposphericDelayCorrection =
     Jpipe.decode TroposphericDelayCorrection
@@ -6042,60 +6000,6 @@ encodeGriddedCorrectionHeader x =
         , ("time", encodeGpsTimeSEC x.time)
         , ("tropo_quality_indicator", Jenc.int x.tropoQualityIndicator)
         , ("update_interval", Jenc.int x.updateInterval)
-        ]
-
-msgSsrGriddedCorrectionNoStd : Jdec.Decoder MsgSsrGriddedCorrectionNoStd
-msgSsrGriddedCorrectionNoStd =
-    Jpipe.decode MsgSsrGriddedCorrectionNoStd
-        |> Jpipe.required "element" gridElementNoStd
-        |> Jpipe.required "header" griddedCorrectionHeader
-
-encodeMsgSsrGriddedCorrectionNoStd : MsgSsrGriddedCorrectionNoStd -> Jenc.Value
-encodeMsgSsrGriddedCorrectionNoStd x =
-    Jenc.object
-        [ ("element", encodeGridElementNoStd x.element)
-        , ("header", encodeGriddedCorrectionHeader x.header)
-        ]
-
-gridElementNoStd : Jdec.Decoder GridElementNoStd
-gridElementNoStd =
-    Jpipe.decode GridElementNoStd
-        |> Jpipe.required "index" Jdec.int
-        |> Jpipe.required "stec_residuals" (Jdec.array stecResidualNoStd)
-        |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrectionNoStd
-
-encodeGridElementNoStd : GridElementNoStd -> Jenc.Value
-encodeGridElementNoStd x =
-    Jenc.object
-        [ ("index", Jenc.int x.index)
-        , ("stec_residuals", makeArrayEncoder encodeSTECResidualNoStd x.stecResiduals)
-        , ("tropo_delay_correction", encodeTroposphericDelayCorrectionNoStd x.tropoDelayCorrection)
-        ]
-
-stecResidualNoStd : Jdec.Decoder STECResidualNoStd
-stecResidualNoStd =
-    Jpipe.decode STECResidualNoStd
-        |> Jpipe.required "residual" Jdec.int
-        |> Jpipe.required "sv_id" svID
-
-encodeSTECResidualNoStd : STECResidualNoStd -> Jenc.Value
-encodeSTECResidualNoStd x =
-    Jenc.object
-        [ ("residual", Jenc.int x.residual)
-        , ("sv_id", encodeSvID x.svID)
-        ]
-
-troposphericDelayCorrectionNoStd : Jdec.Decoder TroposphericDelayCorrectionNoStd
-troposphericDelayCorrectionNoStd =
-    Jpipe.decode TroposphericDelayCorrectionNoStd
-        |> Jpipe.required "hydro" Jdec.int
-        |> Jpipe.required "wet" Jdec.int
-
-encodeTroposphericDelayCorrectionNoStd : TroposphericDelayCorrectionNoStd -> Jenc.Value
-encodeTroposphericDelayCorrectionNoStd x =
-    Jenc.object
-        [ ("hydro", Jenc.int x.hydro)
-        , ("wet", Jenc.int x.wet)
         ]
 
 msgSsrOrbitClock : Jdec.Decoder MsgSsrOrbitClock

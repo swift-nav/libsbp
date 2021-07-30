@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridDefinitionHeader, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGridDefinition, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -14,7 +14,6 @@
 //   const gnssSignal = Convert.toGnssSignal(json);
 //   const gpsTime = Convert.toGpsTime(json);
 //   const gpsTimeSEC = Convert.toGpsTimeSEC(json);
-//   const gridDefinitionHeader = Convert.toGridDefinitionHeader(json);
 //   const gridElement = Convert.toGridElement(json);
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
@@ -136,9 +135,7 @@
 //   const msgSolnMeta = Convert.toMsgSolnMeta(json);
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
-//   const msgSsrGridDefinition = Convert.toMsgSsrGridDefinition(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
-//   const msgSsrGriddedCorrectionNoStd = Convert.toMsgSsrGriddedCorrectionNoStd(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
@@ -199,6 +196,39 @@
  */
 export interface GNSSInputType {
     flags: number;
+}
+
+/**
+ * Contains one tropo delay, plus STEC residuals for each satellite at the grid point.
+ */
+export interface GridElementNoStd {
+    index:                  number;
+    stec_residuals:         STECResidualNoStd[];
+    tropo_delay_correction: TroposphericDelayCorrectionNoStd;
+}
+
+/**
+ * STEC residual for the given satellite at the grid point.
+ */
+export interface STECResidualNoStd {
+    residual: number;
+    sv_id:    SvID;
+}
+
+/**
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.
+ */
+export interface SvID {
+    constellation: number;
+    satId:         number;
+}
+
+/**
+ * Troposphere vertical delays at the grid point.
+ */
+export interface TroposphericDelayCorrectionNoStd {
+    hydro: number;
+    wet:   number;
 }
 
 /**
@@ -1880,28 +1910,6 @@ export interface CodeBiasesContent {
 }
 
 /**
- * Based on the 3GPP proposal R2-1906781 which is in turn based on,
- * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
- */
-export interface MsgSsrGridDefinition {
-    header:   GridDefinitionHeader;
-    rle_list: number[];
-}
-
-/**
- * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.,
- * Also includes an RLE encoded validity list.
- */
-export interface GridDefinitionHeader {
-    area_width:          number;
-    lat_nw_corner_enc:   number;
-    lon_nw_corner_enc:   number;
-    num_msgs:            number;
-    region_size_inverse: number;
-    seq_num:             number;
-}
-
-/**
  * STEC residuals are per space vehicle, troposphere is not.,
  * ,
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
@@ -1931,14 +1939,6 @@ export interface STECResidual {
 }
 
 /**
- * A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.
- */
-export interface SvID {
-    constellation: number;
-    satId:         number;
-}
-
-/**
  * Troposphere vertical delays (mean and standard deviation) at the grid point.
  */
 export interface TroposphericDelayCorrection {
@@ -1960,40 +1960,6 @@ export interface GriddedCorrectionHeader {
     time:                    GpsTimeSEC;
     tropo_quality_indicator: number;
     update_interval:         number;
-}
-
-/**
- * This message was deprecated when variances (stddev),
- * were added.
- */
-export interface MsgSsrGriddedCorrectionNoStd {
-    element: GridElementNoStd;
-    header:  GriddedCorrectionHeader;
-}
-
-/**
- * Contains one tropo delay, plus STEC residuals for each satellite at the grid point.
- */
-export interface GridElementNoStd {
-    index:                  number;
-    stec_residuals:         STECResidualNoStd[];
-    tropo_delay_correction: TroposphericDelayCorrectionNoStd;
-}
-
-/**
- * STEC residual for the given satellite at the grid point.
- */
-export interface STECResidualNoStd {
-    residual: number;
-    sv_id:    SvID;
-}
-
-/**
- * Troposphere vertical delays at the grid point.
- */
-export interface TroposphericDelayCorrectionNoStd {
-    hydro: number;
-    wet:   number;
 }
 
 /**
@@ -2631,14 +2597,6 @@ export class Convert {
 
     public static gpsTimeSECToJson(value: GpsTimeSEC): string {
         return JSON.stringify(uncast(value, r("GpsTimeSEC")), null, 2);
-    }
-
-    public static toGridDefinitionHeader(json: string): GridDefinitionHeader {
-        return cast(JSON.parse(json), r("GridDefinitionHeader"));
-    }
-
-    public static gridDefinitionHeaderToJson(value: GridDefinitionHeader): string {
-        return JSON.stringify(uncast(value, r("GridDefinitionHeader")), null, 2);
     }
 
     public static toGridElement(json: string): GridElement {
@@ -3609,28 +3567,12 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrCodeBiases")), null, 2);
     }
 
-    public static toMsgSsrGridDefinition(json: string): MsgSsrGridDefinition {
-        return cast(JSON.parse(json), r("MsgSsrGridDefinition"));
-    }
-
-    public static msgSsrGridDefinitionToJson(value: MsgSsrGridDefinition): string {
-        return JSON.stringify(uncast(value, r("MsgSsrGridDefinition")), null, 2);
-    }
-
     public static toMsgSsrGriddedCorrection(json: string): MsgSsrGriddedCorrection {
         return cast(JSON.parse(json), r("MsgSsrGriddedCorrection"));
     }
 
     public static msgSsrGriddedCorrectionToJson(value: MsgSsrGriddedCorrection): string {
         return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
-    }
-
-    public static toMsgSsrGriddedCorrectionNoStd(json: string): MsgSsrGriddedCorrectionNoStd {
-        return cast(JSON.parse(json), r("MsgSsrGriddedCorrectionNoStd"));
-    }
-
-    public static msgSsrGriddedCorrectionNoStdToJson(value: MsgSsrGriddedCorrectionNoStd): string {
-        return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrectionNoStd")), null, 2);
     }
 
     public static toMsgSsrOrbitClock(json: string): MsgSsrOrbitClock {
@@ -4169,6 +4111,23 @@ function r(name: string) {
 const typeMap: any = {
     "GNSSInputType": o([
         { json: "flags", js: "flags", typ: 0 },
+    ], "any"),
+    "GridElementNoStd": o([
+        { json: "index", js: "index", typ: 0 },
+        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrectionNoStd") },
+    ], "any"),
+    "STECResidualNoStd": o([
+        { json: "residual", js: "residual", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
+    "SvID": o([
+        { json: "constellation", js: "constellation", typ: 0 },
+        { json: "satId", js: "satId", typ: 0 },
+    ], "any"),
+    "TroposphericDelayCorrectionNoStd": o([
+        { json: "hydro", js: "hydro", typ: 0 },
+        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "IMUInputType": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -5050,18 +5009,6 @@ const typeMap: any = {
         { json: "code", js: "code", typ: 0 },
         { json: "value", js: "value", typ: 0 },
     ], "any"),
-    "MsgSsrGridDefinition": o([
-        { json: "header", js: "header", typ: r("GridDefinitionHeader") },
-        { json: "rle_list", js: "rle_list", typ: a(0) },
-    ], "any"),
-    "GridDefinitionHeader": o([
-        { json: "area_width", js: "area_width", typ: 0 },
-        { json: "lat_nw_corner_enc", js: "lat_nw_corner_enc", typ: 0 },
-        { json: "lon_nw_corner_enc", js: "lon_nw_corner_enc", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "region_size_inverse", js: "region_size_inverse", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-    ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "element", js: "element", typ: r("GridElement") },
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
@@ -5075,10 +5022,6 @@ const typeMap: any = {
         { json: "residual", js: "residual", typ: 0 },
         { json: "stddev", js: "stddev", typ: 0 },
         { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "SvID": o([
-        { json: "constellation", js: "constellation", typ: 0 },
-        { json: "satId", js: "satId", typ: 0 },
     ], "any"),
     "TroposphericDelayCorrection": o([
         { json: "hydro", js: "hydro", typ: 0 },
@@ -5094,23 +5037,6 @@ const typeMap: any = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
-    ], "any"),
-    "MsgSsrGriddedCorrectionNoStd": o([
-        { json: "element", js: "element", typ: r("GridElementNoStd") },
-        { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
-    ], "any"),
-    "GridElementNoStd": o([
-        { json: "index", js: "index", typ: 0 },
-        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
-        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrectionNoStd") },
-    ], "any"),
-    "STECResidualNoStd": o([
-        { json: "residual", js: "residual", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "TroposphericDelayCorrectionNoStd": o([
-        { json: "hydro", js: "hydro", typ: 0 },
-        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
