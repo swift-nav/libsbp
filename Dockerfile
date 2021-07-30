@@ -79,6 +79,7 @@ RUN \
       doxygen \
       graphviz \
       imagemagick \
+      enchant \
       clang-format$(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo -6.0) \
       # from deadsnakes
       $(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo \

@@ -1,6 +1,7 @@
 -r generator/requirements.txt
 -e generator
 -e python
+distro
 sphinx
 sphinxcontrib-spelling
 autoflake

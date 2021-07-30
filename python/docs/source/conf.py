@@ -16,6 +16,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
+import distro
 
 # -- General configuration ------------------------------------------------
 
@@ -34,7 +35,14 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.ifconfig',
               'sphinx.ext.viewcode',
               'sphinx.ext.napoleon',
+              'sphinxcontrib.spelling',
               ]
+
+if distro.codename().lower().startswith('bionic'):
+    # The spelling wordlist on bionic is too old to support.
+    # This effectively silently disables the spelling extension.
+    spelling_exclude_patterns = ['*']
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -284,6 +292,7 @@ texinfo_documents = [(master_doc, project, _TITLE,
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
+spelling_word_list_filename='spelling_wordlist.txt'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}

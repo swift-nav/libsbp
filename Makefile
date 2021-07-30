@@ -436,12 +436,12 @@ html-c:
 	  cd build            && \
 	  cmake ..            && \
 	  $(MAKE) docs
-	$(call announce-end,"Finished generating C bindings documentation")
+	$(call announce-end,"Finished generating C bindings documentation at c/build/docs/html/index.html")
 
 html-python:
 	$(call announce-begin,"Generating Python documentation")
-	tox -e py --run-command="make -C python/docs html"
-	$(call announce-end,"Finished generating Python documentation")
+	tox -e py --run-command="make -C python/docs spelling html"
+	$(call announce-end,"Finished generating Python documentation at python/docs/build/html/index.html")
 
 release:
 	$(call announce-begin,"Run release boilerplate")
