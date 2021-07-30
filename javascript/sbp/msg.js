@@ -101,17 +101,16 @@ var sbpImports = {
   navigation: require('./navigation.js'),
   ndb: require('./ndb.js'),
   observation: require('./observation.js'),
+  orientation: require('./orientation.js'),
   piksi: require('./piksi.js'),
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
-  signal: require('./signal.js'),
   solution_meta: require('./solution_meta.js'),
   ssr: require('./ssr.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),
   user: require('./user.js'),
   vehicle: require('./vehicle.js'),
-  orientation: require('./orientation.js')
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
