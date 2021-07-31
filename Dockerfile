@@ -30,7 +30,9 @@ ENV PATH=/usr/lib/ccache:/cargo/bin:/rust/bin:${PATH}
 
 RUN \
      apt-get update \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends \
+      gnupg \
+      netbase \
       git \
       sudo \
       software-properties-common \
@@ -39,6 +41,7 @@ RUN \
       curl \
       libudev-dev \
       uuid-dev \
+      libffi-dev \
       libgmp-dev \
       zlib1g-dev \
       zip unzip \
@@ -47,14 +50,14 @@ RUN \
       pandoc \
       llvm \
       clang \
-      texlive-science \
       texlive-fonts-extra \
+      texlive-latex-extra \
+      texlive-science \
       check \
       ccache \
       pkg-config \
       doxygen \
       graphviz \
-      texlive-latex-base \
       imagemagick \
       clang-format-6.0 \
   && rm -rf /var/lib/apt/lists/* \
@@ -71,7 +74,7 @@ RUN \
   && gradle --version \
   && add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends \
       libpython2.7-stdlib \
       libpython3.8-stdlib \
       python-is-python3 \
@@ -92,7 +95,7 @@ RUN \
      wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
   && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ focal main' \
   && apt-get update \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends \
     cmake \
   && rm -rf /var/lib/apt/lists/*
 
