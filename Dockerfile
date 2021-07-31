@@ -81,7 +81,8 @@ RUN \
       python3.7-dev \
       python3.9-dev python3.9-dist \
   && pip3 install tox sphinx tox-run-command \
-  && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path \
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --profile minimal --no-modify-path \
+  && rustup component add rustfmt \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/*
 
