@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Swift Navigation Inc.
+# Copyright (C) 2020-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,13 +11,15 @@
 # This describes an image that should be able to generate libsbp bindings.
 # See the README.md for instructions on how to use it.
 
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV NODE_VERSION=v14.17.3
 ENV JAVA_VERSION=11.0.11.hs-adpt
 ENV GRADLE_VERSION=7.1.1
+ENV CC=gcc-7
+ENV CXX=g++-7
 
 ENV RUSTUP_HOME=/rust
 ENV CARGO_HOME=/cargo
@@ -41,6 +43,7 @@ RUN \
       zlib1g-dev \
       zip unzip \
       build-essential \
+      $CC $CXX \
       pandoc \
       llvm \
       clang \
@@ -69,12 +72,13 @@ RUN \
   && add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
   && apt-get install -y \
-      python-pip \
+      libpython2.7-stdlib \
+      libpython3.8-stdlib \
+      python-is-python3 \
       python3-pip \
       python3.5-dev \
       python3.6-dev \
       python3.7-dev \
-      python3.8-dev \
       python3.9-dev python3.9-dist \
   && pip3 install tox sphinx tox-run-command \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path \
@@ -85,7 +89,7 @@ ARG KITWARE_KEY_URL=https://apt.kitware.com/keys/kitware-archive-latest.asc
 
 RUN \
      wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
-  && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' \ 
+  && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ focal main' \
   && apt-get update \
   && apt-get install -y \
     cmake
