@@ -76,10 +76,10 @@ RUN \
       libpython3.8-stdlib \
       python-is-python3 \
       python3-pip \
-      python3.5-dev \
-      python3.6-dev \
-      python3.7-dev \
-      python3.9-dev python3.9-dist \
+      python3.5 \
+      python3.6 \
+      python3.7\
+      python3.9 \
   && pip3 install tox sphinx tox-run-command \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --profile minimal --no-modify-path \
   && rustup component add rustfmt \
