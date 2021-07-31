@@ -93,7 +93,8 @@ RUN \
   && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ focal main' \
   && apt-get update \
   && apt-get install -y \
-    cmake
+    cmake \
+  && rm -rf /var/lib/apt/lists/*
 
 ENV NVM_DIR=/opt/nvm
 
