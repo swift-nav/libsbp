@@ -11,7 +11,12 @@
 # This describes an image that should be able to generate libsbp bindings.
 # See the README.md for instructions on how to use it.
 
-FROM ubuntu:focal
+ARG UBUNTU_RELEASE=focal
+
+FROM ubuntu:${UBUNTU_RELEASE}
+
+# Re-declare UBUNTU_RELEASE to be visible after FROM
+ARG UBUNTU_RELEASE
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -40,10 +45,12 @@ RUN \
       software-properties-common \
       sudo \
       wget \
-  && add-apt-repository ppa:deadsnakes/ppa \
-  && echo $KITWARE_KEY_URL \
-  && wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
-  && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ focal main' \
+  && ((test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal \
+      && add-apt-repository ppa:deadsnakes/ppa \
+      && wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+     && add-apt-repository "deb https://apt.kitware.com/ubuntu/ ${UBUNTU_RELEASE} main" \
+      ) || true) \
+  && cat /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
       git \
@@ -59,8 +66,9 @@ RUN \
       pandoc \
       libpython2.7-stdlib \
       libpython3.8-stdlib \
-      python-is-python3 \
+      $(test $UBUNTU_RELEASE = focal && echo python-is-python3) \
       python3-pip \
+      python3-setuptools \
       llvm \
       clang \
       texlive-fonts-extra \
@@ -72,14 +80,18 @@ RUN \
       doxygen \
       graphviz \
       imagemagick \
-      clang-format-6.0 \
+      clang-format$(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo -6.0) \
       # from deadsnakes
-      python3.5 \
-      python3.6 \
-      python3.7\
-      python3.9 \
-      # from kitware
+      $(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo \
+        python3.5 \
+        python3.6 \
+        python3.7\
+        python3.9 \
+      ) \
+      $(test $UBUNTU_RELEASE = bionic && echo python3.9-dist) \
+      # from kitware or ubuntu groovy+
       cmake \
+  && ((test $UBUNTU_RELEASE = bionic && sudo ln -s /usr/bin/pip3 /usr/bin/pip) || true) \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && apt remove -y \
       gnupg \
