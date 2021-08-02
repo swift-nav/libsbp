@@ -1897,6 +1897,14 @@ struct MessageTraits<sbp_msg_gps_time_gnss_t> {
                  const sbp_msg_gps_time_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gps_time_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_gps_time_gnss_t to_gnss(const sbp_msg_gps_time_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_gps_time_t to_non_gnss(const sbp_msg_gps_time_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gps_time_gnss = msg;
+    return sbp_msg.gps_time;
+  }
 };
 
 template <>
@@ -1917,6 +1925,14 @@ struct MessageTraits<sbp_msg_gps_time_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_gps_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_gps_time_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_gps_time_gnss_t to_gnss(const sbp_msg_gps_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.gps_time = msg;
+    return sbp_msg.gps_time_gnss;
+  }
+  static sbp_msg_gps_time_t to_non_gnss(const sbp_msg_gps_time_t &msg) {
+    return msg;
   }
 };
 
@@ -2929,6 +2945,16 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_gnss_t> {
                  const sbp_msg_pos_ecef_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_cov_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_pos_ecef_cov_gnss_t to_gnss(
+      const sbp_msg_pos_ecef_cov_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_pos_ecef_cov_t to_non_gnss(
+      const sbp_msg_pos_ecef_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_cov_gnss = msg;
+    return sbp_msg.pos_ecef_cov;
+  }
 };
 
 template <>
@@ -2952,6 +2978,15 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_cov_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_pos_ecef_cov_gnss_t to_gnss(
+      const sbp_msg_pos_ecef_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_cov = msg;
+    return sbp_msg.pos_ecef_cov_gnss;
+  }
+  static sbp_msg_pos_ecef_cov_t to_non_gnss(const sbp_msg_pos_ecef_cov_t &msg) {
+    return msg;
   }
 };
 
@@ -3001,6 +3036,14 @@ struct MessageTraits<sbp_msg_pos_ecef_gnss_t> {
                  const sbp_msg_pos_ecef_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_pos_ecef_gnss_t to_gnss(const sbp_msg_pos_ecef_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_pos_ecef_t to_non_gnss(const sbp_msg_pos_ecef_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef_gnss = msg;
+    return sbp_msg.pos_ecef;
+  }
 };
 
 template <>
@@ -3021,6 +3064,14 @@ struct MessageTraits<sbp_msg_pos_ecef_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_ecef_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_pos_ecef_gnss_t to_gnss(const sbp_msg_pos_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_ecef = msg;
+    return sbp_msg.pos_ecef_gnss;
+  }
+  static sbp_msg_pos_ecef_t to_non_gnss(const sbp_msg_pos_ecef_t &msg) {
+    return msg;
   }
 };
 
@@ -3067,6 +3118,16 @@ struct MessageTraits<sbp_msg_pos_llh_cov_gnss_t> {
                  const sbp_msg_pos_llh_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_cov_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_pos_llh_cov_gnss_t to_gnss(
+      const sbp_msg_pos_llh_cov_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_pos_llh_cov_t to_non_gnss(
+      const sbp_msg_pos_llh_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_cov_gnss = msg;
+    return sbp_msg.pos_llh_cov;
+  }
 };
 
 template <>
@@ -3087,6 +3148,14 @@ struct MessageTraits<sbp_msg_pos_llh_cov_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_cov_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_pos_llh_cov_gnss_t to_gnss(const sbp_msg_pos_llh_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_cov = msg;
+    return sbp_msg.pos_llh_cov_gnss;
+  }
+  static sbp_msg_pos_llh_cov_t to_non_gnss(const sbp_msg_pos_llh_cov_t &msg) {
+    return msg;
   }
 };
 
@@ -3136,6 +3205,14 @@ struct MessageTraits<sbp_msg_pos_llh_gnss_t> {
                  const sbp_msg_pos_llh_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_pos_llh_gnss_t to_gnss(const sbp_msg_pos_llh_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_pos_llh_t to_non_gnss(const sbp_msg_pos_llh_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh_gnss = msg;
+    return sbp_msg.pos_llh;
+  }
 };
 
 template <>
@@ -3156,6 +3233,14 @@ struct MessageTraits<sbp_msg_pos_llh_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_pos_llh_t &msg, sbp_write_fn_t write) {
     return sbp_msg_pos_llh_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_pos_llh_gnss_t to_gnss(const sbp_msg_pos_llh_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pos_llh = msg;
+    return sbp_msg.pos_llh_gnss;
+  }
+  static sbp_msg_pos_llh_t to_non_gnss(const sbp_msg_pos_llh_t &msg) {
+    return msg;
   }
 };
 
@@ -4502,6 +4587,14 @@ struct MessageTraits<sbp_msg_utc_time_gnss_t> {
                  const sbp_msg_utc_time_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_utc_time_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_utc_time_gnss_t to_gnss(const sbp_msg_utc_time_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_utc_time_t to_non_gnss(const sbp_msg_utc_time_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.utc_time_gnss = msg;
+    return sbp_msg.utc_time;
+  }
 };
 
 template <>
@@ -4522,6 +4615,14 @@ struct MessageTraits<sbp_msg_utc_time_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_utc_time_t &msg, sbp_write_fn_t write) {
     return sbp_msg_utc_time_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_utc_time_gnss_t to_gnss(const sbp_msg_utc_time_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.utc_time = msg;
+    return sbp_msg.utc_time_gnss;
+  }
+  static sbp_msg_utc_time_t to_non_gnss(const sbp_msg_utc_time_t &msg) {
+    return msg;
   }
 };
 
@@ -4568,6 +4669,16 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_gnss_t> {
                  const sbp_msg_vel_ecef_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_cov_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_vel_ecef_cov_gnss_t to_gnss(
+      const sbp_msg_vel_ecef_cov_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_vel_ecef_cov_t to_non_gnss(
+      const sbp_msg_vel_ecef_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_cov_gnss = msg;
+    return sbp_msg.vel_ecef_cov;
+  }
 };
 
 template <>
@@ -4591,6 +4702,15 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_cov_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_vel_ecef_cov_gnss_t to_gnss(
+      const sbp_msg_vel_ecef_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_cov = msg;
+    return sbp_msg.vel_ecef_cov_gnss;
+  }
+  static sbp_msg_vel_ecef_cov_t to_non_gnss(const sbp_msg_vel_ecef_cov_t &msg) {
+    return msg;
   }
 };
 
@@ -4640,6 +4760,14 @@ struct MessageTraits<sbp_msg_vel_ecef_gnss_t> {
                  const sbp_msg_vel_ecef_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_vel_ecef_gnss_t to_gnss(const sbp_msg_vel_ecef_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_vel_ecef_t to_non_gnss(const sbp_msg_vel_ecef_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef_gnss = msg;
+    return sbp_msg.vel_ecef;
+  }
 };
 
 template <>
@@ -4660,6 +4788,14 @@ struct MessageTraits<sbp_msg_vel_ecef_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ecef_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ecef_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_vel_ecef_gnss_t to_gnss(const sbp_msg_vel_ecef_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ecef = msg;
+    return sbp_msg.vel_ecef_gnss;
+  }
+  static sbp_msg_vel_ecef_t to_non_gnss(const sbp_msg_vel_ecef_t &msg) {
+    return msg;
   }
 };
 
@@ -4685,6 +4821,16 @@ struct MessageTraits<sbp_msg_vel_ned_cov_gnss_t> {
                  const sbp_msg_vel_ned_cov_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_cov_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_vel_ned_cov_gnss_t to_gnss(
+      const sbp_msg_vel_ned_cov_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_vel_ned_cov_t to_non_gnss(
+      const sbp_msg_vel_ned_cov_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_cov_gnss = msg;
+    return sbp_msg.vel_ned_cov;
+  }
 };
 
 template <>
@@ -4705,6 +4851,14 @@ struct MessageTraits<sbp_msg_vel_ned_cov_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_cov_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_cov_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_vel_ned_cov_gnss_t to_gnss(const sbp_msg_vel_ned_cov_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_cov = msg;
+    return sbp_msg.vel_ned_cov_gnss;
+  }
+  static sbp_msg_vel_ned_cov_t to_non_gnss(const sbp_msg_vel_ned_cov_t &msg) {
+    return msg;
   }
 };
 
@@ -4754,6 +4908,14 @@ struct MessageTraits<sbp_msg_vel_ned_gnss_t> {
                  const sbp_msg_vel_ned_gnss_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_gnss_send(state, sender_id, &msg, write);
   }
+  static sbp_msg_vel_ned_gnss_t to_gnss(const sbp_msg_vel_ned_gnss_t &msg) {
+    return msg;
+  }
+  static sbp_msg_vel_ned_t to_non_gnss(const sbp_msg_vel_ned_gnss_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned_gnss = msg;
+    return sbp_msg.vel_ned;
+  }
 };
 
 template <>
@@ -4774,6 +4936,14 @@ struct MessageTraits<sbp_msg_vel_ned_t> {
   static s8 send(sbp_state_t *state, u16 sender_id,
                  const sbp_msg_vel_ned_t &msg, sbp_write_fn_t write) {
     return sbp_msg_vel_ned_send(state, sender_id, &msg, write);
+  }
+  static sbp_msg_vel_ned_gnss_t to_gnss(const sbp_msg_vel_ned_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_ned = msg;
+    return sbp_msg.vel_ned_gnss;
+  }
+  static sbp_msg_vel_ned_t to_non_gnss(const sbp_msg_vel_ned_t &msg) {
+    return msg;
   }
 };
 

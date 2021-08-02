@@ -45,6 +45,32 @@ PRIMITIVE_SIZES = {
     "char": 1,
 }
 
+TO_GNSS = {
+    "sbp_msg_gps_time_t" : "sbp_msg_gps_time_gnss_t",
+    "sbp_msg_utc_time_t" : "sbp_msg_utc_time_gnss_t",
+    "sbp_msg_pos_llh_t" : "sbp_msg_pos_llh_gnss_t",
+    "sbp_msg_pos_ecef_t" : "sbp_msg_pos_ecef_gnss_t",
+    "sbp_msg_vel_ned_t" : "sbp_msg_vel_ned_gnss_t",
+    "sbp_msg_vel_ecef_t" : "sbp_msg_vel_ecef_gnss_t",
+    "sbp_msg_pos_ecef_cov_t" : "sbp_msg_pos_ecef_cov_gnss_t",
+    "sbp_msg_vel_ecef_cov_t" : "sbp_msg_vel_ecef_cov_gnss_t",
+    "sbp_msg_pos_llh_cov_t" : "sbp_msg_pos_llh_cov_gnss_t",
+    "sbp_msg_vel_ned_cov_t" : "sbp_msg_vel_ned_cov_gnss_t"
+    }
+
+TO_NON_GNSS = {
+    "sbp_msg_gps_time_gnss_t" : "sbp_msg_gps_time_t",
+    "sbp_msg_utc_time_gnss_t" : "sbp_msg_utc_time_t",
+    "sbp_msg_pos_llh_gnss_t": "sbp_msg_pos_llh_t",
+    "sbp_msg_pos_ecef_gnss_t" : "sbp_msg_pos_ecef_t",
+    "sbp_msg_vel_ned_gnss_t" : "sbp_msg_vel_ned_t",
+    "sbp_msg_vel_ecef_gnss_t" : "sbp_msg_vel_ecef_t",
+    "sbp_msg_pos_ecef_cov_gnss_t" : "sbp_msg_pos_ecef_cov_t",
+    "sbp_msg_vel_ecef_cov_gnss_t" : "sbp_msg_vel_ecef_cov_t",
+    "sbp_msg_pos_llh_cov_gnss_t" : "sbp_msg_pos_llh_cov_t",
+    "sbp_msg_vel_ned_cov_gnss_t" : "sbp_msg_vel_ned_cov_t"
+}
+
 COLLISIONS = set(["GnssSignal", "GPSTime"])
 
 
@@ -365,7 +391,6 @@ class FieldItem(object):
     def __init__(self, msg, package_specs, field):
         self.name = field.identifier
         type_id = field.type_id
-
         self.units = field.units
         self.desc = field.desc
         self.fn_prefix = get_v4_basename(msg.identifier) + "_" + field.identifier
@@ -457,6 +482,8 @@ class MsgItem(object):
     """
 
     def __init__(self, msg, package, package_specs):
+        self.TO_GNSS = TO_GNSS
+        self.TO_NON_GNSS = TO_NON_GNSS
         self.name = msg.identifier
         self.basename = get_v4_basename(msg.identifier)
         self.type_name = get_v4_typename(msg.identifier)
