@@ -509,6 +509,15 @@ class MsgItem(object):
         self.fields = []
         self.type_include = []
         self.is_fixed_size = True
+        self.gnss_type_name = ""
+        self.non_gnss_type_name = ""
+        self.return_union_member_name = ""
+        if self.type_name in TO_GNSS.keys():
+            self.gnss_type_name = TO_GNSS[self.type_name]
+            self.return_union_member_name = self.gnss_type_name[8:][:-2]
+        if self.type_name in TO_NON_GNSS.keys():
+            self.non_gnss_type_name = TO_NON_GNSS[self.type_name]
+            self.return_union_member_name = self.non_gnss_type_name[8:][:-2]
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
             if not new_field.is_fixed_size:
