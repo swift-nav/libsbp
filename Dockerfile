@@ -63,7 +63,6 @@ RUN \
       zip unzip \
       build-essential \
       $CC $CXX \
-      pandoc \
       libpython2.7-stdlib \
       libpython3.8-stdlib \
       $(test $UBUNTU_RELEASE = focal && echo python-is-python3) \
