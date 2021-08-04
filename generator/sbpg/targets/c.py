@@ -45,6 +45,21 @@ PRIMITIVE_SIZES = {
     "char": 1,
 }
 
+TO_GNSS = {
+    "MSG_GPS_TIME" : "MSG_GPS_TIME_GNSS",
+    "MSG_UTC_TIME" : "MSG_UTC_TIME_GNSS",
+    "MSG_POS_LLH" : "MSG_POS_LLH_GNSS",
+    "MSG_POS_ECEF" : "MSG_POS_ECEF_GNSS",
+    "MSG_VEL_NED" : "MSG_VEL_NED_GNSS",
+    "MSG_VEL_ECEF" : "MSG_VEL_ECEF_GNSS",
+    "MSG_POS_ECEF_COV" : "MSG_POS_ECEF_COV_GNSS",
+    "MSG_VEL_ECEF_COV" : "MSG_VEL_ECEF_COV_GNSS",
+    "MSG_POS_LLH_COV" : "MSG_POS_LLH_COV_GNSS",
+    "MSG_VEL_NED_COV" : "MSG_VEL_NED_COV_GNSS"
+    }
+
+TO_NON_GNSS = {v: k for k, v in TO_GNSS.items()}
+
 COLLISIONS = set(["GnssSignal", "GPSTime"])
 
 
@@ -365,7 +380,6 @@ class FieldItem(object):
     def __init__(self, msg, package_specs, field):
         self.name = field.identifier
         type_id = field.type_id
-
         self.units = field.units
         self.desc = field.desc
         self.fn_prefix = get_v4_basename(msg.identifier) + "_" + field.identifier
@@ -482,6 +496,15 @@ class MsgItem(object):
         self.fields = []
         self.type_include = []
         self.is_fixed_size = True
+        self.gnss_type_name = ""
+        self.non_gnss_type_name = ""
+        self.return_union_member_name = ""
+        if self.name in TO_GNSS:
+            self.gnss_type_name = get_v4_typename(TO_GNSS[self.name])
+            self.return_union_member_name = get_union_member_name(TO_GNSS[self.name])
+        if self.name in TO_NON_GNSS:
+            self.non_gnss_type_name = get_v4_typename(TO_NON_GNSS[self.name])
+            self.return_union_member_name = get_union_member_name(TO_NON_GNSS[self.name])
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
             if not new_field.is_fixed_size:

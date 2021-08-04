@@ -55,9 +55,28 @@ struct MessageTraits<(((m.type_name)))> {
   static s8 send(sbp_state_t *state, u16 sender_id, const (((m.type_name))) &msg, sbp_write_fn_t write) {
     return (((m.send_fn)))(state, sender_id, &msg, write);
   }
+((*- if m.gnss_type_name *))
+  static (((m.gnss_type_name))) to_gnss(const (((m.type_name)))& msg){
+    sbp_msg_t sbp_msg;
+    sbp_msg.(((m.union_member_name))) = msg;
+    return sbp_msg.(((m.return_union_member_name)));
+  }
+  static (((m.type_name))) to_non_gnss(const (((m.type_name)))& msg) {
+    return msg;
+  }
+((* endif *))
+((*- if m.non_gnss_type_name *))
+  static (((m.type_name))) to_gnss(const (((m.type_name)))& msg) {
+    return msg;
+  }
+  static (((m.non_gnss_type_name))) to_non_gnss(const (((m.type_name)))& msg){
+    sbp_msg_t sbp_msg;
+    sbp_msg.(((m.union_member_name))) = msg;
+    return sbp_msg.(((m.return_union_member_name)));
+  }
+((* endif *))
 };
 ((* endfor *))
-
 
 } // namespace sbp
 
