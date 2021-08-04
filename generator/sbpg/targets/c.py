@@ -46,30 +46,19 @@ PRIMITIVE_SIZES = {
 }
 
 TO_GNSS = {
-    "sbp_msg_gps_time_t" : "sbp_msg_gps_time_gnss_t",
-    "sbp_msg_utc_time_t" : "sbp_msg_utc_time_gnss_t",
-    "sbp_msg_pos_llh_t" : "sbp_msg_pos_llh_gnss_t",
-    "sbp_msg_pos_ecef_t" : "sbp_msg_pos_ecef_gnss_t",
-    "sbp_msg_vel_ned_t" : "sbp_msg_vel_ned_gnss_t",
-    "sbp_msg_vel_ecef_t" : "sbp_msg_vel_ecef_gnss_t",
-    "sbp_msg_pos_ecef_cov_t" : "sbp_msg_pos_ecef_cov_gnss_t",
-    "sbp_msg_vel_ecef_cov_t" : "sbp_msg_vel_ecef_cov_gnss_t",
-    "sbp_msg_pos_llh_cov_t" : "sbp_msg_pos_llh_cov_gnss_t",
-    "sbp_msg_vel_ned_cov_t" : "sbp_msg_vel_ned_cov_gnss_t"
+    "MSG_GPS_TIME" : "MSG_GPS_TIME_GNSS",
+    "MSG_UTC_TIME" : "MSG_UTC_TIME_GNSS",
+    "MSG_POS_LLH" : "MSG_POS_LLH_GNSS",
+    "MSG_POS_ECEF" : "MSG_POS_ECEF_GNSS",
+    "MSG_VEL_NED" : "MSG_VEL_NED_GNSS",
+    "MSG_VEL_ECEF" : "MSG_VEL_ECEF_GNSS",
+    "MSG_POS_ECEF_COV" : "MSG_POS_ECEF_COV_GNSS",
+    "MSG_VEL_ECEF_COV" : "MSG_VEL_ECEF_COV_GNSS",
+    "MSG_POS_LLH_COV" : "MSG_POS_LLH_COV_GNSS",
+    "MSG_VEL_NED_COV" : "MSG_VEL_NED_COV_GNSS"
     }
 
-TO_NON_GNSS = {
-    "sbp_msg_gps_time_gnss_t" : "sbp_msg_gps_time_t",
-    "sbp_msg_utc_time_gnss_t" : "sbp_msg_utc_time_t",
-    "sbp_msg_pos_llh_gnss_t": "sbp_msg_pos_llh_t",
-    "sbp_msg_pos_ecef_gnss_t" : "sbp_msg_pos_ecef_t",
-    "sbp_msg_vel_ned_gnss_t" : "sbp_msg_vel_ned_t",
-    "sbp_msg_vel_ecef_gnss_t" : "sbp_msg_vel_ecef_t",
-    "sbp_msg_pos_ecef_cov_gnss_t" : "sbp_msg_pos_ecef_cov_t",
-    "sbp_msg_vel_ecef_cov_gnss_t" : "sbp_msg_vel_ecef_cov_t",
-    "sbp_msg_pos_llh_cov_gnss_t" : "sbp_msg_pos_llh_cov_t",
-    "sbp_msg_vel_ned_cov_gnss_t" : "sbp_msg_vel_ned_cov_t"
-}
+TO_NON_GNSS = {v: k for k, v in TO_GNSS.items()}
 
 COLLISIONS = set(["GnssSignal", "GPSTime"])
 
@@ -482,8 +471,6 @@ class MsgItem(object):
     """
 
     def __init__(self, msg, package, package_specs):
-        self.TO_GNSS = TO_GNSS
-        self.TO_NON_GNSS = TO_NON_GNSS
         self.name = msg.identifier
         self.basename = get_v4_basename(msg.identifier)
         self.type_name = get_v4_typename(msg.identifier)
@@ -512,12 +499,12 @@ class MsgItem(object):
         self.gnss_type_name = ""
         self.non_gnss_type_name = ""
         self.return_union_member_name = ""
-        if self.type_name in TO_GNSS.keys():
-            self.gnss_type_name = TO_GNSS[self.type_name]
-            self.return_union_member_name = self.gnss_type_name[8:][:-2]
-        if self.type_name in TO_NON_GNSS.keys():
-            self.non_gnss_type_name = TO_NON_GNSS[self.type_name]
-            self.return_union_member_name = self.non_gnss_type_name[8:][:-2]
+        if self.name in TO_GNSS:
+            self.gnss_type_name = get_v4_typename(TO_GNSS[self.name])
+            self.return_union_member_name = get_union_member_name(TO_GNSS[self.name])
+        if self.name in TO_NON_GNSS:
+            self.non_gnss_type_name = get_v4_typename(TO_NON_GNSS[self.name])
+            self.return_union_member_name = get_union_member_name(TO_NON_GNSS[self.name])
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
             if not new_field.is_fixed_size:
