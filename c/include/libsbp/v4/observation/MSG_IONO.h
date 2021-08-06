@@ -47,7 +47,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Navigation Message Correction Table Valitidy Time
+   * Navigation Message Correction Table Validity Time
    */
   sbp_gps_time_sec_t t_nmct;
 

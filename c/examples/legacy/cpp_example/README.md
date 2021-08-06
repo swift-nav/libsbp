@@ -44,6 +44,6 @@ usage: ./libsbp_cpp_example [filename.sbp]
 
 ## LICENSE
 
-Copyright © 2019 Swift Navigation
+Copyright © 2019-2021 Swift Navigation
 
 Distributed under MIT.

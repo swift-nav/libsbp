@@ -40,7 +40,7 @@ extern "C" {
  * SBP_MSG_SSR_STEC_CORRECTION
  *
  *****************************************************************************/
-/** STEC correction polynomial coeffcients
+/** STEC correction polynomial coefficients
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the
@@ -50,12 +50,12 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Header of a STEC polynomial coeffcient message.
+   * Header of a STEC polynomial coefficient message.
    */
   sbp_stec_header_t header;
 
   /**
-   * Array of STEC polynomial coeffcients for each space vehicle.
+   * Array of STEC polynomial coefficients for each space vehicle.
    */
   sbp_stec_sat_element_t
       stec_sat_list[SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX];

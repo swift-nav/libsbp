@@ -35,10 +35,10 @@ import org.json.JSONObject;
 public class MsgSsrStecCorrection extends SBPMessage {
     public static final int TYPE = 0x05FB;
 
-    /** Header of a STEC polynomial coeffcient message. */
+    /** Header of a STEC polynomial coefficient message. */
     public STECHeader header;
 
-    /** Array of STEC polynomial coeffcients for each space vehicle. */
+    /** Array of STEC polynomial coefficients for each space vehicle. */
     public STECSatElement[] stec_sat_list;
 
     public MsgSsrStecCorrection(int sender) {

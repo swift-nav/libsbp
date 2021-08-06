@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * <p>This observation message has been deprecated in favor of observations that are more
  * interoperable. This message should be used for observations referenced to a nominal pseudorange
- * which are not interoperable with most 3rd party GNSS receievers or typical RTCMv3 observations.
+ * which are not interoperable with most 3rd party GNSS receivers or typical RTCMv3 observations.
  */
 public class MsgObsDepB extends SBPMessage {
     public static final int TYPE = 0x0043;

@@ -45,7 +45,7 @@ extern "C" {
  * This observation message has been deprecated in favor of observations that
  * are more interoperable. This message should be used for observations
  * referenced to a nominal pseudorange which are not interoperable with most 3rd
- * party GNSS receievers or typical RTCMv3 observations.
+ * party GNSS receivers or typical RTCMv3 observations.
  */
 typedef struct {
   /**

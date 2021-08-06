@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -106,7 +106,7 @@ pub struct GridDefinitionHeaderDepA {
     pub lon_nw_corner_enc: u16,
     /// Number of messages in the dataset
     pub num_msgs: u8,
-    /// Postion of this message in the dataset
+    /// Position of this message in the dataset
     pub seq_num: u8,
 }
 
@@ -168,7 +168,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
 /// Header for the MSG_SSR_GRIDDED_CORRECTION message
 ///
 /// The LPP message contains nested variable length arrays which are not
-/// suppported in SBP, so each grid point will be identified by the index.
+/// supported in SBP, so each grid point will be identified by the index.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -258,7 +258,7 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// Header for MSG_SSR_GRIDDED_CORRECTION_DEP
 ///
 /// The 3GPP message contains nested variable length arrays which are not
-/// suppported in SBP, so each grid point will be identified by the index.
+/// supported in SBP, so each grid point will be identified by the index.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -276,7 +276,7 @@ pub struct GriddedCorrectionHeaderDepA {
     /// IOD of the SSR atmospheric correction
     pub iod_atmo: u8,
     /// Quality of the troposphere data. Encoded following RTCM DF389
-    /// specifcation in units of m.
+    /// specification in units of m.
     pub tropo_quality_indicator: u8,
 }
 
@@ -1278,7 +1278,7 @@ impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
     }
 }
 
-/// STEC correction polynomial coeffcients
+/// STEC correction polynomial coefficients
 ///
 /// The Slant Total Electron Content per space vehicle, given as polynomial
 /// approximation for a given tile. This should be combined with the
@@ -1293,9 +1293,9 @@ impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
 pub struct MsgSsrStecCorrection {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Header of a STEC polynomial coeffcient message.
+    /// Header of a STEC polynomial coefficient message.
     pub header: STECHeader,
-    /// Array of STEC polynomial coeffcients for each space vehicle.
+    /// Array of STEC polynomial coefficients for each space vehicle.
     pub stec_sat_list: Vec<STECSatElement>,
 }
 
@@ -1968,7 +1968,7 @@ pub struct STECSatElement {
     /// Quality of the STEC data. Encoded following RTCM DF389 specification but
     /// in units of TECU instead of m.
     pub stec_quality_indicator: u8,
-    /// Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+    /// Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
     pub stec_coeff: Vec<i16>,
 }
 
@@ -2033,7 +2033,7 @@ pub struct SatelliteAPC {
     pub sat_info: u8,
     /// Satellite Code, as defined by IGS. Typically the space vehicle number.
     pub svn: u16,
-    /// Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    /// Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
     /// description for coordinate system definition.
     pub pco: Vec<i16>,
     /// Elevation dependent phase center variations. First element is 0 degrees

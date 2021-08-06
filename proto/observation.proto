@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -51,7 +51,7 @@ message Doppler {
  *
  * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
  * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
- * peformed.
+ * performed.
  */
 message PackedObsContent {
     uint32 P = 1;

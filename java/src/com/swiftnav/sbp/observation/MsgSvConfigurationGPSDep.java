@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class MsgSvConfigurationGPSDep extends SBPMessage {
     public static final int TYPE = 0x0091;
 
-    /** Navigation Message Correction Table Valitidy Time */
+    /** Navigation Message Correction Table Validity Time */
     public GPSTimeSec t_nmct;
 
     /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */

@@ -61,7 +61,7 @@ typedef struct {
   u16 svn;
 
   /**
-   * Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+   * Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
    * description for coordinate system definition. [1 mm]
    */
   s16 pco[SBP_SATELLITE_APC_PCO_MAX];

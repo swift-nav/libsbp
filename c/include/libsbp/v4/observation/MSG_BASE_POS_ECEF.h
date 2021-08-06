@@ -48,7 +48,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * ECEF X coodinate [m]
+   * ECEF X coordinate [m]
    */
   double x;
 

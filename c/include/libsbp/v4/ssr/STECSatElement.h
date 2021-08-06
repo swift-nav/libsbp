@@ -56,7 +56,7 @@ typedef struct {
   u8 stec_quality_indicator;
 
   /**
-   * Coefficents of the STEC polynomial in the order of C00, C01, C10, C11 [C00
+   * Coefficients of the STEC polynomial in the order of C00, C01, C10, C11 [C00
    * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
    */
   s16 stec_coeff[SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX];

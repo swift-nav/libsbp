@@ -44,7 +44,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * SNR of best point. Currently dimensonless, but will have units of dB Hz in
+   * SNR of best point. Currently dimensionless, but will have units of dB Hz in
    * the revision of this message.
    */
   float snr;

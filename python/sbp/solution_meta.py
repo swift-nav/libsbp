@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -175,7 +175,7 @@ class MsgSolnMetaDepA(SBP):
   Deprecated.
 
   This message contains all metadata about the sensors received and/or used in
-  computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
+  computing the Fuzed Solution. It focuses primarily, but not only, on GNSS
   metadata.
 
   Parameters
@@ -313,11 +313,11 @@ class MsgSolnMeta(SBP):
 
   
   This message contains all metadata about the sensors received and/or used in
-  computing the sensorfusion solution. It focuses primarly, but not only, on
+  computing the sensorfusion solution. It focuses primarily, but not only, on
   GNSS metadata. Regarding the age of the last received valid GNSS solution,
   the highest two bits are time status, indicating whether age gnss can or can
   not be used to retrieve time of measurement (noted TOM, also known as time
-  of validity) If it can, substract 'age gnss' from 'tow' in navigation
+  of validity) If it can, subtract 'age gnss' from 'tow' in navigation
   messages to get TOM. Can be used before alignment is complete in the Fusion
   Engine, when output solution is the last received valid GNSS solution and
   its tow is not a TOM.

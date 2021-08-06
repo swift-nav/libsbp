@@ -46,7 +46,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Index representing the type of telemetry in use.  It is implemention
+   * Index representing the type of telemetry in use.  It is implementation
    * defined.
    */
   u8 id;

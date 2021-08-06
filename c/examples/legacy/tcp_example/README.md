@@ -44,6 +44,6 @@ usage: ./libsbp_tcp_example [-a address -p port]
 
 ## LICENSE
 
-Copyright © 2018 Swift Navigation
+Copyright © 2018-2021 Swift Navigation
 
 Distributed under MIT.

@@ -42,7 +42,7 @@ extern "C" {
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
  * The 3GPP message contains nested variable length arrays which are not
- * suppported in SBP, so each grid point will be identified by the index.
+ * supported in SBP, so each grid point will be identified by the index.
  */
 typedef struct {
   /**
@@ -72,7 +72,7 @@ typedef struct {
   u8 iod_atmo;
 
   /**
-   * Quality of the troposphere data. Encoded following RTCM DF389 specifcation
+   * Quality of the troposphere data. Encoded following RTCM DF389 specification
    * in units of m.
    */
   u8 tropo_quality_indicator;

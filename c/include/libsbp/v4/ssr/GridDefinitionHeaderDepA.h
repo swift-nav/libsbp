@@ -72,7 +72,7 @@ typedef struct {
   u8 num_msgs;
 
   /**
-   * Postion of this message in the dataset
+   * Position of this message in the dataset
    */
   u8 seq_num;
 } sbp_grid_definition_header_dep_a_t;

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -285,7 +285,7 @@ definitions:
     fields:
         - id:
             type: u8
-            desc: Index representing the type of telemetry in use.  It is implemention defined.
+            desc: Index representing the type of telemetry in use.  It is implementation defined.
         - telemetry:
             type: string
             encoding: unterminated
@@ -302,7 +302,7 @@ definitions:
     fields:
         - id:
             type: u8
-            desc: Index representing the type of telemetry in use.  It is implemention defined.
+            desc: Index representing the type of telemetry in use.  It is implementation defined.
         - telemetry_labels:
             type: string
             encoding: unterminated
@@ -313,7 +313,7 @@ definitions:
     short_desc: Inertial Navigation System update status message
     public: false
     desc: >
-        The INS update status message contains informations about executed and rejected INS updates.
+        The INS update status message contains information about executed and rejected INS updates.
         This message is expected to be extended in the future as new types of measurements are being added.
     fields:
         - tow:
@@ -462,5 +462,5 @@ definitions:
            fill: u16
            size_fn: n_group_msgs
            desc: >
-             An inorder list of message types included in the Solution Group,
+             An in-order list of message types included in the Solution Group,
              including GROUP_META itself

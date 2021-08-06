@@ -27,7 +27,7 @@ jobs:
       - name: Installing dependencies
         run: |
           sudo apt-get -qq update
-          sudo apt-get install -y tox python3-sphinx clang-format-6.0 gradle
+          sudo apt-get install -y tox python3-sphinx clang-format-6.0 gradle enchant
           pip3 install tox-run-command
           tox -e py --notest
 

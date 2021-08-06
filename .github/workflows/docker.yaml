@@ -8,6 +8,12 @@ on:
       - .github/workflows/docker.yaml
 jobs:
   build:
+    strategy:
+      matrix:
+        ubuntu-release:
+          - bionic
+          - focal
+          - groovy
     name: Build docker image
     runs-on: ubuntu-latest
     steps:
@@ -18,11 +24,12 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t libsbp-build --build-arg UID=$(id -u) - <Dockerfile
+          docker build -t libsbp-build --build-arg UID=$(id -u) --build-arg UBUNTU_RELEASE=${{ matrix.ubuntu-release }} - <Dockerfile
 
       - name: List images
         run: docker images
 
       - name: Run make all inside image
+        if: matrix.ubuntu-release != 'groovy'
         run: |
           docker run --rm -v $PWD:/mnt/workspace -t libsbp-build:latest make all

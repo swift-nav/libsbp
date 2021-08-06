@@ -31,7 +31,7 @@ public class MsgAcqResultDepA extends SBPMessage {
     public static final int TYPE = 0x0015;
 
     /**
-     * SNR of best point. Currently dimensonless, but will have units of dB Hz in the revision of
+     * SNR of best point. Currently dimensionless, but will have units of dB Hz in the revision of
      * this message.
      */
     public float snr;

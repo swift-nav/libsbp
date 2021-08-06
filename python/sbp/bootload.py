@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -321,9 +321,8 @@ class MsgNapDeviceDnaResp(SBP):
   The device message from the host reads a unique device identifier from the
   SwiftNAP, an FPGA. The host requests the ID by sending a
   MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
-  MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
-  that this ID is tied to the FPGA, and not related to the Piksi's serial
-  number.
+  MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note that
+  this ID is tied to the FPGA, and not related to the Piksi's serial number.
 
   Parameters
   ----------

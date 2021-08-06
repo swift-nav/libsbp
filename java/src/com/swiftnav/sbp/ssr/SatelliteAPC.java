@@ -33,7 +33,7 @@ public class SatelliteAPC extends SBPStruct {
     public int svn;
 
     /**
-     * Mean phase center offset, X Y and Z axises. See IGS ANTEX file format description for
+     * Mean phase center offset, X Y and Z axes. See IGS ANTEX file format description for
      * coordinate system definition.
      */
     public int[] pco;

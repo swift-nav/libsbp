@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -101,17 +101,16 @@ var sbpImports = {
   navigation: require('./navigation.js'),
   ndb: require('./ndb.js'),
   observation: require('./observation.js'),
+  orientation: require('./orientation.js'),
   piksi: require('./piksi.js'),
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
-  signal: require('./signal.js'),
   solution_meta: require('./solution_meta.js'),
   ssr: require('./ssr.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),
   user: require('./user.js'),
   vehicle: require('./vehicle.js'),
-  orientation: require('./orientation.js')
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {

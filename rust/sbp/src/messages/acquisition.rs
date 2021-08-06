@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -345,7 +345,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
 pub struct MsgAcqResultDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// SNR of best point. Currently dimensonless, but will have units of dB Hz
+    /// SNR of best point. Currently dimensionless, but will have units of dB Hz
     /// in the revision of this message.
     pub snr: f32,
     /// Code phase of best point

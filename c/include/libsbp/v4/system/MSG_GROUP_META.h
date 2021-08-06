@@ -61,7 +61,7 @@ typedef struct {
   u8 n_group_msgs;
 
   /**
-   * An inorder list of message types included in the Solution Group, including
+   * An in-order list of message types included in the Solution Group, including
    * GROUP_META itself
    */
   u16 group_msgs[SBP_MSG_GROUP_META_GROUP_MSGS_MAX];

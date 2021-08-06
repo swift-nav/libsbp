@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -32,13 +32,13 @@ class Framer(six.Iterator):
     write : port
       Stream of bytes to write to.
     verbose: boolean
-      verbosify stdout / stderr. Default False
+      Increased verbosity of stdout / stderr. Default False
     dispatcher: function
       function to call on each deframed message
     skip_medata: boolean
       do not add "time" and "session-uuid" metadata
     sender_id_filter: list
-      list of integer sender_ids to frame, with the exlusion of all others
+      list of integer sender_ids to frame, with the exclusion of all others
     """
 
     def __init__(self,

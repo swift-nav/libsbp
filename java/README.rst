@@ -31,7 +31,7 @@ as well as the latitude, longitude, and altitude from MsgPosLLH to stdout.
 License
 -------
 
-Copyright © 2015 Swift Navigation
+Copyright © 2015-2021 Swift Navigation
 
 Distributed under MIT.
 

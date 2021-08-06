@@ -42,7 +42,7 @@ extern "C" {
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
  * The LPP message contains nested variable length arrays which are not
- * suppported in SBP, so each grid point will be identified by the index.
+ * supported in SBP, so each grid point will be identified by the index.
  */
 typedef struct {
   /**
