@@ -12,7 +12,6 @@ set(libsbp_SRCS
   )
 
 swift_add_library(sbp
-  C_STANDARD 99
   SOURCES ${libsbp_SRCS}
   ADD_COMPILE_OPTIONS
     -pedantic
