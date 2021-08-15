@@ -13,8 +13,6 @@ set(libsbp_SRCS
 
 swift_add_library(sbp
   SOURCES ${libsbp_SRCS}
-  ADD_COMPILE_OPTIONS
-    -pedantic
 )
 add_library(swiftnav::sbp ALIAS sbp)
 
