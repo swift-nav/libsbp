@@ -767,7 +767,7 @@ s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
 s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
   return process_frame(s, sender_id, msg_type, msg_len, payload,
-                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK));
+                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK) | SBP_CALLBACK_FLAG(SBP_DECODED_CALLBACK));
 }
 
 s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
