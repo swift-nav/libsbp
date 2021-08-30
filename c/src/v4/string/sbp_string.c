@@ -92,6 +92,9 @@ bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
   if (available > maxlen) {
     return false;
   }
+  if (params->inject_missing_terminator && available == 0) {
+    return false;
+  }
   memcpy(s->data, ctx->buf + ctx->offset, available);
   s->encoded_len = available;
   if (params->inject_missing_terminator) {
