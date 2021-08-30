@@ -1,3 +1,5 @@
+include(GenerateExportHeader)
+
 FILE(GLOB generated_c_sources v4/*.c)
 
 set(libsbp_SRCS
@@ -16,9 +18,25 @@ swift_add_library(sbp
 )
 add_library(swiftnav::sbp ALIAS sbp)
 
-target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set_target_properties(sbp PROPERTIES
-        POSITION_INDEPENDENT_CODE ON)
+generate_export_header(sbp
+  DEPRECATED_MACRO_NAME CMAKE_SBP_DEPRECATED
+  NO_DEPRECATED_MACRO_NAME CMAKE_SBP_NO_DEPRECATED
+  INCLUDE_GUARD_NAME LIBSBP_SBP_EXPORT_H
+)
+target_include_directories(sbp
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_LIBDIR}>
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+set_target_properties(sbp
+  PROPERTIES
+    VISIBILITY_INLINES_HIDDEN true
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden
+)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")
@@ -34,8 +52,9 @@ install(
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/libsbp/" DESTINATION "${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libsbp/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libsbp)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sbp_export.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libsbp)
 
 export(EXPORT sbp-export
-       NAMESPACE LibSbp::
+       NAMESPACE swiftnav::
        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
