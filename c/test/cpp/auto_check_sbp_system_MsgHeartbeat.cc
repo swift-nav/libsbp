@@ -18,21 +18,21 @@
 #include <libsbp/cpp/message_handler.h>
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <cstring>
 class Test_auto_check_sbp_system_MsgHeartbeat0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_heartbeat_t> {
+      sbp::MessageHandler<sbp_msg_heartbeat_t> {
  public:
   Test_auto_check_sbp_system_MsgHeartbeat0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_heartbeat_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_heartbeat_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_heartbeat_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -58,16 +58,14 @@ class Test_auto_check_sbp_system_MsgHeartbeat0
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_heartbeat_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_heartbeat_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_heartbeat_t *last_msg_;
+  sbp_msg_heartbeat_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -81,14 +79,10 @@ TEST_F(Test_auto_check_sbp_system_MsgHeartbeat0, Test) {
       85, 255, 255, 246, 215, 4, 0, 50, 0, 0, 249, 216,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_heartbeat_t *test_msg = (msg_heartbeat_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 12800;
+  sbp_msg_heartbeat_t test_msg{};
+  test_msg.flags = 12800;
 
-  EXPECT_EQ(send_message(0xffff, 55286, test_msg_len, test_msg_storage),
-            SBP_OK);
+  EXPECT_EQ(send_message(55286, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -99,25 +93,25 @@ TEST_F(Test_auto_check_sbp_system_MsgHeartbeat0, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 12800)
-      << "incorrect value for flags, expected 12800, is " << last_msg_->flags;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 12800)
+      << "incorrect value for last_msg_.flags, expected 12800, is "
+      << last_msg_.flags;
 }
 class Test_auto_check_sbp_system_MsgHeartbeat1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_heartbeat_t> {
+      sbp::MessageHandler<sbp_msg_heartbeat_t> {
  public:
   Test_auto_check_sbp_system_MsgHeartbeat1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_heartbeat_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_heartbeat_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_heartbeat_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -143,16 +137,14 @@ class Test_auto_check_sbp_system_MsgHeartbeat1
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_heartbeat_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_heartbeat_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_heartbeat_t *last_msg_;
+  sbp_msg_heartbeat_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -166,13 +158,10 @@ TEST_F(Test_auto_check_sbp_system_MsgHeartbeat1, Test) {
       85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_heartbeat_t *test_msg = (msg_heartbeat_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
+  sbp_msg_heartbeat_t test_msg{};
+  test_msg.flags = 0;
 
-  EXPECT_EQ(send_message(0xffff, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -183,7 +172,8 @@ TEST_F(Test_auto_check_sbp_system_MsgHeartbeat1, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
 }

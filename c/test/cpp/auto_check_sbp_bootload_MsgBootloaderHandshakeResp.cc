@@ -18,22 +18,21 @@
 #include <libsbp/cpp/message_handler.h>
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <cstring>
 class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_bootloader_handshake_resp_t> {
+      sbp::MessageHandler<sbp_msg_bootloader_handshake_resp_t> {
  public:
   Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_bootloader_handshake_resp_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_bootloader_handshake_resp_t *>(
-            last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_bootloader_handshake_resp_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -59,16 +58,14 @@ class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_bootloader_handshake_resp_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_bootloader_handshake_resp_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_bootloader_handshake_resp_t *last_msg_;
+  sbp_msg_bootloader_handshake_resp_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -82,22 +79,17 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
       85, 180, 0, 0, 0, 9, 0, 0, 0, 0, 118, 49, 46, 50, 10, 201, 1,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_bootloader_handshake_resp_t *test_msg =
-      (msg_bootloader_handshake_resp_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->flags = 0;
-  {
-    const char assign_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                  (char)10};
-    memcpy(test_msg->version, assign_string, sizeof(assign_string));
-    if (sizeof(test_msg->version) == 0) {
-      test_msg_len = (uint8_t)(test_msg_len + sizeof(assign_string));
-    }
-  }
+  sbp_msg_bootloader_handshake_resp_t test_msg{};
+  test_msg.flags = 0;
 
-  EXPECT_EQ(send_message(0xb4, 0, test_msg_len, test_msg_storage), SBP_OK);
+  size_t written;
+  EXPECT_TRUE(sbp_msg_bootloader_handshake_resp_version_set(&test_msg, "v1.2\n",
+                                                            false, &written));
+  EXPECT_EQ(written, strlen("v1.2\n"));
+  EXPECT_EQ(sbp_msg_bootloader_handshake_resp_version_encoded_len(&test_msg),
+            5);
+
+  EXPECT_EQ(send_message(0, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -108,33 +100,30 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 0);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
-      << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  {
-    const char check_string[] = {(char)118, (char)49, (char)46, (char)50,
-                                 (char)10};
-    EXPECT_EQ(memcmp(last_msg_->version, check_string, sizeof(check_string)), 0)
-        << "incorrect value for last_msg_->version, expected string '"
-        << check_string << "', is '" << last_msg_->version << "'";
-  }
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_EQ(last_msg_.flags, 0)
+      << "incorrect value for last_msg_.flags, expected 0, is "
+      << last_msg_.flags;
+
+  EXPECT_EQ(sbp_msg_bootloader_handshake_resp_version_encoded_len(&last_msg_),
+            5);
+  EXPECT_STREQ(sbp_msg_bootloader_handshake_resp_version_get(&last_msg_),
+               "v1.2\n");
 }
 class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_bootloader_handshake_dep_a_t> {
+      sbp::MessageHandler<sbp_msg_bootloader_handshake_dep_a_t> {
  public:
   Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_bootloader_handshake_dep_a_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_bootloader_handshake_dep_a_t *>(
-            last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_bootloader_handshake_dep_a_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -160,16 +149,15 @@ class Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_bootloader_handshake_dep_a_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(
+      uint16_t sender_id,
+      const sbp_msg_bootloader_handshake_dep_a_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_bootloader_handshake_dep_a_t *last_msg_;
+  sbp_msg_bootloader_handshake_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -183,33 +171,16 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
       85, 176, 0, 195, 4, 4, 118, 49, 46, 50, 1, 206,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_bootloader_handshake_dep_a_t *test_msg =
-      (msg_bootloader_handshake_dep_a_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  if (sizeof(test_msg->handshake) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->handshake[0]));
-  }
-  test_msg->handshake[0] = 118;
-  if (sizeof(test_msg->handshake) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->handshake[0]));
-  }
-  test_msg->handshake[1] = 49;
-  if (sizeof(test_msg->handshake) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->handshake[0]));
-  }
-  test_msg->handshake[2] = 46;
-  if (sizeof(test_msg->handshake) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->handshake[0]));
-  }
-  test_msg->handshake[3] = 50;
+  sbp_msg_bootloader_handshake_dep_a_t test_msg{};
 
-  EXPECT_EQ(send_message(0xb0, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  size_t written;
+  EXPECT_TRUE(sbp_msg_bootloader_handshake_dep_a_handshake_set(
+      &test_msg, "v1.2", false, &written));
+  EXPECT_EQ(written, strlen("v1.2"));
+  EXPECT_EQ(sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(&test_msg),
+            4);
+
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -220,17 +191,10 @@ TEST_F(Test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->handshake[0], 118)
-      << "incorrect value for handshake[0], expected 118, is "
-      << last_msg_->handshake[0];
-  EXPECT_EQ(last_msg_->handshake[1], 49)
-      << "incorrect value for handshake[1], expected 49, is "
-      << last_msg_->handshake[1];
-  EXPECT_EQ(last_msg_->handshake[2], 46)
-      << "incorrect value for handshake[2], expected 46, is "
-      << last_msg_->handshake[2];
-  EXPECT_EQ(last_msg_->handshake[3], 50)
-      << "incorrect value for handshake[3], expected 50, is "
-      << last_msg_->handshake[3];
+  EXPECT_EQ(last_msg_, test_msg);
+
+  EXPECT_EQ(
+      sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(&last_msg_), 4);
+  EXPECT_STREQ(sbp_msg_bootloader_handshake_dep_a_handshake_get(&last_msg_),
+               "v1.2");
 }

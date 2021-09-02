@@ -9,6 +9,8 @@ tests:
       fwd_payload: [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ]
       protocol: 0
       source: 0
+    c_decoded_fields:
+      n_fwd_payload: 16
     module: sbp.logging
     name: MsgFwd
   msg_type: '0x402'

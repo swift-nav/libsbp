@@ -1,24 +1,24 @@
+FILE(GLOB generated_c_sources v4/*.c)
+
 set(libsbp_SRCS
   edc.c
   sbp.c
+  v4/string/sbp_string.c
+  v4/string/multipart.c
+  v4/string/unterminated.c
+  v4/string/null_terminated.c
+  v4/string/double_null_terminated.c
+  ${generated_c_sources}
   )
 
-add_library(sbp ${libsbp_SRCS})
+swift_add_library(sbp
+  SOURCES ${libsbp_SRCS}
+)
 add_library(swiftnav::sbp ALIAS sbp)
 
-if(MSVC)
-    separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
-else()
-    separate_arguments(LIBSBP_COMPILER_OPTIONS UNIX_COMMAND ${LIBSBP_CFLAGS})
-endif()
-target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
-
-target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
-target_code_coverage(sbp AUTO ALL)
-swift_set_language_standards(sbp)
-swift_set_compile_options(sbp REMOVE -Wconversion)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")

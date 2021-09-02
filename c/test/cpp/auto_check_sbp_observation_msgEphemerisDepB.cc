@@ -18,21 +18,21 @@
 #include <libsbp/cpp/message_handler.h>
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
+#include <cstring>
 class Test_auto_check_sbp_observation_msgEphemerisDepB0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -58,16 +58,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB0
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -93,39 +91,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
       3,   0,   225, 156,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = -1.035025343298912e-05;
-  test_msg->af1 = -9.094947017729282e-13;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = 6.332993507385254e-08;
-  test_msg->c_is = -1.564621925354004e-07;
-  test_msg->c_rc = 234.375;
-  test_msg->c_rs = -74.90625;
-  test_msg->c_uc = -3.937631845474243e-06;
-  test_msg->c_us = 6.9122761487960815e-06;
-  test_msg->dn = 4.8884179079418005e-09;
-  test_msg->ecc = 0.011132609914056957;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9395524830579087;
-  test_msg->inc_dot = -3.296565886629854e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = 2.467348395627239;
-  test_msg->omega0 = -0.9468985437479658;
-  test_msg->omegadot = -8.201055892610478e-09;
-  test_msg->prn = 3;
-  test_msg->sqrta = 5153.714303970337;
-  test_msg->tgd = -6.51925802230835e-09;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = 1.0525047200405302;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = -1.035025343298912e-05;
+  test_msg.af1 = -9.094947017729282e-13;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = 6.332993507385254e-08;
+  test_msg.c_is = -1.564621925354004e-07;
+  test_msg.c_rc = 234.375;
+  test_msg.c_rs = -74.90625;
+  test_msg.c_uc = -3.937631845474243e-06;
+  test_msg.c_us = 6.9122761487960815e-06;
+  test_msg.dn = 4.8884179079418005e-09;
+  test_msg.ecc = 0.011132609914056957;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9395524830579087;
+  test_msg.inc_dot = -3.296565886629854e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = 2.467348395627239;
+  test_msg.omega0 = -0.9468985437479658;
+  test_msg.omegadot = -8.201055892610478e-09;
+  test_msg.prn = 3;
+  test_msg.sqrta = 5153.714303970337;
+  test_msg.tgd = -6.51925802230835e-09;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = 1.0525047200405302;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -136,93 +131,104 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - -1.0350253433e-05 * 100), 0.05)
-      << "incorrect value for af0, expected -1.0350253433e-05, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - -9.09494701773e-13 * 100), 0.05)
-      << "incorrect value for af1, expected -9.09494701773e-13, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - 6.33299350739e-08 * 100), 0.05)
-      << "incorrect value for c_ic, expected 6.33299350739e-08, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - -1.56462192535e-07 * 100), 0.05)
-      << "incorrect value for c_is, expected -1.56462192535e-07, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 234.375 * 100), 0.05)
-      << "incorrect value for c_rc, expected 234.375, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - -74.90625 * 100), 0.05)
-      << "incorrect value for c_rs, expected -74.90625, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - -3.93763184547e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected -3.93763184547e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 6.9122761488e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 6.9122761488e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 4.88841790794e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 4.88841790794e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.0111326099141 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.0111326099141, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.939552483058 * 100), 0.05)
-      << "incorrect value for inc, expected 0.939552483058, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - -3.29656588663e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected -3.29656588663e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - 2.46734839563 * 100), 0.05)
-      << "incorrect value for m0, expected 2.46734839563, is " << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - -0.946898543748 * 100), 0.05)
-      << "incorrect value for omega0, expected -0.946898543748, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -8.20105589261e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -8.20105589261e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 3)
-      << "incorrect value for prn, expected 3, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.71430397 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.71430397, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - -6.51925802231e-09 * 100), 0.05)
-      << "incorrect value for tgd, expected -6.51925802231e-09, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - 1.05250472004 * 100), 0.05)
-      << "incorrect value for w, expected 1.05250472004, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - -1.0350253433e-05 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected -1.0350253433e-05, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - -9.09494701773e-13 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected -9.09494701773e-13, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - 6.33299350739e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected 6.33299350739e-08, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - -1.56462192535e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected -1.56462192535e-07, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 234.375 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 234.375, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - -74.90625 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected -74.90625, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - -3.93763184547e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected -3.93763184547e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 6.9122761488e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 6.9122761488e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 4.88841790794e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 4.88841790794e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.0111326099141 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.0111326099141, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.939552483058 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.939552483058, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - -3.29656588663e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected -3.29656588663e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - 2.46734839563 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected 2.46734839563, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - -0.946898543748 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected -0.946898543748, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -8.20105589261e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -8.20105589261e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 3)
+      << "incorrect value for last_msg_.prn, expected 3, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.71430397 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.71430397, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - -6.51925802231e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected -6.51925802231e-09, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - 1.05250472004 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected 1.05250472004, is "
+      << last_msg_.w;
 }
 class Test_auto_check_sbp_observation_msgEphemerisDepB1
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB1()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -248,16 +254,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB1
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -283,39 +287,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
       13,  0,   180, 21,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = 7.384549826383591e-05;
-  test_msg->af1 = -2.8421709430404007e-12;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = 1.341104507446289e-07;
-  test_msg->c_is = 1.1920928955078125e-07;
-  test_msg->c_rc = 315.78125;
-  test_msg->c_rs = 36.5625;
-  test_msg->c_uc = 2.0638108253479004e-06;
-  test_msg->c_us = 3.4142285585403442e-06;
-  test_msg->dn = 4.86198823561129e-09;
-  test_msg->ecc = 0.007922741584479809;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9669012918227122;
-  test_msg->inc_dot = 2.6251093463412166e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = -1.588160855720083;
-  test_msg->omega0 = 1.237919941568746;
-  test_msg->omegadot = -8.295702692172441e-09;
-  test_msg->prn = 13;
-  test_msg->sqrta = 5153.57085609436;
-  test_msg->tgd = -9.313225746154785e-09;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = -1.9736022837941165;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = 7.384549826383591e-05;
+  test_msg.af1 = -2.8421709430404007e-12;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = 1.341104507446289e-07;
+  test_msg.c_is = 1.1920928955078125e-07;
+  test_msg.c_rc = 315.78125;
+  test_msg.c_rs = 36.5625;
+  test_msg.c_uc = 2.0638108253479004e-06;
+  test_msg.c_us = 3.4142285585403442e-06;
+  test_msg.dn = 4.86198823561129e-09;
+  test_msg.ecc = 0.007922741584479809;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9669012918227122;
+  test_msg.inc_dot = 2.6251093463412166e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = -1.588160855720083;
+  test_msg.omega0 = 1.237919941568746;
+  test_msg.omegadot = -8.295702692172441e-09;
+  test_msg.prn = 13;
+  test_msg.sqrta = 5153.57085609436;
+  test_msg.tgd = -9.313225746154785e-09;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = -1.9736022837941165;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -326,94 +327,104 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - 7.38454982638e-05 * 100), 0.05)
-      << "incorrect value for af0, expected 7.38454982638e-05, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - -2.84217094304e-12 * 100), 0.05)
-      << "incorrect value for af1, expected -2.84217094304e-12, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - 1.34110450745e-07 * 100), 0.05)
-      << "incorrect value for c_ic, expected 1.34110450745e-07, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - 1.19209289551e-07 * 100), 0.05)
-      << "incorrect value for c_is, expected 1.19209289551e-07, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 315.78125 * 100), 0.05)
-      << "incorrect value for c_rc, expected 315.78125, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - 36.5625 * 100), 0.05)
-      << "incorrect value for c_rs, expected 36.5625, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - 2.06381082535e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected 2.06381082535e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 3.41422855854e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 3.41422855854e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 4.86198823561e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 4.86198823561e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.00792274158448 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.00792274158448, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.966901291823 * 100), 0.05)
-      << "incorrect value for inc, expected 0.966901291823, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - 2.62510934634e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected 2.62510934634e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - -1.58816085572 * 100), 0.05)
-      << "incorrect value for m0, expected -1.58816085572, is "
-      << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - 1.23791994157 * 100), 0.05)
-      << "incorrect value for omega0, expected 1.23791994157, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -8.29570269217e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -8.29570269217e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 13)
-      << "incorrect value for prn, expected 13, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.57085609 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.57085609, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - -9.31322574615e-09 * 100), 0.05)
-      << "incorrect value for tgd, expected -9.31322574615e-09, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - -1.97360228379 * 100), 0.05)
-      << "incorrect value for w, expected -1.97360228379, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - 7.38454982638e-05 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected 7.38454982638e-05, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - -2.84217094304e-12 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected -2.84217094304e-12, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - 1.34110450745e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected 1.34110450745e-07, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - 1.19209289551e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected 1.19209289551e-07, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 315.78125 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 315.78125, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - 36.5625 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected 36.5625, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - 2.06381082535e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected 2.06381082535e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 3.41422855854e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 3.41422855854e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 4.86198823561e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 4.86198823561e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.00792274158448 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.00792274158448, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.966901291823 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.966901291823, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - 2.62510934634e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected 2.62510934634e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - -1.58816085572 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected -1.58816085572, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - 1.23791994157 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected 1.23791994157, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -8.29570269217e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -8.29570269217e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 13)
+      << "incorrect value for last_msg_.prn, expected 13, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.57085609 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.57085609, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - -9.31322574615e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected -9.31322574615e-09, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - -1.97360228379 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected -1.97360228379, is "
+      << last_msg_.w;
 }
 class Test_auto_check_sbp_observation_msgEphemerisDepB2
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB2()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -439,16 +450,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB2
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -474,39 +483,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
       0,   0,   222, 152,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = -7.249414920806885e-06;
-  test_msg->af1 = 4.547473508864641e-13;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = -4.6566128730773926e-08;
-  test_msg->c_is = -2.60770320892334e-08;
-  test_msg->c_rc = 236.03125;
-  test_msg->c_rs = -68.625;
-  test_msg->c_uc = -3.470107913017273e-06;
-  test_msg->c_us = 7.461756467819214e-06;
-  test_msg->dn = 4.4637573619826565e-09;
-  test_msg->ecc = 0.004040417145006359;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9619021920701416;
-  test_msg->inc_dot = -3.3644258561271105e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = 2.7055255058713295;
-  test_msg->omega0 = -0.9258770941316397;
-  test_msg->omegadot = -8.082122367123182e-09;
-  test_msg->prn = 0;
-  test_msg->sqrta = 5153.669353485107;
-  test_msg->tgd = 5.587935447692871e-09;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = 0.37873566614641857;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = -7.249414920806885e-06;
+  test_msg.af1 = 4.547473508864641e-13;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = -4.6566128730773926e-08;
+  test_msg.c_is = -2.60770320892334e-08;
+  test_msg.c_rc = 236.03125;
+  test_msg.c_rs = -68.625;
+  test_msg.c_uc = -3.470107913017273e-06;
+  test_msg.c_us = 7.461756467819214e-06;
+  test_msg.dn = 4.4637573619826565e-09;
+  test_msg.ecc = 0.004040417145006359;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9619021920701416;
+  test_msg.inc_dot = -3.3644258561271105e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = 2.7055255058713295;
+  test_msg.omega0 = -0.9258770941316397;
+  test_msg.omegadot = -8.082122367123182e-09;
+  test_msg.prn = 0;
+  test_msg.sqrta = 5153.669353485107;
+  test_msg.tgd = 5.587935447692871e-09;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = 0.37873566614641857;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -517,93 +523,104 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - -7.24941492081e-06 * 100), 0.05)
-      << "incorrect value for af0, expected -7.24941492081e-06, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - 4.54747350886e-13 * 100), 0.05)
-      << "incorrect value for af1, expected 4.54747350886e-13, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - -4.65661287308e-08 * 100), 0.05)
-      << "incorrect value for c_ic, expected -4.65661287308e-08, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - -2.60770320892e-08 * 100), 0.05)
-      << "incorrect value for c_is, expected -2.60770320892e-08, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 236.03125 * 100), 0.05)
-      << "incorrect value for c_rc, expected 236.03125, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - -68.625 * 100), 0.05)
-      << "incorrect value for c_rs, expected -68.625, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - -3.47010791302e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected -3.47010791302e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 7.46175646782e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 7.46175646782e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 4.46375736198e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 4.46375736198e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.00404041714501 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.00404041714501, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.96190219207 * 100), 0.05)
-      << "incorrect value for inc, expected 0.96190219207, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - -3.36442585613e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected -3.36442585613e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - 2.70552550587 * 100), 0.05)
-      << "incorrect value for m0, expected 2.70552550587, is " << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - -0.925877094132 * 100), 0.05)
-      << "incorrect value for omega0, expected -0.925877094132, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -8.08212236712e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -8.08212236712e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 0)
-      << "incorrect value for prn, expected 0, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.66935349 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.66935349, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - 5.58793544769e-09 * 100), 0.05)
-      << "incorrect value for tgd, expected 5.58793544769e-09, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - 0.378735666146 * 100), 0.05)
-      << "incorrect value for w, expected 0.378735666146, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - -7.24941492081e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected -7.24941492081e-06, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - 4.54747350886e-13 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected 4.54747350886e-13, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - -4.65661287308e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected -4.65661287308e-08, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - -2.60770320892e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected -2.60770320892e-08, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 236.03125 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 236.03125, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - -68.625 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected -68.625, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - -3.47010791302e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected -3.47010791302e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 7.46175646782e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 7.46175646782e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 4.46375736198e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 4.46375736198e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.00404041714501 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.00404041714501, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.96190219207 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.96190219207, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - -3.36442585613e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected -3.36442585613e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - 2.70552550587 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected 2.70552550587, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - -0.925877094132 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected -0.925877094132, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -8.08212236712e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -8.08212236712e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 0)
+      << "incorrect value for last_msg_.prn, expected 0, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.66935349 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.66935349, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - 5.58793544769e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected 5.58793544769e-09, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - 0.378735666146 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected 0.378735666146, is "
+      << last_msg_.w;
 }
 class Test_auto_check_sbp_observation_msgEphemerisDepB3
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB3()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -629,16 +646,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB3
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -664,39 +679,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
       13,  0,   180, 21,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = 7.384549826383591e-05;
-  test_msg->af1 = -2.8421709430404007e-12;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = 1.341104507446289e-07;
-  test_msg->c_is = 1.1920928955078125e-07;
-  test_msg->c_rc = 315.78125;
-  test_msg->c_rs = 36.5625;
-  test_msg->c_uc = 2.0638108253479004e-06;
-  test_msg->c_us = 3.4142285585403442e-06;
-  test_msg->dn = 4.86198823561129e-09;
-  test_msg->ecc = 0.007922741584479809;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9669012918227122;
-  test_msg->inc_dot = 2.6251093463412166e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = -1.588160855720083;
-  test_msg->omega0 = 1.237919941568746;
-  test_msg->omegadot = -8.295702692172441e-09;
-  test_msg->prn = 13;
-  test_msg->sqrta = 5153.57085609436;
-  test_msg->tgd = -9.313225746154785e-09;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = -1.9736022837941165;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = 7.384549826383591e-05;
+  test_msg.af1 = -2.8421709430404007e-12;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = 1.341104507446289e-07;
+  test_msg.c_is = 1.1920928955078125e-07;
+  test_msg.c_rc = 315.78125;
+  test_msg.c_rs = 36.5625;
+  test_msg.c_uc = 2.0638108253479004e-06;
+  test_msg.c_us = 3.4142285585403442e-06;
+  test_msg.dn = 4.86198823561129e-09;
+  test_msg.ecc = 0.007922741584479809;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9669012918227122;
+  test_msg.inc_dot = 2.6251093463412166e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = -1.588160855720083;
+  test_msg.omega0 = 1.237919941568746;
+  test_msg.omegadot = -8.295702692172441e-09;
+  test_msg.prn = 13;
+  test_msg.sqrta = 5153.57085609436;
+  test_msg.tgd = -9.313225746154785e-09;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = -1.9736022837941165;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -707,94 +719,104 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - 7.38454982638e-05 * 100), 0.05)
-      << "incorrect value for af0, expected 7.38454982638e-05, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - -2.84217094304e-12 * 100), 0.05)
-      << "incorrect value for af1, expected -2.84217094304e-12, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - 1.34110450745e-07 * 100), 0.05)
-      << "incorrect value for c_ic, expected 1.34110450745e-07, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - 1.19209289551e-07 * 100), 0.05)
-      << "incorrect value for c_is, expected 1.19209289551e-07, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 315.78125 * 100), 0.05)
-      << "incorrect value for c_rc, expected 315.78125, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - 36.5625 * 100), 0.05)
-      << "incorrect value for c_rs, expected 36.5625, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - 2.06381082535e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected 2.06381082535e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 3.41422855854e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 3.41422855854e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 4.86198823561e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 4.86198823561e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.00792274158448 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.00792274158448, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.966901291823 * 100), 0.05)
-      << "incorrect value for inc, expected 0.966901291823, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - 2.62510934634e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected 2.62510934634e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - -1.58816085572 * 100), 0.05)
-      << "incorrect value for m0, expected -1.58816085572, is "
-      << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - 1.23791994157 * 100), 0.05)
-      << "incorrect value for omega0, expected 1.23791994157, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -8.29570269217e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -8.29570269217e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 13)
-      << "incorrect value for prn, expected 13, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.57085609 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.57085609, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - -9.31322574615e-09 * 100), 0.05)
-      << "incorrect value for tgd, expected -9.31322574615e-09, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - -1.97360228379 * 100), 0.05)
-      << "incorrect value for w, expected -1.97360228379, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - 7.38454982638e-05 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected 7.38454982638e-05, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - -2.84217094304e-12 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected -2.84217094304e-12, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - 1.34110450745e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected 1.34110450745e-07, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - 1.19209289551e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected 1.19209289551e-07, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 315.78125 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 315.78125, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - 36.5625 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected 36.5625, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - 2.06381082535e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected 2.06381082535e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 3.41422855854e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 3.41422855854e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 4.86198823561e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 4.86198823561e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.00792274158448 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.00792274158448, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.966901291823 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.966901291823, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - 2.62510934634e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected 2.62510934634e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - -1.58816085572 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected -1.58816085572, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - 1.23791994157 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected 1.23791994157, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -8.29570269217e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -8.29570269217e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 13)
+      << "incorrect value for last_msg_.prn, expected 13, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.57085609 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.57085609, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - -9.31322574615e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected -9.31322574615e-09, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - -1.97360228379 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected -1.97360228379, is "
+      << last_msg_.w;
 }
 class Test_auto_check_sbp_observation_msgEphemerisDepB4
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB4()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -820,16 +842,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB4
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -855,39 +875,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
       22,  0,   99,  61,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = -9.925523772835732e-05;
-  test_msg->af1 = -2.5011104298755527e-12;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = -3.166496753692627e-08;
-  test_msg->c_is = -2.0675361156463623e-07;
-  test_msg->c_rc = 305.21875;
-  test_msg->c_rs = 43.21875;
-  test_msg->c_uc = 2.1010637283325195e-06;
-  test_msg->c_us = 3.766268491744995e-06;
-  test_msg->dn = 5.26057626697412e-09;
-  test_msg->ecc = 0.009923744946718216;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9487513221807672;
-  test_msg->inc_dot = 3.000124967247105e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = -2.666160271911327;
-  test_msg->omega0 = 1.1669551972594425;
-  test_msg->omegadot = -8.45999524990264e-09;
-  test_msg->prn = 22;
-  test_msg->sqrta = 5153.636667251587;
-  test_msg->tgd = -2.0023435354232788e-08;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = -2.7021241452652935;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = -9.925523772835732e-05;
+  test_msg.af1 = -2.5011104298755527e-12;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = -3.166496753692627e-08;
+  test_msg.c_is = -2.0675361156463623e-07;
+  test_msg.c_rc = 305.21875;
+  test_msg.c_rs = 43.21875;
+  test_msg.c_uc = 2.1010637283325195e-06;
+  test_msg.c_us = 3.766268491744995e-06;
+  test_msg.dn = 5.26057626697412e-09;
+  test_msg.ecc = 0.009923744946718216;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9487513221807672;
+  test_msg.inc_dot = 3.000124967247105e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = -2.666160271911327;
+  test_msg.omega0 = 1.1669551972594425;
+  test_msg.omegadot = -8.45999524990264e-09;
+  test_msg.prn = 22;
+  test_msg.sqrta = 5153.636667251587;
+  test_msg.tgd = -2.0023435354232788e-08;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = -2.7021241452652935;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -898,94 +915,104 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - -9.92552377284e-05 * 100), 0.05)
-      << "incorrect value for af0, expected -9.92552377284e-05, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - -2.50111042988e-12 * 100), 0.05)
-      << "incorrect value for af1, expected -2.50111042988e-12, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - -3.16649675369e-08 * 100), 0.05)
-      << "incorrect value for c_ic, expected -3.16649675369e-08, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - -2.06753611565e-07 * 100), 0.05)
-      << "incorrect value for c_is, expected -2.06753611565e-07, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 305.21875 * 100), 0.05)
-      << "incorrect value for c_rc, expected 305.21875, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - 43.21875 * 100), 0.05)
-      << "incorrect value for c_rs, expected 43.21875, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - 2.10106372833e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected 2.10106372833e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 3.76626849174e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 3.76626849174e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 5.26057626697e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 5.26057626697e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.00992374494672 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.00992374494672, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.948751322181 * 100), 0.05)
-      << "incorrect value for inc, expected 0.948751322181, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - 3.00012496725e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected 3.00012496725e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - -2.66616027191 * 100), 0.05)
-      << "incorrect value for m0, expected -2.66616027191, is "
-      << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - 1.16695519726 * 100), 0.05)
-      << "incorrect value for omega0, expected 1.16695519726, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -8.4599952499e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -8.4599952499e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 22)
-      << "incorrect value for prn, expected 22, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.63666725 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.63666725, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - -2.00234353542e-08 * 100), 0.05)
-      << "incorrect value for tgd, expected -2.00234353542e-08, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - -2.70212414527 * 100), 0.05)
-      << "incorrect value for w, expected -2.70212414527, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - -9.92552377284e-05 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected -9.92552377284e-05, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - -2.50111042988e-12 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected -2.50111042988e-12, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - -3.16649675369e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected -3.16649675369e-08, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - -2.06753611565e-07 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected -2.06753611565e-07, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 305.21875 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 305.21875, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - 43.21875 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected 43.21875, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - 2.10106372833e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected 2.10106372833e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 3.76626849174e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 3.76626849174e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 5.26057626697e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 5.26057626697e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.00992374494672 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.00992374494672, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.948751322181 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.948751322181, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - 3.00012496725e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected 3.00012496725e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - -2.66616027191 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected -2.66616027191, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - 1.16695519726 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected 1.16695519726, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -8.4599952499e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -8.4599952499e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 22)
+      << "incorrect value for last_msg_.prn, expected 22, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.63666725 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.63666725, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - -2.00234353542e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected -2.00234353542e-08, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - -2.70212414527 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected -2.70212414527, is "
+      << last_msg_.w;
 }
 class Test_auto_check_sbp_observation_msgEphemerisDepB5
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<msg_ephemeris_dep_b_t> {
+      sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t> {
  public:
   Test_auto_check_sbp_observation_msgEphemerisDepB5()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<msg_ephemeris_dep_b_t>(this),
-        last_msg_storage_(),
-        last_msg_(reinterpret_cast<msg_ephemeris_dep_b_t *>(last_msg_storage_)),
+        sbp::MessageHandler<sbp_msg_ephemeris_dep_b_t>(this),
+        last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -1011,16 +1038,14 @@ class Test_auto_check_sbp_observation_msgEphemerisDepB5
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ephemeris_dep_b_t &msg) override {
-    memcpy(last_msg_storage_, &msg, message_length);
-    last_msg_len_ = message_length;
+  void handle_sbp_msg(uint16_t sender_id,
+                      const sbp_msg_ephemeris_dep_b_t &msg) override {
+    last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ephemeris_dep_b_t *last_msg_;
+  sbp_msg_ephemeris_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -1046,39 +1071,36 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB5, Test) {
       30,  0,   170, 33,
   };
 
-  uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
-  uint8_t test_msg_len = 0;
-  msg_ephemeris_dep_b_t *test_msg = (msg_ephemeris_dep_b_t *)test_msg_storage;
-  test_msg_len = (uint8_t)sizeof(*test_msg);
-  test_msg->af0 = 0.0003196117468178272;
-  test_msg->af1 = -1.0231815394945443e-12;
-  test_msg->af2 = 0.0;
-  test_msg->c_ic = 9.12696123123169e-08;
-  test_msg->c_is = 5.21540641784668e-08;
-  test_msg->c_rc = 247.28125;
-  test_msg->c_rs = -77.90625;
-  test_msg->c_uc = -3.723427653312683e-06;
-  test_msg->c_us = 7.178634405136108e-06;
-  test_msg->dn = 4.400897600764146e-09;
-  test_msg->ecc = 0.008178644930012524;
-  test_msg->healthy = 1;
-  test_msg->inc = 0.9755122017245301;
-  test_msg->inc_dot = -5.882387882209502e-10;
-  test_msg->iode = 0;
-  test_msg->m0 = 1.9401823459824192;
-  test_msg->omega0 = 2.241868028927766;
-  test_msg->omegadot = -7.962474526167494e-09;
-  test_msg->prn = 30;
-  test_msg->sqrta = 5153.7539920806885;
-  test_msg->tgd = -1.3504177331924438e-08;
-  test_msg->toc_tow = 410400.0;
-  test_msg->toc_wn = 1838;
-  test_msg->toe_tow = 410400.0;
-  test_msg->toe_wn = 1838;
-  test_msg->valid = 1;
-  test_msg->w = -0.5237901716088061;
+  sbp_msg_ephemeris_dep_b_t test_msg{};
+  test_msg.af0 = 0.0003196117468178272;
+  test_msg.af1 = -1.0231815394945443e-12;
+  test_msg.af2 = 0.0;
+  test_msg.c_ic = 9.12696123123169e-08;
+  test_msg.c_is = 5.21540641784668e-08;
+  test_msg.c_rc = 247.28125;
+  test_msg.c_rs = -77.90625;
+  test_msg.c_uc = -3.723427653312683e-06;
+  test_msg.c_us = 7.178634405136108e-06;
+  test_msg.dn = 4.400897600764146e-09;
+  test_msg.ecc = 0.008178644930012524;
+  test_msg.healthy = 1;
+  test_msg.inc = 0.9755122017245301;
+  test_msg.inc_dot = -5.882387882209502e-10;
+  test_msg.iode = 0;
+  test_msg.m0 = 1.9401823459824192;
+  test_msg.omega0 = 2.241868028927766;
+  test_msg.omegadot = -7.962474526167494e-09;
+  test_msg.prn = 30;
+  test_msg.sqrta = 5153.7539920806885;
+  test_msg.tgd = -1.3504177331924438e-08;
+  test_msg.toc_tow = 410400.0;
+  test_msg.toc_wn = 1838;
+  test_msg.toe_tow = 410400.0;
+  test_msg.toe_wn = 1838;
+  test_msg.valid = 1;
+  test_msg.w = -0.5237901716088061;
 
-  EXPECT_EQ(send_message(0x46, 1219, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(1219, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -1089,75 +1111,87 @@ TEST_F(Test_auto_check_sbp_observation_msgEphemerisDepB5, Test) {
 
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
-  EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_LT((last_msg_->af0 * 100 - 0.000319611746818 * 100), 0.05)
-      << "incorrect value for af0, expected 0.000319611746818, is "
-      << last_msg_->af0;
-  EXPECT_LT((last_msg_->af1 * 100 - -1.02318153949e-12 * 100), 0.05)
-      << "incorrect value for af1, expected -1.02318153949e-12, is "
-      << last_msg_->af1;
-  EXPECT_LT((last_msg_->af2 * 100 - 0.0 * 100), 0.05)
-      << "incorrect value for af2, expected 0.0, is " << last_msg_->af2;
-  EXPECT_LT((last_msg_->c_ic * 100 - 9.12696123123e-08 * 100), 0.05)
-      << "incorrect value for c_ic, expected 9.12696123123e-08, is "
-      << last_msg_->c_ic;
-  EXPECT_LT((last_msg_->c_is * 100 - 5.21540641785e-08 * 100), 0.05)
-      << "incorrect value for c_is, expected 5.21540641785e-08, is "
-      << last_msg_->c_is;
-  EXPECT_LT((last_msg_->c_rc * 100 - 247.28125 * 100), 0.05)
-      << "incorrect value for c_rc, expected 247.28125, is " << last_msg_->c_rc;
-  EXPECT_LT((last_msg_->c_rs * 100 - -77.90625 * 100), 0.05)
-      << "incorrect value for c_rs, expected -77.90625, is " << last_msg_->c_rs;
-  EXPECT_LT((last_msg_->c_uc * 100 - -3.72342765331e-06 * 100), 0.05)
-      << "incorrect value for c_uc, expected -3.72342765331e-06, is "
-      << last_msg_->c_uc;
-  EXPECT_LT((last_msg_->c_us * 100 - 7.17863440514e-06 * 100), 0.05)
-      << "incorrect value for c_us, expected 7.17863440514e-06, is "
-      << last_msg_->c_us;
-  EXPECT_LT((last_msg_->dn * 100 - 4.40089760076e-09 * 100), 0.05)
-      << "incorrect value for dn, expected 4.40089760076e-09, is "
-      << last_msg_->dn;
-  EXPECT_LT((last_msg_->ecc * 100 - 0.00817864493001 * 100), 0.05)
-      << "incorrect value for ecc, expected 0.00817864493001, is "
-      << last_msg_->ecc;
-  EXPECT_EQ(last_msg_->healthy, 1)
-      << "incorrect value for healthy, expected 1, is " << last_msg_->healthy;
-  EXPECT_LT((last_msg_->inc * 100 - 0.975512201725 * 100), 0.05)
-      << "incorrect value for inc, expected 0.975512201725, is "
-      << last_msg_->inc;
-  EXPECT_LT((last_msg_->inc_dot * 100 - -5.88238788221e-10 * 100), 0.05)
-      << "incorrect value for inc_dot, expected -5.88238788221e-10, is "
-      << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iode, 0)
-      << "incorrect value for iode, expected 0, is " << last_msg_->iode;
-  EXPECT_LT((last_msg_->m0 * 100 - 1.94018234598 * 100), 0.05)
-      << "incorrect value for m0, expected 1.94018234598, is " << last_msg_->m0;
-  EXPECT_LT((last_msg_->omega0 * 100 - 2.24186802893 * 100), 0.05)
-      << "incorrect value for omega0, expected 2.24186802893, is "
-      << last_msg_->omega0;
-  EXPECT_LT((last_msg_->omegadot * 100 - -7.96247452617e-09 * 100), 0.05)
-      << "incorrect value for omegadot, expected -7.96247452617e-09, is "
-      << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->prn, 30)
-      << "incorrect value for prn, expected 30, is " << last_msg_->prn;
-  EXPECT_LT((last_msg_->sqrta * 100 - 5153.75399208 * 100), 0.05)
-      << "incorrect value for sqrta, expected 5153.75399208, is "
-      << last_msg_->sqrta;
-  EXPECT_LT((last_msg_->tgd * 100 - -1.35041773319e-08 * 100), 0.05)
-      << "incorrect value for tgd, expected -1.35041773319e-08, is "
-      << last_msg_->tgd;
-  EXPECT_LT((last_msg_->toc_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toc_tow, expected 410400.0, is "
-      << last_msg_->toc_tow;
-  EXPECT_EQ(last_msg_->toc_wn, 1838)
-      << "incorrect value for toc_wn, expected 1838, is " << last_msg_->toc_wn;
-  EXPECT_LT((last_msg_->toe_tow * 100 - 410400.0 * 100), 0.05)
-      << "incorrect value for toe_tow, expected 410400.0, is "
-      << last_msg_->toe_tow;
-  EXPECT_EQ(last_msg_->toe_wn, 1838)
-      << "incorrect value for toe_wn, expected 1838, is " << last_msg_->toe_wn;
-  EXPECT_EQ(last_msg_->valid, 1)
-      << "incorrect value for valid, expected 1, is " << last_msg_->valid;
-  EXPECT_LT((last_msg_->w * 100 - -0.523790171609 * 100), 0.05)
-      << "incorrect value for w, expected -0.523790171609, is " << last_msg_->w;
+  EXPECT_EQ(last_msg_, test_msg);
+  EXPECT_LT((last_msg_.af0 * 100 - 0.000319611746818 * 100), 0.05)
+      << "incorrect value for last_msg_.af0, expected 0.000319611746818, is "
+      << last_msg_.af0;
+  EXPECT_LT((last_msg_.af1 * 100 - -1.02318153949e-12 * 100), 0.05)
+      << "incorrect value for last_msg_.af1, expected -1.02318153949e-12, is "
+      << last_msg_.af1;
+  EXPECT_LT((last_msg_.af2 * 100 - 0.0 * 100), 0.05)
+      << "incorrect value for last_msg_.af2, expected 0.0, is "
+      << last_msg_.af2;
+  EXPECT_LT((last_msg_.c_ic * 100 - 9.12696123123e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_ic, expected 9.12696123123e-08, is "
+      << last_msg_.c_ic;
+  EXPECT_LT((last_msg_.c_is * 100 - 5.21540641785e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.c_is, expected 5.21540641785e-08, is "
+      << last_msg_.c_is;
+  EXPECT_LT((last_msg_.c_rc * 100 - 247.28125 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rc, expected 247.28125, is "
+      << last_msg_.c_rc;
+  EXPECT_LT((last_msg_.c_rs * 100 - -77.90625 * 100), 0.05)
+      << "incorrect value for last_msg_.c_rs, expected -77.90625, is "
+      << last_msg_.c_rs;
+  EXPECT_LT((last_msg_.c_uc * 100 - -3.72342765331e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_uc, expected -3.72342765331e-06, is "
+      << last_msg_.c_uc;
+  EXPECT_LT((last_msg_.c_us * 100 - 7.17863440514e-06 * 100), 0.05)
+      << "incorrect value for last_msg_.c_us, expected 7.17863440514e-06, is "
+      << last_msg_.c_us;
+  EXPECT_LT((last_msg_.dn * 100 - 4.40089760076e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.dn, expected 4.40089760076e-09, is "
+      << last_msg_.dn;
+  EXPECT_LT((last_msg_.ecc * 100 - 0.00817864493001 * 100), 0.05)
+      << "incorrect value for last_msg_.ecc, expected 0.00817864493001, is "
+      << last_msg_.ecc;
+  EXPECT_EQ(last_msg_.healthy, 1)
+      << "incorrect value for last_msg_.healthy, expected 1, is "
+      << last_msg_.healthy;
+  EXPECT_LT((last_msg_.inc * 100 - 0.975512201725 * 100), 0.05)
+      << "incorrect value for last_msg_.inc, expected 0.975512201725, is "
+      << last_msg_.inc;
+  EXPECT_LT((last_msg_.inc_dot * 100 - -5.88238788221e-10 * 100), 0.05)
+      << "incorrect value for last_msg_.inc_dot, expected -5.88238788221e-10, "
+         "is "
+      << last_msg_.inc_dot;
+  EXPECT_EQ(last_msg_.iode, 0)
+      << "incorrect value for last_msg_.iode, expected 0, is "
+      << last_msg_.iode;
+  EXPECT_LT((last_msg_.m0 * 100 - 1.94018234598 * 100), 0.05)
+      << "incorrect value for last_msg_.m0, expected 1.94018234598, is "
+      << last_msg_.m0;
+  EXPECT_LT((last_msg_.omega0 * 100 - 2.24186802893 * 100), 0.05)
+      << "incorrect value for last_msg_.omega0, expected 2.24186802893, is "
+      << last_msg_.omega0;
+  EXPECT_LT((last_msg_.omegadot * 100 - -7.96247452617e-09 * 100), 0.05)
+      << "incorrect value for last_msg_.omegadot, expected -7.96247452617e-09, "
+         "is "
+      << last_msg_.omegadot;
+  EXPECT_EQ(last_msg_.prn, 30)
+      << "incorrect value for last_msg_.prn, expected 30, is " << last_msg_.prn;
+  EXPECT_LT((last_msg_.sqrta * 100 - 5153.75399208 * 100), 0.05)
+      << "incorrect value for last_msg_.sqrta, expected 5153.75399208, is "
+      << last_msg_.sqrta;
+  EXPECT_LT((last_msg_.tgd * 100 - -1.35041773319e-08 * 100), 0.05)
+      << "incorrect value for last_msg_.tgd, expected -1.35041773319e-08, is "
+      << last_msg_.tgd;
+  EXPECT_LT((last_msg_.toc_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toc_tow, expected 410400.0, is "
+      << last_msg_.toc_tow;
+  EXPECT_EQ(last_msg_.toc_wn, 1838)
+      << "incorrect value for last_msg_.toc_wn, expected 1838, is "
+      << last_msg_.toc_wn;
+  EXPECT_LT((last_msg_.toe_tow * 100 - 410400.0 * 100), 0.05)
+      << "incorrect value for last_msg_.toe_tow, expected 410400.0, is "
+      << last_msg_.toe_tow;
+  EXPECT_EQ(last_msg_.toe_wn, 1838)
+      << "incorrect value for last_msg_.toe_wn, expected 1838, is "
+      << last_msg_.toe_wn;
+  EXPECT_EQ(last_msg_.valid, 1)
+      << "incorrect value for last_msg_.valid, expected 1, is "
+      << last_msg_.valid;
+  EXPECT_LT((last_msg_.w * 100 - -0.523790171609 * 100), 0.05)
+      << "incorrect value for last_msg_.w, expected -0.523790171609, is "
+      << last_msg_.w;
 }
