@@ -27,6 +27,8 @@
 #include <libsbp/v4/(((p.name))).h>
 ((*- endfor *))
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
   extern "C" {
 #endif

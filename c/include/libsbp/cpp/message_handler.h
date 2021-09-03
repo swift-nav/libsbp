@@ -13,11 +13,12 @@
 #ifndef SBP_CPP_MESSAGE_HANDLER_H_
 #define SBP_CPP_MESSAGE_HANDLER_H_
 
-#include <cassert>
 #include <array>
+#include <cassert>
+#include <cstddef>
 
-#include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
+#include <libsbp/cpp/state.h>
 
 namespace sbp {
 
@@ -145,7 +146,7 @@ class CallbackInterface<MsgType> {
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename... MsgTypes>
- class MessageHandler : public details::CallbackInterface<MsgTypes...> {
+class MessageHandler : public details::CallbackInterface<MsgTypes...> {
     static constexpr size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
@@ -184,7 +185,7 @@ inline void sbp_all_msg_cb_passthrough(uint16_t sender_id, sbp_msg_type_t msg_ty
   instance->handle_sbp_message(sender_id, msg_type, *msg);
 }
 
-class AllMessageHandler {
+class SBP_EXPORT AllMessageHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 
