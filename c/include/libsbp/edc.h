@@ -15,11 +15,13 @@
 
 #include <libsbp/common.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc);
+SBP_EXPORT u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc);
 
 #ifdef __cplusplus
 }
