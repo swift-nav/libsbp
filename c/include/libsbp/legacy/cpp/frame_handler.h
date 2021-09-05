@@ -13,11 +13,14 @@
 #ifndef SBP_LEGACY_CPP_FRAME_HANDLER_H
 #define SBP_LEGACY_CPP_FRAME_HANDLER_H
 
-#include <cassert>
 #include <array>
+#include <cassert>
+#include <cstddef>
 
 #include <libsbp/cpp/state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
+
+#include "sbp_export.h"
 
 namespace sbp {
 
@@ -164,7 +167,7 @@ class FrameHandler {
  * };
  *
  */
-class AllFrameHandler {
+class SBP_EXPORT AllFrameHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 
@@ -193,4 +196,4 @@ class AllFrameHandler {
 
 } /* namespace sbp */
 
-#endif /* SBP_LEGACY_CPP_MESSAGE_HANDLER_H */
+#endif /* SBP_LEGACY_CPP_FRAME_HANDLER_H */
