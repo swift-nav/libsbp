@@ -29,6 +29,8 @@
 #include <libsbp/linux_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -95,7 +97,7 @@ typedef struct {
  *
  * @param msg sbp_msg_linux_process_socket_queues_t instance
  */
-void sbp_msg_linux_process_socket_queues_cmdline_init(
+SBP_EXPORT void sbp_msg_linux_process_socket_queues_cmdline_init(
     sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -105,7 +107,7 @@ void sbp_msg_linux_process_socket_queues_cmdline_init(
  * @return true is sbp_msg_linux_process_socket_queues_t::cmdline is valid for
  * encoding purposes, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_valid(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_valid(
     const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -119,7 +121,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_valid(
  * @param b sbp_msg_linux_process_socket_queues_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_linux_process_socket_queues_cmdline_strcmp(
+SBP_EXPORT int sbp_msg_linux_process_socket_queues_cmdline_strcmp(
     const sbp_msg_linux_process_socket_queues_t *a,
     const sbp_msg_linux_process_socket_queues_t *b);
 
@@ -130,7 +132,7 @@ int sbp_msg_linux_process_socket_queues_cmdline_strcmp(
  * @return Size of sbp_msg_linux_process_socket_queues_t::cmdline in wire
  * representation
  */
-size_t sbp_msg_linux_process_socket_queues_cmdline_encoded_len(
+SBP_EXPORT size_t sbp_msg_linux_process_socket_queues_cmdline_encoded_len(
     const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -143,7 +145,7 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_encoded_len(
  * @param msg sbp_msg_linux_process_socket_queues_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-size_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
+SBP_EXPORT size_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
     const sbp_msg_linux_process_socket_queues_t *msg);
 /**
  * Set sbp_msg_linux_process_socket_queues_t::cmdline
@@ -162,7 +164,7 @@ size_t sbp_msg_linux_process_socket_queues_cmdline_space_remaining(
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_set(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_set(
     sbp_msg_linux_process_socket_queues_t *msg, const char *new_str,
     bool should_trunc, size_t *n_written);
 
@@ -184,7 +186,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_set(
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_set_raw(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_set_raw(
     sbp_msg_linux_process_socket_queues_t *msg, const char *new_buf,
     size_t new_buf_len, bool should_trunc, size_t *n_written);
 
@@ -207,7 +209,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_set_raw(
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_printf(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_printf(
     sbp_msg_linux_process_socket_queues_t *msg, bool should_trunc,
     size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
@@ -226,7 +228,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_printf(
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
     sbp_msg_linux_process_socket_queues_t *msg, bool should_trunc,
     size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
@@ -247,7 +249,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_vprintf(
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
     sbp_msg_linux_process_socket_queues_t *msg, bool should_trunc,
     size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
@@ -266,7 +268,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_append_printf(
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
+SBP_EXPORT bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
     sbp_msg_linux_process_socket_queues_t *msg, bool should_trunc,
     size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
@@ -276,7 +278,7 @@ bool sbp_msg_linux_process_socket_queues_cmdline_append_vprintf(
  * @param msg sbp_msg_linux_process_socket_queues_t instance
  * @return String contents
  */
-const char *sbp_msg_linux_process_socket_queues_cmdline_get(
+SBP_EXPORT const char *sbp_msg_linux_process_socket_queues_cmdline_get(
     const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -287,7 +289,7 @@ const char *sbp_msg_linux_process_socket_queues_cmdline_get(
  * @param msg sbp_msg_linux_process_socket_queues_t instance
  * @return Length of string
  */
-size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
+SBP_EXPORT size_t sbp_msg_linux_process_socket_queues_cmdline_strlen(
     const sbp_msg_linux_process_socket_queues_t *msg);
 
 /**
@@ -322,7 +324,7 @@ static inline size_t sbp_msg_linux_process_socket_queues_encoded_len(
  * @param msg Instance of sbp_msg_linux_process_socket_queues_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_linux_process_socket_queues_encode(
+SBP_EXPORT s8 sbp_msg_linux_process_socket_queues_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_msg_linux_process_socket_queues_t *msg);
 
@@ -344,7 +346,7 @@ s8 sbp_msg_linux_process_socket_queues_encode(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_linux_process_socket_queues_decode(
+SBP_EXPORT s8 sbp_msg_linux_process_socket_queues_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_msg_linux_process_socket_queues_t *msg);
 /**
@@ -364,7 +366,7 @@ s8 sbp_msg_linux_process_socket_queues_decode(
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_linux_process_socket_queues_send(
+SBP_EXPORT s8 sbp_msg_linux_process_socket_queues_send(
     sbp_state_t *s, u16 sender_id,
     const sbp_msg_linux_process_socket_queues_t *msg, sbp_write_fn_t write);
 
@@ -383,7 +385,7 @@ s8 sbp_msg_linux_process_socket_queues_send(
  * @param b sbp_msg_linux_process_socket_queues_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_linux_process_socket_queues_cmp(
+SBP_EXPORT int sbp_msg_linux_process_socket_queues_cmp(
     const sbp_msg_linux_process_socket_queues_t *a,
     const sbp_msg_linux_process_socket_queues_t *b);
 

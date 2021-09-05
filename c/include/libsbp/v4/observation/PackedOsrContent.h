@@ -31,6 +31,8 @@
 #include <libsbp/v4/gnss/GnssSignal.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -121,8 +123,9 @@ static inline size_t sbp_packed_osr_content_encoded_len(
  * @param msg Instance of sbp_packed_osr_content_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_packed_osr_content_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                 const sbp_packed_osr_content_t *msg);
+SBP_EXPORT s8
+sbp_packed_osr_content_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                              const sbp_packed_osr_content_t *msg);
 
 /**
  * Decode an instance of sbp_packed_osr_content_t from wire representation
@@ -139,9 +142,9 @@ s8 sbp_packed_osr_content_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_packed_osr_content_decode(const uint8_t *buf, uint8_t len,
-                                 uint8_t *n_read,
-                                 sbp_packed_osr_content_t *msg);
+SBP_EXPORT s8 sbp_packed_osr_content_decode(const uint8_t *buf, uint8_t len,
+                                            uint8_t *n_read,
+                                            sbp_packed_osr_content_t *msg);
 
 /**
  * Compare two instances of sbp_packed_osr_content_t
@@ -158,8 +161,8 @@ s8 sbp_packed_osr_content_decode(const uint8_t *buf, uint8_t len,
  * @param b sbp_packed_osr_content_t instance
  * @return 0, <0, >0
  */
-int sbp_packed_osr_content_cmp(const sbp_packed_osr_content_t *a,
-                               const sbp_packed_osr_content_t *b);
+SBP_EXPORT int sbp_packed_osr_content_cmp(const sbp_packed_osr_content_t *a,
+                                          const sbp_packed_osr_content_t *b);
 
 #ifdef __cplusplus
 }

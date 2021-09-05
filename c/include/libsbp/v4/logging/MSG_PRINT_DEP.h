@@ -29,6 +29,8 @@
 #include <libsbp/logging_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,7 +56,7 @@ typedef struct {
  *
  * @param msg sbp_msg_print_dep_t instance
  */
-void sbp_msg_print_dep_text_init(sbp_msg_print_dep_t *msg);
+SBP_EXPORT void sbp_msg_print_dep_text_init(sbp_msg_print_dep_t *msg);
 
 /**
  * Test sbp_msg_print_dep_t::text for validity
@@ -63,7 +65,7 @@ void sbp_msg_print_dep_text_init(sbp_msg_print_dep_t *msg);
  * @return true is sbp_msg_print_dep_t::text is valid for encoding purposes,
  * false otherwise
  */
-bool sbp_msg_print_dep_text_valid(const sbp_msg_print_dep_t *msg);
+SBP_EXPORT bool sbp_msg_print_dep_text_valid(const sbp_msg_print_dep_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_print_dep_t::text for equality
@@ -75,8 +77,8 @@ bool sbp_msg_print_dep_text_valid(const sbp_msg_print_dep_t *msg);
  * @param b sbp_msg_print_dep_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_print_dep_text_strcmp(const sbp_msg_print_dep_t *a,
-                                  const sbp_msg_print_dep_t *b);
+SBP_EXPORT int sbp_msg_print_dep_text_strcmp(const sbp_msg_print_dep_t *a,
+                                             const sbp_msg_print_dep_t *b);
 
 /**
  * Get the encoded size of sbp_msg_print_dep_t::text
@@ -84,7 +86,8 @@ int sbp_msg_print_dep_text_strcmp(const sbp_msg_print_dep_t *a,
  * @param msg sbp_msg_print_dep_t instance
  * @return Size of sbp_msg_print_dep_t::text in wire representation
  */
-size_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
+SBP_EXPORT size_t
+sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
 
 /**
  * Query sbp_msg_print_dep_t::text for remaining space
@@ -96,7 +99,8 @@ size_t sbp_msg_print_dep_text_encoded_len(const sbp_msg_print_dep_t *msg);
  * @param msg sbp_msg_print_dep_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
+SBP_EXPORT size_t
+sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
 /**
  * Set sbp_msg_print_dep_t::text
  *
@@ -114,8 +118,10 @@ size_t sbp_msg_print_dep_text_space_remaining(const sbp_msg_print_dep_t *msg);
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
-                                bool should_trunc, size_t *n_written);
+SBP_EXPORT bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg,
+                                           const char *new_str,
+                                           bool should_trunc,
+                                           size_t *n_written);
 
 /**
  * Set sbp_msg_print_dep_t::text from a raw buffer
@@ -135,9 +141,11 @@ bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
-                                    const char *new_buf, size_t new_buf_len,
-                                    bool should_trunc, size_t *n_written);
+SBP_EXPORT bool sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
+                                               const char *new_buf,
+                                               size_t new_buf_len,
+                                               bool should_trunc,
+                                               size_t *n_written);
 
 /**
  * Set sbp_msg_print_dep_t::text with printf style formatting
@@ -157,8 +165,10 @@ bool sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, bool should_trunc,
-                                   size_t *n_written, const char *fmt, ...)
+SBP_EXPORT bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg,
+                                              bool should_trunc,
+                                              size_t *n_written,
+                                              const char *fmt, ...)
     SBP_ATTR_FORMAT(4, 5);
 
 /**
@@ -175,9 +185,11 @@ bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, bool should_trunc,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg, bool should_trunc,
-                                    size_t *n_written, const char *fmt,
-                                    va_list ap) SBP_ATTR_VFORMAT(4);
+SBP_EXPORT bool sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg,
+                                               bool should_trunc,
+                                               size_t *n_written,
+                                               const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(4);
 
 /**
  * Append sbp_msg_print_dep_t::text with printf style formatting
@@ -195,9 +207,10 @@ bool sbp_msg_print_dep_text_vprintf(sbp_msg_print_dep_t *msg, bool should_trunc,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
-                                          bool should_trunc, size_t *n_written,
-                                          const char *fmt, ...)
+SBP_EXPORT bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
+                                                     bool should_trunc,
+                                                     size_t *n_written,
+                                                     const char *fmt, ...)
     SBP_ATTR_FORMAT(4, 5);
 
 /**
@@ -214,10 +227,9 @@ bool sbp_msg_print_dep_text_append_printf(sbp_msg_print_dep_t *msg,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
-                                           bool should_trunc, size_t *n_written,
-                                           const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(4);
+SBP_EXPORT bool sbp_msg_print_dep_text_append_vprintf(
+    sbp_msg_print_dep_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Obtain the string value from sbp_msg_print_dep_t::text
@@ -225,7 +237,8 @@ bool sbp_msg_print_dep_text_append_vprintf(sbp_msg_print_dep_t *msg,
  * @param msg sbp_msg_print_dep_t instance
  * @return String contents
  */
-const char *sbp_msg_print_dep_text_get(const sbp_msg_print_dep_t *msg);
+SBP_EXPORT const char *sbp_msg_print_dep_text_get(
+    const sbp_msg_print_dep_t *msg);
 
 /**
  * Obtain the length of sbp_msg_print_dep_t::text
@@ -235,7 +248,7 @@ const char *sbp_msg_print_dep_text_get(const sbp_msg_print_dep_t *msg);
  * @param msg sbp_msg_print_dep_t instance
  * @return Length of string
  */
-size_t sbp_msg_print_dep_text_strlen(const sbp_msg_print_dep_t *msg);
+SBP_EXPORT size_t sbp_msg_print_dep_text_strlen(const sbp_msg_print_dep_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_print_dep_t
@@ -268,8 +281,9 @@ static inline size_t sbp_msg_print_dep_encoded_len(
  * @param msg Instance of sbp_msg_print_dep_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_print_dep_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                            const sbp_msg_print_dep_t *msg);
+SBP_EXPORT s8 sbp_msg_print_dep_encode(uint8_t *buf, uint8_t len,
+                                       uint8_t *n_written,
+                                       const sbp_msg_print_dep_t *msg);
 
 /**
  * Decode an instance of sbp_msg_print_dep_t from wire representation
@@ -286,8 +300,9 @@ s8 sbp_msg_print_dep_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_print_dep_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                            sbp_msg_print_dep_t *msg);
+SBP_EXPORT s8 sbp_msg_print_dep_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_msg_print_dep_t *msg);
 /**
  * Send an instance of sbp_msg_print_dep_t with the given write function
  *
@@ -304,8 +319,9 @@ s8 sbp_msg_print_dep_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_print_dep_send(sbp_state_t *s, u16 sender_id,
-                          const sbp_msg_print_dep_t *msg, sbp_write_fn_t write);
+SBP_EXPORT s8 sbp_msg_print_dep_send(sbp_state_t *s, u16 sender_id,
+                                     const sbp_msg_print_dep_t *msg,
+                                     sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_print_dep_t
@@ -322,8 +338,8 @@ s8 sbp_msg_print_dep_send(sbp_state_t *s, u16 sender_id,
  * @param b sbp_msg_print_dep_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_print_dep_cmp(const sbp_msg_print_dep_t *a,
-                          const sbp_msg_print_dep_t *b);
+SBP_EXPORT int sbp_msg_print_dep_cmp(const sbp_msg_print_dep_t *a,
+                                     const sbp_msg_print_dep_t *b);
 
 #ifdef __cplusplus
 }

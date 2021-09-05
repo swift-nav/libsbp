@@ -29,6 +29,8 @@
 #include <libsbp/piksi_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -106,8 +108,9 @@ static inline size_t sbp_uart_channel_encoded_len(
  * @param msg Instance of sbp_uart_channel_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_uart_channel_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                           const sbp_uart_channel_t *msg);
+SBP_EXPORT s8 sbp_uart_channel_encode(uint8_t *buf, uint8_t len,
+                                      uint8_t *n_written,
+                                      const sbp_uart_channel_t *msg);
 
 /**
  * Decode an instance of sbp_uart_channel_t from wire representation
@@ -124,8 +127,8 @@ s8 sbp_uart_channel_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_uart_channel_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                           sbp_uart_channel_t *msg);
+SBP_EXPORT s8 sbp_uart_channel_decode(const uint8_t *buf, uint8_t len,
+                                      uint8_t *n_read, sbp_uart_channel_t *msg);
 
 /**
  * Compare two instances of sbp_uart_channel_t
@@ -142,8 +145,8 @@ s8 sbp_uart_channel_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_uart_channel_t instance
  * @return 0, <0, >0
  */
-int sbp_uart_channel_cmp(const sbp_uart_channel_t *a,
-                         const sbp_uart_channel_t *b);
+SBP_EXPORT int sbp_uart_channel_cmp(const sbp_uart_channel_t *a,
+                                    const sbp_uart_channel_t *b);
 
 #ifdef __cplusplus
 }

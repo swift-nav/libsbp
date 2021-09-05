@@ -29,6 +29,8 @@
 #include <libsbp/ssr_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -109,7 +111,7 @@ static inline size_t sbp_grid_definition_header_dep_a_encoded_len(
  * @param msg Instance of sbp_grid_definition_header_dep_a_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_grid_definition_header_dep_a_encode(
+SBP_EXPORT s8 sbp_grid_definition_header_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_grid_definition_header_dep_a_t *msg);
 
@@ -130,7 +132,7 @@ s8 sbp_grid_definition_header_dep_a_encode(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_grid_definition_header_dep_a_decode(
+SBP_EXPORT s8 sbp_grid_definition_header_dep_a_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_grid_definition_header_dep_a_t *msg);
 
@@ -149,7 +151,7 @@ s8 sbp_grid_definition_header_dep_a_decode(
  * @param b sbp_grid_definition_header_dep_a_t instance
  * @return 0, <0, >0
  */
-int sbp_grid_definition_header_dep_a_cmp(
+SBP_EXPORT int sbp_grid_definition_header_dep_a_cmp(
     const sbp_grid_definition_header_dep_a_t *a,
     const sbp_grid_definition_header_dep_a_t *b);
 

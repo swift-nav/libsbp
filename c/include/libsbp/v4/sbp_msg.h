@@ -47,6 +47,8 @@
 #include <libsbp/v4/user.h>
 #include <libsbp/v4/vehicle.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

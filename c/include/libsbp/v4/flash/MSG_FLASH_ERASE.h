@@ -29,6 +29,8 @@
 #include <libsbp/flash_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -88,8 +90,9 @@ static inline size_t sbp_msg_flash_erase_encoded_len(
  * @param msg Instance of sbp_msg_flash_erase_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_flash_erase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                              const sbp_msg_flash_erase_t *msg);
+SBP_EXPORT s8 sbp_msg_flash_erase_encode(uint8_t *buf, uint8_t len,
+                                         uint8_t *n_written,
+                                         const sbp_msg_flash_erase_t *msg);
 
 /**
  * Decode an instance of sbp_msg_flash_erase_t from wire representation
@@ -106,8 +109,9 @@ s8 sbp_msg_flash_erase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_flash_erase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                              sbp_msg_flash_erase_t *msg);
+SBP_EXPORT s8 sbp_msg_flash_erase_decode(const uint8_t *buf, uint8_t len,
+                                         uint8_t *n_read,
+                                         sbp_msg_flash_erase_t *msg);
 /**
  * Send an instance of sbp_msg_flash_erase_t with the given write function
  *
@@ -124,9 +128,9 @@ s8 sbp_msg_flash_erase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_flash_erase_send(sbp_state_t *s, u16 sender_id,
-                            const sbp_msg_flash_erase_t *msg,
-                            sbp_write_fn_t write);
+SBP_EXPORT s8 sbp_msg_flash_erase_send(sbp_state_t *s, u16 sender_id,
+                                       const sbp_msg_flash_erase_t *msg,
+                                       sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_flash_erase_t
@@ -143,8 +147,8 @@ s8 sbp_msg_flash_erase_send(sbp_state_t *s, u16 sender_id,
  * @param b sbp_msg_flash_erase_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_flash_erase_cmp(const sbp_msg_flash_erase_t *a,
-                            const sbp_msg_flash_erase_t *b);
+SBP_EXPORT int sbp_msg_flash_erase_cmp(const sbp_msg_flash_erase_t *a,
+                                       const sbp_msg_flash_erase_t *b);
 
 #ifdef __cplusplus
 }

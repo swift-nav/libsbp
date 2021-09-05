@@ -29,6 +29,8 @@
 #include <libsbp/settings_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
+#include "sbp_export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,7 +62,8 @@ typedef struct {
  *
  * @param msg sbp_msg_settings_write_t instance
  */
-void sbp_msg_settings_write_setting_init(sbp_msg_settings_write_t *msg);
+SBP_EXPORT void sbp_msg_settings_write_setting_init(
+    sbp_msg_settings_write_t *msg);
 
 /**
  * Test sbp_msg_settings_write_t::setting for validity
@@ -69,7 +72,8 @@ void sbp_msg_settings_write_setting_init(sbp_msg_settings_write_t *msg);
  * @return true is sbp_msg_settings_write_t::setting is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_settings_write_setting_valid(const sbp_msg_settings_write_t *msg);
+SBP_EXPORT bool sbp_msg_settings_write_setting_valid(
+    const sbp_msg_settings_write_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_settings_write_t::setting for equality
@@ -81,8 +85,8 @@ bool sbp_msg_settings_write_setting_valid(const sbp_msg_settings_write_t *msg);
  * @param b sbp_msg_settings_write_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_settings_write_setting_strcmp(const sbp_msg_settings_write_t *a,
-                                          const sbp_msg_settings_write_t *b);
+SBP_EXPORT int sbp_msg_settings_write_setting_strcmp(
+    const sbp_msg_settings_write_t *a, const sbp_msg_settings_write_t *b);
 
 /**
  * Get the encoded size of sbp_msg_settings_write_t::setting
@@ -90,8 +94,8 @@ int sbp_msg_settings_write_setting_strcmp(const sbp_msg_settings_write_t *a,
  * @param msg sbp_msg_settings_write_t instance
  * @return Size of sbp_msg_settings_write_t::setting in wire representation
  */
-size_t sbp_msg_settings_write_setting_encoded_len(
-    const sbp_msg_settings_write_t *msg);
+SBP_EXPORT size_t
+sbp_msg_settings_write_setting_encoded_len(const sbp_msg_settings_write_t *msg);
 
 /**
  * Query sbp_msg_settings_write_t::setting for remaining space
@@ -103,7 +107,7 @@ size_t sbp_msg_settings_write_setting_encoded_len(
  * @param msg sbp_msg_settings_write_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-size_t sbp_msg_settings_write_setting_space_remaining(
+SBP_EXPORT size_t sbp_msg_settings_write_setting_space_remaining(
     const sbp_msg_settings_write_t *msg);
 /**
  * Return the number of sections in sbp_msg_settings_write_t::setting
@@ -111,7 +115,7 @@ size_t sbp_msg_settings_write_setting_space_remaining(
  * @param msg sbp_msg_settings_write_t instance
  * @return Number of sections in string
  */
-size_t sbp_msg_settings_write_setting_count_sections(
+SBP_EXPORT size_t sbp_msg_settings_write_setting_count_sections(
     const sbp_msg_settings_write_t *msg);
 
 /**
@@ -125,8 +129,8 @@ size_t sbp_msg_settings_write_setting_count_sections(
  * @param new_str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_add_section(sbp_msg_settings_write_t *msg,
-                                                const char *new_str);
+SBP_EXPORT bool sbp_msg_settings_write_setting_add_section(
+    sbp_msg_settings_write_t *msg, const char *new_str);
 
 /**
  * Add a section to sbp_msg_settings_write_t::setting with printf style
@@ -141,7 +145,7 @@ bool sbp_msg_settings_write_setting_add_section(sbp_msg_settings_write_t *msg,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_add_section_printf(
+SBP_EXPORT bool sbp_msg_settings_write_setting_add_section_printf(
     sbp_msg_settings_write_t *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
 
 /**
@@ -156,7 +160,7 @@ bool sbp_msg_settings_write_setting_add_section_printf(
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_add_section_vprintf(
+SBP_EXPORT bool sbp_msg_settings_write_setting_add_section_vprintf(
     sbp_msg_settings_write_t *msg, const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(2);
 
@@ -177,8 +181,8 @@ bool sbp_msg_settings_write_setting_add_section_vprintf(
  * @param str New string
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_append(sbp_msg_settings_write_t *msg,
-                                           const char *str);
+SBP_EXPORT bool sbp_msg_settings_write_setting_append(
+    sbp_msg_settings_write_t *msg, const char *str);
 
 /**
  * Append a string to the last section in sbp_msg_settings_write_t::setting with
@@ -198,9 +202,8 @@ bool sbp_msg_settings_write_setting_append(sbp_msg_settings_write_t *msg,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_append_printf(sbp_msg_settings_write_t *msg,
-                                                  const char *fmt, ...)
-    SBP_ATTR_FORMAT(2, 3);
+SBP_EXPORT bool sbp_msg_settings_write_setting_append_printf(
+    sbp_msg_settings_write_t *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2, 3);
 
 /**
  * Append a string to the last section in sbp_msg_settings_write_t::setting with
@@ -221,7 +224,7 @@ bool sbp_msg_settings_write_setting_append_printf(sbp_msg_settings_write_t *msg,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_settings_write_setting_append_vprintf(
+SBP_EXPORT bool sbp_msg_settings_write_setting_append_vprintf(
     sbp_msg_settings_write_t *msg, const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(2);
 
@@ -236,7 +239,7 @@ bool sbp_msg_settings_write_setting_append_vprintf(
  * @param section Section number
  * @return Pointer to C string, NULL on error
  */
-const char *sbp_msg_settings_write_setting_get_section(
+SBP_EXPORT const char *sbp_msg_settings_write_setting_get_section(
     const sbp_msg_settings_write_t *msg, size_t section);
 
 /**
@@ -250,7 +253,7 @@ const char *sbp_msg_settings_write_setting_get_section(
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_msg_settings_write_setting_section_strlen(
+SBP_EXPORT size_t sbp_msg_settings_write_setting_section_strlen(
     const sbp_msg_settings_write_t *msg, size_t section);
 
 /**
@@ -284,8 +287,9 @@ static inline size_t sbp_msg_settings_write_encoded_len(
  * @param msg Instance of sbp_msg_settings_write_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_settings_write_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                 const sbp_msg_settings_write_t *msg);
+SBP_EXPORT s8
+sbp_msg_settings_write_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                              const sbp_msg_settings_write_t *msg);
 
 /**
  * Decode an instance of sbp_msg_settings_write_t from wire representation
@@ -302,9 +306,9 @@ s8 sbp_msg_settings_write_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_settings_write_decode(const uint8_t *buf, uint8_t len,
-                                 uint8_t *n_read,
-                                 sbp_msg_settings_write_t *msg);
+SBP_EXPORT s8 sbp_msg_settings_write_decode(const uint8_t *buf, uint8_t len,
+                                            uint8_t *n_read,
+                                            sbp_msg_settings_write_t *msg);
 /**
  * Send an instance of sbp_msg_settings_write_t with the given write function
  *
@@ -321,9 +325,9 @@ s8 sbp_msg_settings_write_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_settings_write_send(sbp_state_t *s, u16 sender_id,
-                               const sbp_msg_settings_write_t *msg,
-                               sbp_write_fn_t write);
+SBP_EXPORT s8 sbp_msg_settings_write_send(sbp_state_t *s, u16 sender_id,
+                                          const sbp_msg_settings_write_t *msg,
+                                          sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_settings_write_t
@@ -340,8 +344,8 @@ s8 sbp_msg_settings_write_send(sbp_state_t *s, u16 sender_id,
  * @param b sbp_msg_settings_write_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_settings_write_cmp(const sbp_msg_settings_write_t *a,
-                               const sbp_msg_settings_write_t *b);
+SBP_EXPORT int sbp_msg_settings_write_cmp(const sbp_msg_settings_write_t *a,
+                                          const sbp_msg_settings_write_t *b);
 
 #ifdef __cplusplus
 }
