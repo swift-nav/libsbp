@@ -12,7 +12,7 @@ on:
       - .github/workflows/c.yaml
 jobs:
   coverage:
-    name: Test
+    name: Code Coverage
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -50,7 +50,7 @@ jobs:
         exclude: [
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
-    name: "Ubuntu TLS (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -70,6 +70,8 @@ jobs:
             -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
             -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} \
+            -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/install" \
+            -DINSTALL_GTEST=false \
             -DBUILD_EXAMPLES=true
 
       - name: Build
@@ -82,13 +84,11 @@ jobs:
         run: cmake --build build --target do-all-tests
 
       - name: Install
-        env:
-          DESTDIR: "${GITHUB_WORKSPACE}/install"
         run: cmake --build build --target install
 
 
   macos:
-    name: macos
+    name: macOS Catalina
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
@@ -96,11 +96,23 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Run tests
-        run: make test-c
-        env:
-          CC: clang
-          CXX: clang++
+      - name: Configure
+        run: |
+          cmake -S c -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER=clang \
+            -DCMAKE_CXX_COMPILER=clang++ \
+            -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/install" \
+            -DINSTALL_GTEST=false
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        run: cmake --build build --target do-all-tests
+
+      - name: Install
+        run: cmake --build build --target install
 
 
   big-endian:
@@ -142,9 +154,11 @@ jobs:
       - name: Configure
         run: |
           cmake -G "${{ matrix.generator }}" -S c -B build `
-            "-DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/install" `
+            -DCMAKE_BUILD_TYPE=Release `
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} `
-            -Dgtest_force_shared_crt=true
+            -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/install" `
+            -Dgtest_force_shared_crt=true `
+            -DINSTALL_GTEST=false
 
       - name: Build
         run: cmake --build build
