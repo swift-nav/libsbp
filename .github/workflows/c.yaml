@@ -140,14 +140,19 @@ jobs:
       - name: Configure
         run: |
           cmake -G "${{ matrix.generator }}" -S c -B build `
+            "-DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/install" `
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} `
             -Dgtest_force_shared_crt=true
 
       - name: Build
         run: cmake --build build
 
-      - name: Test
+      - name: Build Test
+        run: cmake --build build --target build-all-tests
+
+      - name: Run Test
         run: cmake --build build --target do-all-tests
+        if: ${{ !matrix.build_shared_libraries }}
 
       - name: Install
         run: cmake --build build --target install
