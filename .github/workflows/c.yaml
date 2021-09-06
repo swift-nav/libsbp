@@ -38,8 +38,18 @@ jobs:
           bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
 
-  gcc6-release:
-    name: GCC6 - Release
+  ubuntu-lts:
+    strategy:
+      matrix:
+        build_type: [ "Debug", "Release" ]
+        compiler: [
+          { c: "gcc-6", cxx: "g++-6", package: "gcc-6 g++-6" },
+          { c: "clang-6.0", cxx: "clang++-6.0", package: "clang-6.0" }
+        ]
+        build_shared_library: [ "true", "false" ]
+        exclude: [
+          { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_library: "false" }
+        ]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -50,65 +60,30 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install libeigen3-dev libserialport-dev
+          sudo apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
 
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
-
-      - name: Build examples
-        run: make -C c/build examples
-
-
-  clang6-debug:
-    name: Clang6 - Debug
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
+      - name: Configure
         run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
+          cmake -S c -B build \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
+            -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
+            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_library }} \
+            -DBUILD_EXAMPLES=true
 
-      - name: Run tests
-        run: make test-c
+      - name: Build
+        run: cmake --build build --target all
+
+      - name: Example
+        run: cmake --build build --target examples
+
+      - name: Test
+        run: cmake --build build --target do-all-tests
+
+      - name: Install
         env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
-          CC: clang-6.0
-          CXX: clang++-6.0
-
-      - name: Build examples
-        run: make -C c/build examples
-
-
-  clang6-release:
-    name: Clang6 - Release
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install clang-6.0 libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
-          CC: clang-6.0
-          CXX: clang++-6.0
-
-      - name: Build examples
-        run: make -C c/build examples
+          DESTDIR: "${GITHUB_WORKSPACE}/install"
+        run: cmake --build build --target install
 
 
   macos:
@@ -153,6 +128,9 @@ jobs:
   windows-minGW:
     name: Windows MinGW
     runs-on: windows-2019
+    strategy:
+      matrix:
+        build_shared_library: [ "True", "False" ]
     steps:
 
       - uses: actions/checkout@v2
@@ -161,7 +139,9 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -G "MinGW Makefiles" -S c -B build
+        run: |
+          cmake -G "MinGW Makefiles" -S c -B build \
+            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_library }}
 
       - name: Build
         run: cmake --build build --target all
@@ -173,15 +153,20 @@ jobs:
   windows-vs-2019:
     name: Windows VS 2019
     runs-on: windows-2019
+    strategy:
+      matrix:
+        build_shared_library: [ "true", "false" ]
     steps:
-
       - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
 
       - name: Configure
-        run: cmake -G "Visual Studio 16 2019" -S c -B build -D gtest_force_shared_crt=true
+        run: |
+          cmake -G "Visual Studio 16 2019" -S c -B build \
+            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_library }} \
+            -Dgtest_force_shared_crt=true
 
       - name: Build
         run: cmake --build build --target ALL_BUILD
