@@ -140,7 +140,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -G "MinGW Makefiles" -S c -B build \
+          cmake -G "MinGW Makefiles" -S c -B build `
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }}
 
       - name: Build
@@ -164,8 +164,8 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -G "Visual Studio 16 2019" -S c -B build \
-            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} \
+          cmake -G "Visual Studio 16 2019" -S c -B build `
+            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} `
             -Dgtest_force_shared_crt=true
 
       - name: Build
