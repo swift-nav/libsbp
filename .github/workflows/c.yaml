@@ -46,9 +46,9 @@ jobs:
           { c: "gcc-6", cxx: "g++-6", package: "gcc-6 g++-6" },
           { c: "clang-6.0", cxx: "clang++-6.0", package: "clang-6.0" }
         ]
-        build_shared_libraries: [ "true", "false" ]
+        build_shared_libraries: [ true, false ]
         exclude: [
-          { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: "false" }
+          { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
     runs-on: ubuntu-18.04
     steps:
@@ -125,37 +125,12 @@ jobs:
           CMAKEFLAGS: -DCMAKE_EXE_LINKER_FLAGS_RELEASE="-static" -Dgtest_disable_pthreads=ON
 
 
-  windows-minGW:
-    name: Windows MinGW
+  windows-2019:
     runs-on: windows-2019
     strategy:
       matrix:
-        build_shared_libraries: [ "true", "false" ]
-    steps:
-
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Configure
-        run: |
-          cmake -G "MinGW Makefiles" -S c -B build `
-            -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }}
-
-      - name: Build
-        run: cmake --build build --target all
-
-      - name: Test
-        run: cmake --build build --target do-all-tests
-
-
-  windows-vs-2019:
-    name: Windows VS 2019
-    runs-on: windows-2019
-    strategy:
-      matrix:
-        build_shared_libraries: [ "true", "false" ]
+        generator: [ "MinGW Makefiles", "Visual Studio 16 2019" ]
+        build_shared_libraries: [ true, false ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -164,7 +139,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -G "Visual Studio 16 2019" -S c -B build `
+          cmake -G "${{ matrix.generator }}" -S c -B build `
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} `
             -Dgtest_force_shared_crt=true
 
