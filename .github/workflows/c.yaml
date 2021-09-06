@@ -72,7 +72,7 @@ jobs:
             -DBUILD_EXAMPLES=true
 
       - name: Build
-        run: cmake --build build --target all
+        run: cmake --build build
 
       - name: Example
         run: cmake --build build --target examples
@@ -144,8 +144,11 @@ jobs:
             -Dgtest_force_shared_crt=true
 
       - name: Build
-        run: cmake --build build --target ALL_BUILD
+        run: cmake --build build
 
       - name: Test
         run: cmake --build build --target do-all-tests
+
+      - name: Install
+        run: cmake --build build --target install
 
