@@ -50,6 +50,7 @@ jobs:
         exclude: [
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
+    name: "Ubuntu TLS (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -126,11 +127,12 @@ jobs:
 
 
   windows-2019:
-    runs-on: windows-2019
     strategy:
       matrix:
         generator: [ "MinGW Makefiles", "Visual Studio 16 2019" ]
         build_shared_libraries: [ true, false ]
+    name: "Windows 2019 (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
         with:
