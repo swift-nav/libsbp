@@ -185,7 +185,7 @@ inline void sbp_all_msg_cb_passthrough(uint16_t sender_id, sbp_msg_type_t msg_ty
   instance->handle_sbp_message(sender_id, msg_type, *msg);
 }
 
-class SBP_EXPORT AllMessageHandler {
+class AllMessageHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 

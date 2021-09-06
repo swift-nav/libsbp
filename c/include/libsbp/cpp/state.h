@@ -16,25 +16,23 @@
 #include <libsbp/sbp.h>
 #include <libsbp/cpp/message_traits.h>
 
-#include "sbp_export.h"
-
 namespace sbp {
 
-class SBP_EXPORT IReader {
+class IReader {
  public:
   virtual ~IReader() = default;
 
   virtual s32 read(u8 *buffer, u32 buffer_length) = 0;
 };
 
-class SBP_EXPORT IWriter {
+class IWriter {
  public:
   virtual ~IWriter() = default;
 
   virtual s32 write(const u8 *buffer, u32 buffer_length) = 0;
 };
 
-class SBP_EXPORT State {
+class State {
  private:
   sbp_state_t state_;
   IReader *reader_;

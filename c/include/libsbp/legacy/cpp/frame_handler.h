@@ -20,8 +20,6 @@
 #include <libsbp/cpp/state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 
-#include "sbp_export.h"
-
 namespace sbp {
 
 /**
@@ -167,7 +165,7 @@ class FrameHandler {
  * };
  *
  */
-class SBP_EXPORT AllFrameHandler {
+class AllFrameHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 

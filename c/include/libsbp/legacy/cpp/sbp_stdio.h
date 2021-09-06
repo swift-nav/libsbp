@@ -17,11 +17,9 @@
 
 #include <libsbp/legacy/cpp/payload_handler.h>
 
-#include "sbp_export.h"
-
 namespace sbp {
 
-class SBP_EXPORT SbpFileReader : public sbp::IReader {
+class SbpFileReader : public sbp::IReader {
   public:
     explicit SbpFileReader(const char *file_path)
       : file_stream_(file_path, std::ios::binary | std::ios_base::in) {}
@@ -50,7 +48,7 @@ class SBP_EXPORT SbpFileReader : public sbp::IReader {
     std::ifstream file_stream_;
 };
 
-class SBP_EXPORT SbpFileWriter : public sbp::IWriter {
+class SbpFileWriter : public sbp::IWriter {
   public:
     explicit SbpFileWriter(const char *file_path)
       : file_stream_(file_path, std::ios::binary | std::ios_base::out) {}
