@@ -185,6 +185,6 @@ jobs:
 
       - name: Test Package
         run: |
-          cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
+          cmake -G "${{ matrix.generator }}" -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
           cmake --build c/test_package/build
 
