@@ -33,6 +33,7 @@ set_target_properties(sbp
     VISIBILITY_INLINES_HIDDEN true
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden
+    POSITION_INDEPENDENT_CODE true
 )
 
 if (MINGW)

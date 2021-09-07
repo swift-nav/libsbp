@@ -37,7 +37,7 @@ input_file_payload_handler(u16 sender_id, sbp_msg_type_t message_type, const sbp
 
 int main() {
   int exit_code = EXIT_SUCCESS;
-  struct Context context = {};
+  struct Context context = {0};
 
   context.input_file = fopen(SBP_FILE, "r");
   if (!context.input_file) {

@@ -41,7 +41,7 @@ input_file_payload_handler(u16 sender_id, u16 message_type, u8 payload_length, u
 
 int main() {
   int exit_code = EXIT_SUCCESS;
-  struct Context context = {};
+  struct Context context = {0};
 
   context.input_file = fopen(SBP_FILE, "r");
   if (!context.input_file) {

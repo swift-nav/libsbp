@@ -119,6 +119,11 @@ jobs:
       - name: Install
         run: cmake --build build --target install
 
+      - name: Test Package
+        run: |
+          cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
+          cmake --build c/test_package/build
+
 
   big-endian:
     name: Test Big Endian

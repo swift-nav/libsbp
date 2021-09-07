@@ -8,11 +8,11 @@ if (NOT EXISTS ${SBP_FILE} OR NOT IS_ABSOLUTE ${SBP_FILE})
 endif()
 
 find_library(SBP_LIBRARY sbp)
-find_path(SBP_INCLUDE_DIRS libsbp)
-
 if (NOT SBP_LIBRARY)
   message(FATAL_ERROR "SBP library was not found")
 endif()
+
+find_path(SBP_INCLUDE_DIRS libsbp)
 if (NOT SBP_INCLUDE_DIRS)
   message(FATAL_ERROR "SBP header folder was not found")
 endif()
