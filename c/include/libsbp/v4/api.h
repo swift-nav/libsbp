@@ -16,8 +16,6 @@
 #include <libsbp/v4/sbp_msg.h>
 #include <libsbp/sbp_msg_type.h>
 
-#include "sbp_export.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

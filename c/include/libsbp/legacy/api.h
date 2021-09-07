@@ -15,8 +15,6 @@
 
 #include <libsbp/common.h>
 
-#include "sbp_export.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

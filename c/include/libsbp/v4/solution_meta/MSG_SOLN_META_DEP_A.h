@@ -30,8 +30,6 @@
 #include <libsbp/v4/solution_meta/SolutionInputType.h>
 #include <libsbp/v4/string/sbp_string.h>
 
-#include "sbp_export.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

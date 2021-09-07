@@ -33,8 +33,6 @@
 #include <libsbp/v4/(((i))).h>
 ((*- endfor *))
 
-#include "sbp_export.h"
-
 #ifdef __cplusplus
   extern "C" {
 #endif

@@ -29,8 +29,6 @@
 #include <libsbp/common.h>
 #include <libsbp/v4/string/sbp_string.h>
 
-#include "sbp_export.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
