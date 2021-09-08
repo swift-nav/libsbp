@@ -119,7 +119,7 @@ static inline size_t sbp_gridded_correction_header_encoded_len(
  * @param msg Instance of sbp_gridded_correction_header_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_gridded_correction_header_encode(
+SBP_EXPORT s8 sbp_gridded_correction_header_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_gridded_correction_header_t *msg);
 
@@ -140,9 +140,9 @@ s8 sbp_gridded_correction_header_encode(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_gridded_correction_header_decode(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_gridded_correction_header_t *msg);
+SBP_EXPORT s8 sbp_gridded_correction_header_decode(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_gridded_correction_header_t *msg);
 
 /**
  * Compare two instances of sbp_gridded_correction_header_t
@@ -159,8 +159,9 @@ s8 sbp_gridded_correction_header_decode(const uint8_t *buf, uint8_t len,
  * @param b sbp_gridded_correction_header_t instance
  * @return 0, <0, >0
  */
-int sbp_gridded_correction_header_cmp(const sbp_gridded_correction_header_t *a,
-                                      const sbp_gridded_correction_header_t *b);
+SBP_EXPORT int sbp_gridded_correction_header_cmp(
+    const sbp_gridded_correction_header_t *a,
+    const sbp_gridded_correction_header_t *b);
 
 #ifdef __cplusplus
 }

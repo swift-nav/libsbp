@@ -105,8 +105,9 @@ static inline size_t sbp_satellite_apc_encoded_len(
  * @param msg Instance of sbp_satellite_apc_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_satellite_apc_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                            const sbp_satellite_apc_t *msg);
+SBP_EXPORT s8 sbp_satellite_apc_encode(uint8_t *buf, uint8_t len,
+                                       uint8_t *n_written,
+                                       const sbp_satellite_apc_t *msg);
 
 /**
  * Decode an instance of sbp_satellite_apc_t from wire representation
@@ -123,8 +124,9 @@ s8 sbp_satellite_apc_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_satellite_apc_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                            sbp_satellite_apc_t *msg);
+SBP_EXPORT s8 sbp_satellite_apc_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_satellite_apc_t *msg);
 
 /**
  * Compare two instances of sbp_satellite_apc_t
@@ -141,8 +143,8 @@ s8 sbp_satellite_apc_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_satellite_apc_t instance
  * @return 0, <0, >0
  */
-int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
-                          const sbp_satellite_apc_t *b);
+SBP_EXPORT int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
+                                     const sbp_satellite_apc_t *b);
 
 #ifdef __cplusplus
 }

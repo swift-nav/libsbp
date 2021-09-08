@@ -94,7 +94,7 @@ static inline size_t sbp_tropospheric_delay_correction_encoded_len(
  * @param msg Instance of sbp_tropospheric_delay_correction_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_tropospheric_delay_correction_encode(
+SBP_EXPORT s8 sbp_tropospheric_delay_correction_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_tropospheric_delay_correction_t *msg);
 
@@ -115,7 +115,7 @@ s8 sbp_tropospheric_delay_correction_encode(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_tropospheric_delay_correction_decode(
+SBP_EXPORT s8 sbp_tropospheric_delay_correction_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_tropospheric_delay_correction_t *msg);
 
@@ -134,7 +134,7 @@ s8 sbp_tropospheric_delay_correction_decode(
  * @param b sbp_tropospheric_delay_correction_t instance
  * @return 0, <0, >0
  */
-int sbp_tropospheric_delay_correction_cmp(
+SBP_EXPORT int sbp_tropospheric_delay_correction_cmp(
     const sbp_tropospheric_delay_correction_t *a,
     const sbp_tropospheric_delay_correction_t *b);
 

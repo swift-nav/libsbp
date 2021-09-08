@@ -22,12 +22,12 @@ extern "C" {
 
 typedef void (*sbp_decoded_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
 
-s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_decoded_callback_t cb, void* context,
+SBP_EXPORT s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_decoded_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
-s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
+SBP_EXPORT s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
                                  sbp_msg_callbacks_node_t *node);
-s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg);
-s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg,
+SBP_EXPORT s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg);
+SBP_EXPORT s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg,
                     sbp_write_fn_t write);
 
 #ifdef __cplusplus

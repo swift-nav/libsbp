@@ -90,7 +90,7 @@ static inline size_t sbp_estimated_horizontal_error_ellipse_encoded_len(
  * @param msg Instance of sbp_estimated_horizontal_error_ellipse_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_estimated_horizontal_error_ellipse_encode(
+SBP_EXPORT s8 sbp_estimated_horizontal_error_ellipse_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
     const sbp_estimated_horizontal_error_ellipse_t *msg);
 
@@ -112,7 +112,7 @@ s8 sbp_estimated_horizontal_error_ellipse_encode(
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_estimated_horizontal_error_ellipse_decode(
+SBP_EXPORT s8 sbp_estimated_horizontal_error_ellipse_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
     sbp_estimated_horizontal_error_ellipse_t *msg);
 
@@ -131,7 +131,7 @@ s8 sbp_estimated_horizontal_error_ellipse_decode(
  * @param b sbp_estimated_horizontal_error_ellipse_t instance
  * @return 0, <0, >0
  */
-int sbp_estimated_horizontal_error_ellipse_cmp(
+SBP_EXPORT int sbp_estimated_horizontal_error_ellipse_cmp(
     const sbp_estimated_horizontal_error_ellipse_t *a,
     const sbp_estimated_horizontal_error_ellipse_t *b);
 

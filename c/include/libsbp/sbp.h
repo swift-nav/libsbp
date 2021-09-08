@@ -148,11 +148,11 @@ struct sbp_state {
 
 /** \} */
 
-s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
-void sbp_clear_callbacks(sbp_state_t* s);
-void sbp_state_init(sbp_state_t *s);
-void sbp_state_set_io_context(sbp_state_t *s, void* context);
-s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
+SBP_EXPORT s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
+SBP_EXPORT void sbp_clear_callbacks(sbp_state_t* s);
+SBP_EXPORT void sbp_state_init(sbp_state_t *s);
+SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void* context);
+SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 
 #ifdef __cplusplus
 }

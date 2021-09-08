@@ -41,7 +41,7 @@ typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the callback was already
  *         registered for that message type.
  */
-s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
+SBP_EXPORT s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
 
  /** Register a frame callback for a msg_type.
@@ -56,7 +56,7 @@ s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
+SBP_EXPORT s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
                                sbp_frame_callback_t cb, void* context,
                                sbp_msg_callbacks_node_t *node);
 
@@ -69,7 +69,7 @@ s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
-s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
+SBP_EXPORT s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context, sbp_msg_callbacks_node_t *node);
 
 /** Directly process an SBP frame.
@@ -92,7 +92,7 @@ s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
  *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
  *          associated callback.
  */
-s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
+SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
 
 /** Directly process an SBP message.
@@ -108,7 +108,7 @@ s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
  *         callback.
  */
-s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     u8 payload[]);
 
 /** Send SBP messages.
@@ -140,7 +140,7 @@ s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+SBP_EXPORT s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     sbp_write_fn_t write);
 
 #ifdef __cplusplus

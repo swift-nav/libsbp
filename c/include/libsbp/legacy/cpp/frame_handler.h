@@ -13,8 +13,9 @@
 #ifndef SBP_LEGACY_CPP_FRAME_HANDLER_H
 #define SBP_LEGACY_CPP_FRAME_HANDLER_H
 
-#include <cassert>
 #include <array>
+#include <cassert>
+#include <cstddef>
 
 #include <libsbp/cpp/state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
@@ -193,4 +194,4 @@ class AllFrameHandler {
 
 } /* namespace sbp */
 
-#endif /* SBP_LEGACY_CPP_MESSAGE_HANDLER_H */
+#endif /* SBP_LEGACY_CPP_FRAME_HANDLER_H */

@@ -1,3 +1,10 @@
+# Since test-libsbp-string is testing internal functions that are not publicly
+# exposed by the sbp library, we can only build and run this test when ingesting
+# it as a static library.
+if (BUILD_SHARED_LIBS)
+  return()
+endif()
+
 swift_add_test(test-libsbp-string
   UNIT_TEST
   POST_BUILD

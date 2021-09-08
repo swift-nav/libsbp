@@ -86,8 +86,8 @@ static inline size_t sbp_doppler_encoded_len(const sbp_doppler_t *msg) {
  * @param msg Instance of sbp_doppler_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_doppler_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                      const sbp_doppler_t *msg);
+SBP_EXPORT s8 sbp_doppler_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                 const sbp_doppler_t *msg);
 
 /**
  * Decode an instance of sbp_doppler_t from wire representation
@@ -104,8 +104,8 @@ s8 sbp_doppler_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_doppler_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                      sbp_doppler_t *msg);
+SBP_EXPORT s8 sbp_doppler_decode(const uint8_t *buf, uint8_t len,
+                                 uint8_t *n_read, sbp_doppler_t *msg);
 
 /**
  * Compare two instances of sbp_doppler_t
@@ -122,7 +122,7 @@ s8 sbp_doppler_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_doppler_t instance
  * @return 0, <0, >0
  */
-int sbp_doppler_cmp(const sbp_doppler_t *a, const sbp_doppler_t *b);
+SBP_EXPORT int sbp_doppler_cmp(const sbp_doppler_t *a, const sbp_doppler_t *b);
 
 #ifdef __cplusplus
 }

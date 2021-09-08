@@ -87,8 +87,9 @@ static inline size_t sbp_carrier_phase_encoded_len(
  * @param msg Instance of sbp_carrier_phase_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_carrier_phase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                            const sbp_carrier_phase_t *msg);
+SBP_EXPORT s8 sbp_carrier_phase_encode(uint8_t *buf, uint8_t len,
+                                       uint8_t *n_written,
+                                       const sbp_carrier_phase_t *msg);
 
 /**
  * Decode an instance of sbp_carrier_phase_t from wire representation
@@ -105,8 +106,9 @@ s8 sbp_carrier_phase_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_carrier_phase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                            sbp_carrier_phase_t *msg);
+SBP_EXPORT s8 sbp_carrier_phase_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_carrier_phase_t *msg);
 
 /**
  * Compare two instances of sbp_carrier_phase_t
@@ -123,8 +125,8 @@ s8 sbp_carrier_phase_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_carrier_phase_t instance
  * @return 0, <0, >0
  */
-int sbp_carrier_phase_cmp(const sbp_carrier_phase_t *a,
-                          const sbp_carrier_phase_t *b);
+SBP_EXPORT int sbp_carrier_phase_cmp(const sbp_carrier_phase_t *a,
+                                     const sbp_carrier_phase_t *b);
 
 #ifdef __cplusplus
 }

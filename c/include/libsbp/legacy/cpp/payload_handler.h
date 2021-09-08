@@ -143,7 +143,7 @@ class PayloadCallbackInterface<MsgType> {
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename... MsgTypes>
- class PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
+class PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
     static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;

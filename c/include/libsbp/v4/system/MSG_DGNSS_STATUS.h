@@ -71,7 +71,7 @@ typedef struct {
  *
  * @param msg sbp_msg_dgnss_status_t instance
  */
-void sbp_msg_dgnss_status_source_init(sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT void sbp_msg_dgnss_status_source_init(sbp_msg_dgnss_status_t *msg);
 
 /**
  * Test sbp_msg_dgnss_status_t::source for validity
@@ -80,7 +80,8 @@ void sbp_msg_dgnss_status_source_init(sbp_msg_dgnss_status_t *msg);
  * @return true is sbp_msg_dgnss_status_t::source is valid for encoding
  * purposes, false otherwise
  */
-bool sbp_msg_dgnss_status_source_valid(const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT bool sbp_msg_dgnss_status_source_valid(
+    const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Tests 2 instances of sbp_msg_dgnss_status_t::source for equality
@@ -92,8 +93,8 @@ bool sbp_msg_dgnss_status_source_valid(const sbp_msg_dgnss_status_t *msg);
  * @param b sbp_msg_dgnss_status_t instance
  * @return 0 if equal, <0 if a<b, >0 if a>b
  */
-int sbp_msg_dgnss_status_source_strcmp(const sbp_msg_dgnss_status_t *a,
-                                       const sbp_msg_dgnss_status_t *b);
+SBP_EXPORT int sbp_msg_dgnss_status_source_strcmp(
+    const sbp_msg_dgnss_status_t *a, const sbp_msg_dgnss_status_t *b);
 
 /**
  * Get the encoded size of sbp_msg_dgnss_status_t::source
@@ -101,8 +102,8 @@ int sbp_msg_dgnss_status_source_strcmp(const sbp_msg_dgnss_status_t *a,
  * @param msg sbp_msg_dgnss_status_t instance
  * @return Size of sbp_msg_dgnss_status_t::source in wire representation
  */
-size_t sbp_msg_dgnss_status_source_encoded_len(
-    const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT size_t
+sbp_msg_dgnss_status_source_encoded_len(const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Query sbp_msg_dgnss_status_t::source for remaining space
@@ -114,8 +115,8 @@ size_t sbp_msg_dgnss_status_source_encoded_len(
  * @param msg sbp_msg_dgnss_status_t instance
  * @return Maximum number of bytes that can be appended to the existing string
  */
-size_t sbp_msg_dgnss_status_source_space_remaining(
-    const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT size_t
+sbp_msg_dgnss_status_source_space_remaining(const sbp_msg_dgnss_status_t *msg);
 /**
  * Set sbp_msg_dgnss_status_t::source
  *
@@ -133,9 +134,10 @@ size_t sbp_msg_dgnss_status_source_space_remaining(
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
-                                     const char *new_str, bool should_trunc,
-                                     size_t *n_written);
+SBP_EXPORT bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
+                                                const char *new_str,
+                                                bool should_trunc,
+                                                size_t *n_written);
 
 /**
  * Set sbp_msg_dgnss_status_t::source from a raw buffer
@@ -155,10 +157,11 @@ bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
  * written to msg
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
-                                         const char *new_buf,
-                                         size_t new_buf_len, bool should_trunc,
-                                         size_t *n_written);
+SBP_EXPORT bool sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
+                                                    const char *new_buf,
+                                                    size_t new_buf_len,
+                                                    bool should_trunc,
+                                                    size_t *n_written);
 
 /**
  * Set sbp_msg_dgnss_status_t::source with printf style formatting
@@ -178,9 +181,10 @@ bool sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
-                                        bool should_trunc, size_t *n_written,
-                                        const char *fmt, ...)
+SBP_EXPORT bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
+                                                   bool should_trunc,
+                                                   size_t *n_written,
+                                                   const char *fmt, ...)
     SBP_ATTR_FORMAT(4, 5);
 
 /**
@@ -197,9 +201,10 @@ bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
-                                         bool should_trunc, size_t *n_written,
-                                         const char *fmt, va_list ap)
+SBP_EXPORT bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
+                                                    bool should_trunc,
+                                                    size_t *n_written,
+                                                    const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(4);
 
 /**
@@ -218,11 +223,9 @@ bool sbp_msg_dgnss_status_source_vprintf(sbp_msg_dgnss_status_t *msg,
  * @param fmt printf style format string
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
-                                               bool should_trunc,
-                                               size_t *n_written,
-                                               const char *fmt, ...)
-    SBP_ATTR_FORMAT(4, 5);
+SBP_EXPORT bool sbp_msg_dgnss_status_source_append_printf(
+    sbp_msg_dgnss_status_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
 /**
  * Append sbp_msg_dgnss_status_t::source with printf style formatting
@@ -238,11 +241,9 @@ bool sbp_msg_dgnss_status_source_append_printf(sbp_msg_dgnss_status_t *msg,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
-                                                bool should_trunc,
-                                                size_t *n_written,
-                                                const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(4);
+SBP_EXPORT bool sbp_msg_dgnss_status_source_append_vprintf(
+    sbp_msg_dgnss_status_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Obtain the string value from sbp_msg_dgnss_status_t::source
@@ -250,7 +251,8 @@ bool sbp_msg_dgnss_status_source_append_vprintf(sbp_msg_dgnss_status_t *msg,
  * @param msg sbp_msg_dgnss_status_t instance
  * @return String contents
  */
-const char *sbp_msg_dgnss_status_source_get(const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT const char *sbp_msg_dgnss_status_source_get(
+    const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Obtain the length of sbp_msg_dgnss_status_t::source
@@ -260,7 +262,8 @@ const char *sbp_msg_dgnss_status_source_get(const sbp_msg_dgnss_status_t *msg);
  * @param msg sbp_msg_dgnss_status_t instance
  * @return Length of string
  */
-size_t sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT size_t
+sbp_msg_dgnss_status_source_strlen(const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_dgnss_status_t
@@ -293,8 +296,9 @@ static inline size_t sbp_msg_dgnss_status_encoded_len(
  * @param msg Instance of sbp_msg_dgnss_status_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_dgnss_status_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                               const sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT s8 sbp_msg_dgnss_status_encode(uint8_t *buf, uint8_t len,
+                                          uint8_t *n_written,
+                                          const sbp_msg_dgnss_status_t *msg);
 
 /**
  * Decode an instance of sbp_msg_dgnss_status_t from wire representation
@@ -311,8 +315,9 @@ s8 sbp_msg_dgnss_status_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_dgnss_status_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                               sbp_msg_dgnss_status_t *msg);
+SBP_EXPORT s8 sbp_msg_dgnss_status_decode(const uint8_t *buf, uint8_t len,
+                                          uint8_t *n_read,
+                                          sbp_msg_dgnss_status_t *msg);
 /**
  * Send an instance of sbp_msg_dgnss_status_t with the given write function
  *
@@ -329,9 +334,9 @@ s8 sbp_msg_dgnss_status_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_msg_dgnss_status_send(sbp_state_t *s, u16 sender_id,
-                             const sbp_msg_dgnss_status_t *msg,
-                             sbp_write_fn_t write);
+SBP_EXPORT s8 sbp_msg_dgnss_status_send(sbp_state_t *s, u16 sender_id,
+                                        const sbp_msg_dgnss_status_t *msg,
+                                        sbp_write_fn_t write);
 
 /**
  * Compare two instances of sbp_msg_dgnss_status_t
@@ -348,8 +353,8 @@ s8 sbp_msg_dgnss_status_send(sbp_state_t *s, u16 sender_id,
  * @param b sbp_msg_dgnss_status_t instance
  * @return 0, <0, >0
  */
-int sbp_msg_dgnss_status_cmp(const sbp_msg_dgnss_status_t *a,
-                             const sbp_msg_dgnss_status_t *b);
+SBP_EXPORT int sbp_msg_dgnss_status_cmp(const sbp_msg_dgnss_status_t *a,
+                                        const sbp_msg_dgnss_status_t *b);
 
 #ifdef __cplusplus
 }

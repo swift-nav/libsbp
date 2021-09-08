@@ -104,8 +104,9 @@ static inline size_t sbp_network_usage_encoded_len(
  * @param msg Instance of sbp_network_usage_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_network_usage_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                            const sbp_network_usage_t *msg);
+SBP_EXPORT s8 sbp_network_usage_encode(uint8_t *buf, uint8_t len,
+                                       uint8_t *n_written,
+                                       const sbp_network_usage_t *msg);
 
 /**
  * Decode an instance of sbp_network_usage_t from wire representation
@@ -122,8 +123,9 @@ s8 sbp_network_usage_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-s8 sbp_network_usage_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                            sbp_network_usage_t *msg);
+SBP_EXPORT s8 sbp_network_usage_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_network_usage_t *msg);
 
 /**
  * Compare two instances of sbp_network_usage_t
@@ -140,8 +142,8 @@ s8 sbp_network_usage_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
  * @param b sbp_network_usage_t instance
  * @return 0, <0, >0
  */
-int sbp_network_usage_cmp(const sbp_network_usage_t *a,
-                          const sbp_network_usage_t *b);
+SBP_EXPORT int sbp_network_usage_cmp(const sbp_network_usage_t *a,
+                                     const sbp_network_usage_t *b);
 
 #ifdef __cplusplus
 }
