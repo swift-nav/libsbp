@@ -3,6 +3,8 @@
 //! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
 
 pub mod codec;
+#[cfg(feature = "link")]
+pub mod link;
 pub mod messages;
 pub(crate) mod parser;
 pub mod sbp_tools;
