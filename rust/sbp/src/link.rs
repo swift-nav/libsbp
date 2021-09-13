@@ -32,7 +32,7 @@ where
         self.stateless_link.clone()
     }
 
-    pub fn send_state<M>(&self, state: &S, msg: M) -> bool
+    pub fn send_with_state<M>(&self, state: &S, msg: M) -> bool
     where
         M: Borrow<SBP>,
     {
@@ -65,7 +65,7 @@ impl<'link> LinkSource<'link, ()> {
     where
         M: Borrow<SBP>,
     {
-        self.send_state(&(), msg)
+        self.send_with_state(&(), msg)
     }
 }
 
@@ -225,7 +225,15 @@ where
     const MESSAGE_TYPES: &'static [u16] = &[T::MESSAGE_TYPE];
 
     fn from_sbp(msg: SBP) -> Self {
-        msg.try_into().unwrap()
+        match msg.try_into() {
+            Ok(event) => event,
+            Err(_) => {
+                panic!(
+                    "invalid message type for event {}",
+                    std::any::type_name::<T>()
+                );
+            }
+        }
     }
 }
 
@@ -248,7 +256,7 @@ mod tests {
         link.register(|triggered: &RefCell<bool>, _: SBP| {
             *triggered.borrow_mut() = true;
         });
-        source.send_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
         assert!(*triggered.borrow());
     }
 
@@ -268,7 +276,7 @@ mod tests {
         });
         r.recv_timeout(Duration::from_secs(1)).unwrap();
 
-        source.send_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
 
         handle.join().unwrap();
 
@@ -300,11 +308,11 @@ mod tests {
         });
 
         let msg = SBP::from(make_msg_obs());
-        source.send_state(&count, &msg);
+        source.send_with_state(&count, &msg);
         assert_eq!(*count.borrow(), 1);
 
         link.unregister(key);
-        source.send_state(&count, &msg);
+        source.send_with_state(&count, &msg);
         assert_eq!(*count.borrow(), 1);
     }
 
@@ -330,14 +338,14 @@ mod tests {
         let link = source.link();
         let count = RefCell::new(0);
 
-        link.register(|count: &RefCell<usize>, _: SBP| {
+        link.register(|count: &RefCell<usize>, _: ObsMsg| {
             *count.borrow_mut() += 1;
         });
 
-        source.send_state(&count, SBP::from(make_msg_obs()));
+        source.send_with_state(&count, SBP::from(make_msg_obs()));
         assert_eq!(*count.borrow(), 1);
 
-        source.send_state(&count, SBP::from(make_msg_obs_dep_a()));
+        source.send_with_state(&count, SBP::from(make_msg_obs_dep_a()));
         assert_eq!(*count.borrow(), 2);
     }
 
