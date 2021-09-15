@@ -156,14 +156,14 @@ size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
  * Set an unterminated string from a raw buffer
  *
  * If the should_trunc parameter is true, and new string contents are larger than
- * can be stored, then as much as possible will be written from new_str to s
+ * can be stored, then as much as possible will be written from new_buf to s
  *
  * If the should_trunc parameter is false, and new string contents are larger than
  * can be stored, the string will not be modified and false will be returned
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param should_trunc Whether the new_buf should be truncated to fit in s
  * @param n_written If not null, on success will be set to the number of bytes
  * written to s
  * @param new_buf New buffer contents

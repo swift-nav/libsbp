@@ -53,9 +53,9 @@ size_t (((f.fn_prefix)))_space_remaining(const (((m.type_name))) *msg)
   return (((string_prefix)))_set(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, new_str);
 }
 
- bool (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_str, size_t new_str_len, bool should_trunc, size_t *n_written)
+ bool (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_buf, size_t new_buf_len, bool should_trunc, size_t *n_written)
 {
-  return (((string_prefix)))_set_raw(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, new_str, new_str_len);
+  return (((string_prefix)))_set_raw(&msg->(((f.name))), (((f.max_items_macro))), should_trunc, n_written, new_buf, new_buf_len);
 }
 
 

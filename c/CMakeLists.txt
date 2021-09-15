@@ -9,7 +9,7 @@ include(SwiftCmakeOptions)
 include(CompileOptions)
 include(LanguageStandards)
 include(ClangFormat)
-include(ClangTidy)
+include(SwiftClangTidy)
 swift_create_project_options(
     HAS_TESTS
     HAS_DOCS
@@ -21,7 +21,6 @@ include(TestTargets)
 add_code_coverage_all_targets()
 # TODO: Reformatting is limited to generated files; it should be expanded to cover all files
 swift_setup_clang_format(PATTERNS 'include/*.h' 'test/*.c' 'test/*.h' 'test/cpp/*.cc')
-swift_setup_clang_tidy(PATTERNS 'src/*.c')
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)
@@ -35,3 +34,6 @@ if(libsbp_BUILD_TESTS)
   add_subdirectory(test)
 endif()
 add_subdirectory(examples)
+
+# Must be called after all targets have been created
+swift_create_tidy_targets()

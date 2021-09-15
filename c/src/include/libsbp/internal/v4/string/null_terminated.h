@@ -142,7 +142,7 @@ size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
  * Set a null terminated string from a raw buffer
  *
  * If the should_trunc parameter is true, and new string contents are larger
- * than can be stored, then as much as possible will be written from new_str to
+ * than can be stored, then as much as possible will be written from new_buf to
  * s
  *
  * If the should_trunc parameter is false, and new string contents are larger
@@ -151,7 +151,7 @@ size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param should_trunc Whether the new_buf should be truncated to fit in s
  * @param n_written If not null, on success will be set to the number of bytes
  * written to s
  * @param new_buf New buffer contents
@@ -167,7 +167,7 @@ bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
  * Set a null terminated string
  *
  * If the should_trunc parameter is true, and new string contents are larger
- * than can be stored, then as much as possible will be written from new_str to
+ * than can be stored, then as much as possible will be written from new_buf to
  * s
  *
  * If the should_trunc parameter is false, and new string contents are larger
@@ -176,14 +176,14 @@ bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param should_trunc Whether the new_str should be truncated to fit in s
+ * @param should_trunc Whether the new_buf should be truncated to fit in s
  * @param n_written If not null, on success will be set to the number of bytes
  * written to s
- * @param new_str New string contents
+ * @param new_buf New string contents
  * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_str);
+                                      bool should_trunc, size_t *n_written, const char *new_buf);
 
 /**
  * Set a null terminated string with printf style formatting
@@ -219,11 +219,11 @@ bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool sho
  *
  * @param s string
  * @param maxlen Maximum encoded length
- * @param new_str String to append
+ * @param new_buf String to append
  * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
-                                       const char *new_str);
+                                       const char *new_buf);
 
 /**
  * Append to a null terminated string with printf style formatting

@@ -148,12 +148,12 @@ SBP_EXPORT bool sbp_msg_fileio_read_dir_req_dirname_set(
  * If the should_trunc parameter is set to false and the specified string is
  * longer than can be represented in wire encoding, this function will return
  * false. Otherwise, if should_trunc is set to true, then as much as possible
- * will be read from the new_str as can fit in the msg.
+ * will be read from the new_buf as can fit in the msg.
  *
  * @param msg sbp_msg_fileio_read_dir_req_t instance
  * @param new_buf New buffer
  * @param new_buf_len New buffer length
- * @param should_trunc Whether the new_str can be truncated to fit in msg
+ * @param should_trunc Whether the new_buf can be truncated to fit in msg
  * @param n_written If not null, on success will be set to the number of bytes
  * written to msg
  * @return true on success, false otherwise

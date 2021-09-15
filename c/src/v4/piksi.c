@@ -1541,12 +1541,12 @@ bool sbp_msg_command_req_command_set(sbp_msg_command_req_t *msg,
 }
 
 bool sbp_msg_command_req_command_set_raw(sbp_msg_command_req_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool should_trunc,
+                                         const char *new_buf,
+                                         size_t new_buf_len, bool should_trunc,
                                          size_t *n_written) {
   return sbp_null_terminated_string_set_raw(
       &msg->command, SBP_MSG_COMMAND_REQ_COMMAND_MAX, should_trunc, n_written,
-      new_str, new_str_len);
+      new_buf, new_buf_len);
 }
 
 bool sbp_msg_command_req_command_printf(sbp_msg_command_req_t *msg,
@@ -1802,12 +1802,12 @@ bool sbp_msg_command_output_line_set(sbp_msg_command_output_t *msg,
 }
 
 bool sbp_msg_command_output_line_set_raw(sbp_msg_command_output_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool should_trunc,
+                                         const char *new_buf,
+                                         size_t new_buf_len, bool should_trunc,
                                          size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->line, SBP_MSG_COMMAND_OUTPUT_LINE_MAX, should_trunc, n_written,
-      new_str, new_str_len);
+      new_buf, new_buf_len);
 }
 
 bool sbp_msg_command_output_line_printf(sbp_msg_command_output_t *msg,
