@@ -55,6 +55,7 @@ impl std::error::Error for TryFromSBPError {}
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub enum SBP {
     ((*- for m in msgs *))
     (((m.identifier|camel_case)))( (((m.identifier|camel_case))) ),
