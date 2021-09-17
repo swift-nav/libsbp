@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Vehicle Body Frame instantaneous angular rates
 ///
@@ -70,11 +68,11 @@ impl MsgAngularRate {
 }
 impl super::SBPMessage for MsgAngularRate {
     fn message_name(&self) -> &'static str {
-        "MSG_ANGULAR_RATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        546
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -181,11 +179,11 @@ impl MsgBaselineHeading {
 }
 impl super::SBPMessage for MsgBaselineHeading {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_HEADING"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        527
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -303,11 +301,11 @@ impl MsgOrientEuler {
 }
 impl super::SBPMessage for MsgOrientEuler {
     fn message_name(&self) -> &'static str {
-        "MSG_ORIENT_EULER"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        545
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -439,11 +437,11 @@ impl MsgOrientQuat {
 }
 impl super::SBPMessage for MsgOrientQuat {
     fn message_name(&self) -> &'static str {
-        "MSG_ORIENT_QUAT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        544
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

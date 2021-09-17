@@ -46,9 +46,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Finished reading settings (host <= device)
 ///
@@ -72,11 +70,11 @@ impl MsgSettingsReadByIndexDone {
 }
 impl super::SBPMessage for MsgSettingsReadByIndexDone {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_DONE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        166
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -148,11 +146,11 @@ impl MsgSettingsReadByIndexReq {
 }
 impl super::SBPMessage for MsgSettingsReadByIndexReq {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        162
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -240,11 +238,11 @@ impl MsgSettingsReadByIndexResp {
 }
 impl super::SBPMessage for MsgSettingsReadByIndexResp {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        167
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -328,11 +326,11 @@ impl MsgSettingsReadReq {
 }
 impl super::SBPMessage for MsgSettingsReadReq {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        164
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -412,11 +410,11 @@ impl MsgSettingsReadResp {
 }
 impl super::SBPMessage for MsgSettingsReadResp {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        165
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -493,11 +491,11 @@ impl MsgSettingsRegister {
 }
 impl super::SBPMessage for MsgSettingsRegister {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_REGISTER"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        174
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -579,11 +577,11 @@ impl MsgSettingsRegisterResp {
 }
 impl super::SBPMessage for MsgSettingsRegisterResp {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_REGISTER_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        431
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -657,11 +655,11 @@ impl MsgSettingsSave {
 }
 impl super::SBPMessage for MsgSettingsSave {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_SAVE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        161
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -738,11 +736,11 @@ impl MsgSettingsWrite {
 }
 impl super::SBPMessage for MsgSettingsWrite {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_WRITE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        160
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -826,11 +824,11 @@ impl MsgSettingsWriteResp {
 }
 impl super::SBPMessage for MsgSettingsWriteResp {
     fn message_name(&self) -> &'static str {
-        "MSG_SETTINGS_WRITE_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        175
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

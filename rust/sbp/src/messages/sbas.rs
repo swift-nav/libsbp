@@ -22,9 +22,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Raw SBAS data
 ///
@@ -61,11 +59,11 @@ impl MsgSbasRaw {
 }
 impl super::SBPMessage for MsgSbasRaw {
     fn message_name(&self) -> &'static str {
-        "MSG_SBAS_RAW"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        30583
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

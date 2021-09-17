@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Raw magnetometer data
 ///
@@ -63,11 +61,11 @@ impl MsgMagRaw {
 }
 impl super::SBPMessage for MsgMagRaw {
     fn message_name(&self) -> &'static str {
-        "MSG_MAG_RAW"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        2306
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

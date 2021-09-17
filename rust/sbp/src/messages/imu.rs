@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Auxiliary IMU data
 ///
@@ -58,11 +56,11 @@ impl MsgImuAux {
 }
 impl super::SBPMessage for MsgImuAux {
     fn message_name(&self) -> &'static str {
-        "MSG_IMU_AUX"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        2305
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -170,11 +168,11 @@ impl MsgImuRaw {
 }
 impl super::SBPMessage for MsgImuRaw {
     fn message_name(&self) -> &'static str {
-        "MSG_IMU_RAW"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        2304
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

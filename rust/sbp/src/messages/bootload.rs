@@ -25,9 +25,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Deprecated
 ///
@@ -54,11 +52,11 @@ impl MsgBootloaderHandshakeDepA {
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        176
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -131,11 +129,11 @@ impl MsgBootloaderHandshakeReq {
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
     fn message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        179
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -211,11 +209,11 @@ impl MsgBootloaderHandshakeResp {
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
     fn message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        180
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -291,11 +289,11 @@ impl MsgBootloaderJumpToApp {
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
     fn message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_JUMP_TO_APP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        177
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -371,11 +369,11 @@ impl MsgNapDeviceDnaReq {
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
     fn message_name(&self) -> &'static str {
-        "MSG_NAP_DEVICE_DNA_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        222
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -450,11 +448,11 @@ impl MsgNapDeviceDnaResp {
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {
     fn message_name(&self) -> &'static str {
-        "MSG_NAP_DEVICE_DNA_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        221
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

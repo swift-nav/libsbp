@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// User data
 ///
@@ -51,11 +49,11 @@ impl MsgUserData {
 }
 impl super::SBPMessage for MsgUserData {
     fn message_name(&self) -> &'static str {
-        "MSG_USER_DATA"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        2048
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

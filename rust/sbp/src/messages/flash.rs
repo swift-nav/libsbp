@@ -24,9 +24,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Flash response message (host <= device)
 ///
@@ -56,11 +54,11 @@ impl MsgFlashDone {
 }
 impl super::SBPMessage for MsgFlashDone {
     fn message_name(&self) -> &'static str {
-        "MSG_FLASH_DONE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        224
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -140,11 +138,11 @@ impl MsgFlashErase {
 }
 impl super::SBPMessage for MsgFlashErase {
     fn message_name(&self) -> &'static str {
-        "MSG_FLASH_ERASE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        226
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -233,11 +231,11 @@ impl MsgFlashProgram {
 }
 impl super::SBPMessage for MsgFlashProgram {
     fn message_name(&self) -> &'static str {
-        "MSG_FLASH_PROGRAM"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        230
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -328,11 +326,11 @@ impl MsgFlashReadReq {
 }
 impl super::SBPMessage for MsgFlashReadReq {
     fn message_name(&self) -> &'static str {
-        "MSG_FLASH_READ_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        231
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -421,11 +419,11 @@ impl MsgFlashReadResp {
 }
 impl super::SBPMessage for MsgFlashReadResp {
     fn message_name(&self) -> &'static str {
-        "MSG_FLASH_READ_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        225
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -504,11 +502,11 @@ impl MsgM25FlashWriteStatus {
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
     fn message_name(&self) -> &'static str {
-        "MSG_M25_FLASH_WRITE_STATUS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        243
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -583,11 +581,11 @@ impl MsgStmFlashLockSector {
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
     fn message_name(&self) -> &'static str {
-        "MSG_STM_FLASH_LOCK_SECTOR"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        227
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -662,11 +660,11 @@ impl MsgStmFlashUnlockSector {
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
     fn message_name(&self) -> &'static str {
-        "MSG_STM_FLASH_UNLOCK_SECTOR"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        228
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -740,11 +738,11 @@ impl MsgStmUniqueIdReq {
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
     fn message_name(&self) -> &'static str {
-        "MSG_STM_UNIQUE_ID_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        232
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -817,11 +815,11 @@ impl MsgStmUniqueIdResp {
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {
     fn message_name(&self) -> &'static str {
-        "MSG_STM_UNIQUE_ID_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        229
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

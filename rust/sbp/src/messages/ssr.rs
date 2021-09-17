@@ -22,9 +22,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// SSR code biases corrections for a particular satellite
 ///
@@ -376,11 +374,11 @@ impl MsgSsrCodeBiases {
 }
 impl super::SBPMessage for MsgSsrCodeBiases {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_CODE_BIASES"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1505
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -473,11 +471,11 @@ impl MsgSsrGriddedCorrection {
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_GRIDDED_CORRECTION"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1532
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -562,11 +560,11 @@ impl MsgSsrGriddedCorrectionDepA {
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_GRIDDED_CORRECTION_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1530
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -651,11 +649,11 @@ impl MsgSsrGriddedCorrectionNoStdDepA {
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1520
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -737,11 +735,11 @@ impl MsgSsrGridDefinitionDepA {
 }
 impl super::SBPMessage for MsgSsrGridDefinitionDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_GRID_DEFINITION_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1525
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -860,11 +858,11 @@ impl MsgSsrOrbitClock {
 }
 impl super::SBPMessage for MsgSsrOrbitClock {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_ORBIT_CLOCK"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1501
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1001,11 +999,11 @@ impl MsgSsrOrbitClockDepA {
 }
 impl super::SBPMessage for MsgSsrOrbitClockDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_ORBIT_CLOCK_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1500
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1135,11 +1133,11 @@ impl MsgSsrPhaseBiases {
 }
 impl super::SBPMessage for MsgSsrPhaseBiases {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_PHASE_BIASES"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1510
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1225,11 +1223,11 @@ impl MsgSsrSatelliteApc {
 }
 impl super::SBPMessage for MsgSsrSatelliteApc {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_SATELLITE_APC"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1540
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1311,11 +1309,11 @@ impl MsgSsrStecCorrection {
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_STEC_CORRECTION"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1531
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1390,11 +1388,11 @@ impl MsgSsrStecCorrectionDepA {
 }
 impl super::SBPMessage for MsgSsrStecCorrectionDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_STEC_CORRECTION_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1515
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1538,11 +1536,11 @@ impl MsgSsrTileDefinition {
 }
 impl super::SBPMessage for MsgSsrTileDefinition {
     fn message_name(&self) -> &'static str {
-        "MSG_SSR_TILE_DEFINITION"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1526
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

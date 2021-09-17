@@ -22,9 +22,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Reports timestamped external pin event
 ///
@@ -65,11 +63,11 @@ impl MsgExtEvent {
 }
 impl super::SBPMessage for MsgExtEvent {
     fn message_name(&self) -> &'static str {
-        "MSG_EXT_EVENT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        257
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

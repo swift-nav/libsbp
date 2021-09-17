@@ -24,9 +24,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Receiver-to-base station latency
 ///
@@ -118,11 +116,11 @@ impl MsgAlmanac {
 }
 impl super::SBPMessage for MsgAlmanac {
     fn message_name(&self) -> &'static str {
-        "MSG_ALMANAC"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        105
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -200,11 +198,11 @@ impl MsgCellModemStatus {
 }
 impl super::SBPMessage for MsgCellModemStatus {
     fn message_name(&self) -> &'static str {
-        "MSG_CELL_MODEM_STATUS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        190
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -287,11 +285,11 @@ impl MsgCommandOutput {
 }
 impl super::SBPMessage for MsgCommandOutput {
     fn message_name(&self) -> &'static str {
-        "MSG_COMMAND_OUTPUT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        188
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -372,11 +370,11 @@ impl MsgCommandReq {
 }
 impl super::SBPMessage for MsgCommandReq {
     fn message_name(&self) -> &'static str {
-        "MSG_COMMAND_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        184
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -456,11 +454,11 @@ impl MsgCommandResp {
 }
 impl super::SBPMessage for MsgCommandResp {
     fn message_name(&self) -> &'static str {
-        "MSG_COMMAND_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        185
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -535,11 +533,11 @@ impl MsgCwResults {
 }
 impl super::SBPMessage for MsgCwResults {
     fn message_name(&self) -> &'static str {
-        "MSG_CW_RESULTS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        192
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -608,11 +606,11 @@ impl MsgCwStart {
 }
 impl super::SBPMessage for MsgCwStart {
     fn message_name(&self) -> &'static str {
-        "MSG_CW_START"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        193
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -696,11 +694,11 @@ impl MsgDeviceMonitor {
 }
 impl super::SBPMessage for MsgDeviceMonitor {
     fn message_name(&self) -> &'static str {
-        "MSG_DEVICE_MONITOR"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        181
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -791,11 +789,11 @@ impl MsgFrontEndGain {
 }
 impl super::SBPMessage for MsgFrontEndGain {
     fn message_name(&self) -> &'static str {
-        "MSG_FRONT_END_GAIN"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        191
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -873,11 +871,11 @@ impl MsgIarState {
 }
 impl super::SBPMessage for MsgIarState {
     fn message_name(&self) -> &'static str {
-        "MSG_IAR_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        25
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -948,11 +946,11 @@ impl MsgInitBaseDep {
 }
 impl super::SBPMessage for MsgInitBaseDep {
     fn message_name(&self) -> &'static str {
-        "MSG_INIT_BASE_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        35
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1026,11 +1024,11 @@ impl MsgMaskSatellite {
 }
 impl super::SBPMessage for MsgMaskSatellite {
     fn message_name(&self) -> &'static str {
-        "MSG_MASK_SATELLITE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        43
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1109,11 +1107,11 @@ impl MsgMaskSatelliteDep {
 }
 impl super::SBPMessage for MsgMaskSatelliteDep {
     fn message_name(&self) -> &'static str {
-        "MSG_MASK_SATELLITE_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        27
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1189,11 +1187,11 @@ impl MsgNetworkBandwidthUsage {
 }
 impl super::SBPMessage for MsgNetworkBandwidthUsage {
     fn message_name(&self) -> &'static str {
-        "MSG_NETWORK_BANDWIDTH_USAGE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        189
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1265,11 +1263,11 @@ impl MsgNetworkStateReq {
 }
 impl super::SBPMessage for MsgNetworkStateReq {
     fn message_name(&self) -> &'static str {
-        "MSG_NETWORK_STATE_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        186
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1361,11 +1359,11 @@ impl MsgNetworkStateResp {
 }
 impl super::SBPMessage for MsgNetworkStateResp {
     fn message_name(&self) -> &'static str {
-        "MSG_NETWORK_STATE_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        187
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1453,11 +1451,11 @@ impl MsgReset {
 }
 impl super::SBPMessage for MsgReset {
     fn message_name(&self) -> &'static str {
-        "MSG_RESET"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        182
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1528,11 +1526,11 @@ impl MsgResetDep {
 }
 impl super::SBPMessage for MsgResetDep {
     fn message_name(&self) -> &'static str {
-        "MSG_RESET_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        178
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1603,11 +1601,11 @@ impl MsgResetFilters {
 }
 impl super::SBPMessage for MsgResetFilters {
     fn message_name(&self) -> &'static str {
-        "MSG_RESET_FILTERS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        34
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1679,11 +1677,11 @@ impl MsgSetTime {
 }
 impl super::SBPMessage for MsgSetTime {
     fn message_name(&self) -> &'static str {
-        "MSG_SET_TIME"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        104
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1771,11 +1769,11 @@ impl MsgSpecan {
 }
 impl super::SBPMessage for MsgSpecan {
     fn message_name(&self) -> &'static str {
-        "MSG_SPECAN"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        81
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1879,11 +1877,11 @@ impl MsgSpecanDep {
 }
 impl super::SBPMessage for MsgSpecanDep {
     fn message_name(&self) -> &'static str {
-        "MSG_SPECAN_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        80
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1978,11 +1976,11 @@ impl MsgThreadState {
 }
 impl super::SBPMessage for MsgThreadState {
     fn message_name(&self) -> &'static str {
-        "MSG_THREAD_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        23
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2079,11 +2077,11 @@ impl MsgUartState {
 }
 impl super::SBPMessage for MsgUartState {
     fn message_name(&self) -> &'static str {
-        "MSG_UART_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        29
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2174,11 +2172,11 @@ impl MsgUartStateDepa {
 }
 impl super::SBPMessage for MsgUartStateDepa {
     fn message_name(&self) -> &'static str {
-        "MSG_UART_STATE_DEPA"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        24
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

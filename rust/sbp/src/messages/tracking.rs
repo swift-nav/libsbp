@@ -22,9 +22,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Measurement Engine signal tracking channel states
 ///
@@ -53,11 +51,11 @@ impl MsgMeasurementState {
 }
 impl super::SBPMessage for MsgMeasurementState {
     fn message_name(&self) -> &'static str {
-        "MSG_MEASUREMENT_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        97
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -138,11 +136,11 @@ impl MsgTrackingIq {
 }
 impl super::SBPMessage for MsgTrackingIq {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_IQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        45
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -226,11 +224,11 @@ impl MsgTrackingIqDepA {
 }
 impl super::SBPMessage for MsgTrackingIqDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_IQ_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        28
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -315,11 +313,11 @@ impl MsgTrackingIqDepB {
 }
 impl super::SBPMessage for MsgTrackingIqDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_IQ_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        44
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -399,11 +397,11 @@ impl MsgTrackingState {
 }
 impl super::SBPMessage for MsgTrackingState {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -477,11 +475,11 @@ impl MsgTrackingStateDepA {
 }
 impl super::SBPMessage for MsgTrackingStateDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_STATE_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        22
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -555,11 +553,11 @@ impl MsgTrackingStateDepB {
 }
 impl super::SBPMessage for MsgTrackingStateDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_STATE_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        19
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -699,11 +697,11 @@ impl MsgTrackingStateDetailedDep {
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDep {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_STATE_DETAILED_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        17
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -884,11 +882,11 @@ impl MsgTrackingStateDetailedDepA {
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_TRACKING_STATE_DETAILED_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        33
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

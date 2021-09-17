@@ -22,9 +22,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Acq perfomance measurement and debug
 ///
@@ -276,11 +274,11 @@ impl MsgAcqResult {
 }
 impl super::SBPMessage for MsgAcqResult {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        47
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -371,11 +369,11 @@ impl MsgAcqResultDepA {
 }
 impl super::SBPMessage for MsgAcqResultDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        21
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -465,11 +463,11 @@ impl MsgAcqResultDepB {
 }
 impl super::SBPMessage for MsgAcqResultDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        20
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -558,11 +556,11 @@ impl MsgAcqResultDepC {
 }
 impl super::SBPMessage for MsgAcqResultDepC {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_C"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        31
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -643,11 +641,11 @@ impl MsgAcqSvProfile {
 }
 impl super::SBPMessage for MsgAcqSvProfile {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_SV_PROFILE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        46
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -721,11 +719,11 @@ impl MsgAcqSvProfileDep {
 }
 impl super::SBPMessage for MsgAcqSvProfileDep {
     fn message_name(&self) -> &'static str {
-        "MSG_ACQ_SV_PROFILE_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        30
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

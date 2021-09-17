@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// List CPU state on the system
 ///
@@ -69,11 +67,11 @@ impl MsgLinuxCpuState {
 }
 impl super::SBPMessage for MsgLinuxCpuState {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_CPU_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32520
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -172,11 +170,11 @@ impl MsgLinuxCpuStateDepA {
 }
 impl super::SBPMessage for MsgLinuxCpuStateDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_CPU_STATE_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32512
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -277,11 +275,11 @@ impl MsgLinuxMemState {
 }
 impl super::SBPMessage for MsgLinuxMemState {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_MEM_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32521
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -380,11 +378,11 @@ impl MsgLinuxMemStateDepA {
 }
 impl super::SBPMessage for MsgLinuxMemStateDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_MEM_STATE_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32513
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -475,11 +473,11 @@ impl MsgLinuxProcessFdCount {
 }
 impl super::SBPMessage for MsgLinuxProcessFdCount {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_FD_COUNT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32518
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -566,11 +564,11 @@ impl MsgLinuxProcessFdSummary {
 }
 impl super::SBPMessage for MsgLinuxProcessFdSummary {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_FD_SUMMARY"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32519
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -665,11 +663,11 @@ impl MsgLinuxProcessSocketCounts {
 }
 impl super::SBPMessage for MsgLinuxProcessSocketCounts {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_SOCKET_COUNTS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32515
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -779,11 +777,11 @@ impl MsgLinuxProcessSocketQueues {
 }
 impl super::SBPMessage for MsgLinuxProcessSocketQueues {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_SOCKET_QUEUES"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32516
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -884,11 +882,11 @@ impl MsgLinuxSocketUsage {
 }
 impl super::SBPMessage for MsgLinuxSocketUsage {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_SOCKET_USAGE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32517
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -990,11 +988,11 @@ impl MsgLinuxSysState {
 }
 impl super::SBPMessage for MsgLinuxSysState {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_SYS_STATE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32522
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1097,11 +1095,11 @@ impl MsgLinuxSysStateDepA {
 }
 impl super::SBPMessage for MsgLinuxSysStateDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_LINUX_SYS_STATE_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        32514
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

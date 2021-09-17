@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
@@ -63,11 +61,11 @@ impl MsgFwd {
 }
 impl super::SBPMessage for MsgFwd {
     fn message_name(&self) -> &'static str {
-        "MSG_FWD"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1026
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -150,11 +148,11 @@ impl MsgLog {
 }
 impl super::SBPMessage for MsgLog {
     fn message_name(&self) -> &'static str {
-        "MSG_LOG"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1025
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -230,11 +228,11 @@ impl MsgPrintDep {
 }
 impl super::SBPMessage for MsgPrintDep {
     fn message_name(&self) -> &'static str {
-        "MSG_PRINT_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        16
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

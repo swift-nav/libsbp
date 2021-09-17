@@ -22,9 +22,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Navigation DataBase Event
 ///
@@ -79,11 +77,11 @@ impl MsgNdbEvent {
 }
 impl super::SBPMessage for MsgNdbEvent {
     fn message_name(&self) -> &'static str {
-        "MSG_NDB_EVENT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1024
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

@@ -24,9 +24,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -710,11 +708,11 @@ impl MsgAlmanacGlo {
 }
 impl super::SBPMessage for MsgAlmanacGlo {
     fn message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GLO"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        115
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -827,11 +825,11 @@ impl MsgAlmanacGloDep {
 }
 impl super::SBPMessage for MsgAlmanacGloDep {
     fn message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GLO_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        113
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -949,11 +947,11 @@ impl MsgAlmanacGPS {
 }
 impl super::SBPMessage for MsgAlmanacGPS {
     fn message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GPS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        114
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1075,11 +1073,11 @@ impl MsgAlmanacGPSDep {
 }
 impl super::SBPMessage for MsgAlmanacGPSDep {
     fn message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GPS_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        112
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1181,11 +1179,11 @@ impl MsgBasePosECEF {
 }
 impl super::SBPMessage for MsgBasePosECEF {
     fn message_name(&self) -> &'static str {
-        "MSG_BASE_POS_ECEF"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        72
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1272,11 +1270,11 @@ impl MsgBasePosLLH {
 }
 impl super::SBPMessage for MsgBasePosLLH {
     fn message_name(&self) -> &'static str {
-        "MSG_BASE_POS_LLH"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        68
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1434,11 +1432,11 @@ impl MsgEphemerisBds {
 }
 impl super::SBPMessage for MsgEphemerisBds {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_BDS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        137
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1637,11 +1635,11 @@ impl MsgEphemerisDepA {
 }
 impl super::SBPMessage for MsgEphemerisDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        26
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1847,11 +1845,11 @@ impl MsgEphemerisDepB {
 }
 impl super::SBPMessage for MsgEphemerisDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        70
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2068,11 +2066,11 @@ impl MsgEphemerisDepC {
 }
 impl super::SBPMessage for MsgEphemerisDepC {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_C"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        71
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2293,11 +2291,11 @@ impl MsgEphemerisDepD {
 }
 impl super::SBPMessage for MsgEphemerisDepD {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_D"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        128
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2506,11 +2504,11 @@ impl MsgEphemerisGal {
 }
 impl super::SBPMessage for MsgEphemerisGal {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GAL"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        141
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2706,11 +2704,11 @@ impl MsgEphemerisGalDepA {
 }
 impl super::SBPMessage for MsgEphemerisGalDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GAL_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        149
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2857,11 +2855,11 @@ impl MsgEphemerisGlo {
 }
 impl super::SBPMessage for MsgEphemerisGlo {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        139
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2969,11 +2967,11 @@ impl MsgEphemerisGloDepA {
 }
 impl super::SBPMessage for MsgEphemerisGloDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        131
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3075,11 +3073,11 @@ impl MsgEphemerisGloDepB {
 }
 impl super::SBPMessage for MsgEphemerisGloDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        133
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3187,11 +3185,11 @@ impl MsgEphemerisGloDepC {
 }
 impl super::SBPMessage for MsgEphemerisGloDepC {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_C"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        135
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3304,11 +3302,11 @@ impl MsgEphemerisGloDepD {
 }
 impl super::SBPMessage for MsgEphemerisGloDepD {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_D"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        136
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3471,11 +3469,11 @@ impl MsgEphemerisGPS {
 }
 impl super::SBPMessage for MsgEphemerisGPS {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        138
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3666,11 +3664,11 @@ impl MsgEphemerisGPSDepE {
 }
 impl super::SBPMessage for MsgEphemerisGPSDepE {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS_DEP_E"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        129
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3859,11 +3857,11 @@ impl MsgEphemerisGPSDepF {
 }
 impl super::SBPMessage for MsgEphemerisGPSDepF {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS_DEP_F"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        134
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4052,11 +4050,11 @@ impl MsgEphemerisQzss {
 }
 impl super::SBPMessage for MsgEphemerisQzss {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_QZSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        142
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4185,11 +4183,11 @@ impl MsgEphemerisSbas {
 }
 impl super::SBPMessage for MsgEphemerisSbas {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        140
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4284,11 +4282,11 @@ impl MsgEphemerisSbasDepA {
 }
 impl super::SBPMessage for MsgEphemerisSbasDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        130
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4388,11 +4386,11 @@ impl MsgEphemerisSbasDepB {
 }
 impl super::SBPMessage for MsgEphemerisSbasDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        132
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4490,11 +4488,11 @@ impl MsgGloBiases {
 }
 impl super::SBPMessage for MsgGloBiases {
     fn message_name(&self) -> &'static str {
-        "MSG_GLO_BIASES"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        117
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4575,11 +4573,11 @@ impl MsgGnssCapb {
 }
 impl super::SBPMessage for MsgGnssCapb {
     fn message_name(&self) -> &'static str {
-        "MSG_GNSS_CAPB"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        150
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4668,11 +4666,11 @@ impl MsgGroupDelay {
 }
 impl super::SBPMessage for MsgGroupDelay {
     fn message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        148
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4769,11 +4767,11 @@ impl MsgGroupDelayDepA {
 }
 impl super::SBPMessage for MsgGroupDelayDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        146
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4870,11 +4868,11 @@ impl MsgGroupDelayDepB {
 }
 impl super::SBPMessage for MsgGroupDelayDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        147
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4976,11 +4974,11 @@ impl MsgIono {
 }
 impl super::SBPMessage for MsgIono {
     fn message_name(&self) -> &'static str {
-        "MSG_IONO"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        144
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5078,11 +5076,11 @@ impl MsgObs {
 }
 impl super::SBPMessage for MsgObs {
     fn message_name(&self) -> &'static str {
-        "MSG_OBS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        74
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5177,11 +5175,11 @@ impl MsgObsDepA {
 }
 impl super::SBPMessage for MsgObsDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        69
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5279,11 +5277,11 @@ impl MsgObsDepB {
 }
 impl super::SBPMessage for MsgObsDepB {
     fn message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_B"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        67
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5383,11 +5381,11 @@ impl MsgObsDepC {
 }
 impl super::SBPMessage for MsgObsDepC {
     fn message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_C"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        73
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5483,11 +5481,11 @@ impl MsgOsr {
 }
 impl super::SBPMessage for MsgOsr {
     fn message_name(&self) -> &'static str {
-        "MSG_OSR"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        1600
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5580,11 +5578,11 @@ impl MsgSvAzEl {
 }
 impl super::SBPMessage for MsgSvAzEl {
     fn message_name(&self) -> &'static str {
-        "MSG_SV_AZ_EL"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        151
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -5661,11 +5659,11 @@ impl MsgSvConfigurationGPSDep {
 }
 impl super::SBPMessage for MsgSvConfigurationGPSDep {
     fn message_name(&self) -> &'static str {
-        "MSG_SV_CONFIGURATION_GPS_DEP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        145
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

@@ -22,9 +22,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian,ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::SbpString;
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
+use crate::{SbpString, serialize::SbpSerialize, messages::ConcreteMessage};
 
 ((*- for i in includes *))
 use super::(((i)))::*;
@@ -88,11 +86,11 @@ impl (((m.identifier|camel_case))) {
 ((*- if m.is_real_message *))
 impl super::SBPMessage for (((m.identifier|camel_case))) {
     fn message_name(&self) -> &'static str {
-        "(((m.identifier)))"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        (((m.sbp_id)))
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

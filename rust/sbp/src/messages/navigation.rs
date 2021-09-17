@@ -44,9 +44,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -140,11 +138,11 @@ impl MsgAgeCorrections {
 }
 impl super::SBPMessage for MsgAgeCorrections {
     fn message_name(&self) -> &'static str {
-        "MSG_AGE_CORRECTIONS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        528
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -253,11 +251,11 @@ impl MsgBaselineECEF {
 }
 impl super::SBPMessage for MsgBaselineECEF {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_ECEF"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        523
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -376,11 +374,11 @@ impl MsgBaselineECEFDepA {
 }
 impl super::SBPMessage for MsgBaselineECEFDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_ECEF_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        514
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -489,11 +487,11 @@ impl MsgBaselineHeadingDepA {
 }
 impl super::SBPMessage for MsgBaselineHeadingDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_HEADING_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        519
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -611,11 +609,11 @@ impl MsgBaselineNED {
 }
 impl super::SBPMessage for MsgBaselineNED {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_NED"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        524
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -741,11 +739,11 @@ impl MsgBaselineNEDDepA {
 }
 impl super::SBPMessage for MsgBaselineNEDDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_BASELINE_NED_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        515
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -866,11 +864,11 @@ impl MsgDops {
 }
 impl super::SBPMessage for MsgDops {
     fn message_name(&self) -> &'static str {
-        "MSG_DOPS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        520
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -984,11 +982,11 @@ impl MsgDopsDepA {
 }
 impl super::SBPMessage for MsgDopsDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_DOPS_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        518
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1104,11 +1102,11 @@ impl MsgGPSTime {
 }
 impl super::SBPMessage for MsgGPSTime {
     fn message_name(&self) -> &'static str {
-        "MSG_GPS_TIME"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        258
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1224,11 +1222,11 @@ impl MsgGPSTimeDepA {
 }
 impl super::SBPMessage for MsgGPSTimeDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_GPS_TIME_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        256
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1344,11 +1342,11 @@ impl MsgGPSTimeGnss {
 }
 impl super::SBPMessage for MsgGPSTimeGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_GPS_TIME_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        260
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1468,11 +1466,11 @@ impl MsgPosECEF {
 }
 impl super::SBPMessage for MsgPosECEF {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_ECEF"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        521
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1610,11 +1608,11 @@ impl MsgPosECEFCov {
 }
 impl super::SBPMessage for MsgPosECEFCov {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_COV"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        532
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1762,11 +1760,11 @@ impl MsgPosECEFCovGnss {
 }
 impl super::SBPMessage for MsgPosECEFCovGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_COV_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        564
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -1898,11 +1896,11 @@ impl MsgPosECEFDepA {
 }
 impl super::SBPMessage for MsgPosECEFDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        512
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2024,11 +2022,11 @@ impl MsgPosECEFGnss {
 }
 impl super::SBPMessage for MsgPosECEFGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        553
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2153,11 +2151,11 @@ impl MsgPosLLH {
 }
 impl super::SBPMessage for MsgPosLLH {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        522
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2310,11 +2308,11 @@ impl MsgPosLLHAcc {
 }
 impl super::SBPMessage for MsgPosLLHAcc {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH_ACC"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        536
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2464,11 +2462,11 @@ impl MsgPosLLHCov {
 }
 impl super::SBPMessage for MsgPosLLHCov {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH_COV"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        529
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2616,11 +2614,11 @@ impl MsgPosLLHCovGnss {
 }
 impl super::SBPMessage for MsgPosLLHCovGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH_COV_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        561
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2755,11 +2753,11 @@ impl MsgPosLLHDepA {
 }
 impl super::SBPMessage for MsgPosLLHDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        513
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -2886,11 +2884,11 @@ impl MsgPosLLHGnss {
 }
 impl super::SBPMessage for MsgPosLLHGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_POS_LLH_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        554
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3054,11 +3052,11 @@ impl MsgProtectionLevel {
 }
 impl super::SBPMessage for MsgProtectionLevel {
     fn message_name(&self) -> &'static str {
-        "MSG_PROTECTION_LEVEL"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        535
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3208,11 +3206,11 @@ impl MsgProtectionLevelDepA {
 }
 impl super::SBPMessage for MsgProtectionLevelDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_PROTECTION_LEVEL_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        534
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3336,11 +3334,11 @@ impl MsgUtcTime {
 }
 impl super::SBPMessage for MsgUtcTime {
     fn message_name(&self) -> &'static str {
-        "MSG_UTC_TIME"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        259
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3468,11 +3466,11 @@ impl MsgUtcTimeGnss {
 }
 impl super::SBPMessage for MsgUtcTimeGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_UTC_TIME_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        261
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3615,11 +3613,11 @@ impl MsgVelBody {
 }
 impl super::SBPMessage for MsgVelBody {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_BODY"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        531
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3747,11 +3745,11 @@ impl MsgVelECEF {
 }
 impl super::SBPMessage for MsgVelECEF {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        525
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -3884,11 +3882,11 @@ impl MsgVelECEFCov {
 }
 impl super::SBPMessage for MsgVelECEFCov {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_COV"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        533
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4031,11 +4029,11 @@ impl MsgVelECEFCovGnss {
 }
 impl super::SBPMessage for MsgVelECEFCovGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_COV_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        565
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4163,11 +4161,11 @@ impl MsgVelECEFDepA {
 }
 impl super::SBPMessage for MsgVelECEFDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        516
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4285,11 +4283,11 @@ impl MsgVelECEFGnss {
 }
 impl super::SBPMessage for MsgVelECEFGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        557
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4411,11 +4409,11 @@ impl MsgVelNED {
 }
 impl super::SBPMessage for MsgVelNED {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_NED"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        526
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4553,11 +4551,11 @@ impl MsgVelNEDCov {
 }
 impl super::SBPMessage for MsgVelNEDCov {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_NED_COV"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        530
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4703,11 +4701,11 @@ impl MsgVelNEDCovGnss {
 }
 impl super::SBPMessage for MsgVelNEDCovGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_NED_COV_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        562
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4839,11 +4837,11 @@ impl MsgVelNEDDepA {
 }
 impl super::SBPMessage for MsgVelNEDDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_NED_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        517
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -4967,11 +4965,11 @@ impl MsgVelNEDGnss {
 }
 impl super::SBPMessage for MsgVelNEDGnss {
     fn message_name(&self) -> &'static str {
-        "MSG_VEL_NED_GNSS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        558
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

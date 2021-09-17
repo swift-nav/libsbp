@@ -22,9 +22,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Instruments the physical type of GNSS sensor input to the fuzed solution
 ///
@@ -189,11 +187,11 @@ impl MsgSolnMeta {
 }
 impl super::SBPMessage for MsgSolnMeta {
     fn message_name(&self) -> &'static str {
-        "MSG_SOLN_META"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65294
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -327,11 +325,11 @@ impl MsgSolnMetaDepA {
 }
 impl super::SBPMessage for MsgSolnMetaDepA {
     fn message_name(&self) -> &'static str {
-        "MSG_SOLN_META_DEP_A"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65295
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

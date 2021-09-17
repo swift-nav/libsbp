@@ -21,9 +21,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Experimental telemetry message
 ///
@@ -56,11 +54,11 @@ impl MsgCsacTelemetry {
 }
 impl super::SBPMessage for MsgCsacTelemetry {
     fn message_name(&self) -> &'static str {
-        "MSG_CSAC_TELEMETRY"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65284
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -142,11 +140,11 @@ impl MsgCsacTelemetryLabels {
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
     fn message_name(&self) -> &'static str {
-        "MSG_CSAC_TELEMETRY_LABELS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65285
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -233,11 +231,11 @@ impl MsgDgnssStatus {
 }
 impl super::SBPMessage for MsgDgnssStatus {
     fn message_name(&self) -> &'static str {
-        "MSG_DGNSS_STATUS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65282
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -328,11 +326,11 @@ impl MsgGnssTimeOffset {
 }
 impl super::SBPMessage for MsgGnssTimeOffset {
     fn message_name(&self) -> &'static str {
-        "MSG_GNSS_TIME_OFFSET"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65287
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -424,11 +422,11 @@ impl MsgGroupMeta {
 }
 impl super::SBPMessage for MsgGroupMeta {
     fn message_name(&self) -> &'static str {
-        "MSG_GROUP_META"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65290
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -516,11 +514,11 @@ impl MsgHeartbeat {
 }
 impl super::SBPMessage for MsgHeartbeat {
     fn message_name(&self) -> &'static str {
-        "MSG_HEARTBEAT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65535
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -595,11 +593,11 @@ impl MsgInsStatus {
 }
 impl super::SBPMessage for MsgInsStatus {
     fn message_name(&self) -> &'static str {
-        "MSG_INS_STATUS"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65283
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -693,11 +691,11 @@ impl MsgInsUpdates {
 }
 impl super::SBPMessage for MsgInsUpdates {
     fn message_name(&self) -> &'static str {
-        "MSG_INS_UPDATES"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65286
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -809,11 +807,11 @@ impl MsgPpsTime {
 }
 impl super::SBPMessage for MsgPpsTime {
     fn message_name(&self) -> &'static str {
-        "MSG_PPS_TIME"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65288
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -897,11 +895,11 @@ impl MsgStartup {
 }
 impl super::SBPMessage for MsgStartup {
     fn message_name(&self) -> &'static str {
-        "MSG_STARTUP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65280
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -998,11 +996,11 @@ impl MsgStatusReport {
 }
 impl super::SBPMessage for MsgStatusReport {
     fn message_name(&self) -> &'static str {
-        "MSG_STATUS_REPORT"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        65534
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {

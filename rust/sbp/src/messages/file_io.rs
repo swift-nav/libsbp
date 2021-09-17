@@ -28,9 +28,7 @@ use std::convert::TryFrom;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
 /// Request advice on the optimal configuration for FileIO
 ///
@@ -60,11 +58,11 @@ impl MsgFileioConfigReq {
 }
 impl super::SBPMessage for MsgFileioConfigReq {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_CONFIG_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        4097
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -151,11 +149,11 @@ impl MsgFileioConfigResp {
 }
 impl super::SBPMessage for MsgFileioConfigResp {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_CONFIG_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        4098
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -249,11 +247,11 @@ impl MsgFileioReadDirReq {
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_READ_DIR_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        169
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -338,11 +336,11 @@ impl MsgFileioReadDirResp {
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_READ_DIR_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        170
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -433,11 +431,11 @@ impl MsgFileioReadReq {
 }
 impl super::SBPMessage for MsgFileioReadReq {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_READ_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        168
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -523,11 +521,11 @@ impl MsgFileioReadResp {
 }
 impl super::SBPMessage for MsgFileioReadResp {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_READ_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        163
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -606,11 +604,11 @@ impl MsgFileioRemove {
 }
 impl super::SBPMessage for MsgFileioRemove {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_REMOVE"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        172
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -699,11 +697,11 @@ impl MsgFileioWriteReq {
 }
 impl super::SBPMessage for MsgFileioWriteReq {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_WRITE_REQ"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        173
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -786,11 +784,11 @@ impl MsgFileioWriteResp {
 }
 impl super::SBPMessage for MsgFileioWriteResp {
     fn message_name(&self) -> &'static str {
-        "MSG_FILEIO_WRITE_RESP"
+        Self::MESSAGE_NAME
     }
 
     fn message_type(&self) -> u16 {
-        171
+        Self::MESSAGE_TYPE
     }
 
     fn sender_id(&self) -> Option<u16> {
