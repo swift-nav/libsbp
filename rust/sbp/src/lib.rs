@@ -214,11 +214,11 @@ mod swiftnav_rs_conversions {
         }
     }
 
-    impl TryFrom<messages::observation::MsgEphemerisGPS> for swiftnav_rs::ephemeris::Ephemeris {
+    impl TryFrom<messages::observation::MsgEphemerisGps> for swiftnav_rs::ephemeris::Ephemeris {
         type Error = EphemerisDecodeError;
 
         fn try_from(
-            eph: messages::observation::MsgEphemerisGPS,
+            eph: messages::observation::MsgEphemerisGps,
         ) -> Result<swiftnav_rs::ephemeris::Ephemeris, EphemerisDecodeError> {
             Ok(swiftnav_rs::ephemeris::Ephemeris::new(
                 eph.common.sid.try_into()?,

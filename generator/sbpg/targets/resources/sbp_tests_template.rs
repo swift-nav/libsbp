@@ -11,12 +11,6 @@
 
 // This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
 
-use std::io::Cursor;
-
-use sbp::messages::SbpMessage;
-use sbp::iter_messages;
-
-#[allow(unused_imports)]
 use crate::*;
 
 ((*- macro compare_value(prefix, value) *))
@@ -36,7 +30,7 @@ assert_eq!(msg.(((prefix))), (((value))), "incorrect value for (((prefix))), exp
 ((*- endmacro *))
 
 #[test]
-fn test_(((s.suite_name)))()
+fn test_(((s.suite_name|snake_case)))()
 {
     ((*- for t in s.tests *))
     {
@@ -50,7 +44,7 @@ fn test_(((s.suite_name)))()
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::(((t.msg.name)))(msg) => {
+            sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
                 assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);

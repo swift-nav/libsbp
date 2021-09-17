@@ -190,7 +190,7 @@ mod tests {
             0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
         ];
-        let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineECEF {
+        let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineEcef {
             sender_id: Some(0x88d3),
             accuracy: 0,
             flags: 0,
@@ -202,7 +202,7 @@ mod tests {
         };
 
         let (consumed, msg) = match parse_sbp(&packet[..]) {
-            ParseResult::Ok((consumed, Sbp::MsgBaselineECEF(msg))) => (consumed, msg),
+            ParseResult::Ok((consumed, Sbp::MsgBaselineEcef(msg))) => (consumed, msg),
             err => panic!("unexpected parse result: {:?}", err),
         };
 
@@ -234,7 +234,7 @@ mod tests {
 
         assert!(matches!(
             res,
-            ParseResult::Ok((28, Sbp::MsgBaselineECEF(_)))
+            ParseResult::Ok((28, Sbp::MsgBaselineEcef(_)))
         ));
     }
 

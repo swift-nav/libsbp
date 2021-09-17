@@ -10,11 +10,15 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 // This file was auto-generated. Do not modify by hand!
-#![allow(non_snake_case)]
 
 ((*- for test_name in test_names *))
 mod (((test_name)));
 ((*- endfor *))
+
+pub use std::io::Cursor;
+
+pub use sbp::messages::SbpMessage;
+pub use sbp::iter_messages;
 
 pub trait AlmostEq {
     fn almost_eq(self, rhs: Self) -> bool;

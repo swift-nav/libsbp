@@ -902,7 +902,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgAlmanacGPS {
+pub struct MsgAlmanacGps {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
@@ -927,10 +927,10 @@ pub struct MsgAlmanacGPS {
     pub af1: f64,
 }
 
-impl MsgAlmanacGPS {
+impl MsgAlmanacGps {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, crate::Error> {
-        Ok( MsgAlmanacGPS{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGps, crate::Error> {
+        Ok( MsgAlmanacGps{
             sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
             m0: _buf.read_f64::<LittleEndian>()?,
@@ -945,7 +945,7 @@ impl MsgAlmanacGPS {
         } )
     }
 }
-impl super::SbpMessage for MsgAlmanacGPS {
+impl super::SbpMessage for MsgAlmanacGps {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -972,22 +972,22 @@ impl super::SbpMessage for MsgAlmanacGPS {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgAlmanacGPS {
+impl super::ConcreteMessage for MsgAlmanacGps {
     const MESSAGE_TYPE: u16 = 114;
     const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GPS";
 }
-impl TryFrom<super::Sbp> for MsgAlmanacGPS {
+impl TryFrom<super::Sbp> for MsgAlmanacGps {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgAlmanacGPS(m) => Ok(m),
+            super::Sbp::MsgAlmanacGps(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
+impl crate::serialize::SbpSerialize for MsgAlmanacGps {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.common.append_to_sbp_buffer(buf);
@@ -1028,7 +1028,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgAlmanacGPSDep {
+pub struct MsgAlmanacGpsDep {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
@@ -1053,10 +1053,10 @@ pub struct MsgAlmanacGPSDep {
     pub af1: f64,
 }
 
-impl MsgAlmanacGPSDep {
+impl MsgAlmanacGpsDep {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, crate::Error> {
-        Ok( MsgAlmanacGPSDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGpsDep, crate::Error> {
+        Ok( MsgAlmanacGpsDep{
             sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
             m0: _buf.read_f64::<LittleEndian>()?,
@@ -1071,7 +1071,7 @@ impl MsgAlmanacGPSDep {
         } )
     }
 }
-impl super::SbpMessage for MsgAlmanacGPSDep {
+impl super::SbpMessage for MsgAlmanacGpsDep {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1098,22 +1098,22 @@ impl super::SbpMessage for MsgAlmanacGPSDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgAlmanacGPSDep {
+impl super::ConcreteMessage for MsgAlmanacGpsDep {
     const MESSAGE_TYPE: u16 = 112;
     const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GPS_DEP";
 }
-impl TryFrom<super::Sbp> for MsgAlmanacGPSDep {
+impl TryFrom<super::Sbp> for MsgAlmanacGpsDep {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgAlmanacGPSDep(m) => Ok(m),
+            super::Sbp::MsgAlmanacGpsDep(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
+impl crate::serialize::SbpSerialize for MsgAlmanacGpsDep {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.common.append_to_sbp_buffer(buf);
@@ -1155,7 +1155,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBasePosECEF {
+pub struct MsgBasePosEcef {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// ECEF X coordinate
@@ -1166,10 +1166,10 @@ pub struct MsgBasePosECEF {
     pub z: f64,
 }
 
-impl MsgBasePosECEF {
+impl MsgBasePosEcef {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, crate::Error> {
-        Ok( MsgBasePosECEF{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosEcef, crate::Error> {
+        Ok( MsgBasePosEcef{
             sender_id: None,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
@@ -1177,7 +1177,7 @@ impl MsgBasePosECEF {
         } )
     }
 }
-impl super::SbpMessage for MsgBasePosECEF {
+impl super::SbpMessage for MsgBasePosEcef {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1204,22 +1204,22 @@ impl super::SbpMessage for MsgBasePosECEF {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgBasePosECEF {
+impl super::ConcreteMessage for MsgBasePosEcef {
     const MESSAGE_TYPE: u16 = 72;
     const MESSAGE_NAME: &'static str = "MSG_BASE_POS_ECEF";
 }
-impl TryFrom<super::Sbp> for MsgBasePosECEF {
+impl TryFrom<super::Sbp> for MsgBasePosEcef {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBasePosECEF(m) => Ok(m),
+            super::Sbp::MsgBasePosEcef(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBasePosECEF {
+impl crate::serialize::SbpSerialize for MsgBasePosEcef {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.x.append_to_sbp_buffer(buf);
@@ -1246,7 +1246,7 @@ impl crate::serialize::SbpSerialize for MsgBasePosECEF {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBasePosLLH {
+pub struct MsgBasePosLlh {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Latitude
@@ -1257,10 +1257,10 @@ pub struct MsgBasePosLLH {
     pub height: f64,
 }
 
-impl MsgBasePosLLH {
+impl MsgBasePosLlh {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, crate::Error> {
-        Ok( MsgBasePosLLH{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLlh, crate::Error> {
+        Ok( MsgBasePosLlh{
             sender_id: None,
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
@@ -1268,7 +1268,7 @@ impl MsgBasePosLLH {
         } )
     }
 }
-impl super::SbpMessage for MsgBasePosLLH {
+impl super::SbpMessage for MsgBasePosLlh {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1295,22 +1295,22 @@ impl super::SbpMessage for MsgBasePosLLH {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgBasePosLLH {
+impl super::ConcreteMessage for MsgBasePosLlh {
     const MESSAGE_TYPE: u16 = 68;
     const MESSAGE_NAME: &'static str = "MSG_BASE_POS_LLH";
 }
-impl TryFrom<super::Sbp> for MsgBasePosLLH {
+impl TryFrom<super::Sbp> for MsgBasePosLlh {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBasePosLLH(m) => Ok(m),
+            super::Sbp::MsgBasePosLlh(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBasePosLLH {
+impl crate::serialize::SbpSerialize for MsgBasePosLlh {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.lat.append_to_sbp_buffer(buf);
@@ -3381,7 +3381,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgEphemerisGPS {
+pub struct MsgEphemerisGps {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
@@ -3436,10 +3436,10 @@ pub struct MsgEphemerisGPS {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPS {
+impl MsgEphemerisGps {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, crate::Error> {
-        Ok( MsgEphemerisGPS{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGps, crate::Error> {
+        Ok( MsgEphemerisGps{
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             tgd: _buf.read_f32::<LittleEndian>()?,
@@ -3467,7 +3467,7 @@ impl MsgEphemerisGPS {
         } )
     }
 }
-impl super::SbpMessage for MsgEphemerisGPS {
+impl super::SbpMessage for MsgEphemerisGps {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3494,22 +3494,22 @@ impl super::SbpMessage for MsgEphemerisGPS {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgEphemerisGPS {
+impl super::ConcreteMessage for MsgEphemerisGps {
     const MESSAGE_TYPE: u16 = 138;
     const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS";
 }
-impl TryFrom<super::Sbp> for MsgEphemerisGPS {
+impl TryFrom<super::Sbp> for MsgEphemerisGps {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgEphemerisGPS(m) => Ok(m),
+            super::Sbp::MsgEphemerisGps(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
+impl crate::serialize::SbpSerialize for MsgEphemerisGps {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.common.append_to_sbp_buffer(buf);
@@ -3576,7 +3576,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgEphemerisGPSDepE {
+pub struct MsgEphemerisGpsDepE {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
@@ -3631,10 +3631,10 @@ pub struct MsgEphemerisGPSDepE {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepE {
+impl MsgEphemerisGpsDepE {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, crate::Error> {
-        Ok( MsgEphemerisGPSDepE{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGpsDepE, crate::Error> {
+        Ok( MsgEphemerisGpsDepE{
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -3662,7 +3662,7 @@ impl MsgEphemerisGPSDepE {
         } )
     }
 }
-impl super::SbpMessage for MsgEphemerisGPSDepE {
+impl super::SbpMessage for MsgEphemerisGpsDepE {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3689,22 +3689,22 @@ impl super::SbpMessage for MsgEphemerisGPSDepE {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgEphemerisGPSDepE {
+impl super::ConcreteMessage for MsgEphemerisGpsDepE {
     const MESSAGE_TYPE: u16 = 129;
     const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS_DEP_E";
 }
-impl TryFrom<super::Sbp> for MsgEphemerisGPSDepE {
+impl TryFrom<super::Sbp> for MsgEphemerisGpsDepE {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgEphemerisGPSDepE(m) => Ok(m),
+            super::Sbp::MsgEphemerisGpsDepE(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
+impl crate::serialize::SbpSerialize for MsgEphemerisGpsDepE {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.common.append_to_sbp_buffer(buf);
@@ -3769,7 +3769,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgEphemerisGPSDepF {
+pub struct MsgEphemerisGpsDepF {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
@@ -3824,10 +3824,10 @@ pub struct MsgEphemerisGPSDepF {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepF {
+impl MsgEphemerisGpsDepF {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, crate::Error> {
-        Ok( MsgEphemerisGPSDepF{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGpsDepF, crate::Error> {
+        Ok( MsgEphemerisGpsDepF{
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -3855,7 +3855,7 @@ impl MsgEphemerisGPSDepF {
         } )
     }
 }
-impl super::SbpMessage for MsgEphemerisGPSDepF {
+impl super::SbpMessage for MsgEphemerisGpsDepF {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3882,22 +3882,22 @@ impl super::SbpMessage for MsgEphemerisGPSDepF {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgEphemerisGPSDepF {
+impl super::ConcreteMessage for MsgEphemerisGpsDepF {
     const MESSAGE_TYPE: u16 = 134;
     const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS_DEP_F";
 }
-impl TryFrom<super::Sbp> for MsgEphemerisGPSDepF {
+impl TryFrom<super::Sbp> for MsgEphemerisGpsDepF {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgEphemerisGPSDepF(m) => Ok(m),
+            super::Sbp::MsgEphemerisGpsDepF(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
+impl crate::serialize::SbpSerialize for MsgEphemerisGpsDepF {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.common.append_to_sbp_buffer(buf);
@@ -5638,7 +5638,7 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgSvConfigurationGPSDep {
+pub struct MsgSvConfigurationGpsDep {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
@@ -5647,17 +5647,17 @@ pub struct MsgSvConfigurationGPSDep {
     pub l2c_mask: u32,
 }
 
-impl MsgSvConfigurationGPSDep {
+impl MsgSvConfigurationGpsDep {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, crate::Error> {
-        Ok( MsgSvConfigurationGPSDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGpsDep, crate::Error> {
+        Ok( MsgSvConfigurationGpsDep{
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
             l2c_mask: _buf.read_u32::<LittleEndian>()?,
         } )
     }
 }
-impl super::SbpMessage for MsgSvConfigurationGPSDep {
+impl super::SbpMessage for MsgSvConfigurationGpsDep {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -5684,22 +5684,22 @@ impl super::SbpMessage for MsgSvConfigurationGPSDep {
         crate::write_frame(self, frame)
     }
 }
-impl super::ConcreteMessage for MsgSvConfigurationGPSDep {
+impl super::ConcreteMessage for MsgSvConfigurationGpsDep {
     const MESSAGE_TYPE: u16 = 145;
     const MESSAGE_NAME: &'static str = "MSG_SV_CONFIGURATION_GPS_DEP";
 }
-impl TryFrom<super::Sbp> for MsgSvConfigurationGPSDep {
+impl TryFrom<super::Sbp> for MsgSvConfigurationGpsDep {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgSvConfigurationGPSDep(m) => Ok(m),
+            super::Sbp::MsgSvConfigurationGpsDep(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
+impl crate::serialize::SbpSerialize for MsgSvConfigurationGpsDep {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.t_nmct.append_to_sbp_buffer(buf);

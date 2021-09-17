@@ -90,7 +90,7 @@ def camel_case(s):
   """
   if '_' not in s: return s
   s = re.sub('([a-z])([A-Z])', r'\1_\2', s)
-  return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
+  return ''.join(w.title() for w in s.split('_'))
 
 @pass_environment
 def commentify(environment: Environment,

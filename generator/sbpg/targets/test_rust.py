@@ -13,8 +13,10 @@
 Generator for rust tests target.
 """
 
+import re
+
 from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
-from sbpg.targets.templating import JENV
+from sbpg.targets.templating import JENV, LOWER_ACRONYMS, ACRONYMS
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "sbp_tests_main_template.rs"
@@ -25,10 +27,23 @@ def str_escape(value):
 def mod_name(value):
     return value.split('.')[1]
 
+def snake_case(s):
+  if "_" in s:
+    return "_".join(snake_case(p) for p in s.split('_'))
+  s = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)
+  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower()
+
+def lower_acronyms(s):
+  for (i, a) in enumerate(ACRONYMS):
+    s = s.replace(a, LOWER_ACRONYMS[i])
+  return s
+
 JENV.filters['to_str'] = to_str
 JENV.filters['str_escape'] = str_escape
 JENV.filters['sorted'] = sorted
 JENV.filters['mod_name'] = mod_name
+JENV.filters['lower_acronyms'] = lower_acronyms
+JENV.filters['snake_case'] = snake_case
 
 JENV.tests['string_type'] = string_type
 JENV.tests['array_type'] = array_type
@@ -41,7 +56,7 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/integration/%s.rs" % (output_dir, name)
+  destination_filename = "%s/integration/%s.rs" % (output_dir, snake_case(name))
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(s=package_spec,
@@ -53,6 +68,6 @@ def render_source(output_dir, package_spec):
 def render_main(output_dir, package_specs):
   destination_filename = "%s/integration/main.rs" % output_dir
   py_template = JENV.get_template(TEST_MAIN_TEMPLATE_NAME)
-  test_names = [p.filepath[1] for p in package_specs]
+  test_names = [snake_case(p.filepath[1]) for p in package_specs]
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(test_names=test_names))

@@ -215,7 +215,7 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBaselineECEF {
+pub struct MsgBaselineEcef {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -234,10 +234,10 @@ pub struct MsgBaselineECEF {
     pub flags: u8,
 }
 
-impl MsgBaselineECEF {
+impl MsgBaselineEcef {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, crate::Error> {
-        Ok( MsgBaselineECEF{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineEcef, crate::Error> {
+        Ok( MsgBaselineEcef{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -249,7 +249,7 @@ impl MsgBaselineECEF {
         } )
     }
 }
-impl super::SbpMessage for MsgBaselineECEF {
+impl super::SbpMessage for MsgBaselineEcef {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -288,22 +288,22 @@ impl super::SbpMessage for MsgBaselineECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgBaselineECEF {
+impl super::ConcreteMessage for MsgBaselineEcef {
     const MESSAGE_TYPE: u16 = 523;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF";
 }
-impl TryFrom<super::Sbp> for MsgBaselineECEF {
+impl TryFrom<super::Sbp> for MsgBaselineEcef {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBaselineECEF(m) => Ok(m),
+            super::Sbp::MsgBaselineEcef(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineECEF {
+impl crate::serialize::SbpSerialize for MsgBaselineEcef {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -338,7 +338,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBaselineECEFDepA {
+pub struct MsgBaselineEcefDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -357,10 +357,10 @@ pub struct MsgBaselineECEFDepA {
     pub flags: u8,
 }
 
-impl MsgBaselineECEFDepA {
+impl MsgBaselineEcefDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, crate::Error> {
-        Ok( MsgBaselineECEFDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineEcefDepA, crate::Error> {
+        Ok( MsgBaselineEcefDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -372,7 +372,7 @@ impl MsgBaselineECEFDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgBaselineECEFDepA {
+impl super::SbpMessage for MsgBaselineEcefDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -411,22 +411,22 @@ impl super::SbpMessage for MsgBaselineECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgBaselineECEFDepA {
+impl super::ConcreteMessage for MsgBaselineEcefDepA {
     const MESSAGE_TYPE: u16 = 514;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgBaselineECEFDepA {
+impl TryFrom<super::Sbp> for MsgBaselineEcefDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBaselineECEFDepA(m) => Ok(m),
+            super::Sbp::MsgBaselineEcefDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
+impl crate::serialize::SbpSerialize for MsgBaselineEcefDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -570,7 +570,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBaselineNED {
+pub struct MsgBaselineNed {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -591,10 +591,10 @@ pub struct MsgBaselineNED {
     pub flags: u8,
 }
 
-impl MsgBaselineNED {
+impl MsgBaselineNed {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, crate::Error> {
-        Ok( MsgBaselineNED{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNed, crate::Error> {
+        Ok( MsgBaselineNed{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -607,7 +607,7 @@ impl MsgBaselineNED {
         } )
     }
 }
-impl super::SbpMessage for MsgBaselineNED {
+impl super::SbpMessage for MsgBaselineNed {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -646,22 +646,22 @@ impl super::SbpMessage for MsgBaselineNED {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgBaselineNED {
+impl super::ConcreteMessage for MsgBaselineNed {
     const MESSAGE_TYPE: u16 = 524;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED";
 }
-impl TryFrom<super::Sbp> for MsgBaselineNED {
+impl TryFrom<super::Sbp> for MsgBaselineNed {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBaselineNED(m) => Ok(m),
+            super::Sbp::MsgBaselineNed(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineNED {
+impl crate::serialize::SbpSerialize for MsgBaselineNed {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -700,7 +700,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgBaselineNEDDepA {
+pub struct MsgBaselineNedDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -721,10 +721,10 @@ pub struct MsgBaselineNEDDepA {
     pub flags: u8,
 }
 
-impl MsgBaselineNEDDepA {
+impl MsgBaselineNedDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, crate::Error> {
-        Ok( MsgBaselineNEDDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNedDepA, crate::Error> {
+        Ok( MsgBaselineNedDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -737,7 +737,7 @@ impl MsgBaselineNEDDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgBaselineNEDDepA {
+impl super::SbpMessage for MsgBaselineNedDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -776,22 +776,22 @@ impl super::SbpMessage for MsgBaselineNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgBaselineNEDDepA {
+impl super::ConcreteMessage for MsgBaselineNedDepA {
     const MESSAGE_TYPE: u16 = 515;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgBaselineNEDDepA {
+impl TryFrom<super::Sbp> for MsgBaselineNedDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgBaselineNEDDepA(m) => Ok(m),
+            super::Sbp::MsgBaselineNedDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
+impl crate::serialize::SbpSerialize for MsgBaselineNedDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1074,7 +1074,7 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgGPSTime {
+pub struct MsgGpsTime {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
@@ -1088,10 +1088,10 @@ pub struct MsgGPSTime {
     pub flags: u8,
 }
 
-impl MsgGPSTime {
+impl MsgGpsTime {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, crate::Error> {
-        Ok( MsgGPSTime{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGpsTime, crate::Error> {
+        Ok( MsgGpsTime{
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1100,7 +1100,7 @@ impl MsgGPSTime {
         } )
     }
 }
-impl super::SbpMessage for MsgGPSTime {
+impl super::SbpMessage for MsgGpsTime {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1143,22 +1143,22 @@ impl super::SbpMessage for MsgGPSTime {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgGPSTime {
+impl super::ConcreteMessage for MsgGpsTime {
     const MESSAGE_TYPE: u16 = 258;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME";
 }
-impl TryFrom<super::Sbp> for MsgGPSTime {
+impl TryFrom<super::Sbp> for MsgGpsTime {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgGPSTime(m) => Ok(m),
+            super::Sbp::MsgGpsTime(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTime {
+impl crate::serialize::SbpSerialize for MsgGpsTime {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.wn.append_to_sbp_buffer(buf);
@@ -1194,7 +1194,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgGPSTimeDepA {
+pub struct MsgGpsTimeDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
@@ -1208,10 +1208,10 @@ pub struct MsgGPSTimeDepA {
     pub flags: u8,
 }
 
-impl MsgGPSTimeDepA {
+impl MsgGpsTimeDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, crate::Error> {
-        Ok( MsgGPSTimeDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGpsTimeDepA, crate::Error> {
+        Ok( MsgGpsTimeDepA{
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1220,7 +1220,7 @@ impl MsgGPSTimeDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgGPSTimeDepA {
+impl super::SbpMessage for MsgGpsTimeDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1263,22 +1263,22 @@ impl super::SbpMessage for MsgGPSTimeDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgGPSTimeDepA {
+impl super::ConcreteMessage for MsgGpsTimeDepA {
     const MESSAGE_TYPE: u16 = 256;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgGPSTimeDepA {
+impl TryFrom<super::Sbp> for MsgGpsTimeDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgGPSTimeDepA(m) => Ok(m),
+            super::Sbp::MsgGpsTimeDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
+impl crate::serialize::SbpSerialize for MsgGpsTimeDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.wn.append_to_sbp_buffer(buf);
@@ -1314,7 +1314,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgGPSTimeGnss {
+pub struct MsgGpsTimeGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
@@ -1328,10 +1328,10 @@ pub struct MsgGPSTimeGnss {
     pub flags: u8,
 }
 
-impl MsgGPSTimeGnss {
+impl MsgGpsTimeGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeGnss, crate::Error> {
-        Ok( MsgGPSTimeGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGpsTimeGnss, crate::Error> {
+        Ok( MsgGpsTimeGnss{
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1340,7 +1340,7 @@ impl MsgGPSTimeGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgGPSTimeGnss {
+impl super::SbpMessage for MsgGpsTimeGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1383,22 +1383,22 @@ impl super::SbpMessage for MsgGPSTimeGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgGPSTimeGnss {
+impl super::ConcreteMessage for MsgGpsTimeGnss {
     const MESSAGE_TYPE: u16 = 260;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgGPSTimeGnss {
+impl TryFrom<super::Sbp> for MsgGpsTimeGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgGPSTimeGnss(m) => Ok(m),
+            super::Sbp::MsgGpsTimeGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
+impl crate::serialize::SbpSerialize for MsgGpsTimeGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.wn.append_to_sbp_buffer(buf);
@@ -1430,7 +1430,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosECEF {
+pub struct MsgPosEcef {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -1449,10 +1449,10 @@ pub struct MsgPosECEF {
     pub flags: u8,
 }
 
-impl MsgPosECEF {
+impl MsgPosEcef {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, crate::Error> {
-        Ok( MsgPosECEF{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosEcef, crate::Error> {
+        Ok( MsgPosEcef{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1464,7 +1464,7 @@ impl MsgPosECEF {
         } )
     }
 }
-impl super::SbpMessage for MsgPosECEF {
+impl super::SbpMessage for MsgPosEcef {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1503,22 +1503,22 @@ impl super::SbpMessage for MsgPosECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosECEF {
+impl super::ConcreteMessage for MsgPosEcef {
     const MESSAGE_TYPE: u16 = 521;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF";
 }
-impl TryFrom<super::Sbp> for MsgPosECEF {
+impl TryFrom<super::Sbp> for MsgPosEcef {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosECEF(m) => Ok(m),
+            super::Sbp::MsgPosEcef(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEF {
+impl crate::serialize::SbpSerialize for MsgPosEcef {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1557,7 +1557,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosECEFCov {
+pub struct MsgPosEcefCov {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -1586,10 +1586,10 @@ pub struct MsgPosECEFCov {
     pub flags: u8,
 }
 
-impl MsgPosECEFCov {
+impl MsgPosEcefCov {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, crate::Error> {
-        Ok( MsgPosECEFCov{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosEcefCov, crate::Error> {
+        Ok( MsgPosEcefCov{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1606,7 +1606,7 @@ impl MsgPosECEFCov {
         } )
     }
 }
-impl super::SbpMessage for MsgPosECEFCov {
+impl super::SbpMessage for MsgPosEcefCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1645,22 +1645,22 @@ impl super::SbpMessage for MsgPosECEFCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosECEFCov {
+impl super::ConcreteMessage for MsgPosEcefCov {
     const MESSAGE_TYPE: u16 = 532;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV";
 }
-impl TryFrom<super::Sbp> for MsgPosECEFCov {
+impl TryFrom<super::Sbp> for MsgPosEcefCov {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosECEFCov(m) => Ok(m),
+            super::Sbp::MsgPosEcefCov(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFCov {
+impl crate::serialize::SbpSerialize for MsgPosEcefCov {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1709,7 +1709,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosECEFCovGnss {
+pub struct MsgPosEcefCovGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -1738,10 +1738,10 @@ pub struct MsgPosECEFCovGnss {
     pub flags: u8,
 }
 
-impl MsgPosECEFCovGnss {
+impl MsgPosEcefCovGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCovGnss, crate::Error> {
-        Ok( MsgPosECEFCovGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosEcefCovGnss, crate::Error> {
+        Ok( MsgPosEcefCovGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1758,7 +1758,7 @@ impl MsgPosECEFCovGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgPosECEFCovGnss {
+impl super::SbpMessage for MsgPosEcefCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1797,22 +1797,22 @@ impl super::SbpMessage for MsgPosECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosECEFCovGnss {
+impl super::ConcreteMessage for MsgPosEcefCovGnss {
     const MESSAGE_TYPE: u16 = 564;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgPosECEFCovGnss {
+impl TryFrom<super::Sbp> for MsgPosEcefCovGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosECEFCovGnss(m) => Ok(m),
+            super::Sbp::MsgPosEcefCovGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
+impl crate::serialize::SbpSerialize for MsgPosEcefCovGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1860,7 +1860,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosECEFDepA {
+pub struct MsgPosEcefDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -1879,10 +1879,10 @@ pub struct MsgPosECEFDepA {
     pub flags: u8,
 }
 
-impl MsgPosECEFDepA {
+impl MsgPosEcefDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, crate::Error> {
-        Ok( MsgPosECEFDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosEcefDepA, crate::Error> {
+        Ok( MsgPosEcefDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1894,7 +1894,7 @@ impl MsgPosECEFDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgPosECEFDepA {
+impl super::SbpMessage for MsgPosEcefDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1933,22 +1933,22 @@ impl super::SbpMessage for MsgPosECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosECEFDepA {
+impl super::ConcreteMessage for MsgPosEcefDepA {
     const MESSAGE_TYPE: u16 = 512;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgPosECEFDepA {
+impl TryFrom<super::Sbp> for MsgPosEcefDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosECEFDepA(m) => Ok(m),
+            super::Sbp::MsgPosEcefDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
+impl crate::serialize::SbpSerialize for MsgPosEcefDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1986,7 +1986,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosECEFGnss {
+pub struct MsgPosEcefGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2005,10 +2005,10 @@ pub struct MsgPosECEFGnss {
     pub flags: u8,
 }
 
-impl MsgPosECEFGnss {
+impl MsgPosEcefGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFGnss, crate::Error> {
-        Ok( MsgPosECEFGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosEcefGnss, crate::Error> {
+        Ok( MsgPosEcefGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -2020,7 +2020,7 @@ impl MsgPosECEFGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgPosECEFGnss {
+impl super::SbpMessage for MsgPosEcefGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2059,22 +2059,22 @@ impl super::SbpMessage for MsgPosECEFGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosECEFGnss {
+impl super::ConcreteMessage for MsgPosEcefGnss {
     const MESSAGE_TYPE: u16 = 553;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgPosECEFGnss {
+impl TryFrom<super::Sbp> for MsgPosEcefGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosECEFGnss(m) => Ok(m),
+            super::Sbp::MsgPosEcefGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
+impl crate::serialize::SbpSerialize for MsgPosEcefGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2112,7 +2112,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLH {
+pub struct MsgPosLlh {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2133,10 +2133,10 @@ pub struct MsgPosLLH {
     pub flags: u8,
 }
 
-impl MsgPosLLH {
+impl MsgPosLlh {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, crate::Error> {
-        Ok( MsgPosLLH{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlh, crate::Error> {
+        Ok( MsgPosLlh{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2149,7 +2149,7 @@ impl MsgPosLLH {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLH {
+impl super::SbpMessage for MsgPosLlh {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2188,22 +2188,22 @@ impl super::SbpMessage for MsgPosLLH {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLH {
+impl super::ConcreteMessage for MsgPosLlh {
     const MESSAGE_TYPE: u16 = 522;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH";
 }
-impl TryFrom<super::Sbp> for MsgPosLLH {
+impl TryFrom<super::Sbp> for MsgPosLlh {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLH(m) => Ok(m),
+            super::Sbp::MsgPosLlh(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLH {
+impl crate::serialize::SbpSerialize for MsgPosLlh {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2246,7 +2246,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLHAcc {
+pub struct MsgPosLlhAcc {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2285,10 +2285,10 @@ pub struct MsgPosLLHAcc {
     pub flags: u8,
 }
 
-impl MsgPosLLHAcc {
+impl MsgPosLlhAcc {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHAcc, crate::Error> {
-        Ok( MsgPosLLHAcc{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlhAcc, crate::Error> {
+        Ok( MsgPosLlhAcc{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2306,7 +2306,7 @@ impl MsgPosLLHAcc {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLHAcc {
+impl super::SbpMessage for MsgPosLlhAcc {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2345,22 +2345,22 @@ impl super::SbpMessage for MsgPosLLHAcc {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLHAcc {
+impl super::ConcreteMessage for MsgPosLlhAcc {
     const MESSAGE_TYPE: u16 = 536;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_ACC";
 }
-impl TryFrom<super::Sbp> for MsgPosLLHAcc {
+impl TryFrom<super::Sbp> for MsgPosLlhAcc {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLHAcc(m) => Ok(m),
+            super::Sbp::MsgPosLlhAcc(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
+impl crate::serialize::SbpSerialize for MsgPosLlhAcc {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2411,7 +2411,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLHCov {
+pub struct MsgPosLlhCov {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2440,10 +2440,10 @@ pub struct MsgPosLLHCov {
     pub flags: u8,
 }
 
-impl MsgPosLLHCov {
+impl MsgPosLlhCov {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, crate::Error> {
-        Ok( MsgPosLLHCov{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlhCov, crate::Error> {
+        Ok( MsgPosLlhCov{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2460,7 +2460,7 @@ impl MsgPosLLHCov {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLHCov {
+impl super::SbpMessage for MsgPosLlhCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2499,22 +2499,22 @@ impl super::SbpMessage for MsgPosLLHCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLHCov {
+impl super::ConcreteMessage for MsgPosLlhCov {
     const MESSAGE_TYPE: u16 = 529;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV";
 }
-impl TryFrom<super::Sbp> for MsgPosLLHCov {
+impl TryFrom<super::Sbp> for MsgPosLlhCov {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLHCov(m) => Ok(m),
+            super::Sbp::MsgPosLlhCov(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHCov {
+impl crate::serialize::SbpSerialize for MsgPosLlhCov {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2563,7 +2563,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLHCovGnss {
+pub struct MsgPosLlhCovGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2592,10 +2592,10 @@ pub struct MsgPosLLHCovGnss {
     pub flags: u8,
 }
 
-impl MsgPosLLHCovGnss {
+impl MsgPosLlhCovGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCovGnss, crate::Error> {
-        Ok( MsgPosLLHCovGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlhCovGnss, crate::Error> {
+        Ok( MsgPosLlhCovGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2612,7 +2612,7 @@ impl MsgPosLLHCovGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLHCovGnss {
+impl super::SbpMessage for MsgPosLlhCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2651,22 +2651,22 @@ impl super::SbpMessage for MsgPosLLHCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLHCovGnss {
+impl super::ConcreteMessage for MsgPosLlhCovGnss {
     const MESSAGE_TYPE: u16 = 561;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgPosLLHCovGnss {
+impl TryFrom<super::Sbp> for MsgPosLlhCovGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLHCovGnss(m) => Ok(m),
+            super::Sbp::MsgPosLlhCovGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
+impl crate::serialize::SbpSerialize for MsgPosLlhCovGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2714,7 +2714,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLHDepA {
+pub struct MsgPosLlhDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2735,10 +2735,10 @@ pub struct MsgPosLLHDepA {
     pub flags: u8,
 }
 
-impl MsgPosLLHDepA {
+impl MsgPosLlhDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, crate::Error> {
-        Ok( MsgPosLLHDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlhDepA, crate::Error> {
+        Ok( MsgPosLlhDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2751,7 +2751,7 @@ impl MsgPosLLHDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLHDepA {
+impl super::SbpMessage for MsgPosLlhDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2790,22 +2790,22 @@ impl super::SbpMessage for MsgPosLLHDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLHDepA {
+impl super::ConcreteMessage for MsgPosLlhDepA {
     const MESSAGE_TYPE: u16 = 513;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgPosLLHDepA {
+impl TryFrom<super::Sbp> for MsgPosLlhDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLHDepA(m) => Ok(m),
+            super::Sbp::MsgPosLlhDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
+impl crate::serialize::SbpSerialize for MsgPosLlhDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2845,7 +2845,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgPosLLHGnss {
+pub struct MsgPosLlhGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2866,10 +2866,10 @@ pub struct MsgPosLLHGnss {
     pub flags: u8,
 }
 
-impl MsgPosLLHGnss {
+impl MsgPosLlhGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHGnss, crate::Error> {
-        Ok( MsgPosLLHGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLlhGnss, crate::Error> {
+        Ok( MsgPosLlhGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -2882,7 +2882,7 @@ impl MsgPosLLHGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgPosLLHGnss {
+impl super::SbpMessage for MsgPosLlhGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2921,22 +2921,22 @@ impl super::SbpMessage for MsgPosLLHGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgPosLLHGnss {
+impl super::ConcreteMessage for MsgPosLlhGnss {
     const MESSAGE_TYPE: u16 = 554;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgPosLLHGnss {
+impl TryFrom<super::Sbp> for MsgPosLlhGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgPosLLHGnss(m) => Ok(m),
+            super::Sbp::MsgPosLlhGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
+impl crate::serialize::SbpSerialize for MsgPosLlhGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -3709,7 +3709,7 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelECEF {
+pub struct MsgVelEcef {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -3728,10 +3728,10 @@ pub struct MsgVelECEF {
     pub flags: u8,
 }
 
-impl MsgVelECEF {
+impl MsgVelEcef {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, crate::Error> {
-        Ok( MsgVelECEF{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelEcef, crate::Error> {
+        Ok( MsgVelEcef{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -3743,7 +3743,7 @@ impl MsgVelECEF {
         } )
     }
 }
-impl super::SbpMessage for MsgVelECEF {
+impl super::SbpMessage for MsgVelEcef {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3782,22 +3782,22 @@ impl super::SbpMessage for MsgVelECEF {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelECEF {
+impl super::ConcreteMessage for MsgVelEcef {
     const MESSAGE_TYPE: u16 = 525;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF";
 }
-impl TryFrom<super::Sbp> for MsgVelECEF {
+impl TryFrom<super::Sbp> for MsgVelEcef {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelECEF(m) => Ok(m),
+            super::Sbp::MsgVelEcef(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEF {
+impl crate::serialize::SbpSerialize for MsgVelEcef {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -3831,7 +3831,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelECEFCov {
+pub struct MsgVelEcefCov {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -3860,10 +3860,10 @@ pub struct MsgVelECEFCov {
     pub flags: u8,
 }
 
-impl MsgVelECEFCov {
+impl MsgVelEcefCov {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, crate::Error> {
-        Ok( MsgVelECEFCov{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelEcefCov, crate::Error> {
+        Ok( MsgVelEcefCov{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -3880,7 +3880,7 @@ impl MsgVelECEFCov {
         } )
     }
 }
-impl super::SbpMessage for MsgVelECEFCov {
+impl super::SbpMessage for MsgVelEcefCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3919,22 +3919,22 @@ impl super::SbpMessage for MsgVelECEFCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelECEFCov {
+impl super::ConcreteMessage for MsgVelEcefCov {
     const MESSAGE_TYPE: u16 = 533;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV";
 }
-impl TryFrom<super::Sbp> for MsgVelECEFCov {
+impl TryFrom<super::Sbp> for MsgVelEcefCov {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelECEFCov(m) => Ok(m),
+            super::Sbp::MsgVelEcefCov(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFCov {
+impl crate::serialize::SbpSerialize for MsgVelEcefCov {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -3978,7 +3978,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelECEFCovGnss {
+pub struct MsgVelEcefCovGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4007,10 +4007,10 @@ pub struct MsgVelECEFCovGnss {
     pub flags: u8,
 }
 
-impl MsgVelECEFCovGnss {
+impl MsgVelEcefCovGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCovGnss, crate::Error> {
-        Ok( MsgVelECEFCovGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelEcefCovGnss, crate::Error> {
+        Ok( MsgVelEcefCovGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -4027,7 +4027,7 @@ impl MsgVelECEFCovGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgVelECEFCovGnss {
+impl super::SbpMessage for MsgVelEcefCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4066,22 +4066,22 @@ impl super::SbpMessage for MsgVelECEFCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelECEFCovGnss {
+impl super::ConcreteMessage for MsgVelEcefCovGnss {
     const MESSAGE_TYPE: u16 = 565;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgVelECEFCovGnss {
+impl TryFrom<super::Sbp> for MsgVelEcefCovGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelECEFCovGnss(m) => Ok(m),
+            super::Sbp::MsgVelEcefCovGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
+impl crate::serialize::SbpSerialize for MsgVelEcefCovGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4125,7 +4125,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelECEFDepA {
+pub struct MsgVelEcefDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4144,10 +4144,10 @@ pub struct MsgVelECEFDepA {
     pub flags: u8,
 }
 
-impl MsgVelECEFDepA {
+impl MsgVelEcefDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, crate::Error> {
-        Ok( MsgVelECEFDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelEcefDepA, crate::Error> {
+        Ok( MsgVelEcefDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -4159,7 +4159,7 @@ impl MsgVelECEFDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgVelECEFDepA {
+impl super::SbpMessage for MsgVelEcefDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4198,22 +4198,22 @@ impl super::SbpMessage for MsgVelECEFDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelECEFDepA {
+impl super::ConcreteMessage for MsgVelEcefDepA {
     const MESSAGE_TYPE: u16 = 516;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgVelECEFDepA {
+impl TryFrom<super::Sbp> for MsgVelEcefDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelECEFDepA(m) => Ok(m),
+            super::Sbp::MsgVelEcefDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
+impl crate::serialize::SbpSerialize for MsgVelEcefDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4247,7 +4247,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelECEFGnss {
+pub struct MsgVelEcefGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4266,10 +4266,10 @@ pub struct MsgVelECEFGnss {
     pub flags: u8,
 }
 
-impl MsgVelECEFGnss {
+impl MsgVelEcefGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFGnss, crate::Error> {
-        Ok( MsgVelECEFGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelEcefGnss, crate::Error> {
+        Ok( MsgVelEcefGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -4281,7 +4281,7 @@ impl MsgVelECEFGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgVelECEFGnss {
+impl super::SbpMessage for MsgVelEcefGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4320,22 +4320,22 @@ impl super::SbpMessage for MsgVelECEFGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelECEFGnss {
+impl super::ConcreteMessage for MsgVelEcefGnss {
     const MESSAGE_TYPE: u16 = 557;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgVelECEFGnss {
+impl TryFrom<super::Sbp> for MsgVelEcefGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelECEFGnss(m) => Ok(m),
+            super::Sbp::MsgVelEcefGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
+impl crate::serialize::SbpSerialize for MsgVelEcefGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4370,7 +4370,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelNED {
+pub struct MsgVelNed {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4391,10 +4391,10 @@ pub struct MsgVelNED {
     pub flags: u8,
 }
 
-impl MsgVelNED {
+impl MsgVelNed {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, crate::Error> {
-        Ok( MsgVelNED{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNed, crate::Error> {
+        Ok( MsgVelNed{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -4407,7 +4407,7 @@ impl MsgVelNED {
         } )
     }
 }
-impl super::SbpMessage for MsgVelNED {
+impl super::SbpMessage for MsgVelNed {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4446,22 +4446,22 @@ impl super::SbpMessage for MsgVelNED {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelNED {
+impl super::ConcreteMessage for MsgVelNed {
     const MESSAGE_TYPE: u16 = 526;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED";
 }
-impl TryFrom<super::Sbp> for MsgVelNED {
+impl TryFrom<super::Sbp> for MsgVelNed {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelNED(m) => Ok(m),
+            super::Sbp::MsgVelNed(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNED {
+impl crate::serialize::SbpSerialize for MsgVelNed {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4500,7 +4500,7 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelNEDCov {
+pub struct MsgVelNedCov {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4529,10 +4529,10 @@ pub struct MsgVelNEDCov {
     pub flags: u8,
 }
 
-impl MsgVelNEDCov {
+impl MsgVelNedCov {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, crate::Error> {
-        Ok( MsgVelNEDCov{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNedCov, crate::Error> {
+        Ok( MsgVelNedCov{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -4549,7 +4549,7 @@ impl MsgVelNEDCov {
         } )
     }
 }
-impl super::SbpMessage for MsgVelNEDCov {
+impl super::SbpMessage for MsgVelNedCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4588,22 +4588,22 @@ impl super::SbpMessage for MsgVelNEDCov {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelNEDCov {
+impl super::ConcreteMessage for MsgVelNedCov {
     const MESSAGE_TYPE: u16 = 530;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV";
 }
-impl TryFrom<super::Sbp> for MsgVelNEDCov {
+impl TryFrom<super::Sbp> for MsgVelNedCov {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelNEDCov(m) => Ok(m),
+            super::Sbp::MsgVelNedCov(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDCov {
+impl crate::serialize::SbpSerialize for MsgVelNedCov {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4650,7 +4650,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelNEDCovGnss {
+pub struct MsgVelNedCovGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4679,10 +4679,10 @@ pub struct MsgVelNEDCovGnss {
     pub flags: u8,
 }
 
-impl MsgVelNEDCovGnss {
+impl MsgVelNedCovGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCovGnss, crate::Error> {
-        Ok( MsgVelNEDCovGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNedCovGnss, crate::Error> {
+        Ok( MsgVelNedCovGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -4699,7 +4699,7 @@ impl MsgVelNEDCovGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgVelNEDCovGnss {
+impl super::SbpMessage for MsgVelNedCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4738,22 +4738,22 @@ impl super::SbpMessage for MsgVelNEDCovGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelNEDCovGnss {
+impl super::ConcreteMessage for MsgVelNedCovGnss {
     const MESSAGE_TYPE: u16 = 562;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgVelNEDCovGnss {
+impl TryFrom<super::Sbp> for MsgVelNedCovGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelNEDCovGnss(m) => Ok(m),
+            super::Sbp::MsgVelNedCovGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
+impl crate::serialize::SbpSerialize for MsgVelNedCovGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4798,7 +4798,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelNEDDepA {
+pub struct MsgVelNedDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4819,10 +4819,10 @@ pub struct MsgVelNEDDepA {
     pub flags: u8,
 }
 
-impl MsgVelNEDDepA {
+impl MsgVelNedDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, crate::Error> {
-        Ok( MsgVelNEDDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNedDepA, crate::Error> {
+        Ok( MsgVelNedDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -4835,7 +4835,7 @@ impl MsgVelNEDDepA {
         } )
     }
 }
-impl super::SbpMessage for MsgVelNEDDepA {
+impl super::SbpMessage for MsgVelNedDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4874,22 +4874,22 @@ impl super::SbpMessage for MsgVelNEDDepA {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelNEDDepA {
+impl super::ConcreteMessage for MsgVelNedDepA {
     const MESSAGE_TYPE: u16 = 517;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgVelNEDDepA {
+impl TryFrom<super::Sbp> for MsgVelNedDepA {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelNEDDepA(m) => Ok(m),
+            super::Sbp::MsgVelNedDepA(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
+impl crate::serialize::SbpSerialize for MsgVelNedDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -4926,7 +4926,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgVelNEDGnss {
+pub struct MsgVelNedGnss {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -4947,10 +4947,10 @@ pub struct MsgVelNEDGnss {
     pub flags: u8,
 }
 
-impl MsgVelNEDGnss {
+impl MsgVelNedGnss {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDGnss, crate::Error> {
-        Ok( MsgVelNEDGnss{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNedGnss, crate::Error> {
+        Ok( MsgVelNedGnss{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -4963,7 +4963,7 @@ impl MsgVelNEDGnss {
         } )
     }
 }
-impl super::SbpMessage for MsgVelNEDGnss {
+impl super::SbpMessage for MsgVelNedGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -5002,22 +5002,22 @@ impl super::SbpMessage for MsgVelNEDGnss {
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
-impl super::ConcreteMessage for MsgVelNEDGnss {
+impl super::ConcreteMessage for MsgVelNedGnss {
     const MESSAGE_TYPE: u16 = 558;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_GNSS";
 }
-impl TryFrom<super::Sbp> for MsgVelNEDGnss {
+impl TryFrom<super::Sbp> for MsgVelNedGnss {
     type Error = super::TryFromSbpError;
 
     fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgVelNEDGnss(m) => Ok(m),
+            super::Sbp::MsgVelNedGnss(m) => Ok(m),
             _ => Err(super::TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDGnss {
+impl crate::serialize::SbpSerialize for MsgVelNedGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
