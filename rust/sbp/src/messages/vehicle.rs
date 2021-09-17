@@ -62,7 +62,7 @@ impl MsgOdometry {
         } )
     }
 }
-impl super::SBPMessage for MsgOdometry {
+impl super::SbpMessage for MsgOdometry {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -105,13 +105,13 @@ impl super::ConcreteMessage for MsgOdometry {
     const MESSAGE_TYPE: u16 = 2307;
     const MESSAGE_NAME: &'static str = "MSG_ODOMETRY";
 }
-impl TryFrom<super::SBP> for MsgOdometry {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgOdometry {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgOdometry(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgOdometry(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -180,7 +180,7 @@ impl MsgWheeltick {
         } )
     }
 }
-impl super::SBPMessage for MsgWheeltick {
+impl super::SbpMessage for MsgWheeltick {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -227,13 +227,13 @@ impl super::ConcreteMessage for MsgWheeltick {
     const MESSAGE_TYPE: u16 = 2308;
     const MESSAGE_NAME: &'static str = "MSG_WHEELTICK";
 }
-impl TryFrom<super::SBP> for MsgWheeltick {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgWheeltick {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgWheeltick(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgWheeltick(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

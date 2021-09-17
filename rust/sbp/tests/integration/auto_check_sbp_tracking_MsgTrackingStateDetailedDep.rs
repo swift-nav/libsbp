@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -36,7 +36,7 @@ fn test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x11,
@@ -191,7 +191,7 @@ fn test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x11,
@@ -346,7 +346,7 @@ fn test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x11,
@@ -501,7 +501,7 @@ fn test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x11,
@@ -656,7 +656,7 @@ fn test_auto_check_sbp_tracking_MsgTrackingStateDetailedDep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x11,

@@ -6,7 +6,7 @@ use std::{
 
 use slotmap::DenseSlotMap;
 
-use crate::messages::{ConcreteMessage, SBPMessage, SBP};
+use crate::messages::{ConcreteMessage, Sbp, SbpMessage};
 
 pub struct LinkSource<'link, S = ()> {
     link: Link<'link, S>,
@@ -34,7 +34,7 @@ where
 
     pub fn send_with_state<M>(&self, state: &S, msg: M) -> bool
     where
-        M: Borrow<SBP>,
+        M: Borrow<Sbp>,
     {
         let msg = msg.borrow();
         let mut sent = false;
@@ -63,7 +63,7 @@ where
 impl<'link> LinkSource<'link, ()> {
     pub fn send<M>(&self, msg: M) -> bool
     where
-        M: Borrow<SBP>,
+        M: Borrow<Sbp>,
     {
         self.send_with_state(&(), msg)
     }
@@ -120,16 +120,16 @@ struct LinkInner<'link, S> {
 }
 
 pub struct Handler<'link, S> {
-    func: Box<dyn FnMut(&S, SBP) + Send + 'link>,
+    func: Box<dyn FnMut(&S, Sbp) + Send + 'link>,
     msg_types: Cow<'static, [u16]>,
 }
 
 impl<'link, S> Handler<'link, S> {
-    fn run(&mut self, state: &S, msg: SBP) {
+    fn run(&mut self, state: &S, msg: Sbp) {
         (self.func)(state, msg);
     }
 
-    fn can_run(&self, msg: &SBP) -> bool {
+    fn can_run(&self, msg: &Sbp) -> bool {
         self.msg_types.contains(&msg.message_type()) || self.msg_types.is_empty()
     }
 }
@@ -207,13 +207,13 @@ pub struct Key {
 pub trait Event {
     const MESSAGE_TYPES: &'static [u16];
 
-    fn from_sbp(msg: SBP) -> Self;
+    fn from_sbp(msg: Sbp) -> Self;
 }
 
-impl Event for SBP {
+impl Event for Sbp {
     const MESSAGE_TYPES: &'static [u16] = &[];
 
-    fn from_sbp(msg: SBP) -> Self {
+    fn from_sbp(msg: Sbp) -> Self {
         msg
     }
 }
@@ -224,7 +224,7 @@ where
 {
     const MESSAGE_TYPES: &'static [u16] = &[T::MESSAGE_TYPE];
 
-    fn from_sbp(msg: SBP) -> Self {
+    fn from_sbp(msg: Sbp) -> Self {
         match msg.try_into() {
             Ok(event) => event,
             Err(_) => {
@@ -253,10 +253,10 @@ mod tests {
         let source = LinkSource::new();
         let link = source.link();
         let triggered = RefCell::new(false);
-        link.register(|triggered: &RefCell<bool>, _: SBP| {
+        link.register(|triggered: &RefCell<bool>, _: Sbp| {
             *triggered.borrow_mut() = true;
         });
-        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, Sbp::from(make_msg_obs()));
         assert!(*triggered.borrow());
     }
 
@@ -269,14 +269,14 @@ mod tests {
         let triggered = RefCell::new(false);
 
         let handle = thread::spawn(move || {
-            link.register(|triggered: &RefCell<bool>, _: SBP| {
+            link.register(|triggered: &RefCell<bool>, _: Sbp| {
                 *triggered.borrow_mut() = true;
             });
             s.send(()).unwrap();
         });
         r.recv_timeout(Duration::from_secs(1)).unwrap();
 
-        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, Sbp::from(make_msg_obs()));
 
         handle.join().unwrap();
 
@@ -289,10 +289,10 @@ mod tests {
         {
             let source = LinkSource::new();
             let link = source.link();
-            link.register(|_: SBP| {
+            link.register(|_: Sbp| {
                 triggered = true;
             });
-            source.send(SBP::from(make_msg_obs()));
+            source.send(Sbp::from(make_msg_obs()));
         }
         assert!(triggered);
     }
@@ -303,11 +303,11 @@ mod tests {
         let link = source.link();
         let count = RefCell::new(0);
 
-        let key = link.register(|count: &RefCell<usize>, _: SBP| {
+        let key = link.register(|count: &RefCell<usize>, _: Sbp| {
             *count.borrow_mut() += 1;
         });
 
-        let msg = SBP::from(make_msg_obs());
+        let msg = Sbp::from(make_msg_obs());
         source.send_with_state(&count, &msg);
         assert_eq!(*count.borrow(), 1);
 
@@ -325,10 +325,10 @@ mod tests {
 
         impl Event for ObsMsg {
             const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
-            fn from_sbp(msg: SBP) -> Self {
+            fn from_sbp(msg: Sbp) -> Self {
                 match msg {
-                    SBP::MsgObs(m) => ObsMsg::Obs(m),
-                    SBP::MsgObsDepA(m) => ObsMsg::DepA(m),
+                    Sbp::MsgObs(m) => ObsMsg::Obs(m),
+                    Sbp::MsgObsDepA(m) => ObsMsg::DepA(m),
                     _ => unreachable!("wrong event keys"),
                 }
             }
@@ -342,10 +342,10 @@ mod tests {
             *count.borrow_mut() += 1;
         });
 
-        source.send_with_state(&count, SBP::from(make_msg_obs()));
+        source.send_with_state(&count, Sbp::from(make_msg_obs()));
         assert_eq!(*count.borrow(), 1);
 
-        source.send_with_state(&count, SBP::from(make_msg_obs_dep_a()));
+        source.send_with_state(&count, Sbp::from(make_msg_obs_dep_a()));
         assert_eq!(*count.borrow(), 2);
     }
 

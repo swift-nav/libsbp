@@ -52,7 +52,7 @@ impl MsgFlashDone {
         } )
     }
 }
-impl super::SBPMessage for MsgFlashDone {
+impl super::SbpMessage for MsgFlashDone {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -83,13 +83,13 @@ impl super::ConcreteMessage for MsgFlashDone {
     const MESSAGE_TYPE: u16 = 224;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_DONE";
 }
-impl TryFrom<super::SBP> for MsgFlashDone {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFlashDone {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFlashDone(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFlashDone(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -136,7 +136,7 @@ impl MsgFlashErase {
         } )
     }
 }
-impl super::SBPMessage for MsgFlashErase {
+impl super::SbpMessage for MsgFlashErase {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -167,13 +167,13 @@ impl super::ConcreteMessage for MsgFlashErase {
     const MESSAGE_TYPE: u16 = 226;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_ERASE";
 }
-impl TryFrom<super::SBP> for MsgFlashErase {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFlashErase {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFlashErase(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFlashErase(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -229,7 +229,7 @@ impl MsgFlashProgram {
         } )
     }
 }
-impl super::SBPMessage for MsgFlashProgram {
+impl super::SbpMessage for MsgFlashProgram {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -260,13 +260,13 @@ impl super::ConcreteMessage for MsgFlashProgram {
     const MESSAGE_TYPE: u16 = 230;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_PROGRAM";
 }
-impl TryFrom<super::SBP> for MsgFlashProgram {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFlashProgram {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFlashProgram(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFlashProgram(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -324,7 +324,7 @@ impl MsgFlashReadReq {
         } )
     }
 }
-impl super::SBPMessage for MsgFlashReadReq {
+impl super::SbpMessage for MsgFlashReadReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -355,13 +355,13 @@ impl super::ConcreteMessage for MsgFlashReadReq {
     const MESSAGE_TYPE: u16 = 231;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_REQ";
 }
-impl TryFrom<super::SBP> for MsgFlashReadReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFlashReadReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFlashReadReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFlashReadReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -417,7 +417,7 @@ impl MsgFlashReadResp {
         } )
     }
 }
-impl super::SBPMessage for MsgFlashReadResp {
+impl super::SbpMessage for MsgFlashReadResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -448,13 +448,13 @@ impl super::ConcreteMessage for MsgFlashReadResp {
     const MESSAGE_TYPE: u16 = 225;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_RESP";
 }
-impl TryFrom<super::SBP> for MsgFlashReadResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFlashReadResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFlashReadResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFlashReadResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -500,7 +500,7 @@ impl MsgM25FlashWriteStatus {
         } )
     }
 }
-impl super::SBPMessage for MsgM25FlashWriteStatus {
+impl super::SbpMessage for MsgM25FlashWriteStatus {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -531,13 +531,13 @@ impl super::ConcreteMessage for MsgM25FlashWriteStatus {
     const MESSAGE_TYPE: u16 = 243;
     const MESSAGE_NAME: &'static str = "MSG_M25_FLASH_WRITE_STATUS";
 }
-impl TryFrom<super::SBP> for MsgM25FlashWriteStatus {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgM25FlashWriteStatus {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgM25FlashWriteStatus(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgM25FlashWriteStatus(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -579,7 +579,7 @@ impl MsgStmFlashLockSector {
         } )
     }
 }
-impl super::SBPMessage for MsgStmFlashLockSector {
+impl super::SbpMessage for MsgStmFlashLockSector {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -610,13 +610,13 @@ impl super::ConcreteMessage for MsgStmFlashLockSector {
     const MESSAGE_TYPE: u16 = 227;
     const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_LOCK_SECTOR";
 }
-impl TryFrom<super::SBP> for MsgStmFlashLockSector {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgStmFlashLockSector {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgStmFlashLockSector(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgStmFlashLockSector(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -658,7 +658,7 @@ impl MsgStmFlashUnlockSector {
         } )
     }
 }
-impl super::SBPMessage for MsgStmFlashUnlockSector {
+impl super::SbpMessage for MsgStmFlashUnlockSector {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -689,13 +689,13 @@ impl super::ConcreteMessage for MsgStmFlashUnlockSector {
     const MESSAGE_TYPE: u16 = 228;
     const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_UNLOCK_SECTOR";
 }
-impl TryFrom<super::SBP> for MsgStmFlashUnlockSector {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgStmFlashUnlockSector {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgStmFlashUnlockSector(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgStmFlashUnlockSector(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -736,7 +736,7 @@ impl MsgStmUniqueIdReq {
         } )
     }
 }
-impl super::SBPMessage for MsgStmUniqueIdReq {
+impl super::SbpMessage for MsgStmUniqueIdReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -767,13 +767,13 @@ impl super::ConcreteMessage for MsgStmUniqueIdReq {
     const MESSAGE_TYPE: u16 = 232;
     const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_REQ";
 }
-impl TryFrom<super::SBP> for MsgStmUniqueIdReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgStmUniqueIdReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgStmUniqueIdReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgStmUniqueIdReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -813,7 +813,7 @@ impl MsgStmUniqueIdResp {
         } )
     }
 }
-impl super::SBPMessage for MsgStmUniqueIdResp {
+impl super::SbpMessage for MsgStmUniqueIdResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -844,13 +844,13 @@ impl super::ConcreteMessage for MsgStmUniqueIdResp {
     const MESSAGE_TYPE: u16 = 229;
     const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_RESP";
 }
-impl TryFrom<super::SBP> for MsgStmUniqueIdResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgStmUniqueIdResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgStmUniqueIdResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgStmUniqueIdResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

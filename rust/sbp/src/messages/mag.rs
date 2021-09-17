@@ -59,7 +59,7 @@ impl MsgMagRaw {
         } )
     }
 }
-impl super::SBPMessage for MsgMagRaw {
+impl super::SbpMessage for MsgMagRaw {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -102,13 +102,13 @@ impl super::ConcreteMessage for MsgMagRaw {
     const MESSAGE_TYPE: u16 = 2306;
     const MESSAGE_NAME: &'static str = "MSG_MAG_RAW";
 }
-impl TryFrom<super::SBP> for MsgMagRaw {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgMagRaw {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgMagRaw(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgMagRaw(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

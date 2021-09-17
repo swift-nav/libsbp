@@ -68,7 +68,7 @@ impl MsgSettingsReadByIndexDone {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsReadByIndexDone {
+impl super::SbpMessage for MsgSettingsReadByIndexDone {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -99,13 +99,13 @@ impl super::ConcreteMessage for MsgSettingsReadByIndexDone {
     const MESSAGE_TYPE: u16 = 166;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_DONE";
 }
-impl TryFrom<super::SBP> for MsgSettingsReadByIndexDone {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsReadByIndexDone {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsReadByIndexDone(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsReadByIndexDone(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -144,7 +144,7 @@ impl MsgSettingsReadByIndexReq {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsReadByIndexReq {
+impl super::SbpMessage for MsgSettingsReadByIndexReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -175,13 +175,13 @@ impl super::ConcreteMessage for MsgSettingsReadByIndexReq {
     const MESSAGE_TYPE: u16 = 162;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_REQ";
 }
-impl TryFrom<super::SBP> for MsgSettingsReadByIndexReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsReadByIndexReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsReadByIndexReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsReadByIndexReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -236,7 +236,7 @@ impl MsgSettingsReadByIndexResp {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsReadByIndexResp {
+impl super::SbpMessage for MsgSettingsReadByIndexResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -267,13 +267,13 @@ impl super::ConcreteMessage for MsgSettingsReadByIndexResp {
     const MESSAGE_TYPE: u16 = 167;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_RESP";
 }
-impl TryFrom<super::SBP> for MsgSettingsReadByIndexResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsReadByIndexResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsReadByIndexResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsReadByIndexResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -324,7 +324,7 @@ impl MsgSettingsReadReq {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsReadReq {
+impl super::SbpMessage for MsgSettingsReadReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -355,13 +355,13 @@ impl super::ConcreteMessage for MsgSettingsReadReq {
     const MESSAGE_TYPE: u16 = 164;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_REQ";
 }
-impl TryFrom<super::SBP> for MsgSettingsReadReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsReadReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsReadReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsReadReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -408,7 +408,7 @@ impl MsgSettingsReadResp {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsReadResp {
+impl super::SbpMessage for MsgSettingsReadResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -439,13 +439,13 @@ impl super::ConcreteMessage for MsgSettingsReadResp {
     const MESSAGE_TYPE: u16 = 165;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_RESP";
 }
-impl TryFrom<super::SBP> for MsgSettingsReadResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsReadResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsReadResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsReadResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -489,7 +489,7 @@ impl MsgSettingsRegister {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsRegister {
+impl super::SbpMessage for MsgSettingsRegister {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -520,13 +520,13 @@ impl super::ConcreteMessage for MsgSettingsRegister {
     const MESSAGE_TYPE: u16 = 174;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER";
 }
-impl TryFrom<super::SBP> for MsgSettingsRegister {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsRegister {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsRegister(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsRegister(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -575,7 +575,7 @@ impl MsgSettingsRegisterResp {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsRegisterResp {
+impl super::SbpMessage for MsgSettingsRegisterResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -606,13 +606,13 @@ impl super::ConcreteMessage for MsgSettingsRegisterResp {
     const MESSAGE_TYPE: u16 = 431;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER_RESP";
 }
-impl TryFrom<super::SBP> for MsgSettingsRegisterResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsRegisterResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsRegisterResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsRegisterResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -653,7 +653,7 @@ impl MsgSettingsSave {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsSave {
+impl super::SbpMessage for MsgSettingsSave {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -684,13 +684,13 @@ impl super::ConcreteMessage for MsgSettingsSave {
     const MESSAGE_TYPE: u16 = 161;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_SAVE";
 }
-impl TryFrom<super::SBP> for MsgSettingsSave {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsSave {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsSave(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsSave(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -734,7 +734,7 @@ impl MsgSettingsWrite {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsWrite {
+impl super::SbpMessage for MsgSettingsWrite {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -765,13 +765,13 @@ impl super::ConcreteMessage for MsgSettingsWrite {
     const MESSAGE_TYPE: u16 = 160;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE";
 }
-impl TryFrom<super::SBP> for MsgSettingsWrite {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsWrite {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsWrite(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsWrite(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -822,7 +822,7 @@ impl MsgSettingsWriteResp {
         } )
     }
 }
-impl super::SBPMessage for MsgSettingsWriteResp {
+impl super::SbpMessage for MsgSettingsWriteResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -853,13 +853,13 @@ impl super::ConcreteMessage for MsgSettingsWriteResp {
     const MESSAGE_TYPE: u16 = 175;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE_RESP";
 }
-impl TryFrom<super::SBP> for MsgSettingsWriteResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSettingsWriteResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSettingsWriteResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSettingsWriteResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

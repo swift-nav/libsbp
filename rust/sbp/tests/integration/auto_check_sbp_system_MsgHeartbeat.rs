@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -32,7 +32,7 @@ fn test_auto_check_sbp_system_MsgHeartbeat() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgHeartbeat(msg) => {
+            sbp::messages::Sbp::MsgHeartbeat(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xffff,
@@ -67,7 +67,7 @@ fn test_auto_check_sbp_system_MsgHeartbeat() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgHeartbeat(msg) => {
+            sbp::messages::Sbp::MsgHeartbeat(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xffff,

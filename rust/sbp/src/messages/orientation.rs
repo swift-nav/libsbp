@@ -66,7 +66,7 @@ impl MsgAngularRate {
         } )
     }
 }
-impl super::SBPMessage for MsgAngularRate {
+impl super::SbpMessage for MsgAngularRate {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -109,13 +109,13 @@ impl super::ConcreteMessage for MsgAngularRate {
     const MESSAGE_TYPE: u16 = 546;
     const MESSAGE_NAME: &'static str = "MSG_ANGULAR_RATE";
 }
-impl TryFrom<super::SBP> for MsgAngularRate {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAngularRate {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAngularRate(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAngularRate(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -177,7 +177,7 @@ impl MsgBaselineHeading {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineHeading {
+impl super::SbpMessage for MsgBaselineHeading {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -220,13 +220,13 @@ impl super::ConcreteMessage for MsgBaselineHeading {
     const MESSAGE_TYPE: u16 = 527;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_HEADING";
 }
-impl TryFrom<super::SBP> for MsgBaselineHeading {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineHeading {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineHeading(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineHeading(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -299,7 +299,7 @@ impl MsgOrientEuler {
         } )
     }
 }
-impl super::SBPMessage for MsgOrientEuler {
+impl super::SbpMessage for MsgOrientEuler {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -342,13 +342,13 @@ impl super::ConcreteMessage for MsgOrientEuler {
     const MESSAGE_TYPE: u16 = 545;
     const MESSAGE_NAME: &'static str = "MSG_ORIENT_EULER";
 }
-impl TryFrom<super::SBP> for MsgOrientEuler {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgOrientEuler {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgOrientEuler(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgOrientEuler(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -435,7 +435,7 @@ impl MsgOrientQuat {
         } )
     }
 }
-impl super::SBPMessage for MsgOrientQuat {
+impl super::SbpMessage for MsgOrientQuat {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -478,13 +478,13 @@ impl super::ConcreteMessage for MsgOrientQuat {
     const MESSAGE_TYPE: u16 = 544;
     const MESSAGE_NAME: &'static str = "MSG_ORIENT_QUAT";
 }
-impl TryFrom<super::SBP> for MsgOrientQuat {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgOrientQuat {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgOrientQuat(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgOrientQuat(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

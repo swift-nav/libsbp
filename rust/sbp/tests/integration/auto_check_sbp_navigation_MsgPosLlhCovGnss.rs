@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -37,7 +37,7 @@ fn test_auto_check_sbp_navigation_MsgPosLlhCovGnss() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosLLHCovGnss(msg) => {
+            sbp::messages::Sbp::MsgPosLLHCovGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x231,

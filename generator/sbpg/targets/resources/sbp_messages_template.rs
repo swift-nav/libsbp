@@ -84,7 +84,7 @@ impl (((m.identifier|camel_case))) {
 }
 
 ((*- if m.is_real_message *))
-impl super::SBPMessage for (((m.identifier|camel_case))) {
+impl super::SbpMessage for (((m.identifier|camel_case))) {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -126,13 +126,13 @@ impl super::ConcreteMessage for (((m.identifier|camel_case))) {
 ((*- endif *))
 
 ((*- if m.is_real_message *))
-impl TryFrom<super::SBP> for (((m.identifier|camel_case))) {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for (((m.identifier|camel_case))) {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::(((m.identifier|camel_case)))(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::(((m.identifier|camel_case)))(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

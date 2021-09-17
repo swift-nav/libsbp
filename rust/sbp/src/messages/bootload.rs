@@ -50,7 +50,7 @@ impl MsgBootloaderHandshakeDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgBootloaderHandshakeDepA {
+impl super::SbpMessage for MsgBootloaderHandshakeDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -81,13 +81,13 @@ impl super::ConcreteMessage for MsgBootloaderHandshakeDepA {
     const MESSAGE_TYPE: u16 = 176;
     const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBootloaderHandshakeDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBootloaderHandshakeDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBootloaderHandshakeDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBootloaderHandshakeDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -127,7 +127,7 @@ impl MsgBootloaderHandshakeReq {
         } )
     }
 }
-impl super::SBPMessage for MsgBootloaderHandshakeReq {
+impl super::SbpMessage for MsgBootloaderHandshakeReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -158,13 +158,13 @@ impl super::ConcreteMessage for MsgBootloaderHandshakeReq {
     const MESSAGE_TYPE: u16 = 179;
     const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_REQ";
 }
-impl TryFrom<super::SBP> for MsgBootloaderHandshakeReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBootloaderHandshakeReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBootloaderHandshakeReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBootloaderHandshakeReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -207,7 +207,7 @@ impl MsgBootloaderHandshakeResp {
         } )
     }
 }
-impl super::SBPMessage for MsgBootloaderHandshakeResp {
+impl super::SbpMessage for MsgBootloaderHandshakeResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -238,13 +238,13 @@ impl super::ConcreteMessage for MsgBootloaderHandshakeResp {
     const MESSAGE_TYPE: u16 = 180;
     const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_RESP";
 }
-impl TryFrom<super::SBP> for MsgBootloaderHandshakeResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBootloaderHandshakeResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBootloaderHandshakeResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBootloaderHandshakeResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -287,7 +287,7 @@ impl MsgBootloaderJumpToApp {
         } )
     }
 }
-impl super::SBPMessage for MsgBootloaderJumpToApp {
+impl super::SbpMessage for MsgBootloaderJumpToApp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -318,13 +318,13 @@ impl super::ConcreteMessage for MsgBootloaderJumpToApp {
     const MESSAGE_TYPE: u16 = 177;
     const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_JUMP_TO_APP";
 }
-impl TryFrom<super::SBP> for MsgBootloaderJumpToApp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBootloaderJumpToApp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBootloaderJumpToApp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBootloaderJumpToApp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -367,7 +367,7 @@ impl MsgNapDeviceDnaReq {
         } )
     }
 }
-impl super::SBPMessage for MsgNapDeviceDnaReq {
+impl super::SbpMessage for MsgNapDeviceDnaReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -398,13 +398,13 @@ impl super::ConcreteMessage for MsgNapDeviceDnaReq {
     const MESSAGE_TYPE: u16 = 222;
     const MESSAGE_NAME: &'static str = "MSG_NAP_DEVICE_DNA_REQ";
 }
-impl TryFrom<super::SBP> for MsgNapDeviceDnaReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgNapDeviceDnaReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgNapDeviceDnaReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgNapDeviceDnaReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -446,7 +446,7 @@ impl MsgNapDeviceDnaResp {
         } )
     }
 }
-impl super::SBPMessage for MsgNapDeviceDnaResp {
+impl super::SbpMessage for MsgNapDeviceDnaResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -477,13 +477,13 @@ impl super::ConcreteMessage for MsgNapDeviceDnaResp {
     const MESSAGE_TYPE: u16 = 221;
     const MESSAGE_NAME: &'static str = "MSG_NAP_DEVICE_DNA_RESP";
 }
-impl TryFrom<super::SBP> for MsgNapDeviceDnaResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgNapDeviceDnaResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgNapDeviceDnaResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgNapDeviceDnaResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

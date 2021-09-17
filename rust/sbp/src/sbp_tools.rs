@@ -3,16 +3,16 @@ use swiftnav_rs::time::GpsTime;
 
 #[cfg(feature = "swiftnav-rs")]
 use crate::{
-    messages::SBPMessage,
+    messages::SbpMessage,
     time::{GpsTimeError, MessageTime, RoverTime},
 };
 
-use crate::messages::SBP;
+use crate::messages::Sbp;
 
 pub trait SBPTools: Iterator {
     fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
     where
-        Self: Iterator<Item = crate::Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
     {
         HandleErrorsIter::new(self, |_| ControlFlow::Continue)
     }
@@ -22,7 +22,7 @@ pub trait SBPTools: Iterator {
         level: log::Level,
     ) -> HandleErrorsIter<Self, Box<dyn Fn(&crate::Error) -> ControlFlow>>
     where
-        Self: Iterator<Item = crate::Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
     {
         HandleErrorsIter::new(
             self,
@@ -35,7 +35,7 @@ pub trait SBPTools: Iterator {
 
     fn handle_errors<F>(self, on_err: F) -> HandleErrorsIter<Self, F>
     where
-        Self: Iterator<Item = crate::Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
         F: FnMut(&crate::Error) -> ControlFlow,
     {
         HandleErrorsIter::new(self, on_err)
@@ -70,7 +70,7 @@ where
 
 impl<I, F> HandleErrorsIter<I, F>
 where
-    I: Iterator<Item = crate::Result<SBP>>,
+    I: Iterator<Item = crate::Result<Sbp>>,
 {
     fn new(messages: I, on_err: F) -> HandleErrorsIter<I, F> {
         Self {
@@ -87,10 +87,10 @@ where
 
 impl<I, F> Iterator for HandleErrorsIter<I, F>
 where
-    I: Iterator<Item = crate::Result<SBP>>,
+    I: Iterator<Item = crate::Result<Sbp>>,
     F: FnMut(&crate::Error) -> ControlFlow,
 {
-    type Item = SBP;
+    type Item = Sbp;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.messages.next()? {
@@ -152,9 +152,9 @@ where
 #[cfg(feature = "swiftnav-rs")]
 impl<I> Iterator for RoverTimeIter<I>
 where
-    I: Iterator<Item = SBP>,
+    I: Iterator<Item = Sbp>,
 {
-    type Item = (SBP, Option<Result<GpsTime, GpsTimeError>>);
+    type Item = (Sbp, Option<Result<GpsTime, GpsTimeError>>);
 
     fn next(&mut self) -> Option<Self::Item> {
         let msg = self.messages.next()?;

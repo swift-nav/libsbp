@@ -1,4 +1,4 @@
-use crate::{messages::SBPMessage, serialize::SbpSerialize};
+use crate::{messages::SbpMessage, serialize::SbpSerialize};
 
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
@@ -21,7 +21,7 @@ impl SbpSerialize for Unknown {
     }
 }
 
-impl SBPMessage for Unknown {
+impl SbpMessage for Unknown {
     fn message_name(&self) -> &'static str {
         "UNKNOWN"
     }

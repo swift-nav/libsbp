@@ -4,7 +4,7 @@ use bytes::{Buf, BufMut, BytesMut};
 use dencode::{Decoder, Encoder, FramedRead, FramedWrite};
 
 use crate::{
-    messages::{SBPMessage, SBP},
+    messages::{Sbp, SbpMessage},
     parser::{parse_sbp, ParseResult},
     Error, Result,
 };
@@ -17,11 +17,11 @@ const PREAMBLE: u8 = 0x55;
 #[cfg(feature = "async")]
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
-) -> impl futures::Stream<Item = Result<SBP>> {
+) -> impl futures::Stream<Item = Result<Sbp>> {
     FramedRead::new(input, SbpDecoder::new())
 }
 
-pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
+pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<Sbp>> {
     FramedRead::new(input, SbpDecoder::new())
 }
 
@@ -34,7 +34,7 @@ impl SbpDecoder {
 }
 
 impl Decoder for SbpDecoder {
-    type Item = SBP;
+    type Item = Sbp;
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
@@ -93,7 +93,7 @@ impl SbpEncoder {
 
 impl<T> Encoder<T> for SbpEncoder
 where
-    T: Borrow<SBP>,
+    T: Borrow<Sbp>,
 {
     type Error = Error;
 

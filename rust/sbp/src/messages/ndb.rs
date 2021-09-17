@@ -75,7 +75,7 @@ impl MsgNdbEvent {
         } )
     }
 }
-impl super::SBPMessage for MsgNdbEvent {
+impl super::SbpMessage for MsgNdbEvent {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -106,13 +106,13 @@ impl super::ConcreteMessage for MsgNdbEvent {
     const MESSAGE_TYPE: u16 = 1024;
     const MESSAGE_NAME: &'static str = "MSG_NDB_EVENT";
 }
-impl TryFrom<super::SBP> for MsgNdbEvent {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgNdbEvent {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgNdbEvent(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgNdbEvent(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

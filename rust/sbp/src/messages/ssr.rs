@@ -372,7 +372,7 @@ impl MsgSsrCodeBiases {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrCodeBiases {
+impl super::SbpMessage for MsgSsrCodeBiases {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -403,13 +403,13 @@ impl super::ConcreteMessage for MsgSsrCodeBiases {
     const MESSAGE_TYPE: u16 = 1505;
     const MESSAGE_NAME: &'static str = "MSG_SSR_CODE_BIASES";
 }
-impl TryFrom<super::SBP> for MsgSsrCodeBiases {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrCodeBiases {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrCodeBiases(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrCodeBiases(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -469,7 +469,7 @@ impl MsgSsrGriddedCorrection {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrGriddedCorrection {
+impl super::SbpMessage for MsgSsrGriddedCorrection {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -500,13 +500,13 @@ impl super::ConcreteMessage for MsgSsrGriddedCorrection {
     const MESSAGE_TYPE: u16 = 1532;
     const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION";
 }
-impl TryFrom<super::SBP> for MsgSsrGriddedCorrection {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrGriddedCorrection {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrGriddedCorrection(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrGriddedCorrection(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -558,7 +558,7 @@ impl MsgSsrGriddedCorrectionDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
+impl super::SbpMessage for MsgSsrGriddedCorrectionDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -589,13 +589,13 @@ impl super::ConcreteMessage for MsgSsrGriddedCorrectionDepA {
     const MESSAGE_TYPE: u16 = 1530;
     const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrGriddedCorrectionDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrGriddedCorrectionDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrGriddedCorrectionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -647,7 +647,7 @@ impl MsgSsrGriddedCorrectionNoStdDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
+impl super::SbpMessage for MsgSsrGriddedCorrectionNoStdDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -678,13 +678,13 @@ impl super::ConcreteMessage for MsgSsrGriddedCorrectionNoStdDepA {
     const MESSAGE_TYPE: u16 = 1520;
     const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSsrGriddedCorrectionNoStdDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrGriddedCorrectionNoStdDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrGriddedCorrectionNoStdDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrGriddedCorrectionNoStdDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -733,7 +733,7 @@ impl MsgSsrGridDefinitionDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrGridDefinitionDepA {
+impl super::SbpMessage for MsgSsrGridDefinitionDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -764,13 +764,13 @@ impl super::ConcreteMessage for MsgSsrGridDefinitionDepA {
     const MESSAGE_TYPE: u16 = 1525;
     const MESSAGE_NAME: &'static str = "MSG_SSR_GRID_DEFINITION_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSsrGridDefinitionDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrGridDefinitionDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrGridDefinitionDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrGridDefinitionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -856,7 +856,7 @@ impl MsgSsrOrbitClock {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrOrbitClock {
+impl super::SbpMessage for MsgSsrOrbitClock {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -887,13 +887,13 @@ impl super::ConcreteMessage for MsgSsrOrbitClock {
     const MESSAGE_TYPE: u16 = 1501;
     const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK";
 }
-impl TryFrom<super::SBP> for MsgSsrOrbitClock {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrOrbitClock {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrOrbitClock(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrOrbitClock(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -997,7 +997,7 @@ impl MsgSsrOrbitClockDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrOrbitClockDepA {
+impl super::SbpMessage for MsgSsrOrbitClockDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1028,13 +1028,13 @@ impl super::ConcreteMessage for MsgSsrOrbitClockDepA {
     const MESSAGE_TYPE: u16 = 1500;
     const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSsrOrbitClockDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrOrbitClockDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrOrbitClockDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrOrbitClockDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1131,7 +1131,7 @@ impl MsgSsrPhaseBiases {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrPhaseBiases {
+impl super::SbpMessage for MsgSsrPhaseBiases {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1162,13 +1162,13 @@ impl super::ConcreteMessage for MsgSsrPhaseBiases {
     const MESSAGE_TYPE: u16 = 1510;
     const MESSAGE_NAME: &'static str = "MSG_SSR_PHASE_BIASES";
 }
-impl TryFrom<super::SBP> for MsgSsrPhaseBiases {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrPhaseBiases {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrPhaseBiases(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrPhaseBiases(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1221,7 +1221,7 @@ impl MsgSsrSatelliteApc {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrSatelliteApc {
+impl super::SbpMessage for MsgSsrSatelliteApc {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1252,13 +1252,13 @@ impl super::ConcreteMessage for MsgSsrSatelliteApc {
     const MESSAGE_TYPE: u16 = 1540;
     const MESSAGE_NAME: &'static str = "MSG_SSR_SATELLITE_APC";
 }
-impl TryFrom<super::SBP> for MsgSsrSatelliteApc {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrSatelliteApc {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrSatelliteApc(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrSatelliteApc(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1307,7 +1307,7 @@ impl MsgSsrStecCorrection {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrStecCorrection {
+impl super::SbpMessage for MsgSsrStecCorrection {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1338,13 +1338,13 @@ impl super::ConcreteMessage for MsgSsrStecCorrection {
     const MESSAGE_TYPE: u16 = 1531;
     const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION";
 }
-impl TryFrom<super::SBP> for MsgSsrStecCorrection {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrStecCorrection {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrStecCorrection(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrStecCorrection(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1386,7 +1386,7 @@ impl MsgSsrStecCorrectionDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrStecCorrectionDepA {
+impl super::SbpMessage for MsgSsrStecCorrectionDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1417,13 +1417,13 @@ impl super::ConcreteMessage for MsgSsrStecCorrectionDepA {
     const MESSAGE_TYPE: u16 = 1515;
     const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSsrStecCorrectionDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrStecCorrectionDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrStecCorrectionDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrStecCorrectionDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1534,7 +1534,7 @@ impl MsgSsrTileDefinition {
         } )
     }
 }
-impl super::SBPMessage for MsgSsrTileDefinition {
+impl super::SbpMessage for MsgSsrTileDefinition {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1565,13 +1565,13 @@ impl super::ConcreteMessage for MsgSsrTileDefinition {
     const MESSAGE_TYPE: u16 = 1526;
     const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION";
 }
-impl TryFrom<super::SBP> for MsgSsrTileDefinition {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSsrTileDefinition {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSsrTileDefinition(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSsrTileDefinition(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -32,7 +32,7 @@ fn test_auto_check_sbp_file_io_MsgFileioWriteResp() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgFileioWriteResp(msg) => {
+            sbp::messages::Sbp::MsgFileioWriteResp(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xab,

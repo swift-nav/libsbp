@@ -13,7 +13,7 @@
 
 use std::io::Cursor;
 
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 use sbp::iter_messages;
 
 #[allow(unused_imports)]
@@ -50,7 +50,7 @@ fn test_(((s.suite_name)))()
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::(((t.msg.name)))(msg) => {
+            sbp::messages::Sbp::(((t.msg.name)))(msg) => {
                 assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);

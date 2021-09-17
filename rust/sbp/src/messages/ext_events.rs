@@ -61,7 +61,7 @@ impl MsgExtEvent {
         } )
     }
 }
-impl super::SBPMessage for MsgExtEvent {
+impl super::SbpMessage for MsgExtEvent {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -108,13 +108,13 @@ impl super::ConcreteMessage for MsgExtEvent {
     const MESSAGE_TYPE: u16 = 257;
     const MESSAGE_NAME: &'static str = "MSG_EXT_EVENT";
 }
-impl TryFrom<super::SBP> for MsgExtEvent {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgExtEvent {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgExtEvent(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgExtEvent(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

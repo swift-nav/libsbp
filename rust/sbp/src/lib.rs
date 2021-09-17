@@ -17,7 +17,7 @@ use std::{fmt, result};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-use crate::{messages::SBPMessage, serialize::SbpSerialize};
+use crate::{messages::SbpMessage, serialize::SbpSerialize};
 
 pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
@@ -130,7 +130,7 @@ pub enum Error {
     IoError(#[from] std::io::Error),
 }
 
-pub(crate) fn write_frame<M: SBPMessage>(
+pub(crate) fn write_frame<M: SbpMessage>(
     msg: &M,
     frame: &mut Vec<u8>,
 ) -> std::result::Result<(), FramerError> {
@@ -350,7 +350,7 @@ mod swiftnav_rs_conversions {
 mod tests {
     #[test]
     fn test_making_frame() {
-        use crate::messages::SBPMessage;
+        use crate::messages::SbpMessage;
 
         let msg = crate::messages::system::MsgStartup {
             sender_id: Some(250),

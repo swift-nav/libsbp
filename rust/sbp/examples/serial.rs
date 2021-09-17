@@ -7,7 +7,7 @@ use std::time::Duration;
 
 use serialport::prelude::*;
 
-use sbp::{iter_messages, messages::SBP, Error};
+use sbp::{iter_messages, messages::Sbp, Error};
 
 fn main() {
     let s = SerialPortSettings {
@@ -23,8 +23,8 @@ fn main() {
 
     for msg in iter_messages(&mut port) {
         match msg {
-            Ok(SBP::MsgLog(x)) => println!("{}", x.text),
-            Ok(SBP::MsgPosLLH(x)) => println!("{} {} {}", x.lat, x.lon, x.height),
+            Ok(Sbp::MsgLog(x)) => println!("{}", x.text),
+            Ok(Sbp::MsgPosLLH(x)) => println!("{} {} {}", x.lat, x.lon, x.height),
             Ok(_) => (),
 
             Err(Error::ParseError { .. }) => (),

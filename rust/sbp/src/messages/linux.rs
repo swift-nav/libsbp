@@ -65,7 +65,7 @@ impl MsgLinuxCpuState {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxCpuState {
+impl super::SbpMessage for MsgLinuxCpuState {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -96,13 +96,13 @@ impl super::ConcreteMessage for MsgLinuxCpuState {
     const MESSAGE_TYPE: u16 = 32520;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxCpuState {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxCpuState {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxCpuState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxCpuState(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -168,7 +168,7 @@ impl MsgLinuxCpuStateDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxCpuStateDepA {
+impl super::SbpMessage for MsgLinuxCpuStateDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -199,13 +199,13 @@ impl super::ConcreteMessage for MsgLinuxCpuStateDepA {
     const MESSAGE_TYPE: u16 = 32512;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxCpuStateDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxCpuStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxCpuStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -273,7 +273,7 @@ impl MsgLinuxMemState {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxMemState {
+impl super::SbpMessage for MsgLinuxMemState {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -304,13 +304,13 @@ impl super::ConcreteMessage for MsgLinuxMemState {
     const MESSAGE_TYPE: u16 = 32521;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxMemState {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxMemState {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxMemState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxMemState(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -376,7 +376,7 @@ impl MsgLinuxMemStateDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxMemStateDepA {
+impl super::SbpMessage for MsgLinuxMemStateDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -407,13 +407,13 @@ impl super::ConcreteMessage for MsgLinuxMemStateDepA {
     const MESSAGE_TYPE: u16 = 32513;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxMemStateDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxMemStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxMemStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -471,7 +471,7 @@ impl MsgLinuxProcessFdCount {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxProcessFdCount {
+impl super::SbpMessage for MsgLinuxProcessFdCount {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -502,13 +502,13 @@ impl super::ConcreteMessage for MsgLinuxProcessFdCount {
     const MESSAGE_TYPE: u16 = 32518;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_COUNT";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxProcessFdCount {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessFdCount(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxProcessFdCount(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -562,7 +562,7 @@ impl MsgLinuxProcessFdSummary {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxProcessFdSummary {
+impl super::SbpMessage for MsgLinuxProcessFdSummary {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -593,13 +593,13 @@ impl super::ConcreteMessage for MsgLinuxProcessFdSummary {
     const MESSAGE_TYPE: u16 = 32519;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_SUMMARY";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxProcessFdSummary {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessFdSummary(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxProcessFdSummary(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -661,7 +661,7 @@ impl MsgLinuxProcessSocketCounts {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxProcessSocketCounts {
+impl super::SbpMessage for MsgLinuxProcessSocketCounts {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -692,13 +692,13 @@ impl super::ConcreteMessage for MsgLinuxProcessSocketCounts {
     const MESSAGE_TYPE: u16 = 32515;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxProcessSocketCounts {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessSocketCounts(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxProcessSocketCounts(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -775,7 +775,7 @@ impl MsgLinuxProcessSocketQueues {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxProcessSocketQueues {
+impl super::SbpMessage for MsgLinuxProcessSocketQueues {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -806,13 +806,13 @@ impl super::ConcreteMessage for MsgLinuxProcessSocketQueues {
     const MESSAGE_TYPE: u16 = 32516;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxProcessSocketQueues {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessSocketQueues(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxProcessSocketQueues(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -880,7 +880,7 @@ impl MsgLinuxSocketUsage {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxSocketUsage {
+impl super::SbpMessage for MsgLinuxSocketUsage {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -911,13 +911,13 @@ impl super::ConcreteMessage for MsgLinuxSocketUsage {
     const MESSAGE_TYPE: u16 = 32517;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SOCKET_USAGE";
 }
-impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxSocketUsage {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSocketUsage(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxSocketUsage(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -986,7 +986,7 @@ impl MsgLinuxSysState {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxSysState {
+impl super::SbpMessage for MsgLinuxSysState {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1017,13 +1017,13 @@ impl super::ConcreteMessage for MsgLinuxSysState {
     const MESSAGE_TYPE: u16 = 32522;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxSysState {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxSysState {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSysState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxSysState(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1093,7 +1093,7 @@ impl MsgLinuxSysStateDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgLinuxSysStateDepA {
+impl super::SbpMessage for MsgLinuxSysStateDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1124,13 +1124,13 @@ impl super::ConcreteMessage for MsgLinuxSysStateDepA {
     const MESSAGE_TYPE: u16 = 32514;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLinuxSysStateDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSysStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLinuxSysStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

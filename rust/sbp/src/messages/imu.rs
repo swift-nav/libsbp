@@ -54,7 +54,7 @@ impl MsgImuAux {
         } )
     }
 }
-impl super::SBPMessage for MsgImuAux {
+impl super::SbpMessage for MsgImuAux {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -85,13 +85,13 @@ impl super::ConcreteMessage for MsgImuAux {
     const MESSAGE_TYPE: u16 = 2305;
     const MESSAGE_NAME: &'static str = "MSG_IMU_AUX";
 }
-impl TryFrom<super::SBP> for MsgImuAux {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgImuAux {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgImuAux(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgImuAux(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -166,7 +166,7 @@ impl MsgImuRaw {
         } )
     }
 }
-impl super::SBPMessage for MsgImuRaw {
+impl super::SbpMessage for MsgImuRaw {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -213,13 +213,13 @@ impl super::ConcreteMessage for MsgImuRaw {
     const MESSAGE_TYPE: u16 = 2304;
     const MESSAGE_NAME: &'static str = "MSG_IMU_RAW";
 }
-impl TryFrom<super::SBP> for MsgImuRaw {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgImuRaw {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgImuRaw(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgImuRaw(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

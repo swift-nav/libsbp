@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -34,7 +34,7 @@ fn test_auto_check_sbp_navigation_MsgGPSTimeGNSS() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgGPSTimeGnss(msg) => {
+            sbp::messages::Sbp::MsgGPSTimeGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x104,
@@ -86,7 +86,7 @@ fn test_auto_check_sbp_navigation_MsgGPSTimeGNSS() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgGPSTimeGnss(msg) => {
+            sbp::messages::Sbp::MsgGPSTimeGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x104,
@@ -138,7 +138,7 @@ fn test_auto_check_sbp_navigation_MsgGPSTimeGNSS() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgGPSTimeGnss(msg) => {
+            sbp::messages::Sbp::MsgGPSTimeGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x104,
@@ -190,7 +190,7 @@ fn test_auto_check_sbp_navigation_MsgGPSTimeGNSS() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgGPSTimeGnss(msg) => {
+            sbp::messages::Sbp::MsgGPSTimeGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x104,
@@ -242,7 +242,7 @@ fn test_auto_check_sbp_navigation_MsgGPSTimeGNSS() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgGPSTimeGnss(msg) => {
+            sbp::messages::Sbp::MsgGPSTimeGnss(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x104,

@@ -185,7 +185,7 @@ impl MsgSolnMeta {
         } )
     }
 }
-impl super::SBPMessage for MsgSolnMeta {
+impl super::SbpMessage for MsgSolnMeta {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -228,13 +228,13 @@ impl super::ConcreteMessage for MsgSolnMeta {
     const MESSAGE_TYPE: u16 = 65294;
     const MESSAGE_NAME: &'static str = "MSG_SOLN_META";
 }
-impl TryFrom<super::SBP> for MsgSolnMeta {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSolnMeta {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSolnMeta(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSolnMeta(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -323,7 +323,7 @@ impl MsgSolnMetaDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgSolnMetaDepA {
+impl super::SbpMessage for MsgSolnMetaDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -354,13 +354,13 @@ impl super::ConcreteMessage for MsgSolnMetaDepA {
     const MESSAGE_TYPE: u16 = 65295;
     const MESSAGE_NAME: &'static str = "MSG_SOLN_META_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgSolnMetaDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgSolnMetaDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgSolnMetaDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgSolnMetaDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

@@ -56,7 +56,7 @@ impl MsgFileioConfigReq {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioConfigReq {
+impl super::SbpMessage for MsgFileioConfigReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -87,13 +87,13 @@ impl super::ConcreteMessage for MsgFileioConfigReq {
     const MESSAGE_TYPE: u16 = 4097;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_CONFIG_REQ";
 }
-impl TryFrom<super::SBP> for MsgFileioConfigReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioConfigReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioConfigReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioConfigReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -147,7 +147,7 @@ impl MsgFileioConfigResp {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioConfigResp {
+impl super::SbpMessage for MsgFileioConfigResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -178,13 +178,13 @@ impl super::ConcreteMessage for MsgFileioConfigResp {
     const MESSAGE_TYPE: u16 = 4098;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_CONFIG_RESP";
 }
-impl TryFrom<super::SBP> for MsgFileioConfigResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioConfigResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioConfigResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioConfigResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -245,7 +245,7 @@ impl MsgFileioReadDirReq {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioReadDirReq {
+impl super::SbpMessage for MsgFileioReadDirReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -276,13 +276,13 @@ impl super::ConcreteMessage for MsgFileioReadDirReq {
     const MESSAGE_TYPE: u16 = 169;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_DIR_REQ";
 }
-impl TryFrom<super::SBP> for MsgFileioReadDirReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioReadDirReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioReadDirReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioReadDirReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -334,7 +334,7 @@ impl MsgFileioReadDirResp {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioReadDirResp {
+impl super::SbpMessage for MsgFileioReadDirResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -365,13 +365,13 @@ impl super::ConcreteMessage for MsgFileioReadDirResp {
     const MESSAGE_TYPE: u16 = 170;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_DIR_RESP";
 }
-impl TryFrom<super::SBP> for MsgFileioReadDirResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioReadDirResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioReadDirResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioReadDirResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -429,7 +429,7 @@ impl MsgFileioReadReq {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioReadReq {
+impl super::SbpMessage for MsgFileioReadReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -460,13 +460,13 @@ impl super::ConcreteMessage for MsgFileioReadReq {
     const MESSAGE_TYPE: u16 = 168;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_REQ";
 }
-impl TryFrom<super::SBP> for MsgFileioReadReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioReadReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioReadReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioReadReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -519,7 +519,7 @@ impl MsgFileioReadResp {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioReadResp {
+impl super::SbpMessage for MsgFileioReadResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -550,13 +550,13 @@ impl super::ConcreteMessage for MsgFileioReadResp {
     const MESSAGE_TYPE: u16 = 163;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_RESP";
 }
-impl TryFrom<super::SBP> for MsgFileioReadResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioReadResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioReadResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioReadResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -602,7 +602,7 @@ impl MsgFileioRemove {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioRemove {
+impl super::SbpMessage for MsgFileioRemove {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -633,13 +633,13 @@ impl super::ConcreteMessage for MsgFileioRemove {
     const MESSAGE_TYPE: u16 = 172;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_REMOVE";
 }
-impl TryFrom<super::SBP> for MsgFileioRemove {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioRemove {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioRemove(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioRemove(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -695,7 +695,7 @@ impl MsgFileioWriteReq {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioWriteReq {
+impl super::SbpMessage for MsgFileioWriteReq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -726,13 +726,13 @@ impl super::ConcreteMessage for MsgFileioWriteReq {
     const MESSAGE_TYPE: u16 = 173;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_WRITE_REQ";
 }
-impl TryFrom<super::SBP> for MsgFileioWriteReq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioWriteReq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioWriteReq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioWriteReq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -782,7 +782,7 @@ impl MsgFileioWriteResp {
         } )
     }
 }
-impl super::SBPMessage for MsgFileioWriteResp {
+impl super::SbpMessage for MsgFileioWriteResp {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -813,13 +813,13 @@ impl super::ConcreteMessage for MsgFileioWriteResp {
     const MESSAGE_TYPE: u16 = 171;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_WRITE_RESP";
 }
-impl TryFrom<super::SBP> for MsgFileioWriteResp {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFileioWriteResp {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFileioWriteResp(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFileioWriteResp(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -37,7 +37,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,
@@ -237,7 +237,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,
@@ -437,7 +437,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,
@@ -637,7 +637,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,
@@ -833,7 +833,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,
@@ -1029,7 +1029,7 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+            sbp::messages::Sbp::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x16,

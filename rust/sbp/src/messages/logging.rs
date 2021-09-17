@@ -59,7 +59,7 @@ impl MsgFwd {
         } )
     }
 }
-impl super::SBPMessage for MsgFwd {
+impl super::SbpMessage for MsgFwd {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -90,13 +90,13 @@ impl super::ConcreteMessage for MsgFwd {
     const MESSAGE_TYPE: u16 = 1026;
     const MESSAGE_NAME: &'static str = "MSG_FWD";
 }
-impl TryFrom<super::SBP> for MsgFwd {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgFwd {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFwd(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgFwd(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -146,7 +146,7 @@ impl MsgLog {
         } )
     }
 }
-impl super::SBPMessage for MsgLog {
+impl super::SbpMessage for MsgLog {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -177,13 +177,13 @@ impl super::ConcreteMessage for MsgLog {
     const MESSAGE_TYPE: u16 = 1025;
     const MESSAGE_NAME: &'static str = "MSG_LOG";
 }
-impl TryFrom<super::SBP> for MsgLog {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgLog {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLog(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgLog(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -226,7 +226,7 @@ impl MsgPrintDep {
         } )
     }
 }
-impl super::SBPMessage for MsgPrintDep {
+impl super::SbpMessage for MsgPrintDep {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -257,13 +257,13 @@ impl super::ConcreteMessage for MsgPrintDep {
     const MESSAGE_TYPE: u16 = 16;
     const MESSAGE_NAME: &'static str = "MSG_PRINT_DEP";
 }
-impl TryFrom<super::SBP> for MsgPrintDep {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPrintDep {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPrintDep(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPrintDep(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

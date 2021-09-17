@@ -49,7 +49,7 @@ impl MsgMeasurementState {
         } )
     }
 }
-impl super::SBPMessage for MsgMeasurementState {
+impl super::SbpMessage for MsgMeasurementState {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -80,13 +80,13 @@ impl super::ConcreteMessage for MsgMeasurementState {
     const MESSAGE_TYPE: u16 = 97;
     const MESSAGE_NAME: &'static str = "MSG_MEASUREMENT_STATE";
 }
-impl TryFrom<super::SBP> for MsgMeasurementState {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgMeasurementState {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgMeasurementState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgMeasurementState(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -134,7 +134,7 @@ impl MsgTrackingIq {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingIq {
+impl super::SbpMessage for MsgTrackingIq {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -165,13 +165,13 @@ impl super::ConcreteMessage for MsgTrackingIq {
     const MESSAGE_TYPE: u16 = 45;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ";
 }
-impl TryFrom<super::SBP> for MsgTrackingIq {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingIq {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingIq(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingIq(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -222,7 +222,7 @@ impl MsgTrackingIqDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingIqDepA {
+impl super::SbpMessage for MsgTrackingIqDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -253,13 +253,13 @@ impl super::ConcreteMessage for MsgTrackingIqDepA {
     const MESSAGE_TYPE: u16 = 28;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgTrackingIqDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingIqDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingIqDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingIqDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -311,7 +311,7 @@ impl MsgTrackingIqDepB {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingIqDepB {
+impl super::SbpMessage for MsgTrackingIqDepB {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -342,13 +342,13 @@ impl super::ConcreteMessage for MsgTrackingIqDepB {
     const MESSAGE_TYPE: u16 = 44;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_IQ_DEP_B";
 }
-impl TryFrom<super::SBP> for MsgTrackingIqDepB {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingIqDepB {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingIqDepB(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingIqDepB(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -395,7 +395,7 @@ impl MsgTrackingState {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingState {
+impl super::SbpMessage for MsgTrackingState {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -426,13 +426,13 @@ impl super::ConcreteMessage for MsgTrackingState {
     const MESSAGE_TYPE: u16 = 65;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE";
 }
-impl TryFrom<super::SBP> for MsgTrackingState {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingState {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingState(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -473,7 +473,7 @@ impl MsgTrackingStateDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingStateDepA {
+impl super::SbpMessage for MsgTrackingStateDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -504,13 +504,13 @@ impl super::ConcreteMessage for MsgTrackingStateDepA {
     const MESSAGE_TYPE: u16 = 22;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgTrackingStateDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingStateDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingStateDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -551,7 +551,7 @@ impl MsgTrackingStateDepB {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingStateDepB {
+impl super::SbpMessage for MsgTrackingStateDepB {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -582,13 +582,13 @@ impl super::ConcreteMessage for MsgTrackingStateDepB {
     const MESSAGE_TYPE: u16 = 19;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DEP_B";
 }
-impl TryFrom<super::SBP> for MsgTrackingStateDepB {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingStateDepB {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingStateDepB(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingStateDepB(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -695,7 +695,7 @@ impl MsgTrackingStateDetailedDep {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingStateDetailedDep {
+impl super::SbpMessage for MsgTrackingStateDetailedDep {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -726,13 +726,13 @@ impl super::ConcreteMessage for MsgTrackingStateDetailedDep {
     const MESSAGE_TYPE: u16 = 17;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DETAILED_DEP";
 }
-impl TryFrom<super::SBP> for MsgTrackingStateDetailedDep {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingStateDetailedDep {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingStateDetailedDep(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingStateDetailedDep(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -880,7 +880,7 @@ impl MsgTrackingStateDetailedDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgTrackingStateDetailedDepA {
+impl super::SbpMessage for MsgTrackingStateDetailedDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -911,13 +911,13 @@ impl super::ConcreteMessage for MsgTrackingStateDetailedDepA {
     const MESSAGE_TYPE: u16 = 33;
     const MESSAGE_NAME: &'static str = "MSG_TRACKING_STATE_DETAILED_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgTrackingStateDetailedDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgTrackingStateDetailedDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgTrackingStateDetailedDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgTrackingStateDetailedDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

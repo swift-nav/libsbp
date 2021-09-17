@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -32,7 +32,7 @@ fn test_auto_check_sbp_imu_MsgImuAux() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgImuAux(msg) => {
+            sbp::messages::Sbp::MsgImuAux(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x901,

@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -34,7 +34,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,
@@ -86,7 +86,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,
@@ -138,7 +138,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,
@@ -191,7 +191,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,
@@ -243,7 +243,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,
@@ -295,7 +295,7 @@ fn test_auto_check_sbp_acquisition_MsgAcqResultDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+            sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x15,

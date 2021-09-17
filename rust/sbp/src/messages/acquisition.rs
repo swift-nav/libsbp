@@ -272,7 +272,7 @@ impl MsgAcqResult {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqResult {
+impl super::SbpMessage for MsgAcqResult {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -303,13 +303,13 @@ impl super::ConcreteMessage for MsgAcqResult {
     const MESSAGE_TYPE: u16 = 47;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT";
 }
-impl TryFrom<super::SBP> for MsgAcqResult {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqResult {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqResult(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqResult(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -367,7 +367,7 @@ impl MsgAcqResultDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqResultDepA {
+impl super::SbpMessage for MsgAcqResultDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -398,13 +398,13 @@ impl super::ConcreteMessage for MsgAcqResultDepA {
     const MESSAGE_TYPE: u16 = 21;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgAcqResultDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqResultDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqResultDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqResultDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -461,7 +461,7 @@ impl MsgAcqResultDepB {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqResultDepB {
+impl super::SbpMessage for MsgAcqResultDepB {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -492,13 +492,13 @@ impl super::ConcreteMessage for MsgAcqResultDepB {
     const MESSAGE_TYPE: u16 = 20;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_B";
 }
-impl TryFrom<super::SBP> for MsgAcqResultDepB {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqResultDepB {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqResultDepB(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqResultDepB(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -554,7 +554,7 @@ impl MsgAcqResultDepC {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqResultDepC {
+impl super::SbpMessage for MsgAcqResultDepC {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -585,13 +585,13 @@ impl super::ConcreteMessage for MsgAcqResultDepC {
     const MESSAGE_TYPE: u16 = 31;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_C";
 }
-impl TryFrom<super::SBP> for MsgAcqResultDepC {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqResultDepC {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqResultDepC(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqResultDepC(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -639,7 +639,7 @@ impl MsgAcqSvProfile {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqSvProfile {
+impl super::SbpMessage for MsgAcqSvProfile {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -670,13 +670,13 @@ impl super::ConcreteMessage for MsgAcqSvProfile {
     const MESSAGE_TYPE: u16 = 46;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE";
 }
-impl TryFrom<super::SBP> for MsgAcqSvProfile {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqSvProfile {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqSvProfile(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqSvProfile(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -717,7 +717,7 @@ impl MsgAcqSvProfileDep {
         } )
     }
 }
-impl super::SBPMessage for MsgAcqSvProfileDep {
+impl super::SbpMessage for MsgAcqSvProfileDep {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -748,13 +748,13 @@ impl super::ConcreteMessage for MsgAcqSvProfileDep {
     const MESSAGE_TYPE: u16 = 30;
     const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE_DEP";
 }
-impl TryFrom<super::SBP> for MsgAcqSvProfileDep {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAcqSvProfileDep {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAcqSvProfileDep(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAcqSvProfileDep(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

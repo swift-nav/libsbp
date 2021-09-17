@@ -47,7 +47,7 @@ impl MsgUserData {
         } )
     }
 }
-impl super::SBPMessage for MsgUserData {
+impl super::SbpMessage for MsgUserData {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -78,13 +78,13 @@ impl super::ConcreteMessage for MsgUserData {
     const MESSAGE_TYPE: u16 = 2048;
     const MESSAGE_NAME: &'static str = "MSG_USER_DATA";
 }
-impl TryFrom<super::SBP> for MsgUserData {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgUserData {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUserData(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgUserData(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }

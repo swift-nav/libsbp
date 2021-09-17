@@ -117,7 +117,7 @@ def main():
         "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
     test_mode = args.test_c or args.test_rust or args.test_java
-    print(args)
+
     if test_mode:
       file_index = yaml.resolve_test_deps(*yaml.get_files(input_file))
     else:

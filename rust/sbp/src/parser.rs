@@ -4,7 +4,7 @@
 use byteorder::{LittleEndian, ReadBytesExt};
 use nom::Err as NomErr;
 
-use crate::{messages::SBP, Error, Result, SbpString};
+use crate::{messages::Sbp, Error, Result, SbpString};
 
 pub fn read_string(buf: &mut &[u8]) -> Result<SbpString> {
     let amount = buf.len();
@@ -89,7 +89,7 @@ pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
 
 #[derive(Debug)]
 pub enum ParseResult {
-    Ok((usize, SBP)),
+    Ok((usize, Sbp)),
     Err((usize, Error)),
     Incomplete,
 }
@@ -118,7 +118,7 @@ pub fn parse_sbp<'a>(input: &'a [u8]) -> ParseResult {
         ));
     }
 
-    let msg = match SBP::parse(frame.1, frame.2, &mut frame.3) {
+    let msg = match Sbp::parse(frame.1, frame.2, &mut frame.3) {
         Ok(msg) => msg,
         Err(err) => return ParseResult::Err((bytes_read, err)),
     };
@@ -202,7 +202,7 @@ mod tests {
         };
 
         let (consumed, msg) = match parse_sbp(&packet[..]) {
-            ParseResult::Ok((consumed, SBP::MsgBaselineECEF(msg))) => (consumed, msg),
+            ParseResult::Ok((consumed, Sbp::MsgBaselineECEF(msg))) => (consumed, msg),
             err => panic!("unexpected parse result: {:?}", err),
         };
 
@@ -234,7 +234,7 @@ mod tests {
 
         assert!(matches!(
             res,
-            ParseResult::Ok((28, SBP::MsgBaselineECEF(_)))
+            ParseResult::Ok((28, Sbp::MsgBaselineECEF(_)))
         ));
     }
 

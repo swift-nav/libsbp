@@ -10,21 +10,19 @@ pub use serde_json::ser::CompactFormatter;
 const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
 
 use crate::{
-    messages::{SBPMessage, SBP},
+    messages::{Sbp, SbpMessage},
     serialize::SbpSerialize,
     Error, Result,
 };
 
-pub fn iter_messages<R: std::io::Read>(
-    input: R,
-) -> impl Iterator<Item = Result<crate::messages::SBP>> {
+pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<Sbp>> {
     dencode::FramedRead::new(input, JsonDecoder::new())
 }
 
 #[cfg(feature = "async")]
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
-) -> impl futures::Stream<Item = Result<SBP>> {
+) -> impl futures::Stream<Item = Result<Sbp>> {
     dencode::FramedRead::new(input, JsonDecoder::new())
 }
 
@@ -61,7 +59,7 @@ impl JsonDecoder {
         }
     }
 
-    fn parse_json(&mut self, input: JsonInput) -> Result<SBP> {
+    fn parse_json(&mut self, input: JsonInput) -> Result<Sbp> {
         let data = input.into_inner();
 
         self.payload_buf.clear();
@@ -72,12 +70,12 @@ impl JsonDecoder {
         )?;
         let mut payload = self.payload_buf.as_slice();
 
-        SBP::parse(data.msg_type, data.sender, &mut payload)
+        Sbp::parse(data.msg_type, data.sender, &mut payload)
     }
 }
 
 impl Decoder for JsonDecoder {
-    type Item = SBP;
+    type Item = Sbp;
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
@@ -168,13 +166,13 @@ struct JsonOutput<'a> {
     common: CommonJson<'a>,
 
     #[serde(flatten)]
-    msg: &'a SBP,
+    msg: &'a Sbp,
 }
 
 impl<F, T> Encoder<T> for JsonEncoder<F>
 where
     F: Formatter + Clone,
-    T: Borrow<SBP>,
+    T: Borrow<Sbp>,
 {
     type Error = Error;
 
@@ -228,7 +226,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoder<F> {
 
         let msg = {
             let mut payload = payload.as_slice();
-            SBP::parse(input.data.msg_type, input.data.sender, &mut payload)?
+            Sbp::parse(input.data.msg_type, input.data.sender, &mut payload)?
         };
 
         let output = Json2JsonOutput {
@@ -250,7 +248,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoder<F> {
 fn get_common_fields<'a>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut Vec<u8>,
-    msg: &SBP,
+    msg: &Sbp,
 ) -> Result<CommonJson<'a>> {
     payload_buf.clear();
     frame_buf.clear();

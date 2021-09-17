@@ -14,7 +14,7 @@
 use std::io::Cursor;
 
 use sbp::iter_messages;
-use sbp::messages::SBPMessage;
+use sbp::messages::SbpMessage;
 
 #[allow(unused_imports)]
 use crate::*;
@@ -35,7 +35,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -103,7 +103,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -171,7 +171,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -239,7 +239,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -307,7 +307,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -375,7 +375,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -443,7 +443,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -511,7 +511,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -579,7 +579,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -647,7 +647,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,
@@ -715,7 +715,7 @@ fn test_auto_check_sbp_navigation_MsgPosECEFDepA() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::Sbp::MsgPosECEFDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0x200,

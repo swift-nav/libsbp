@@ -136,7 +136,7 @@ impl MsgAgeCorrections {
         } )
     }
 }
-impl super::SBPMessage for MsgAgeCorrections {
+impl super::SbpMessage for MsgAgeCorrections {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -179,13 +179,13 @@ impl super::ConcreteMessage for MsgAgeCorrections {
     const MESSAGE_TYPE: u16 = 528;
     const MESSAGE_NAME: &'static str = "MSG_AGE_CORRECTIONS";
 }
-impl TryFrom<super::SBP> for MsgAgeCorrections {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgAgeCorrections {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAgeCorrections(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgAgeCorrections(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -249,7 +249,7 @@ impl MsgBaselineECEF {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineECEF {
+impl super::SbpMessage for MsgBaselineECEF {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -292,13 +292,13 @@ impl super::ConcreteMessage for MsgBaselineECEF {
     const MESSAGE_TYPE: u16 = 523;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF";
 }
-impl TryFrom<super::SBP> for MsgBaselineECEF {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineECEF {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineECEF(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -372,7 +372,7 @@ impl MsgBaselineECEFDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineECEFDepA {
+impl super::SbpMessage for MsgBaselineECEFDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -415,13 +415,13 @@ impl super::ConcreteMessage for MsgBaselineECEFDepA {
     const MESSAGE_TYPE: u16 = 514;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineECEFDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineECEFDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -485,7 +485,7 @@ impl MsgBaselineHeadingDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineHeadingDepA {
+impl super::SbpMessage for MsgBaselineHeadingDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -528,13 +528,13 @@ impl super::ConcreteMessage for MsgBaselineHeadingDepA {
     const MESSAGE_TYPE: u16 = 519;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_HEADING_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineHeadingDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineHeadingDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineHeadingDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineHeadingDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -607,7 +607,7 @@ impl MsgBaselineNED {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineNED {
+impl super::SbpMessage for MsgBaselineNED {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -650,13 +650,13 @@ impl super::ConcreteMessage for MsgBaselineNED {
     const MESSAGE_TYPE: u16 = 524;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED";
 }
-impl TryFrom<super::SBP> for MsgBaselineNED {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineNED {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineNED(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineNED(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -737,7 +737,7 @@ impl MsgBaselineNEDDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgBaselineNEDDepA {
+impl super::SbpMessage for MsgBaselineNEDDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -780,13 +780,13 @@ impl super::ConcreteMessage for MsgBaselineNEDDepA {
     const MESSAGE_TYPE: u16 = 515;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineNEDDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgBaselineNEDDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineNEDDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgBaselineNEDDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -862,7 +862,7 @@ impl MsgDops {
         } )
     }
 }
-impl super::SBPMessage for MsgDops {
+impl super::SbpMessage for MsgDops {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -905,13 +905,13 @@ impl super::ConcreteMessage for MsgDops {
     const MESSAGE_TYPE: u16 = 520;
     const MESSAGE_NAME: &'static str = "MSG_DOPS";
 }
-impl TryFrom<super::SBP> for MsgDops {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgDops {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgDops(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgDops(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -980,7 +980,7 @@ impl MsgDopsDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgDopsDepA {
+impl super::SbpMessage for MsgDopsDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1023,13 +1023,13 @@ impl super::ConcreteMessage for MsgDopsDepA {
     const MESSAGE_TYPE: u16 = 518;
     const MESSAGE_NAME: &'static str = "MSG_DOPS_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgDopsDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgDopsDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgDopsDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgDopsDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1100,7 +1100,7 @@ impl MsgGPSTime {
         } )
     }
 }
-impl super::SBPMessage for MsgGPSTime {
+impl super::SbpMessage for MsgGPSTime {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1147,13 +1147,13 @@ impl super::ConcreteMessage for MsgGPSTime {
     const MESSAGE_TYPE: u16 = 258;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME";
 }
-impl TryFrom<super::SBP> for MsgGPSTime {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgGPSTime {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTime(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgGPSTime(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1220,7 +1220,7 @@ impl MsgGPSTimeDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgGPSTimeDepA {
+impl super::SbpMessage for MsgGPSTimeDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1267,13 +1267,13 @@ impl super::ConcreteMessage for MsgGPSTimeDepA {
     const MESSAGE_TYPE: u16 = 256;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgGPSTimeDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgGPSTimeDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTimeDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgGPSTimeDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1340,7 +1340,7 @@ impl MsgGPSTimeGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgGPSTimeGnss {
+impl super::SbpMessage for MsgGPSTimeGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1387,13 +1387,13 @@ impl super::ConcreteMessage for MsgGPSTimeGnss {
     const MESSAGE_TYPE: u16 = 260;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_GNSS";
 }
-impl TryFrom<super::SBP> for MsgGPSTimeGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgGPSTimeGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTimeGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgGPSTimeGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1464,7 +1464,7 @@ impl MsgPosECEF {
         } )
     }
 }
-impl super::SBPMessage for MsgPosECEF {
+impl super::SbpMessage for MsgPosECEF {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1507,13 +1507,13 @@ impl super::ConcreteMessage for MsgPosECEF {
     const MESSAGE_TYPE: u16 = 521;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF";
 }
-impl TryFrom<super::SBP> for MsgPosECEF {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosECEF {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosECEF(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1606,7 +1606,7 @@ impl MsgPosECEFCov {
         } )
     }
 }
-impl super::SBPMessage for MsgPosECEFCov {
+impl super::SbpMessage for MsgPosECEFCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1649,13 +1649,13 @@ impl super::ConcreteMessage for MsgPosECEFCov {
     const MESSAGE_TYPE: u16 = 532;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV";
 }
-impl TryFrom<super::SBP> for MsgPosECEFCov {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosECEFCov {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosECEFCov(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1758,7 +1758,7 @@ impl MsgPosECEFCovGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgPosECEFCovGnss {
+impl super::SbpMessage for MsgPosECEFCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1801,13 +1801,13 @@ impl super::ConcreteMessage for MsgPosECEFCovGnss {
     const MESSAGE_TYPE: u16 = 564;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosECEFCovGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosECEFCovGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosECEFCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -1894,7 +1894,7 @@ impl MsgPosECEFDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgPosECEFDepA {
+impl super::SbpMessage for MsgPosECEFDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -1937,13 +1937,13 @@ impl super::ConcreteMessage for MsgPosECEFDepA {
     const MESSAGE_TYPE: u16 = 512;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgPosECEFDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosECEFDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2020,7 +2020,7 @@ impl MsgPosECEFGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgPosECEFGnss {
+impl super::SbpMessage for MsgPosECEFGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2063,13 +2063,13 @@ impl super::ConcreteMessage for MsgPosECEFGnss {
     const MESSAGE_TYPE: u16 = 553;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosECEFGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosECEFGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosECEFGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2149,7 +2149,7 @@ impl MsgPosLLH {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLH {
+impl super::SbpMessage for MsgPosLLH {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2192,13 +2192,13 @@ impl super::ConcreteMessage for MsgPosLLH {
     const MESSAGE_TYPE: u16 = 522;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH";
 }
-impl TryFrom<super::SBP> for MsgPosLLH {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLH {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLH(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLH(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2306,7 +2306,7 @@ impl MsgPosLLHAcc {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLHAcc {
+impl super::SbpMessage for MsgPosLLHAcc {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2349,13 +2349,13 @@ impl super::ConcreteMessage for MsgPosLLHAcc {
     const MESSAGE_TYPE: u16 = 536;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_ACC";
 }
-impl TryFrom<super::SBP> for MsgPosLLHAcc {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLHAcc {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHAcc(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLHAcc(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2460,7 +2460,7 @@ impl MsgPosLLHCov {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLHCov {
+impl super::SbpMessage for MsgPosLLHCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2503,13 +2503,13 @@ impl super::ConcreteMessage for MsgPosLLHCov {
     const MESSAGE_TYPE: u16 = 529;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV";
 }
-impl TryFrom<super::SBP> for MsgPosLLHCov {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLHCov {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLHCov(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2612,7 +2612,7 @@ impl MsgPosLLHCovGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLHCovGnss {
+impl super::SbpMessage for MsgPosLLHCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2655,13 +2655,13 @@ impl super::ConcreteMessage for MsgPosLLHCovGnss {
     const MESSAGE_TYPE: u16 = 561;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosLLHCovGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLHCovGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLHCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2751,7 +2751,7 @@ impl MsgPosLLHDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLHDepA {
+impl super::SbpMessage for MsgPosLLHDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2794,13 +2794,13 @@ impl super::ConcreteMessage for MsgPosLLHDepA {
     const MESSAGE_TYPE: u16 = 513;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgPosLLHDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLHDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLHDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -2882,7 +2882,7 @@ impl MsgPosLLHGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgPosLLHGnss {
+impl super::SbpMessage for MsgPosLLHGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -2925,13 +2925,13 @@ impl super::ConcreteMessage for MsgPosLLHGnss {
     const MESSAGE_TYPE: u16 = 554;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosLLHGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgPosLLHGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgPosLLHGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3050,7 +3050,7 @@ impl MsgProtectionLevel {
         } )
     }
 }
-impl super::SBPMessage for MsgProtectionLevel {
+impl super::SbpMessage for MsgProtectionLevel {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3097,13 +3097,13 @@ impl super::ConcreteMessage for MsgProtectionLevel {
     const MESSAGE_TYPE: u16 = 535;
     const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL";
 }
-impl TryFrom<super::SBP> for MsgProtectionLevel {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgProtectionLevel {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgProtectionLevel(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgProtectionLevel(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3204,7 +3204,7 @@ impl MsgProtectionLevelDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgProtectionLevelDepA {
+impl super::SbpMessage for MsgProtectionLevelDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3247,13 +3247,13 @@ impl super::ConcreteMessage for MsgProtectionLevelDepA {
     const MESSAGE_TYPE: u16 = 534;
     const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgProtectionLevelDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgProtectionLevelDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgProtectionLevelDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgProtectionLevelDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3332,7 +3332,7 @@ impl MsgUtcTime {
         } )
     }
 }
-impl super::SBPMessage for MsgUtcTime {
+impl super::SbpMessage for MsgUtcTime {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3375,13 +3375,13 @@ impl super::ConcreteMessage for MsgUtcTime {
     const MESSAGE_TYPE: u16 = 259;
     const MESSAGE_NAME: &'static str = "MSG_UTC_TIME";
 }
-impl TryFrom<super::SBP> for MsgUtcTime {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgUtcTime {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUtcTime(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgUtcTime(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3464,7 +3464,7 @@ impl MsgUtcTimeGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgUtcTimeGnss {
+impl super::SbpMessage for MsgUtcTimeGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3507,13 +3507,13 @@ impl super::ConcreteMessage for MsgUtcTimeGnss {
     const MESSAGE_TYPE: u16 = 261;
     const MESSAGE_NAME: &'static str = "MSG_UTC_TIME_GNSS";
 }
-impl TryFrom<super::SBP> for MsgUtcTimeGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgUtcTimeGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUtcTimeGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgUtcTimeGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3611,7 +3611,7 @@ impl MsgVelBody {
         } )
     }
 }
-impl super::SBPMessage for MsgVelBody {
+impl super::SbpMessage for MsgVelBody {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3654,13 +3654,13 @@ impl super::ConcreteMessage for MsgVelBody {
     const MESSAGE_TYPE: u16 = 531;
     const MESSAGE_NAME: &'static str = "MSG_VEL_BODY";
 }
-impl TryFrom<super::SBP> for MsgVelBody {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelBody {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelBody(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelBody(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3743,7 +3743,7 @@ impl MsgVelECEF {
         } )
     }
 }
-impl super::SBPMessage for MsgVelECEF {
+impl super::SbpMessage for MsgVelECEF {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3786,13 +3786,13 @@ impl super::ConcreteMessage for MsgVelECEF {
     const MESSAGE_TYPE: u16 = 525;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF";
 }
-impl TryFrom<super::SBP> for MsgVelECEF {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelECEF {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelECEF(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -3880,7 +3880,7 @@ impl MsgVelECEFCov {
         } )
     }
 }
-impl super::SBPMessage for MsgVelECEFCov {
+impl super::SbpMessage for MsgVelECEFCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -3923,13 +3923,13 @@ impl super::ConcreteMessage for MsgVelECEFCov {
     const MESSAGE_TYPE: u16 = 533;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV";
 }
-impl TryFrom<super::SBP> for MsgVelECEFCov {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelECEFCov {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelECEFCov(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4027,7 +4027,7 @@ impl MsgVelECEFCovGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgVelECEFCovGnss {
+impl super::SbpMessage for MsgVelECEFCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4070,13 +4070,13 @@ impl super::ConcreteMessage for MsgVelECEFCovGnss {
     const MESSAGE_TYPE: u16 = 565;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelECEFCovGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelECEFCovGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelECEFCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4159,7 +4159,7 @@ impl MsgVelECEFDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgVelECEFDepA {
+impl super::SbpMessage for MsgVelECEFDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4202,13 +4202,13 @@ impl super::ConcreteMessage for MsgVelECEFDepA {
     const MESSAGE_TYPE: u16 = 516;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgVelECEFDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelECEFDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelECEFDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4281,7 +4281,7 @@ impl MsgVelECEFGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgVelECEFGnss {
+impl super::SbpMessage for MsgVelECEFGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4324,13 +4324,13 @@ impl super::ConcreteMessage for MsgVelECEFGnss {
     const MESSAGE_TYPE: u16 = 557;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelECEFGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelECEFGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelECEFGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4407,7 +4407,7 @@ impl MsgVelNED {
         } )
     }
 }
-impl super::SBPMessage for MsgVelNED {
+impl super::SbpMessage for MsgVelNED {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4450,13 +4450,13 @@ impl super::ConcreteMessage for MsgVelNED {
     const MESSAGE_TYPE: u16 = 526;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED";
 }
-impl TryFrom<super::SBP> for MsgVelNED {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelNED {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNED(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelNED(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4549,7 +4549,7 @@ impl MsgVelNEDCov {
         } )
     }
 }
-impl super::SBPMessage for MsgVelNEDCov {
+impl super::SbpMessage for MsgVelNEDCov {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4592,13 +4592,13 @@ impl super::ConcreteMessage for MsgVelNEDCov {
     const MESSAGE_TYPE: u16 = 530;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV";
 }
-impl TryFrom<super::SBP> for MsgVelNEDCov {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelNEDCov {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelNEDCov(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4699,7 +4699,7 @@ impl MsgVelNEDCovGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgVelNEDCovGnss {
+impl super::SbpMessage for MsgVelNEDCovGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4742,13 +4742,13 @@ impl super::ConcreteMessage for MsgVelNEDCovGnss {
     const MESSAGE_TYPE: u16 = 562;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelNEDCovGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelNEDCovGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelNEDCovGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4835,7 +4835,7 @@ impl MsgVelNEDDepA {
         } )
     }
 }
-impl super::SBPMessage for MsgVelNEDDepA {
+impl super::SbpMessage for MsgVelNEDDepA {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -4878,13 +4878,13 @@ impl super::ConcreteMessage for MsgVelNEDDepA {
     const MESSAGE_TYPE: u16 = 517;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgVelNEDDepA {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelNEDDepA {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelNEDDepA(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
@@ -4963,7 +4963,7 @@ impl MsgVelNEDGnss {
         } )
     }
 }
-impl super::SBPMessage for MsgVelNEDGnss {
+impl super::SbpMessage for MsgVelNEDGnss {
     fn message_name(&self) -> &'static str {
         Self::MESSAGE_NAME
     }
@@ -5006,13 +5006,13 @@ impl super::ConcreteMessage for MsgVelNEDGnss {
     const MESSAGE_TYPE: u16 = 558;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelNEDGnss {
-    type Error = super::TryFromSBPError;
+impl TryFrom<super::Sbp> for MsgVelNEDGnss {
+    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            super::Sbp::MsgVelNEDGnss(m) => Ok(m),
+            _ => Err(super::TryFromSbpError),
         }
     }
 }
