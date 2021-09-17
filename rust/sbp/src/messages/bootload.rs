@@ -31,11 +31,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Version number string (not NULL terminated)
     pub handshake: Vec<u8>,
@@ -111,11 +111,11 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
 /// between the device bootloader and the host. The response from the device
 /// is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
@@ -185,11 +185,11 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 /// MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
 /// number and the SBP protocol version number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Bootloader flags
     pub flags: u32,
@@ -268,11 +268,11 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
 ///
 /// The host initiates the bootloader to jump to the application.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Ignored by the device
     pub jump: u8,
@@ -351,11 +351,11 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
 /// that this ID is tied to the FPGA, and not related to the Piksi's serial
 /// number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
@@ -427,11 +427,11 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 /// that this ID is tied to the FPGA, and not related to the Piksi's serial
 /// number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
     pub dna: Vec<u8>,

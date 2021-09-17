@@ -29,7 +29,7 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// Code biases are to be added to pseudorange. The corrections conform with
 /// RTCMv3 MT 1059 / 1065.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
@@ -88,7 +88,7 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
 /// RLE encoded validity list.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeaderDepA {
@@ -168,7 +168,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
 /// The LPP message contains nested variable length arrays which are not
 /// supported in SBP, so each grid point will be identified by the index.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
@@ -258,7 +258,7 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// The 3GPP message contains nested variable length arrays which are not
 /// supported in SBP, so each grid point will be identified by the index.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeaderDepA {
@@ -339,11 +339,11 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
 /// corresponding signal to get corrected pseudorange. It is an equivalent to
 /// the 1059 / 1065 RTCM message types.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -441,11 +441,11 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a gridded correction message
     pub header: GriddedCorrectionHeader,
@@ -530,11 +530,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
@@ -619,11 +619,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionNoStdDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
@@ -708,11 +708,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStdDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinitionDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GridDefinitionHeaderDepA,
@@ -796,11 +796,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
 /// correction to broadcast ephemeris and is an equivalent to the 1060 /1066
 /// RTCM message types.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -937,11 +937,11 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -1086,11 +1086,11 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 /// the phase wind-up correction. It is typically an equivalent to the 1265
 /// RTCM message types.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -1202,11 +1202,11 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrSatelliteApc {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Satellite antenna phase center corrections
     pub apc: Vec<SatelliteAPC>,
@@ -1285,11 +1285,11 @@ impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a STEC polynomial coefficient message.
     pub header: STECHeader,
@@ -1364,11 +1364,11 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrectionDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a STEC message
     pub header: STECHeaderDepA,
@@ -1454,11 +1454,11 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
 /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 /// correction points, not lists of points.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrTileDefinition {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Unique identifier of the tile set this tile belongs to.
     pub tile_set_id: u16,
@@ -1609,7 +1609,7 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
 ///
 /// Phase biases are to be added to carrier phase measurements.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
@@ -1685,7 +1685,7 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 /// since SBP message a limited to 255 bytes.  The header is used to tie
 /// multiple SBP messages into a sequence.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
@@ -1767,7 +1767,7 @@ impl crate::serialize::SbpSerialize for STECHeader {
 /// since SBP message a limited to 255 bytes.  The header is used to tie
 /// multiple SBP messages into a sequence.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECHeaderDepA {
@@ -1841,7 +1841,7 @@ impl crate::serialize::SbpSerialize for STECHeaderDepA {
 /// STEC residual (mean and standard deviation) for the given satellite at the
 /// grid point.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
@@ -1900,7 +1900,7 @@ impl crate::serialize::SbpSerialize for STECResidual {
 ///
 /// STEC residual for the given satellite at the grid point.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidualNoStd {
@@ -1957,7 +1957,7 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 ///
 /// STEC polynomial for the given satellite.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
@@ -2021,7 +2021,7 @@ impl crate::serialize::SbpSerialize for STECSatElement {
 /// Contains phase center offset and elevation variation corrections for one
 /// signal on a satellite.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SatelliteAPC {
@@ -2094,7 +2094,7 @@ impl crate::serialize::SbpSerialize for SatelliteAPC {
 /// Troposphere vertical delays (mean and standard deviation) at the grid
 /// point.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
@@ -2156,7 +2156,7 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
 ///
 /// Troposphere vertical delays at the grid point.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrectionNoStd {

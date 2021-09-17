@@ -29,11 +29,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// This message is sent once per second per SBAS satellite. ME checks the
 /// parity of the data block and sends only blocks that pass the check.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS signal identifier.
     pub sid: GnssSignal,

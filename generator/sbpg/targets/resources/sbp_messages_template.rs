@@ -35,12 +35,12 @@ use super::(((i)))::*;
 /// (((m.desc | commentify)))
 ///
 ((*- endif *))
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
     ((*- if m.is_real_message *))
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))

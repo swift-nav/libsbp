@@ -37,11 +37,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// window of FileIO data that can be in-flight during read or write
 /// operations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
     pub sequence: u32,
@@ -119,11 +119,11 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 /// window of FileIO data that can be in-flight during read or write
 /// operations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
     pub sequence: u32,
@@ -220,11 +220,11 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 /// device will only respond to this message when it is received from sender
 /// ID 0x42.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -312,11 +312,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 /// the end of the list is identified by an packet with no entries. The
 /// sequence number in the response is preserved from the request.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -401,11 +401,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 /// print "Invalid fileio read message". A device will only respond to this
 /// message when it is received from sender ID 0x42.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -497,11 +497,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 /// message length field indicates how many bytes were successfully read. The
 /// sequence number in the response is preserved from the request.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -583,11 +583,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 /// fileio remove message". A device will only process this message when it is
 /// received from sender ID 0x42.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Name of the file to delete
     pub filename: SbpString,
@@ -667,11 +667,11 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 /// fileio write message". A device will only process this message when it is
 /// received from sender ID 0x42.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
     pub sequence: u32,
@@ -763,11 +763,11 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 /// MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
 /// number in the response is preserved from the request.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
     pub sequence: u32,

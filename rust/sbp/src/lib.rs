@@ -14,7 +14,7 @@ pub mod time;
 
 use std::{fmt, result};
 
-#[cfg(feature = "sbp_serde")]
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::{messages::SbpMessage, serialize::SbpSerialize};
@@ -48,7 +48,7 @@ impl SbpString {
     }
 }
 
-#[cfg(feature = "sbp_serde")]
+#[cfg(feature = "serde")]
 impl Serialize for SbpString {
     fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
     where
@@ -59,7 +59,7 @@ impl Serialize for SbpString {
     }
 }
 
-#[cfg(feature = "sbp_serde")]
+#[cfg(feature = "serde")]
 impl<'de> Deserialize<'de> for SbpString {
     fn deserialize<D>(deserializer: D) -> result::Result<Self, D::Error>
     where

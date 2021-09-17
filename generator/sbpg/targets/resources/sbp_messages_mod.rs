@@ -53,7 +53,7 @@ impl std::fmt::Display for TryFromSbpError {
 
 impl std::error::Error for TryFromSbpError {}
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
 #[non_exhaustive]
 pub enum Sbp {

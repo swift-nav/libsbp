@@ -34,11 +34,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// forwarded msg contains. Protocol 0 represents SBP and the remaining values
 /// are implementation defined.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// source identifier
     pub source: u8,
@@ -124,11 +124,11 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 /// containing errors, warnings and informational messages at ERROR, WARNING,
 /// DEBUG, INFO logging levels.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Logging level
     pub level: u8,
@@ -207,11 +207,11 @@ impl crate::serialize::SbpSerialize for MsgLog {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Human-readable string
     pub text: SbpString,

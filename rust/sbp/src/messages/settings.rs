@@ -52,11 +52,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 ///
 /// The settings message for indicating end of the settings values.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexDone {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
@@ -124,11 +124,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
 /// The settings message for iterating through the settings values. A device
 /// will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// An index into the device settings, with values ranging from 0 to
     /// length(settings).
@@ -212,11 +212,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
 /// example string that could be sent from the device is
 /// "simulator\0enabled\0True\0enum:True,False\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// An index into the device settings, with values ranging from 0 to
     /// length(settings)
@@ -304,11 +304,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
 /// device should respond with a MSG_SETTINGS_READ_RESP message (msg_id
 /// 0x00A5).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0"
@@ -388,11 +388,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
 /// the NULL character and where quotation marks are omitted. An example
 /// string that could be sent from device is "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -469,11 +469,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
 /// settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
 /// setting to set the initial value.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegister {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE".
@@ -551,11 +551,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegister {
 /// was already registered or is available in the permanent setting storage
 /// and had a different value.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegisterResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Register status
     pub status: u8,
@@ -637,11 +637,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
 /// The save settings message persists the device's current settings
 /// configuration to its onboard flash memory file system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsSave {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
@@ -714,11 +714,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsSave {
 /// example string that could be sent to a device is
 /// "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWrite {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -799,11 +799,11 @@ impl crate::serialize::SbpSerialize for MsgSettingsWrite {
 /// An example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWriteResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write status
     pub status: u8,

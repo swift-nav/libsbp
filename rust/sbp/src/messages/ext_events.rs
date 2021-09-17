@@ -29,11 +29,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// Reports detection of an external event, the GPS time it occurred, which
 /// pin it was and whether it was rising or falling.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
     pub wn: u16,

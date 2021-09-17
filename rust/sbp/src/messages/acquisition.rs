@@ -30,7 +30,7 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// profile during acquisition time. The message is used to debug and measure
 /// the performance.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
@@ -134,7 +134,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfile {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
@@ -244,11 +244,11 @@ impl crate::serialize::SbpSerialize for AcqSvProfileDep {
 /// range. It contains the parameters of the point in the acquisition search
 /// space with the best carrier-to-noise (CN/0) ratio.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// CN/0 of best point
     pub cn0: f32,
@@ -337,11 +337,11 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// SNR of best point. Currently dimensionless, but will have units of dB Hz
     /// in the revision of this message.
@@ -432,11 +432,11 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// SNR of best point. Currently in arbitrary SNR points, but will be in
     /// units of dB Hz in a later revision of this message.
@@ -526,11 +526,11 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// CN/0 of best point
     pub cn0: f32,
@@ -620,11 +620,11 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
 /// The message describes all SV profiles during acquisition time. The message
 /// is used to debug and measure the performance.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// SV profiles during acquisition time
     pub acq_sv_profile: Vec<AcqSvProfile>,
@@ -698,11 +698,11 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// SV profiles during acquisition time
     pub acq_sv_profile: Vec<AcqSvProfileDep>,

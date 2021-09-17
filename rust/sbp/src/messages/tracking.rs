@@ -30,11 +30,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// states. It reports status and carrier-to-noise density measurements for
 /// all tracked satellites.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgMeasurementState {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// ME signal tracking channel state
     pub states: Vec<MeasurementState>,
@@ -109,11 +109,11 @@ impl crate::serialize::SbpSerialize for MsgMeasurementState {
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Tracking channel of origin
     pub channel: u8,
@@ -197,11 +197,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingIq {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Tracking channel of origin
     pub channel: u8,
@@ -286,11 +286,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepA {
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Tracking channel of origin
     pub channel: u8,
@@ -376,11 +376,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
 /// states. It reports status and carrier-to-noise density measurements for
 /// all tracked satellites.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Signal tracking channel state
     pub states: Vec<TrackingChannelState>,
@@ -454,11 +454,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingState {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Satellite tracking channel state
     pub states: Vec<TrackingChannelStateDepA>,
@@ -532,11 +532,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Signal tracking channel state
     pub states: Vec<TrackingChannelStateDepB>,
@@ -610,11 +610,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepB {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Receiver clock time.
     pub recv_time: u64,
@@ -795,11 +795,11 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDep {
 /// The tracking message returns a set tracking channel parameters for a
 /// single tracking channel useful for debugging issues.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Receiver clock time.
     pub recv_time: u64,
@@ -982,7 +982,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDepA {
 /// the FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to
 /// 28).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MeasurementState {
@@ -1040,7 +1040,7 @@ impl crate::serialize::SbpSerialize for MeasurementState {
 ///
 /// Structure containing in-phase and quadrature correlation components.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelation {
@@ -1097,7 +1097,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelCorrelation {
 ///
 /// Structure containing in-phase and quadrature correlation components.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelationDep {
@@ -1157,7 +1157,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelCorrelationDep {
 /// Tracking channel state for a specific satellite signal and measured signal
 /// power.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelState {
@@ -1219,7 +1219,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelState {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepA {
@@ -1281,7 +1281,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelStateDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepB {

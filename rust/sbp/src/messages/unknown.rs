@@ -1,9 +1,9 @@
 use crate::{messages::SbpMessage, serialize::SbpSerialize};
 
-#[cfg(feature = "sbp_serde")]
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
 pub struct Unknown {
     pub msg_id: u16,

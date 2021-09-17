@@ -29,11 +29,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Index representing the type of telemetry in use.  It is implementation
     /// defined.
@@ -115,11 +115,11 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
 /// lower rate than the MSG_CSAC_TELEMETRY.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Index representing the type of telemetry in use.  It is implementation
     /// defined.
@@ -201,11 +201,11 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgDgnssStatus {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u8,
@@ -296,11 +296,11 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
 /// translate messages tagged with a local timestamp (e.g. IMU or wheeltick
 /// messages) to GNSS time for the sender producing this message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGnssTimeOffset {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Weeks portion of the time offset
     pub weeks: i16,
@@ -391,11 +391,11 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
 /// also lists the atomic contents (i.e. types of messages included) of the
 /// Solution Group.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupMeta {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
     pub group_id: u8,
@@ -493,11 +493,11 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
 /// the system. To determine the source of the error, the remaining error
 /// flags should be inspected.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u32,
@@ -572,11 +572,11 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
 /// The INS status message describes the state of the operation and
 /// initialization of the inertial navigation system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgInsStatus {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u32,
@@ -652,11 +652,11 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 /// rejected INS updates. This message is expected to be extended in the
 /// future as new types of measurements are being added.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgInsUpdates {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
@@ -783,11 +783,11 @@ impl crate::serialize::SbpSerialize for MsgInsUpdates {
 /// timestamping.  The sender ID for each of these MSG_PPS_TIME messages
 /// should match the sender ID of the respective sensor data.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPpsTime {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Local time in microseconds
     pub time: u64,
@@ -868,11 +868,11 @@ impl crate::serialize::SbpSerialize for MsgPpsTime {
 /// the host or other attached devices that the system has started and is now
 /// ready to respond to commands or configuration requests.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStartup {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Cause of startup
     pub cause: u8,
@@ -963,11 +963,11 @@ impl crate::serialize::SbpSerialize for MsgStartup {
 /// but if the generic status code is initializing, it should be ignored.
 /// Refer to product documentation for details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStatusReport {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Identity of reporting system
     pub reporting_system: u16,
@@ -1062,7 +1062,7 @@ impl crate::serialize::SbpSerialize for MsgStatusReport {
 /// Report the general and specific state of a sub-system.  If the generic
 /// state is reported as initializing, the specific state should be ignored.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SubSystemReport {

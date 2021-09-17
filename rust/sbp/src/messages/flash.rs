@@ -33,11 +33,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return
 /// this message on failure.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashDone {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Response flags
     pub response: u8,
@@ -114,11 +114,11 @@ impl crate::serialize::SbpSerialize for MsgFlashDone {
 /// message containing the return code - FLASH_OK (0) on success or
 /// FLASH_INVALID_FLASH (1) if the flash specified is invalid.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashErase {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Target flags
     pub target: u8,
@@ -201,11 +201,11 @@ impl crate::serialize::SbpSerialize for MsgFlashErase {
 /// (2) if the maximum write size is exceeded. Note that the sector-containing
 /// addresses must be erased before addresses can be programmed.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashProgram {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Target flags
     pub target: u8,
@@ -299,11 +299,11 @@ impl crate::serialize::SbpSerialize for MsgFlashProgram {
 /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
 /// allowed range.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Target flags
     pub target: u8,
@@ -392,11 +392,11 @@ impl crate::serialize::SbpSerialize for MsgFlashReadReq {
 /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
 /// allowed range.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Target flags
     pub target: u8,
@@ -481,11 +481,11 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
 /// The flash status message writes to the 8-bit M25 flash status register.
 /// The device replies with a MSG_FLASH_DONE message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgM25FlashWriteStatus {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Byte to write to the M25 flash status register
     pub status: Vec<u8>,
@@ -560,11 +560,11 @@ impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
 /// The flash lock message locks a sector of the STM flash memory. The device
 /// replies with a MSG_FLASH_DONE message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashLockSector {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Flash sector number to lock
     pub sector: u32,
@@ -639,11 +639,11 @@ impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
 /// The flash unlock message unlocks a sector of the STM flash memory. The
 /// device replies with a MSG_FLASH_DONE message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashUnlockSector {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Flash sector number to unlock
     pub sector: u32,
@@ -720,11 +720,11 @@ impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
 /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
@@ -794,11 +794,11 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Device unique ID
     pub stm_id: Vec<u8>,

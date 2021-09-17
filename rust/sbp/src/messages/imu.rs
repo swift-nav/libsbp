@@ -29,11 +29,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// IMU type
     pub imu_type: u8,
@@ -126,11 +126,11 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 ///
 /// The time-tagging mode should not change throughout a run.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Milliseconds since reference epoch and time status.
     pub tow: u32,

@@ -26,7 +26,7 @@ use super::gnss::*;
 #[allow(unused_imports)]
 use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
@@ -112,7 +112,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContent {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
@@ -205,7 +205,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
 /// fractional cycles. This has the opposite sign convention than a typical
 /// GPS receiver and the phase has the opposite sign as the pseudorange.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
@@ -264,7 +264,7 @@ impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
 /// Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
 /// doppler. This doppler is defined as positive for approaching satellites.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct Doppler {
@@ -314,7 +314,7 @@ impl crate::serialize::SbpSerialize for Doppler {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
@@ -390,7 +390,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContent {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
@@ -466,7 +466,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
@@ -541,7 +541,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepB {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssCapb {
@@ -665,11 +665,11 @@ impl crate::serialize::SbpSerialize for GnssCapb {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContent,
@@ -782,11 +782,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
@@ -899,11 +899,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGps {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContent,
@@ -1025,11 +1025,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGps {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGpsDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
@@ -1152,11 +1152,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGpsDep {
 /// accuracy surveyed location of the base station. Any error here will result
 /// in an error in the pseudo-absolute position output.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosEcef {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// ECEF X coordinate
     pub x: f64,
@@ -1243,11 +1243,11 @@ impl crate::serialize::SbpSerialize for MsgBasePosEcef {
 /// required to be a high-accuracy surveyed location of the base station. Any
 /// error here will result in an error in the pseudo-absolute position output.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLlh {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Latitude
     pub lat: f64,
@@ -1334,11 +1334,11 @@ impl crate::serialize::SbpSerialize for MsgBasePosLlh {
 /// Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
 /// Table 5-9 for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -1535,11 +1535,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisBds {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -1742,11 +1742,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -1957,11 +1957,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -2182,11 +2182,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -2407,11 +2407,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
 /// Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016
 /// for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2610,11 +2610,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGal {
 /// This observation message has been deprecated in favor of an ephemeris
 /// message with explicit source of NAV data.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2810,11 +2810,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
 /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
 /// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2931,11 +2931,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
 /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
 /// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -3037,11 +3037,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
 /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
 /// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3143,11 +3143,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
 /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
 /// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3257,11 +3257,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
 /// This observation message has been deprecated in favor of ephemeris message
 /// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3378,11 +3378,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGps {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -3573,11 +3573,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGps {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
 /// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGpsDepE {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -3766,11 +3766,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGpsDepE {
 /// This observation message has been deprecated in favor of ephemeris message
 /// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGpsDepF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3959,11 +3959,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGpsDepF {
 /// The ephemeris message returns a set of satellite orbit parameters that is
 /// used to calculate QZSS satellite position, velocity, and clock offset.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -4147,11 +4147,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -4246,11 +4246,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -4350,11 +4350,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
 /// This observation message has been deprecated in favor of ephemeris message
 /// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -4455,11 +4455,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
 /// ambiguity resolution for baselines with mixed receiver types (e.g.
 /// receiver of different manufacturers).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GLONASS FDMA signals mask
     pub mask: u8,
@@ -4549,11 +4549,11 @@ impl crate::serialize::SbpSerialize for MsgGloBiases {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
@@ -4632,11 +4632,11 @@ impl crate::serialize::SbpSerialize for MsgGnssCapb {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
@@ -4733,11 +4733,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelay {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeDep,
@@ -4834,11 +4834,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
@@ -4937,11 +4937,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
 /// utilize the ionospheric model for computation of the ionospheric delay.
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
@@ -5052,11 +5052,11 @@ impl crate::serialize::SbpSerialize for MsgIono {
 /// cycles). The observations are be interoperable with 3rd party receivers
 /// and conform with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeader,
@@ -5151,11 +5151,11 @@ impl crate::serialize::SbpSerialize for MsgObs {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -5253,11 +5253,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
 /// referenced to a nominal pseudorange which are not interoperable with most
 /// 3rd party GNSS receivers or typical RTCMv3 observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -5357,11 +5357,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepB {
 /// cycles). The observations are interoperable with 3rd party receivers and
 /// conform with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -5457,11 +5457,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepC {
 /// The OSR message contains network corrections in an observation-like
 /// format.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeader,
@@ -5557,11 +5557,11 @@ impl crate::serialize::SbpSerialize for MsgOsr {
 /// Azimuth and elevation angles of all the visible satellites that the device
 /// does have ephemeris or almanac for.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Azimuth and elevation per satellite
     pub azel: Vec<SvAzEl>,
@@ -5635,11 +5635,11 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGpsDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
@@ -5718,7 +5718,7 @@ impl crate::serialize::SbpSerialize for MsgSvConfigurationGpsDep {
 ///
 /// Header of a GNSS observation message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeader {
@@ -5776,7 +5776,7 @@ impl crate::serialize::SbpSerialize for ObservationHeader {
 ///
 /// Header of a GPS observation message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
@@ -5840,7 +5840,7 @@ impl crate::serialize::SbpSerialize for ObservationHeaderDep {
 /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
 /// currently performed.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContent {
@@ -5929,7 +5929,7 @@ impl crate::serialize::SbpSerialize for PackedObsContent {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
@@ -6004,7 +6004,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepA {
 /// Pseudorange and carrier phase observation for a satellite being tracked.
 /// Pseudoranges are referenced to a nominal pseudorange.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
@@ -6080,7 +6080,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepB {
 /// The observations are be interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
@@ -6154,7 +6154,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepC {
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedOsrContent {
@@ -6246,7 +6246,7 @@ impl crate::serialize::SbpSerialize for PackedOsrContent {
 ///
 /// Satellite azimuth and elevation.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SvAzEl {

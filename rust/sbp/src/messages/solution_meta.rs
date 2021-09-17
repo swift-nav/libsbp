@@ -29,7 +29,7 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// Metadata around the GNSS sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GNSSInputType {
@@ -83,7 +83,7 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
 /// Metadata around the IMU sensors involved in the fuzed solution. Accessible
 /// through sol_in[N].flags in a MSG_SOLN_META.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct IMUInputType {
@@ -140,11 +140,11 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 /// complete in the Fusion Engine, when output solution is the last received
 /// valid GNSS solution and its tow is not a TOM.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSolnMeta {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
@@ -272,11 +272,11 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
 /// in computing the Fuzed Solution. It focuses primarily, but not only, on
 /// GNSS metadata.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSolnMetaDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Position Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
@@ -400,7 +400,7 @@ impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
 /// Metadata around the Odometry sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct OdoInputType {
@@ -455,7 +455,7 @@ impl crate::serialize::SbpSerialize for OdoInputType {
 /// flags, for each sensor type, is described in the relevant structures in
 /// this section.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SolutionInputType {

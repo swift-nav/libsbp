@@ -28,11 +28,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// User data payload
     pub contents: Vec<u8>,

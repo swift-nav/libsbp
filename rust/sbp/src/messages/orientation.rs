@@ -35,11 +35,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// down direction. This message will only be available in future INS versions
 /// of Swift Products and is not produced by Piksi Multi or Duro.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAngularRate {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
@@ -149,11 +149,11 @@ impl crate::serialize::SbpSerialize for MsgAngularRate {
 /// intended that time-matched RTK mode is used when the base station is
 /// moving.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeading {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
@@ -259,11 +259,11 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeading {
 /// in future INS versions of Swift Products and is not produced by Piksi
 /// Multi or Duro.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOrientEuler {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
@@ -389,11 +389,11 @@ impl crate::serialize::SbpSerialize for MsgOrientEuler {
 /// in future INS versions of Swift Products and is not produced by Piksi
 /// Multi or Duro.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOrientQuat {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,

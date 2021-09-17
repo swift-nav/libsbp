@@ -35,11 +35,11 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 /// available to synchronise odometry measurements with GNSS. Processor time
 /// shall roll over to zero after one week.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Time field representing either milliseconds in the GPS Week or local CPU
     /// time from the producing system in milliseconds.  See the tow_source flag
@@ -147,11 +147,11 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
 /// when a PVT fix becomes available to synchronise wheeltick measurements
 /// with GNSS. Local CPU time shall roll over to zero after one week.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgWheeltick {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Time field representing either microseconds since the last PPS,
     /// microseconds in the GPS Week or local CPU time from the producing system
