@@ -11,14 +11,13 @@
 
 // This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
 
+use std::io::Cursor;
+
 use sbp::messages::SBPMessage;
 use sbp::iter_messages;
 
-mod common;
 #[allow(unused_imports)]
-use common::AlmostEq;
-
-use std::io::Cursor;
+use crate::*;
 
 ((*- macro compare_value(prefix, value) *))
 ((*- if value is string_type *))

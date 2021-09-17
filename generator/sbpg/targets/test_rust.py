@@ -17,7 +17,7 @@ from sbpg.targets.common import array_type, dict_type, float_type, is_empty, str
 from sbpg.targets.templating import JENV
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
-
+TEST_MAIN_TEMPLATE_NAME = "sbp_tests_main_template.rs"
 
 def str_escape(value):
     return "\"{}\".to_string()".format(value)
@@ -41,7 +41,7 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/%s.rs" % (output_dir, name)
+  destination_filename = "%s/integration/%s.rs" % (output_dir, name)
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(s=package_spec,
@@ -50,3 +50,9 @@ def render_source(output_dir, package_spec):
                                include=package_spec.package.split('.')[1],
                                filepath="/".join(package_spec.filepath) + ".yaml"))
 
+def render_main(output_dir, package_specs):
+  destination_filename = "%s/integration/main.rs" % output_dir
+  py_template = JENV.get_template(TEST_MAIN_TEMPLATE_NAME)
+  test_names = [p.filepath[1] for p in package_specs]
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(test_names=test_names))
