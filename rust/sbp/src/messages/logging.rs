@@ -62,15 +62,15 @@ impl MsgFwd {
     }
 }
 impl super::SBPMessage for MsgFwd {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FWD"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1026
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -149,15 +149,15 @@ impl MsgLog {
     }
 }
 impl super::SBPMessage for MsgLog {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LOG"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1025
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -229,15 +229,15 @@ impl MsgPrintDep {
     }
 }
 impl super::SBPMessage for MsgPrintDep {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_PRINT_DEP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         16
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

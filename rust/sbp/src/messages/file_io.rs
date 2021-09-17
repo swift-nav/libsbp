@@ -59,15 +59,15 @@ impl MsgFileioConfigReq {
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_CONFIG_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         4097
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -150,15 +150,15 @@ impl MsgFileioConfigResp {
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_CONFIG_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         4098
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -248,15 +248,15 @@ impl MsgFileioReadDirReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_READ_DIR_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         169
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -337,15 +337,15 @@ impl MsgFileioReadDirResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_READ_DIR_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         170
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -432,15 +432,15 @@ impl MsgFileioReadReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_READ_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         168
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -522,15 +522,15 @@ impl MsgFileioReadResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_READ_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         163
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -605,15 +605,15 @@ impl MsgFileioRemove {
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_REMOVE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         172
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -698,15 +698,15 @@ impl MsgFileioWriteReq {
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_WRITE_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         173
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -785,15 +785,15 @@ impl MsgFileioWriteResp {
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FILEIO_WRITE_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         171
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

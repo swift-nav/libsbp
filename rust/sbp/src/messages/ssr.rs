@@ -375,15 +375,15 @@ impl MsgSsrCodeBiases {
     }
 }
 impl super::SBPMessage for MsgSsrCodeBiases {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_CODE_BIASES"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1505
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -472,15 +472,15 @@ impl MsgSsrGriddedCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_GRIDDED_CORRECTION"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1532
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -561,15 +561,15 @@ impl MsgSsrGriddedCorrectionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_GRIDDED_CORRECTION_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1530
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -650,15 +650,15 @@ impl MsgSsrGriddedCorrectionNoStdDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1520
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -736,15 +736,15 @@ impl MsgSsrGridDefinitionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGridDefinitionDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_GRID_DEFINITION_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1525
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -859,15 +859,15 @@ impl MsgSsrOrbitClock {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClock {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_ORBIT_CLOCK"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1501
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1000,15 +1000,15 @@ impl MsgSsrOrbitClockDepA {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClockDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_ORBIT_CLOCK_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1500
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1134,15 +1134,15 @@ impl MsgSsrPhaseBiases {
     }
 }
 impl super::SBPMessage for MsgSsrPhaseBiases {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_PHASE_BIASES"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1510
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1224,15 +1224,15 @@ impl MsgSsrSatelliteApc {
     }
 }
 impl super::SBPMessage for MsgSsrSatelliteApc {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_SATELLITE_APC"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1540
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1310,15 +1310,15 @@ impl MsgSsrStecCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_STEC_CORRECTION"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1531
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1389,15 +1389,15 @@ impl MsgSsrStecCorrectionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrectionDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_STEC_CORRECTION_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1515
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1537,15 +1537,15 @@ impl MsgSsrTileDefinition {
     }
 }
 impl super::SBPMessage for MsgSsrTileDefinition {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_SSR_TILE_DEFINITION"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         1526
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

@@ -39,12 +39,12 @@ fn test_auto_check_sbp_navigation_MsgVelEcefCovGnss() {
         match &sbp_msg {
             sbp::messages::SBP::MsgVelECEFCovGnss(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x235,
                     "Incorrect message type, expected 0x235, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x1000,
                     "incorrect sender id, expected 0x1000, is {}",

@@ -55,15 +55,15 @@ impl MsgCsacTelemetry {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetry {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_CSAC_TELEMETRY"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65284
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -141,15 +141,15 @@ impl MsgCsacTelemetryLabels {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_CSAC_TELEMETRY_LABELS"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65285
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -232,15 +232,15 @@ impl MsgDgnssStatus {
     }
 }
 impl super::SBPMessage for MsgDgnssStatus {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_DGNSS_STATUS"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65282
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -327,15 +327,15 @@ impl MsgGnssTimeOffset {
     }
 }
 impl super::SBPMessage for MsgGnssTimeOffset {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_GNSS_TIME_OFFSET"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65287
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -423,15 +423,15 @@ impl MsgGroupMeta {
     }
 }
 impl super::SBPMessage for MsgGroupMeta {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_GROUP_META"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65290
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -515,15 +515,15 @@ impl MsgHeartbeat {
     }
 }
 impl super::SBPMessage for MsgHeartbeat {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_HEARTBEAT"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65535
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -594,15 +594,15 @@ impl MsgInsStatus {
     }
 }
 impl super::SBPMessage for MsgInsStatus {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_INS_STATUS"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65283
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -692,15 +692,15 @@ impl MsgInsUpdates {
     }
 }
 impl super::SBPMessage for MsgInsUpdates {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_INS_UPDATES"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65286
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -808,15 +808,15 @@ impl MsgPpsTime {
     }
 }
 impl super::SBPMessage for MsgPpsTime {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_PPS_TIME"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65288
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -896,15 +896,15 @@ impl MsgStartup {
     }
 }
 impl super::SBPMessage for MsgStartup {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STARTUP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65280
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -997,15 +997,15 @@ impl MsgStatusReport {
     }
 }
 impl super::SBPMessage for MsgStatusReport {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STATUS_REPORT"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65534
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

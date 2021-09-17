@@ -35,12 +35,12 @@ fn test_auto_check_sbp_file_io_MsgFileioWriteResp() {
         match &sbp_msg {
             sbp::messages::SBP::MsgFileioWriteResp(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0xab,
                     "Incorrect message type, expected 0xab, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
                     "incorrect sender id, expected 0x42, is {}",

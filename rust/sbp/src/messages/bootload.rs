@@ -53,15 +53,15 @@ impl MsgBootloaderHandshakeDepA {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_BOOTLOADER_HANDSHAKE_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         176
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -130,15 +130,15 @@ impl MsgBootloaderHandshakeReq {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_BOOTLOADER_HANDSHAKE_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         179
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -210,15 +210,15 @@ impl MsgBootloaderHandshakeResp {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_BOOTLOADER_HANDSHAKE_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         180
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -290,15 +290,15 @@ impl MsgBootloaderJumpToApp {
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_BOOTLOADER_JUMP_TO_APP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         177
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -370,15 +370,15 @@ impl MsgNapDeviceDnaReq {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_NAP_DEVICE_DNA_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         222
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -449,15 +449,15 @@ impl MsgNapDeviceDnaResp {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_NAP_DEVICE_DNA_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         221
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

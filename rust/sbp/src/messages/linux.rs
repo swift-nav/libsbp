@@ -68,15 +68,15 @@ impl MsgLinuxCpuState {
     }
 }
 impl super::SBPMessage for MsgLinuxCpuState {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_CPU_STATE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32520
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -171,15 +171,15 @@ impl MsgLinuxCpuStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxCpuStateDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_CPU_STATE_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32512
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -276,15 +276,15 @@ impl MsgLinuxMemState {
     }
 }
 impl super::SBPMessage for MsgLinuxMemState {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_MEM_STATE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32521
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -379,15 +379,15 @@ impl MsgLinuxMemStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxMemStateDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_MEM_STATE_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32513
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -474,15 +474,15 @@ impl MsgLinuxProcessFdCount {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdCount {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_PROCESS_FD_COUNT"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32518
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -565,15 +565,15 @@ impl MsgLinuxProcessFdSummary {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdSummary {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_PROCESS_FD_SUMMARY"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32519
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -664,15 +664,15 @@ impl MsgLinuxProcessSocketCounts {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketCounts {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_PROCESS_SOCKET_COUNTS"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32515
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -778,15 +778,15 @@ impl MsgLinuxProcessSocketQueues {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketQueues {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_PROCESS_SOCKET_QUEUES"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32516
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -883,15 +883,15 @@ impl MsgLinuxSocketUsage {
     }
 }
 impl super::SBPMessage for MsgLinuxSocketUsage {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_SOCKET_USAGE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32517
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -989,15 +989,15 @@ impl MsgLinuxSysState {
     }
 }
 impl super::SBPMessage for MsgLinuxSysState {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_SYS_STATE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32522
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -1096,15 +1096,15 @@ impl MsgLinuxSysStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxSysStateDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_LINUX_SYS_STATE_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         32514
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

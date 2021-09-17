@@ -52,8 +52,8 @@ fn test_(((s.suite_name)))()
         };
         match &sbp_msg {
             sbp::messages::SBP::(((t.msg.name)))(msg) => {
-                assert_eq!( msg.get_message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.get_message_type());
-                let sender_id = msg.get_sender_id().unwrap();
+                assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);
                 ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
             },

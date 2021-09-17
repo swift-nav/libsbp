@@ -277,8 +277,8 @@ fn get_common_fields<'a>(
 
     Ok(CommonJson {
         preamble: 0x55,
-        sender: msg.get_sender_id().unwrap_or(0),
-        msg_type: msg.get_message_type(),
+        sender: msg.sender_id().unwrap_or(0),
+        msg_type: msg.message_type(),
         length: length as u8,
         payload: payload_buf,
         crc,

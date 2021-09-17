@@ -44,12 +44,12 @@ fn test_auto_check_sbp_observation_MsgEphemerisGPS() {
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisGPS(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x8a,
                     "Incorrect message type, expected 0x8a, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
                     "incorrect sender id, expected 0x90a, is {}",

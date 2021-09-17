@@ -87,15 +87,15 @@ impl (((m.identifier|camel_case))) {
 
 ((*- if m.is_real_message *))
 impl super::SBPMessage for (((m.identifier|camel_case))) {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "(((m.identifier)))"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         (((m.sbp_id)))
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

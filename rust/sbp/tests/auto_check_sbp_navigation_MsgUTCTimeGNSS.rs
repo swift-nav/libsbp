@@ -38,12 +38,12 @@ fn test_auto_check_sbp_navigation_MsgUTCTimeGNSS() {
         match &sbp_msg {
             sbp::messages::SBP::MsgUtcTimeGnss(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x105,
                     "Incorrect message type, expected 0x105, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x315,
                     "incorrect sender id, expected 0x315, is {}",

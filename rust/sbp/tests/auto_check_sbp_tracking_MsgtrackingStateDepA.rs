@@ -40,12 +40,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",
@@ -240,12 +240,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",
@@ -440,12 +440,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",
@@ -640,12 +640,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",
@@ -836,12 +836,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",
@@ -1032,12 +1032,12 @@ fn test_auto_check_sbp_tracking_MsgtrackingStateDepA() {
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x16,
                     "Incorrect message type, expected 0x16, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
                     "incorrect sender id, expected 0x4c3, is {}",

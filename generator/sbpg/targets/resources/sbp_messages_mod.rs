@@ -25,9 +25,9 @@ use self::unknown::Unknown;
 use crate::serialize::SbpSerialize;
 
 pub trait SBPMessage: SbpSerialize {
-    fn get_message_name(&self) -> &'static str;
-    fn get_message_type(&self) -> u16;
-    fn get_sender_id(&self) -> Option<u16>;
+    fn message_name(&self) -> &'static str;
+    fn message_type(&self) -> u16;
+    fn sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
     fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
@@ -78,41 +78,41 @@ impl SBP {
 }
 
 impl crate::SBPMessage for SBP {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         match self {
             ((*- for m in msgs *))
             SBP::(((m.identifier|camel_case)))(msg) => {
-                msg.get_message_name()
+                msg.message_name()
             },
             ((*- endfor *))
             SBP::Unknown(msg) => {
-                msg.get_message_name()
+                msg.message_name()
             },
         }
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         match self {
             ((*- for m in msgs *))
             SBP::(((m.identifier|camel_case)))(msg) => {
-                msg.get_message_type()
+                msg.message_type()
             },
             ((*- endfor *))
             SBP::Unknown(msg) => {
-                msg.get_message_type()
+                msg.message_type()
             },
         }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         match self {
             ((*- for m in msgs *))
             SBP::(((m.identifier|camel_case)))(msg) => {
-                msg.get_sender_id()
+                msg.sender_id()
             },
             ((*- endfor *))
             SBP::Unknown(msg) => {
-                msg.get_sender_id()
+                msg.sender_id()
             },
         }
     }

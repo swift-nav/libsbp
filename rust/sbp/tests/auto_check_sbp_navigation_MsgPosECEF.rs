@@ -38,12 +38,12 @@ fn test_auto_check_sbp_navigation_MsgPosECEF() {
         match &sbp_msg {
             sbp::messages::SBP::MsgPosECEF(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x209,
                     "Incorrect message type, expected 0x209, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
                     "incorrect sender id, expected 0x88d3, is {}",
@@ -107,12 +107,12 @@ fn test_auto_check_sbp_navigation_MsgPosECEF() {
         match &sbp_msg {
             sbp::messages::SBP::MsgPosECEF(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x209,
                     "Incorrect message type, expected 0x209, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
                     "incorrect sender id, expected 0x88d3, is {}",
@@ -176,12 +176,12 @@ fn test_auto_check_sbp_navigation_MsgPosECEF() {
         match &sbp_msg {
             sbp::messages::SBP::MsgPosECEF(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x209,
                     "Incorrect message type, expected 0x209, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
                     "incorrect sender id, expected 0x88d3, is {}",
@@ -244,12 +244,12 @@ fn test_auto_check_sbp_navigation_MsgPosECEF() {
         match &sbp_msg {
             sbp::messages::SBP::MsgPosECEF(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x209,
                     "Incorrect message type, expected 0x209, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
                     "incorrect sender id, expected 0x88d3, is {}",

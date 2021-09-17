@@ -22,15 +22,15 @@ impl SbpSerialize for Unknown {
 }
 
 impl SBPMessage for Unknown {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "UNKNOWN"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         self.msg_id
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         Some(self.sender_id)
     }
 

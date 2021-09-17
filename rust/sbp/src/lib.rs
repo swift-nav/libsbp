@@ -138,12 +138,12 @@ pub(crate) fn write_frame<M: SBPMessage>(
     if len > SBP_MAX_PAYLOAD_SIZE {
         return Err(crate::FramerError::TooLarge);
     }
-    let sender_id = msg.get_sender_id().ok_or(FramerError::NoSenderId)?;
+    let sender_id = msg.sender_id().ok_or(FramerError::NoSenderId)?;
 
     frame.reserve(len);
 
     (0x55 as u8).append_to_sbp_buffer(frame);
-    msg.get_message_type().append_to_sbp_buffer(frame);
+    msg.message_type().append_to_sbp_buffer(frame);
     sender_id.append_to_sbp_buffer(frame);
     (len as u8).append_to_sbp_buffer(frame);
     msg.append_to_sbp_buffer(frame);

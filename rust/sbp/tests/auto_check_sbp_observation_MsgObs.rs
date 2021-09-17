@@ -49,12 +49,12 @@ fn test_auto_check_sbp_observation_MsgObs() {
         match &sbp_msg {
             sbp::messages::SBP::MsgObs(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x4a,
                     "Incorrect message type, expected 0x4a, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xf081,
                     "incorrect sender id, expected 0xf081, is {}",
@@ -801,12 +801,12 @@ fn test_auto_check_sbp_observation_MsgObs() {
         match &sbp_msg {
             sbp::messages::SBP::MsgObs(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x4a,
                     "Incorrect message type, expected 0x4a, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xf081,
                     "incorrect sender id, expected 0xf081, is {}",

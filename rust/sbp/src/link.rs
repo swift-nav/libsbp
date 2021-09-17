@@ -130,7 +130,7 @@ impl<'link, S> Handler<'link, S> {
     }
 
     fn can_run(&self, msg: &SBP) -> bool {
-        self.msg_types.contains(&msg.get_message_type()) || self.msg_types.is_empty()
+        self.msg_types.contains(&msg.message_type()) || self.msg_types.is_empty()
     }
 }
 

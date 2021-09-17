@@ -55,15 +55,15 @@ impl MsgFlashDone {
     }
 }
 impl super::SBPMessage for MsgFlashDone {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FLASH_DONE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         224
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -139,15 +139,15 @@ impl MsgFlashErase {
     }
 }
 impl super::SBPMessage for MsgFlashErase {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FLASH_ERASE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         226
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -232,15 +232,15 @@ impl MsgFlashProgram {
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FLASH_PROGRAM"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         230
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -327,15 +327,15 @@ impl MsgFlashReadReq {
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FLASH_READ_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         231
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -420,15 +420,15 @@ impl MsgFlashReadResp {
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_FLASH_READ_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         225
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -503,15 +503,15 @@ impl MsgM25FlashWriteStatus {
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_M25_FLASH_WRITE_STATUS"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         243
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -582,15 +582,15 @@ impl MsgStmFlashLockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STM_FLASH_LOCK_SECTOR"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         227
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -661,15 +661,15 @@ impl MsgStmFlashUnlockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STM_FLASH_UNLOCK_SECTOR"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         228
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -739,15 +739,15 @@ impl MsgStmUniqueIdReq {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STM_UNIQUE_ID_REQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         232
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -816,15 +816,15 @@ impl MsgStmUniqueIdResp {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_STM_UNIQUE_ID_RESP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         229
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

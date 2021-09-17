@@ -52,15 +52,15 @@ impl MsgMeasurementState {
     }
 }
 impl super::SBPMessage for MsgMeasurementState {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_MEASUREMENT_STATE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         97
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -137,15 +137,15 @@ impl MsgTrackingIq {
     }
 }
 impl super::SBPMessage for MsgTrackingIq {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_IQ"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         45
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -225,15 +225,15 @@ impl MsgTrackingIqDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_IQ_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         28
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -314,15 +314,15 @@ impl MsgTrackingIqDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepB {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_IQ_DEP_B"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         44
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -398,15 +398,15 @@ impl MsgTrackingState {
     }
 }
 impl super::SBPMessage for MsgTrackingState {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_STATE"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         65
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -476,15 +476,15 @@ impl MsgTrackingStateDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_STATE_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         22
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -554,15 +554,15 @@ impl MsgTrackingStateDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepB {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_STATE_DEP_B"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         19
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -698,15 +698,15 @@ impl MsgTrackingStateDetailedDep {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDep {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_STATE_DETAILED_DEP"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         17
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 
@@ -883,15 +883,15 @@ impl MsgTrackingStateDetailedDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDepA {
-    fn get_message_name(&self) -> &'static str {
+    fn message_name(&self) -> &'static str {
         "MSG_TRACKING_STATE_DETAILED_DEP_A"
     }
 
-    fn get_message_type(&self) -> u16 {
+    fn message_type(&self) -> u16 {
         33
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
 

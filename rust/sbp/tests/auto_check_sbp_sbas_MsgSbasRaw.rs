@@ -39,12 +39,12 @@ fn test_auto_check_sbp_sbas_MsgSbasRaw() {
         match &sbp_msg {
             sbp::messages::SBP::MsgSbasRaw(msg) => {
                 assert_eq!(
-                    msg.get_message_type(),
+                    msg.message_type(),
                     0x7777,
                     "Incorrect message type, expected 0x7777, is {}",
-                    msg.get_message_type()
+                    msg.message_type()
                 );
-                let sender_id = msg.get_sender_id().unwrap();
+                let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xc81c,
                     "incorrect sender id, expected 0xc81c, is {}",
