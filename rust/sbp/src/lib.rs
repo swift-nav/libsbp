@@ -332,7 +332,7 @@ mod swiftnav_conversions {
             }
             if observation.flags & 0x80 != 0 {
                 measurement.set_flags(
-                    measurement.get_flags() | swiftnav::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION,
+                    measurement.flags() | swiftnav::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION,
                 );
             }
 
