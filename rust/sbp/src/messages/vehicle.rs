@@ -91,7 +91,7 @@ impl super::SBPMessage for MsgOdometry {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -209,7 +209,7 @@ impl super::SBPMessage for MsgWheeltick {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {

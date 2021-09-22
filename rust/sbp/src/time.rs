@@ -1,6 +1,6 @@
-pub use swiftnav_rs::time::GpsTime;
+pub use swiftnav::time::GpsTime;
 
-pub use crate::swiftnav_rs_conversions::GpsTimeError;
+pub use crate::swiftnav_conversions::GpsTimeError;
 
 #[derive(Debug, Clone, Copy)]
 pub enum MessageTime {

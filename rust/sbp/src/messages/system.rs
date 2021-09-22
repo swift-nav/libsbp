@@ -718,7 +718,7 @@ impl super::SBPMessage for MsgInsUpdates {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {

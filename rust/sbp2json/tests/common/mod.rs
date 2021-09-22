@@ -8,6 +8,7 @@ use std::{
 };
 
 use assert_cmd::{assert::OutputAssertExt, cargo::CommandCargoExt};
+use assert_json_diff::{assert_json_matches_no_panic, CompareMode, Config, NumericMode};
 use serde_json::{Deserializer, Value};
 use sha2::{Digest, Sha256};
 
@@ -234,7 +235,10 @@ fn json_file_equals(a: File, b: File) -> bool {
     let wrong = a
         .iter()
         .zip(b.iter())
-        .map(|(a, b)| assert_json_diff::assert_json_eq_no_panic(a, b))
+        .map(|(a, b)| {
+            let config = Config::new(CompareMode::Strict).numeric_mode(NumericMode::AssumeFloat);
+            assert_json_matches_no_panic(a, b, config)
+        })
         .enumerate()
         .find(|(_, res)| res.is_err());
 
