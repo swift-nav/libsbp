@@ -9,7 +9,7 @@ pub mod messages;
 pub(crate) mod parser;
 pub mod sbp_tools;
 pub mod serialize;
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 pub mod time;
 
 use std::{fmt, result};
@@ -161,7 +161,7 @@ pub enum FramerError {
     NoSenderId,
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 mod swiftnav_conversions {
     use std::convert::{TryFrom, TryInto};
 

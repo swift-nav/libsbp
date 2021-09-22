@@ -5103,7 +5103,7 @@ impl super::SBPMessage for MsgObs {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -5202,7 +5202,7 @@ impl super::SBPMessage for MsgObsDepA {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -5304,7 +5304,7 @@ impl super::SBPMessage for MsgObsDepB {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -5408,7 +5408,7 @@ impl super::SBPMessage for MsgObsDepC {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -5508,7 +5508,7 @@ impl super::SBPMessage for MsgOsr {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {

@@ -1,7 +1,7 @@
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 use swiftnav::time::GpsTime;
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 use crate::{
     messages::SBPMessage,
     time::{GpsTimeError, MessageTime, RoverTime},
@@ -41,7 +41,7 @@ pub trait SBPTools: Iterator {
         HandleErrorsIter::new(self, on_err)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn with_rover_time(self) -> RoverTimeIter<Self>
     where
         Self: Sized,
@@ -107,13 +107,13 @@ where
     }
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 pub struct RoverTimeIter<I: Iterator> {
     messages: I,
     clock: Option<GpsTime>,
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 impl<I> RoverTimeIter<I>
 where
     I: Iterator,
@@ -149,7 +149,7 @@ where
     }
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 impl<I> Iterator for RoverTimeIter<I>
 where
     I: Iterator<Item = SBP>,
