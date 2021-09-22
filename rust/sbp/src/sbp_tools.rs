@@ -1,5 +1,5 @@
 #[cfg(feature = "swiftnav-rs")]
-use swiftnav_rs::time::GpsTime;
+use swiftnav::time::GpsTime;
 
 #[cfg(feature = "swiftnav-rs")]
 use crate::{
