@@ -49,7 +49,7 @@ features = ["derive"]
 optional = true
 
 [dependencies.serde_json]
-version = "1"
+version = "=1.0.67"
 optional = true
 
 [dependencies.base64]
