@@ -208,8 +208,7 @@ mod swiftnav_conversions {
 
         fn try_from(
             value: messages::gnss::GnssSignal,
-        ) -> Result<swiftnav::signal::GnssSignal, swiftnav::signal::InvalidGnssSignal>
-        {
+        ) -> Result<swiftnav::signal::GnssSignal, swiftnav::signal::InvalidGnssSignal> {
             swiftnav::signal::GnssSignal::new(value.sat as u16, value.code.try_into()?)
         }
     }
@@ -309,17 +308,13 @@ mod swiftnav_conversions {
         InvalidSignal(#[from] swiftnav::signal::InvalidGnssSignal),
     }
 
-    impl TryFrom<messages::observation::PackedObsContent>
-        for swiftnav::navmeas::NavigationMeasurement
-    {
+    impl TryFrom<messages::observation::PackedObsContent> for swiftnav::navmeas::NavigationMeasurement {
         type Error = swiftnav::signal::InvalidGnssSignal;
 
         fn try_from(
             observation: messages::observation::PackedObsContent,
-        ) -> Result<
-            swiftnav::navmeas::NavigationMeasurement,
-            swiftnav::signal::InvalidGnssSignal,
-        > {
+        ) -> Result<swiftnav::navmeas::NavigationMeasurement, swiftnav::signal::InvalidGnssSignal>
+        {
             let mut measurement = swiftnav::navmeas::NavigationMeasurement::new();
 
             measurement.set_lock_time(swiftnav::navmeas::decode_lock_time(observation.lock));
