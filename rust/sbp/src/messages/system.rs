@@ -72,7 +72,7 @@ impl super::SBPMessage for MsgCsacTelemetry {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -158,7 +158,7 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -249,7 +249,7 @@ impl super::SBPMessage for MsgDgnssStatus {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -344,7 +344,7 @@ impl super::SBPMessage for MsgGnssTimeOffset {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -440,7 +440,7 @@ impl super::SBPMessage for MsgGroupMeta {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -532,7 +532,7 @@ impl super::SBPMessage for MsgHeartbeat {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -611,7 +611,7 @@ impl super::SBPMessage for MsgInsStatus {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -709,7 +709,7 @@ impl super::SBPMessage for MsgInsUpdates {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -825,7 +825,7 @@ impl super::SBPMessage for MsgPpsTime {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -913,7 +913,7 @@ impl super::SBPMessage for MsgStartup {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1014,7 +1014,7 @@ impl super::SBPMessage for MsgStatusReport {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1086,7 +1086,7 @@ impl SubSystemReport {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SubSystemReport>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(SubSystemReport::parse(buf)?);
         }
@@ -1097,7 +1097,7 @@ impl SubSystemReport {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<SubSystemReport>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(SubSystemReport::parse(buf)?);
         }

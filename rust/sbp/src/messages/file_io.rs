@@ -76,7 +76,7 @@ impl super::SBPMessage for MsgFileioConfigReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -167,7 +167,7 @@ impl super::SBPMessage for MsgFileioConfigResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -265,7 +265,7 @@ impl super::SBPMessage for MsgFileioReadDirReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -354,7 +354,7 @@ impl super::SBPMessage for MsgFileioReadDirResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -449,7 +449,7 @@ impl super::SBPMessage for MsgFileioReadReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -539,7 +539,7 @@ impl super::SBPMessage for MsgFileioReadResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -622,7 +622,7 @@ impl super::SBPMessage for MsgFileioRemove {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -715,7 +715,7 @@ impl super::SBPMessage for MsgFileioWriteReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -802,7 +802,7 @@ impl super::SBPMessage for MsgFileioWriteResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }

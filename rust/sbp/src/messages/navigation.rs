@@ -75,7 +75,7 @@ impl EstimatedHorizontalErrorEllipse {
     pub fn parse_array(
         buf: &mut &[u8],
     ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
         }
@@ -86,7 +86,7 @@ impl EstimatedHorizontalErrorEllipse {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
         }
@@ -156,7 +156,7 @@ impl super::SBPMessage for MsgAgeCorrections {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -269,7 +269,7 @@ impl super::SBPMessage for MsgBaselineECEF {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -392,7 +392,7 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -505,7 +505,7 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -627,7 +627,7 @@ impl super::SBPMessage for MsgBaselineNED {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -757,7 +757,7 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -882,7 +882,7 @@ impl super::SBPMessage for MsgDops {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1000,7 +1000,7 @@ impl super::SBPMessage for MsgDopsDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1120,7 +1120,7 @@ impl super::SBPMessage for MsgGPSTime {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1240,7 +1240,7 @@ impl super::SBPMessage for MsgGPSTimeDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1360,7 +1360,7 @@ impl super::SBPMessage for MsgGPSTimeGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1484,7 +1484,7 @@ impl super::SBPMessage for MsgPosECEF {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1626,7 +1626,7 @@ impl super::SBPMessage for MsgPosECEFCov {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1778,7 +1778,7 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1914,7 +1914,7 @@ impl super::SBPMessage for MsgPosECEFDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2040,7 +2040,7 @@ impl super::SBPMessage for MsgPosECEFGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2169,7 +2169,7 @@ impl super::SBPMessage for MsgPosLLH {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2326,7 +2326,7 @@ impl super::SBPMessage for MsgPosLLHAcc {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2480,7 +2480,7 @@ impl super::SBPMessage for MsgPosLLHCov {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2632,7 +2632,7 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2771,7 +2771,7 @@ impl super::SBPMessage for MsgPosLLHDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2902,7 +2902,7 @@ impl super::SBPMessage for MsgPosLLHGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3070,7 +3070,7 @@ impl super::SBPMessage for MsgProtectionLevel {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3224,7 +3224,7 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3352,7 +3352,7 @@ impl super::SBPMessage for MsgUtcTime {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3484,7 +3484,7 @@ impl super::SBPMessage for MsgUtcTimeGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3631,7 +3631,7 @@ impl super::SBPMessage for MsgVelBody {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3763,7 +3763,7 @@ impl super::SBPMessage for MsgVelECEF {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3900,7 +3900,7 @@ impl super::SBPMessage for MsgVelECEFCov {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4047,7 +4047,7 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4179,7 +4179,7 @@ impl super::SBPMessage for MsgVelECEFDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4301,7 +4301,7 @@ impl super::SBPMessage for MsgVelECEFGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4427,7 +4427,7 @@ impl super::SBPMessage for MsgVelNED {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4569,7 +4569,7 @@ impl super::SBPMessage for MsgVelNEDCov {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4719,7 +4719,7 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4855,7 +4855,7 @@ impl super::SBPMessage for MsgVelNEDDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4983,7 +4983,7 @@ impl super::SBPMessage for MsgVelNEDGnss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }

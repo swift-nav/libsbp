@@ -40,7 +40,7 @@ pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
 }
 
 pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_u8()?);
     }
@@ -48,7 +48,7 @@ pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
 }
 
 pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_i8()?);
     }
@@ -56,7 +56,7 @@ pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
 }
 
 pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_i16::<LittleEndian>()?);
     }
@@ -64,7 +64,7 @@ pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
 }
 
 pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_u16::<LittleEndian>()?);
     }
@@ -72,7 +72,7 @@ pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
 }
 
 pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_f32::<LittleEndian>()?);
     }
@@ -80,7 +80,7 @@ pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
 }
 
 pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
-    let mut v = Vec::new();
+    let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
     for _ in 0..n {
         v.push(buf.read_f64::<LittleEndian>()?);
     }

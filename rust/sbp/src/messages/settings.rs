@@ -88,7 +88,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -164,7 +164,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -256,7 +256,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -344,7 +344,7 @@ impl super::SBPMessage for MsgSettingsReadReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -428,7 +428,7 @@ impl super::SBPMessage for MsgSettingsReadResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -509,7 +509,7 @@ impl super::SBPMessage for MsgSettingsRegister {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -595,7 +595,7 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -673,7 +673,7 @@ impl super::SBPMessage for MsgSettingsSave {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -754,7 +754,7 @@ impl super::SBPMessage for MsgSettingsWrite {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -842,7 +842,7 @@ impl super::SBPMessage for MsgSettingsWriteResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }

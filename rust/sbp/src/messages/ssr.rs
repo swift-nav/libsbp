@@ -51,7 +51,7 @@ impl CodeBiasesContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(CodeBiasesContent::parse(buf)?);
         }
@@ -62,7 +62,7 @@ impl CodeBiasesContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<CodeBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(CodeBiasesContent::parse(buf)?);
         }
@@ -123,7 +123,7 @@ impl GridDefinitionHeaderDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GridDefinitionHeaderDepA::parse(buf)?);
         }
@@ -134,7 +134,7 @@ impl GridDefinitionHeaderDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GridDefinitionHeaderDepA::parse(buf)?);
         }
@@ -209,7 +209,7 @@ impl GriddedCorrectionHeader {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GriddedCorrectionHeader::parse(buf)?);
         }
@@ -220,7 +220,7 @@ impl GriddedCorrectionHeader {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GriddedCorrectionHeader::parse(buf)?);
         }
@@ -293,7 +293,7 @@ impl GriddedCorrectionHeaderDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
         }
@@ -304,7 +304,7 @@ impl GriddedCorrectionHeaderDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
         }
@@ -392,7 +392,7 @@ impl super::SBPMessage for MsgSsrCodeBiases {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -489,7 +489,7 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -578,7 +578,7 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -667,7 +667,7 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -753,7 +753,7 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -876,7 +876,7 @@ impl super::SBPMessage for MsgSsrOrbitClock {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1017,7 +1017,7 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1151,7 +1151,7 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1241,7 +1241,7 @@ impl super::SBPMessage for MsgSsrSatelliteApc {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1327,7 +1327,7 @@ impl super::SBPMessage for MsgSsrStecCorrection {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1406,7 +1406,7 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1554,7 +1554,7 @@ impl super::SBPMessage for MsgSsrTileDefinition {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1641,7 +1641,7 @@ impl PhaseBiasesContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PhaseBiasesContent::parse(buf)?);
         }
@@ -1652,7 +1652,7 @@ impl PhaseBiasesContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PhaseBiasesContent::parse(buf)?);
         }
@@ -1722,7 +1722,7 @@ impl STECHeader {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(STECHeader::parse(buf)?);
         }
@@ -1730,7 +1730,7 @@ impl STECHeader {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(STECHeader::parse(buf)?);
         }
@@ -1798,7 +1798,7 @@ impl STECHeaderDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(STECHeaderDepA::parse(buf)?);
         }
@@ -1809,7 +1809,7 @@ impl STECHeaderDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<STECHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(STECHeaderDepA::parse(buf)?);
         }
@@ -1865,7 +1865,7 @@ impl STECResidual {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(STECResidual::parse(buf)?);
         }
@@ -1873,7 +1873,7 @@ impl STECResidual {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECResidual>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(STECResidual::parse(buf)?);
         }
@@ -1921,7 +1921,7 @@ impl STECResidualNoStd {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidualNoStd>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(STECResidualNoStd::parse(buf)?);
         }
@@ -1932,7 +1932,7 @@ impl STECResidualNoStd {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<STECResidualNoStd>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(STECResidualNoStd::parse(buf)?);
         }
@@ -1982,7 +1982,7 @@ impl STECSatElement {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(STECSatElement::parse(buf)?);
         }
@@ -1993,7 +1993,7 @@ impl STECSatElement {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<STECSatElement>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(STECSatElement::parse(buf)?);
         }
@@ -2054,7 +2054,7 @@ impl SatelliteAPC {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SatelliteAPC>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(SatelliteAPC::parse(buf)?);
         }
@@ -2062,7 +2062,7 @@ impl SatelliteAPC {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SatelliteAPC>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(SatelliteAPC::parse(buf)?);
         }
@@ -2118,7 +2118,7 @@ impl TroposphericDelayCorrection {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TroposphericDelayCorrection::parse(buf)?);
         }
@@ -2129,7 +2129,7 @@ impl TroposphericDelayCorrection {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TroposphericDelayCorrection::parse(buf)?);
         }
@@ -2179,7 +2179,7 @@ impl TroposphericDelayCorrectionNoStd {
     pub fn parse_array(
         buf: &mut &[u8],
     ) -> Result<Vec<TroposphericDelayCorrectionNoStd>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TroposphericDelayCorrectionNoStd::parse(buf)?);
         }
@@ -2190,7 +2190,7 @@ impl TroposphericDelayCorrectionNoStd {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TroposphericDelayCorrectionNoStd>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TroposphericDelayCorrectionNoStd::parse(buf)?);
         }

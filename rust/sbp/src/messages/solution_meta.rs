@@ -47,7 +47,7 @@ impl GNSSInputType {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GNSSInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GNSSInputType::parse(buf)?);
         }
@@ -58,7 +58,7 @@ impl GNSSInputType {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<GNSSInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GNSSInputType::parse(buf)?);
         }
@@ -101,7 +101,7 @@ impl IMUInputType {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<IMUInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(IMUInputType::parse(buf)?);
         }
@@ -109,7 +109,7 @@ impl IMUInputType {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<IMUInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(IMUInputType::parse(buf)?);
         }
@@ -205,7 +205,7 @@ impl super::SBPMessage for MsgSolnMeta {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -343,7 +343,7 @@ impl super::SBPMessage for MsgSolnMetaDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -418,7 +418,7 @@ impl OdoInputType {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<OdoInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(OdoInputType::parse(buf)?);
         }
@@ -426,7 +426,7 @@ impl OdoInputType {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<OdoInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(OdoInputType::parse(buf)?);
         }
@@ -476,7 +476,7 @@ impl SolutionInputType {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SolutionInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(SolutionInputType::parse(buf)?);
         }
@@ -487,7 +487,7 @@ impl SolutionInputType {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<SolutionInputType>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(SolutionInputType::parse(buf)?);
         }

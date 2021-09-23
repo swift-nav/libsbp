@@ -60,7 +60,7 @@ impl Latency {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Latency>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(Latency::parse(buf)?);
         }
@@ -68,7 +68,7 @@ impl Latency {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Latency>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(Latency::parse(buf)?);
         }
@@ -134,7 +134,7 @@ impl super::SBPMessage for MsgAlmanac {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -216,7 +216,7 @@ impl super::SBPMessage for MsgCellModemStatus {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -303,7 +303,7 @@ impl super::SBPMessage for MsgCommandOutput {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -388,7 +388,7 @@ impl super::SBPMessage for MsgCommandReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -472,7 +472,7 @@ impl super::SBPMessage for MsgCommandResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -551,7 +551,7 @@ impl super::SBPMessage for MsgCwResults {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -624,7 +624,7 @@ impl super::SBPMessage for MsgCwStart {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -712,7 +712,7 @@ impl super::SBPMessage for MsgDeviceMonitor {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -807,7 +807,7 @@ impl super::SBPMessage for MsgFrontEndGain {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -889,7 +889,7 @@ impl super::SBPMessage for MsgIarState {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -964,7 +964,7 @@ impl super::SBPMessage for MsgInitBaseDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1042,7 +1042,7 @@ impl super::SBPMessage for MsgMaskSatellite {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1125,7 +1125,7 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1205,7 +1205,7 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1281,7 +1281,7 @@ impl super::SBPMessage for MsgNetworkStateReq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1377,7 +1377,7 @@ impl super::SBPMessage for MsgNetworkStateResp {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1469,7 +1469,7 @@ impl super::SBPMessage for MsgReset {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1544,7 +1544,7 @@ impl super::SBPMessage for MsgResetDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1619,7 +1619,7 @@ impl super::SBPMessage for MsgResetFilters {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1695,7 +1695,7 @@ impl super::SBPMessage for MsgSetTime {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1787,7 +1787,7 @@ impl super::SBPMessage for MsgSpecan {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1895,7 +1895,7 @@ impl super::SBPMessage for MsgSpecanDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1994,7 +1994,7 @@ impl super::SBPMessage for MsgThreadState {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2095,7 +2095,7 @@ impl super::SBPMessage for MsgUartState {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2190,7 +2190,7 @@ impl super::SBPMessage for MsgUartStateDepa {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2269,7 +2269,7 @@ impl NetworkUsage {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(NetworkUsage::parse(buf)?);
         }
@@ -2277,7 +2277,7 @@ impl NetworkUsage {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(NetworkUsage::parse(buf)?);
         }
@@ -2340,7 +2340,7 @@ impl Period {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Period>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(Period::parse(buf)?);
         }
@@ -2348,7 +2348,7 @@ impl Period {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Period>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(Period::parse(buf)?);
         }
@@ -2411,7 +2411,7 @@ impl UARTChannel {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<UARTChannel>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(UARTChannel::parse(buf)?);
         }
@@ -2419,7 +2419,7 @@ impl UARTChannel {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<UARTChannel>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(UARTChannel::parse(buf)?);
         }

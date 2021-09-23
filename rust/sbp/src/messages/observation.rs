@@ -72,7 +72,7 @@ impl AlmanacCommonContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(AlmanacCommonContent::parse(buf)?);
         }
@@ -83,7 +83,7 @@ impl AlmanacCommonContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(AlmanacCommonContent::parse(buf)?);
         }
@@ -158,7 +158,7 @@ impl AlmanacCommonContentDep {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(AlmanacCommonContentDep::parse(buf)?);
         }
@@ -169,7 +169,7 @@ impl AlmanacCommonContentDep {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(AlmanacCommonContentDep::parse(buf)?);
         }
@@ -226,7 +226,7 @@ impl CarrierPhaseDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(CarrierPhaseDepA::parse(buf)?);
         }
@@ -237,7 +237,7 @@ impl CarrierPhaseDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(CarrierPhaseDepA::parse(buf)?);
         }
@@ -285,7 +285,7 @@ impl Doppler {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(Doppler::parse(buf)?);
         }
@@ -293,7 +293,7 @@ impl Doppler {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(Doppler::parse(buf)?);
         }
@@ -350,7 +350,7 @@ impl EphemerisCommonContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(EphemerisCommonContent::parse(buf)?);
         }
@@ -361,7 +361,7 @@ impl EphemerisCommonContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(EphemerisCommonContent::parse(buf)?);
         }
@@ -426,7 +426,7 @@ impl EphemerisCommonContentDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
         }
@@ -437,7 +437,7 @@ impl EphemerisCommonContentDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
         }
@@ -501,7 +501,7 @@ impl EphemerisCommonContentDepB {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
         }
@@ -512,7 +512,7 @@ impl EphemerisCommonContentDepB {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
         }
@@ -603,7 +603,7 @@ impl GnssCapb {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GnssCapb::parse(buf)?);
         }
@@ -611,7 +611,7 @@ impl GnssCapb {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GnssCapb::parse(buf)?);
         }
@@ -726,7 +726,7 @@ impl super::SBPMessage for MsgAlmanacGlo {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -843,7 +843,7 @@ impl super::SBPMessage for MsgAlmanacGloDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -965,7 +965,7 @@ impl super::SBPMessage for MsgAlmanacGPS {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1091,7 +1091,7 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1197,7 +1197,7 @@ impl super::SBPMessage for MsgBasePosECEF {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1288,7 +1288,7 @@ impl super::SBPMessage for MsgBasePosLLH {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1450,7 +1450,7 @@ impl super::SBPMessage for MsgEphemerisBds {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1653,7 +1653,7 @@ impl super::SBPMessage for MsgEphemerisDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1863,7 +1863,7 @@ impl super::SBPMessage for MsgEphemerisDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2084,7 +2084,7 @@ impl super::SBPMessage for MsgEphemerisDepC {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2309,7 +2309,7 @@ impl super::SBPMessage for MsgEphemerisDepD {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2522,7 +2522,7 @@ impl super::SBPMessage for MsgEphemerisGal {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2722,7 +2722,7 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2873,7 +2873,7 @@ impl super::SBPMessage for MsgEphemerisGlo {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -2985,7 +2985,7 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3091,7 +3091,7 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3203,7 +3203,7 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3320,7 +3320,7 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3487,7 +3487,7 @@ impl super::SBPMessage for MsgEphemerisGPS {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3682,7 +3682,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -3875,7 +3875,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4068,7 +4068,7 @@ impl super::SBPMessage for MsgEphemerisQzss {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4201,7 +4201,7 @@ impl super::SBPMessage for MsgEphemerisSbas {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4300,7 +4300,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4404,7 +4404,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4506,7 +4506,7 @@ impl super::SBPMessage for MsgGloBiases {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4591,7 +4591,7 @@ impl super::SBPMessage for MsgGnssCapb {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4684,7 +4684,7 @@ impl super::SBPMessage for MsgGroupDelay {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4785,7 +4785,7 @@ impl super::SBPMessage for MsgGroupDelayDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4886,7 +4886,7 @@ impl super::SBPMessage for MsgGroupDelayDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -4992,7 +4992,7 @@ impl super::SBPMessage for MsgIono {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5094,7 +5094,7 @@ impl super::SBPMessage for MsgObs {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5193,7 +5193,7 @@ impl super::SBPMessage for MsgObsDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5295,7 +5295,7 @@ impl super::SBPMessage for MsgObsDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5399,7 +5399,7 @@ impl super::SBPMessage for MsgObsDepC {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5499,7 +5499,7 @@ impl super::SBPMessage for MsgOsr {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5596,7 +5596,7 @@ impl super::SBPMessage for MsgSvAzEl {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5677,7 +5677,7 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -5740,7 +5740,7 @@ impl ObservationHeader {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(ObservationHeader::parse(buf)?);
         }
@@ -5751,7 +5751,7 @@ impl ObservationHeader {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<ObservationHeader>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(ObservationHeader::parse(buf)?);
         }
@@ -5798,7 +5798,7 @@ impl ObservationHeaderDep {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(ObservationHeaderDep::parse(buf)?);
         }
@@ -5809,7 +5809,7 @@ impl ObservationHeaderDep {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(ObservationHeaderDep::parse(buf)?);
         }
@@ -5883,7 +5883,7 @@ impl PackedObsContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PackedObsContent::parse(buf)?);
         }
@@ -5894,7 +5894,7 @@ impl PackedObsContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PackedObsContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PackedObsContent::parse(buf)?);
         }
@@ -5961,7 +5961,7 @@ impl PackedObsContentDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PackedObsContentDepA::parse(buf)?);
         }
@@ -5972,7 +5972,7 @@ impl PackedObsContentDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PackedObsContentDepA::parse(buf)?);
         }
@@ -6036,7 +6036,7 @@ impl PackedObsContentDepB {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PackedObsContentDepB::parse(buf)?);
         }
@@ -6047,7 +6047,7 @@ impl PackedObsContentDepB {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PackedObsContentDepB::parse(buf)?);
         }
@@ -6112,7 +6112,7 @@ impl PackedObsContentDepC {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PackedObsContentDepC::parse(buf)?);
         }
@@ -6123,7 +6123,7 @@ impl PackedObsContentDepC {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PackedObsContentDepC::parse(buf)?);
         }
@@ -6198,7 +6198,7 @@ impl PackedOsrContent {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(PackedOsrContent::parse(buf)?);
         }
@@ -6209,7 +6209,7 @@ impl PackedOsrContent {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<PackedOsrContent>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(PackedOsrContent::parse(buf)?);
         }
@@ -6270,7 +6270,7 @@ impl SvAzEl {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(SvAzEl::parse(buf)?);
         }
@@ -6278,7 +6278,7 @@ impl SvAzEl {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(SvAzEl::parse(buf)?);
         }

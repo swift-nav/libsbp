@@ -68,7 +68,7 @@ impl (((m.identifier|camel_case))) {
 
     ((*- if not m.is_real_message *))
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push( (((m.identifier|camel_case)))::parse(buf)? );
         }
@@ -76,7 +76,7 @@ impl (((m.identifier|camel_case))) {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push( (((m.identifier|camel_case)))::parse(buf)? );
         }
@@ -104,7 +104,7 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }

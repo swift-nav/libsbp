@@ -69,7 +69,7 @@ impl super::SBPMessage for MsgMeasurementState {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -154,7 +154,7 @@ impl super::SBPMessage for MsgTrackingIq {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -242,7 +242,7 @@ impl super::SBPMessage for MsgTrackingIqDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -331,7 +331,7 @@ impl super::SBPMessage for MsgTrackingIqDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -415,7 +415,7 @@ impl super::SBPMessage for MsgTrackingState {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -493,7 +493,7 @@ impl super::SBPMessage for MsgTrackingStateDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -571,7 +571,7 @@ impl super::SBPMessage for MsgTrackingStateDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -715,7 +715,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -900,7 +900,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -1004,7 +1004,7 @@ impl MeasurementState {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(MeasurementState::parse(buf)?);
         }
@@ -1015,7 +1015,7 @@ impl MeasurementState {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<MeasurementState>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(MeasurementState::parse(buf)?);
         }
@@ -1061,7 +1061,7 @@ impl TrackingChannelCorrelation {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelation::parse(buf)?);
         }
@@ -1072,7 +1072,7 @@ impl TrackingChannelCorrelation {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TrackingChannelCorrelation::parse(buf)?);
         }
@@ -1120,7 +1120,7 @@ impl TrackingChannelCorrelationDep {
     pub fn parse_array(
         buf: &mut &[u8],
     ) -> Result<Vec<TrackingChannelCorrelationDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
         }
@@ -1131,7 +1131,7 @@ impl TrackingChannelCorrelationDep {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TrackingChannelCorrelationDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
         }
@@ -1181,7 +1181,7 @@ impl TrackingChannelState {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TrackingChannelState::parse(buf)?);
         }
@@ -1192,7 +1192,7 @@ impl TrackingChannelState {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TrackingChannelState>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TrackingChannelState::parse(buf)?);
         }
@@ -1243,7 +1243,7 @@ impl TrackingChannelStateDepA {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepA::parse(buf)?);
         }
@@ -1254,7 +1254,7 @@ impl TrackingChannelStateDepA {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TrackingChannelStateDepA::parse(buf)?);
         }
@@ -1305,7 +1305,7 @@ impl TrackingChannelStateDepB {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepB::parse(buf)?);
         }
@@ -1316,7 +1316,7 @@ impl TrackingChannelStateDepB {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(TrackingChannelStateDepB::parse(buf)?);
         }

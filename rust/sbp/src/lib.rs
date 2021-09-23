@@ -19,6 +19,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::{messages::SBPMessage, serialize::SbpSerialize};
 
+pub const MIN_BUF_SIZE: usize = 256;
 pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 pub const MSG_CRC_LEN: usize = 2;

@@ -81,7 +81,7 @@ impl AcqSvProfile {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(AcqSvProfile::parse(buf)?);
         }
@@ -89,7 +89,7 @@ impl AcqSvProfile {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(AcqSvProfile::parse(buf)?);
         }
@@ -185,7 +185,7 @@ impl AcqSvProfileDep {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(AcqSvProfileDep::parse(buf)?);
         }
@@ -196,7 +196,7 @@ impl AcqSvProfileDep {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(AcqSvProfileDep::parse(buf)?);
         }
@@ -292,7 +292,7 @@ impl super::SBPMessage for MsgAcqResult {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -387,7 +387,7 @@ impl super::SBPMessage for MsgAcqResultDepA {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -481,7 +481,7 @@ impl super::SBPMessage for MsgAcqResultDepB {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -574,7 +574,7 @@ impl super::SBPMessage for MsgAcqResultDepC {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -659,7 +659,7 @@ impl super::SBPMessage for MsgAcqSvProfile {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }
@@ -737,7 +737,7 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
     }
 
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
+        let mut frame = Vec::with_capacity(crate::MIN_BUF_SIZE);
         self.write_frame(&mut frame)?;
         Ok(frame)
     }

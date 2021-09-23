@@ -50,7 +50,7 @@ impl CarrierPhase {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(CarrierPhase::parse(buf)?);
         }
@@ -58,7 +58,7 @@ impl CarrierPhase {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhase>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(CarrierPhase::parse(buf)?);
         }
@@ -110,7 +110,7 @@ impl GPSTime {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GPSTime::parse(buf)?);
         }
@@ -118,7 +118,7 @@ impl GPSTime {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTime>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GPSTime::parse(buf)?);
         }
@@ -167,7 +167,7 @@ impl GPSTimeDep {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GPSTimeDep::parse(buf)?);
         }
@@ -175,7 +175,7 @@ impl GPSTimeDep {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GPSTimeDep::parse(buf)?);
         }
@@ -222,7 +222,7 @@ impl GPSTimeSec {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GPSTimeSec::parse(buf)?);
         }
@@ -230,7 +230,7 @@ impl GPSTimeSec {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeSec>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GPSTimeSec::parse(buf)?);
         }
@@ -278,7 +278,7 @@ impl GnssSignal {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GnssSignal::parse(buf)?);
         }
@@ -286,7 +286,7 @@ impl GnssSignal {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignal>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GnssSignal::parse(buf)?);
         }
@@ -338,7 +338,7 @@ impl GnssSignalDep {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(GnssSignalDep::parse(buf)?);
         }
@@ -349,7 +349,7 @@ impl GnssSignalDep {
         buf: &mut &[u8],
         n: usize,
     ) -> Result<Vec<GnssSignalDep>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(GnssSignalDep::parse(buf)?);
         }
@@ -398,7 +398,7 @@ impl SvId {
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         while buf.len() > 0 {
             v.push(SvId::parse(buf)?);
         }
@@ -406,7 +406,7 @@ impl SvId {
     }
 
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvId>, crate::Error> {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(crate::MIN_BUF_SIZE);
         for _ in 0..n {
             v.push(SvId::parse(buf)?);
         }
