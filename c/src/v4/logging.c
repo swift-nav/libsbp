@@ -43,12 +43,12 @@ bool sbp_msg_log_text_set(sbp_msg_log_t *msg, const char *new_str,
                                      should_trunc, n_written, new_str);
 }
 
-bool sbp_msg_log_text_set_raw(sbp_msg_log_t *msg, const char *new_str,
-                              size_t new_str_len, bool should_trunc,
+bool sbp_msg_log_text_set_raw(sbp_msg_log_t *msg, const char *new_buf,
+                              size_t new_buf_len, bool should_trunc,
                               size_t *n_written) {
   return sbp_unterminated_string_set_raw(&msg->text, SBP_MSG_LOG_TEXT_MAX,
-                                         should_trunc, n_written, new_str,
-                                         new_str_len);
+                                         should_trunc, n_written, new_buf,
+                                         new_buf_len);
 }
 
 bool sbp_msg_log_text_printf(sbp_msg_log_t *msg, bool should_trunc,
@@ -298,11 +298,11 @@ bool sbp_msg_print_dep_text_set(sbp_msg_print_dep_t *msg, const char *new_str,
 }
 
 bool sbp_msg_print_dep_text_set_raw(sbp_msg_print_dep_t *msg,
-                                    const char *new_str, size_t new_str_len,
+                                    const char *new_buf, size_t new_buf_len,
                                     bool should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set_raw(&msg->text, SBP_MSG_PRINT_DEP_TEXT_MAX,
-                                         should_trunc, n_written, new_str,
-                                         new_str_len);
+                                         should_trunc, n_written, new_buf,
+                                         new_buf_len);
 }
 
 bool sbp_msg_print_dep_text_printf(sbp_msg_print_dep_t *msg, bool should_trunc,

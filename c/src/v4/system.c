@@ -142,12 +142,12 @@ bool sbp_msg_dgnss_status_source_set(sbp_msg_dgnss_status_t *msg,
 }
 
 bool sbp_msg_dgnss_status_source_set_raw(sbp_msg_dgnss_status_t *msg,
-                                         const char *new_str,
-                                         size_t new_str_len, bool should_trunc,
+                                         const char *new_buf,
+                                         size_t new_buf_len, bool should_trunc,
                                          size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->source, SBP_MSG_DGNSS_STATUS_SOURCE_MAX, should_trunc, n_written,
-      new_str, new_str_len);
+      new_buf, new_buf_len);
 }
 
 bool sbp_msg_dgnss_status_source_printf(sbp_msg_dgnss_status_t *msg,
@@ -690,13 +690,13 @@ bool sbp_msg_csac_telemetry_telemetry_set(sbp_msg_csac_telemetry_t *msg,
 }
 
 bool sbp_msg_csac_telemetry_telemetry_set_raw(sbp_msg_csac_telemetry_t *msg,
-                                              const char *new_str,
-                                              size_t new_str_len,
+                                              const char *new_buf,
+                                              size_t new_buf_len,
                                               bool should_trunc,
                                               size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->telemetry, SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX, should_trunc,
-      n_written, new_str, new_str_len);
+      n_written, new_buf, new_buf_len);
 }
 
 bool sbp_msg_csac_telemetry_telemetry_printf(sbp_msg_csac_telemetry_t *msg,
@@ -881,12 +881,12 @@ bool sbp_msg_csac_telemetry_labels_telemetry_labels_set(
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
-    sbp_msg_csac_telemetry_labels_t *msg, const char *new_str,
-    size_t new_str_len, bool should_trunc, size_t *n_written) {
+    sbp_msg_csac_telemetry_labels_t *msg, const char *new_buf,
+    size_t new_buf_len, bool should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->telemetry_labels,
       SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX, should_trunc,
-      n_written, new_str, new_str_len);
+      n_written, new_buf, new_buf_len);
 }
 
 bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
