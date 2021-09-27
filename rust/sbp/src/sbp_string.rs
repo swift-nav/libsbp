@@ -37,7 +37,7 @@ where
 
 impl<E> From<String> for SbpString<Vec<u8>, E> {
     fn from(s: String) -> Self {
-        SbpString::new(s.as_bytes().to_vec())
+        SbpString::new(s.into_bytes())
     }
 }
 
