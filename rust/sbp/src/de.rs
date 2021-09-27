@@ -6,6 +6,7 @@ use dencode::{Decoder, FramedRead};
 use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
+///
 /// # Example
 ///
 /// ```

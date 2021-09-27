@@ -1,6 +1,6 @@
 //! Types representing GPS times embedded in messsages.
 
-pub use swiftnav_rs::time::GpsTime;
+pub use swiftnav::time::GpsTime;
 
 pub use crate::swiftnav_conversions::GpsTimeError;
 
@@ -15,6 +15,7 @@ pub enum MessageTime {
 }
 
 impl MessageTime {
+    /*  */
     /// If the `MessageTime` is from a rover return it. Otherwise return None.
     pub fn to_rover(self) -> Option<RoverTime> {
         if let Self::Rover(v) = self {

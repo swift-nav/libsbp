@@ -1,9 +1,9 @@
 //! Extra adaptors for iterators of [Sbp] messages.
 
-#[cfg(feature = "swiftnav-rs")]
-use swiftnav_rs::time::GpsTime;
+#[cfg(feature = "swiftnav")]
+use swiftnav::time::GpsTime;
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 use crate::{
     messages::SbpMessage,
     time::{GpsTimeError, MessageTime, RoverTime},
@@ -53,7 +53,7 @@ pub trait SbpIterExt: Iterator {
     /// Return an iterable that also includes [GpsTime]s. This method calls [SbpMessage::gps_time] on each message.
     /// If the message has a complete GpsTime it is returned. If the message only has a TOW, this itertor will use the
     /// last week number it has seen, or return `None` if it hasn't seen any.
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn with_rover_time(self) -> RoverTimeIter<Self>
     where
         Self: Sized,
@@ -124,13 +124,13 @@ where
 }
 
 /// See [SbpIterExt::with_rover_time] for more information.
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 pub struct RoverTimeIter<I: Iterator> {
     messages: I,
     clock: Option<GpsTime>,
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 impl<I> RoverTimeIter<I>
 where
     I: Iterator,
@@ -166,7 +166,7 @@ where
     }
 }
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 impl<I> Iterator for RoverTimeIter<I>
 where
     I: Iterator<Item = Sbp>,

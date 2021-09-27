@@ -227,7 +227,7 @@ def gps_time(msg, all_messages):
     ret = gen_ret()
 
     return f"""
-  #[cfg(feature = "swiftnav-rs")]
+  #[cfg(feature = "swiftnav")]
   fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {{
       {body}
       {ret}

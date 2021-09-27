@@ -75,9 +75,9 @@ pub mod json;
 #[cfg(feature = "link")]
 pub mod link;
 
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 mod swiftnav_conversions;
-#[cfg(feature = "swiftnav-rs")]
+#[cfg(feature = "swiftnav")]
 pub mod time;
 
 pub(crate) mod de;

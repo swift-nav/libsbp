@@ -5199,7 +5199,7 @@ impl SbpMessage for MsgObs {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
         let wn: i16 = match self.header.t.wn.try_into() {
@@ -5279,7 +5279,7 @@ impl SbpMessage for MsgObsDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
         let wn: i16 = match self.header.t.wn.try_into() {
@@ -5362,7 +5362,7 @@ impl SbpMessage for MsgObsDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
         let wn: i16 = match self.header.t.wn.try_into() {
@@ -5447,7 +5447,7 @@ impl SbpMessage for MsgObsDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
         let wn: i16 = match self.header.t.wn.try_into() {
@@ -5528,7 +5528,7 @@ impl SbpMessage for MsgOsr {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
         let wn: i16 = match self.header.t.wn.try_into() {

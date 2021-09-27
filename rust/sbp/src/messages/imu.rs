@@ -156,7 +156,7 @@ impl SbpMessage for MsgImuRaw {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
         if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {

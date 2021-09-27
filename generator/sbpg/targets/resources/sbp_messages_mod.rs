@@ -31,7 +31,7 @@ mod lib {
     pub use crate::wire_format::{WireFormat, PayloadParseError};
     pub use crate::sbp_string::{SbpString, Unterminated, NullTerminated, Multipart, DoubleNullTerminated};
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     pub use crate::time;
 
     pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
@@ -50,7 +50,7 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     /// Set the sender id.
     fn set_sender_id(&mut self, new_id: u16);
     /// Get the GPS time associated with the message.
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
@@ -162,7 +162,7 @@ impl SbpMessage for Sbp {
         }
     }
 
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         match self {
             ((*- for m in msgs *))

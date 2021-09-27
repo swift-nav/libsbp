@@ -117,7 +117,7 @@ impl SbpMessage for MsgAgeCorrections {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -211,7 +211,7 @@ impl SbpMessage for MsgBaselineEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -326,7 +326,7 @@ impl SbpMessage for MsgBaselineEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -431,7 +431,7 @@ impl SbpMessage for MsgBaselineHeadingDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -539,7 +539,7 @@ impl SbpMessage for MsgBaselineNed {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -663,7 +663,7 @@ impl SbpMessage for MsgBaselineNedDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -782,7 +782,7 @@ impl SbpMessage for MsgDops {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -892,7 +892,7 @@ impl SbpMessage for MsgDopsDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1002,7 +1002,7 @@ impl SbpMessage for MsgGpsTime {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         #[allow(clippy::useless_conversion)]
@@ -1109,7 +1109,7 @@ impl SbpMessage for MsgGpsTimeDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         #[allow(clippy::useless_conversion)]
@@ -1216,7 +1216,7 @@ impl SbpMessage for MsgGpsTimeGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         #[allow(clippy::useless_conversion)]
@@ -1327,7 +1327,7 @@ impl SbpMessage for MsgPosEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1461,7 +1461,7 @@ impl SbpMessage for MsgPosEcefCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1615,7 +1615,7 @@ impl SbpMessage for MsgPosEcefCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1753,7 +1753,7 @@ impl SbpMessage for MsgPosEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1871,7 +1871,7 @@ impl SbpMessage for MsgPosEcefGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -1992,7 +1992,7 @@ impl SbpMessage for MsgPosLlh {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2143,7 +2143,7 @@ impl SbpMessage for MsgPosLlhAcc {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2301,7 +2301,7 @@ impl SbpMessage for MsgPosLlhCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2455,7 +2455,7 @@ impl SbpMessage for MsgPosLlhCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2596,7 +2596,7 @@ impl SbpMessage for MsgPosLlhDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2721,7 +2721,7 @@ impl SbpMessage for MsgPosLlhGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -2883,7 +2883,7 @@ impl SbpMessage for MsgProtectionLevel {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         #[allow(clippy::useless_conversion)]
@@ -3058,7 +3058,7 @@ impl SbpMessage for MsgProtectionLevelDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3178,7 +3178,7 @@ impl SbpMessage for MsgUtcTime {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3306,7 +3306,7 @@ impl SbpMessage for MsgUtcTimeGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3449,7 +3449,7 @@ impl SbpMessage for MsgVelBody {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3583,7 +3583,7 @@ impl SbpMessage for MsgVelEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3712,7 +3712,7 @@ impl SbpMessage for MsgVelEcefCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3861,7 +3861,7 @@ impl SbpMessage for MsgVelEcefCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -3995,7 +3995,7 @@ impl SbpMessage for MsgVelEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4109,7 +4109,7 @@ impl SbpMessage for MsgVelEcefGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4227,7 +4227,7 @@ impl SbpMessage for MsgVelNed {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4363,7 +4363,7 @@ impl SbpMessage for MsgVelNedCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4515,7 +4515,7 @@ impl SbpMessage for MsgVelNedCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4653,7 +4653,7 @@ impl SbpMessage for MsgVelNedDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -4775,7 +4775,7 @@ impl SbpMessage for MsgVelNedGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {

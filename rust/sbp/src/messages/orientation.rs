@@ -69,7 +69,7 @@ impl SbpMessage for MsgAngularRate {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -168,7 +168,7 @@ impl SbpMessage for MsgBaselineHeading {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -276,7 +276,7 @@ impl SbpMessage for MsgOrientEuler {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {
@@ -406,7 +406,7 @@ impl SbpMessage for MsgOrientQuat {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    #[cfg(feature = "swiftnav-rs")]
+    #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let gps_time = match time::GpsTime::new(0, tow_s) {

@@ -9,7 +9,7 @@ use crate::messages;
 
 #[derive(Debug, Clone)]
 pub enum GpsTimeError {
-    InvalidGpsTime(swiftnav_rs::time::InvalidGpsTime),
+    InvalidGpsTime(swiftnav::time::InvalidGpsTime),
     TryFromIntError(num::TryFromIntError),
 }
 
@@ -24,8 +24,8 @@ impl fmt::Display for GpsTimeError {
 
 impl std::error::Error for GpsTimeError {}
 
-impl From<swiftnav_rs::time::InvalidGpsTime> for GpsTimeError {
-    fn from(e: swiftnav_rs::time::InvalidGpsTime) -> Self {
+impl From<swiftnav::time::InvalidGpsTime> for GpsTimeError {
+    fn from(e: swiftnav::time::InvalidGpsTime) -> Self {
         GpsTimeError::InvalidGpsTime(e)
     }
 }
@@ -42,44 +42,44 @@ impl From<std::convert::Infallible> for GpsTimeError {
     }
 }
 
-impl TryFrom<messages::gnss::GpsTime> for swiftnav_rs::time::GpsTime {
-    type Error = swiftnav_rs::time::InvalidGpsTime;
+impl TryFrom<messages::gnss::GpsTime> for swiftnav::time::GpsTime {
+    type Error = swiftnav::time::InvalidGpsTime;
 
     fn try_from(
         msg: messages::gnss::GpsTime,
-    ) -> Result<swiftnav_rs::time::GpsTime, swiftnav_rs::time::InvalidGpsTime> {
+    ) -> Result<swiftnav::time::GpsTime, swiftnav::time::InvalidGpsTime> {
         let tow = (msg.tow as f64) * 1e-3 + (msg.ns_residual as f64) * 1e-9;
-        swiftnav_rs::time::GpsTime::new(msg.wn as i16, tow)
+        swiftnav::time::GpsTime::new(msg.wn as i16, tow)
     }
 }
 
-impl TryFrom<messages::gnss::GpsTimeSec> for swiftnav_rs::time::GpsTime {
-    type Error = swiftnav_rs::time::InvalidGpsTime;
+impl TryFrom<messages::gnss::GpsTimeSec> for swiftnav::time::GpsTime {
+    type Error = swiftnav::time::InvalidGpsTime;
 
     fn try_from(
         msg: messages::gnss::GpsTimeSec,
-    ) -> Result<swiftnav_rs::time::GpsTime, swiftnav_rs::time::InvalidGpsTime> {
-        swiftnav_rs::time::GpsTime::new(msg.wn as i16, msg.tow as f64)
+    ) -> Result<swiftnav::time::GpsTime, swiftnav::time::InvalidGpsTime> {
+        swiftnav::time::GpsTime::new(msg.wn as i16, msg.tow as f64)
     }
 }
 
-impl TryFrom<messages::gnss::GnssSignal> for swiftnav_rs::signal::GnssSignal {
-    type Error = swiftnav_rs::signal::InvalidGnssSignal;
+impl TryFrom<messages::gnss::GnssSignal> for swiftnav::signal::GnssSignal {
+    type Error = swiftnav::signal::InvalidGnssSignal;
 
     fn try_from(
         value: messages::gnss::GnssSignal,
-    ) -> Result<swiftnav_rs::signal::GnssSignal, swiftnav_rs::signal::InvalidGnssSignal> {
-        swiftnav_rs::signal::GnssSignal::new(value.sat as u16, value.code.try_into()?)
+    ) -> Result<swiftnav::signal::GnssSignal, swiftnav::signal::InvalidGnssSignal> {
+        swiftnav::signal::GnssSignal::new(value.sat as u16, value.code.try_into()?)
     }
 }
 
-impl TryFrom<messages::observation::MsgEphemerisGps> for swiftnav_rs::ephemeris::Ephemeris {
+impl TryFrom<messages::observation::MsgEphemerisGps> for swiftnav::ephemeris::Ephemeris {
     type Error = EphemerisDecodeError;
 
     fn try_from(
         eph: messages::observation::MsgEphemerisGps,
-    ) -> Result<swiftnav_rs::ephemeris::Ephemeris, EphemerisDecodeError> {
-        Ok(swiftnav_rs::ephemeris::Ephemeris::new(
+    ) -> Result<swiftnav::ephemeris::Ephemeris, EphemerisDecodeError> {
+        Ok(swiftnav::ephemeris::Ephemeris::new(
             eph.common.sid.try_into()?,
             eph.common.toe.try_into()?,
             eph.common.ura,
@@ -87,8 +87,8 @@ impl TryFrom<messages::observation::MsgEphemerisGps> for swiftnav_rs::ephemeris:
             eph.common.valid,
             eph.common.health_bits,
             0,
-            swiftnav_rs::ephemeris::EphemerisTerms::new_kepler(
-                swiftnav_rs::signal::Constellation::Gps,
+            swiftnav::ephemeris::EphemerisTerms::new_kepler(
+                swiftnav::signal::Constellation::Gps,
                 [eph.tgd, 0.],
                 eph.c_rc as f64,
                 eph.c_rs as f64,
@@ -116,13 +116,13 @@ impl TryFrom<messages::observation::MsgEphemerisGps> for swiftnav_rs::ephemeris:
     }
 }
 
-impl TryFrom<messages::observation::MsgEphemerisGal> for swiftnav_rs::ephemeris::Ephemeris {
+impl TryFrom<messages::observation::MsgEphemerisGal> for swiftnav::ephemeris::Ephemeris {
     type Error = EphemerisDecodeError;
 
     fn try_from(
         eph: messages::observation::MsgEphemerisGal,
-    ) -> Result<swiftnav_rs::ephemeris::Ephemeris, EphemerisDecodeError> {
-        Ok(swiftnav_rs::ephemeris::Ephemeris::new(
+    ) -> Result<swiftnav::ephemeris::Ephemeris, EphemerisDecodeError> {
+        Ok(swiftnav::ephemeris::Ephemeris::new(
             eph.common.sid.try_into()?,
             eph.common.toe.try_into()?,
             eph.common.ura,
@@ -130,8 +130,8 @@ impl TryFrom<messages::observation::MsgEphemerisGal> for swiftnav_rs::ephemeris:
             eph.common.valid,
             eph.common.health_bits,
             eph.source,
-            swiftnav_rs::ephemeris::EphemerisTerms::new_kepler(
-                swiftnav_rs::signal::Constellation::Gal,
+            swiftnav::ephemeris::EphemerisTerms::new_kepler(
+                swiftnav::signal::Constellation::Gal,
                 [eph.bgd_e1e5a, eph.bgd_e1e5b],
                 eph.c_rc as f64,
                 eph.c_rs as f64,
@@ -161,8 +161,8 @@ impl TryFrom<messages::observation::MsgEphemerisGal> for swiftnav_rs::ephemeris:
 
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum EphemerisDecodeError {
-    InvalidTime(swiftnav_rs::time::InvalidGpsTime),
-    InvalidSignal(swiftnav_rs::signal::InvalidGnssSignal),
+    InvalidTime(swiftnav::time::InvalidGpsTime),
+    InvalidSignal(swiftnav::signal::InvalidGnssSignal),
 }
 
 impl fmt::Display for EphemerisDecodeError {
@@ -176,30 +176,27 @@ impl fmt::Display for EphemerisDecodeError {
 
 impl std::error::Error for EphemerisDecodeError {}
 
-impl From<swiftnav_rs::time::InvalidGpsTime> for EphemerisDecodeError {
-    fn from(e: swiftnav_rs::time::InvalidGpsTime) -> Self {
+impl From<swiftnav::time::InvalidGpsTime> for EphemerisDecodeError {
+    fn from(e: swiftnav::time::InvalidGpsTime) -> Self {
         EphemerisDecodeError::InvalidTime(e)
     }
 }
 
-impl From<swiftnav_rs::signal::InvalidGnssSignal> for EphemerisDecodeError {
-    fn from(e: swiftnav_rs::signal::InvalidGnssSignal) -> Self {
+impl From<swiftnav::signal::InvalidGnssSignal> for EphemerisDecodeError {
+    fn from(e: swiftnav::signal::InvalidGnssSignal) -> Self {
         EphemerisDecodeError::InvalidSignal(e)
     }
 }
 
-impl TryFrom<messages::observation::PackedObsContent>
-    for swiftnav_rs::navmeas::NavigationMeasurement
-{
-    type Error = swiftnav_rs::signal::InvalidGnssSignal;
+impl TryFrom<messages::observation::PackedObsContent> for swiftnav::navmeas::NavigationMeasurement {
+    type Error = swiftnav::signal::InvalidGnssSignal;
 
     fn try_from(
         observation: messages::observation::PackedObsContent,
-    ) -> Result<swiftnav_rs::navmeas::NavigationMeasurement, swiftnav_rs::signal::InvalidGnssSignal>
-    {
-        let mut measurement = swiftnav_rs::navmeas::NavigationMeasurement::new();
+    ) -> Result<swiftnav::navmeas::NavigationMeasurement, swiftnav::signal::InvalidGnssSignal> {
+        let mut measurement = swiftnav::navmeas::NavigationMeasurement::new();
 
-        measurement.set_lock_time(swiftnav_rs::navmeas::decode_lock_time(observation.lock));
+        measurement.set_lock_time(swiftnav::navmeas::decode_lock_time(observation.lock));
         measurement.set_sid(observation.sid.try_into()?);
         // A CN0 of 0 is considered invalid
         if observation.cn0 != 0 {
@@ -213,9 +210,8 @@ impl TryFrom<messages::observation::PackedObsContent>
                 .set_measured_doppler(observation.d.i as f64 + (observation.d.f as f64) / 256.);
         }
         if observation.flags & 0x80 != 0 {
-            measurement.set_flags(
-                measurement.get_flags() | swiftnav_rs::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION,
-            );
+            measurement
+                .set_flags(measurement.flags() | swiftnav::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION);
         }
 
         Ok(measurement)
