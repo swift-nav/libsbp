@@ -74,29 +74,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.header.t.wn
                 );
                 assert_eq!(
-                    msg.obs[0].D.f, 172,
-                    "incorrect value for obs[0].D.f, expected 172, is {}",
-                    msg.obs[0].D.f
+                    msg.obs[0].d.f, 172,
+                    "incorrect value for obs[0].d.f, expected 172, is {}",
+                    msg.obs[0].d.f
                 );
                 assert_eq!(
-                    msg.obs[0].D.i, -1536,
-                    "incorrect value for obs[0].D.i, expected -1536, is {}",
-                    msg.obs[0].D.i
+                    msg.obs[0].d.i, -1536,
+                    "incorrect value for obs[0].d.i, expected -1536, is {}",
+                    msg.obs[0].d.i
                 );
                 assert_eq!(
-                    msg.obs[0].L.f, 146,
-                    "incorrect value for obs[0].L.f, expected 146, is {}",
-                    msg.obs[0].L.f
+                    msg.obs[0].l.f, 146,
+                    "incorrect value for obs[0].l.f, expected 146, is {}",
+                    msg.obs[0].l.f
                 );
                 assert_eq!(
-                    msg.obs[0].L.i, 111080057,
-                    "incorrect value for obs[0].L.i, expected 111080057, is {}",
-                    msg.obs[0].L.i
+                    msg.obs[0].l.i, 111080057,
+                    "incorrect value for obs[0].l.i, expected 111080057, is {}",
+                    msg.obs[0].l.i
                 );
                 assert_eq!(
-                    msg.obs[0].P, 1056891697,
-                    "incorrect value for obs[0].P, expected 1056891697, is {}",
-                    msg.obs[0].P
+                    msg.obs[0].p, 1056891697,
+                    "incorrect value for obs[0].p, expected 1056891697, is {}",
+                    msg.obs[0].p
                 );
                 assert_eq!(
                     msg.obs[0].cn0, 182,
@@ -124,29 +124,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[0].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[1].D.f, 172,
-                    "incorrect value for obs[1].D.f, expected 172, is {}",
-                    msg.obs[1].D.f
+                    msg.obs[1].d.f, 172,
+                    "incorrect value for obs[1].d.f, expected 172, is {}",
+                    msg.obs[1].d.f
                 );
                 assert_eq!(
-                    msg.obs[1].D.i, -1197,
-                    "incorrect value for obs[1].D.i, expected -1197, is {}",
-                    msg.obs[1].D.i
+                    msg.obs[1].d.i, -1197,
+                    "incorrect value for obs[1].d.i, expected -1197, is {}",
+                    msg.obs[1].d.i
                 );
                 assert_eq!(
-                    msg.obs[1].L.f, 59,
-                    "incorrect value for obs[1].L.f, expected 59, is {}",
-                    msg.obs[1].L.f
+                    msg.obs[1].l.f, 59,
+                    "incorrect value for obs[1].l.f, expected 59, is {}",
+                    msg.obs[1].l.f
                 );
                 assert_eq!(
-                    msg.obs[1].L.i, 86555916,
-                    "incorrect value for obs[1].L.i, expected 86555916, is {}",
-                    msg.obs[1].L.i
+                    msg.obs[1].l.i, 86555916,
+                    "incorrect value for obs[1].l.i, expected 86555916, is {}",
+                    msg.obs[1].l.i
                 );
                 assert_eq!(
-                    msg.obs[1].P, 1056891934,
-                    "incorrect value for obs[1].P, expected 1056891934, is {}",
-                    msg.obs[1].P
+                    msg.obs[1].p, 1056891934,
+                    "incorrect value for obs[1].p, expected 1056891934, is {}",
+                    msg.obs[1].p
                 );
                 assert_eq!(
                     msg.obs[1].cn0, 178,
@@ -174,29 +174,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[1].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[2].D.f, 119,
-                    "incorrect value for obs[2].D.f, expected 119, is {}",
-                    msg.obs[2].D.f
+                    msg.obs[2].d.f, 119,
+                    "incorrect value for obs[2].d.f, expected 119, is {}",
+                    msg.obs[2].d.f
                 );
                 assert_eq!(
-                    msg.obs[2].D.i, -3219,
-                    "incorrect value for obs[2].D.i, expected -3219, is {}",
-                    msg.obs[2].D.i
+                    msg.obs[2].d.i, -3219,
+                    "incorrect value for obs[2].d.i, expected -3219, is {}",
+                    msg.obs[2].d.i
                 );
                 assert_eq!(
-                    msg.obs[2].L.f, 243,
-                    "incorrect value for obs[2].L.f, expected 243, is {}",
-                    msg.obs[2].L.f
+                    msg.obs[2].l.f, 243,
+                    "incorrect value for obs[2].l.f, expected 243, is {}",
+                    msg.obs[2].l.f
                 );
                 assert_eq!(
-                    msg.obs[2].L.i, 127954794,
-                    "incorrect value for obs[2].L.i, expected 127954794, is {}",
-                    msg.obs[2].L.i
+                    msg.obs[2].l.i, 127954794,
+                    "incorrect value for obs[2].l.i, expected 127954794, is {}",
+                    msg.obs[2].l.i
                 );
                 assert_eq!(
-                    msg.obs[2].P, 1217449431,
-                    "incorrect value for obs[2].P, expected 1217449431, is {}",
-                    msg.obs[2].P
+                    msg.obs[2].p, 1217449431,
+                    "incorrect value for obs[2].p, expected 1217449431, is {}",
+                    msg.obs[2].p
                 );
                 assert_eq!(
                     msg.obs[2].cn0, 158,
@@ -224,29 +224,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[2].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[3].D.f, 27,
-                    "incorrect value for obs[3].D.f, expected 27, is {}",
-                    msg.obs[3].D.f
+                    msg.obs[3].d.f, 27,
+                    "incorrect value for obs[3].d.f, expected 27, is {}",
+                    msg.obs[3].d.f
                 );
                 assert_eq!(
-                    msg.obs[3].D.i, -2508,
-                    "incorrect value for obs[3].D.i, expected -2508, is {}",
-                    msg.obs[3].D.i
+                    msg.obs[3].d.i, -2508,
+                    "incorrect value for obs[3].d.i, expected -2508, is {}",
+                    msg.obs[3].d.i
                 );
                 assert_eq!(
-                    msg.obs[3].L.f, 12,
-                    "incorrect value for obs[3].L.f, expected 12, is {}",
-                    msg.obs[3].L.f
+                    msg.obs[3].l.f, 12,
+                    "incorrect value for obs[3].l.f, expected 12, is {}",
+                    msg.obs[3].l.f
                 );
                 assert_eq!(
-                    msg.obs[3].L.i, 99705055,
-                    "incorrect value for obs[3].L.i, expected 99705055, is {}",
-                    msg.obs[3].L.i
+                    msg.obs[3].l.i, 99705055,
+                    "incorrect value for obs[3].l.i, expected 99705055, is {}",
+                    msg.obs[3].l.i
                 );
                 assert_eq!(
-                    msg.obs[3].P, 1217449753,
-                    "incorrect value for obs[3].P, expected 1217449753, is {}",
-                    msg.obs[3].P
+                    msg.obs[3].p, 1217449753,
+                    "incorrect value for obs[3].p, expected 1217449753, is {}",
+                    msg.obs[3].p
                 );
                 assert_eq!(
                     msg.obs[3].cn0, 125,
@@ -274,29 +274,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[3].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[4].D.f, 245,
-                    "incorrect value for obs[4].D.f, expected 245, is {}",
-                    msg.obs[4].D.f
+                    msg.obs[4].d.f, 245,
+                    "incorrect value for obs[4].d.f, expected 245, is {}",
+                    msg.obs[4].d.f
                 );
                 assert_eq!(
-                    msg.obs[4].D.i, 2829,
-                    "incorrect value for obs[4].D.i, expected 2829, is {}",
-                    msg.obs[4].D.i
+                    msg.obs[4].d.i, 2829,
+                    "incorrect value for obs[4].d.i, expected 2829, is {}",
+                    msg.obs[4].d.i
                 );
                 assert_eq!(
-                    msg.obs[4].L.f, 53,
-                    "incorrect value for obs[4].L.f, expected 53, is {}",
-                    msg.obs[4].L.f
+                    msg.obs[4].l.f, 53,
+                    "incorrect value for obs[4].l.f, expected 53, is {}",
+                    msg.obs[4].l.f
                 );
                 assert_eq!(
-                    msg.obs[4].L.i, 132024982,
-                    "incorrect value for obs[4].L.i, expected 132024982, is {}",
-                    msg.obs[4].L.i
+                    msg.obs[4].l.i, 132024982,
+                    "incorrect value for obs[4].l.i, expected 132024982, is {}",
+                    msg.obs[4].l.i
                 );
                 assert_eq!(
-                    msg.obs[4].P, 1256175650,
-                    "incorrect value for obs[4].P, expected 1256175650, is {}",
-                    msg.obs[4].P
+                    msg.obs[4].p, 1256175650,
+                    "incorrect value for obs[4].p, expected 1256175650, is {}",
+                    msg.obs[4].p
                 );
                 assert_eq!(
                     msg.obs[4].cn0, 114,
@@ -324,29 +324,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[4].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[5].D.f, 246,
-                    "incorrect value for obs[5].D.f, expected 246, is {}",
-                    msg.obs[5].D.f
+                    msg.obs[5].d.f, 246,
+                    "incorrect value for obs[5].d.f, expected 246, is {}",
+                    msg.obs[5].d.f
                 );
                 assert_eq!(
-                    msg.obs[5].D.i, -2433,
-                    "incorrect value for obs[5].D.i, expected -2433, is {}",
-                    msg.obs[5].D.i
+                    msg.obs[5].d.i, -2433,
+                    "incorrect value for obs[5].d.i, expected -2433, is {}",
+                    msg.obs[5].d.i
                 );
                 assert_eq!(
-                    msg.obs[5].L.f, 70,
-                    "incorrect value for obs[5].L.f, expected 70, is {}",
-                    msg.obs[5].L.f
+                    msg.obs[5].l.f, 70,
+                    "incorrect value for obs[5].l.f, expected 70, is {}",
+                    msg.obs[5].l.f
                 );
                 assert_eq!(
-                    msg.obs[5].L.i, 121711010,
-                    "incorrect value for obs[5].L.i, expected 121711010, is {}",
-                    msg.obs[5].L.i
+                    msg.obs[5].l.i, 121711010,
+                    "incorrect value for obs[5].l.i, expected 121711010, is {}",
+                    msg.obs[5].l.i
                 );
                 assert_eq!(
-                    msg.obs[5].P, 1158041713,
-                    "incorrect value for obs[5].P, expected 1158041713, is {}",
-                    msg.obs[5].P
+                    msg.obs[5].p, 1158041713,
+                    "incorrect value for obs[5].p, expected 1158041713, is {}",
+                    msg.obs[5].p
                 );
                 assert_eq!(
                     msg.obs[5].cn0, 189,
@@ -374,29 +374,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[5].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[6].D.f, 231,
-                    "incorrect value for obs[6].D.f, expected 231, is {}",
-                    msg.obs[6].D.f
+                    msg.obs[6].d.f, 231,
+                    "incorrect value for obs[6].d.f, expected 231, is {}",
+                    msg.obs[6].d.f
                 );
                 assert_eq!(
-                    msg.obs[6].D.i, -1896,
-                    "incorrect value for obs[6].D.i, expected -1896, is {}",
-                    msg.obs[6].D.i
+                    msg.obs[6].d.i, -1896,
+                    "incorrect value for obs[6].d.i, expected -1896, is {}",
+                    msg.obs[6].d.i
                 );
                 assert_eq!(
-                    msg.obs[6].L.f, 221,
-                    "incorrect value for obs[6].L.f, expected 221, is {}",
-                    msg.obs[6].L.f
+                    msg.obs[6].l.f, 221,
+                    "incorrect value for obs[6].l.f, expected 221, is {}",
+                    msg.obs[6].l.f
                 );
                 assert_eq!(
-                    msg.obs[6].L.i, 94839765,
-                    "incorrect value for obs[6].L.i, expected 94839765, is {}",
-                    msg.obs[6].L.i
+                    msg.obs[6].l.i, 94839765,
+                    "incorrect value for obs[6].l.i, expected 94839765, is {}",
+                    msg.obs[6].l.i
                 );
                 assert_eq!(
-                    msg.obs[6].P, 1158041847,
-                    "incorrect value for obs[6].P, expected 1158041847, is {}",
-                    msg.obs[6].P
+                    msg.obs[6].p, 1158041847,
+                    "incorrect value for obs[6].p, expected 1158041847, is {}",
+                    msg.obs[6].p
                 );
                 assert_eq!(
                     msg.obs[6].cn0, 158,
@@ -424,29 +424,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[6].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[7].D.f, 67,
-                    "incorrect value for obs[7].D.f, expected 67, is {}",
-                    msg.obs[7].D.f
+                    msg.obs[7].d.f, 67,
+                    "incorrect value for obs[7].d.f, expected 67, is {}",
+                    msg.obs[7].d.f
                 );
                 assert_eq!(
-                    msg.obs[7].D.i, -1997,
-                    "incorrect value for obs[7].D.i, expected -1997, is {}",
-                    msg.obs[7].D.i
+                    msg.obs[7].d.i, -1997,
+                    "incorrect value for obs[7].d.i, expected -1997, is {}",
+                    msg.obs[7].d.i
                 );
                 assert_eq!(
-                    msg.obs[7].L.f, 114,
-                    "incorrect value for obs[7].L.f, expected 114, is {}",
-                    msg.obs[7].L.f
+                    msg.obs[7].l.f, 114,
+                    "incorrect value for obs[7].l.f, expected 114, is {}",
+                    msg.obs[7].l.f
                 );
                 assert_eq!(
-                    msg.obs[7].L.i, 113998348,
-                    "incorrect value for obs[7].L.i, expected 113998348, is {}",
-                    msg.obs[7].L.i
+                    msg.obs[7].l.i, 113998348,
+                    "incorrect value for obs[7].l.i, expected 113998348, is {}",
+                    msg.obs[7].l.i
                 );
                 assert_eq!(
-                    msg.obs[7].P, 1084658184,
-                    "incorrect value for obs[7].P, expected 1084658184, is {}",
-                    msg.obs[7].P
+                    msg.obs[7].p, 1084658184,
+                    "incorrect value for obs[7].p, expected 1084658184, is {}",
+                    msg.obs[7].p
                 );
                 assert_eq!(
                     msg.obs[7].cn0, 93,
@@ -474,29 +474,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[7].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[8].D.f, 237,
-                    "incorrect value for obs[8].D.f, expected 237, is {}",
-                    msg.obs[8].D.f
+                    msg.obs[8].d.f, 237,
+                    "incorrect value for obs[8].d.f, expected 237, is {}",
+                    msg.obs[8].d.f
                 );
                 assert_eq!(
-                    msg.obs[8].D.i, 3041,
-                    "incorrect value for obs[8].D.i, expected 3041, is {}",
-                    msg.obs[8].D.i
+                    msg.obs[8].d.i, 3041,
+                    "incorrect value for obs[8].d.i, expected 3041, is {}",
+                    msg.obs[8].d.i
                 );
                 assert_eq!(
-                    msg.obs[8].L.f, 232,
-                    "incorrect value for obs[8].L.f, expected 232, is {}",
-                    msg.obs[8].L.f
+                    msg.obs[8].l.f, 232,
+                    "incorrect value for obs[8].l.f, expected 232, is {}",
+                    msg.obs[8].l.f
                 );
                 assert_eq!(
-                    msg.obs[8].L.i, 133443545,
-                    "incorrect value for obs[8].L.i, expected 133443545, is {}",
-                    msg.obs[8].L.i
+                    msg.obs[8].l.i, 133443545,
+                    "incorrect value for obs[8].l.i, expected 133443545, is {}",
+                    msg.obs[8].l.i
                 );
                 assert_eq!(
-                    msg.obs[8].P, 1269673181,
-                    "incorrect value for obs[8].P, expected 1269673181, is {}",
-                    msg.obs[8].P
+                    msg.obs[8].p, 1269673181,
+                    "incorrect value for obs[8].p, expected 1269673181, is {}",
+                    msg.obs[8].p
                 );
                 assert_eq!(
                     msg.obs[8].cn0, 123,
@@ -524,29 +524,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[8].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[9].D.f, 62,
-                    "incorrect value for obs[9].D.f, expected 62, is {}",
-                    msg.obs[9].D.f
+                    msg.obs[9].d.f, 62,
+                    "incorrect value for obs[9].d.f, expected 62, is {}",
+                    msg.obs[9].d.f
                 );
                 assert_eq!(
-                    msg.obs[9].D.i, 2374,
-                    "incorrect value for obs[9].D.i, expected 2374, is {}",
-                    msg.obs[9].D.i
+                    msg.obs[9].d.i, 2374,
+                    "incorrect value for obs[9].d.i, expected 2374, is {}",
+                    msg.obs[9].d.i
                 );
                 assert_eq!(
-                    msg.obs[9].L.f, 40,
-                    "incorrect value for obs[9].L.f, expected 40, is {}",
-                    msg.obs[9].L.f
+                    msg.obs[9].l.f, 40,
+                    "incorrect value for obs[9].l.f, expected 40, is {}",
+                    msg.obs[9].l.f
                 );
                 assert_eq!(
-                    msg.obs[9].L.i, 103982040,
-                    "incorrect value for obs[9].L.i, expected 103982040, is {}",
-                    msg.obs[9].L.i
+                    msg.obs[9].l.i, 103982040,
+                    "incorrect value for obs[9].l.i, expected 103982040, is {}",
+                    msg.obs[9].l.i
                 );
                 assert_eq!(
-                    msg.obs[9].P, 1269673722,
-                    "incorrect value for obs[9].P, expected 1269673722, is {}",
-                    msg.obs[9].P
+                    msg.obs[9].p, 1269673722,
+                    "incorrect value for obs[9].p, expected 1269673722, is {}",
+                    msg.obs[9].p
                 );
                 assert_eq!(
                     msg.obs[9].cn0, 120,
@@ -574,29 +574,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[9].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[10].D.f, 96,
-                    "incorrect value for obs[10].D.f, expected 96, is {}",
-                    msg.obs[10].D.f
+                    msg.obs[10].d.f, 96,
+                    "incorrect value for obs[10].d.f, expected 96, is {}",
+                    msg.obs[10].d.f
                 );
                 assert_eq!(
-                    msg.obs[10].D.i, -3446,
-                    "incorrect value for obs[10].D.i, expected -3446, is {}",
-                    msg.obs[10].D.i
+                    msg.obs[10].d.i, -3446,
+                    "incorrect value for obs[10].d.i, expected -3446, is {}",
+                    msg.obs[10].d.i
                 );
                 assert_eq!(
-                    msg.obs[10].L.f, 7,
-                    "incorrect value for obs[10].L.f, expected 7, is {}",
-                    msg.obs[10].L.f
+                    msg.obs[10].l.f, 7,
+                    "incorrect value for obs[10].l.f, expected 7, is {}",
+                    msg.obs[10].l.f
                 );
                 assert_eq!(
-                    msg.obs[10].L.i, 118217315,
-                    "incorrect value for obs[10].L.i, expected 118217315, is {}",
-                    msg.obs[10].L.i
+                    msg.obs[10].l.i, 118217315,
+                    "incorrect value for obs[10].l.i, expected 118217315, is {}",
+                    msg.obs[10].l.i
                 );
                 assert_eq!(
-                    msg.obs[10].P, 1107693703,
-                    "incorrect value for obs[10].P, expected 1107693703, is {}",
-                    msg.obs[10].P
+                    msg.obs[10].p, 1107693703,
+                    "incorrect value for obs[10].p, expected 1107693703, is {}",
+                    msg.obs[10].p
                 );
                 assert_eq!(
                     msg.obs[10].cn0, 176,
@@ -624,29 +624,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[10].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[11].D.f, 96,
-                    "incorrect value for obs[11].D.f, expected 96, is {}",
-                    msg.obs[11].D.f
+                    msg.obs[11].d.f, 96,
+                    "incorrect value for obs[11].d.f, expected 96, is {}",
+                    msg.obs[11].d.f
                 );
                 assert_eq!(
-                    msg.obs[11].D.i, -1003,
-                    "incorrect value for obs[11].D.i, expected -1003, is {}",
-                    msg.obs[11].D.i
+                    msg.obs[11].d.i, -1003,
+                    "incorrect value for obs[11].d.i, expected -1003, is {}",
+                    msg.obs[11].d.i
                 );
                 assert_eq!(
-                    msg.obs[11].L.f, 203,
-                    "incorrect value for obs[11].L.f, expected 203, is {}",
-                    msg.obs[11].L.f
+                    msg.obs[11].l.f, 203,
+                    "incorrect value for obs[11].l.f, expected 203, is {}",
+                    msg.obs[11].l.f
                 );
                 assert_eq!(
-                    msg.obs[11].L.i, 104224985,
-                    "incorrect value for obs[11].L.i, expected 104224985, is {}",
-                    msg.obs[11].L.i
+                    msg.obs[11].l.i, 104224985,
+                    "incorrect value for obs[11].l.i, expected 104224985, is {}",
+                    msg.obs[11].l.i
                 );
                 assert_eq!(
-                    msg.obs[11].P, 973505172,
-                    "incorrect value for obs[11].P, expected 973505172, is {}",
-                    msg.obs[11].P
+                    msg.obs[11].p, 973505172,
+                    "incorrect value for obs[11].p, expected 973505172, is {}",
+                    msg.obs[11].p
                 );
                 assert_eq!(
                     msg.obs[11].cn0, 170,
@@ -674,29 +674,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[11].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[12].D.f, 219,
-                    "incorrect value for obs[12].D.f, expected 219, is {}",
-                    msg.obs[12].D.f
+                    msg.obs[12].d.f, 219,
+                    "incorrect value for obs[12].d.f, expected 219, is {}",
+                    msg.obs[12].d.f
                 );
                 assert_eq!(
-                    msg.obs[12].D.i, -3836,
-                    "incorrect value for obs[12].D.i, expected -3836, is {}",
-                    msg.obs[12].D.i
+                    msg.obs[12].d.i, -3836,
+                    "incorrect value for obs[12].d.i, expected -3836, is {}",
+                    msg.obs[12].d.i
                 );
                 assert_eq!(
-                    msg.obs[12].L.f, 80,
-                    "incorrect value for obs[12].L.f, expected 80, is {}",
-                    msg.obs[12].L.f
+                    msg.obs[12].l.f, 80,
+                    "incorrect value for obs[12].l.f, expected 80, is {}",
+                    msg.obs[12].l.f
                 );
                 assert_eq!(
-                    msg.obs[12].L.i, 114505343,
-                    "incorrect value for obs[12].L.i, expected 114505343, is {}",
-                    msg.obs[12].L.i
+                    msg.obs[12].l.i, 114505343,
+                    "incorrect value for obs[12].l.i, expected 114505343, is {}",
+                    msg.obs[12].l.i
                 );
                 assert_eq!(
-                    msg.obs[12].P, 1069903034,
-                    "incorrect value for obs[12].P, expected 1069903034, is {}",
-                    msg.obs[12].P
+                    msg.obs[12].p, 1069903034,
+                    "incorrect value for obs[12].p, expected 1069903034, is {}",
+                    msg.obs[12].p
                 );
                 assert_eq!(
                     msg.obs[12].cn0, 200,
@@ -724,29 +724,29 @@ fn test_auto_check_sbp_observation_msg_obs() {
                     msg.obs[12].sid.sat
                 );
                 assert_eq!(
-                    msg.obs[13].D.f, 182,
-                    "incorrect value for obs[13].D.f, expected 182, is {}",
-                    msg.obs[13].D.f
+                    msg.obs[13].d.f, 182,
+                    "incorrect value for obs[13].d.f, expected 182, is {}",
+                    msg.obs[13].d.f
                 );
                 assert_eq!(
-                    msg.obs[13].D.i, -461,
-                    "incorrect value for obs[13].D.i, expected -461, is {}",
-                    msg.obs[13].D.i
+                    msg.obs[13].d.i, -461,
+                    "incorrect value for obs[13].d.i, expected -461, is {}",
+                    msg.obs[13].d.i
                 );
                 assert_eq!(
-                    msg.obs[13].L.f, 105,
-                    "incorrect value for obs[13].L.f, expected 105, is {}",
-                    msg.obs[13].L.f
+                    msg.obs[13].l.f, 105,
+                    "incorrect value for obs[13].l.f, expected 105, is {}",
+                    msg.obs[13].l.f
                 );
                 assert_eq!(
-                    msg.obs[13].L.i, 102157331,
-                    "incorrect value for obs[13].L.i, expected 102157331, is {}",
-                    msg.obs[13].L.i
+                    msg.obs[13].l.i, 102157331,
+                    "incorrect value for obs[13].l.i, expected 102157331, is {}",
+                    msg.obs[13].l.i
                 );
                 assert_eq!(
-                    msg.obs[13].P, 956875687,
-                    "incorrect value for obs[13].P, expected 956875687, is {}",
-                    msg.obs[13].P
+                    msg.obs[13].p, 956875687,
+                    "incorrect value for obs[13].p, expected 956875687, is {}",
+                    msg.obs[13].p
                 );
                 assert_eq!(
                     msg.obs[13].cn0, 152,
@@ -776,7 +776,7 @@ fn test_auto_check_sbp_observation_msg_obs() {
             }
             _ => panic!("Invalid message type! Expected a MsgObs"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -828,7 +828,7 @@ fn test_auto_check_sbp_observation_msg_obs() {
             }
             _ => panic!("Invalid message type! Expected a MsgObs"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

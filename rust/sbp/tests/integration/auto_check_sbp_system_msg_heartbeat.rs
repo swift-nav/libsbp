@@ -47,7 +47,7 @@ fn test_auto_check_sbp_system_msg_heartbeat() {
             }
             _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -82,7 +82,7 @@ fn test_auto_check_sbp_system_msg_heartbeat() {
             }
             _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

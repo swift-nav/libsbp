@@ -42,7 +42,7 @@ fn test_auto_check_sbp_settings_msg_settings_read_by_index_done() {
             }
             _ => panic!("Invalid message type! Expected a MsgSettingsReadByIndexDone"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

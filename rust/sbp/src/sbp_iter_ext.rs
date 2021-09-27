@@ -1,3 +1,5 @@
+//! Extra adaptors for iterators of [Sbp] messages.
+
 #[cfg(feature = "swiftnav-rs")]
 use swiftnav_rs::time::GpsTime;
 
@@ -7,40 +9,50 @@ use crate::{
     time::{GpsTimeError, MessageTime, RoverTime},
 };
 
-use crate::messages::Sbp;
+use crate::{DeserializeError, Sbp};
 
-pub trait SBPTools: Iterator {
-    fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
+/// An [Iterator] blanket implementation that provides extra adaptors for iterators of [Sbp] messages.
+pub trait SbpIterExt: Iterator {
+    /// Lift an `Iterator<Item = Result<Sbp>>` into an `Iterator<Item = Sbp>` by ignoring all the errors.
+    /// The iterator will terminate if an io error is encountered.
+    fn ignore_errors<'a>(self) -> HandleErrorsIter<'a, Self, DeserializeError>
     where
-        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
+        Self: Iterator<Item = Result<Sbp, DeserializeError>> + Sized,
     {
-        HandleErrorsIter::new(self, |_| ControlFlow::Continue)
+        HandleErrorsIter::new(self, |e| match e {
+            DeserializeError::IoError(_) => ControlFlow::Break,
+            _ => ControlFlow::Continue,
+        })
     }
 
-    fn log_errors(
-        self,
-        level: log::Level,
-    ) -> HandleErrorsIter<Self, Box<dyn Fn(&crate::Error) -> ControlFlow>>
+    /// Lift an `Iterator<Item = Result<Sbp>>` into an `Iterator<Item = Sbp>` by logging all the errors.
+    /// The iterator will terminate if an io error is encountered.
+    fn log_errors<'a>(self, level: log::Level) -> HandleErrorsIter<'a, Self, DeserializeError>
     where
-        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
+        Self: Iterator<Item = Result<Sbp, DeserializeError>> + Sized,
     {
-        HandleErrorsIter::new(
-            self,
-            Box::new(move |e| {
-                log::log!(level, "{}", e);
-                ControlFlow::Continue
-            }),
-        )
+        HandleErrorsIter::new(self, move |e| {
+            log::log!(level, "{}", e);
+            match e {
+                DeserializeError::IoError(_) => ControlFlow::Break,
+                _ => ControlFlow::Continue,
+            }
+        })
     }
 
-    fn handle_errors<F>(self, on_err: F) -> HandleErrorsIter<Self, F>
+    /// Lift an `Iterator<Item = Result<Sbp>>` into an `Iterator<Item = Sbp>` with a custom error handler.
+    /// You can use (ControlFlow)[self::ControlFlow] to determine if the iterator should continue or break on error.
+    fn handle_errors<'a, E, F>(self, on_err: F) -> HandleErrorsIter<'a, Self, E>
     where
-        Self: Iterator<Item = crate::Result<Sbp>> + Sized,
-        F: FnMut(&crate::Error) -> ControlFlow,
+        Self: Iterator<Item = Result<Sbp, E>> + Sized,
+        F: FnMut(&E) -> ControlFlow + 'a,
     {
         HandleErrorsIter::new(self, on_err)
     }
 
+    /// Return an iterable that also includes [GpsTime]s. This method calls [SbpMessage::gps_time] on each message.
+    /// If the message has a complete GpsTime it is returned. If the message only has a TOW, this itertor will use the
+    /// last week number it has seen, or return `None` if it hasn't seen any.
     #[cfg(feature = "swiftnav-rs")]
     fn with_rover_time(self) -> RoverTimeIter<Self>
     where
@@ -50,45 +62,49 @@ pub trait SBPTools: Iterator {
     }
 }
 
-impl<I> SBPTools for I where I: Iterator + Sized {}
+impl<I> SbpIterExt for I where I: Iterator + Sized {}
 
 // A less general https://doc.rust-lang.org/std/ops/enum.ControlFlow.html
 // could be replaced by that once it's stable
+/// Used to tell [HandleErrorsIter] whether it should exit early or go on as usual.
 pub enum ControlFlow {
     Continue,
     Break,
 }
 
-pub struct HandleErrorsIter<I, F>
+/// See [SbpIterExt::handle_errors] for more information.
+pub struct HandleErrorsIter<'a, I, E>
 where
     I: Iterator,
 {
     messages: I,
-    on_err: F,
-    err: crate::Result<()>,
+    on_err: Box<dyn FnMut(&E) -> ControlFlow + 'a>,
+    err: Result<(), E>,
 }
 
-impl<I, F> HandleErrorsIter<I, F>
+impl<'a, I, E> HandleErrorsIter<'a, I, E>
 where
-    I: Iterator<Item = crate::Result<Sbp>>,
+    I: Iterator<Item = Result<Sbp, E>>,
 {
-    fn new(messages: I, on_err: F) -> HandleErrorsIter<I, F> {
+    fn new<F>(messages: I, on_err: F) -> HandleErrorsIter<'a, I, E>
+    where
+        F: FnMut(&E) -> ControlFlow + 'a,
+    {
         Self {
             messages,
-            on_err,
+            on_err: Box::new(on_err),
             err: Ok(()),
         }
     }
 
-    pub fn check_error(&mut self) -> crate::Result<()> {
+    pub fn take_err(&mut self) -> Result<(), E> {
         std::mem::replace(&mut self.err, Ok(()))
     }
 }
 
-impl<I, F> Iterator for HandleErrorsIter<I, F>
+impl<'a, I, E> Iterator for HandleErrorsIter<'a, I, E>
 where
-    I: Iterator<Item = crate::Result<Sbp>>,
-    F: FnMut(&crate::Error) -> ControlFlow,
+    I: Iterator<Item = Result<Sbp, E>>,
 {
     type Item = Sbp;
 
@@ -107,6 +123,7 @@ where
     }
 }
 
+/// See [SbpIterExt::with_rover_time] for more information.
 #[cfg(feature = "swiftnav-rs")]
 pub struct RoverTimeIter<I: Iterator> {
     messages: I,
@@ -255,15 +272,15 @@ mod tests {
             msg_count += 1;
         }
         assert!(matches!(
-            messages.check_error(),
-            Err(crate::Error::CrcError { .. })
+            messages.take_err(),
+            Err(DeserializeError::CrcError { .. })
         ));
         assert_eq!(msg_count, 2);
 
         while let Some(_) = messages.next() {
             msg_count += 1;
         }
-        assert!(messages.check_error().is_ok());
+        assert!(messages.take_err().is_ok());
         assert_eq!(msg_count, 3);
 
         assert_eq!(messages.count(), 0);

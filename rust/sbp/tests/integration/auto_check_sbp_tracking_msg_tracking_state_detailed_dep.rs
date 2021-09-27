@@ -44,20 +44,20 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.L.f, 169,
-                    "incorrect value for L.f, expected 169, is {}",
-                    msg.L.f
+                    msg.l.f, 169,
+                    "incorrect value for l.f, expected 169, is {}",
+                    msg.l.f
                 );
                 assert_eq!(
-                    msg.L.i, 1319,
-                    "incorrect value for L.i, expected 1319, is {}",
-                    msg.L.i
+                    msg.l.i, 1319,
+                    "incorrect value for l.i, expected 1319, is {}",
+                    msg.l.i
                 );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
+                assert_eq!(msg.p, 0, "incorrect value for p, expected 0, is {}", msg.p);
                 assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.p_std, 0,
+                    "incorrect value for p_std, expected 0, is {}",
+                    msg.p_std
                 );
                 assert_eq!(
                     msg.acceleration, 108,
@@ -167,7 +167,7 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -199,20 +199,20 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.L.f, 14,
-                    "incorrect value for L.f, expected 14, is {}",
-                    msg.L.f
+                    msg.l.f, 14,
+                    "incorrect value for l.f, expected 14, is {}",
+                    msg.l.f
                 );
                 assert_eq!(
-                    msg.L.i, 1810,
-                    "incorrect value for L.i, expected 1810, is {}",
-                    msg.L.i
+                    msg.l.i, 1810,
+                    "incorrect value for l.i, expected 1810, is {}",
+                    msg.l.i
                 );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
+                assert_eq!(msg.p, 0, "incorrect value for p, expected 0, is {}", msg.p);
                 assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.p_std, 0,
+                    "incorrect value for p_std, expected 0, is {}",
+                    msg.p_std
                 );
                 assert_eq!(
                     msg.acceleration, -32,
@@ -322,7 +322,7 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -354,20 +354,20 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.L.f, 8,
-                    "incorrect value for L.f, expected 8, is {}",
-                    msg.L.f
+                    msg.l.f, 8,
+                    "incorrect value for l.f, expected 8, is {}",
+                    msg.l.f
                 );
                 assert_eq!(
-                    msg.L.i, 2298,
-                    "incorrect value for L.i, expected 2298, is {}",
-                    msg.L.i
+                    msg.l.i, 2298,
+                    "incorrect value for l.i, expected 2298, is {}",
+                    msg.l.i
                 );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
+                assert_eq!(msg.p, 0, "incorrect value for p, expected 0, is {}", msg.p);
                 assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.p_std, 0,
+                    "incorrect value for p_std, expected 0, is {}",
+                    msg.p_std
                 );
                 assert_eq!(
                     msg.acceleration, 27,
@@ -477,7 +477,7 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -509,20 +509,20 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.L.f, 125,
-                    "incorrect value for L.f, expected 125, is {}",
-                    msg.L.f
+                    msg.l.f, 125,
+                    "incorrect value for l.f, expected 125, is {}",
+                    msg.l.f
                 );
                 assert_eq!(
-                    msg.L.i, 2786,
-                    "incorrect value for L.i, expected 2786, is {}",
-                    msg.L.i
+                    msg.l.i, 2786,
+                    "incorrect value for l.i, expected 2786, is {}",
+                    msg.l.i
                 );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
+                assert_eq!(msg.p, 0, "incorrect value for p, expected 0, is {}", msg.p);
                 assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.p_std, 0,
+                    "incorrect value for p_std, expected 0, is {}",
+                    msg.p_std
                 );
                 assert_eq!(
                     msg.acceleration, -36,
@@ -632,7 +632,7 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -664,20 +664,20 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.L.f, 64,
-                    "incorrect value for L.f, expected 64, is {}",
-                    msg.L.f
+                    msg.l.f, 64,
+                    "incorrect value for l.f, expected 64, is {}",
+                    msg.l.f
                 );
                 assert_eq!(
-                    msg.L.i, 3275,
-                    "incorrect value for L.i, expected 3275, is {}",
-                    msg.L.i
+                    msg.l.i, 3275,
+                    "incorrect value for l.i, expected 3275, is {}",
+                    msg.l.i
                 );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
+                assert_eq!(msg.p, 0, "incorrect value for p, expected 0, is {}", msg.p);
                 assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.p_std, 0,
+                    "incorrect value for p_std, expected 0, is {}",
+                    msg.p_std
                 );
                 assert_eq!(
                     msg.acceleration, 2,
@@ -787,7 +787,7 @@ fn test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

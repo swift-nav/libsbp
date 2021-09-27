@@ -15,65 +15,33 @@
 //! Standardized Metadata messages for Fuzed Solution from Swift Navigation
 //! devices.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
+use super::lib::*;
 
 /// Instruments the physical type of GNSS sensor input to the fuzed solution
 ///
 /// Metadata around the GNSS sensors involved in the fuzed solution.
-/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
+/// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GNSSInputType {
+pub struct GnssInputType {
     /// flags that store all relevant info specific to this sensor type.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl GNSSInputType {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GNSSInputType, crate::Error> {
-        Ok( GNSSInputType{
-            flags: _buf.read_u8()?,
-        } )
+impl WireFormat for GnssInputType {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.flags)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GNSSInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GNSSInputType::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GnssInputType {
+            flags: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GNSSInputType>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GNSSInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GNSSInputType {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size
     }
 }
 
@@ -81,50 +49,28 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
 
 ///
 /// Metadata around the IMU sensors involved in the fuzed solution. Accessible
-/// through sol_in[N].flags in a MSG_SOLN_META.
+/// through sol_in\[N\].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct IMUInputType {
+pub struct ImuInputType {
     /// Instrument time, grade, and architecture for a sensor.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl IMUInputType {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<IMUInputType, crate::Error> {
-        Ok( IMUInputType{
-            flags: _buf.read_u8()?,
-        } )
+impl WireFormat for ImuInputType {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.flags)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<IMUInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(IMUInputType::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        ImuInputType {
+            flags: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<IMUInputType>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(IMUInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for IMUInputType {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size
     }
 }
 
@@ -142,125 +88,117 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSolnMeta {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Position Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
     pub pdop: u16,
     /// Horizontal Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
     pub hdop: u16,
     /// Vertical Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
     pub vdop: u16,
     /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
     /// (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "age_corrections")))]
     pub age_corrections: u16,
     /// Age and Time Status of the last received valid GNSS solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "age_gnss")))]
     pub age_gnss: u32,
     /// Array of Metadata describing the sensors potentially involved in the
     /// solution. Each element in the array represents a single sensor type and
     /// consists of flags containing (meta)data pertaining to that specific
     /// single sensor. Refer to each (XX)InputType descriptor in the present
     /// doc.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
     pub sol_in: Vec<SolutionInputType>,
 }
 
-impl MsgSolnMeta {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSolnMeta, crate::Error> {
-        Ok( MsgSolnMeta{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            age_corrections: _buf.read_u16::<LittleEndian>()?,
-            age_gnss: _buf.read_u32::<LittleEndian>()?,
-            sol_in: SolutionInputType::parse_array(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgSolnMeta {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgSolnMeta {
+impl ConcreteMessage for MsgSolnMeta {
     const MESSAGE_TYPE: u16 = 65294;
     const MESSAGE_NAME: &'static str = "MSG_SOLN_META";
 }
-impl TryFrom<super::Sbp> for MsgSolnMeta {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgSolnMeta {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgSolnMeta {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgSolnMeta(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgSolnMeta(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSolnMeta {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.pdop.append_to_sbp_buffer(buf);
-        self.hdop.append_to_sbp_buffer(buf);
-        self.vdop.append_to_sbp_buffer(buf);
-        self.age_corrections.append_to_sbp_buffer(buf);
-        self.age_gnss.append_to_sbp_buffer(buf);
-        self.sol_in.append_to_sbp_buffer(buf);
+impl WireFormat for MsgSolnMeta {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <Vec<SolutionInputType> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.pdop)
+            + WireFormat::encoded_len(&self.hdop)
+            + WireFormat::encoded_len(&self.vdop)
+            + WireFormat::encoded_len(&self.age_corrections)
+            + WireFormat::encoded_len(&self.age_gnss)
+            + WireFormat::encoded_len(&self.sol_in)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.pdop.sbp_size();
-        size += self.hdop.sbp_size();
-        size += self.vdop.sbp_size();
-        size += self.age_corrections.sbp_size();
-        size += self.age_gnss.sbp_size();
-        size += self.sol_in.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.pdop, buf);
+        WireFormat::write(&self.hdop, buf);
+        WireFormat::write(&self.vdop, buf);
+        WireFormat::write(&self.age_corrections, buf);
+        WireFormat::write(&self.age_gnss, buf);
+        WireFormat::write(&self.sol_in, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgSolnMeta {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            pdop: WireFormat::parse_unchecked(buf),
+            hdop: WireFormat::parse_unchecked(buf),
+            vdop: WireFormat::parse_unchecked(buf),
+            age_corrections: WireFormat::parse_unchecked(buf),
+            age_gnss: WireFormat::parse_unchecked(buf),
+            sol_in: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -274,123 +212,122 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSolnMetaDepA {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Position Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
     pub pdop: u16,
     /// Horizontal Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
     pub hdop: u16,
     /// Vertical Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
     pub vdop: u16,
     /// Number of satellites as per last available solution from PVT engine
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
     /// (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "age_corrections")))]
     pub age_corrections: u16,
     /// State of alignment and the status and receipt of the alignment inputs
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "alignment_status")))]
     pub alignment_status: u8,
     /// Tow of last-used GNSS position measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "last_used_gnss_pos_tow")))]
     pub last_used_gnss_pos_tow: u32,
     /// Tow of last-used GNSS velocity measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "last_used_gnss_vel_tow")))]
     pub last_used_gnss_vel_tow: u32,
     /// Array of Metadata describing the sensors potentially involved in the
     /// solution. Each element in the array represents a single sensor type and
     /// consists of flags containing (meta)data pertaining to that specific
     /// single sensor. Refer to each (XX)InputType descriptor in the present
     /// doc.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
     pub sol_in: Vec<SolutionInputType>,
 }
 
-impl MsgSolnMetaDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSolnMetaDepA, crate::Error> {
-        Ok( MsgSolnMetaDepA{
-            sender_id: None,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            age_corrections: _buf.read_u16::<LittleEndian>()?,
-            alignment_status: _buf.read_u8()?,
-            last_used_gnss_pos_tow: _buf.read_u32::<LittleEndian>()?,
-            last_used_gnss_vel_tow: _buf.read_u32::<LittleEndian>()?,
-            sol_in: SolutionInputType::parse_array(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgSolnMetaDepA {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgSolnMetaDepA {
+impl ConcreteMessage for MsgSolnMetaDepA {
     const MESSAGE_TYPE: u16 = 65295;
     const MESSAGE_NAME: &'static str = "MSG_SOLN_META_DEP_A";
 }
-impl TryFrom<super::Sbp> for MsgSolnMetaDepA {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgSolnMetaDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgSolnMetaDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgSolnMetaDepA(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgSolnMetaDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.pdop.append_to_sbp_buffer(buf);
-        self.hdop.append_to_sbp_buffer(buf);
-        self.vdop.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.age_corrections.append_to_sbp_buffer(buf);
-        self.alignment_status.append_to_sbp_buffer(buf);
-        self.last_used_gnss_pos_tow.append_to_sbp_buffer(buf);
-        self.last_used_gnss_vel_tow.append_to_sbp_buffer(buf);
-        self.sol_in.append_to_sbp_buffer(buf);
+impl WireFormat for MsgSolnMetaDepA {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <Vec<SolutionInputType> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.pdop)
+            + WireFormat::encoded_len(&self.hdop)
+            + WireFormat::encoded_len(&self.vdop)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.age_corrections)
+            + WireFormat::encoded_len(&self.alignment_status)
+            + WireFormat::encoded_len(&self.last_used_gnss_pos_tow)
+            + WireFormat::encoded_len(&self.last_used_gnss_vel_tow)
+            + WireFormat::encoded_len(&self.sol_in)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.pdop.sbp_size();
-        size += self.hdop.sbp_size();
-        size += self.vdop.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.age_corrections.sbp_size();
-        size += self.alignment_status.sbp_size();
-        size += self.last_used_gnss_pos_tow.sbp_size();
-        size += self.last_used_gnss_vel_tow.sbp_size();
-        size += self.sol_in.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.pdop, buf);
+        WireFormat::write(&self.hdop, buf);
+        WireFormat::write(&self.vdop, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.age_corrections, buf);
+        WireFormat::write(&self.alignment_status, buf);
+        WireFormat::write(&self.last_used_gnss_pos_tow, buf);
+        WireFormat::write(&self.last_used_gnss_vel_tow, buf);
+        WireFormat::write(&self.sol_in, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgSolnMetaDepA {
+            sender_id: None,
+            pdop: WireFormat::parse_unchecked(buf),
+            hdop: WireFormat::parse_unchecked(buf),
+            vdop: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            age_corrections: WireFormat::parse_unchecked(buf),
+            alignment_status: WireFormat::parse_unchecked(buf),
+            last_used_gnss_pos_tow: WireFormat::parse_unchecked(buf),
+            last_used_gnss_vel_tow: WireFormat::parse_unchecked(buf),
+            sol_in: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -398,50 +335,28 @@ impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
 
 ///
 /// Metadata around the Odometry sensors involved in the fuzed solution.
-/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
+/// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct OdoInputType {
     /// Instrument ODO rate, grade, and quality.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl OdoInputType {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<OdoInputType, crate::Error> {
-        Ok( OdoInputType{
-            flags: _buf.read_u8()?,
-        } )
+impl WireFormat for OdoInputType {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.flags)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<OdoInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(OdoInputType::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        OdoInputType {
+            flags: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<OdoInputType>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(OdoInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for OdoInputType {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size
     }
 }
 
@@ -457,53 +372,29 @@ impl crate::serialize::SbpSerialize for OdoInputType {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct SolutionInputType {
     /// The type of sensor
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
     pub sensor_type: u8,
     /// Refer to each InputType description
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl SolutionInputType {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SolutionInputType, crate::Error> {
-        Ok( SolutionInputType{
-            sensor_type: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
+impl WireFormat for SolutionInputType {
+    const MIN_ENCODED_LEN: usize =
+        <u8 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sensor_type) + WireFormat::encoded_len(&self.flags)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SolutionInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SolutionInputType::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sensor_type, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        SolutionInputType {
+            sensor_type: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<SolutionInputType>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(SolutionInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for SolutionInputType {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sensor_type.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sensor_type.sbp_size();
-        size += self.flags.sbp_size();
-        size
     }
 }

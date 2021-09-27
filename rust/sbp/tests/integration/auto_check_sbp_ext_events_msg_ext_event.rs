@@ -69,7 +69,7 @@ fn test_auto_check_sbp_ext_events_msg_ext_event() {
             }
             _ => panic!("Invalid message type! Expected a MsgExtEvent"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

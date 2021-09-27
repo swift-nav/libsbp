@@ -79,7 +79,7 @@ fn test_auto_check_sbp_orientation_msg_orient_quat() {
             }
             _ => panic!("Invalid message type! Expected a MsgOrientQuat"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

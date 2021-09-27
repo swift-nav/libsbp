@@ -21,14 +21,7 @@
 //! Note that some of these messages share the same message type ID for both
 //! the host request and the device response.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
+use super::lib::*;
 
 /// Request advice on the optimal configuration for FileIO
 ///
@@ -39,75 +32,58 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
 }
 
-impl MsgFileioConfigReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
-        Ok( MsgFileioConfigReq{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioConfigReq {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioConfigReq {
+impl ConcreteMessage for MsgFileioConfigReq {
     const MESSAGE_TYPE: u16 = 4097;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_CONFIG_REQ";
 }
-impl TryFrom<super::Sbp> for MsgFileioConfigReq {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioConfigReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioConfigReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioConfigReq(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioConfigReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioConfigReq {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioConfigReq {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -121,90 +97,79 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// The number of SBP packets in the data in-flight window
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "window_size")))]
     pub window_size: u32,
     /// The number of SBP packets sent in one PDU
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "batch_size")))]
     pub batch_size: u32,
     /// The version of FileIO that is supported
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fileio_version")))]
     pub fileio_version: u32,
 }
 
-impl MsgFileioConfigResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
-        Ok( MsgFileioConfigResp{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            window_size: _buf.read_u32::<LittleEndian>()?,
-            batch_size: _buf.read_u32::<LittleEndian>()?,
-            fileio_version: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioConfigResp {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioConfigResp {
+impl ConcreteMessage for MsgFileioConfigResp {
     const MESSAGE_TYPE: u16 = 4098;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_CONFIG_RESP";
 }
-impl TryFrom<super::Sbp> for MsgFileioConfigResp {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioConfigResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioConfigResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioConfigResp(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioConfigResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.window_size.append_to_sbp_buffer(buf);
-        self.batch_size.append_to_sbp_buffer(buf);
-        self.fileio_version.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioConfigResp {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
+            + WireFormat::encoded_len(&self.window_size)
+            + WireFormat::encoded_len(&self.batch_size)
+            + WireFormat::encoded_len(&self.fileio_version)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.window_size.sbp_size();
-        size += self.batch_size.sbp_size();
-        size += self.fileio_version.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.window_size, buf);
+        WireFormat::write(&self.batch_size, buf);
+        WireFormat::write(&self.fileio_version, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioConfigResp {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            window_size: WireFormat::parse_unchecked(buf),
+            batch_size: WireFormat::parse_unchecked(buf),
+            fileio_version: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -222,85 +187,72 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// The offset to skip the first n elements of the file list
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
     pub offset: u32,
     /// Name of the directory to list
-    pub dirname: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dirname")))]
+    pub dirname: SbpString<Vec<u8>, NullTerminated>,
 }
 
-impl MsgFileioReadDirReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, crate::Error> {
-        Ok( MsgFileioReadDirReq{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            dirname: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioReadDirReq {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioReadDirReq {
+impl ConcreteMessage for MsgFileioReadDirReq {
     const MESSAGE_TYPE: u16 = 169;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_DIR_REQ";
 }
-impl TryFrom<super::Sbp> for MsgFileioReadDirReq {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioReadDirReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioReadDirReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioReadDirReq(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioReadDirReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.offset.append_to_sbp_buffer(buf);
-        self.dirname.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioReadDirReq {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
+            + WireFormat::encoded_len(&self.offset)
+            + WireFormat::encoded_len(&self.dirname)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.offset.sbp_size();
-        size += self.dirname.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.offset, buf);
+        WireFormat::write(&self.dirname, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioReadDirReq {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            offset: WireFormat::parse_unchecked(buf),
+            dirname: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -314,80 +266,64 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// Contents of read directory
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
     pub contents: Vec<u8>,
 }
 
-impl MsgFileioReadDirResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, crate::Error> {
-        Ok( MsgFileioReadDirResp{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioReadDirResp {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioReadDirResp {
+impl ConcreteMessage for MsgFileioReadDirResp {
     const MESSAGE_TYPE: u16 = 170;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_DIR_RESP";
 }
-impl TryFrom<super::Sbp> for MsgFileioReadDirResp {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioReadDirResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioReadDirResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioReadDirResp(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioReadDirResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.contents.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioReadDirResp {
+    const MIN_ENCODED_LEN: usize =
+        <u32 as WireFormat>::MIN_ENCODED_LEN + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.contents.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.contents, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioReadDirResp {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            contents: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -403,90 +339,79 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// File offset
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
     pub offset: u32,
     /// Chunk size to read
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "chunk_size")))]
     pub chunk_size: u8,
     /// Name of the file to read from
-    pub filename: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+    pub filename: SbpString<Vec<u8>, NullTerminated>,
 }
 
-impl MsgFileioReadReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
-        Ok( MsgFileioReadReq{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            chunk_size: _buf.read_u8()?,
-            filename: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioReadReq {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioReadReq {
+impl ConcreteMessage for MsgFileioReadReq {
     const MESSAGE_TYPE: u16 = 168;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_REQ";
 }
-impl TryFrom<super::Sbp> for MsgFileioReadReq {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioReadReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioReadReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioReadReq(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioReadReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioReadReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.offset.append_to_sbp_buffer(buf);
-        self.chunk_size.append_to_sbp_buffer(buf);
-        self.filename.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioReadReq {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
+            + WireFormat::encoded_len(&self.offset)
+            + WireFormat::encoded_len(&self.chunk_size)
+            + WireFormat::encoded_len(&self.filename)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.offset.sbp_size();
-        size += self.chunk_size.sbp_size();
-        size += self.filename.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.offset, buf);
+        WireFormat::write(&self.chunk_size, buf);
+        WireFormat::write(&self.filename, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioReadReq {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            offset: WireFormat::parse_unchecked(buf),
+            chunk_size: WireFormat::parse_unchecked(buf),
+            filename: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -499,80 +424,64 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// Contents of read file
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
     pub contents: Vec<u8>,
 }
 
-impl MsgFileioReadResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
-        Ok( MsgFileioReadResp{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioReadResp {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioReadResp {
+impl ConcreteMessage for MsgFileioReadResp {
     const MESSAGE_TYPE: u16 = 163;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_READ_RESP";
 }
-impl TryFrom<super::Sbp> for MsgFileioReadResp {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioReadResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioReadResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioReadResp(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioReadResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioReadResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.contents.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioReadResp {
+    const MIN_ENCODED_LEN: usize =
+        <u32 as WireFormat>::MIN_ENCODED_LEN + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.contents.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.contents, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioReadResp {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            contents: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -585,75 +494,59 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioRemove {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Name of the file to delete
-    pub filename: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+    pub filename: SbpString<Vec<u8>, NullTerminated>,
 }
 
-impl MsgFileioRemove {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, crate::Error> {
-        Ok( MsgFileioRemove{
-            sender_id: None,
-            filename: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioRemove {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioRemove {
+impl ConcreteMessage for MsgFileioRemove {
     const MESSAGE_TYPE: u16 = 172;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_REMOVE";
 }
-impl TryFrom<super::Sbp> for MsgFileioRemove {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioRemove {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioRemove {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioRemove(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioRemove(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioRemove {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.filename.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioRemove {
+    const MIN_ENCODED_LEN: usize =
+        <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.filename)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.filename.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.filename, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioRemove {
+            sender_id: None,
+            filename: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -669,90 +562,79 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
     /// Offset into the file at which to start writing in bytes
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
     pub offset: u32,
     /// Name of the file to write to
-    pub filename: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+    pub filename: SbpString<Vec<u8>, NullTerminated>,
     /// Variable-length array of data to write
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
     pub data: Vec<u8>,
 }
 
-impl MsgFileioWriteReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, crate::Error> {
-        Ok( MsgFileioWriteReq{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            filename: crate::parser::read_string(_buf)?,
-            data: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioWriteReq {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioWriteReq {
+impl ConcreteMessage for MsgFileioWriteReq {
     const MESSAGE_TYPE: u16 = 173;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_WRITE_REQ";
 }
-impl TryFrom<super::Sbp> for MsgFileioWriteReq {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioWriteReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioWriteReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioWriteReq(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioWriteReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
-        self.offset.append_to_sbp_buffer(buf);
-        self.filename.append_to_sbp_buffer(buf);
-        self.data.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioWriteReq {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN
+        + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
+            + WireFormat::encoded_len(&self.offset)
+            + WireFormat::encoded_len(&self.filename)
+            + WireFormat::encoded_len(&self.data)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size += self.offset.sbp_size();
-        size += self.filename.sbp_size();
-        size += self.data.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+        WireFormat::write(&self.offset, buf);
+        WireFormat::write(&self.filename, buf);
+        WireFormat::write(&self.data, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioWriteReq {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+            offset: WireFormat::parse_unchecked(buf),
+            filename: WireFormat::parse_unchecked(buf),
+            data: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -765,74 +647,57 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
     pub sequence: u32,
 }
 
-impl MsgFileioWriteResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
-        Ok( MsgFileioWriteResp{
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgFileioWriteResp {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFileioWriteResp {
+impl ConcreteMessage for MsgFileioWriteResp {
     const MESSAGE_TYPE: u16 = 171;
     const MESSAGE_NAME: &'static str = "MSG_FILEIO_WRITE_RESP";
 }
-impl TryFrom<super::Sbp> for MsgFileioWriteResp {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFileioWriteResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFileioWriteResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgFileioWriteResp(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgFileioWriteResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFileioWriteResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sequence.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFileioWriteResp {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sequence)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sequence.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sequence, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFileioWriteResp {
+            sender_id: None,
+            sequence: WireFormat::parse_unchecked(buf),
+        }
     }
 }

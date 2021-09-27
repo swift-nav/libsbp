@@ -16,7 +16,8 @@ Generator for rust tests target.
 import re
 
 from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
-from sbpg.targets.templating import JENV, LOWER_ACRONYMS, ACRONYMS
+from sbpg.targets.templating import JENV
+from sbpg.targets.rust import lower_acronyms, snake_case
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "sbp_tests_main_template.rs"
@@ -26,17 +27,6 @@ def str_escape(value):
 
 def mod_name(value):
     return value.split('.')[1]
-
-def snake_case(s):
-  if "_" in s:
-    return "_".join(snake_case(p) for p in s.split('_'))
-  s = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)
-  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower()
-
-def lower_acronyms(s):
-  for (i, a) in enumerate(ACRONYMS):
-    s = s.replace(a, LOWER_ACRONYMS[i])
-  return s
 
 JENV.filters['to_str'] = to_str
 JENV.filters['str_escape'] = str_escape

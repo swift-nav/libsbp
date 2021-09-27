@@ -102,7 +102,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_cov_gnss() {
             }
             _ => panic!("Invalid message type! Expected a MsgVelNEDCovGnss"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

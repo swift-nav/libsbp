@@ -47,7 +47,7 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.version.clone()),
+                    msg.version.to_string(),
                     "v1.2
 "
                     .to_string(),
@@ -60,7 +60,7 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -110,7 +110,7 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeDepA"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

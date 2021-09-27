@@ -44,7 +44,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
 "
                     .to_string(),
@@ -57,7 +57,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -89,7 +89,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
 "
                     .to_string(),
@@ -102,7 +102,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -134,7 +134,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: Disabling channel 0 (PRN 11)
 "
                     .to_string(),
@@ -147,7 +147,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -179,7 +179,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
 "
                     .to_string(),
@@ -192,7 +192,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -224,7 +224,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
 "
                     .to_string(),
@@ -237,7 +237,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
@@ -269,7 +269,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                     sender_id
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "INFO: Disabling channel 1 (PRN 15)
 "
                     .to_string(),
@@ -282,7 +282,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

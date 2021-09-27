@@ -49,7 +49,7 @@ fn test_auto_check_sbp_logging_msg_log() {
                     msg.level
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.text.clone()),
+                    msg.text.to_string(),
                     "Filtered all obs from 2314 at tow 83.539019".to_string(),
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "Filtered all obs from 2314 at tow 83.539019".to_string(),
@@ -58,7 +58,7 @@ fn test_auto_check_sbp_logging_msg_log() {
             }
             _ => panic!("Invalid message type! Expected a MsgLog"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

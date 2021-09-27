@@ -1,24 +1,19 @@
-use crate::{messages::SbpMessage, serialize::SbpSerialize};
+//! Unknown messages.
 
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
+use bytes::BytesMut;
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+use crate::{wire_format::WireFormat, SbpMessage};
+
+/// The message returned by the parser when the message type does not correspond to a known message.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone)]
 pub struct Unknown {
+    /// The message id of the message.
     pub msg_id: u16,
-    pub sender_id: u16,
+    /// The message sender_id.
+    pub sender_id: Option<u16>,
+    /// Raw payload of the message.
     pub payload: Vec<u8>,
-}
-
-impl SbpSerialize for Unknown {
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        buf.extend(&self.payload);
-    }
-
-    fn sbp_size(&self) -> usize {
-        self.payload.len()
-    }
 }
 
 impl SbpMessage for Unknown {
@@ -31,20 +26,28 @@ impl SbpMessage for Unknown {
     }
 
     fn sender_id(&self) -> Option<u16> {
-        Some(self.sender_id)
+        self.sender_id
     }
 
     fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = new_id;
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl WireFormat for Unknown {
+    fn encoded_len(&self) -> usize {
+        self.payload.encoded_len()
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn write(&self, buf: &mut BytesMut) {
+        self.payload.write(buf)
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+        Unknown {
+            msg_id: 0,
+            sender_id: None,
+            payload: WireFormat::parse_unchecked(buf),
+        }
     }
 }

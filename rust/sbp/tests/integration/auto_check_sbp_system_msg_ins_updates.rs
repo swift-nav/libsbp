@@ -79,7 +79,7 @@ fn test_auto_check_sbp_system_msg_ins_updates() {
             }
             _ => panic!("Invalid message type! Expected a MsgInsUpdates"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

@@ -7,6 +7,7 @@
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+//! SBP message definitions.
 pub mod acquisition;
 pub mod bootload;
 pub mod ext_events;
@@ -235,30 +236,51 @@ use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
 use self::vehicle::MsgWheeltick;
 
-use crate::serialize::SbpSerialize;
+mod lib {
+    //! Common imports so we can just `use super::lib::*` in all the message files
 
-pub trait SbpMessage: SbpSerialize {
-    fn message_name(&self) -> &'static str;
-    fn message_type(&self) -> u16;
-    fn sender_id(&self) -> Option<u16>;
-    fn set_sender_id(&mut self, new_id: u16);
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
-    fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
+    pub use std::convert::{TryFrom, TryInto};
+
+    pub use crate::sbp_string::{
+        DoubleNullTerminated, Multipart, NullTerminated, SbpString, Unterminated,
+    };
+    pub use crate::wire_format::{PayloadParseError, WireFormat};
+
     #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+    pub use crate::time;
+
+    pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
+}
+
+use lib::*;
+
+/// Common functionality available to all SBP messages.
+pub trait SbpMessage: WireFormat + Clone + Sized {
+    /// Get the message name.
+    fn message_name(&self) -> &'static str;
+    /// Get the message type.
+    fn message_type(&self) -> u16;
+    /// Get the sender_id if it is set.
+    fn sender_id(&self) -> Option<u16>;
+    /// Set the sender id.
+    fn set_sender_id(&mut self, new_id: u16);
+    /// Get the GPS time associated with the message.
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
 }
 
-pub trait ConcreteMessage:
-    SbpMessage + std::convert::TryFrom<Sbp, Error = TryFromSbpError> + Clone + Sized
-{
+/// Implemented by messages who's message name and type are known at compile time.
+/// This is everything that implements [SbpMessage] except for [Sbp].
+pub trait ConcreteMessage: SbpMessage + TryFrom<Sbp, Error = TryFromSbpError> {
+    /// The message type.
     const MESSAGE_TYPE: u16;
+    /// The message name.
     const MESSAGE_NAME: &'static str;
 }
 
+/// The error returned when using [TryFrom] to convert [Sbp] to the wrong message type.
 #[derive(Debug, Clone)]
 pub struct TryFromSbpError;
 
@@ -270,1238 +292,1442 @@ impl std::fmt::Display for TryFromSbpError {
 
 impl std::error::Error for TryFromSbpError {}
 
+/// Represents any SBP message.
 #[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
 #[non_exhaustive]
 pub enum Sbp {
+    /// Deprecated
     MsgPrintDep(MsgPrintDep),
+    /// Deprecated
     MsgTrackingStateDetailedDep(MsgTrackingStateDetailedDep),
+    /// Deprecated
     MsgTrackingStateDepB(MsgTrackingStateDepB),
+    /// Deprecated
     MsgAcqResultDepB(MsgAcqResultDepB),
+    /// Deprecated
     MsgAcqResultDepA(MsgAcqResultDepA),
+    /// Deprecated
     MsgTrackingStateDepA(MsgTrackingStateDepA),
+    /// State of an RTOS thread
     MsgThreadState(MsgThreadState),
+    /// Deprecated
     MsgUartStateDepa(MsgUartStateDepa),
+    /// State of the Integer Ambiguity Resolution (IAR) process
     MsgIarState(MsgIarState),
+    /// Deprecated
     MsgEphemerisDepA(MsgEphemerisDepA),
+    /// Deprecated
     MsgMaskSatelliteDep(MsgMaskSatelliteDep),
+    /// Deprecated
     MsgTrackingIqDepA(MsgTrackingIqDepA),
+    /// State of the UART channels
     MsgUartState(MsgUartState),
+    /// Deprecated
     MsgAcqSvProfileDep(MsgAcqSvProfileDep),
+    /// Deprecated
     MsgAcqResultDepC(MsgAcqResultDepC),
+    /// Detailed signal tracking channel states. DEPRECATED
     MsgTrackingStateDetailedDepA(MsgTrackingStateDetailedDepA),
+    /// Reset IAR filters (host => Piksi)
     MsgResetFilters(MsgResetFilters),
+    /// Deprecated
     MsgInitBaseDep(MsgInitBaseDep),
+    /// Mask a satellite from use in Piksi subsystems
     MsgMaskSatellite(MsgMaskSatellite),
+    /// Tracking channel correlations
     MsgTrackingIqDepB(MsgTrackingIqDepB),
+    /// Tracking channel correlations
     MsgTrackingIq(MsgTrackingIq),
+    /// Acquisition perfomance measurement and debug
     MsgAcqSvProfile(MsgAcqSvProfile),
+    /// Satellite acquisition result
     MsgAcqResult(MsgAcqResult),
+    /// Signal tracking channel states
     MsgTrackingState(MsgTrackingState),
+    /// Deprecated
     MsgObsDepB(MsgObsDepB),
+    /// Base station position
     MsgBasePosLlh(MsgBasePosLlh),
+    /// Deprecated
     MsgObsDepA(MsgObsDepA),
+    /// Deprecated
     MsgEphemerisDepB(MsgEphemerisDepB),
+    /// Satellite broadcast ephemeris
     MsgEphemerisDepC(MsgEphemerisDepC),
+    /// Base station position in ECEF
     MsgBasePosEcef(MsgBasePosEcef),
+    /// Deprecated
     MsgObsDepC(MsgObsDepC),
+    /// GPS satellite observations
     MsgObs(MsgObs),
+    /// Deprecated
     MsgSpecanDep(MsgSpecanDep),
+    /// Spectrum analyzer
     MsgSpecan(MsgSpecan),
+    /// Measurement Engine signal tracking channel states
     MsgMeasurementState(MsgMeasurementState),
+    /// Send GPS time from host (host => Piksi)
     MsgSetTime(MsgSetTime),
+    /// Legacy message to load satellite almanac (host => Piksi)
     MsgAlmanac(MsgAlmanac),
+    /// Satellite broadcast ephemeris for GPS
     MsgAlmanacGpsDep(MsgAlmanacGpsDep),
+    /// Satellite broadcast ephemeris for GLO
     MsgAlmanacGloDep(MsgAlmanacGloDep),
+    /// Satellite broadcast ephemeris for GPS
     MsgAlmanacGps(MsgAlmanacGps),
+    /// Satellite broadcast ephemeris for GLO
     MsgAlmanacGlo(MsgAlmanacGlo),
+    /// GLONASS L1/L2 Code-Phase biases
     MsgGloBiases(MsgGloBiases),
+    /// Satellite broadcast ephemeris
     MsgEphemerisDepD(MsgEphemerisDepD),
+    /// Satellite broadcast ephemeris for GPS
     MsgEphemerisGpsDepE(MsgEphemerisGpsDepE),
+    /// Satellite broadcast ephemeris for SBAS
     MsgEphemerisSbasDepA(MsgEphemerisSbasDepA),
+    /// Satellite broadcast ephemeris for GLO
     MsgEphemerisGloDepA(MsgEphemerisGloDepA),
+    /// Deprecated
     MsgEphemerisSbasDepB(MsgEphemerisSbasDepB),
+    /// Satellite broadcast ephemeris for GLO
     MsgEphemerisGloDepB(MsgEphemerisGloDepB),
+    /// Deprecated
     MsgEphemerisGpsDepF(MsgEphemerisGpsDepF),
+    /// Satellite broadcast ephemeris for GLO
     MsgEphemerisGloDepC(MsgEphemerisGloDepC),
+    /// Deprecated
     MsgEphemerisGloDepD(MsgEphemerisGloDepD),
+    /// Satellite broadcast ephemeris for BDS
     MsgEphemerisBds(MsgEphemerisBds),
+    /// Satellite broadcast ephemeris for GPS
     MsgEphemerisGps(MsgEphemerisGps),
+    /// Satellite broadcast ephemeris for GLO
     MsgEphemerisGlo(MsgEphemerisGlo),
+    /// Satellite broadcast ephemeris for SBAS
     MsgEphemerisSbas(MsgEphemerisSbas),
+    /// Satellite broadcast ephemeris for Galileo
     MsgEphemerisGal(MsgEphemerisGal),
+    /// Satellite broadcast ephemeris for QZSS
     MsgEphemerisQzss(MsgEphemerisQzss),
+    /// Iono corrections
     MsgIono(MsgIono),
+    /// L2C capability mask
     MsgSvConfigurationGpsDep(MsgSvConfigurationGpsDep),
+    /// Group Delay
     MsgGroupDelayDepA(MsgGroupDelayDepA),
+    /// Group Delay
     MsgGroupDelayDepB(MsgGroupDelayDepB),
+    /// Group Delay
     MsgGroupDelay(MsgGroupDelay),
+    /// Deprecated
     MsgEphemerisGalDepA(MsgEphemerisGalDepA),
+    /// GNSS capabilities
     MsgGnssCapb(MsgGnssCapb),
+    /// Satellite azimuths and elevations
     MsgSvAzEl(MsgSvAzEl),
+    /// Write device configuration settings (host => device)
     MsgSettingsWrite(MsgSettingsWrite),
+    /// Save settings to flash (host => device)
     MsgSettingsSave(MsgSettingsSave),
+    /// Read setting by direct index (host => device)
     MsgSettingsReadByIndexReq(MsgSettingsReadByIndexReq),
+    /// File read from the file system (host <= device)
     MsgFileioReadResp(MsgFileioReadResp),
+    /// Read device configuration settings (host => device)
     MsgSettingsReadReq(MsgSettingsReadReq),
+    /// Read device configuration settings (host <= device)
     MsgSettingsReadResp(MsgSettingsReadResp),
+    /// Finished reading settings (host <= device)
     MsgSettingsReadByIndexDone(MsgSettingsReadByIndexDone),
+    /// Read setting by direct index (host <= device)
     MsgSettingsReadByIndexResp(MsgSettingsReadByIndexResp),
+    /// Read file from the file system (host => device)
     MsgFileioReadReq(MsgFileioReadReq),
+    /// List files in a directory (host => device)
     MsgFileioReadDirReq(MsgFileioReadDirReq),
+    /// Files listed in a directory (host <= device)
     MsgFileioReadDirResp(MsgFileioReadDirResp),
+    /// File written to (host <= device)
     MsgFileioWriteResp(MsgFileioWriteResp),
+    /// Delete a file from the file system (host => device)
     MsgFileioRemove(MsgFileioRemove),
+    /// Write to file (host => device)
     MsgFileioWriteReq(MsgFileioWriteReq),
+    /// Register setting and default value (device => host)
     MsgSettingsRegister(MsgSettingsRegister),
+    /// Acknowledgement with status of MSG_SETTINGS_WRITE
     MsgSettingsWriteResp(MsgSettingsWriteResp),
+    /// Deprecated
     MsgBootloaderHandshakeDepA(MsgBootloaderHandshakeDepA),
+    /// Bootloader jump to application (host => device)
     MsgBootloaderJumpToApp(MsgBootloaderJumpToApp),
+    /// Reset the device (host => Piksi)
     MsgResetDep(MsgResetDep),
+    /// Bootloading handshake request (host => device)
     MsgBootloaderHandshakeReq(MsgBootloaderHandshakeReq),
+    /// Bootloading handshake response (host <= device)
     MsgBootloaderHandshakeResp(MsgBootloaderHandshakeResp),
+    /// Device temperature and voltage levels
     MsgDeviceMonitor(MsgDeviceMonitor),
+    /// Reset the device (host => Piksi)
     MsgReset(MsgReset),
+    /// Execute a command (host => device)
     MsgCommandReq(MsgCommandReq),
+    /// Exit code from executed command (device => host)
     MsgCommandResp(MsgCommandResp),
+    /// Request state of Piksi network interfaces
     MsgNetworkStateReq(MsgNetworkStateReq),
+    /// State of network interface
     MsgNetworkStateResp(MsgNetworkStateResp),
+    /// Command output
     MsgCommandOutput(MsgCommandOutput),
+    /// Bandwidth usage reporting message
     MsgNetworkBandwidthUsage(MsgNetworkBandwidthUsage),
+    /// Cell modem information update message
     MsgCellModemStatus(MsgCellModemStatus),
+    /// RF AGC status
     MsgFrontEndGain(MsgFrontEndGain),
+    /// Legacy message for CW interference channel (Piksi => host)
     MsgCwResults(MsgCwResults),
+    /// Legacy message for CW interference channel (host => Piksi)
     MsgCwStart(MsgCwStart),
+    /// Read FPGA device ID over UART response (host <= device)
     MsgNapDeviceDnaResp(MsgNapDeviceDnaResp),
+    /// Read FPGA device ID over UART request (host => device)
     MsgNapDeviceDnaReq(MsgNapDeviceDnaReq),
+    /// Flash response message (host <= device)
     MsgFlashDone(MsgFlashDone),
+    /// Read STM or M25 flash address response (host <= device)
     MsgFlashReadResp(MsgFlashReadResp),
+    /// Erase sector of device flash memory (host => device)
     MsgFlashErase(MsgFlashErase),
+    /// Lock sector of STM flash memory (host => device)
     MsgStmFlashLockSector(MsgStmFlashLockSector),
+    /// Unlock sector of STM flash memory (host => device)
     MsgStmFlashUnlockSector(MsgStmFlashUnlockSector),
+    /// Read device's hard-coded unique ID response (host <= device)
     MsgStmUniqueIdResp(MsgStmUniqueIdResp),
+    /// Program flash addresses
     MsgFlashProgram(MsgFlashProgram),
+    /// Read STM or M25 flash address request (host => device)
     MsgFlashReadReq(MsgFlashReadReq),
+    /// Read device's hard-coded unique ID request (host => device)
     MsgStmUniqueIdReq(MsgStmUniqueIdReq),
+    /// Write M25 flash status register (host => device)
     MsgM25FlashWriteStatus(MsgM25FlashWriteStatus),
+    /// GPS Time (v1.0)
     MsgGpsTimeDepA(MsgGpsTimeDepA),
+    /// Reports timestamped external pin event
     MsgExtEvent(MsgExtEvent),
+    /// GPS Time
     MsgGpsTime(MsgGpsTime),
+    /// UTC Time
     MsgUtcTime(MsgUtcTime),
+    /// GPS Time
     MsgGpsTimeGnss(MsgGpsTimeGnss),
+    /// UTC Time
     MsgUtcTimeGnss(MsgUtcTimeGnss),
+    /// Register setting and default value (device <= host)
     MsgSettingsRegisterResp(MsgSettingsRegisterResp),
+    /// Single-point position in ECEF
     MsgPosEcefDepA(MsgPosEcefDepA),
+    /// Geodetic Position
     MsgPosLlhDepA(MsgPosLlhDepA),
+    /// Baseline Position in ECEF
     MsgBaselineEcefDepA(MsgBaselineEcefDepA),
+    /// Baseline in NED
     MsgBaselineNedDepA(MsgBaselineNedDepA),
+    /// Velocity in ECEF
     MsgVelEcefDepA(MsgVelEcefDepA),
+    /// Velocity in NED
     MsgVelNedDepA(MsgVelNedDepA),
+    /// Dilution of Precision
     MsgDopsDepA(MsgDopsDepA),
+    /// Heading relative to True North
     MsgBaselineHeadingDepA(MsgBaselineHeadingDepA),
+    /// Dilution of Precision
     MsgDops(MsgDops),
+    /// Single-point position in ECEF
     MsgPosEcef(MsgPosEcef),
+    /// Geodetic Position
     MsgPosLlh(MsgPosLlh),
+    /// Baseline Position in ECEF
     MsgBaselineEcef(MsgBaselineEcef),
+    /// Baseline in NED
     MsgBaselineNed(MsgBaselineNed),
+    /// Velocity in ECEF
     MsgVelEcef(MsgVelEcef),
+    /// Velocity in NED
     MsgVelNed(MsgVelNed),
+    /// Heading relative to True North
     MsgBaselineHeading(MsgBaselineHeading),
+    /// Age of corrections
     MsgAgeCorrections(MsgAgeCorrections),
+    /// Geodetic Position
     MsgPosLlhCov(MsgPosLlhCov),
+    /// Velocity in NED
     MsgVelNedCov(MsgVelNedCov),
+    /// Velocity in User Frame
     MsgVelBody(MsgVelBody),
+    /// Single-point position in ECEF
     MsgPosEcefCov(MsgPosEcefCov),
+    /// Velocity in ECEF
     MsgVelEcefCov(MsgVelEcefCov),
+    /// Computed Position and Protection Level
     MsgProtectionLevelDepA(MsgProtectionLevelDepA),
+    /// Computed state and Protection Levels
     MsgProtectionLevel(MsgProtectionLevel),
+    /// Geodetic Position and Accuracy
     MsgPosLlhAcc(MsgPosLlhAcc),
+    /// Quaternion 4 component vector
     MsgOrientQuat(MsgOrientQuat),
+    /// Euler angles
     MsgOrientEuler(MsgOrientEuler),
+    /// Vehicle Body Frame instantaneous angular rates
     MsgAngularRate(MsgAngularRate),
+    /// GNSS-only Position in ECEF
     MsgPosEcefGnss(MsgPosEcefGnss),
+    /// GNSS-only Geodetic Position
     MsgPosLlhGnss(MsgPosLlhGnss),
+    /// GNSS-only Velocity in ECEF
     MsgVelEcefGnss(MsgVelEcefGnss),
+    /// GNSS-only Velocity in NED
     MsgVelNedGnss(MsgVelNedGnss),
+    /// GNSS-only Geodetic Position
     MsgPosLlhCovGnss(MsgPosLlhCovGnss),
+    /// GNSS-only Velocity in NED
     MsgVelNedCovGnss(MsgVelNedCovGnss),
+    /// GNSS-only Position in ECEF
     MsgPosEcefCovGnss(MsgPosEcefCovGnss),
+    /// GNSS-only Velocity in ECEF
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
+    /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
+    /// Plaintext logging messages with levels
     MsgLog(MsgLog),
+    /// Wrapper for FWD a separate stream of information over SBP
     MsgFwd(MsgFwd),
+    /// Deprecated
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
+    /// Precise orbit and clock correction
     MsgSsrOrbitClock(MsgSsrOrbitClock),
+    /// Precise code biases correction
     MsgSsrCodeBiases(MsgSsrCodeBiases),
+    /// Precise phase biases correction
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
+    /// Deprecated
     MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
+    /// Deprecated
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),
+    /// Deprecated
     MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
+    /// Definition of a SSR atmospheric correction tile.
     MsgSsrTileDefinition(MsgSsrTileDefinition),
+    /// Deprecated
     MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
+    /// STEC correction polynomial coefficients
     MsgSsrStecCorrection(MsgSsrStecCorrection),
+    /// Gridded troposphere and STEC correction residuals
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    /// Satellite antenna phase center corrections
     MsgSsrSatelliteApc(MsgSsrSatelliteApc),
+    /// OSR corrections
     MsgOsr(MsgOsr),
+    /// User data
     MsgUserData(MsgUserData),
+    /// Raw IMU data
     MsgImuRaw(MsgImuRaw),
+    /// Auxiliary IMU data
     MsgImuAux(MsgImuAux),
+    /// Raw magnetometer data
     MsgMagRaw(MsgMagRaw),
+    /// Vehicle forward (x-axis) velocity
     MsgOdometry(MsgOdometry),
+    /// Accumulated wheeltick count message
     MsgWheeltick(MsgWheeltick),
+    /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
+    /// Response with advice on the optimal configuration for FileIO.
     MsgFileioConfigResp(MsgFileioConfigResp),
+    /// Raw SBAS data
     MsgSbasRaw(MsgSbasRaw),
+    /// List CPU state on the system. DEPRECATED
     MsgLinuxCpuStateDepA(MsgLinuxCpuStateDepA),
+    /// List memory state on the system. DEPRECATED
     MsgLinuxMemStateDepA(MsgLinuxMemStateDepA),
+    /// CPU, Memory and Process Starts/Stops. DEPRECATED
     MsgLinuxSysStateDepA(MsgLinuxSysStateDepA),
+    /// A list of processes with high socket counts
     MsgLinuxProcessSocketCounts(MsgLinuxProcessSocketCounts),
+    /// A list of processes with deep socket queues
     MsgLinuxProcessSocketQueues(MsgLinuxProcessSocketQueues),
+    /// Summary of socket usage across the system
     MsgLinuxSocketUsage(MsgLinuxSocketUsage),
+    /// Summary of processes with large amounts of open file descriptors
     MsgLinuxProcessFdCount(MsgLinuxProcessFdCount),
+    /// Summary of open file descriptors on the system
     MsgLinuxProcessFdSummary(MsgLinuxProcessFdSummary),
+    /// List CPU state on the system
     MsgLinuxCpuState(MsgLinuxCpuState),
+    /// List memory state on the system
     MsgLinuxMemState(MsgLinuxMemState),
+    /// CPU, Memory and Process Starts/Stops
     MsgLinuxSysState(MsgLinuxSysState),
+    /// System start-up message
     MsgStartup(MsgStartup),
+    /// Status of received corrections
     MsgDgnssStatus(MsgDgnssStatus),
+    /// Inertial Navigation System status message
     MsgInsStatus(MsgInsStatus),
+    /// Experimental telemetry message
     MsgCsacTelemetry(MsgCsacTelemetry),
+    /// Experimental telemetry message labels
     MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
+    /// Inertial Navigation System update status message
     MsgInsUpdates(MsgInsUpdates),
+    /// Offset of the local time with respect to GNSS time
     MsgGnssTimeOffset(MsgGnssTimeOffset),
+    /// Local time at detection of PPS pulse
     MsgPpsTime(MsgPpsTime),
+    /// Solution Group Metadata
     MsgGroupMeta(MsgGroupMeta),
+    /// Solution Sensors Metadata
     MsgSolnMeta(MsgSolnMeta),
+    /// Deprecated
     MsgSolnMetaDepA(MsgSolnMetaDepA),
+    /// Status report message
     MsgStatusReport(MsgStatusReport),
+    /// System heartbeat message
     MsgHeartbeat(MsgHeartbeat),
+    /// Unknown message type
     Unknown(Unknown),
 }
 
 impl Sbp {
-    pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<Sbp, crate::Error> {
-        match msg_id {
-            16 => {
-                let mut msg = MsgPrintDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+    pub(crate) fn from_frame(mut frame: crate::de::Frame) -> Result<Sbp, PayloadParseError> {
+        match frame.msg_type {
+            MsgPrintDep::MESSAGE_TYPE => {
+                let mut msg = MsgPrintDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPrintDep(msg))
             }
-            17 => {
-                let mut msg = MsgTrackingStateDetailedDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingStateDetailedDep::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingStateDetailedDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingStateDetailedDep(msg))
             }
-            19 => {
-                let mut msg = MsgTrackingStateDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingStateDepB::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingStateDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingStateDepB(msg))
             }
-            20 => {
-                let mut msg = MsgAcqResultDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqResultDepB::MESSAGE_TYPE => {
+                let mut msg = MsgAcqResultDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqResultDepB(msg))
             }
-            21 => {
-                let mut msg = MsgAcqResultDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqResultDepA::MESSAGE_TYPE => {
+                let mut msg = MsgAcqResultDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqResultDepA(msg))
             }
-            22 => {
-                let mut msg = MsgTrackingStateDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingStateDepA::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingStateDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingStateDepA(msg))
             }
-            23 => {
-                let mut msg = MsgThreadState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgThreadState::MESSAGE_TYPE => {
+                let mut msg = MsgThreadState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgThreadState(msg))
             }
-            24 => {
-                let mut msg = MsgUartStateDepa::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgUartStateDepa::MESSAGE_TYPE => {
+                let mut msg = MsgUartStateDepa::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgUartStateDepa(msg))
             }
-            25 => {
-                let mut msg = MsgIarState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgIarState::MESSAGE_TYPE => {
+                let mut msg = MsgIarState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgIarState(msg))
             }
-            26 => {
-                let mut msg = MsgEphemerisDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisDepA(msg))
             }
-            27 => {
-                let mut msg = MsgMaskSatelliteDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgMaskSatelliteDep::MESSAGE_TYPE => {
+                let mut msg = MsgMaskSatelliteDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgMaskSatelliteDep(msg))
             }
-            28 => {
-                let mut msg = MsgTrackingIqDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingIqDepA::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingIqDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingIqDepA(msg))
             }
-            29 => {
-                let mut msg = MsgUartState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgUartState::MESSAGE_TYPE => {
+                let mut msg = MsgUartState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgUartState(msg))
             }
-            30 => {
-                let mut msg = MsgAcqSvProfileDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqSvProfileDep::MESSAGE_TYPE => {
+                let mut msg = MsgAcqSvProfileDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqSvProfileDep(msg))
             }
-            31 => {
-                let mut msg = MsgAcqResultDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqResultDepC::MESSAGE_TYPE => {
+                let mut msg = MsgAcqResultDepC::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqResultDepC(msg))
             }
-            33 => {
-                let mut msg = MsgTrackingStateDetailedDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingStateDetailedDepA::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingStateDetailedDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingStateDetailedDepA(msg))
             }
-            34 => {
-                let mut msg = MsgResetFilters::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgResetFilters::MESSAGE_TYPE => {
+                let mut msg = MsgResetFilters::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgResetFilters(msg))
             }
-            35 => {
-                let mut msg = MsgInitBaseDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgInitBaseDep::MESSAGE_TYPE => {
+                let mut msg = MsgInitBaseDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgInitBaseDep(msg))
             }
-            43 => {
-                let mut msg = MsgMaskSatellite::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgMaskSatellite::MESSAGE_TYPE => {
+                let mut msg = MsgMaskSatellite::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgMaskSatellite(msg))
             }
-            44 => {
-                let mut msg = MsgTrackingIqDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingIqDepB::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingIqDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingIqDepB(msg))
             }
-            45 => {
-                let mut msg = MsgTrackingIq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingIq::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingIq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingIq(msg))
             }
-            46 => {
-                let mut msg = MsgAcqSvProfile::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqSvProfile::MESSAGE_TYPE => {
+                let mut msg = MsgAcqSvProfile::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqSvProfile(msg))
             }
-            47 => {
-                let mut msg = MsgAcqResult::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAcqResult::MESSAGE_TYPE => {
+                let mut msg = MsgAcqResult::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAcqResult(msg))
             }
-            65 => {
-                let mut msg = MsgTrackingState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgTrackingState::MESSAGE_TYPE => {
+                let mut msg = MsgTrackingState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgTrackingState(msg))
             }
-            67 => {
-                let mut msg = MsgObsDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgObsDepB::MESSAGE_TYPE => {
+                let mut msg = MsgObsDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgObsDepB(msg))
             }
-            68 => {
-                let mut msg = MsgBasePosLlh::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBasePosLlh::MESSAGE_TYPE => {
+                let mut msg = MsgBasePosLlh::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBasePosLlh(msg))
             }
-            69 => {
-                let mut msg = MsgObsDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgObsDepA::MESSAGE_TYPE => {
+                let mut msg = MsgObsDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgObsDepA(msg))
             }
-            70 => {
-                let mut msg = MsgEphemerisDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisDepB::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisDepB(msg))
             }
-            71 => {
-                let mut msg = MsgEphemerisDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisDepC::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisDepC::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisDepC(msg))
             }
-            72 => {
-                let mut msg = MsgBasePosEcef::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBasePosEcef::MESSAGE_TYPE => {
+                let mut msg = MsgBasePosEcef::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBasePosEcef(msg))
             }
-            73 => {
-                let mut msg = MsgObsDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgObsDepC::MESSAGE_TYPE => {
+                let mut msg = MsgObsDepC::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgObsDepC(msg))
             }
-            74 => {
-                let mut msg = MsgObs::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgObs::MESSAGE_TYPE => {
+                let mut msg = MsgObs::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgObs(msg))
             }
-            80 => {
-                let mut msg = MsgSpecanDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSpecanDep::MESSAGE_TYPE => {
+                let mut msg = MsgSpecanDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSpecanDep(msg))
             }
-            81 => {
-                let mut msg = MsgSpecan::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSpecan::MESSAGE_TYPE => {
+                let mut msg = MsgSpecan::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSpecan(msg))
             }
-            97 => {
-                let mut msg = MsgMeasurementState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgMeasurementState::MESSAGE_TYPE => {
+                let mut msg = MsgMeasurementState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgMeasurementState(msg))
             }
-            104 => {
-                let mut msg = MsgSetTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSetTime::MESSAGE_TYPE => {
+                let mut msg = MsgSetTime::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSetTime(msg))
             }
-            105 => {
-                let mut msg = MsgAlmanac::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAlmanac::MESSAGE_TYPE => {
+                let mut msg = MsgAlmanac::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAlmanac(msg))
             }
-            112 => {
-                let mut msg = MsgAlmanacGpsDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAlmanacGpsDep::MESSAGE_TYPE => {
+                let mut msg = MsgAlmanacGpsDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAlmanacGpsDep(msg))
             }
-            113 => {
-                let mut msg = MsgAlmanacGloDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAlmanacGloDep::MESSAGE_TYPE => {
+                let mut msg = MsgAlmanacGloDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAlmanacGloDep(msg))
             }
-            114 => {
-                let mut msg = MsgAlmanacGps::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAlmanacGps::MESSAGE_TYPE => {
+                let mut msg = MsgAlmanacGps::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAlmanacGps(msg))
             }
-            115 => {
-                let mut msg = MsgAlmanacGlo::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAlmanacGlo::MESSAGE_TYPE => {
+                let mut msg = MsgAlmanacGlo::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAlmanacGlo(msg))
             }
-            117 => {
-                let mut msg = MsgGloBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGloBiases::MESSAGE_TYPE => {
+                let mut msg = MsgGloBiases::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGloBiases(msg))
             }
-            128 => {
-                let mut msg = MsgEphemerisDepD::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisDepD::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisDepD::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisDepD(msg))
             }
-            129 => {
-                let mut msg = MsgEphemerisGpsDepE::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGpsDepE::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGpsDepE::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGpsDepE(msg))
             }
-            130 => {
-                let mut msg = MsgEphemerisSbasDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisSbasDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisSbasDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisSbasDepA(msg))
             }
-            131 => {
-                let mut msg = MsgEphemerisGloDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGloDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGloDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGloDepA(msg))
             }
-            132 => {
-                let mut msg = MsgEphemerisSbasDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisSbasDepB::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisSbasDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisSbasDepB(msg))
             }
-            133 => {
-                let mut msg = MsgEphemerisGloDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGloDepB::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGloDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGloDepB(msg))
             }
-            134 => {
-                let mut msg = MsgEphemerisGpsDepF::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGpsDepF::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGpsDepF::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGpsDepF(msg))
             }
-            135 => {
-                let mut msg = MsgEphemerisGloDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGloDepC::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGloDepC::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGloDepC(msg))
             }
-            136 => {
-                let mut msg = MsgEphemerisGloDepD::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGloDepD::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGloDepD::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGloDepD(msg))
             }
-            137 => {
-                let mut msg = MsgEphemerisBds::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisBds::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisBds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisBds(msg))
             }
-            138 => {
-                let mut msg = MsgEphemerisGps::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGps::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGps::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGps(msg))
             }
-            139 => {
-                let mut msg = MsgEphemerisGlo::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGlo::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGlo::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGlo(msg))
             }
-            140 => {
-                let mut msg = MsgEphemerisSbas::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisSbas::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisSbas::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisSbas(msg))
             }
-            141 => {
-                let mut msg = MsgEphemerisGal::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGal::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGal::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGal(msg))
             }
-            142 => {
-                let mut msg = MsgEphemerisQzss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisQzss::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisQzss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisQzss(msg))
             }
-            144 => {
-                let mut msg = MsgIono::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgIono::MESSAGE_TYPE => {
+                let mut msg = MsgIono::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgIono(msg))
             }
-            145 => {
-                let mut msg = MsgSvConfigurationGpsDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSvConfigurationGpsDep::MESSAGE_TYPE => {
+                let mut msg = MsgSvConfigurationGpsDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSvConfigurationGpsDep(msg))
             }
-            146 => {
-                let mut msg = MsgGroupDelayDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGroupDelayDepA::MESSAGE_TYPE => {
+                let mut msg = MsgGroupDelayDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGroupDelayDepA(msg))
             }
-            147 => {
-                let mut msg = MsgGroupDelayDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGroupDelayDepB::MESSAGE_TYPE => {
+                let mut msg = MsgGroupDelayDepB::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGroupDelayDepB(msg))
             }
-            148 => {
-                let mut msg = MsgGroupDelay::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGroupDelay::MESSAGE_TYPE => {
+                let mut msg = MsgGroupDelay::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGroupDelay(msg))
             }
-            149 => {
-                let mut msg = MsgEphemerisGalDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgEphemerisGalDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEphemerisGalDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgEphemerisGalDepA(msg))
             }
-            150 => {
-                let mut msg = MsgGnssCapb::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGnssCapb::MESSAGE_TYPE => {
+                let mut msg = MsgGnssCapb::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGnssCapb(msg))
             }
-            151 => {
-                let mut msg = MsgSvAzEl::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSvAzEl::MESSAGE_TYPE => {
+                let mut msg = MsgSvAzEl::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSvAzEl(msg))
             }
-            160 => {
-                let mut msg = MsgSettingsWrite::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsWrite::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsWrite::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsWrite(msg))
             }
-            161 => {
-                let mut msg = MsgSettingsSave::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsSave::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsSave::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsSave(msg))
             }
-            162 => {
-                let mut msg = MsgSettingsReadByIndexReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsReadByIndexReq::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsReadByIndexReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsReadByIndexReq(msg))
             }
-            163 => {
-                let mut msg = MsgFileioReadResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioReadResp::MESSAGE_TYPE => {
+                let mut msg = MsgFileioReadResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioReadResp(msg))
             }
-            164 => {
-                let mut msg = MsgSettingsReadReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsReadReq::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsReadReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsReadReq(msg))
             }
-            165 => {
-                let mut msg = MsgSettingsReadResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsReadResp::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsReadResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsReadResp(msg))
             }
-            166 => {
-                let mut msg = MsgSettingsReadByIndexDone::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsReadByIndexDone::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsReadByIndexDone::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsReadByIndexDone(msg))
             }
-            167 => {
-                let mut msg = MsgSettingsReadByIndexResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsReadByIndexResp::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsReadByIndexResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsReadByIndexResp(msg))
             }
-            168 => {
-                let mut msg = MsgFileioReadReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioReadReq::MESSAGE_TYPE => {
+                let mut msg = MsgFileioReadReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioReadReq(msg))
             }
-            169 => {
-                let mut msg = MsgFileioReadDirReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioReadDirReq::MESSAGE_TYPE => {
+                let mut msg = MsgFileioReadDirReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioReadDirReq(msg))
             }
-            170 => {
-                let mut msg = MsgFileioReadDirResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioReadDirResp::MESSAGE_TYPE => {
+                let mut msg = MsgFileioReadDirResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioReadDirResp(msg))
             }
-            171 => {
-                let mut msg = MsgFileioWriteResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioWriteResp::MESSAGE_TYPE => {
+                let mut msg = MsgFileioWriteResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioWriteResp(msg))
             }
-            172 => {
-                let mut msg = MsgFileioRemove::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioRemove::MESSAGE_TYPE => {
+                let mut msg = MsgFileioRemove::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioRemove(msg))
             }
-            173 => {
-                let mut msg = MsgFileioWriteReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioWriteReq::MESSAGE_TYPE => {
+                let mut msg = MsgFileioWriteReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioWriteReq(msg))
             }
-            174 => {
-                let mut msg = MsgSettingsRegister::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsRegister::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsRegister::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsRegister(msg))
             }
-            175 => {
-                let mut msg = MsgSettingsWriteResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsWriteResp::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsWriteResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsWriteResp(msg))
             }
-            176 => {
-                let mut msg = MsgBootloaderHandshakeDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBootloaderHandshakeDepA::MESSAGE_TYPE => {
+                let mut msg = MsgBootloaderHandshakeDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBootloaderHandshakeDepA(msg))
             }
-            177 => {
-                let mut msg = MsgBootloaderJumpToApp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBootloaderJumpToApp::MESSAGE_TYPE => {
+                let mut msg = MsgBootloaderJumpToApp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBootloaderJumpToApp(msg))
             }
-            178 => {
-                let mut msg = MsgResetDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgResetDep::MESSAGE_TYPE => {
+                let mut msg = MsgResetDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgResetDep(msg))
             }
-            179 => {
-                let mut msg = MsgBootloaderHandshakeReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBootloaderHandshakeReq::MESSAGE_TYPE => {
+                let mut msg = MsgBootloaderHandshakeReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBootloaderHandshakeReq(msg))
             }
-            180 => {
-                let mut msg = MsgBootloaderHandshakeResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBootloaderHandshakeResp::MESSAGE_TYPE => {
+                let mut msg = MsgBootloaderHandshakeResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBootloaderHandshakeResp(msg))
             }
-            181 => {
-                let mut msg = MsgDeviceMonitor::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgDeviceMonitor::MESSAGE_TYPE => {
+                let mut msg = MsgDeviceMonitor::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgDeviceMonitor(msg))
             }
-            182 => {
-                let mut msg = MsgReset::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgReset::MESSAGE_TYPE => {
+                let mut msg = MsgReset::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgReset(msg))
             }
-            184 => {
-                let mut msg = MsgCommandReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCommandReq::MESSAGE_TYPE => {
+                let mut msg = MsgCommandReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCommandReq(msg))
             }
-            185 => {
-                let mut msg = MsgCommandResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCommandResp::MESSAGE_TYPE => {
+                let mut msg = MsgCommandResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCommandResp(msg))
             }
-            186 => {
-                let mut msg = MsgNetworkStateReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNetworkStateReq::MESSAGE_TYPE => {
+                let mut msg = MsgNetworkStateReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNetworkStateReq(msg))
             }
-            187 => {
-                let mut msg = MsgNetworkStateResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNetworkStateResp::MESSAGE_TYPE => {
+                let mut msg = MsgNetworkStateResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNetworkStateResp(msg))
             }
-            188 => {
-                let mut msg = MsgCommandOutput::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCommandOutput::MESSAGE_TYPE => {
+                let mut msg = MsgCommandOutput::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCommandOutput(msg))
             }
-            189 => {
-                let mut msg = MsgNetworkBandwidthUsage::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNetworkBandwidthUsage::MESSAGE_TYPE => {
+                let mut msg = MsgNetworkBandwidthUsage::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNetworkBandwidthUsage(msg))
             }
-            190 => {
-                let mut msg = MsgCellModemStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCellModemStatus::MESSAGE_TYPE => {
+                let mut msg = MsgCellModemStatus::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCellModemStatus(msg))
             }
-            191 => {
-                let mut msg = MsgFrontEndGain::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFrontEndGain::MESSAGE_TYPE => {
+                let mut msg = MsgFrontEndGain::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFrontEndGain(msg))
             }
-            192 => {
-                let mut msg = MsgCwResults::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCwResults::MESSAGE_TYPE => {
+                let mut msg = MsgCwResults::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCwResults(msg))
             }
-            193 => {
-                let mut msg = MsgCwStart::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCwStart::MESSAGE_TYPE => {
+                let mut msg = MsgCwStart::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCwStart(msg))
             }
-            221 => {
-                let mut msg = MsgNapDeviceDnaResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNapDeviceDnaResp::MESSAGE_TYPE => {
+                let mut msg = MsgNapDeviceDnaResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNapDeviceDnaResp(msg))
             }
-            222 => {
-                let mut msg = MsgNapDeviceDnaReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNapDeviceDnaReq::MESSAGE_TYPE => {
+                let mut msg = MsgNapDeviceDnaReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNapDeviceDnaReq(msg))
             }
-            224 => {
-                let mut msg = MsgFlashDone::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFlashDone::MESSAGE_TYPE => {
+                let mut msg = MsgFlashDone::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFlashDone(msg))
             }
-            225 => {
-                let mut msg = MsgFlashReadResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFlashReadResp::MESSAGE_TYPE => {
+                let mut msg = MsgFlashReadResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFlashReadResp(msg))
             }
-            226 => {
-                let mut msg = MsgFlashErase::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFlashErase::MESSAGE_TYPE => {
+                let mut msg = MsgFlashErase::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFlashErase(msg))
             }
-            227 => {
-                let mut msg = MsgStmFlashLockSector::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStmFlashLockSector::MESSAGE_TYPE => {
+                let mut msg = MsgStmFlashLockSector::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStmFlashLockSector(msg))
             }
-            228 => {
-                let mut msg = MsgStmFlashUnlockSector::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStmFlashUnlockSector::MESSAGE_TYPE => {
+                let mut msg = MsgStmFlashUnlockSector::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStmFlashUnlockSector(msg))
             }
-            229 => {
-                let mut msg = MsgStmUniqueIdResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStmUniqueIdResp::MESSAGE_TYPE => {
+                let mut msg = MsgStmUniqueIdResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStmUniqueIdResp(msg))
             }
-            230 => {
-                let mut msg = MsgFlashProgram::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFlashProgram::MESSAGE_TYPE => {
+                let mut msg = MsgFlashProgram::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFlashProgram(msg))
             }
-            231 => {
-                let mut msg = MsgFlashReadReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFlashReadReq::MESSAGE_TYPE => {
+                let mut msg = MsgFlashReadReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFlashReadReq(msg))
             }
-            232 => {
-                let mut msg = MsgStmUniqueIdReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStmUniqueIdReq::MESSAGE_TYPE => {
+                let mut msg = MsgStmUniqueIdReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStmUniqueIdReq(msg))
             }
-            243 => {
-                let mut msg = MsgM25FlashWriteStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgM25FlashWriteStatus::MESSAGE_TYPE => {
+                let mut msg = MsgM25FlashWriteStatus::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgM25FlashWriteStatus(msg))
             }
-            256 => {
-                let mut msg = MsgGpsTimeDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGpsTimeDepA::MESSAGE_TYPE => {
+                let mut msg = MsgGpsTimeDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGpsTimeDepA(msg))
             }
-            257 => {
-                let mut msg = MsgExtEvent::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgExtEvent::MESSAGE_TYPE => {
+                let mut msg = MsgExtEvent::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgExtEvent(msg))
             }
-            258 => {
-                let mut msg = MsgGpsTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGpsTime::MESSAGE_TYPE => {
+                let mut msg = MsgGpsTime::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGpsTime(msg))
             }
-            259 => {
-                let mut msg = MsgUtcTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgUtcTime::MESSAGE_TYPE => {
+                let mut msg = MsgUtcTime::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgUtcTime(msg))
             }
-            260 => {
-                let mut msg = MsgGpsTimeGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGpsTimeGnss::MESSAGE_TYPE => {
+                let mut msg = MsgGpsTimeGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGpsTimeGnss(msg))
             }
-            261 => {
-                let mut msg = MsgUtcTimeGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgUtcTimeGnss::MESSAGE_TYPE => {
+                let mut msg = MsgUtcTimeGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgUtcTimeGnss(msg))
             }
-            431 => {
-                let mut msg = MsgSettingsRegisterResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSettingsRegisterResp::MESSAGE_TYPE => {
+                let mut msg = MsgSettingsRegisterResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSettingsRegisterResp(msg))
             }
-            512 => {
-                let mut msg = MsgPosEcefDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosEcefDepA::MESSAGE_TYPE => {
+                let mut msg = MsgPosEcefDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosEcefDepA(msg))
             }
-            513 => {
-                let mut msg = MsgPosLlhDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlhDepA::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlhDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhDepA(msg))
             }
-            514 => {
-                let mut msg = MsgBaselineEcefDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineEcefDepA::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineEcefDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineEcefDepA(msg))
             }
-            515 => {
-                let mut msg = MsgBaselineNedDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineNedDepA::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineNedDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineNedDepA(msg))
             }
-            516 => {
-                let mut msg = MsgVelEcefDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelEcefDepA::MESSAGE_TYPE => {
+                let mut msg = MsgVelEcefDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefDepA(msg))
             }
-            517 => {
-                let mut msg = MsgVelNedDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelNedDepA::MESSAGE_TYPE => {
+                let mut msg = MsgVelNedDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelNedDepA(msg))
             }
-            518 => {
-                let mut msg = MsgDopsDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgDopsDepA::MESSAGE_TYPE => {
+                let mut msg = MsgDopsDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgDopsDepA(msg))
             }
-            519 => {
-                let mut msg = MsgBaselineHeadingDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineHeadingDepA::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineHeadingDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineHeadingDepA(msg))
             }
-            520 => {
-                let mut msg = MsgDops::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgDops::MESSAGE_TYPE => {
+                let mut msg = MsgDops::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgDops(msg))
             }
-            521 => {
-                let mut msg = MsgPosEcef::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosEcef::MESSAGE_TYPE => {
+                let mut msg = MsgPosEcef::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosEcef(msg))
             }
-            522 => {
-                let mut msg = MsgPosLlh::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlh::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlh::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlh(msg))
             }
-            523 => {
-                let mut msg = MsgBaselineEcef::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineEcef::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineEcef::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineEcef(msg))
             }
-            524 => {
-                let mut msg = MsgBaselineNed::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineNed::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineNed::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineNed(msg))
             }
-            525 => {
-                let mut msg = MsgVelEcef::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelEcef::MESSAGE_TYPE => {
+                let mut msg = MsgVelEcef::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcef(msg))
             }
-            526 => {
-                let mut msg = MsgVelNed::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelNed::MESSAGE_TYPE => {
+                let mut msg = MsgVelNed::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelNed(msg))
             }
-            527 => {
-                let mut msg = MsgBaselineHeading::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgBaselineHeading::MESSAGE_TYPE => {
+                let mut msg = MsgBaselineHeading::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgBaselineHeading(msg))
             }
-            528 => {
-                let mut msg = MsgAgeCorrections::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAgeCorrections::MESSAGE_TYPE => {
+                let mut msg = MsgAgeCorrections::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAgeCorrections(msg))
             }
-            529 => {
-                let mut msg = MsgPosLlhCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlhCov::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlhCov::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhCov(msg))
             }
-            530 => {
-                let mut msg = MsgVelNedCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelNedCov::MESSAGE_TYPE => {
+                let mut msg = MsgVelNedCov::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelNedCov(msg))
             }
-            531 => {
-                let mut msg = MsgVelBody::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelBody::MESSAGE_TYPE => {
+                let mut msg = MsgVelBody::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelBody(msg))
             }
-            532 => {
-                let mut msg = MsgPosEcefCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosEcefCov::MESSAGE_TYPE => {
+                let mut msg = MsgPosEcefCov::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosEcefCov(msg))
             }
-            533 => {
-                let mut msg = MsgVelEcefCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelEcefCov::MESSAGE_TYPE => {
+                let mut msg = MsgVelEcefCov::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefCov(msg))
             }
-            534 => {
-                let mut msg = MsgProtectionLevelDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgProtectionLevelDepA::MESSAGE_TYPE => {
+                let mut msg = MsgProtectionLevelDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgProtectionLevelDepA(msg))
             }
-            535 => {
-                let mut msg = MsgProtectionLevel::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgProtectionLevel::MESSAGE_TYPE => {
+                let mut msg = MsgProtectionLevel::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgProtectionLevel(msg))
             }
-            536 => {
-                let mut msg = MsgPosLlhAcc::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlhAcc::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlhAcc::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhAcc(msg))
             }
-            544 => {
-                let mut msg = MsgOrientQuat::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgOrientQuat::MESSAGE_TYPE => {
+                let mut msg = MsgOrientQuat::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgOrientQuat(msg))
             }
-            545 => {
-                let mut msg = MsgOrientEuler::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgOrientEuler::MESSAGE_TYPE => {
+                let mut msg = MsgOrientEuler::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgOrientEuler(msg))
             }
-            546 => {
-                let mut msg = MsgAngularRate::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgAngularRate::MESSAGE_TYPE => {
+                let mut msg = MsgAngularRate::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgAngularRate(msg))
             }
-            553 => {
-                let mut msg = MsgPosEcefGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosEcefGnss::MESSAGE_TYPE => {
+                let mut msg = MsgPosEcefGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosEcefGnss(msg))
             }
-            554 => {
-                let mut msg = MsgPosLlhGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlhGnss::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlhGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhGnss(msg))
             }
-            557 => {
-                let mut msg = MsgVelEcefGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelEcefGnss::MESSAGE_TYPE => {
+                let mut msg = MsgVelEcefGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefGnss(msg))
             }
-            558 => {
-                let mut msg = MsgVelNedGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelNedGnss::MESSAGE_TYPE => {
+                let mut msg = MsgVelNedGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelNedGnss(msg))
             }
-            561 => {
-                let mut msg = MsgPosLlhCovGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosLlhCovGnss::MESSAGE_TYPE => {
+                let mut msg = MsgPosLlhCovGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhCovGnss(msg))
             }
-            562 => {
-                let mut msg = MsgVelNedCovGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelNedCovGnss::MESSAGE_TYPE => {
+                let mut msg = MsgVelNedCovGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelNedCovGnss(msg))
             }
-            564 => {
-                let mut msg = MsgPosEcefCovGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPosEcefCovGnss::MESSAGE_TYPE => {
+                let mut msg = MsgPosEcefCovGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosEcefCovGnss(msg))
             }
-            565 => {
-                let mut msg = MsgVelEcefCovGnss::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgVelEcefCovGnss::MESSAGE_TYPE => {
+                let mut msg = MsgVelEcefCovGnss::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefCovGnss(msg))
             }
-            1024 => {
-                let mut msg = MsgNdbEvent::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgNdbEvent::MESSAGE_TYPE => {
+                let mut msg = MsgNdbEvent::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgNdbEvent(msg))
             }
-            1025 => {
-                let mut msg = MsgLog::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLog::MESSAGE_TYPE => {
+                let mut msg = MsgLog::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLog(msg))
             }
-            1026 => {
-                let mut msg = MsgFwd::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFwd::MESSAGE_TYPE => {
+                let mut msg = MsgFwd::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFwd(msg))
             }
-            1500 => {
-                let mut msg = MsgSsrOrbitClockDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrOrbitClockDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrOrbitClockDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrOrbitClockDepA(msg))
             }
-            1501 => {
-                let mut msg = MsgSsrOrbitClock::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrOrbitClock::MESSAGE_TYPE => {
+                let mut msg = MsgSsrOrbitClock::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrOrbitClock(msg))
             }
-            1505 => {
-                let mut msg = MsgSsrCodeBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrCodeBiases::MESSAGE_TYPE => {
+                let mut msg = MsgSsrCodeBiases::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrCodeBiases(msg))
             }
-            1510 => {
-                let mut msg = MsgSsrPhaseBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrPhaseBiases::MESSAGE_TYPE => {
+                let mut msg = MsgSsrPhaseBiases::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrPhaseBiases(msg))
             }
-            1515 => {
-                let mut msg = MsgSsrStecCorrectionDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrStecCorrectionDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrectionDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrStecCorrectionDepA(msg))
             }
-            1520 => {
-                let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrGriddedCorrectionNoStdDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg))
             }
-            1525 => {
-                let mut msg = MsgSsrGridDefinitionDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrGridDefinitionDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGridDefinitionDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGridDefinitionDepA(msg))
             }
-            1526 => {
-                let mut msg = MsgSsrTileDefinition::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrTileDefinition::MESSAGE_TYPE => {
+                let mut msg = MsgSsrTileDefinition::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrTileDefinition(msg))
             }
-            1530 => {
-                let mut msg = MsgSsrGriddedCorrectionDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrGriddedCorrectionDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGriddedCorrectionDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrectionDepA(msg))
             }
-            1531 => {
-                let mut msg = MsgSsrStecCorrection::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrStecCorrection::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrection::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrStecCorrection(msg))
             }
-            1532 => {
-                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrGriddedCorrection::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGriddedCorrection::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrection(msg))
             }
-            1540 => {
-                let mut msg = MsgSsrSatelliteApc::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSsrSatelliteApc::MESSAGE_TYPE => {
+                let mut msg = MsgSsrSatelliteApc::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrSatelliteApc(msg))
             }
-            1600 => {
-                let mut msg = MsgOsr::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgOsr::MESSAGE_TYPE => {
+                let mut msg = MsgOsr::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgOsr(msg))
             }
-            2048 => {
-                let mut msg = MsgUserData::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgUserData::MESSAGE_TYPE => {
+                let mut msg = MsgUserData::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgUserData(msg))
             }
-            2304 => {
-                let mut msg = MsgImuRaw::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgImuRaw::MESSAGE_TYPE => {
+                let mut msg = MsgImuRaw::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgImuRaw(msg))
             }
-            2305 => {
-                let mut msg = MsgImuAux::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgImuAux::MESSAGE_TYPE => {
+                let mut msg = MsgImuAux::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgImuAux(msg))
             }
-            2306 => {
-                let mut msg = MsgMagRaw::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgMagRaw::MESSAGE_TYPE => {
+                let mut msg = MsgMagRaw::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgMagRaw(msg))
             }
-            2307 => {
-                let mut msg = MsgOdometry::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgOdometry::MESSAGE_TYPE => {
+                let mut msg = MsgOdometry::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgOdometry(msg))
             }
-            2308 => {
-                let mut msg = MsgWheeltick::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgWheeltick::MESSAGE_TYPE => {
+                let mut msg = MsgWheeltick::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgWheeltick(msg))
             }
-            4097 => {
-                let mut msg = MsgFileioConfigReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioConfigReq::MESSAGE_TYPE => {
+                let mut msg = MsgFileioConfigReq::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioConfigReq(msg))
             }
-            4098 => {
-                let mut msg = MsgFileioConfigResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgFileioConfigResp::MESSAGE_TYPE => {
+                let mut msg = MsgFileioConfigResp::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgFileioConfigResp(msg))
             }
-            30583 => {
-                let mut msg = MsgSbasRaw::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSbasRaw::MESSAGE_TYPE => {
+                let mut msg = MsgSbasRaw::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSbasRaw(msg))
             }
-            32512 => {
-                let mut msg = MsgLinuxCpuStateDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxCpuStateDepA::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxCpuStateDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxCpuStateDepA(msg))
             }
-            32513 => {
-                let mut msg = MsgLinuxMemStateDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxMemStateDepA::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxMemStateDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxMemStateDepA(msg))
             }
-            32514 => {
-                let mut msg = MsgLinuxSysStateDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxSysStateDepA::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxSysStateDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxSysStateDepA(msg))
             }
-            32515 => {
-                let mut msg = MsgLinuxProcessSocketCounts::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxProcessSocketCounts::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxProcessSocketCounts::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxProcessSocketCounts(msg))
             }
-            32516 => {
-                let mut msg = MsgLinuxProcessSocketQueues::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxProcessSocketQueues::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxProcessSocketQueues::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxProcessSocketQueues(msg))
             }
-            32517 => {
-                let mut msg = MsgLinuxSocketUsage::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxSocketUsage::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxSocketUsage::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxSocketUsage(msg))
             }
-            32518 => {
-                let mut msg = MsgLinuxProcessFdCount::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxProcessFdCount::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxProcessFdCount::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxProcessFdCount(msg))
             }
-            32519 => {
-                let mut msg = MsgLinuxProcessFdSummary::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxProcessFdSummary::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxProcessFdSummary::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxProcessFdSummary(msg))
             }
-            32520 => {
-                let mut msg = MsgLinuxCpuState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxCpuState::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxCpuState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxCpuState(msg))
             }
-            32521 => {
-                let mut msg = MsgLinuxMemState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxMemState::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxMemState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxMemState(msg))
             }
-            32522 => {
-                let mut msg = MsgLinuxSysState::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgLinuxSysState::MESSAGE_TYPE => {
+                let mut msg = MsgLinuxSysState::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgLinuxSysState(msg))
             }
-            65280 => {
-                let mut msg = MsgStartup::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStartup::MESSAGE_TYPE => {
+                let mut msg = MsgStartup::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStartup(msg))
             }
-            65282 => {
-                let mut msg = MsgDgnssStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgDgnssStatus::MESSAGE_TYPE => {
+                let mut msg = MsgDgnssStatus::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgDgnssStatus(msg))
             }
-            65283 => {
-                let mut msg = MsgInsStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgInsStatus::MESSAGE_TYPE => {
+                let mut msg = MsgInsStatus::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgInsStatus(msg))
             }
-            65284 => {
-                let mut msg = MsgCsacTelemetry::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCsacTelemetry::MESSAGE_TYPE => {
+                let mut msg = MsgCsacTelemetry::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCsacTelemetry(msg))
             }
-            65285 => {
-                let mut msg = MsgCsacTelemetryLabels::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgCsacTelemetryLabels::MESSAGE_TYPE => {
+                let mut msg = MsgCsacTelemetryLabels::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgCsacTelemetryLabels(msg))
             }
-            65286 => {
-                let mut msg = MsgInsUpdates::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgInsUpdates::MESSAGE_TYPE => {
+                let mut msg = MsgInsUpdates::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgInsUpdates(msg))
             }
-            65287 => {
-                let mut msg = MsgGnssTimeOffset::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGnssTimeOffset::MESSAGE_TYPE => {
+                let mut msg = MsgGnssTimeOffset::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGnssTimeOffset(msg))
             }
-            65288 => {
-                let mut msg = MsgPpsTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgPpsTime::MESSAGE_TYPE => {
+                let mut msg = MsgPpsTime::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPpsTime(msg))
             }
-            65290 => {
-                let mut msg = MsgGroupMeta::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgGroupMeta::MESSAGE_TYPE => {
+                let mut msg = MsgGroupMeta::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgGroupMeta(msg))
             }
-            65294 => {
-                let mut msg = MsgSolnMeta::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSolnMeta::MESSAGE_TYPE => {
+                let mut msg = MsgSolnMeta::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSolnMeta(msg))
             }
-            65295 => {
-                let mut msg = MsgSolnMetaDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgSolnMetaDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSolnMetaDepA::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSolnMetaDepA(msg))
             }
-            65534 => {
-                let mut msg = MsgStatusReport::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgStatusReport::MESSAGE_TYPE => {
+                let mut msg = MsgStatusReport::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgStatusReport(msg))
             }
-            65535 => {
-                let mut msg = MsgHeartbeat::parse(payload)?;
-                msg.set_sender_id(sender_id);
+            MsgHeartbeat::MESSAGE_TYPE => {
+                let mut msg = MsgHeartbeat::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgHeartbeat(msg))
             }
-            _ => Ok(Sbp::Unknown(Unknown {
-                msg_id: msg_id,
-                sender_id: sender_id,
-                payload: payload.to_vec(),
-            })),
+            _ => {
+                let mut msg = Unknown::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::Unknown(msg))
+            }
         }
     }
 }
 
-impl crate::SbpMessage for Sbp {
+impl SbpMessage for Sbp {
     fn message_name(&self) -> &'static str {
         match self {
             Sbp::MsgPrintDep(msg) => msg.message_name(),
@@ -2334,422 +2560,6 @@ impl crate::SbpMessage for Sbp {
         }
     }
 
-    fn to_frame(&self) -> Result<Vec<u8>, crate::FramerError> {
-        match self {
-            Sbp::MsgPrintDep(msg) => msg.to_frame(),
-            Sbp::MsgTrackingStateDetailedDep(msg) => msg.to_frame(),
-            Sbp::MsgTrackingStateDepB(msg) => msg.to_frame(),
-            Sbp::MsgAcqResultDepB(msg) => msg.to_frame(),
-            Sbp::MsgAcqResultDepA(msg) => msg.to_frame(),
-            Sbp::MsgTrackingStateDepA(msg) => msg.to_frame(),
-            Sbp::MsgThreadState(msg) => msg.to_frame(),
-            Sbp::MsgUartStateDepa(msg) => msg.to_frame(),
-            Sbp::MsgIarState(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisDepA(msg) => msg.to_frame(),
-            Sbp::MsgMaskSatelliteDep(msg) => msg.to_frame(),
-            Sbp::MsgTrackingIqDepA(msg) => msg.to_frame(),
-            Sbp::MsgUartState(msg) => msg.to_frame(),
-            Sbp::MsgAcqSvProfileDep(msg) => msg.to_frame(),
-            Sbp::MsgAcqResultDepC(msg) => msg.to_frame(),
-            Sbp::MsgTrackingStateDetailedDepA(msg) => msg.to_frame(),
-            Sbp::MsgResetFilters(msg) => msg.to_frame(),
-            Sbp::MsgInitBaseDep(msg) => msg.to_frame(),
-            Sbp::MsgMaskSatellite(msg) => msg.to_frame(),
-            Sbp::MsgTrackingIqDepB(msg) => msg.to_frame(),
-            Sbp::MsgTrackingIq(msg) => msg.to_frame(),
-            Sbp::MsgAcqSvProfile(msg) => msg.to_frame(),
-            Sbp::MsgAcqResult(msg) => msg.to_frame(),
-            Sbp::MsgTrackingState(msg) => msg.to_frame(),
-            Sbp::MsgObsDepB(msg) => msg.to_frame(),
-            Sbp::MsgBasePosLlh(msg) => msg.to_frame(),
-            Sbp::MsgObsDepA(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisDepB(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisDepC(msg) => msg.to_frame(),
-            Sbp::MsgBasePosEcef(msg) => msg.to_frame(),
-            Sbp::MsgObsDepC(msg) => msg.to_frame(),
-            Sbp::MsgObs(msg) => msg.to_frame(),
-            Sbp::MsgSpecanDep(msg) => msg.to_frame(),
-            Sbp::MsgSpecan(msg) => msg.to_frame(),
-            Sbp::MsgMeasurementState(msg) => msg.to_frame(),
-            Sbp::MsgSetTime(msg) => msg.to_frame(),
-            Sbp::MsgAlmanac(msg) => msg.to_frame(),
-            Sbp::MsgAlmanacGpsDep(msg) => msg.to_frame(),
-            Sbp::MsgAlmanacGloDep(msg) => msg.to_frame(),
-            Sbp::MsgAlmanacGps(msg) => msg.to_frame(),
-            Sbp::MsgAlmanacGlo(msg) => msg.to_frame(),
-            Sbp::MsgGloBiases(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisDepD(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGpsDepE(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisSbasDepA(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGloDepA(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisSbasDepB(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGloDepB(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGpsDepF(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGloDepC(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGloDepD(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisBds(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGps(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGlo(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisSbas(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGal(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisQzss(msg) => msg.to_frame(),
-            Sbp::MsgIono(msg) => msg.to_frame(),
-            Sbp::MsgSvConfigurationGpsDep(msg) => msg.to_frame(),
-            Sbp::MsgGroupDelayDepA(msg) => msg.to_frame(),
-            Sbp::MsgGroupDelayDepB(msg) => msg.to_frame(),
-            Sbp::MsgGroupDelay(msg) => msg.to_frame(),
-            Sbp::MsgEphemerisGalDepA(msg) => msg.to_frame(),
-            Sbp::MsgGnssCapb(msg) => msg.to_frame(),
-            Sbp::MsgSvAzEl(msg) => msg.to_frame(),
-            Sbp::MsgSettingsWrite(msg) => msg.to_frame(),
-            Sbp::MsgSettingsSave(msg) => msg.to_frame(),
-            Sbp::MsgSettingsReadByIndexReq(msg) => msg.to_frame(),
-            Sbp::MsgFileioReadResp(msg) => msg.to_frame(),
-            Sbp::MsgSettingsReadReq(msg) => msg.to_frame(),
-            Sbp::MsgSettingsReadResp(msg) => msg.to_frame(),
-            Sbp::MsgSettingsReadByIndexDone(msg) => msg.to_frame(),
-            Sbp::MsgSettingsReadByIndexResp(msg) => msg.to_frame(),
-            Sbp::MsgFileioReadReq(msg) => msg.to_frame(),
-            Sbp::MsgFileioReadDirReq(msg) => msg.to_frame(),
-            Sbp::MsgFileioReadDirResp(msg) => msg.to_frame(),
-            Sbp::MsgFileioWriteResp(msg) => msg.to_frame(),
-            Sbp::MsgFileioRemove(msg) => msg.to_frame(),
-            Sbp::MsgFileioWriteReq(msg) => msg.to_frame(),
-            Sbp::MsgSettingsRegister(msg) => msg.to_frame(),
-            Sbp::MsgSettingsWriteResp(msg) => msg.to_frame(),
-            Sbp::MsgBootloaderHandshakeDepA(msg) => msg.to_frame(),
-            Sbp::MsgBootloaderJumpToApp(msg) => msg.to_frame(),
-            Sbp::MsgResetDep(msg) => msg.to_frame(),
-            Sbp::MsgBootloaderHandshakeReq(msg) => msg.to_frame(),
-            Sbp::MsgBootloaderHandshakeResp(msg) => msg.to_frame(),
-            Sbp::MsgDeviceMonitor(msg) => msg.to_frame(),
-            Sbp::MsgReset(msg) => msg.to_frame(),
-            Sbp::MsgCommandReq(msg) => msg.to_frame(),
-            Sbp::MsgCommandResp(msg) => msg.to_frame(),
-            Sbp::MsgNetworkStateReq(msg) => msg.to_frame(),
-            Sbp::MsgNetworkStateResp(msg) => msg.to_frame(),
-            Sbp::MsgCommandOutput(msg) => msg.to_frame(),
-            Sbp::MsgNetworkBandwidthUsage(msg) => msg.to_frame(),
-            Sbp::MsgCellModemStatus(msg) => msg.to_frame(),
-            Sbp::MsgFrontEndGain(msg) => msg.to_frame(),
-            Sbp::MsgCwResults(msg) => msg.to_frame(),
-            Sbp::MsgCwStart(msg) => msg.to_frame(),
-            Sbp::MsgNapDeviceDnaResp(msg) => msg.to_frame(),
-            Sbp::MsgNapDeviceDnaReq(msg) => msg.to_frame(),
-            Sbp::MsgFlashDone(msg) => msg.to_frame(),
-            Sbp::MsgFlashReadResp(msg) => msg.to_frame(),
-            Sbp::MsgFlashErase(msg) => msg.to_frame(),
-            Sbp::MsgStmFlashLockSector(msg) => msg.to_frame(),
-            Sbp::MsgStmFlashUnlockSector(msg) => msg.to_frame(),
-            Sbp::MsgStmUniqueIdResp(msg) => msg.to_frame(),
-            Sbp::MsgFlashProgram(msg) => msg.to_frame(),
-            Sbp::MsgFlashReadReq(msg) => msg.to_frame(),
-            Sbp::MsgStmUniqueIdReq(msg) => msg.to_frame(),
-            Sbp::MsgM25FlashWriteStatus(msg) => msg.to_frame(),
-            Sbp::MsgGpsTimeDepA(msg) => msg.to_frame(),
-            Sbp::MsgExtEvent(msg) => msg.to_frame(),
-            Sbp::MsgGpsTime(msg) => msg.to_frame(),
-            Sbp::MsgUtcTime(msg) => msg.to_frame(),
-            Sbp::MsgGpsTimeGnss(msg) => msg.to_frame(),
-            Sbp::MsgUtcTimeGnss(msg) => msg.to_frame(),
-            Sbp::MsgSettingsRegisterResp(msg) => msg.to_frame(),
-            Sbp::MsgPosEcefDepA(msg) => msg.to_frame(),
-            Sbp::MsgPosLlhDepA(msg) => msg.to_frame(),
-            Sbp::MsgBaselineEcefDepA(msg) => msg.to_frame(),
-            Sbp::MsgBaselineNedDepA(msg) => msg.to_frame(),
-            Sbp::MsgVelEcefDepA(msg) => msg.to_frame(),
-            Sbp::MsgVelNedDepA(msg) => msg.to_frame(),
-            Sbp::MsgDopsDepA(msg) => msg.to_frame(),
-            Sbp::MsgBaselineHeadingDepA(msg) => msg.to_frame(),
-            Sbp::MsgDops(msg) => msg.to_frame(),
-            Sbp::MsgPosEcef(msg) => msg.to_frame(),
-            Sbp::MsgPosLlh(msg) => msg.to_frame(),
-            Sbp::MsgBaselineEcef(msg) => msg.to_frame(),
-            Sbp::MsgBaselineNed(msg) => msg.to_frame(),
-            Sbp::MsgVelEcef(msg) => msg.to_frame(),
-            Sbp::MsgVelNed(msg) => msg.to_frame(),
-            Sbp::MsgBaselineHeading(msg) => msg.to_frame(),
-            Sbp::MsgAgeCorrections(msg) => msg.to_frame(),
-            Sbp::MsgPosLlhCov(msg) => msg.to_frame(),
-            Sbp::MsgVelNedCov(msg) => msg.to_frame(),
-            Sbp::MsgVelBody(msg) => msg.to_frame(),
-            Sbp::MsgPosEcefCov(msg) => msg.to_frame(),
-            Sbp::MsgVelEcefCov(msg) => msg.to_frame(),
-            Sbp::MsgProtectionLevelDepA(msg) => msg.to_frame(),
-            Sbp::MsgProtectionLevel(msg) => msg.to_frame(),
-            Sbp::MsgPosLlhAcc(msg) => msg.to_frame(),
-            Sbp::MsgOrientQuat(msg) => msg.to_frame(),
-            Sbp::MsgOrientEuler(msg) => msg.to_frame(),
-            Sbp::MsgAngularRate(msg) => msg.to_frame(),
-            Sbp::MsgPosEcefGnss(msg) => msg.to_frame(),
-            Sbp::MsgPosLlhGnss(msg) => msg.to_frame(),
-            Sbp::MsgVelEcefGnss(msg) => msg.to_frame(),
-            Sbp::MsgVelNedGnss(msg) => msg.to_frame(),
-            Sbp::MsgPosLlhCovGnss(msg) => msg.to_frame(),
-            Sbp::MsgVelNedCovGnss(msg) => msg.to_frame(),
-            Sbp::MsgPosEcefCovGnss(msg) => msg.to_frame(),
-            Sbp::MsgVelEcefCovGnss(msg) => msg.to_frame(),
-            Sbp::MsgNdbEvent(msg) => msg.to_frame(),
-            Sbp::MsgLog(msg) => msg.to_frame(),
-            Sbp::MsgFwd(msg) => msg.to_frame(),
-            Sbp::MsgSsrOrbitClockDepA(msg) => msg.to_frame(),
-            Sbp::MsgSsrOrbitClock(msg) => msg.to_frame(),
-            Sbp::MsgSsrCodeBiases(msg) => msg.to_frame(),
-            Sbp::MsgSsrPhaseBiases(msg) => msg.to_frame(),
-            Sbp::MsgSsrStecCorrectionDepA(msg) => msg.to_frame(),
-            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.to_frame(),
-            Sbp::MsgSsrGridDefinitionDepA(msg) => msg.to_frame(),
-            Sbp::MsgSsrTileDefinition(msg) => msg.to_frame(),
-            Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.to_frame(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.to_frame(),
-            Sbp::MsgSsrGriddedCorrection(msg) => msg.to_frame(),
-            Sbp::MsgSsrSatelliteApc(msg) => msg.to_frame(),
-            Sbp::MsgOsr(msg) => msg.to_frame(),
-            Sbp::MsgUserData(msg) => msg.to_frame(),
-            Sbp::MsgImuRaw(msg) => msg.to_frame(),
-            Sbp::MsgImuAux(msg) => msg.to_frame(),
-            Sbp::MsgMagRaw(msg) => msg.to_frame(),
-            Sbp::MsgOdometry(msg) => msg.to_frame(),
-            Sbp::MsgWheeltick(msg) => msg.to_frame(),
-            Sbp::MsgFileioConfigReq(msg) => msg.to_frame(),
-            Sbp::MsgFileioConfigResp(msg) => msg.to_frame(),
-            Sbp::MsgSbasRaw(msg) => msg.to_frame(),
-            Sbp::MsgLinuxCpuStateDepA(msg) => msg.to_frame(),
-            Sbp::MsgLinuxMemStateDepA(msg) => msg.to_frame(),
-            Sbp::MsgLinuxSysStateDepA(msg) => msg.to_frame(),
-            Sbp::MsgLinuxProcessSocketCounts(msg) => msg.to_frame(),
-            Sbp::MsgLinuxProcessSocketQueues(msg) => msg.to_frame(),
-            Sbp::MsgLinuxSocketUsage(msg) => msg.to_frame(),
-            Sbp::MsgLinuxProcessFdCount(msg) => msg.to_frame(),
-            Sbp::MsgLinuxProcessFdSummary(msg) => msg.to_frame(),
-            Sbp::MsgLinuxCpuState(msg) => msg.to_frame(),
-            Sbp::MsgLinuxMemState(msg) => msg.to_frame(),
-            Sbp::MsgLinuxSysState(msg) => msg.to_frame(),
-            Sbp::MsgStartup(msg) => msg.to_frame(),
-            Sbp::MsgDgnssStatus(msg) => msg.to_frame(),
-            Sbp::MsgInsStatus(msg) => msg.to_frame(),
-            Sbp::MsgCsacTelemetry(msg) => msg.to_frame(),
-            Sbp::MsgCsacTelemetryLabels(msg) => msg.to_frame(),
-            Sbp::MsgInsUpdates(msg) => msg.to_frame(),
-            Sbp::MsgGnssTimeOffset(msg) => msg.to_frame(),
-            Sbp::MsgPpsTime(msg) => msg.to_frame(),
-            Sbp::MsgGroupMeta(msg) => msg.to_frame(),
-            Sbp::MsgSolnMeta(msg) => msg.to_frame(),
-            Sbp::MsgSolnMetaDepA(msg) => msg.to_frame(),
-            Sbp::MsgStatusReport(msg) => msg.to_frame(),
-            Sbp::MsgHeartbeat(msg) => msg.to_frame(),
-            Sbp::Unknown(msg) => msg.to_frame(),
-        }
-    }
-
-    fn write_frame(&self, buf: &mut Vec<u8>) -> Result<(), crate::FramerError> {
-        match self {
-            Sbp::MsgPrintDep(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingStateDetailedDep(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingStateDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqResultDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqResultDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingStateDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgThreadState(msg) => msg.write_frame(buf),
-            Sbp::MsgUartStateDepa(msg) => msg.write_frame(buf),
-            Sbp::MsgIarState(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgMaskSatelliteDep(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingIqDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgUartState(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqSvProfileDep(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqResultDepC(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingStateDetailedDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgResetFilters(msg) => msg.write_frame(buf),
-            Sbp::MsgInitBaseDep(msg) => msg.write_frame(buf),
-            Sbp::MsgMaskSatellite(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingIqDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingIq(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqSvProfile(msg) => msg.write_frame(buf),
-            Sbp::MsgAcqResult(msg) => msg.write_frame(buf),
-            Sbp::MsgTrackingState(msg) => msg.write_frame(buf),
-            Sbp::MsgObsDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgBasePosLlh(msg) => msg.write_frame(buf),
-            Sbp::MsgObsDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisDepC(msg) => msg.write_frame(buf),
-            Sbp::MsgBasePosEcef(msg) => msg.write_frame(buf),
-            Sbp::MsgObsDepC(msg) => msg.write_frame(buf),
-            Sbp::MsgObs(msg) => msg.write_frame(buf),
-            Sbp::MsgSpecanDep(msg) => msg.write_frame(buf),
-            Sbp::MsgSpecan(msg) => msg.write_frame(buf),
-            Sbp::MsgMeasurementState(msg) => msg.write_frame(buf),
-            Sbp::MsgSetTime(msg) => msg.write_frame(buf),
-            Sbp::MsgAlmanac(msg) => msg.write_frame(buf),
-            Sbp::MsgAlmanacGpsDep(msg) => msg.write_frame(buf),
-            Sbp::MsgAlmanacGloDep(msg) => msg.write_frame(buf),
-            Sbp::MsgAlmanacGps(msg) => msg.write_frame(buf),
-            Sbp::MsgAlmanacGlo(msg) => msg.write_frame(buf),
-            Sbp::MsgGloBiases(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisDepD(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGpsDepE(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisSbasDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGloDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisSbasDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGloDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGpsDepF(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGloDepC(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGloDepD(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisBds(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGps(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGlo(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisSbas(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGal(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisQzss(msg) => msg.write_frame(buf),
-            Sbp::MsgIono(msg) => msg.write_frame(buf),
-            Sbp::MsgSvConfigurationGpsDep(msg) => msg.write_frame(buf),
-            Sbp::MsgGroupDelayDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgGroupDelayDepB(msg) => msg.write_frame(buf),
-            Sbp::MsgGroupDelay(msg) => msg.write_frame(buf),
-            Sbp::MsgEphemerisGalDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgGnssCapb(msg) => msg.write_frame(buf),
-            Sbp::MsgSvAzEl(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsWrite(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsSave(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsReadByIndexReq(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioReadResp(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsReadReq(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsReadResp(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsReadByIndexDone(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsReadByIndexResp(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioReadReq(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioReadDirReq(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioReadDirResp(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioWriteResp(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioRemove(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioWriteReq(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsRegister(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsWriteResp(msg) => msg.write_frame(buf),
-            Sbp::MsgBootloaderHandshakeDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgBootloaderJumpToApp(msg) => msg.write_frame(buf),
-            Sbp::MsgResetDep(msg) => msg.write_frame(buf),
-            Sbp::MsgBootloaderHandshakeReq(msg) => msg.write_frame(buf),
-            Sbp::MsgBootloaderHandshakeResp(msg) => msg.write_frame(buf),
-            Sbp::MsgDeviceMonitor(msg) => msg.write_frame(buf),
-            Sbp::MsgReset(msg) => msg.write_frame(buf),
-            Sbp::MsgCommandReq(msg) => msg.write_frame(buf),
-            Sbp::MsgCommandResp(msg) => msg.write_frame(buf),
-            Sbp::MsgNetworkStateReq(msg) => msg.write_frame(buf),
-            Sbp::MsgNetworkStateResp(msg) => msg.write_frame(buf),
-            Sbp::MsgCommandOutput(msg) => msg.write_frame(buf),
-            Sbp::MsgNetworkBandwidthUsage(msg) => msg.write_frame(buf),
-            Sbp::MsgCellModemStatus(msg) => msg.write_frame(buf),
-            Sbp::MsgFrontEndGain(msg) => msg.write_frame(buf),
-            Sbp::MsgCwResults(msg) => msg.write_frame(buf),
-            Sbp::MsgCwStart(msg) => msg.write_frame(buf),
-            Sbp::MsgNapDeviceDnaResp(msg) => msg.write_frame(buf),
-            Sbp::MsgNapDeviceDnaReq(msg) => msg.write_frame(buf),
-            Sbp::MsgFlashDone(msg) => msg.write_frame(buf),
-            Sbp::MsgFlashReadResp(msg) => msg.write_frame(buf),
-            Sbp::MsgFlashErase(msg) => msg.write_frame(buf),
-            Sbp::MsgStmFlashLockSector(msg) => msg.write_frame(buf),
-            Sbp::MsgStmFlashUnlockSector(msg) => msg.write_frame(buf),
-            Sbp::MsgStmUniqueIdResp(msg) => msg.write_frame(buf),
-            Sbp::MsgFlashProgram(msg) => msg.write_frame(buf),
-            Sbp::MsgFlashReadReq(msg) => msg.write_frame(buf),
-            Sbp::MsgStmUniqueIdReq(msg) => msg.write_frame(buf),
-            Sbp::MsgM25FlashWriteStatus(msg) => msg.write_frame(buf),
-            Sbp::MsgGpsTimeDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgExtEvent(msg) => msg.write_frame(buf),
-            Sbp::MsgGpsTime(msg) => msg.write_frame(buf),
-            Sbp::MsgUtcTime(msg) => msg.write_frame(buf),
-            Sbp::MsgGpsTimeGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgUtcTimeGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgSettingsRegisterResp(msg) => msg.write_frame(buf),
-            Sbp::MsgPosEcefDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlhDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineEcefDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineNedDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgVelEcefDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgVelNedDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgDopsDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineHeadingDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgDops(msg) => msg.write_frame(buf),
-            Sbp::MsgPosEcef(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlh(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineEcef(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineNed(msg) => msg.write_frame(buf),
-            Sbp::MsgVelEcef(msg) => msg.write_frame(buf),
-            Sbp::MsgVelNed(msg) => msg.write_frame(buf),
-            Sbp::MsgBaselineHeading(msg) => msg.write_frame(buf),
-            Sbp::MsgAgeCorrections(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlhCov(msg) => msg.write_frame(buf),
-            Sbp::MsgVelNedCov(msg) => msg.write_frame(buf),
-            Sbp::MsgVelBody(msg) => msg.write_frame(buf),
-            Sbp::MsgPosEcefCov(msg) => msg.write_frame(buf),
-            Sbp::MsgVelEcefCov(msg) => msg.write_frame(buf),
-            Sbp::MsgProtectionLevelDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgProtectionLevel(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlhAcc(msg) => msg.write_frame(buf),
-            Sbp::MsgOrientQuat(msg) => msg.write_frame(buf),
-            Sbp::MsgOrientEuler(msg) => msg.write_frame(buf),
-            Sbp::MsgAngularRate(msg) => msg.write_frame(buf),
-            Sbp::MsgPosEcefGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlhGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgVelEcefGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgVelNedGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgPosLlhCovGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgVelNedCovGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgPosEcefCovGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgVelEcefCovGnss(msg) => msg.write_frame(buf),
-            Sbp::MsgNdbEvent(msg) => msg.write_frame(buf),
-            Sbp::MsgLog(msg) => msg.write_frame(buf),
-            Sbp::MsgFwd(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrOrbitClockDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrOrbitClock(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrCodeBiases(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrPhaseBiases(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrStecCorrectionDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrGridDefinitionDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrTileDefinition(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrStecCorrection(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrGriddedCorrection(msg) => msg.write_frame(buf),
-            Sbp::MsgSsrSatelliteApc(msg) => msg.write_frame(buf),
-            Sbp::MsgOsr(msg) => msg.write_frame(buf),
-            Sbp::MsgUserData(msg) => msg.write_frame(buf),
-            Sbp::MsgImuRaw(msg) => msg.write_frame(buf),
-            Sbp::MsgImuAux(msg) => msg.write_frame(buf),
-            Sbp::MsgMagRaw(msg) => msg.write_frame(buf),
-            Sbp::MsgOdometry(msg) => msg.write_frame(buf),
-            Sbp::MsgWheeltick(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioConfigReq(msg) => msg.write_frame(buf),
-            Sbp::MsgFileioConfigResp(msg) => msg.write_frame(buf),
-            Sbp::MsgSbasRaw(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxCpuStateDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxMemStateDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxSysStateDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxProcessSocketCounts(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxProcessSocketQueues(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxSocketUsage(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxProcessFdCount(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxProcessFdSummary(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxCpuState(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxMemState(msg) => msg.write_frame(buf),
-            Sbp::MsgLinuxSysState(msg) => msg.write_frame(buf),
-            Sbp::MsgStartup(msg) => msg.write_frame(buf),
-            Sbp::MsgDgnssStatus(msg) => msg.write_frame(buf),
-            Sbp::MsgInsStatus(msg) => msg.write_frame(buf),
-            Sbp::MsgCsacTelemetry(msg) => msg.write_frame(buf),
-            Sbp::MsgCsacTelemetryLabels(msg) => msg.write_frame(buf),
-            Sbp::MsgInsUpdates(msg) => msg.write_frame(buf),
-            Sbp::MsgGnssTimeOffset(msg) => msg.write_frame(buf),
-            Sbp::MsgPpsTime(msg) => msg.write_frame(buf),
-            Sbp::MsgGroupMeta(msg) => msg.write_frame(buf),
-            Sbp::MsgSolnMeta(msg) => msg.write_frame(buf),
-            Sbp::MsgSolnMetaDepA(msg) => msg.write_frame(buf),
-            Sbp::MsgStatusReport(msg) => msg.write_frame(buf),
-            Sbp::MsgHeartbeat(msg) => msg.write_frame(buf),
-            Sbp::Unknown(msg) => msg.write_frame(buf),
-        }
-    }
-
     #[cfg(feature = "swiftnav-rs")]
     fn gps_time(
         &self,
@@ -2962,1428 +2772,1636 @@ impl crate::SbpMessage for Sbp {
     }
 }
 
-impl crate::SbpSerialize for Sbp {
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+impl WireFormat for Sbp {
+    const MIN_ENCODED_LEN: usize = crate::MAX_FRAME_LEN;
+
+    fn parse_unchecked(_: &mut bytes::BytesMut) -> Self {
+        unimplemented!("Sbp must be parsed with Sbp::from_frame");
+    }
+
+    fn write(&self, buf: &mut bytes::BytesMut) {
         match self {
-            Sbp::MsgPrintDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingStateDetailedDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingStateDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqResultDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqResultDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingStateDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgThreadState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgUartStateDepa(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgIarState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgMaskSatelliteDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingIqDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgUartState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqSvProfileDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqResultDepC(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingStateDetailedDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgResetFilters(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgInitBaseDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgMaskSatellite(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingIqDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingIq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqSvProfile(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAcqResult(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgTrackingState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgObsDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBasePosLlh(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgObsDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisDepC(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBasePosEcef(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgObsDepC(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgObs(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSpecanDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSpecan(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgMeasurementState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSetTime(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAlmanac(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAlmanacGpsDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAlmanacGloDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAlmanacGps(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAlmanacGlo(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGloBiases(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisDepD(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGpsDepE(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisSbasDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGloDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisSbasDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGloDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGpsDepF(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGloDepC(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGloDepD(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisBds(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGps(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGlo(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisSbas(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGal(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisQzss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgIono(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSvConfigurationGpsDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGroupDelayDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGroupDelayDepB(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGroupDelay(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgEphemerisGalDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGnssCapb(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSvAzEl(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsWrite(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsSave(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsReadByIndexReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioReadResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsReadReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsReadResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsReadByIndexDone(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsReadByIndexResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioReadReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioReadDirReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioReadDirResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioWriteResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioRemove(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioWriteReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsRegister(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsWriteResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBootloaderHandshakeDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBootloaderJumpToApp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgResetDep(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBootloaderHandshakeReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBootloaderHandshakeResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgDeviceMonitor(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgReset(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCommandReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCommandResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNetworkStateReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNetworkStateResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCommandOutput(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNetworkBandwidthUsage(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCellModemStatus(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFrontEndGain(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCwResults(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCwStart(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNapDeviceDnaResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNapDeviceDnaReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFlashDone(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFlashReadResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFlashErase(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStmFlashLockSector(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStmFlashUnlockSector(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStmUniqueIdResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFlashProgram(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFlashReadReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStmUniqueIdReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgM25FlashWriteStatus(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGpsTimeDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgExtEvent(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGpsTime(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgUtcTime(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGpsTimeGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgUtcTimeGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSettingsRegisterResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosEcefDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlhDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineEcefDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineNedDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelEcefDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelNedDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgDopsDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineHeadingDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgDops(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosEcef(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlh(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineEcef(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineNed(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelEcef(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelNed(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgBaselineHeading(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAgeCorrections(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlhCov(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelNedCov(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelBody(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosEcefCov(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelEcefCov(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgProtectionLevelDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgProtectionLevel(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlhAcc(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgOrientQuat(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgOrientEuler(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgAngularRate(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosEcefGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlhGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelEcefGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelNedGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosLlhCovGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelNedCovGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPosEcefCovGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgVelEcefCovGnss(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgNdbEvent(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLog(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFwd(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrOrbitClockDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrOrbitClock(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrCodeBiases(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrPhaseBiases(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrStecCorrectionDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrGridDefinitionDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrTileDefinition(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrStecCorrection(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrGriddedCorrection(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSsrSatelliteApc(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgOsr(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgUserData(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgImuRaw(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgImuAux(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgMagRaw(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgOdometry(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgWheeltick(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioConfigReq(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgFileioConfigResp(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSbasRaw(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxCpuStateDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxMemStateDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxSysStateDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxProcessSocketCounts(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxProcessSocketQueues(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxSocketUsage(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxProcessFdCount(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxProcessFdSummary(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxCpuState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxMemState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgLinuxSysState(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStartup(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgDgnssStatus(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgInsStatus(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCsacTelemetry(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgCsacTelemetryLabels(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgInsUpdates(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGnssTimeOffset(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgPpsTime(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgGroupMeta(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSolnMeta(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgSolnMetaDepA(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgStatusReport(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::MsgHeartbeat(msg) => msg.append_to_sbp_buffer(buf),
-            Sbp::Unknown(msg) => msg.append_to_sbp_buffer(buf),
+            Sbp::MsgPrintDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingStateDetailedDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingStateDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqResultDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqResultDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingStateDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgThreadState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUartStateDepa(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgIarState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgMaskSatelliteDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingIqDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUartState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqSvProfileDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqResultDepC(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingStateDetailedDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgResetFilters(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgInitBaseDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgMaskSatellite(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingIqDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingIq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqSvProfile(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcqResult(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTrackingState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgObsDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBasePosLlh(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgObsDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisDepC(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBasePosEcef(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgObsDepC(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgObs(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSpecanDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSpecan(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgMeasurementState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSetTime(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAlmanac(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAlmanacGpsDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAlmanacGloDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAlmanacGps(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAlmanacGlo(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGloBiases(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisDepD(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGpsDepE(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisSbasDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGloDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisSbasDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGloDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGpsDepF(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGloDepC(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGloDepD(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisBds(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGps(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGlo(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisSbas(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGal(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisQzss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgIono(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSvConfigurationGpsDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGroupDelayDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGroupDelayDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGroupDelay(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisGalDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGnssCapb(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSvAzEl(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsWrite(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsSave(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsReadByIndexReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioReadResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsReadReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsReadResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsReadByIndexDone(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsReadByIndexResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioReadReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioReadDirReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioReadDirResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioWriteResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioRemove(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioWriteReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsRegister(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsWriteResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBootloaderHandshakeDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBootloaderJumpToApp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgResetDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBootloaderHandshakeReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBootloaderHandshakeResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgDeviceMonitor(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgReset(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCommandReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCommandResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNetworkStateReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNetworkStateResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCommandOutput(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNetworkBandwidthUsage(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCellModemStatus(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFrontEndGain(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCwResults(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCwStart(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNapDeviceDnaResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNapDeviceDnaReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFlashDone(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFlashReadResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFlashErase(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStmFlashLockSector(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStmFlashUnlockSector(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStmUniqueIdResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFlashProgram(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFlashReadReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStmUniqueIdReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgM25FlashWriteStatus(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGpsTimeDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgExtEvent(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGpsTime(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUtcTime(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGpsTimeGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUtcTimeGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSettingsRegisterResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosEcefDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlhDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineEcefDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineNedDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelEcefDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelNedDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgDopsDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineHeadingDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgDops(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosEcef(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlh(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineEcef(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineNed(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelEcef(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelNed(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgBaselineHeading(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAgeCorrections(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlhCov(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelNedCov(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelBody(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosEcefCov(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelEcefCov(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgProtectionLevelDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgProtectionLevel(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlhAcc(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgOrientQuat(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgOrientEuler(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAngularRate(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosEcefGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlhGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelEcefGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelNedGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosLlhCovGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelNedCovGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosEcefCovGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelEcefCovGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgNdbEvent(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLog(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFwd(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrOrbitClock(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrCodeBiases(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrPhaseBiases(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrTileDefinition(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrSatelliteApc(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgOsr(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUserData(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgImuRaw(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgImuAux(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgMagRaw(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgOdometry(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgWheeltick(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxCpuStateDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxMemStateDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxSysStateDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxProcessSocketCounts(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxProcessSocketQueues(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxSocketUsage(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxProcessFdCount(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxProcessFdSummary(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxCpuState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxMemState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgLinuxSysState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStartup(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgDgnssStatus(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgInsStatus(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCsacTelemetry(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCsacTelemetryLabels(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgInsUpdates(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGnssTimeOffset(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPpsTime(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGroupMeta(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSolnMeta(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSolnMetaDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStatusReport(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgHeartbeat(msg) => WireFormat::write(msg, buf),
+            Sbp::Unknown(msg) => WireFormat::write(msg, buf),
         }
     }
 
-    fn sbp_size(&self) -> usize {
+    fn encoded_len(&self) -> usize {
         match self {
-            Sbp::MsgPrintDep(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingStateDetailedDep(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingStateDepB(msg) => msg.sbp_size(),
-            Sbp::MsgAcqResultDepB(msg) => msg.sbp_size(),
-            Sbp::MsgAcqResultDepA(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingStateDepA(msg) => msg.sbp_size(),
-            Sbp::MsgThreadState(msg) => msg.sbp_size(),
-            Sbp::MsgUartStateDepa(msg) => msg.sbp_size(),
-            Sbp::MsgIarState(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisDepA(msg) => msg.sbp_size(),
-            Sbp::MsgMaskSatelliteDep(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingIqDepA(msg) => msg.sbp_size(),
-            Sbp::MsgUartState(msg) => msg.sbp_size(),
-            Sbp::MsgAcqSvProfileDep(msg) => msg.sbp_size(),
-            Sbp::MsgAcqResultDepC(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingStateDetailedDepA(msg) => msg.sbp_size(),
-            Sbp::MsgResetFilters(msg) => msg.sbp_size(),
-            Sbp::MsgInitBaseDep(msg) => msg.sbp_size(),
-            Sbp::MsgMaskSatellite(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingIqDepB(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingIq(msg) => msg.sbp_size(),
-            Sbp::MsgAcqSvProfile(msg) => msg.sbp_size(),
-            Sbp::MsgAcqResult(msg) => msg.sbp_size(),
-            Sbp::MsgTrackingState(msg) => msg.sbp_size(),
-            Sbp::MsgObsDepB(msg) => msg.sbp_size(),
-            Sbp::MsgBasePosLlh(msg) => msg.sbp_size(),
-            Sbp::MsgObsDepA(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisDepB(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisDepC(msg) => msg.sbp_size(),
-            Sbp::MsgBasePosEcef(msg) => msg.sbp_size(),
-            Sbp::MsgObsDepC(msg) => msg.sbp_size(),
-            Sbp::MsgObs(msg) => msg.sbp_size(),
-            Sbp::MsgSpecanDep(msg) => msg.sbp_size(),
-            Sbp::MsgSpecan(msg) => msg.sbp_size(),
-            Sbp::MsgMeasurementState(msg) => msg.sbp_size(),
-            Sbp::MsgSetTime(msg) => msg.sbp_size(),
-            Sbp::MsgAlmanac(msg) => msg.sbp_size(),
-            Sbp::MsgAlmanacGpsDep(msg) => msg.sbp_size(),
-            Sbp::MsgAlmanacGloDep(msg) => msg.sbp_size(),
-            Sbp::MsgAlmanacGps(msg) => msg.sbp_size(),
-            Sbp::MsgAlmanacGlo(msg) => msg.sbp_size(),
-            Sbp::MsgGloBiases(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisDepD(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGpsDepE(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisSbasDepA(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGloDepA(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisSbasDepB(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGloDepB(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGpsDepF(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGloDepC(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGloDepD(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisBds(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGps(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGlo(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisSbas(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGal(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisQzss(msg) => msg.sbp_size(),
-            Sbp::MsgIono(msg) => msg.sbp_size(),
-            Sbp::MsgSvConfigurationGpsDep(msg) => msg.sbp_size(),
-            Sbp::MsgGroupDelayDepA(msg) => msg.sbp_size(),
-            Sbp::MsgGroupDelayDepB(msg) => msg.sbp_size(),
-            Sbp::MsgGroupDelay(msg) => msg.sbp_size(),
-            Sbp::MsgEphemerisGalDepA(msg) => msg.sbp_size(),
-            Sbp::MsgGnssCapb(msg) => msg.sbp_size(),
-            Sbp::MsgSvAzEl(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsWrite(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsSave(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsReadByIndexReq(msg) => msg.sbp_size(),
-            Sbp::MsgFileioReadResp(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsReadReq(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsReadResp(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsReadByIndexDone(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsReadByIndexResp(msg) => msg.sbp_size(),
-            Sbp::MsgFileioReadReq(msg) => msg.sbp_size(),
-            Sbp::MsgFileioReadDirReq(msg) => msg.sbp_size(),
-            Sbp::MsgFileioReadDirResp(msg) => msg.sbp_size(),
-            Sbp::MsgFileioWriteResp(msg) => msg.sbp_size(),
-            Sbp::MsgFileioRemove(msg) => msg.sbp_size(),
-            Sbp::MsgFileioWriteReq(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsRegister(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsWriteResp(msg) => msg.sbp_size(),
-            Sbp::MsgBootloaderHandshakeDepA(msg) => msg.sbp_size(),
-            Sbp::MsgBootloaderJumpToApp(msg) => msg.sbp_size(),
-            Sbp::MsgResetDep(msg) => msg.sbp_size(),
-            Sbp::MsgBootloaderHandshakeReq(msg) => msg.sbp_size(),
-            Sbp::MsgBootloaderHandshakeResp(msg) => msg.sbp_size(),
-            Sbp::MsgDeviceMonitor(msg) => msg.sbp_size(),
-            Sbp::MsgReset(msg) => msg.sbp_size(),
-            Sbp::MsgCommandReq(msg) => msg.sbp_size(),
-            Sbp::MsgCommandResp(msg) => msg.sbp_size(),
-            Sbp::MsgNetworkStateReq(msg) => msg.sbp_size(),
-            Sbp::MsgNetworkStateResp(msg) => msg.sbp_size(),
-            Sbp::MsgCommandOutput(msg) => msg.sbp_size(),
-            Sbp::MsgNetworkBandwidthUsage(msg) => msg.sbp_size(),
-            Sbp::MsgCellModemStatus(msg) => msg.sbp_size(),
-            Sbp::MsgFrontEndGain(msg) => msg.sbp_size(),
-            Sbp::MsgCwResults(msg) => msg.sbp_size(),
-            Sbp::MsgCwStart(msg) => msg.sbp_size(),
-            Sbp::MsgNapDeviceDnaResp(msg) => msg.sbp_size(),
-            Sbp::MsgNapDeviceDnaReq(msg) => msg.sbp_size(),
-            Sbp::MsgFlashDone(msg) => msg.sbp_size(),
-            Sbp::MsgFlashReadResp(msg) => msg.sbp_size(),
-            Sbp::MsgFlashErase(msg) => msg.sbp_size(),
-            Sbp::MsgStmFlashLockSector(msg) => msg.sbp_size(),
-            Sbp::MsgStmFlashUnlockSector(msg) => msg.sbp_size(),
-            Sbp::MsgStmUniqueIdResp(msg) => msg.sbp_size(),
-            Sbp::MsgFlashProgram(msg) => msg.sbp_size(),
-            Sbp::MsgFlashReadReq(msg) => msg.sbp_size(),
-            Sbp::MsgStmUniqueIdReq(msg) => msg.sbp_size(),
-            Sbp::MsgM25FlashWriteStatus(msg) => msg.sbp_size(),
-            Sbp::MsgGpsTimeDepA(msg) => msg.sbp_size(),
-            Sbp::MsgExtEvent(msg) => msg.sbp_size(),
-            Sbp::MsgGpsTime(msg) => msg.sbp_size(),
-            Sbp::MsgUtcTime(msg) => msg.sbp_size(),
-            Sbp::MsgGpsTimeGnss(msg) => msg.sbp_size(),
-            Sbp::MsgUtcTimeGnss(msg) => msg.sbp_size(),
-            Sbp::MsgSettingsRegisterResp(msg) => msg.sbp_size(),
-            Sbp::MsgPosEcefDepA(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlhDepA(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineEcefDepA(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineNedDepA(msg) => msg.sbp_size(),
-            Sbp::MsgVelEcefDepA(msg) => msg.sbp_size(),
-            Sbp::MsgVelNedDepA(msg) => msg.sbp_size(),
-            Sbp::MsgDopsDepA(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineHeadingDepA(msg) => msg.sbp_size(),
-            Sbp::MsgDops(msg) => msg.sbp_size(),
-            Sbp::MsgPosEcef(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlh(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineEcef(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineNed(msg) => msg.sbp_size(),
-            Sbp::MsgVelEcef(msg) => msg.sbp_size(),
-            Sbp::MsgVelNed(msg) => msg.sbp_size(),
-            Sbp::MsgBaselineHeading(msg) => msg.sbp_size(),
-            Sbp::MsgAgeCorrections(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlhCov(msg) => msg.sbp_size(),
-            Sbp::MsgVelNedCov(msg) => msg.sbp_size(),
-            Sbp::MsgVelBody(msg) => msg.sbp_size(),
-            Sbp::MsgPosEcefCov(msg) => msg.sbp_size(),
-            Sbp::MsgVelEcefCov(msg) => msg.sbp_size(),
-            Sbp::MsgProtectionLevelDepA(msg) => msg.sbp_size(),
-            Sbp::MsgProtectionLevel(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlhAcc(msg) => msg.sbp_size(),
-            Sbp::MsgOrientQuat(msg) => msg.sbp_size(),
-            Sbp::MsgOrientEuler(msg) => msg.sbp_size(),
-            Sbp::MsgAngularRate(msg) => msg.sbp_size(),
-            Sbp::MsgPosEcefGnss(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlhGnss(msg) => msg.sbp_size(),
-            Sbp::MsgVelEcefGnss(msg) => msg.sbp_size(),
-            Sbp::MsgVelNedGnss(msg) => msg.sbp_size(),
-            Sbp::MsgPosLlhCovGnss(msg) => msg.sbp_size(),
-            Sbp::MsgVelNedCovGnss(msg) => msg.sbp_size(),
-            Sbp::MsgPosEcefCovGnss(msg) => msg.sbp_size(),
-            Sbp::MsgVelEcefCovGnss(msg) => msg.sbp_size(),
-            Sbp::MsgNdbEvent(msg) => msg.sbp_size(),
-            Sbp::MsgLog(msg) => msg.sbp_size(),
-            Sbp::MsgFwd(msg) => msg.sbp_size(),
-            Sbp::MsgSsrOrbitClockDepA(msg) => msg.sbp_size(),
-            Sbp::MsgSsrOrbitClock(msg) => msg.sbp_size(),
-            Sbp::MsgSsrCodeBiases(msg) => msg.sbp_size(),
-            Sbp::MsgSsrPhaseBiases(msg) => msg.sbp_size(),
-            Sbp::MsgSsrStecCorrectionDepA(msg) => msg.sbp_size(),
-            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.sbp_size(),
-            Sbp::MsgSsrGridDefinitionDepA(msg) => msg.sbp_size(),
-            Sbp::MsgSsrTileDefinition(msg) => msg.sbp_size(),
-            Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.sbp_size(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.sbp_size(),
-            Sbp::MsgSsrGriddedCorrection(msg) => msg.sbp_size(),
-            Sbp::MsgSsrSatelliteApc(msg) => msg.sbp_size(),
-            Sbp::MsgOsr(msg) => msg.sbp_size(),
-            Sbp::MsgUserData(msg) => msg.sbp_size(),
-            Sbp::MsgImuRaw(msg) => msg.sbp_size(),
-            Sbp::MsgImuAux(msg) => msg.sbp_size(),
-            Sbp::MsgMagRaw(msg) => msg.sbp_size(),
-            Sbp::MsgOdometry(msg) => msg.sbp_size(),
-            Sbp::MsgWheeltick(msg) => msg.sbp_size(),
-            Sbp::MsgFileioConfigReq(msg) => msg.sbp_size(),
-            Sbp::MsgFileioConfigResp(msg) => msg.sbp_size(),
-            Sbp::MsgSbasRaw(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxCpuStateDepA(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxMemStateDepA(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxSysStateDepA(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxProcessSocketCounts(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxProcessSocketQueues(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxSocketUsage(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxProcessFdCount(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxProcessFdSummary(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxCpuState(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxMemState(msg) => msg.sbp_size(),
-            Sbp::MsgLinuxSysState(msg) => msg.sbp_size(),
-            Sbp::MsgStartup(msg) => msg.sbp_size(),
-            Sbp::MsgDgnssStatus(msg) => msg.sbp_size(),
-            Sbp::MsgInsStatus(msg) => msg.sbp_size(),
-            Sbp::MsgCsacTelemetry(msg) => msg.sbp_size(),
-            Sbp::MsgCsacTelemetryLabels(msg) => msg.sbp_size(),
-            Sbp::MsgInsUpdates(msg) => msg.sbp_size(),
-            Sbp::MsgGnssTimeOffset(msg) => msg.sbp_size(),
-            Sbp::MsgPpsTime(msg) => msg.sbp_size(),
-            Sbp::MsgGroupMeta(msg) => msg.sbp_size(),
-            Sbp::MsgSolnMeta(msg) => msg.sbp_size(),
-            Sbp::MsgSolnMetaDepA(msg) => msg.sbp_size(),
-            Sbp::MsgStatusReport(msg) => msg.sbp_size(),
-            Sbp::MsgHeartbeat(msg) => msg.sbp_size(),
-            Sbp::Unknown(msg) => msg.sbp_size(),
+            Sbp::MsgPrintDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingStateDetailedDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingStateDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqResultDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqResultDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingStateDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgThreadState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgUartStateDepa(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgIarState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgMaskSatelliteDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingIqDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgUartState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqSvProfileDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqResultDepC(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingStateDetailedDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgResetFilters(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgInitBaseDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgMaskSatellite(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingIqDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingIq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqSvProfile(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAcqResult(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgTrackingState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgObsDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBasePosLlh(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgObsDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisDepC(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBasePosEcef(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgObsDepC(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgObs(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSpecanDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSpecan(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgMeasurementState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSetTime(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAlmanac(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAlmanacGpsDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAlmanacGloDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAlmanacGps(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAlmanacGlo(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGloBiases(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisDepD(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGpsDepE(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisSbasDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGloDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisSbasDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGloDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGpsDepF(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGloDepC(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGloDepD(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisBds(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGps(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGlo(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisSbas(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGal(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisQzss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgIono(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSvConfigurationGpsDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGroupDelayDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGroupDelayDepB(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGroupDelay(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgEphemerisGalDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGnssCapb(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSvAzEl(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsWrite(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsSave(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsReadByIndexReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioReadResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsReadReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsReadResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsReadByIndexDone(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsReadByIndexResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioReadReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioReadDirReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioReadDirResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioWriteResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioRemove(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioWriteReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsRegister(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsWriteResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBootloaderHandshakeDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBootloaderJumpToApp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgResetDep(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBootloaderHandshakeReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBootloaderHandshakeResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgDeviceMonitor(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgReset(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCommandReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCommandResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNetworkStateReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNetworkStateResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCommandOutput(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNetworkBandwidthUsage(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCellModemStatus(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFrontEndGain(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCwResults(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCwStart(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNapDeviceDnaResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNapDeviceDnaReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFlashDone(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFlashReadResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFlashErase(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStmFlashLockSector(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStmFlashUnlockSector(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStmUniqueIdResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFlashProgram(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFlashReadReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStmUniqueIdReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgM25FlashWriteStatus(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGpsTimeDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgExtEvent(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGpsTime(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgUtcTime(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGpsTimeGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgUtcTimeGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSettingsRegisterResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosEcefDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlhDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineEcefDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineNedDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelEcefDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelNedDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgDopsDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineHeadingDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgDops(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosEcef(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlh(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineEcef(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineNed(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelEcef(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelNed(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgBaselineHeading(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAgeCorrections(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlhCov(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelNedCov(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelBody(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosEcefCov(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelEcefCov(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgProtectionLevelDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgProtectionLevel(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlhAcc(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgOrientQuat(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgOrientEuler(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgAngularRate(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosEcefGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlhGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelEcefGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelNedGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosLlhCovGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelNedCovGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPosEcefCovGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgVelEcefCovGnss(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgNdbEvent(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLog(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFwd(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrOrbitClock(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrCodeBiases(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrPhaseBiases(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrTileDefinition(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSsrSatelliteApc(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgOsr(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgUserData(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgImuRaw(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgImuAux(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgMagRaw(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgOdometry(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgWheeltick(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioConfigReq(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgFileioConfigResp(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSbasRaw(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxCpuStateDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxMemStateDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxSysStateDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxProcessSocketCounts(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxProcessSocketQueues(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxSocketUsage(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxProcessFdCount(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxProcessFdSummary(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxCpuState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxMemState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgLinuxSysState(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStartup(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgDgnssStatus(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgInsStatus(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCsacTelemetry(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgCsacTelemetryLabels(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgInsUpdates(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGnssTimeOffset(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgPpsTime(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgGroupMeta(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSolnMeta(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgSolnMetaDepA(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgStatusReport(msg) => WireFormat::encoded_len(msg),
+            Sbp::MsgHeartbeat(msg) => WireFormat::encoded_len(msg),
+            Sbp::Unknown(msg) => WireFormat::encoded_len(msg),
         }
     }
 }
+
 impl From<MsgPrintDep> for Sbp {
     fn from(msg: MsgPrintDep) -> Self {
         Sbp::MsgPrintDep(msg)
     }
 }
+
 impl From<MsgTrackingStateDetailedDep> for Sbp {
     fn from(msg: MsgTrackingStateDetailedDep) -> Self {
         Sbp::MsgTrackingStateDetailedDep(msg)
     }
 }
+
 impl From<MsgTrackingStateDepB> for Sbp {
     fn from(msg: MsgTrackingStateDepB) -> Self {
         Sbp::MsgTrackingStateDepB(msg)
     }
 }
+
 impl From<MsgAcqResultDepB> for Sbp {
     fn from(msg: MsgAcqResultDepB) -> Self {
         Sbp::MsgAcqResultDepB(msg)
     }
 }
+
 impl From<MsgAcqResultDepA> for Sbp {
     fn from(msg: MsgAcqResultDepA) -> Self {
         Sbp::MsgAcqResultDepA(msg)
     }
 }
+
 impl From<MsgTrackingStateDepA> for Sbp {
     fn from(msg: MsgTrackingStateDepA) -> Self {
         Sbp::MsgTrackingStateDepA(msg)
     }
 }
+
 impl From<MsgThreadState> for Sbp {
     fn from(msg: MsgThreadState) -> Self {
         Sbp::MsgThreadState(msg)
     }
 }
+
 impl From<MsgUartStateDepa> for Sbp {
     fn from(msg: MsgUartStateDepa) -> Self {
         Sbp::MsgUartStateDepa(msg)
     }
 }
+
 impl From<MsgIarState> for Sbp {
     fn from(msg: MsgIarState) -> Self {
         Sbp::MsgIarState(msg)
     }
 }
+
 impl From<MsgEphemerisDepA> for Sbp {
     fn from(msg: MsgEphemerisDepA) -> Self {
         Sbp::MsgEphemerisDepA(msg)
     }
 }
+
 impl From<MsgMaskSatelliteDep> for Sbp {
     fn from(msg: MsgMaskSatelliteDep) -> Self {
         Sbp::MsgMaskSatelliteDep(msg)
     }
 }
+
 impl From<MsgTrackingIqDepA> for Sbp {
     fn from(msg: MsgTrackingIqDepA) -> Self {
         Sbp::MsgTrackingIqDepA(msg)
     }
 }
+
 impl From<MsgUartState> for Sbp {
     fn from(msg: MsgUartState) -> Self {
         Sbp::MsgUartState(msg)
     }
 }
+
 impl From<MsgAcqSvProfileDep> for Sbp {
     fn from(msg: MsgAcqSvProfileDep) -> Self {
         Sbp::MsgAcqSvProfileDep(msg)
     }
 }
+
 impl From<MsgAcqResultDepC> for Sbp {
     fn from(msg: MsgAcqResultDepC) -> Self {
         Sbp::MsgAcqResultDepC(msg)
     }
 }
+
 impl From<MsgTrackingStateDetailedDepA> for Sbp {
     fn from(msg: MsgTrackingStateDetailedDepA) -> Self {
         Sbp::MsgTrackingStateDetailedDepA(msg)
     }
 }
+
 impl From<MsgResetFilters> for Sbp {
     fn from(msg: MsgResetFilters) -> Self {
         Sbp::MsgResetFilters(msg)
     }
 }
+
 impl From<MsgInitBaseDep> for Sbp {
     fn from(msg: MsgInitBaseDep) -> Self {
         Sbp::MsgInitBaseDep(msg)
     }
 }
+
 impl From<MsgMaskSatellite> for Sbp {
     fn from(msg: MsgMaskSatellite) -> Self {
         Sbp::MsgMaskSatellite(msg)
     }
 }
+
 impl From<MsgTrackingIqDepB> for Sbp {
     fn from(msg: MsgTrackingIqDepB) -> Self {
         Sbp::MsgTrackingIqDepB(msg)
     }
 }
+
 impl From<MsgTrackingIq> for Sbp {
     fn from(msg: MsgTrackingIq) -> Self {
         Sbp::MsgTrackingIq(msg)
     }
 }
+
 impl From<MsgAcqSvProfile> for Sbp {
     fn from(msg: MsgAcqSvProfile) -> Self {
         Sbp::MsgAcqSvProfile(msg)
     }
 }
+
 impl From<MsgAcqResult> for Sbp {
     fn from(msg: MsgAcqResult) -> Self {
         Sbp::MsgAcqResult(msg)
     }
 }
+
 impl From<MsgTrackingState> for Sbp {
     fn from(msg: MsgTrackingState) -> Self {
         Sbp::MsgTrackingState(msg)
     }
 }
+
 impl From<MsgObsDepB> for Sbp {
     fn from(msg: MsgObsDepB) -> Self {
         Sbp::MsgObsDepB(msg)
     }
 }
+
 impl From<MsgBasePosLlh> for Sbp {
     fn from(msg: MsgBasePosLlh) -> Self {
         Sbp::MsgBasePosLlh(msg)
     }
 }
+
 impl From<MsgObsDepA> for Sbp {
     fn from(msg: MsgObsDepA) -> Self {
         Sbp::MsgObsDepA(msg)
     }
 }
+
 impl From<MsgEphemerisDepB> for Sbp {
     fn from(msg: MsgEphemerisDepB) -> Self {
         Sbp::MsgEphemerisDepB(msg)
     }
 }
+
 impl From<MsgEphemerisDepC> for Sbp {
     fn from(msg: MsgEphemerisDepC) -> Self {
         Sbp::MsgEphemerisDepC(msg)
     }
 }
+
 impl From<MsgBasePosEcef> for Sbp {
     fn from(msg: MsgBasePosEcef) -> Self {
         Sbp::MsgBasePosEcef(msg)
     }
 }
+
 impl From<MsgObsDepC> for Sbp {
     fn from(msg: MsgObsDepC) -> Self {
         Sbp::MsgObsDepC(msg)
     }
 }
+
 impl From<MsgObs> for Sbp {
     fn from(msg: MsgObs) -> Self {
         Sbp::MsgObs(msg)
     }
 }
+
 impl From<MsgSpecanDep> for Sbp {
     fn from(msg: MsgSpecanDep) -> Self {
         Sbp::MsgSpecanDep(msg)
     }
 }
+
 impl From<MsgSpecan> for Sbp {
     fn from(msg: MsgSpecan) -> Self {
         Sbp::MsgSpecan(msg)
     }
 }
+
 impl From<MsgMeasurementState> for Sbp {
     fn from(msg: MsgMeasurementState) -> Self {
         Sbp::MsgMeasurementState(msg)
     }
 }
+
 impl From<MsgSetTime> for Sbp {
     fn from(msg: MsgSetTime) -> Self {
         Sbp::MsgSetTime(msg)
     }
 }
+
 impl From<MsgAlmanac> for Sbp {
     fn from(msg: MsgAlmanac) -> Self {
         Sbp::MsgAlmanac(msg)
     }
 }
+
 impl From<MsgAlmanacGpsDep> for Sbp {
     fn from(msg: MsgAlmanacGpsDep) -> Self {
         Sbp::MsgAlmanacGpsDep(msg)
     }
 }
+
 impl From<MsgAlmanacGloDep> for Sbp {
     fn from(msg: MsgAlmanacGloDep) -> Self {
         Sbp::MsgAlmanacGloDep(msg)
     }
 }
+
 impl From<MsgAlmanacGps> for Sbp {
     fn from(msg: MsgAlmanacGps) -> Self {
         Sbp::MsgAlmanacGps(msg)
     }
 }
+
 impl From<MsgAlmanacGlo> for Sbp {
     fn from(msg: MsgAlmanacGlo) -> Self {
         Sbp::MsgAlmanacGlo(msg)
     }
 }
+
 impl From<MsgGloBiases> for Sbp {
     fn from(msg: MsgGloBiases) -> Self {
         Sbp::MsgGloBiases(msg)
     }
 }
+
 impl From<MsgEphemerisDepD> for Sbp {
     fn from(msg: MsgEphemerisDepD) -> Self {
         Sbp::MsgEphemerisDepD(msg)
     }
 }
+
 impl From<MsgEphemerisGpsDepE> for Sbp {
     fn from(msg: MsgEphemerisGpsDepE) -> Self {
         Sbp::MsgEphemerisGpsDepE(msg)
     }
 }
+
 impl From<MsgEphemerisSbasDepA> for Sbp {
     fn from(msg: MsgEphemerisSbasDepA) -> Self {
         Sbp::MsgEphemerisSbasDepA(msg)
     }
 }
+
 impl From<MsgEphemerisGloDepA> for Sbp {
     fn from(msg: MsgEphemerisGloDepA) -> Self {
         Sbp::MsgEphemerisGloDepA(msg)
     }
 }
+
 impl From<MsgEphemerisSbasDepB> for Sbp {
     fn from(msg: MsgEphemerisSbasDepB) -> Self {
         Sbp::MsgEphemerisSbasDepB(msg)
     }
 }
+
 impl From<MsgEphemerisGloDepB> for Sbp {
     fn from(msg: MsgEphemerisGloDepB) -> Self {
         Sbp::MsgEphemerisGloDepB(msg)
     }
 }
+
 impl From<MsgEphemerisGpsDepF> for Sbp {
     fn from(msg: MsgEphemerisGpsDepF) -> Self {
         Sbp::MsgEphemerisGpsDepF(msg)
     }
 }
+
 impl From<MsgEphemerisGloDepC> for Sbp {
     fn from(msg: MsgEphemerisGloDepC) -> Self {
         Sbp::MsgEphemerisGloDepC(msg)
     }
 }
+
 impl From<MsgEphemerisGloDepD> for Sbp {
     fn from(msg: MsgEphemerisGloDepD) -> Self {
         Sbp::MsgEphemerisGloDepD(msg)
     }
 }
+
 impl From<MsgEphemerisBds> for Sbp {
     fn from(msg: MsgEphemerisBds) -> Self {
         Sbp::MsgEphemerisBds(msg)
     }
 }
+
 impl From<MsgEphemerisGps> for Sbp {
     fn from(msg: MsgEphemerisGps) -> Self {
         Sbp::MsgEphemerisGps(msg)
     }
 }
+
 impl From<MsgEphemerisGlo> for Sbp {
     fn from(msg: MsgEphemerisGlo) -> Self {
         Sbp::MsgEphemerisGlo(msg)
     }
 }
+
 impl From<MsgEphemerisSbas> for Sbp {
     fn from(msg: MsgEphemerisSbas) -> Self {
         Sbp::MsgEphemerisSbas(msg)
     }
 }
+
 impl From<MsgEphemerisGal> for Sbp {
     fn from(msg: MsgEphemerisGal) -> Self {
         Sbp::MsgEphemerisGal(msg)
     }
 }
+
 impl From<MsgEphemerisQzss> for Sbp {
     fn from(msg: MsgEphemerisQzss) -> Self {
         Sbp::MsgEphemerisQzss(msg)
     }
 }
+
 impl From<MsgIono> for Sbp {
     fn from(msg: MsgIono) -> Self {
         Sbp::MsgIono(msg)
     }
 }
+
 impl From<MsgSvConfigurationGpsDep> for Sbp {
     fn from(msg: MsgSvConfigurationGpsDep) -> Self {
         Sbp::MsgSvConfigurationGpsDep(msg)
     }
 }
+
 impl From<MsgGroupDelayDepA> for Sbp {
     fn from(msg: MsgGroupDelayDepA) -> Self {
         Sbp::MsgGroupDelayDepA(msg)
     }
 }
+
 impl From<MsgGroupDelayDepB> for Sbp {
     fn from(msg: MsgGroupDelayDepB) -> Self {
         Sbp::MsgGroupDelayDepB(msg)
     }
 }
+
 impl From<MsgGroupDelay> for Sbp {
     fn from(msg: MsgGroupDelay) -> Self {
         Sbp::MsgGroupDelay(msg)
     }
 }
+
 impl From<MsgEphemerisGalDepA> for Sbp {
     fn from(msg: MsgEphemerisGalDepA) -> Self {
         Sbp::MsgEphemerisGalDepA(msg)
     }
 }
+
 impl From<MsgGnssCapb> for Sbp {
     fn from(msg: MsgGnssCapb) -> Self {
         Sbp::MsgGnssCapb(msg)
     }
 }
+
 impl From<MsgSvAzEl> for Sbp {
     fn from(msg: MsgSvAzEl) -> Self {
         Sbp::MsgSvAzEl(msg)
     }
 }
+
 impl From<MsgSettingsWrite> for Sbp {
     fn from(msg: MsgSettingsWrite) -> Self {
         Sbp::MsgSettingsWrite(msg)
     }
 }
+
 impl From<MsgSettingsSave> for Sbp {
     fn from(msg: MsgSettingsSave) -> Self {
         Sbp::MsgSettingsSave(msg)
     }
 }
+
 impl From<MsgSettingsReadByIndexReq> for Sbp {
     fn from(msg: MsgSettingsReadByIndexReq) -> Self {
         Sbp::MsgSettingsReadByIndexReq(msg)
     }
 }
+
 impl From<MsgFileioReadResp> for Sbp {
     fn from(msg: MsgFileioReadResp) -> Self {
         Sbp::MsgFileioReadResp(msg)
     }
 }
+
 impl From<MsgSettingsReadReq> for Sbp {
     fn from(msg: MsgSettingsReadReq) -> Self {
         Sbp::MsgSettingsReadReq(msg)
     }
 }
+
 impl From<MsgSettingsReadResp> for Sbp {
     fn from(msg: MsgSettingsReadResp) -> Self {
         Sbp::MsgSettingsReadResp(msg)
     }
 }
+
 impl From<MsgSettingsReadByIndexDone> for Sbp {
     fn from(msg: MsgSettingsReadByIndexDone) -> Self {
         Sbp::MsgSettingsReadByIndexDone(msg)
     }
 }
+
 impl From<MsgSettingsReadByIndexResp> for Sbp {
     fn from(msg: MsgSettingsReadByIndexResp) -> Self {
         Sbp::MsgSettingsReadByIndexResp(msg)
     }
 }
+
 impl From<MsgFileioReadReq> for Sbp {
     fn from(msg: MsgFileioReadReq) -> Self {
         Sbp::MsgFileioReadReq(msg)
     }
 }
+
 impl From<MsgFileioReadDirReq> for Sbp {
     fn from(msg: MsgFileioReadDirReq) -> Self {
         Sbp::MsgFileioReadDirReq(msg)
     }
 }
+
 impl From<MsgFileioReadDirResp> for Sbp {
     fn from(msg: MsgFileioReadDirResp) -> Self {
         Sbp::MsgFileioReadDirResp(msg)
     }
 }
+
 impl From<MsgFileioWriteResp> for Sbp {
     fn from(msg: MsgFileioWriteResp) -> Self {
         Sbp::MsgFileioWriteResp(msg)
     }
 }
+
 impl From<MsgFileioRemove> for Sbp {
     fn from(msg: MsgFileioRemove) -> Self {
         Sbp::MsgFileioRemove(msg)
     }
 }
+
 impl From<MsgFileioWriteReq> for Sbp {
     fn from(msg: MsgFileioWriteReq) -> Self {
         Sbp::MsgFileioWriteReq(msg)
     }
 }
+
 impl From<MsgSettingsRegister> for Sbp {
     fn from(msg: MsgSettingsRegister) -> Self {
         Sbp::MsgSettingsRegister(msg)
     }
 }
+
 impl From<MsgSettingsWriteResp> for Sbp {
     fn from(msg: MsgSettingsWriteResp) -> Self {
         Sbp::MsgSettingsWriteResp(msg)
     }
 }
+
 impl From<MsgBootloaderHandshakeDepA> for Sbp {
     fn from(msg: MsgBootloaderHandshakeDepA) -> Self {
         Sbp::MsgBootloaderHandshakeDepA(msg)
     }
 }
+
 impl From<MsgBootloaderJumpToApp> for Sbp {
     fn from(msg: MsgBootloaderJumpToApp) -> Self {
         Sbp::MsgBootloaderJumpToApp(msg)
     }
 }
+
 impl From<MsgResetDep> for Sbp {
     fn from(msg: MsgResetDep) -> Self {
         Sbp::MsgResetDep(msg)
     }
 }
+
 impl From<MsgBootloaderHandshakeReq> for Sbp {
     fn from(msg: MsgBootloaderHandshakeReq) -> Self {
         Sbp::MsgBootloaderHandshakeReq(msg)
     }
 }
+
 impl From<MsgBootloaderHandshakeResp> for Sbp {
     fn from(msg: MsgBootloaderHandshakeResp) -> Self {
         Sbp::MsgBootloaderHandshakeResp(msg)
     }
 }
+
 impl From<MsgDeviceMonitor> for Sbp {
     fn from(msg: MsgDeviceMonitor) -> Self {
         Sbp::MsgDeviceMonitor(msg)
     }
 }
+
 impl From<MsgReset> for Sbp {
     fn from(msg: MsgReset) -> Self {
         Sbp::MsgReset(msg)
     }
 }
+
 impl From<MsgCommandReq> for Sbp {
     fn from(msg: MsgCommandReq) -> Self {
         Sbp::MsgCommandReq(msg)
     }
 }
+
 impl From<MsgCommandResp> for Sbp {
     fn from(msg: MsgCommandResp) -> Self {
         Sbp::MsgCommandResp(msg)
     }
 }
+
 impl From<MsgNetworkStateReq> for Sbp {
     fn from(msg: MsgNetworkStateReq) -> Self {
         Sbp::MsgNetworkStateReq(msg)
     }
 }
+
 impl From<MsgNetworkStateResp> for Sbp {
     fn from(msg: MsgNetworkStateResp) -> Self {
         Sbp::MsgNetworkStateResp(msg)
     }
 }
+
 impl From<MsgCommandOutput> for Sbp {
     fn from(msg: MsgCommandOutput) -> Self {
         Sbp::MsgCommandOutput(msg)
     }
 }
+
 impl From<MsgNetworkBandwidthUsage> for Sbp {
     fn from(msg: MsgNetworkBandwidthUsage) -> Self {
         Sbp::MsgNetworkBandwidthUsage(msg)
     }
 }
+
 impl From<MsgCellModemStatus> for Sbp {
     fn from(msg: MsgCellModemStatus) -> Self {
         Sbp::MsgCellModemStatus(msg)
     }
 }
+
 impl From<MsgFrontEndGain> for Sbp {
     fn from(msg: MsgFrontEndGain) -> Self {
         Sbp::MsgFrontEndGain(msg)
     }
 }
+
 impl From<MsgCwResults> for Sbp {
     fn from(msg: MsgCwResults) -> Self {
         Sbp::MsgCwResults(msg)
     }
 }
+
 impl From<MsgCwStart> for Sbp {
     fn from(msg: MsgCwStart) -> Self {
         Sbp::MsgCwStart(msg)
     }
 }
+
 impl From<MsgNapDeviceDnaResp> for Sbp {
     fn from(msg: MsgNapDeviceDnaResp) -> Self {
         Sbp::MsgNapDeviceDnaResp(msg)
     }
 }
+
 impl From<MsgNapDeviceDnaReq> for Sbp {
     fn from(msg: MsgNapDeviceDnaReq) -> Self {
         Sbp::MsgNapDeviceDnaReq(msg)
     }
 }
+
 impl From<MsgFlashDone> for Sbp {
     fn from(msg: MsgFlashDone) -> Self {
         Sbp::MsgFlashDone(msg)
     }
 }
+
 impl From<MsgFlashReadResp> for Sbp {
     fn from(msg: MsgFlashReadResp) -> Self {
         Sbp::MsgFlashReadResp(msg)
     }
 }
+
 impl From<MsgFlashErase> for Sbp {
     fn from(msg: MsgFlashErase) -> Self {
         Sbp::MsgFlashErase(msg)
     }
 }
+
 impl From<MsgStmFlashLockSector> for Sbp {
     fn from(msg: MsgStmFlashLockSector) -> Self {
         Sbp::MsgStmFlashLockSector(msg)
     }
 }
+
 impl From<MsgStmFlashUnlockSector> for Sbp {
     fn from(msg: MsgStmFlashUnlockSector) -> Self {
         Sbp::MsgStmFlashUnlockSector(msg)
     }
 }
+
 impl From<MsgStmUniqueIdResp> for Sbp {
     fn from(msg: MsgStmUniqueIdResp) -> Self {
         Sbp::MsgStmUniqueIdResp(msg)
     }
 }
+
 impl From<MsgFlashProgram> for Sbp {
     fn from(msg: MsgFlashProgram) -> Self {
         Sbp::MsgFlashProgram(msg)
     }
 }
+
 impl From<MsgFlashReadReq> for Sbp {
     fn from(msg: MsgFlashReadReq) -> Self {
         Sbp::MsgFlashReadReq(msg)
     }
 }
+
 impl From<MsgStmUniqueIdReq> for Sbp {
     fn from(msg: MsgStmUniqueIdReq) -> Self {
         Sbp::MsgStmUniqueIdReq(msg)
     }
 }
+
 impl From<MsgM25FlashWriteStatus> for Sbp {
     fn from(msg: MsgM25FlashWriteStatus) -> Self {
         Sbp::MsgM25FlashWriteStatus(msg)
     }
 }
+
 impl From<MsgGpsTimeDepA> for Sbp {
     fn from(msg: MsgGpsTimeDepA) -> Self {
         Sbp::MsgGpsTimeDepA(msg)
     }
 }
+
 impl From<MsgExtEvent> for Sbp {
     fn from(msg: MsgExtEvent) -> Self {
         Sbp::MsgExtEvent(msg)
     }
 }
+
 impl From<MsgGpsTime> for Sbp {
     fn from(msg: MsgGpsTime) -> Self {
         Sbp::MsgGpsTime(msg)
     }
 }
+
 impl From<MsgUtcTime> for Sbp {
     fn from(msg: MsgUtcTime) -> Self {
         Sbp::MsgUtcTime(msg)
     }
 }
+
 impl From<MsgGpsTimeGnss> for Sbp {
     fn from(msg: MsgGpsTimeGnss) -> Self {
         Sbp::MsgGpsTimeGnss(msg)
     }
 }
+
 impl From<MsgUtcTimeGnss> for Sbp {
     fn from(msg: MsgUtcTimeGnss) -> Self {
         Sbp::MsgUtcTimeGnss(msg)
     }
 }
+
 impl From<MsgSettingsRegisterResp> for Sbp {
     fn from(msg: MsgSettingsRegisterResp) -> Self {
         Sbp::MsgSettingsRegisterResp(msg)
     }
 }
+
 impl From<MsgPosEcefDepA> for Sbp {
     fn from(msg: MsgPosEcefDepA) -> Self {
         Sbp::MsgPosEcefDepA(msg)
     }
 }
+
 impl From<MsgPosLlhDepA> for Sbp {
     fn from(msg: MsgPosLlhDepA) -> Self {
         Sbp::MsgPosLlhDepA(msg)
     }
 }
+
 impl From<MsgBaselineEcefDepA> for Sbp {
     fn from(msg: MsgBaselineEcefDepA) -> Self {
         Sbp::MsgBaselineEcefDepA(msg)
     }
 }
+
 impl From<MsgBaselineNedDepA> for Sbp {
     fn from(msg: MsgBaselineNedDepA) -> Self {
         Sbp::MsgBaselineNedDepA(msg)
     }
 }
+
 impl From<MsgVelEcefDepA> for Sbp {
     fn from(msg: MsgVelEcefDepA) -> Self {
         Sbp::MsgVelEcefDepA(msg)
     }
 }
+
 impl From<MsgVelNedDepA> for Sbp {
     fn from(msg: MsgVelNedDepA) -> Self {
         Sbp::MsgVelNedDepA(msg)
     }
 }
+
 impl From<MsgDopsDepA> for Sbp {
     fn from(msg: MsgDopsDepA) -> Self {
         Sbp::MsgDopsDepA(msg)
     }
 }
+
 impl From<MsgBaselineHeadingDepA> for Sbp {
     fn from(msg: MsgBaselineHeadingDepA) -> Self {
         Sbp::MsgBaselineHeadingDepA(msg)
     }
 }
+
 impl From<MsgDops> for Sbp {
     fn from(msg: MsgDops) -> Self {
         Sbp::MsgDops(msg)
     }
 }
+
 impl From<MsgPosEcef> for Sbp {
     fn from(msg: MsgPosEcef) -> Self {
         Sbp::MsgPosEcef(msg)
     }
 }
+
 impl From<MsgPosLlh> for Sbp {
     fn from(msg: MsgPosLlh) -> Self {
         Sbp::MsgPosLlh(msg)
     }
 }
+
 impl From<MsgBaselineEcef> for Sbp {
     fn from(msg: MsgBaselineEcef) -> Self {
         Sbp::MsgBaselineEcef(msg)
     }
 }
+
 impl From<MsgBaselineNed> for Sbp {
     fn from(msg: MsgBaselineNed) -> Self {
         Sbp::MsgBaselineNed(msg)
     }
 }
+
 impl From<MsgVelEcef> for Sbp {
     fn from(msg: MsgVelEcef) -> Self {
         Sbp::MsgVelEcef(msg)
     }
 }
+
 impl From<MsgVelNed> for Sbp {
     fn from(msg: MsgVelNed) -> Self {
         Sbp::MsgVelNed(msg)
     }
 }
+
 impl From<MsgBaselineHeading> for Sbp {
     fn from(msg: MsgBaselineHeading) -> Self {
         Sbp::MsgBaselineHeading(msg)
     }
 }
+
 impl From<MsgAgeCorrections> for Sbp {
     fn from(msg: MsgAgeCorrections) -> Self {
         Sbp::MsgAgeCorrections(msg)
     }
 }
+
 impl From<MsgPosLlhCov> for Sbp {
     fn from(msg: MsgPosLlhCov) -> Self {
         Sbp::MsgPosLlhCov(msg)
     }
 }
+
 impl From<MsgVelNedCov> for Sbp {
     fn from(msg: MsgVelNedCov) -> Self {
         Sbp::MsgVelNedCov(msg)
     }
 }
+
 impl From<MsgVelBody> for Sbp {
     fn from(msg: MsgVelBody) -> Self {
         Sbp::MsgVelBody(msg)
     }
 }
+
 impl From<MsgPosEcefCov> for Sbp {
     fn from(msg: MsgPosEcefCov) -> Self {
         Sbp::MsgPosEcefCov(msg)
     }
 }
+
 impl From<MsgVelEcefCov> for Sbp {
     fn from(msg: MsgVelEcefCov) -> Self {
         Sbp::MsgVelEcefCov(msg)
     }
 }
+
 impl From<MsgProtectionLevelDepA> for Sbp {
     fn from(msg: MsgProtectionLevelDepA) -> Self {
         Sbp::MsgProtectionLevelDepA(msg)
     }
 }
+
 impl From<MsgProtectionLevel> for Sbp {
     fn from(msg: MsgProtectionLevel) -> Self {
         Sbp::MsgProtectionLevel(msg)
     }
 }
+
 impl From<MsgPosLlhAcc> for Sbp {
     fn from(msg: MsgPosLlhAcc) -> Self {
         Sbp::MsgPosLlhAcc(msg)
     }
 }
+
 impl From<MsgOrientQuat> for Sbp {
     fn from(msg: MsgOrientQuat) -> Self {
         Sbp::MsgOrientQuat(msg)
     }
 }
+
 impl From<MsgOrientEuler> for Sbp {
     fn from(msg: MsgOrientEuler) -> Self {
         Sbp::MsgOrientEuler(msg)
     }
 }
+
 impl From<MsgAngularRate> for Sbp {
     fn from(msg: MsgAngularRate) -> Self {
         Sbp::MsgAngularRate(msg)
     }
 }
+
 impl From<MsgPosEcefGnss> for Sbp {
     fn from(msg: MsgPosEcefGnss) -> Self {
         Sbp::MsgPosEcefGnss(msg)
     }
 }
+
 impl From<MsgPosLlhGnss> for Sbp {
     fn from(msg: MsgPosLlhGnss) -> Self {
         Sbp::MsgPosLlhGnss(msg)
     }
 }
+
 impl From<MsgVelEcefGnss> for Sbp {
     fn from(msg: MsgVelEcefGnss) -> Self {
         Sbp::MsgVelEcefGnss(msg)
     }
 }
+
 impl From<MsgVelNedGnss> for Sbp {
     fn from(msg: MsgVelNedGnss) -> Self {
         Sbp::MsgVelNedGnss(msg)
     }
 }
+
 impl From<MsgPosLlhCovGnss> for Sbp {
     fn from(msg: MsgPosLlhCovGnss) -> Self {
         Sbp::MsgPosLlhCovGnss(msg)
     }
 }
+
 impl From<MsgVelNedCovGnss> for Sbp {
     fn from(msg: MsgVelNedCovGnss) -> Self {
         Sbp::MsgVelNedCovGnss(msg)
     }
 }
+
 impl From<MsgPosEcefCovGnss> for Sbp {
     fn from(msg: MsgPosEcefCovGnss) -> Self {
         Sbp::MsgPosEcefCovGnss(msg)
     }
 }
+
 impl From<MsgVelEcefCovGnss> for Sbp {
     fn from(msg: MsgVelEcefCovGnss) -> Self {
         Sbp::MsgVelEcefCovGnss(msg)
     }
 }
+
 impl From<MsgNdbEvent> for Sbp {
     fn from(msg: MsgNdbEvent) -> Self {
         Sbp::MsgNdbEvent(msg)
     }
 }
+
 impl From<MsgLog> for Sbp {
     fn from(msg: MsgLog) -> Self {
         Sbp::MsgLog(msg)
     }
 }
+
 impl From<MsgFwd> for Sbp {
     fn from(msg: MsgFwd) -> Self {
         Sbp::MsgFwd(msg)
     }
 }
+
 impl From<MsgSsrOrbitClockDepA> for Sbp {
     fn from(msg: MsgSsrOrbitClockDepA) -> Self {
         Sbp::MsgSsrOrbitClockDepA(msg)
     }
 }
+
 impl From<MsgSsrOrbitClock> for Sbp {
     fn from(msg: MsgSsrOrbitClock) -> Self {
         Sbp::MsgSsrOrbitClock(msg)
     }
 }
+
 impl From<MsgSsrCodeBiases> for Sbp {
     fn from(msg: MsgSsrCodeBiases) -> Self {
         Sbp::MsgSsrCodeBiases(msg)
     }
 }
+
 impl From<MsgSsrPhaseBiases> for Sbp {
     fn from(msg: MsgSsrPhaseBiases) -> Self {
         Sbp::MsgSsrPhaseBiases(msg)
     }
 }
+
 impl From<MsgSsrStecCorrectionDepA> for Sbp {
     fn from(msg: MsgSsrStecCorrectionDepA) -> Self {
         Sbp::MsgSsrStecCorrectionDepA(msg)
     }
 }
+
 impl From<MsgSsrGriddedCorrectionNoStdDepA> for Sbp {
     fn from(msg: MsgSsrGriddedCorrectionNoStdDepA) -> Self {
         Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg)
     }
 }
+
 impl From<MsgSsrGridDefinitionDepA> for Sbp {
     fn from(msg: MsgSsrGridDefinitionDepA) -> Self {
         Sbp::MsgSsrGridDefinitionDepA(msg)
     }
 }
+
 impl From<MsgSsrTileDefinition> for Sbp {
     fn from(msg: MsgSsrTileDefinition) -> Self {
         Sbp::MsgSsrTileDefinition(msg)
     }
 }
+
 impl From<MsgSsrGriddedCorrectionDepA> for Sbp {
     fn from(msg: MsgSsrGriddedCorrectionDepA) -> Self {
         Sbp::MsgSsrGriddedCorrectionDepA(msg)
     }
 }
+
 impl From<MsgSsrStecCorrection> for Sbp {
     fn from(msg: MsgSsrStecCorrection) -> Self {
         Sbp::MsgSsrStecCorrection(msg)
     }
 }
+
 impl From<MsgSsrGriddedCorrection> for Sbp {
     fn from(msg: MsgSsrGriddedCorrection) -> Self {
         Sbp::MsgSsrGriddedCorrection(msg)
     }
 }
+
 impl From<MsgSsrSatelliteApc> for Sbp {
     fn from(msg: MsgSsrSatelliteApc) -> Self {
         Sbp::MsgSsrSatelliteApc(msg)
     }
 }
+
 impl From<MsgOsr> for Sbp {
     fn from(msg: MsgOsr) -> Self {
         Sbp::MsgOsr(msg)
     }
 }
+
 impl From<MsgUserData> for Sbp {
     fn from(msg: MsgUserData) -> Self {
         Sbp::MsgUserData(msg)
     }
 }
+
 impl From<MsgImuRaw> for Sbp {
     fn from(msg: MsgImuRaw) -> Self {
         Sbp::MsgImuRaw(msg)
     }
 }
+
 impl From<MsgImuAux> for Sbp {
     fn from(msg: MsgImuAux) -> Self {
         Sbp::MsgImuAux(msg)
     }
 }
+
 impl From<MsgMagRaw> for Sbp {
     fn from(msg: MsgMagRaw) -> Self {
         Sbp::MsgMagRaw(msg)
     }
 }
+
 impl From<MsgOdometry> for Sbp {
     fn from(msg: MsgOdometry) -> Self {
         Sbp::MsgOdometry(msg)
     }
 }
+
 impl From<MsgWheeltick> for Sbp {
     fn from(msg: MsgWheeltick) -> Self {
         Sbp::MsgWheeltick(msg)
     }
 }
+
 impl From<MsgFileioConfigReq> for Sbp {
     fn from(msg: MsgFileioConfigReq) -> Self {
         Sbp::MsgFileioConfigReq(msg)
     }
 }
+
 impl From<MsgFileioConfigResp> for Sbp {
     fn from(msg: MsgFileioConfigResp) -> Self {
         Sbp::MsgFileioConfigResp(msg)
     }
 }
+
 impl From<MsgSbasRaw> for Sbp {
     fn from(msg: MsgSbasRaw) -> Self {
         Sbp::MsgSbasRaw(msg)
     }
 }
+
 impl From<MsgLinuxCpuStateDepA> for Sbp {
     fn from(msg: MsgLinuxCpuStateDepA) -> Self {
         Sbp::MsgLinuxCpuStateDepA(msg)
     }
 }
+
 impl From<MsgLinuxMemStateDepA> for Sbp {
     fn from(msg: MsgLinuxMemStateDepA) -> Self {
         Sbp::MsgLinuxMemStateDepA(msg)
     }
 }
+
 impl From<MsgLinuxSysStateDepA> for Sbp {
     fn from(msg: MsgLinuxSysStateDepA) -> Self {
         Sbp::MsgLinuxSysStateDepA(msg)
     }
 }
+
 impl From<MsgLinuxProcessSocketCounts> for Sbp {
     fn from(msg: MsgLinuxProcessSocketCounts) -> Self {
         Sbp::MsgLinuxProcessSocketCounts(msg)
     }
 }
+
 impl From<MsgLinuxProcessSocketQueues> for Sbp {
     fn from(msg: MsgLinuxProcessSocketQueues) -> Self {
         Sbp::MsgLinuxProcessSocketQueues(msg)
     }
 }
+
 impl From<MsgLinuxSocketUsage> for Sbp {
     fn from(msg: MsgLinuxSocketUsage) -> Self {
         Sbp::MsgLinuxSocketUsage(msg)
     }
 }
+
 impl From<MsgLinuxProcessFdCount> for Sbp {
     fn from(msg: MsgLinuxProcessFdCount) -> Self {
         Sbp::MsgLinuxProcessFdCount(msg)
     }
 }
+
 impl From<MsgLinuxProcessFdSummary> for Sbp {
     fn from(msg: MsgLinuxProcessFdSummary) -> Self {
         Sbp::MsgLinuxProcessFdSummary(msg)
     }
 }
+
 impl From<MsgLinuxCpuState> for Sbp {
     fn from(msg: MsgLinuxCpuState) -> Self {
         Sbp::MsgLinuxCpuState(msg)
     }
 }
+
 impl From<MsgLinuxMemState> for Sbp {
     fn from(msg: MsgLinuxMemState) -> Self {
         Sbp::MsgLinuxMemState(msg)
     }
 }
+
 impl From<MsgLinuxSysState> for Sbp {
     fn from(msg: MsgLinuxSysState) -> Self {
         Sbp::MsgLinuxSysState(msg)
     }
 }
+
 impl From<MsgStartup> for Sbp {
     fn from(msg: MsgStartup) -> Self {
         Sbp::MsgStartup(msg)
     }
 }
+
 impl From<MsgDgnssStatus> for Sbp {
     fn from(msg: MsgDgnssStatus) -> Self {
         Sbp::MsgDgnssStatus(msg)
     }
 }
+
 impl From<MsgInsStatus> for Sbp {
     fn from(msg: MsgInsStatus) -> Self {
         Sbp::MsgInsStatus(msg)
     }
 }
+
 impl From<MsgCsacTelemetry> for Sbp {
     fn from(msg: MsgCsacTelemetry) -> Self {
         Sbp::MsgCsacTelemetry(msg)
     }
 }
+
 impl From<MsgCsacTelemetryLabels> for Sbp {
     fn from(msg: MsgCsacTelemetryLabels) -> Self {
         Sbp::MsgCsacTelemetryLabels(msg)
     }
 }
+
 impl From<MsgInsUpdates> for Sbp {
     fn from(msg: MsgInsUpdates) -> Self {
         Sbp::MsgInsUpdates(msg)
     }
 }
+
 impl From<MsgGnssTimeOffset> for Sbp {
     fn from(msg: MsgGnssTimeOffset) -> Self {
         Sbp::MsgGnssTimeOffset(msg)
     }
 }
+
 impl From<MsgPpsTime> for Sbp {
     fn from(msg: MsgPpsTime) -> Self {
         Sbp::MsgPpsTime(msg)
     }
 }
+
 impl From<MsgGroupMeta> for Sbp {
     fn from(msg: MsgGroupMeta) -> Self {
         Sbp::MsgGroupMeta(msg)
     }
 }
+
 impl From<MsgSolnMeta> for Sbp {
     fn from(msg: MsgSolnMeta) -> Self {
         Sbp::MsgSolnMeta(msg)
     }
 }
+
 impl From<MsgSolnMetaDepA> for Sbp {
     fn from(msg: MsgSolnMetaDepA) -> Self {
         Sbp::MsgSolnMetaDepA(msg)
     }
 }
+
 impl From<MsgStatusReport> for Sbp {
     fn from(msg: MsgStatusReport) -> Self {
         Sbp::MsgStatusReport(msg)
     }
 }
+
 impl From<MsgHeartbeat> for Sbp {
     fn from(msg: MsgHeartbeat) -> Self {
         Sbp::MsgHeartbeat(msg)

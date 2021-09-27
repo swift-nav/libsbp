@@ -26,12 +26,9 @@ link = ["slotmap"]
 path = "src/lib.rs"
 
 [dependencies]
-byteorder = "1.2"
-bytes = "1.0"
-crc16 = "*"
+bytes = "1"
+crc16 = "0.4"
 log = "0.4"
-nom = "6.0"
-thiserror = "1.0"
 
 [dependencies.swiftnav-rs]
 git = "https://github.com/swift-nav/swiftnav-rs"
@@ -60,7 +57,7 @@ version = "0.3"
 optional = true
 
 [dependencies.dencode]
-version = "0.3.0"
+version = "0.3"
 default-features = false
 
 [dev-dependencies]

@@ -57,7 +57,7 @@ fn test_auto_check_sbp_vehicle_msg_odometry() {
             }
             _ => panic!("Invalid message type! Expected a MsgOdometry"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

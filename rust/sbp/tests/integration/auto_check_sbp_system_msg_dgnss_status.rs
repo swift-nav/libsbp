@@ -57,7 +57,7 @@ fn test_auto_check_sbp_system_msg_dgnss_status() {
                     msg.num_signals
                 );
                 assert_eq!(
-                    Into::<String>::into(msg.source.clone()),
+                    msg.source.to_string(),
                     "Skylark".to_string(),
                     "incorrect value for msg.source, expected string '{}', is '{}'",
                     "Skylark".to_string(),
@@ -66,7 +66,7 @@ fn test_auto_check_sbp_system_msg_dgnss_status() {
             }
             _ => panic!("Invalid message type! Expected a MsgDgnssStatus"),
         };
-        let frame = sbp_msg.to_frame().unwrap();
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
 }

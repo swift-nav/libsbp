@@ -1,14 +1,21 @@
+//! Types representing GPS times embedded in messsages.
+
 pub use swiftnav_rs::time::GpsTime;
 
-pub use crate::swiftnav_rs_conversions::GpsTimeError;
+pub use crate::swiftnav_conversions::GpsTimeError;
 
+/// The time returned by [SbpMessage::gps_time](crate::SbpMessage::gps_time).
 #[derive(Debug, Clone, Copy)]
 pub enum MessageTime {
+    /// Time received via a message from a rover.
     Rover(RoverTime),
+
+    /// Time received via a message from a base station.
     Base(BaseTime),
 }
 
 impl MessageTime {
+    /// If the `MessageTime` is from a rover return it. Otherwise return None.
     pub fn to_rover(self) -> Option<RoverTime> {
         if let Self::Rover(v) = self {
             Some(v)
@@ -17,6 +24,7 @@ impl MessageTime {
         }
     }
 
+    /// If the `MessageTime` is from a base station return it. Otherwise return None.
     pub fn to_base(self) -> Option<BaseTime> {
         if let Self::Base(v) = self {
             Some(v)
@@ -38,13 +46,18 @@ impl From<BaseTime> for MessageTime {
     }
 }
 
+/// Time received via a message from a rover, like
+/// [MsgAngularRate](crate::messages::orientation::MsgAngularRate)
 #[derive(Debug, Clone, Copy)]
 pub enum RoverTime {
+    /// The [GpsTime] of the message.
     GpsTime(GpsTime),
+    /// The message had no week number.
     Tow(f64),
 }
 
 impl RoverTime {
+    /// Get the time of week.
     pub fn tow(&self) -> f64 {
         match self {
             RoverTime::GpsTime(time) => time.tow(),
@@ -52,6 +65,7 @@ impl RoverTime {
         }
     }
 
+    /// Get the week number if the message included it. Otherwise return None.
     pub fn wn(&self) -> Option<i16> {
         match self {
             RoverTime::GpsTime(time) => Some(time.wn()),
@@ -72,6 +86,8 @@ impl From<f64> for RoverTime {
     }
 }
 
+/// Time received via a message from a base station, like
+/// [MsgObs](crate::messages::observation::MsgObs).
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
 pub struct BaseTime(GpsTime);
 

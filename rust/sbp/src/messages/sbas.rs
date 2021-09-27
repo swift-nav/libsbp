@@ -14,15 +14,9 @@
 //****************************************************************************/
 //! SBAS data
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
 use super::gnss::*;
-#[allow(unused_imports)]
-use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
+
+use super::lib::*;
 
 /// Raw SBAS data
 ///
@@ -31,101 +25,87 @@ use crate::{messages::ConcreteMessage, serialize::SbpSerialize, SbpString};
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSbasRaw {
+    /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS signal identifier.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// GPS time-of-week at the start of the data block.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// SBAS message type (0-63)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "message_type")))]
     pub message_type: u8,
     /// Raw SBAS data field of 212 bits (last byte padded with zeros).
-    pub data: Vec<u8>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+    pub data: [u8; 27],
 }
 
-impl MsgSbasRaw {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, crate::Error> {
-        Ok( MsgSbasRaw{
-            sender_id: None,
-            sid: GnssSignal::parse(_buf)?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            message_type: _buf.read_u8()?,
-            data: crate::parser::read_u8_array_limit(_buf, 27)?,
-        } )
-    }
-}
-impl super::SbpMessage for MsgSbasRaw {
-    fn message_name(&self) -> &'static str {
-        Self::MESSAGE_NAME
-    }
-
-    fn message_type(&self) -> u16 {
-        Self::MESSAGE_TYPE
-    }
-
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgSbasRaw {
+impl ConcreteMessage for MsgSbasRaw {
     const MESSAGE_TYPE: u16 = 30583;
     const MESSAGE_NAME: &'static str = "MSG_SBAS_RAW";
 }
-impl TryFrom<super::Sbp> for MsgSbasRaw {
-    type Error = super::TryFromSbpError;
 
-    fn try_from(msg: super::Sbp) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgSbasRaw {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgSbasRaw {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::Sbp::MsgSbasRaw(m) => Ok(m),
-            _ => Err(super::TryFromSbpError),
+            Sbp::MsgSbasRaw(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSbasRaw {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.message_type.append_to_sbp_buffer(buf);
-        self.data.append_to_sbp_buffer(buf);
+impl WireFormat for MsgSbasRaw {
+    const MIN_ENCODED_LEN: usize = <GnssSignal as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <[u8; 27] as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sid)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.message_type)
+            + WireFormat::encoded_len(&self.data)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.message_type.sbp_size();
-        size += self.data.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.message_type, buf);
+        WireFormat::write(&self.data, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgSbasRaw {
+            sender_id: None,
+            sid: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            message_type: WireFormat::parse_unchecked(buf),
+            data: WireFormat::parse_unchecked(buf),
+        }
     }
 }
